@@ -1,0 +1,153 @@
+C:\Users\piete\Local Storage\Uni\370\API\BioProSystem\BioProSystem\bin\Debug\net8.0\appsettings.Development.json
+C:\Users\piete\Local Storage\Uni\370\API\BioProSystem\BioProSystem\bin\Debug\net8.0\appsettings.json
+C:\Users\piete\Local Storage\Uni\370\API\BioProSystem\BioProSystem\bin\Debug\net8.0\BioProSystem.exe
+C:\Users\piete\Local Storage\Uni\370\API\BioProSystem\BioProSystem\bin\Debug\net8.0\BioProSystem.deps.json
+C:\Users\piete\Local Storage\Uni\370\API\BioProSystem\BioProSystem\bin\Debug\net8.0\BioProSystem.runtimeconfig.json
+C:\Users\piete\Local Storage\Uni\370\API\BioProSystem\BioProSystem\bin\Debug\net8.0\BioProSystem.dll
+C:\Users\piete\Local Storage\Uni\370\API\BioProSystem\BioProSystem\bin\Debug\net8.0\BioProSystem.pdb
+C:\Users\piete\Local Storage\Uni\370\API\BioProSystem\BioProSystem\bin\Debug\net8.0\Humanizer.dll
+C:\Users\piete\Local Storage\Uni\370\API\BioProSystem\BioProSystem\bin\Debug\net8.0\Microsoft.Bcl.AsyncInterfaces.dll
+C:\Users\piete\Local Storage\Uni\370\API\BioProSystem\BioProSystem\bin\Debug\net8.0\Microsoft.EntityFrameworkCore.dll
+C:\Users\piete\Local Storage\Uni\370\API\BioProSystem\BioProSystem\bin\Debug\net8.0\Microsoft.EntityFrameworkCore.Abstractions.dll
+C:\Users\piete\Local Storage\Uni\370\API\BioProSystem\BioProSystem\bin\Debug\net8.0\Microsoft.EntityFrameworkCore.Design.dll
+C:\Users\piete\Local Storage\Uni\370\API\BioProSystem\BioProSystem\bin\Debug\net8.0\Microsoft.EntityFrameworkCore.Relational.dll
+C:\Users\piete\Local Storage\Uni\370\API\BioProSystem\BioProSystem\bin\Debug\net8.0\Microsoft.Extensions.DependencyModel.dll
+C:\Users\piete\Local Storage\Uni\370\API\BioProSystem\BioProSystem\bin\Debug\net8.0\Microsoft.OpenApi.dll
+C:\Users\piete\Local Storage\Uni\370\API\BioProSystem\BioProSystem\bin\Debug\net8.0\Mono.TextTemplating.dll
+C:\Users\piete\Local Storage\Uni\370\API\BioProSystem\BioProSystem\bin\Debug\net8.0\Swashbuckle.AspNetCore.Swagger.dll
+C:\Users\piete\Local Storage\Uni\370\API\BioProSystem\BioProSystem\bin\Debug\net8.0\Swashbuckle.AspNetCore.SwaggerGen.dll
+C:\Users\piete\Local Storage\Uni\370\API\BioProSystem\BioProSystem\bin\Debug\net8.0\Swashbuckle.AspNetCore.SwaggerUI.dll
+C:\Users\piete\Local Storage\Uni\370\API\BioProSystem\BioProSystem\bin\Debug\net8.0\System.CodeDom.dll
+C:\Users\piete\Local Storage\Uni\370\API\BioProSystem\BioProSystem\obj\Debug\net8.0\BioProSystem.csproj.AssemblyReference.cache
+C:\Users\piete\Local Storage\Uni\370\API\BioProSystem\BioProSystem\obj\Debug\net8.0\BioProSystem.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\piete\Local Storage\Uni\370\API\BioProSystem\BioProSystem\obj\Debug\net8.0\BioProSystem.AssemblyInfoInputs.cache
+C:\Users\piete\Local Storage\Uni\370\API\BioProSystem\BioProSystem\obj\Debug\net8.0\BioProSystem.AssemblyInfo.cs
+C:\Users\piete\Local Storage\Uni\370\API\BioProSystem\BioProSystem\obj\Debug\net8.0\BioProSystem.csproj.CoreCompileInputs.cache
+C:\Users\piete\Local Storage\Uni\370\API\BioProSystem\BioProSystem\obj\Debug\net8.0\BioProSystem.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\piete\Local Storage\Uni\370\API\BioProSystem\BioProSystem\obj\Debug\net8.0\BioProSystem.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\piete\Local Storage\Uni\370\API\BioProSystem\BioProSystem\obj\Debug\net8.0\staticwebassets.build.json
+C:\Users\piete\Local Storage\Uni\370\API\BioProSystem\BioProSystem\obj\Debug\net8.0\staticwebassets.development.json
+C:\Users\piete\Local Storage\Uni\370\API\BioProSystem\BioProSystem\obj\Debug\net8.0\staticwebassets\msbuild.BioProSystem.Microsoft.AspNetCore.StaticWebAssets.props
+C:\Users\piete\Local Storage\Uni\370\API\BioProSystem\BioProSystem\obj\Debug\net8.0\staticwebassets\msbuild.build.BioProSystem.props
+C:\Users\piete\Local Storage\Uni\370\API\BioProSystem\BioProSystem\obj\Debug\net8.0\staticwebassets\msbuild.buildMultiTargeting.BioProSystem.props
+C:\Users\piete\Local Storage\Uni\370\API\BioProSystem\BioProSystem\obj\Debug\net8.0\staticwebassets\msbuild.buildTransitive.BioProSystem.props
+C:\Users\piete\Local Storage\Uni\370\API\BioProSystem\BioProSystem\obj\Debug\net8.0\staticwebassets.pack.json
+C:\Users\piete\Local Storage\Uni\370\API\BioProSystem\BioProSystem\obj\Debug\net8.0\scopedcss\bundle\BioProSystem.styles.css
+C:\Users\piete\Local Storage\Uni\370\API\BioProSystem\BioProSystem\obj\Debug\net8.0\BioProSy.CDCA44FF.Up2Date
+C:\Users\piete\Local Storage\Uni\370\API\BioProSystem\BioProSystem\obj\Debug\net8.0\BioProSystem.dll
+C:\Users\piete\Local Storage\Uni\370\API\BioProSystem\BioProSystem\obj\Debug\net8.0\refint\BioProSystem.dll
+C:\Users\piete\Local Storage\Uni\370\API\BioProSystem\BioProSystem\obj\Debug\net8.0\BioProSystem.pdb
+C:\Users\piete\Local Storage\Uni\370\API\BioProSystem\BioProSystem\obj\Debug\net8.0\BioProSystem.genruntimeconfig.cache
+C:\Users\piete\Local Storage\Uni\370\API\BioProSystem\BioProSystem\obj\Debug\net8.0\ref\BioProSystem.dll
+C:\Users\piete\Local Storage\Uni\370\API\BioProSystem\BioProSystem\bin\Debug\net8.0\Azure.Core.dll
+C:\Users\piete\Local Storage\Uni\370\API\BioProSystem\BioProSystem\bin\Debug\net8.0\Azure.Identity.dll
+C:\Users\piete\Local Storage\Uni\370\API\BioProSystem\BioProSystem\bin\Debug\net8.0\Microsoft.Data.SqlClient.dll
+C:\Users\piete\Local Storage\Uni\370\API\BioProSystem\BioProSystem\bin\Debug\net8.0\Microsoft.EntityFrameworkCore.SqlServer.dll
+C:\Users\piete\Local Storage\Uni\370\API\BioProSystem\BioProSystem\bin\Debug\net8.0\Microsoft.Identity.Client.dll
+C:\Users\piete\Local Storage\Uni\370\API\BioProSystem\BioProSystem\bin\Debug\net8.0\Microsoft.Identity.Client.Extensions.Msal.dll
+C:\Users\piete\Local Storage\Uni\370\API\BioProSystem\BioProSystem\bin\Debug\net8.0\Microsoft.IdentityModel.Abstractions.dll
+C:\Users\piete\Local Storage\Uni\370\API\BioProSystem\BioProSystem\bin\Debug\net8.0\Microsoft.IdentityModel.JsonWebTokens.dll
+C:\Users\piete\Local Storage\Uni\370\API\BioProSystem\BioProSystem\bin\Debug\net8.0\Microsoft.IdentityModel.Logging.dll
+C:\Users\piete\Local Storage\Uni\370\API\BioProSystem\BioProSystem\bin\Debug\net8.0\Microsoft.IdentityModel.Protocols.dll
+C:\Users\piete\Local Storage\Uni\370\API\BioProSystem\BioProSystem\bin\Debug\net8.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+C:\Users\piete\Local Storage\Uni\370\API\BioProSystem\BioProSystem\bin\Debug\net8.0\Microsoft.IdentityModel.Tokens.dll
+C:\Users\piete\Local Storage\Uni\370\API\BioProSystem\BioProSystem\bin\Debug\net8.0\Microsoft.SqlServer.Server.dll
+C:\Users\piete\Local Storage\Uni\370\API\BioProSystem\BioProSystem\bin\Debug\net8.0\Microsoft.Win32.SystemEvents.dll
+C:\Users\piete\Local Storage\Uni\370\API\BioProSystem\BioProSystem\bin\Debug\net8.0\System.Configuration.ConfigurationManager.dll
+C:\Users\piete\Local Storage\Uni\370\API\BioProSystem\BioProSystem\bin\Debug\net8.0\System.Drawing.Common.dll
+C:\Users\piete\Local Storage\Uni\370\API\BioProSystem\BioProSystem\bin\Debug\net8.0\System.IdentityModel.Tokens.Jwt.dll
+C:\Users\piete\Local Storage\Uni\370\API\BioProSystem\BioProSystem\bin\Debug\net8.0\System.Memory.Data.dll
+C:\Users\piete\Local Storage\Uni\370\API\BioProSystem\BioProSystem\bin\Debug\net8.0\System.Runtime.Caching.dll
+C:\Users\piete\Local Storage\Uni\370\API\BioProSystem\BioProSystem\bin\Debug\net8.0\System.Security.Cryptography.ProtectedData.dll
+C:\Users\piete\Local Storage\Uni\370\API\BioProSystem\BioProSystem\bin\Debug\net8.0\System.Security.Permissions.dll
+C:\Users\piete\Local Storage\Uni\370\API\BioProSystem\BioProSystem\bin\Debug\net8.0\System.Windows.Extensions.dll
+C:\Users\piete\Local Storage\Uni\370\API\BioProSystem\BioProSystem\bin\Debug\net8.0\runtimes\unix\lib\net6.0\Microsoft.Data.SqlClient.dll
+C:\Users\piete\Local Storage\Uni\370\API\BioProSystem\BioProSystem\bin\Debug\net8.0\runtimes\win\lib\net6.0\Microsoft.Data.SqlClient.dll
+C:\Users\piete\Local Storage\Uni\370\API\BioProSystem\BioProSystem\bin\Debug\net8.0\runtimes\win-arm\native\Microsoft.Data.SqlClient.SNI.dll
+C:\Users\piete\Local Storage\Uni\370\API\BioProSystem\BioProSystem\bin\Debug\net8.0\runtimes\win-arm64\native\Microsoft.Data.SqlClient.SNI.dll
+C:\Users\piete\Local Storage\Uni\370\API\BioProSystem\BioProSystem\bin\Debug\net8.0\runtimes\win-x64\native\Microsoft.Data.SqlClient.SNI.dll
+C:\Users\piete\Local Storage\Uni\370\API\BioProSystem\BioProSystem\bin\Debug\net8.0\runtimes\win-x86\native\Microsoft.Data.SqlClient.SNI.dll
+C:\Users\piete\Local Storage\Uni\370\API\BioProSystem\BioProSystem\bin\Debug\net8.0\runtimes\win\lib\net6.0\Microsoft.Win32.SystemEvents.dll
+C:\Users\piete\Local Storage\Uni\370\API\BioProSystem\BioProSystem\bin\Debug\net8.0\runtimes\unix\lib\net6.0\System.Drawing.Common.dll
+C:\Users\piete\Local Storage\Uni\370\API\BioProSystem\BioProSystem\bin\Debug\net8.0\runtimes\win\lib\net6.0\System.Drawing.Common.dll
+C:\Users\piete\Local Storage\Uni\370\API\BioProSystem\BioProSystem\bin\Debug\net8.0\runtimes\win\lib\net6.0\System.Runtime.Caching.dll
+C:\Users\piete\Local Storage\Uni\370\API\BioProSystem\BioProSystem\bin\Debug\net8.0\runtimes\win\lib\net6.0\System.Security.Cryptography.ProtectedData.dll
+C:\Users\piete\Local Storage\Uni\370\API\BioProSystem\BioProSystem\bin\Debug\net8.0\runtimes\win\lib\net6.0\System.Windows.Extensions.dll
+C:\Users\piete\Local Storage\Uni\370\Bio Pro\BioProAPI\BioProSystem\BioProSystem\bin\Debug\net8.0\appsettings.Development.json
+C:\Users\piete\Local Storage\Uni\370\Bio Pro\BioProAPI\BioProSystem\BioProSystem\bin\Debug\net8.0\appsettings.json
+C:\Users\piete\Local Storage\Uni\370\Bio Pro\BioProAPI\BioProSystem\BioProSystem\bin\Debug\net8.0\BioProSystem.exe
+C:\Users\piete\Local Storage\Uni\370\Bio Pro\BioProAPI\BioProSystem\BioProSystem\bin\Debug\net8.0\BioProSystem.deps.json
+C:\Users\piete\Local Storage\Uni\370\Bio Pro\BioProAPI\BioProSystem\BioProSystem\bin\Debug\net8.0\BioProSystem.runtimeconfig.json
+C:\Users\piete\Local Storage\Uni\370\Bio Pro\BioProAPI\BioProSystem\BioProSystem\bin\Debug\net8.0\BioProSystem.dll
+C:\Users\piete\Local Storage\Uni\370\Bio Pro\BioProAPI\BioProSystem\BioProSystem\bin\Debug\net8.0\BioProSystem.pdb
+C:\Users\piete\Local Storage\Uni\370\Bio Pro\BioProAPI\BioProSystem\BioProSystem\bin\Debug\net8.0\Azure.Core.dll
+C:\Users\piete\Local Storage\Uni\370\Bio Pro\BioProAPI\BioProSystem\BioProSystem\bin\Debug\net8.0\Azure.Identity.dll
+C:\Users\piete\Local Storage\Uni\370\Bio Pro\BioProAPI\BioProSystem\BioProSystem\bin\Debug\net8.0\Humanizer.dll
+C:\Users\piete\Local Storage\Uni\370\Bio Pro\BioProAPI\BioProSystem\BioProSystem\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\Users\piete\Local Storage\Uni\370\Bio Pro\BioProAPI\BioProSystem\BioProSystem\bin\Debug\net8.0\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
+C:\Users\piete\Local Storage\Uni\370\Bio Pro\BioProAPI\BioProSystem\BioProSystem\bin\Debug\net8.0\Microsoft.Bcl.AsyncInterfaces.dll
+C:\Users\piete\Local Storage\Uni\370\Bio Pro\BioProAPI\BioProSystem\BioProSystem\bin\Debug\net8.0\Microsoft.Data.SqlClient.dll
+C:\Users\piete\Local Storage\Uni\370\Bio Pro\BioProAPI\BioProSystem\BioProSystem\bin\Debug\net8.0\Microsoft.EntityFrameworkCore.dll
+C:\Users\piete\Local Storage\Uni\370\Bio Pro\BioProAPI\BioProSystem\BioProSystem\bin\Debug\net8.0\Microsoft.EntityFrameworkCore.Abstractions.dll
+C:\Users\piete\Local Storage\Uni\370\Bio Pro\BioProAPI\BioProSystem\BioProSystem\bin\Debug\net8.0\Microsoft.EntityFrameworkCore.Design.dll
+C:\Users\piete\Local Storage\Uni\370\Bio Pro\BioProAPI\BioProSystem\BioProSystem\bin\Debug\net8.0\Microsoft.EntityFrameworkCore.Relational.dll
+C:\Users\piete\Local Storage\Uni\370\Bio Pro\BioProAPI\BioProSystem\BioProSystem\bin\Debug\net8.0\Microsoft.EntityFrameworkCore.SqlServer.dll
+C:\Users\piete\Local Storage\Uni\370\Bio Pro\BioProAPI\BioProSystem\BioProSystem\bin\Debug\net8.0\Microsoft.Extensions.DependencyModel.dll
+C:\Users\piete\Local Storage\Uni\370\Bio Pro\BioProAPI\BioProSystem\BioProSystem\bin\Debug\net8.0\Microsoft.Identity.Client.dll
+C:\Users\piete\Local Storage\Uni\370\Bio Pro\BioProAPI\BioProSystem\BioProSystem\bin\Debug\net8.0\Microsoft.Identity.Client.Extensions.Msal.dll
+C:\Users\piete\Local Storage\Uni\370\Bio Pro\BioProAPI\BioProSystem\BioProSystem\bin\Debug\net8.0\Microsoft.IdentityModel.Abstractions.dll
+C:\Users\piete\Local Storage\Uni\370\Bio Pro\BioProAPI\BioProSystem\BioProSystem\bin\Debug\net8.0\Microsoft.IdentityModel.JsonWebTokens.dll
+C:\Users\piete\Local Storage\Uni\370\Bio Pro\BioProAPI\BioProSystem\BioProSystem\bin\Debug\net8.0\Microsoft.IdentityModel.Logging.dll
+C:\Users\piete\Local Storage\Uni\370\Bio Pro\BioProAPI\BioProSystem\BioProSystem\bin\Debug\net8.0\Microsoft.IdentityModel.Protocols.dll
+C:\Users\piete\Local Storage\Uni\370\Bio Pro\BioProAPI\BioProSystem\BioProSystem\bin\Debug\net8.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+C:\Users\piete\Local Storage\Uni\370\Bio Pro\BioProAPI\BioProSystem\BioProSystem\bin\Debug\net8.0\Microsoft.IdentityModel.Tokens.dll
+C:\Users\piete\Local Storage\Uni\370\Bio Pro\BioProAPI\BioProSystem\BioProSystem\bin\Debug\net8.0\Microsoft.OpenApi.dll
+C:\Users\piete\Local Storage\Uni\370\Bio Pro\BioProAPI\BioProSystem\BioProSystem\bin\Debug\net8.0\Microsoft.SqlServer.Server.dll
+C:\Users\piete\Local Storage\Uni\370\Bio Pro\BioProAPI\BioProSystem\BioProSystem\bin\Debug\net8.0\Microsoft.Win32.SystemEvents.dll
+C:\Users\piete\Local Storage\Uni\370\Bio Pro\BioProAPI\BioProSystem\BioProSystem\bin\Debug\net8.0\Mono.TextTemplating.dll
+C:\Users\piete\Local Storage\Uni\370\Bio Pro\BioProAPI\BioProSystem\BioProSystem\bin\Debug\net8.0\Swashbuckle.AspNetCore.Swagger.dll
+C:\Users\piete\Local Storage\Uni\370\Bio Pro\BioProAPI\BioProSystem\BioProSystem\bin\Debug\net8.0\Swashbuckle.AspNetCore.SwaggerGen.dll
+C:\Users\piete\Local Storage\Uni\370\Bio Pro\BioProAPI\BioProSystem\BioProSystem\bin\Debug\net8.0\Swashbuckle.AspNetCore.SwaggerUI.dll
+C:\Users\piete\Local Storage\Uni\370\Bio Pro\BioProAPI\BioProSystem\BioProSystem\bin\Debug\net8.0\System.CodeDom.dll
+C:\Users\piete\Local Storage\Uni\370\Bio Pro\BioProAPI\BioProSystem\BioProSystem\bin\Debug\net8.0\System.Configuration.ConfigurationManager.dll
+C:\Users\piete\Local Storage\Uni\370\Bio Pro\BioProAPI\BioProSystem\BioProSystem\bin\Debug\net8.0\System.Drawing.Common.dll
+C:\Users\piete\Local Storage\Uni\370\Bio Pro\BioProAPI\BioProSystem\BioProSystem\bin\Debug\net8.0\System.IdentityModel.Tokens.Jwt.dll
+C:\Users\piete\Local Storage\Uni\370\Bio Pro\BioProAPI\BioProSystem\BioProSystem\bin\Debug\net8.0\System.Memory.Data.dll
+C:\Users\piete\Local Storage\Uni\370\Bio Pro\BioProAPI\BioProSystem\BioProSystem\bin\Debug\net8.0\System.Runtime.Caching.dll
+C:\Users\piete\Local Storage\Uni\370\Bio Pro\BioProAPI\BioProSystem\BioProSystem\bin\Debug\net8.0\System.Security.Cryptography.ProtectedData.dll
+C:\Users\piete\Local Storage\Uni\370\Bio Pro\BioProAPI\BioProSystem\BioProSystem\bin\Debug\net8.0\System.Security.Permissions.dll
+C:\Users\piete\Local Storage\Uni\370\Bio Pro\BioProAPI\BioProSystem\BioProSystem\bin\Debug\net8.0\System.Windows.Extensions.dll
+C:\Users\piete\Local Storage\Uni\370\Bio Pro\BioProAPI\BioProSystem\BioProSystem\bin\Debug\net8.0\runtimes\unix\lib\net6.0\Microsoft.Data.SqlClient.dll
+C:\Users\piete\Local Storage\Uni\370\Bio Pro\BioProAPI\BioProSystem\BioProSystem\bin\Debug\net8.0\runtimes\win\lib\net6.0\Microsoft.Data.SqlClient.dll
+C:\Users\piete\Local Storage\Uni\370\Bio Pro\BioProAPI\BioProSystem\BioProSystem\bin\Debug\net8.0\runtimes\win-arm\native\Microsoft.Data.SqlClient.SNI.dll
+C:\Users\piete\Local Storage\Uni\370\Bio Pro\BioProAPI\BioProSystem\BioProSystem\bin\Debug\net8.0\runtimes\win-arm64\native\Microsoft.Data.SqlClient.SNI.dll
+C:\Users\piete\Local Storage\Uni\370\Bio Pro\BioProAPI\BioProSystem\BioProSystem\bin\Debug\net8.0\runtimes\win-x64\native\Microsoft.Data.SqlClient.SNI.dll
+C:\Users\piete\Local Storage\Uni\370\Bio Pro\BioProAPI\BioProSystem\BioProSystem\bin\Debug\net8.0\runtimes\win-x86\native\Microsoft.Data.SqlClient.SNI.dll
+C:\Users\piete\Local Storage\Uni\370\Bio Pro\BioProAPI\BioProSystem\BioProSystem\bin\Debug\net8.0\runtimes\win\lib\net6.0\Microsoft.Win32.SystemEvents.dll
+C:\Users\piete\Local Storage\Uni\370\Bio Pro\BioProAPI\BioProSystem\BioProSystem\bin\Debug\net8.0\runtimes\unix\lib\net6.0\System.Drawing.Common.dll
+C:\Users\piete\Local Storage\Uni\370\Bio Pro\BioProAPI\BioProSystem\BioProSystem\bin\Debug\net8.0\runtimes\win\lib\net6.0\System.Drawing.Common.dll
+C:\Users\piete\Local Storage\Uni\370\Bio Pro\BioProAPI\BioProSystem\BioProSystem\bin\Debug\net8.0\runtimes\win\lib\net6.0\System.Runtime.Caching.dll
+C:\Users\piete\Local Storage\Uni\370\Bio Pro\BioProAPI\BioProSystem\BioProSystem\bin\Debug\net8.0\runtimes\win\lib\net6.0\System.Security.Cryptography.ProtectedData.dll
+C:\Users\piete\Local Storage\Uni\370\Bio Pro\BioProAPI\BioProSystem\BioProSystem\bin\Debug\net8.0\runtimes\win\lib\net6.0\System.Windows.Extensions.dll
+C:\Users\piete\Local Storage\Uni\370\Bio Pro\BioProAPI\BioProSystem\BioProSystem\obj\Debug\net8.0\BioProSystem.csproj.AssemblyReference.cache
+C:\Users\piete\Local Storage\Uni\370\Bio Pro\BioProAPI\BioProSystem\BioProSystem\obj\Debug\net8.0\BioProSystem.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\piete\Local Storage\Uni\370\Bio Pro\BioProAPI\BioProSystem\BioProSystem\obj\Debug\net8.0\BioProSystem.AssemblyInfoInputs.cache
+C:\Users\piete\Local Storage\Uni\370\Bio Pro\BioProAPI\BioProSystem\BioProSystem\obj\Debug\net8.0\BioProSystem.AssemblyInfo.cs
+C:\Users\piete\Local Storage\Uni\370\Bio Pro\BioProAPI\BioProSystem\BioProSystem\obj\Debug\net8.0\BioProSystem.csproj.CoreCompileInputs.cache
+C:\Users\piete\Local Storage\Uni\370\Bio Pro\BioProAPI\BioProSystem\BioProSystem\obj\Debug\net8.0\BioProSystem.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\piete\Local Storage\Uni\370\Bio Pro\BioProAPI\BioProSystem\BioProSystem\obj\Debug\net8.0\BioProSystem.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\piete\Local Storage\Uni\370\Bio Pro\BioProAPI\BioProSystem\BioProSystem\obj\Debug\net8.0\BioProSystem.sourcelink.json
+C:\Users\piete\Local Storage\Uni\370\Bio Pro\BioProAPI\BioProSystem\BioProSystem\obj\Debug\net8.0\staticwebassets.build.json
+C:\Users\piete\Local Storage\Uni\370\Bio Pro\BioProAPI\BioProSystem\BioProSystem\obj\Debug\net8.0\staticwebassets.development.json
+C:\Users\piete\Local Storage\Uni\370\Bio Pro\BioProAPI\BioProSystem\BioProSystem\obj\Debug\net8.0\staticwebassets\msbuild.BioProSystem.Microsoft.AspNetCore.StaticWebAssets.props
+C:\Users\piete\Local Storage\Uni\370\Bio Pro\BioProAPI\BioProSystem\BioProSystem\obj\Debug\net8.0\staticwebassets\msbuild.build.BioProSystem.props
+C:\Users\piete\Local Storage\Uni\370\Bio Pro\BioProAPI\BioProSystem\BioProSystem\obj\Debug\net8.0\staticwebassets\msbuild.buildMultiTargeting.BioProSystem.props
+C:\Users\piete\Local Storage\Uni\370\Bio Pro\BioProAPI\BioProSystem\BioProSystem\obj\Debug\net8.0\staticwebassets\msbuild.buildTransitive.BioProSystem.props
+C:\Users\piete\Local Storage\Uni\370\Bio Pro\BioProAPI\BioProSystem\BioProSystem\obj\Debug\net8.0\staticwebassets.pack.json
+C:\Users\piete\Local Storage\Uni\370\Bio Pro\BioProAPI\BioProSystem\BioProSystem\obj\Debug\net8.0\scopedcss\bundle\BioProSystem.styles.css
+C:\Users\piete\Local Storage\Uni\370\Bio Pro\BioProAPI\BioProSystem\BioProSystem\obj\Debug\net8.0\BioProSy.CDCA44FF.Up2Date
+C:\Users\piete\Local Storage\Uni\370\Bio Pro\BioProAPI\BioProSystem\BioProSystem\obj\Debug\net8.0\BioProSystem.dll
+C:\Users\piete\Local Storage\Uni\370\Bio Pro\BioProAPI\BioProSystem\BioProSystem\obj\Debug\net8.0\refint\BioProSystem.dll
+C:\Users\piete\Local Storage\Uni\370\Bio Pro\BioProAPI\BioProSystem\BioProSystem\obj\Debug\net8.0\BioProSystem.pdb
+C:\Users\piete\Local Storage\Uni\370\Bio Pro\BioProAPI\BioProSystem\BioProSystem\obj\Debug\net8.0\BioProSystem.genruntimeconfig.cache
+C:\Users\piete\Local Storage\Uni\370\Bio Pro\BioProAPI\BioProSystem\BioProSystem\obj\Debug\net8.0\ref\BioProSystem.dll
