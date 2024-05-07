@@ -16,7 +16,7 @@ public partial class Dentist
     public string ContactDetail { get; set; } = null!;
 
     public string? Address { get; set; }
-
+    
     public virtual ICollection<Patient>?  Patients { get; set; } = new List<Patient>();
 
     public virtual ICollection<SystemOrder>? SystemOrders { get; set; } = new List<SystemOrder>();
