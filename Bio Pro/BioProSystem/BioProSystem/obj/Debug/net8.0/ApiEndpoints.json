@@ -8,8 +8,8 @@
     "Order": 0,
     "Parameters": [
       {
-        "Name": "dentist",
-        "Type": "BioProSystem.Models.Dentist",
+        "Name": "model",
+        "Type": "BioProSystem.ViewModels.DentistViewModel",
         "IsRequired": true
       }
     ],
@@ -45,8 +45,8 @@
         "IsRequired": true
       },
       {
-        "Name": "dentist",
-        "Type": "BioProSystem.Models.Dentist",
+        "Name": "model",
+        "Type": "BioProSystem.ViewModels.DentistViewModel",
         "IsRequired": true
       }
     ],
