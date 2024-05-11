@@ -8,6 +8,7 @@ public partial class PasswordManagement
 {
     [Key]
     public int ManagementId { get; set; }
+    [Required]
 
     public DateTime ChangeTimeStamp { get; set; }
 

@@ -10,8 +10,10 @@ public partial class StakeWriteOff
     public int StakeWriteOffId { get; set; }
 
     public int StockId { get; set; }
+    [Required]
 
     public int QuantityWrittenOff { get; set; }
+    [Required]
 
     public DateTime WriteOffDate { get; set; }
 

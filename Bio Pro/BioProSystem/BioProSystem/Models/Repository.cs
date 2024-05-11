@@ -3,13 +3,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BioProSystem.Models
 {
-    public class Repository :IRepository
+    public class Repository : IRepository
     {
         private readonly DentalProSystemTestDBContext _appDbContext;
 
         public Repository(DentalProSystemTestDBContext appDbContext)
         {
-                _appDbContext = appDbContext;
+            _appDbContext = appDbContext;
         }
 
         public void Add<T>(T entity) where T : class

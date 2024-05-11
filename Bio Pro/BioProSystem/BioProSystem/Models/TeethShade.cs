@@ -8,10 +8,10 @@ public partial class TeethShade
 {
     [Key]
     public int TeethShadeId { get; set; }
-
+    [Required]
     public string Colour { get; set; } = null!;
-
+    [Required]
     public string ColourCode { get; set; } = null!;
 
-    public virtual ICollection<OrderDetail> OrderDetails { get; set; } = new List<OrderDetail>();
+    public virtual ICollection<SystemOrder> SystemOrders { get; set; } = new List<SystemOrder>();
 }

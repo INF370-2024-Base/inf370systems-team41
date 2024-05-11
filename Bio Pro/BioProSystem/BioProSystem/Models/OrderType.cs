@@ -8,10 +8,8 @@ public partial class OrderType
 {
     [Key]
     public int OrderTypeId { get; set; }
-
-    public string OrderTypeState { get; set; } = null!;
-
+    [Required]
     public string Description { get; set; } = null!;
 
-    public virtual ICollection<OrderDetail> OrderDetails { get; set; } = new List<OrderDetail>();
+    public virtual ICollection<SystemOrder> systemOrders { get; set; } = new List<SystemOrder>();
 }

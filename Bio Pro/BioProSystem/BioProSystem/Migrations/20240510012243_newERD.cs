@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace BioProSystem.Migrations
 {
     /// <inheritdoc />
-    public partial class initial : Migration
+    public partial class newERD : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -39,31 +39,44 @@ namespace BioProSystem.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "CalanderScheduleEvents",
+                name: "AspNetUsers",
                 columns: table => new
                 {
-                    CalanderScheduleEventId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    CalanderScheduleEventDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Surname = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    NormalizedEmail = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    EmailConfirmed = table.Column<bool>(type: "bit", nullable: false),
+                    PasswordHash = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    SecurityStamp = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ConcurrencyStamp = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PhoneNumberConfirmed = table.Column<bool>(type: "bit", nullable: false),
+                    TwoFactorEnabled = table.Column<bool>(type: "bit", nullable: false),
+                    LockoutEnd = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    LockoutEnabled = table.Column<bool>(type: "bit", nullable: false),
+                    AccessFailedCount = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_CalanderScheduleEvents", x => x.CalanderScheduleEventId);
+                    table.PrimaryKey("PK_AspNetUsers", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "DecisionLogs",
+                name: "Calanders",
                 columns: table => new
                 {
-                    DecisionLogId = table.Column<int>(type: "int", nullable: false)
+                    CalanderId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    DecisionLogState = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Justification = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    TimelineId = table.Column<int>(type: "int", nullable: true),
+                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_DecisionLogs", x => x.DecisionLogId);
+                    table.PrimaryKey("PK_Calanders", x => x.CalanderId);
                 });
 
             migrationBuilder.CreateTable(
@@ -79,7 +92,6 @@ namespace BioProSystem.Migrations
                     table.PrimaryKey("PK_DeliveryStatuses", x => x.DeliveryStatusId);
                 });
 
-
             migrationBuilder.CreateTable(
                 name: "Dentists",
                 columns: table => new
@@ -88,7 +100,7 @@ namespace BioProSystem.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ContactDetail = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ContactDetail = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Address = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
@@ -97,33 +109,30 @@ namespace BioProSystem.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "EmployeeDailyHours",
+                columns: table => new
+                {
+                    EmployeeDailyHoursId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    WorkDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Hours = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_EmployeeDailyHours", x => x.EmployeeDailyHoursId);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "JobTitles",
                 columns: table => new
                 {
                     JobTitleId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    TitleName = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    TitleName = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_JobTitles", x => x.JobTitleId);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "MediaFiles",
-                columns: table => new
-                {
-                    MediaFileId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    FileName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    FileSelf = table.Column<byte[]>(type: "varbinary(max)", nullable: false),
-                    FileSizeKb = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    ExportDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    ExportStatus = table.Column<string>(type: "nvarchar(max)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_MediaFiles", x => x.MediaFileId);
                 });
 
             migrationBuilder.CreateTable(
@@ -133,8 +142,6 @@ namespace BioProSystem.Migrations
                     MedicalAidId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     MedicalAidNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Packet = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    PercentageAllowedToClaim = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     MedicalAidName = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
@@ -148,8 +155,8 @@ namespace BioProSystem.Migrations
                 {
                     OpenOrderId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    OpenOrderTimeStamp = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    EstimatedDurationInDays = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -162,7 +169,7 @@ namespace BioProSystem.Migrations
                 {
                     OrderDirectionStateId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    StateDescription = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    StateDescription = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -175,7 +182,6 @@ namespace BioProSystem.Migrations
                 {
                     OrderStatusId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    OrderStatusState = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
@@ -189,7 +195,6 @@ namespace BioProSystem.Migrations
                 {
                     OrderTypeId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    OrderTypeState = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
@@ -203,27 +208,15 @@ namespace BioProSystem.Migrations
                 {
                     PaymentId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    RefundPaymentId = table.Column<int>(type: "int", nullable: false),
                     PaymentMethod = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     PaymentDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    ProofOfPayment = table.Column<byte[]>(type: "varbinary(max)", nullable: false)
+                    ProofOfPayment = table.Column<byte[]>(type: "varbinary(max)", nullable: false),
+                    IslatePayment = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Payments", x => x.PaymentId);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "ProceduralTimelines",
-                columns: table => new
-                {
-                    ProceduralTimelineId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    TimelineDetail = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    TimeStamp = table.Column<DateTime>(type: "datetime2", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ProceduralTimelines", x => x.ProceduralTimelineId);
                 });
 
             migrationBuilder.CreateTable(
@@ -269,19 +262,6 @@ namespace BioProSystem.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "WorkflowStatuses",
-                columns: table => new
-                {
-                    WorkflowStatusId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    WorkflowStatusStatus = table.Column<string>(type: "nvarchar(max)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_WorkflowStatuses", x => x.WorkflowStatusId);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "PasswordManagements",
                 columns: table => new
                 {
@@ -319,341 +299,6 @@ namespace BioProSystem.Migrations
                         column: x => x.RoleId,
                         principalTable: "AspNetRoles",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Patients",
-                columns: table => new
-                {
-                    PatientId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    FirsName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Lastname = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    DentistId = table.Column<int>(type: "int", nullable: false),
-                    MedicalAidId = table.Column<int>(type: "int", nullable: false),
-                    CellphoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Patients", x => x.PatientId);
-                    table.ForeignKey(
-                        name: "FK_Patients_Dentists_DentistId",
-                        column: x => x.DentistId,
-                        principalTable: "Dentists",
-                        principalColumn: "DentistId",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Patients_MedicalAids_MedicalAidId",
-                        column: x => x.MedicalAidId,
-                        principalTable: "MedicalAids",
-                        principalColumn: "MedicalAidId",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "OrderDirections",
-                columns: table => new
-                {
-                    OrderDirectionId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Instruction = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    DueDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    OrderDirectionStateId = table.Column<int>(type: "int", nullable: false),
-                    OrderDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    MouthArea = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    SpecialRequirements = table.Column<string>(type: "nvarchar(max)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_OrderDirections", x => x.OrderDirectionId);
-                    table.ForeignKey(
-                        name: "FK_OrderDirections_OrderDirectionStates_OrderDirectionStateId",
-                        column: x => x.OrderDirectionStateId,
-                        principalTable: "OrderDirectionStates",
-                        principalColumn: "OrderDirectionStateId",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "LatePayments",
-                columns: table => new
-                {
-                    LatePaymentId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    PaymentId = table.Column<int>(type: "int", nullable: false),
-                    LatePaymentDate = table.Column<DateTime>(type: "datetime2", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_LatePayments", x => x.LatePaymentId);
-                    table.ForeignKey(
-                        name: "FK_LatePayments_Payments_PaymentId",
-                        column: x => x.PaymentId,
-                        principalTable: "Payments",
-                        principalColumn: "PaymentId",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "RefundPayments",
-                columns: table => new
-                {
-                    RefundPaymentId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    PaymentId = table.Column<int>(type: "int", nullable: false),
-                    ProofOfrefund = table.Column<byte[]>(type: "varbinary(max)", nullable: false),
-                    RefundPaymentDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    ReasonForRefund = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    RefundPaymentAmount = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_RefundPayments", x => x.RefundPaymentId);
-                    table.ForeignKey(
-                        name: "FK_RefundPayments_Payments_PaymentId",
-                        column: x => x.PaymentId,
-                        principalTable: "Payments",
-                        principalColumn: "PaymentId",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Calanders",
-                columns: table => new
-                {
-                    CalanderId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    TimelineId = table.Column<int>(type: "int", nullable: true),
-                    EventId = table.Column<int>(type: "int", nullable: true),
-                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Calanders", x => x.CalanderId);
-                    table.ForeignKey(
-                        name: "FK_Calanders_CalanderScheduleEvents_EventId",
-                        column: x => x.EventId,
-                        principalTable: "CalanderScheduleEvents",
-                        principalColumn: "CalanderScheduleEventId");
-                    table.ForeignKey(
-                        name: "FK_Calanders_ProceduralTimelines_TimelineId",
-                        column: x => x.TimelineId,
-                        principalTable: "ProceduralTimelines",
-                        principalColumn: "ProceduralTimelineId");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Stocks",
-                columns: table => new
-                {
-                    StockId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    StockCategoryId = table.Column<int>(type: "int", nullable: false),
-                    SupplierId = table.Column<int>(type: "int", nullable: false),
-                    StockName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    QuantityAvailable = table.Column<int>(type: "int", nullable: false),
-                    MaximumStockLevel = table.Column<int>(type: "int", nullable: false),
-                    MinimumStockLevel = table.Column<int>(type: "int", nullable: false),
-                    ReorderPoint = table.Column<string>(type: "nvarchar(max)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Stocks", x => x.StockId);
-                    table.ForeignKey(
-                        name: "FK_Stocks_StockCategories_StockCategoryId",
-                        column: x => x.StockCategoryId,
-                        principalTable: "StockCategories",
-                        principalColumn: "StockCategoryId",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Stocks_Suppliers_SupplierId",
-                        column: x => x.SupplierId,
-                        principalTable: "Suppliers",
-                        principalColumn: "SupplierId",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "WorkflowStructures",
-                columns: table => new
-                {
-                    WorkflowStructureId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    PriorityLevel = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    WorkflowStructureProcedure = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    WorkflowStatusId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_WorkflowStructures", x => x.WorkflowStructureId);
-                    table.ForeignKey(
-                        name: "FK_WorkflowStructures_WorkflowStatuses_WorkflowStatusId",
-                        column: x => x.WorkflowStatusId,
-                        principalTable: "WorkflowStatuses",
-                        principalColumn: "WorkflowStatusId",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Passwords",
-                columns: table => new
-                {
-                    PasswordId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    PasswordHash = table.Column<byte[]>(type: "varbinary(max)", nullable: false),
-                    ManagementId = table.Column<int>(type: "int", nullable: true),
-                    SecretQuestion = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    SecretAnswer = table.Column<string>(type: "nvarchar(max)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Passwords", x => x.PasswordId);
-                    table.ForeignKey(
-                        name: "FK_Passwords_PasswordManagements_ManagementId",
-                        column: x => x.ManagementId,
-                        principalTable: "PasswordManagements",
-                        principalColumn: "ManagementId");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "OrderDetails",
-                columns: table => new
-                {
-                    OrderDetailId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    MediaFileId = table.Column<int>(type: "int", nullable: true),
-                    OrderStatusId = table.Column<int>(type: "int", nullable: true),
-                    DecisionLogId = table.Column<int>(type: "int", nullable: true),
-                    OpenOrderId = table.Column<int>(type: "int", nullable: true),
-                    OrderDirectionId = table.Column<int>(type: "int", nullable: true),
-                    TeethShadeId = table.Column<int>(type: "int", nullable: true),
-                    OrderTypeId = table.Column<int>(type: "int", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_OrderDetails", x => x.OrderDetailId);
-                    table.ForeignKey(
-                        name: "FK_OrderDetails_DecisionLogs_DecisionLogId",
-                        column: x => x.DecisionLogId,
-                        principalTable: "DecisionLogs",
-                        principalColumn: "DecisionLogId");
-                    table.ForeignKey(
-                        name: "FK_OrderDetails_MediaFiles_MediaFileId",
-                        column: x => x.MediaFileId,
-                        principalTable: "MediaFiles",
-                        principalColumn: "MediaFileId");
-                    table.ForeignKey(
-                        name: "FK_OrderDetails_OpenOrders_OpenOrderId",
-                        column: x => x.OpenOrderId,
-                        principalTable: "OpenOrders",
-                        principalColumn: "OpenOrderId");
-                    table.ForeignKey(
-                        name: "FK_OrderDetails_OrderDirections_OrderDirectionId",
-                        column: x => x.OrderDirectionId,
-                        principalTable: "OrderDirections",
-                        principalColumn: "OrderDirectionId");
-                    table.ForeignKey(
-                        name: "FK_OrderDetails_OrderStatuses_OrderStatusId",
-                        column: x => x.OrderStatusId,
-                        principalTable: "OrderStatuses",
-                        principalColumn: "OrderStatusId");
-                    table.ForeignKey(
-                        name: "FK_OrderDetails_OrderTypes_OrderTypeId",
-                        column: x => x.OrderTypeId,
-                        principalTable: "OrderTypes",
-                        principalColumn: "OrderTypeId");
-                    table.ForeignKey(
-                        name: "FK_OrderDetails_TeethShades_TeethShadeId",
-                        column: x => x.TeethShadeId,
-                        principalTable: "TeethShades",
-                        principalColumn: "TeethShadeId");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "StakeWriteOffs",
-                columns: table => new
-                {
-                    StakeWriteOffId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    StockId = table.Column<int>(type: "int", nullable: false),
-                    QuantityWrittenOff = table.Column<int>(type: "int", nullable: false),
-                    WriteOffDate = table.Column<DateTime>(type: "datetime2", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_StakeWriteOffs", x => x.StakeWriteOffId);
-                    table.ForeignKey(
-                        name: "FK_StakeWriteOffs_Stocks_StockId",
-                        column: x => x.StockId,
-                        principalTable: "Stocks",
-                        principalColumn: "StockId",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "AspNetUsers",
-                columns: table => new
-                {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    UserId = table.Column<int>(type: "int", nullable: false),
-                    UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
-                    LoginEmail = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    PasswordId = table.Column<int>(type: "int", nullable: false),
-                    NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
-                    Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
-                    NormalizedEmail = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
-                    EmailConfirmed = table.Column<bool>(type: "bit", nullable: false),
-                    PasswordHash = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    SecurityStamp = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ConcurrencyStamp = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    PhoneNumberConfirmed = table.Column<bool>(type: "bit", nullable: false),
-                    TwoFactorEnabled = table.Column<bool>(type: "bit", nullable: false),
-                    LockoutEnd = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
-                    LockoutEnabled = table.Column<bool>(type: "bit", nullable: false),
-                    AccessFailedCount = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AspNetUsers", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_AspNetUsers_Passwords_PasswordId",
-                        column: x => x.PasswordId,
-                        principalTable: "Passwords",
-                        principalColumn: "PasswordId",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "OrderWorkflowTimelines",
-                columns: table => new
-                {
-                    WorkflowStructureId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    TimelineId = table.Column<int>(type: "int", nullable: true),
-                    OrderDetailId = table.Column<int>(type: "int", nullable: true),
-                    WorkflowStructureId1 = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_OrderWorkflowTimelines", x => x.WorkflowStructureId);
-                    table.ForeignKey(
-                        name: "FK_OrderWorkflowTimelines_OrderDetails_OrderDetailId",
-                        column: x => x.OrderDetailId,
-                        principalTable: "OrderDetails",
-                        principalColumn: "OrderDetailId");
-                    table.ForeignKey(
-                        name: "FK_OrderWorkflowTimelines_ProceduralTimelines_TimelineId",
-                        column: x => x.TimelineId,
-                        principalTable: "ProceduralTimelines",
-                        principalColumn: "ProceduralTimelineId");
-                    table.ForeignKey(
-                        name: "FK_OrderWorkflowTimelines_WorkflowStructures_WorkflowStructureId1",
-                        column: x => x.WorkflowStructureId1,
-                        principalTable: "WorkflowStructures",
-                        principalColumn: "WorkflowStructureId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -743,58 +388,6 @@ namespace BioProSystem.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Employees",
-                columns: table => new
-                {
-                    EmployeeId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    UserId = table.Column<int>(type: "int", nullable: false),
-                    JobTitleId = table.Column<int>(type: "int", nullable: true),
-                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CellphoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Address = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    UserId1 = table.Column<string>(type: "nvarchar(450)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Employees", x => x.EmployeeId);
-                    table.ForeignKey(
-                        name: "FK_Employees_AspNetUsers_UserId1",
-                        column: x => x.UserId1,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Employees_JobTitles_JobTitleId",
-                        column: x => x.JobTitleId,
-                        principalTable: "JobTitles",
-                        principalColumn: "JobTitleId");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Logins",
-                columns: table => new
-                {
-                    LoginId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    UserId = table.Column<int>(type: "int", nullable: true),
-                    LoginTimeStamp = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    LoginAttempt = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    UserId1 = table.Column<string>(type: "nvarchar(450)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Logins", x => x.LoginId);
-                    table.ForeignKey(
-                        name: "FK_Logins_AspNetUsers_UserId1",
-                        column: x => x.UserId1,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id");
-                });
-
-            migrationBuilder.CreateTable(
                 name: "UserActions",
                 columns: table => new
                 {
@@ -816,16 +409,293 @@ namespace BioProSystem.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "CalanderScheduleEvents",
+                columns: table => new
+                {
+                    CalanderScheduleEventId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    CalanderScheduleEventDateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CalanderId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CalanderScheduleEvents", x => x.CalanderScheduleEventId);
+                    table.ForeignKey(
+                        name: "FK_CalanderScheduleEvents_Calanders_CalanderId",
+                        column: x => x.CalanderId,
+                        principalTable: "Calanders",
+                        principalColumn: "CalanderId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ProceduralTimelines",
+                columns: table => new
+                {
+                    ProceduralTimelineId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    CalanderId = table.Column<int>(type: "int", nullable: false),
+                    TimelineDetail = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    TimeStamp = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ProceduralTimelines", x => x.ProceduralTimelineId);
+                    table.ForeignKey(
+                        name: "FK_ProceduralTimelines_Calanders_CalanderId",
+                        column: x => x.CalanderId,
+                        principalTable: "Calanders",
+                        principalColumn: "CalanderId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Employees",
+                columns: table => new
+                {
+                    EmployeeId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    SystemUserId = table.Column<int>(type: "int", nullable: false),
+                    JobTitleId = table.Column<int>(type: "int", nullable: true),
+                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CellphoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Address = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    SystemUserId1 = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Employees", x => x.EmployeeId);
+                    table.ForeignKey(
+                        name: "FK_Employees_AspNetUsers_SystemUserId1",
+                        column: x => x.SystemUserId1,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Employees_JobTitles_JobTitleId",
+                        column: x => x.JobTitleId,
+                        principalTable: "JobTitles",
+                        principalColumn: "JobTitleId");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Patients",
+                columns: table => new
+                {
+                    PatientId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    FirsName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Lastname = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    DentistId = table.Column<int>(type: "int", nullable: false),
+                    MedicalAidId = table.Column<int>(type: "int", nullable: false),
+                    CellphoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Patients", x => x.PatientId);
+                    table.ForeignKey(
+                        name: "FK_Patients_Dentists_DentistId",
+                        column: x => x.DentistId,
+                        principalTable: "Dentists",
+                        principalColumn: "DentistId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Patients_MedicalAids_MedicalAidId",
+                        column: x => x.MedicalAidId,
+                        principalTable: "MedicalAids",
+                        principalColumn: "MedicalAidId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "OrderDirections",
+                columns: table => new
+                {
+                    OrderDirectionId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Instructions = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    OrderDirectionStateId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_OrderDirections", x => x.OrderDirectionId);
+                    table.ForeignKey(
+                        name: "FK_OrderDirections_OrderDirectionStates_OrderDirectionStateId",
+                        column: x => x.OrderDirectionStateId,
+                        principalTable: "OrderDirectionStates",
+                        principalColumn: "OrderDirectionStateId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "RefundPayments",
+                columns: table => new
+                {
+                    RefundPaymentId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    PaymentId = table.Column<int>(type: "int", nullable: false),
+                    ProofOfrefund = table.Column<byte[]>(type: "varbinary(max)", nullable: false),
+                    RefundPaymentDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ReasonForRefund = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    RefundPaymentAmount = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_RefundPayments", x => x.RefundPaymentId);
+                    table.ForeignKey(
+                        name: "FK_RefundPayments_Payments_PaymentId",
+                        column: x => x.PaymentId,
+                        principalTable: "Payments",
+                        principalColumn: "PaymentId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Stocks",
+                columns: table => new
+                {
+                    StockId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    StockCategoryId = table.Column<int>(type: "int", nullable: false),
+                    SupplierId = table.Column<int>(type: "int", nullable: false),
+                    StockName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    QuantityAvailable = table.Column<int>(type: "int", nullable: false),
+                    MaximumStockLevel = table.Column<int>(type: "int", nullable: false),
+                    MinimumStockLevel = table.Column<int>(type: "int", nullable: false),
+                    ReorderPoint = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Stocks", x => x.StockId);
+                    table.ForeignKey(
+                        name: "FK_Stocks_StockCategories_StockCategoryId",
+                        column: x => x.StockCategoryId,
+                        principalTable: "StockCategories",
+                        principalColumn: "StockCategoryId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Stocks_Suppliers_SupplierId",
+                        column: x => x.SupplierId,
+                        principalTable: "Suppliers",
+                        principalColumn: "SupplierId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "PasswordManagementSystemUser",
+                columns: table => new
+                {
+                    ManagementId = table.Column<int>(type: "int", nullable: false),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PasswordManagementSystemUser", x => new { x.ManagementId, x.UserId });
+                    table.ForeignKey(
+                        name: "FK_PasswordManagementSystemUser_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_PasswordManagementSystemUser_PasswordManagements_ManagementId",
+                        column: x => x.ManagementId,
+                        principalTable: "PasswordManagements",
+                        principalColumn: "ManagementId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "EmployeeEmployeeDailyHours",
+                columns: table => new
+                {
+                    EmployeeDailyHoursId = table.Column<int>(type: "int", nullable: false),
+                    EmployeesEmployeeId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_EmployeeEmployeeDailyHours", x => new { x.EmployeeDailyHoursId, x.EmployeesEmployeeId });
+                    table.ForeignKey(
+                        name: "FK_EmployeeEmployeeDailyHours_EmployeeDailyHours_EmployeeDailyHoursId",
+                        column: x => x.EmployeeDailyHoursId,
+                        principalTable: "EmployeeDailyHours",
+                        principalColumn: "EmployeeDailyHoursId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_EmployeeEmployeeDailyHours_Employees_EmployeesEmployeeId",
+                        column: x => x.EmployeesEmployeeId,
+                        principalTable: "Employees",
+                        principalColumn: "EmployeeId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "OrderWorkflowTimelines",
+                columns: table => new
+                {
+                    WorkflowStructureId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    TimelineId = table.Column<int>(type: "int", nullable: true),
+                    SystemOrderId = table.Column<int>(type: "int", nullable: false),
+                    OrderDirectionId = table.Column<int>(type: "int", nullable: false),
+                    TimelineDetails = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_OrderWorkflowTimelines", x => x.WorkflowStructureId);
+                    table.ForeignKey(
+                        name: "FK_OrderWorkflowTimelines_OrderDirections_OrderDirectionId",
+                        column: x => x.OrderDirectionId,
+                        principalTable: "OrderDirections",
+                        principalColumn: "OrderDirectionId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_OrderWorkflowTimelines_ProceduralTimelines_TimelineId",
+                        column: x => x.TimelineId,
+                        principalTable: "ProceduralTimelines",
+                        principalColumn: "ProceduralTimelineId");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "StakeWriteOffs",
+                columns: table => new
+                {
+                    StakeWriteOffId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    StockId = table.Column<int>(type: "int", nullable: false),
+                    QuantityWrittenOff = table.Column<int>(type: "int", nullable: false),
+                    WriteOffDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_StakeWriteOffs", x => x.StakeWriteOffId);
+                    table.ForeignKey(
+                        name: "FK_StakeWriteOffs_Stocks_StockId",
+                        column: x => x.StockId,
+                        principalTable: "Stocks",
+                        principalColumn: "StockId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "SystemOrders",
                 columns: table => new
                 {
                     OrderId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    OrderDetailId = table.Column<int>(type: "int", nullable: false),
                     DentistId = table.Column<int>(type: "int", nullable: false),
-                    EmployeeId = table.Column<int>(type: "int", nullable: false),
+                    OpenOrderId = table.Column<int>(type: "int", nullable: false),
+                    OrderStatusId = table.Column<int>(type: "int", nullable: false),
+                    OrderWorkflowTimelineId = table.Column<int>(type: "int", nullable: true),
+                    OrderTypeId = table.Column<int>(type: "int", nullable: false),
                     DueDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     OrderDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    SpecialRequirements = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PriorityLevel = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    MouthArea = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     TotalAmountDue = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
                 },
                 constraints: table =>
@@ -838,16 +708,48 @@ namespace BioProSystem.Migrations
                         principalColumn: "DentistId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_SystemOrders_Employees_EmployeeId",
-                        column: x => x.EmployeeId,
-                        principalTable: "Employees",
-                        principalColumn: "EmployeeId",
+                        name: "FK_SystemOrders_OpenOrders_OpenOrderId",
+                        column: x => x.OpenOrderId,
+                        principalTable: "OpenOrders",
+                        principalColumn: "OpenOrderId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_SystemOrders_OrderDetails_OrderDetailId",
-                        column: x => x.OrderDetailId,
-                        principalTable: "OrderDetails",
-                        principalColumn: "OrderDetailId",
+                        name: "FK_SystemOrders_OrderStatuses_OrderStatusId",
+                        column: x => x.OrderStatusId,
+                        principalTable: "OrderStatuses",
+                        principalColumn: "OrderStatusId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_SystemOrders_OrderTypes_OrderTypeId",
+                        column: x => x.OrderTypeId,
+                        principalTable: "OrderTypes",
+                        principalColumn: "OrderTypeId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_SystemOrders_OrderWorkflowTimelines_OrderWorkflowTimelineId",
+                        column: x => x.OrderWorkflowTimelineId,
+                        principalTable: "OrderWorkflowTimelines",
+                        principalColumn: "WorkflowStructureId");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "DecisionLogs",
+                columns: table => new
+                {
+                    DecisionLogId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    DecisionLogState = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Justification = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    SystemOrderId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_DecisionLogs", x => x.DecisionLogId);
+                    table.ForeignKey(
+                        name: "FK_DecisionLogs_SystemOrders_SystemOrderId",
+                        column: x => x.SystemOrderId,
+                        principalTable: "SystemOrders",
+                        principalColumn: "OrderId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -857,10 +759,10 @@ namespace BioProSystem.Migrations
                 {
                     DeliveryId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    OrderId = table.Column<int>(type: "int", nullable: false),
+                    SystemOrderId = table.Column<int>(type: "int", nullable: false),
                     EmployeeId = table.Column<int>(type: "int", nullable: false),
                     DeliveryDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    DeliveryStatusId = table.Column<int>(type: "int", nullable: true)
+                    DeliveryStatusId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -869,7 +771,8 @@ namespace BioProSystem.Migrations
                         name: "FK_Deliveries_DeliveryStatuses_DeliveryStatusId",
                         column: x => x.DeliveryStatusId,
                         principalTable: "DeliveryStatuses",
-                        principalColumn: "DeliveryStatusId");
+                        principalColumn: "DeliveryStatusId",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Deliveries_Employees_EmployeeId",
                         column: x => x.EmployeeId,
@@ -877,11 +780,11 @@ namespace BioProSystem.Migrations
                         principalColumn: "EmployeeId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Deliveries_SystemOrders_OrderId",
-                        column: x => x.OrderId,
+                        name: "FK_Deliveries_SystemOrders_SystemOrderId",
+                        column: x => x.SystemOrderId,
                         principalTable: "SystemOrders",
                         principalColumn: "OrderId",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -890,7 +793,7 @@ namespace BioProSystem.Migrations
                 {
                     DiscountId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    OrderId = table.Column<int>(type: "int", nullable: false),
+                    SystemOrderId = table.Column<int>(type: "int", nullable: false),
                     ReasonForDiscount = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     DiscountAmount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     DiscountDate = table.Column<DateTime>(type: "datetime2", nullable: false)
@@ -899,8 +802,56 @@ namespace BioProSystem.Migrations
                 {
                     table.PrimaryKey("PK_Discounts", x => x.DiscountId);
                     table.ForeignKey(
-                        name: "FK_Discounts_SystemOrders_OrderId",
-                        column: x => x.OrderId,
+                        name: "FK_Discounts_SystemOrders_SystemOrderId",
+                        column: x => x.SystemOrderId,
+                        principalTable: "SystemOrders",
+                        principalColumn: "OrderId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "EmployeeSystemOrder",
+                columns: table => new
+                {
+                    EmployeesEmployeeId = table.Column<int>(type: "int", nullable: false),
+                    SystemOrdersOrderId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_EmployeeSystemOrder", x => new { x.EmployeesEmployeeId, x.SystemOrdersOrderId });
+                    table.ForeignKey(
+                        name: "FK_EmployeeSystemOrder_Employees_EmployeesEmployeeId",
+                        column: x => x.EmployeesEmployeeId,
+                        principalTable: "Employees",
+                        principalColumn: "EmployeeId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_EmployeeSystemOrder_SystemOrders_SystemOrdersOrderId",
+                        column: x => x.SystemOrdersOrderId,
+                        principalTable: "SystemOrders",
+                        principalColumn: "OrderId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "MediaFiles",
+                columns: table => new
+                {
+                    MediaFileId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    SystemOrderId = table.Column<int>(type: "int", nullable: false),
+                    FileName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    FileSelf = table.Column<byte[]>(type: "varbinary(max)", nullable: false),
+                    FileSizeKb = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
+                    ExportDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    ExportStatus = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_MediaFiles", x => x.MediaFileId);
+                    table.ForeignKey(
+                        name: "FK_MediaFiles_SystemOrders_SystemOrderId",
+                        column: x => x.SystemOrderId,
                         principalTable: "SystemOrders",
                         principalColumn: "OrderId",
                         onDelete: ReferentialAction.Cascade);
@@ -960,6 +911,30 @@ namespace BioProSystem.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "SystemOrderTeethShade",
+                columns: table => new
+                {
+                    SystemOrdersOrderId = table.Column<int>(type: "int", nullable: false),
+                    TeethShadesTeethShadeId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SystemOrderTeethShade", x => new { x.SystemOrdersOrderId, x.TeethShadesTeethShadeId });
+                    table.ForeignKey(
+                        name: "FK_SystemOrderTeethShade_SystemOrders_SystemOrdersOrderId",
+                        column: x => x.SystemOrdersOrderId,
+                        principalTable: "SystemOrders",
+                        principalColumn: "OrderId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_SystemOrderTeethShade_TeethShades_TeethShadesTeethShadeId",
+                        column: x => x.TeethShadesTeethShadeId,
+                        principalTable: "TeethShades",
+                        principalColumn: "TeethShadeId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -993,11 +968,6 @@ namespace BioProSystem.Migrations
                 column: "NormalizedEmail");
 
             migrationBuilder.CreateIndex(
-                name: "IX_AspNetUsers_PasswordId",
-                table: "AspNetUsers",
-                column: "PasswordId");
-
-            migrationBuilder.CreateIndex(
                 name: "UserNameIndex",
                 table: "AspNetUsers",
                 column: "NormalizedUserName",
@@ -1005,14 +975,14 @@ namespace BioProSystem.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Calanders_EventId",
-                table: "Calanders",
-                column: "EventId");
+                name: "IX_CalanderScheduleEvents_CalanderId",
+                table: "CalanderScheduleEvents",
+                column: "CalanderId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Calanders_TimelineId",
-                table: "Calanders",
-                column: "TimelineId");
+                name: "IX_DecisionLogs_SystemOrderId",
+                table: "DecisionLogs",
+                column: "SystemOrderId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Deliveries_DeliveryStatusId",
@@ -1025,14 +995,19 @@ namespace BioProSystem.Migrations
                 column: "EmployeeId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Deliveries_OrderId",
+                name: "IX_Deliveries_SystemOrderId",
                 table: "Deliveries",
-                column: "OrderId");
+                column: "SystemOrderId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Discounts_OrderId",
+                name: "IX_Discounts_SystemOrderId",
                 table: "Discounts",
-                column: "OrderId");
+                column: "SystemOrderId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_EmployeeEmployeeDailyHours_EmployeesEmployeeId",
+                table: "EmployeeEmployeeDailyHours",
+                column: "EmployeesEmployeeId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Employees_JobTitleId",
@@ -1040,54 +1015,19 @@ namespace BioProSystem.Migrations
                 column: "JobTitleId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Employees_UserId1",
+                name: "IX_Employees_SystemUserId1",
                 table: "Employees",
-                column: "UserId1");
+                column: "SystemUserId1");
 
             migrationBuilder.CreateIndex(
-                name: "IX_LatePayments_PaymentId",
-                table: "LatePayments",
-                column: "PaymentId");
+                name: "IX_EmployeeSystemOrder_SystemOrdersOrderId",
+                table: "EmployeeSystemOrder",
+                column: "SystemOrdersOrderId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Logins_UserId1",
-                table: "Logins",
-                column: "UserId1");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_OrderDetails_DecisionLogId",
-                table: "OrderDetails",
-                column: "DecisionLogId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_OrderDetails_MediaFileId",
-                table: "OrderDetails",
-                column: "MediaFileId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_OrderDetails_OpenOrderId",
-                table: "OrderDetails",
-                column: "OpenOrderId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_OrderDetails_OrderDirectionId",
-                table: "OrderDetails",
-                column: "OrderDirectionId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_OrderDetails_OrderStatusId",
-                table: "OrderDetails",
-                column: "OrderStatusId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_OrderDetails_OrderTypeId",
-                table: "OrderDetails",
-                column: "OrderTypeId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_OrderDetails_TeethShadeId",
-                table: "OrderDetails",
-                column: "TeethShadeId");
+                name: "IX_MediaFiles_SystemOrderId",
+                table: "MediaFiles",
+                column: "SystemOrderId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_OrderDirections_OrderDirectionStateId",
@@ -1105,9 +1045,9 @@ namespace BioProSystem.Migrations
                 column: "PaymentId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_OrderWorkflowTimelines_OrderDetailId",
+                name: "IX_OrderWorkflowTimelines_OrderDirectionId",
                 table: "OrderWorkflowTimelines",
-                column: "OrderDetailId");
+                column: "OrderDirectionId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_OrderWorkflowTimelines_TimelineId",
@@ -1115,19 +1055,14 @@ namespace BioProSystem.Migrations
                 column: "TimelineId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_OrderWorkflowTimelines_WorkflowStructureId1",
-                table: "OrderWorkflowTimelines",
-                column: "WorkflowStructureId1");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_PasswordManagements_ActionTypeId",
                 table: "PasswordManagements",
                 column: "ActionTypeId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Passwords_ManagementId",
-                table: "Passwords",
-                column: "ManagementId");
+                name: "IX_PasswordManagementSystemUser_UserId",
+                table: "PasswordManagementSystemUser",
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Patients_DentistId",
@@ -1140,9 +1075,15 @@ namespace BioProSystem.Migrations
                 column: "MedicalAidId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_ProceduralTimelines_CalanderId",
+                table: "ProceduralTimelines",
+                column: "CalanderId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_RefundPayments_PaymentId",
                 table: "RefundPayments",
-                column: "PaymentId");
+                column: "PaymentId",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_StakeWriteOffs_StockId",
@@ -1175,24 +1116,37 @@ namespace BioProSystem.Migrations
                 column: "DentistId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_SystemOrders_EmployeeId",
+                name: "IX_SystemOrders_OpenOrderId",
                 table: "SystemOrders",
-                column: "EmployeeId");
+                column: "OpenOrderId",
+                unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_SystemOrders_OrderDetailId",
+                name: "IX_SystemOrders_OrderStatusId",
                 table: "SystemOrders",
-                column: "OrderDetailId");
+                column: "OrderStatusId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_SystemOrders_OrderTypeId",
+                table: "SystemOrders",
+                column: "OrderTypeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_SystemOrders_OrderWorkflowTimelineId",
+                table: "SystemOrders",
+                column: "OrderWorkflowTimelineId",
+                unique: true,
+                filter: "[OrderWorkflowTimelineId] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_SystemOrderTeethShade_TeethShadesTeethShadeId",
+                table: "SystemOrderTeethShade",
+                column: "TeethShadesTeethShadeId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_UserActions_UserId1",
                 table: "UserActions",
                 column: "UserId1");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_WorkflowStructures_WorkflowStatusId",
-                table: "WorkflowStructures",
-                column: "WorkflowStatusId");
         }
 
         /// <inheritdoc />
@@ -1214,7 +1168,10 @@ namespace BioProSystem.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Calanders");
+                name: "CalanderScheduleEvents");
+
+            migrationBuilder.DropTable(
+                name: "DecisionLogs");
 
             migrationBuilder.DropTable(
                 name: "Deliveries");
@@ -1223,16 +1180,19 @@ namespace BioProSystem.Migrations
                 name: "Discounts");
 
             migrationBuilder.DropTable(
-                name: "LatePayments");
+                name: "EmployeeEmployeeDailyHours");
 
             migrationBuilder.DropTable(
-                name: "Logins");
+                name: "EmployeeSystemOrder");
+
+            migrationBuilder.DropTable(
+                name: "MediaFiles");
 
             migrationBuilder.DropTable(
                 name: "OrderPayments");
 
             migrationBuilder.DropTable(
-                name: "OrderWorkflowTimelines");
+                name: "PasswordManagementSystemUser");
 
             migrationBuilder.DropTable(
                 name: "Patients");
@@ -1247,22 +1207,25 @@ namespace BioProSystem.Migrations
                 name: "StockItems");
 
             migrationBuilder.DropTable(
+                name: "SystemOrderTeethShade");
+
+            migrationBuilder.DropTable(
                 name: "UserActions");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "CalanderScheduleEvents");
-
-            migrationBuilder.DropTable(
                 name: "DeliveryStatuses");
 
             migrationBuilder.DropTable(
-                name: "ProceduralTimelines");
+                name: "EmployeeDailyHours");
 
             migrationBuilder.DropTable(
-                name: "WorkflowStructures");
+                name: "Employees");
+
+            migrationBuilder.DropTable(
+                name: "PasswordManagements");
 
             migrationBuilder.DropTable(
                 name: "MedicalAids");
@@ -1277,7 +1240,16 @@ namespace BioProSystem.Migrations
                 name: "SystemOrders");
 
             migrationBuilder.DropTable(
-                name: "WorkflowStatuses");
+                name: "TeethShades");
+
+            migrationBuilder.DropTable(
+                name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "JobTitles");
+
+            migrationBuilder.DropTable(
+                name: "ActionTypes");
 
             migrationBuilder.DropTable(
                 name: "StockCategories");
@@ -1289,28 +1261,7 @@ namespace BioProSystem.Migrations
                 name: "Dentists");
 
             migrationBuilder.DropTable(
-                name: "Employees");
-
-            migrationBuilder.DropTable(
-                name: "OrderDetails");
-
-            migrationBuilder.DropTable(
-                name: "AspNetUsers");
-
-            migrationBuilder.DropTable(
-                name: "JobTitles");
-
-            migrationBuilder.DropTable(
-                name: "DecisionLogs");
-
-            migrationBuilder.DropTable(
-                name: "MediaFiles");
-
-            migrationBuilder.DropTable(
                 name: "OpenOrders");
-
-            migrationBuilder.DropTable(
-                name: "OrderDirections");
 
             migrationBuilder.DropTable(
                 name: "OrderStatuses");
@@ -1319,19 +1270,19 @@ namespace BioProSystem.Migrations
                 name: "OrderTypes");
 
             migrationBuilder.DropTable(
-                name: "TeethShades");
+                name: "OrderWorkflowTimelines");
 
             migrationBuilder.DropTable(
-                name: "Passwords");
+                name: "OrderDirections");
+
+            migrationBuilder.DropTable(
+                name: "ProceduralTimelines");
 
             migrationBuilder.DropTable(
                 name: "OrderDirectionStates");
 
             migrationBuilder.DropTable(
-                name: "PasswordManagements");
-
-            migrationBuilder.DropTable(
-                name: "ActionTypes");
+                name: "Calanders");
         }
     }
 }

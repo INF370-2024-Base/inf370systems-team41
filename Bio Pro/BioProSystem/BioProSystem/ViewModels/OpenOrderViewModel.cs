@@ -1,6 +1,6 @@
 ﻿namespace BioProSystem.ViewModels
 {
-    public class SystemUserViewModel
+    public class OpenOrderViewModel
     {
         public string Emailaddress { get; set; }
         public string Password { get; set; }

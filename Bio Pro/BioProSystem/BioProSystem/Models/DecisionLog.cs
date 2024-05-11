@@ -9,9 +9,13 @@ public partial class DecisionLog
     [Key]
     public int DecisionLogId { get; set; }
 
+    [Required]
     public string DecisionLogState { get; set; } = null!;
 
+    [Required]
     public string Justification { get; set; } = null!;
 
-    public virtual ICollection<OrderDetail> OrderDetails { get; set; } = new List<OrderDetail>();
+    public int SystemOrderId { get; set; }
+
+    public virtual SystemOrder SystemOrder { get; set; } = null!;
 }

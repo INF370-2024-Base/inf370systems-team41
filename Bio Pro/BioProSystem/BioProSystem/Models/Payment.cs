@@ -8,14 +8,16 @@ public partial class Payment
 {
     [Key]
     public int PaymentId { get; set; }
-
+    public int RefundPaymentId { get; set; }
+    [Required]
     public string PaymentMethod { get; set; } = null!;
-
+    [Required]
     public DateTime PaymentDate { get; set; }
-
+    [Required]
     public byte[] ProofOfPayment { get; set; } = null!;
 
-    public virtual ICollection<LatePayment> LatePayments { get; set; } = new List<LatePayment>();
+    public bool IslatePayment { get; set; } = false;
 
-    public virtual ICollection<RefundPayment> RefundPayments { get; set; } = new List<RefundPayment>();
+    public virtual ICollection<OrderPayment> OrderPayment { get; set; } = new List<OrderPayment>();
+    public virtual RefundPayment RefundPayments { get; set; } = null!; 
 }

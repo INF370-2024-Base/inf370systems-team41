@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
-using BioProSystem.Models; 
+using BioProSystem.Models;
 using BioProSystem.ViewModels;
 
 namespace BioProSystem.Controllers

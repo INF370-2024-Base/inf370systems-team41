@@ -8,16 +8,17 @@ public partial class Dentist
 {
     [Key]
     public int DentistId { get; set; }
-
+    [Required]
     public string LastName { get; set; } = null!;
+    [Required]
 
     public string FirstName { get; set; } = null!;
 
-    public string ContactDetail { get; set; } = null!;
+    public string? ContactDetail { get; set; } = null!;
 
     public string? Address { get; set; }
-    
-    public virtual ICollection<Patient>?  Patients { get; set; } = new List<Patient>();
 
-    public virtual ICollection<SystemOrder>? SystemOrders { get; set; } = new List<SystemOrder>();
+    public virtual ICollection<Patient> Patients { get; set; } = new List<Patient>();
+
+    public virtual ICollection<SystemOrder> SystemOrders { get; set; } = new List<SystemOrder>();
 }

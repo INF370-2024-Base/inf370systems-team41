@@ -9,9 +9,13 @@ public partial class CalanderScheduleEvent
     [Key]
     public int CalanderScheduleEventId { get; set; }
 
-    public DateTime CalanderScheduleEventDate { get; set; }
+    public DateTime CalanderScheduleEventDateTime { get; set; }
+
+    [Required]
 
     public string Description { get; set; } = null!;
 
-    public virtual ICollection<Calander> Calanders { get; set; } = new List<Calander>();
+    public int CalanderId { get; set; }
+
+    public virtual Calander Calander { get; set; }
 }

@@ -5,12 +5,14 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
+using System.Diagnostics;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 
 namespace BioProSystem.Controllers
 {
+    [ApiController]
     public class LoginController : Controller
     {
         private readonly UserManager<SystemUser> _userManager;
@@ -29,7 +31,7 @@ namespace BioProSystem.Controllers
         }
         [HttpPost]
         [Route("Register")]
-        public async Task<IActionResult> Register(SystemUserViewModel uvm)
+        public async Task<IActionResult> Register(SystemUserAddViewModel uvm)
         {
             var user = await _userManager.FindByIdAsync(uvm.emailaddress);
 
@@ -40,8 +42,8 @@ namespace BioProSystem.Controllers
                     Id = Guid.NewGuid().ToString(),
                     UserName = uvm.emailaddress,
                     Email = uvm.emailaddress,
-                    name = uvm.name,
-                    surname = uvm.surname,
+                    Name = uvm.name,
+                    Surname = uvm.surname,
 
                 };
                 PasswordManagement management = new PasswordManagement();
@@ -68,9 +70,19 @@ namespace BioProSystem.Controllers
         [Route("Login")]
         public async Task<ActionResult> Login(SystemUserViewModel uvm)
         {
-            var user = await _userManager.FindByNameAsync(uvm.emailaddress);
+            Console.WriteLine("Email" + uvm.Emailaddress + " " + uvm.Password);
+            var user = await _userManager.FindByNameAsync(uvm.Emailaddress);
 
-            if (user != null && await _userManager.CheckPasswordAsync(user, uvm.password))
+
+            if (user == null)
+            {
+                // Email not found
+                return NotFound("Invalid login credentials");
+            }
+
+            var isPasswordValid = await _userManager.CheckPasswordAsync(user, uvm.Password);
+
+            if (isPasswordValid)
             {
                 try
                 {
@@ -83,7 +95,8 @@ namespace BioProSystem.Controllers
             }
             else
             {
-                return NotFound("Does not exist");
+                // Password incorrect (avoid revealing email exists for security)
+                return BadRequest("Invalid login credentials");
             }
         }
 
@@ -171,6 +184,24 @@ namespace BioProSystem.Controllers
         public IActionResult RoleTest()
         {
             return Ok("You are an admin or manager!!!");
+        }
+        [HttpGet]
+        [Route("GetSignInProfile/{emailAddress}")]
+        public async Task<IActionResult> GetUser(string emailAddress)
+        {
+            Console.WriteLine("email add:" + emailAddress);
+            try
+            {
+                var result = await _repository.GetsystemUserAsync(emailAddress);
+
+                if (result == null) return NotFound("Course does not exist");
+
+                return Ok(result);
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, "Internal Server Error. Please contact support");
+            }
         }
     }
 }

@@ -8,9 +8,9 @@ public partial class Patient
 {
     [Key]
     public int PatientId { get; set; }
-
+    [Required]
     public string FirsName { get; set; } = null!;
-
+    [Required]
     public string Lastname { get; set; } = null!;
 
     public int DentistId { get; set; }

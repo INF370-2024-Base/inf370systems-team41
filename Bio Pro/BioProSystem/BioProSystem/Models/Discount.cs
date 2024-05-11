@@ -8,14 +8,18 @@ public partial class Discount
 {
     [Key]
     public int DiscountId { get; set; }
+    [Required]
 
-    public int OrderId { get; set; }
+    public int SystemOrderId { get; set; }
+    [Required]
 
-    public string ReasonForDiscount { get; set; } = null!;
+    public string ReasonForDiscount { get; set; }
+    [Required]
 
     public decimal DiscountAmount { get; set; }
+    [Required]
 
     public DateTime DiscountDate { get; set; }
 
-    public virtual SystemOrder Order { get; set; } = null!;
+    public virtual SystemOrder SystemOrder { get; set; } = null!;
 }

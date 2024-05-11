@@ -9,10 +9,11 @@ namespace BioProSystem.Models
         Task<bool> SaveChangesAsync();
         Task<OpenOrder[]> GetAllOpenOrdersAsync();
         Task<OpenOrder> GetOpenOrdersAsync(int custId);
+        Task<SystemUser> GetsystemUserAsync(string systemUserEmail);
         //Employee
-        Task<JobTitle> GetJobTitleByIdAsync(int id); 
+        Task<JobTitle> GetJobTitleByIdAsync(int id);
         Task<IEnumerable<Employee>> GetAllEmployeesAsync();
-        Task<Employee> GetEmployeeByIdAsync(int id); 
+        Task<Employee> GetEmployeeByIdAsync(int id);
         Task<Employee> UpdateEmployeeAsync(Employee employee);
         Task<bool> DeleteEmployeeAsync(Employee employee);
         //Dentist 
@@ -21,6 +22,6 @@ namespace BioProSystem.Models
         void AddDentist(Dentist dentist);
         void UpdateDentist(Dentist dentist);
         void DeleteDentist(Dentist dentist);
-       
+
     }
 }

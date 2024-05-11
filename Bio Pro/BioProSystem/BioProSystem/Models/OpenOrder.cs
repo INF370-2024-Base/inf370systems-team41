@@ -8,10 +8,13 @@ public partial class OpenOrder
 {
     [Key]
     public int OpenOrderId { get; set; }
+    [Required]
 
     public string? Description { get; set; }
+    [Required]
 
-    public DateTime OpenOrderTimeStamp { get; set; }
+    public int EstimatedDurationInDays { get; set; }
+    [Required]
 
-    public virtual ICollection<OrderDetail> OrderDetails { get; set; } = new List<OrderDetail>();
+    public virtual SystemOrder systemOrder { get; set; } = null!;
 }

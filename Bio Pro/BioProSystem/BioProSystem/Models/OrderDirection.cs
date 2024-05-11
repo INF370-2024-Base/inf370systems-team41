@@ -8,22 +8,17 @@ public partial class OrderDirection
 {
     [Key]
     public int OrderDirectionId { get; set; }
+    [Required]
 
     public string Description { get; set; } = null!;
+    [Required]
 
-    public string Instruction { get; set; } = null!;
-
-    public DateTime DueDate { get; set; }
+    public string Instructions { get; set; } = null!;
+    [Required]
 
     public int OrderDirectionStateId { get; set; }
 
-    public DateTime OrderDate { get; set; }
-
-    public string MouthArea { get; set; } = null!;
-
-    public string? SpecialRequirements { get; set; }
-
-    public virtual ICollection<OrderDetail> OrderDetails { get; set; } = new List<OrderDetail>();
+    public virtual ICollection<OrderWorkflowTimeline> OrderDetails { get; set; } = new List<OrderWorkflowTimeline>();
 
     public virtual OrderDirectionState OrderDirectionState { get; set; } = null!;
 }
