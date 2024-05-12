@@ -6,8 +6,6 @@ namespace BioProSystem.ViewModels
 {
     public class SystemOrderViewModel
     {
-        private readonly IRepository _repository;
-
         [Required(ErrorMessage = "Please enter valid Order ID.")]
         public string OrderId { get; set; }
 
@@ -25,15 +23,12 @@ namespace BioProSystem.ViewModels
         public int MedicalAidId { get; set; }
 
         [Required(ErrorMessage = "Please enter the medical aid number.")]
-        public string MedicalAidNumber { get; set; }
+        public int MedicalAidNumber { get; set; }
 
         [Required(ErrorMessage = "Please select an order direction.")]
-        public int? OrderDirectionId { get; set; }
-        public string MouthArea { get; set; }
+        public int OrderDirectionId { get; set; }
+        public string SelectedMouthArea { get; set; }
 
-        [Required]
-        public string OrderDirectionMaincategory { get; set; }
-        public string OrderDirectionSubcategory { get; set; }
         public string? EmergencyNumber { get; set; }//Nullable to account for possibility of number not provided
 
         public DateTime DueDate { get; set; }
@@ -45,20 +40,15 @@ namespace BioProSystem.ViewModels
 
         // Dropdown lists for select fields
         public SelectList Dentists { get; set; }
-        public SelectList OrderType { get; set; }
-
-        public SelectList OrderStatus { get; set; }
         public SelectList MedicalAids { get; set; }
         public SelectList OrderDirections { get; set; }
         public SelectList PriorityLevels { get; set; }
-
-        public List<int> TeethShadesIds { get; set; }
-        public List<int> SeletedAreasIds { get; set; }
+        public SelectedArea MouthArea { get; set; }
 
         public int DentistId { get; set; }
-        public int OrderTypeId { get; set; }
-        public int? OpenOrderId { get; set; }
+        public int OpenOrderId { get; set; }
         public int OrderStatusId { get; set; }
         public int? OrderWorkflowTimelineId { get; set; }
+        public int OrderTypeId { get; set; }
     }
 }

@@ -385,4 +385,3 @@ C:\Users\leze7\Desktop\UNI 2024\INF 370\Project\A2\Bio Pro\BioProSystem\BioProSy
 C:\Users\leze7\Desktop\UNI 2024\INF 370\Project\A2\Bio Pro\BioProSystem\BioProSystem\obj\Debug\net8.0\BioProSystem.pdb
 C:\Users\leze7\Desktop\UNI 2024\INF 370\Project\A2\Bio Pro\BioProSystem\BioProSystem\obj\Debug\net8.0\BioProSystem.genruntimeconfig.cache
 C:\Users\leze7\Desktop\UNI 2024\INF 370\Project\A2\Bio Pro\BioProSystem\BioProSystem\obj\Debug\net8.0\ref\BioProSystem.dll
-C:\Users\piete\Local Storage\Uni\370\Project repo\inf370systems-team41\Bio Pro\BioProSystem\BioProSystem\bin\Debug\net8.0\Newtonsoft.Json.dll

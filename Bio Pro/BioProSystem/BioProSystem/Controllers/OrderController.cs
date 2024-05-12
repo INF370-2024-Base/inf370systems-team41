@@ -8,8 +8,7 @@ using System.Security.Claims;
 using System.Text;
 using BioProSystem.ViewModels;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Newtonsoft.Json;
-using Microsoft.Extensions.Options;
+using Newtonsoft.Json; 
 
 namespace BioProSystem.Controllers
 {
@@ -41,8 +40,8 @@ namespace BioProSystem.Controllers
         // POST: /Order/Add
         [HttpPost]
         [Route("AddOrders")]
-        //[Authorize(AuthenticationSchemes = "Bearer")]
-        //[Authorize(Roles = "Admin, Manager")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
+        [Authorize(Roles = "Admin, Manager")]
         public async Task<IActionResult> Add(SystemOrderViewModel viewModel)
         {
             if (ModelState.IsValid)
@@ -50,71 +49,27 @@ namespace BioProSystem.Controllers
                 try
                 {
                     //ADD the TEETHSHADING !!!!!!!!!
-                    //var selectedMouthArea = JsonConvert.DeserializeObject<SelectedArea>(viewModel.SelectedMouthArea);
+                    var selectedMouthArea = JsonConvert.DeserializeObject<SelectedArea>(viewModel.SelectedMouthArea);
 
                     var newOrder = new SystemOrder
                     {
                         OrderId = viewModel.OrderId,//dropdown
                         DentistId = viewModel.DentistId,//dropdown or small search pop-up
                         OrderDate = viewModel.OrderDate,//calendar select
+                        PatientName = viewModel.PatientName,//enter
+                        PatientSurname = viewModel.PatientSurname,//enter
+                        MedicalAidId = viewModel.MedicalAidId,//dropdown or small search pop-up
+                        MedicalAidNumber = viewModel.MedicalAidNumber,//enter
+                        OrderDirectionId = viewModel.OrderDirectionId,//dropdown
+                        MouthArea = selectedMouthArea,
                         EmergencyNumber = viewModel.EmergencyNumber,
                         SpecialRequirements = viewModel.SpecialRequirements,
                         PriorityLevel = viewModel.PriorityLevel,
-                        DueDate = viewModel.DueDate,
-                        OrderTypeId = viewModel.OrderTypeId,
-                        OrderStatusId = viewModel.OrderStatusId,
-                        OrderDirectionMaincategory = viewModel.OrderDirectionMaincategory,
-                        OrderDirectionSubcategory = viewModel.OrderDirectionSubcategory,
-                        MouthArea=viewModel.MouthArea,
-                        
+                        DueDate = viewModel.DueDate
                     };
-                    foreach (TeethShade teethShade in _repository.GetTeethShadesAsync(viewModel.TeethShadesIds).Result)
-                    {
-                        newOrder.TeethShades.Add(teethShade);
-                    }
-                    foreach (SelectedArea selected in _repository.GetSelectedAreasAsync(viewModel.SeletedAreasIds).Result)
-                    {
-                        newOrder.SelectedAreas.Add(selected);
-                    }
-                    foreach (TeethShade teethShade in _repository.GetTeethShadesAsync(viewModel.TeethShadesIds).Result)
-                    {
-                        teethShade.SystemOrders.Add(newOrder);
-                    }
-                    foreach (SelectedArea selected in _repository.GetSelectedAreasAsync(viewModel.SeletedAreasIds).Result)
-                    {
-                        selected.SystemOrders.Add(newOrder);
-                    }
-                    OpenOrder newOpenOrder = new OpenOrder();
-                    if (viewModel.OrderTypeId==1)
-                    {
-
-                        newOpenOrder.Description = viewModel.OrderDirectionMaincategory;
-                        newOpenOrder.systemOrder = newOrder;
-                         newOpenOrder.EstimatedDurationInDays = 1; //needs updating
-                        _repository.Add(newOpenOrder);
-                    }
-                    var newPatient = new Patient();
-                    if (await _repository.CheckSystemPatient(viewModel.MedicalAidNumber))
-                    {
-                        newPatient.FirsName = viewModel.PatientName;
-                        newPatient.Lastname = viewModel.PatientSurname;
-                        newPatient.DentistId = viewModel.DentistId;
-                        newPatient.MedicalAidId = viewModel.MedicalAidId;
-                        newPatient.MedicalAidNumber = viewModel.MedicalAidNumber;
-                        _repository.Add(newPatient);
-                    }
-                    else
-                    {
-
-                        newPatient.FirsName = _repository.GetPatientByMedicalAidNumber(viewModel.MedicalAidNumber).Result.FirsName;
-                        newPatient.Lastname = _repository.GetPatientByMedicalAidNumber(viewModel.MedicalAidNumber).Result.Lastname;
-                        newPatient.DentistId = _repository.GetPatientByMedicalAidNumber(viewModel.MedicalAidNumber).Result.DentistId;
-                        newPatient.MedicalAidId = _repository.GetPatientByMedicalAidNumber(viewModel.MedicalAidNumber).Result.MedicalAidId;
-                        newPatient.MedicalAidNumber = _repository.GetPatientByMedicalAidNumber(viewModel.MedicalAidNumber).Result.MedicalAidNumber;
-
-                    }      
-                    SelectedArea selectedArea = new SelectedArea();
+                    newOrder.Employees.Add()
                     _repository.Add(newOrder);
+
                     if (await _repository.SaveChangesAsync())
                     {
                         return Ok(newOrder);
@@ -137,7 +92,7 @@ namespace BioProSystem.Controllers
             }
         }
 
-
+        
 
         [HttpGet("api/medicalaids")]
         public async Task<IActionResult> GetMedicalAids()

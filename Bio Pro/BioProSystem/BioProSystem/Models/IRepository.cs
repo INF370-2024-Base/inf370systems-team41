@@ -17,13 +17,6 @@ namespace BioProSystem.Models
         Task<IEnumerable<SystemOrder>> GetAllSystemOrdersAsync();
 
         Task<SystemOrder> GetSystemOrderByIdAsync(string orderId);
-        Task<bool> CheckSystemPatient(string medicalAidNumber);
-        Task<Patient> GetPatientByMedicalAidNumber(string medicalAidNumber);
-        Task<MedicalAid> GetMedicalAidByMedicalAidId(int medicalAidId);
-        Task<TeethShade> GetTeethShadeAsync(int teethshadeIds);
-        Task<List<TeethShade>> GetTeethShadesAsync(List<int> teethshadeIds);
-        Task<SelectedArea> GetSelectedAreaAsync(int areaId);
-        Task<List<SelectedArea>> GetSelectedAreasAsync(List<int> areaIds);
 
     }
 }

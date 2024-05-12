@@ -12,9 +12,14 @@ public partial class Patient
     public string FirsName { get; set; } = null!;
     [Required]
     public string Lastname { get; set; } = null!;
+
     public int DentistId { get; set; }
+
     public int MedicalAidId { get; set; }
-    public string MedicalAidNumber { get; set; } = null!;
-    public virtual Dentist? Dentist { get; set; } = null!;
-    public virtual MedicalAid? MedicalAid { get; set; } = null!;
+
+    public string CellphoneNumber { get; set; } = null!;
+
+    public virtual Dentist Dentist { get; set; } = null!;
+
+    public virtual MedicalAid MedicalAid { get; set; } = null!;
 }
