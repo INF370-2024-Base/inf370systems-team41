@@ -1,0 +1,85 @@
+<p>add-order works!</p>
+
+<!-- AddOrderComponent HTML Template -->
+<div class="container">
+    <h2>Add New Order</h2>
+  
+    <form [formGroup]="addForm" (ngSubmit)="onSubmit()">
+        <!-- Order ID Input -->
+        <div class="form-group">
+          <label for="OrderId">Order ID:</label>
+          <input type="text" formControlName="OrderId" class="form-control" id="OrderId" placeholder="Enter Order ID">
+        </div>
+    
+       <!-- Dentist Selection Dropdown -->
+       <div class="form-group">
+        <label for="DentistId">Dentist:</label>
+        <select formControlName="DentistId" class="form-control" id="DentistId" >
+          <option *ngFor="let dentist of dentists" [ngValue]="dentist.dentistId">
+            {{ dentist.firstName }} {{ dentist.lastName }}
+          </option>
+        </select>
+      </div>
+        <!-- Order Date Input -->
+        <div class="form-group">
+          <label for="OrderDate">Order Date:</label>
+          <input type="date" formControlName="OrderDate" class="form-control" id="OrderDate" placeholder="Select Order Date">
+        </div>
+    
+        <!-- Medical Aid Selection Dropdown -->
+        <div class="form-group">
+            <label for="MedicalAidId">Medical Aid:</label>
+            <select formControlName="MedicalAidId" class="form-control" id="MedicalAidId">
+              <option disabled selected value="">Select Medical Aid</option>
+              <option *ngFor="let medicalAid of medicalAids" [ngValue]="medicalAid.medicalAidId">
+                {{ medicalAid.medicalAidId }} - {{ medicalAid.medicalAidName }}
+              </option>
+            </select>
+          </div>
+    
+        <!-- Order Direction Selection Dropdown -->
+        <div class="form-group">
+          <label for="OrderDirectionId">Order Direction:</label>
+          <select formControlName="OrderDirectionId" class="form-control" id="OrderDirectionId" title="Select Order Direction">
+            <option *ngFor="let direction of orderDirections" [value]="direction.Id">
+              {{ direction.Id }} - {{ direction.Description }}
+            </option>
+          </select>
+        </div>
+
+
+      <div>
+        <canvas #imageCanvas id="imageCanvas" width="100" height="50"></canvas>
+      </div>
+      
+      <!-- Display Selected Areas (Read-only) -->
+      <div *ngIf="addForm.get('SelectedAreas')?.value && addForm.get('SelectedAreas')?.value.length > 0">
+        <h3>Selected Areas:</h3>
+        <div *ngFor="let area of addForm.get('SelectedAreas')?.value; let i = index">
+          <div class="form-group">
+            <label>Area {{ i + 1 }}:</label>
+            <input type="text" [value]="'X: ' + area.X + ', Y: ' + area.Y + ', Width: ' + area.Width + ', Height: ' + area.Height"
+              class="form-control" readonly>
+          </div>
+        </div>
+      </div>
+      <!-- Additional Form Controls -->
+      <div class="form-group">
+        <label for="EmergencyNumber">Emergency Number:</label>
+        <input type="text" formControlName="EmergencyNumber" class="form-control" id="EmergencyNumber" placeholder="Enter Emergency Contact Number">
+      </div>
+      <div class="form-group">
+        <label for="SpecialRequirements">Special Requirements:</label>
+        <textarea formControlName="SpecialRequirements" class="form-control" id="SpecialRequirements" placeholder="Enter any special requirements"></textarea>
+      </div>
+      
+      <div class="form-group">
+        <label for="DueDate">Due Date:</label>
+        <input type="date" formControlName="DueDate" class="form-control" id="DueDate" placeholder="Select Due Date">
+      </div>
+      <!-- Submit and Cancel Buttons -->
+      <button type="submit" class="btn btn-primary">Submit</button>
+      <button type="button" class="btn btn-secondary" (click)="cancel()">Cancel</button>
+    </form>
+  </div>
+  
