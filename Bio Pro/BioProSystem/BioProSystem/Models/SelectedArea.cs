@@ -11,8 +11,7 @@ namespace BioProSystem.Models
         public decimal Y { get; set; }
         public decimal Width { get; set; }
         public decimal Height { get; set; }
-        public string SystemOrdersId { get; set; }
-        public virtual SystemOrder SystemOrders { get; set; } = null!;
+        public virtual List<SystemOrder>? SystemOrders { get; set; } = null!;
     }
 }
 

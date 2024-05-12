@@ -4,6 +4,7 @@ using BioProSystem.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BioProSystem.Migrations
 {
     [DbContext(typeof(DentalProSystemTestDBContext))]
-    partial class DentalProSystemTestDBContextModelSnapshot : ModelSnapshot
+    [Migration("20240512173755_OptionalSystemOrder")]
+    partial class OptionalSystemOrder
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -355,6 +358,10 @@ namespace BioProSystem.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("MedicalAidNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("MedicalAidId");
 
                     b.ToTable("MedicalAids");
@@ -555,10 +562,6 @@ namespace BioProSystem.Migrations
                     b.Property<int>("MedicalAidId")
                         .HasColumnType("int");
 
-                    b.Property<string>("MedicalAidNumber")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.HasKey("PatientId");
 
                     b.HasIndex("DentistId");
@@ -667,6 +670,10 @@ namespace BioProSystem.Migrations
                     b.Property<decimal>("Height")
                         .HasColumnType("decimal(18,2)");
 
+                    b.Property<string>("SystemOrdersId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<decimal>("Width")
                         .HasColumnType("decimal(18,2)");
 
@@ -677,6 +684,8 @@ namespace BioProSystem.Migrations
                         .HasColumnType("decimal(18,2)");
 
                     b.HasKey("SelectedAreaId");
+
+                    b.HasIndex("SystemOrdersId");
 
                     b.ToTable("SelectedAreas");
                 });
@@ -1185,21 +1194,6 @@ namespace BioProSystem.Migrations
                     b.ToTable("PasswordManagementSystemUser");
                 });
 
-            modelBuilder.Entity("SelectedAreaSystemOrder", b =>
-                {
-                    b.Property<int>("SelectedAreasSelectedAreaId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("SystemOrdersOrderId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("SelectedAreasSelectedAreaId", "SystemOrdersOrderId");
-
-                    b.HasIndex("SystemOrdersOrderId");
-
-                    b.ToTable("SelectedAreaSystemOrder");
-                });
-
             modelBuilder.Entity("SystemOrderTeethShade", b =>
                 {
                     b.Property<string>("SystemOrdersOrderId")
@@ -1404,6 +1398,17 @@ namespace BioProSystem.Migrations
                     b.Navigation("Payment");
                 });
 
+            modelBuilder.Entity("BioProSystem.Models.SelectedArea", b =>
+                {
+                    b.HasOne("BioProSystem.Models.SystemOrder", "SystemOrders")
+                        .WithMany("SelectedAreas")
+                        .HasForeignKey("SystemOrdersId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("SystemOrders");
+                });
+
             modelBuilder.Entity("BioProSystem.Models.StakeWriteOff", b =>
                 {
                     b.HasOne("BioProSystem.Models.Stock", "Stock")
@@ -1599,21 +1604,6 @@ namespace BioProSystem.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("SelectedAreaSystemOrder", b =>
-                {
-                    b.HasOne("BioProSystem.Models.SelectedArea", null)
-                        .WithMany()
-                        .HasForeignKey("SelectedAreasSelectedAreaId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("BioProSystem.Models.SystemOrder", null)
-                        .WithMany()
-                        .HasForeignKey("SystemOrdersOrderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("SystemOrderTeethShade", b =>
                 {
                     b.HasOne("BioProSystem.Models.SystemOrder", null)
@@ -1741,6 +1731,8 @@ namespace BioProSystem.Migrations
                     b.Navigation("MediaFiles");
 
                     b.Navigation("OrderPayments");
+
+                    b.Navigation("SelectedAreas");
 
                     b.Navigation("StockItems");
                 });
