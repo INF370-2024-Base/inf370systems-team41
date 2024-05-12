@@ -8,7 +8,7 @@ import { OpenOrder } from '../shared/openorder';
 })
 export class DataService {
 
-  apiUrl = 'https://localhost:44315/api/';
+  apiUrl = 'https://localhost:7280/api/';
 
   httpOptions ={
     headers: new HttpHeaders({
@@ -33,9 +33,7 @@ export class DataService {
     return this.httpClient.post<any>(`${this.apiUrl}AddOrders`, orderData, this.httpOptions);
   }
 
-  getOrderDirections(): Observable<any[]> {
-    return this.httpClient.get<any[]>(`${this.apiUrl}OrderDirections`);
-  }
+
 
   getAllOrders(orderId: number): Observable<any[]> {
     return this.httpClient.get<any[]>(`${this.apiUrl}GetAllOrders/${orderId}`);
@@ -54,6 +52,21 @@ export class DataService {
     return this.httpClient.get<any[]>(`${this.apiUrl}${endpoint}`);
   }
 
+  getOrderTypes(): Observable<any[]> {
+    const endpoint = 'orderTypes'; // Correct endpoint for fetching order types
+    return this.httpClient.get<any[]>(`${this.apiUrl}${endpoint}`);
+  }
+  
+  getOrderStatuses(): Observable<any[]> {
+    const endpoint = 'orderStatuses'; // Correct endpoint for fetching order statuses
+    return this.httpClient.get<any[]>(`${this.apiUrl}${endpoint}`);
+  }
+  
+  getOrderDirections(): Observable<any[]> {
+    const endpoint = 'orderDirections'; // Correct endpoint for fetching order directions
+    return this.httpClient.get<any[]>(`${this.apiUrl}${endpoint}`);
+  }
+  
 }
 
 

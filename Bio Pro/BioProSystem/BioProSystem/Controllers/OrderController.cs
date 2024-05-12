@@ -184,6 +184,47 @@ namespace BioProSystem.Controllers
                 return StatusCode(500, $"Internal Server Error: {ex.Message}");
             }
         }
+        [HttpGet("api/ordertypes")]
+        public async Task<IActionResult> GetOrderTypes()
+        {
+            try
+            {
+                var orderTypes = await _repository.GetOrderTypesAsync(); // Call repository method to fetch order types
+                return Ok(orderTypes); // Return list of order types as JSON response
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal Server Error: {ex.Message}");
+            }
+        }
+
+        [HttpGet("api/orderstatuses")]
+        public async Task<IActionResult> GetOrderStatuses()
+        {
+            try
+            {
+                var orderStatuses = await _repository.GetOrderStatusesAsync(); // Call repository method to fetch order statuses
+                return Ok(orderStatuses); // Return list of order statuses as JSON response
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal Server Error: {ex.Message}");
+            }
+        }
+
+        [HttpGet("api/orderdirections")]
+        public async Task<IActionResult> GetOrderDirections()
+        {
+            try
+            {
+                var orderDirections = await _repository.GetOrderDirectionsAsync(); // Call repository method to fetch order directions
+                return Ok(orderDirections); // Return list of order directions as JSON response
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal Server Error: {ex.Message}");
+            }
+        }
 
         [HttpGet("Create")]
         public async Task<IActionResult> Create()
@@ -196,6 +237,9 @@ namespace BioProSystem.Controllers
                 viewModel.Dentists = new SelectList(await _repository.GetDentistsAsync(), "DentistId", "FullName");
                 viewModel.MedicalAids = new SelectList(await _repository.GetMedicalAidsAsync(), "MedicalAidId", "Name");
                 viewModel.OrderDirections = new SelectList(await _repository.GetOrderDirectionsAsync(), "OrderDirectionId", "Name");
+                viewModel.OrderType = new SelectList(await _repository.GetOrderTypesAsync(), "OrderTypeId", "Name");
+                viewModel.OrderStatus = new SelectList(await _repository.GetOrderStatusesAsync(), "OrderStatusId", "Name");
+               
 
                 return View(viewModel);
             }

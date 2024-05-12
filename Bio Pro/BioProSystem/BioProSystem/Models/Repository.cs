@@ -126,5 +126,15 @@ namespace BioProSystem.Models
         {
             return await _appDbContext.SaveChangesAsync() > 0;
         }
+
+        public async Task<List<OrderType>> GetOrderTypesAsync()
+        {
+            return await _appDbContext.OrderTypes.ToListAsync();
+        }
+
+        public async Task<List<OrderStatus>> GetOrderStatusesAsync()
+        {
+            return await _appDbContext.OrderStatuses.ToListAsync();
+        }
     }
 }

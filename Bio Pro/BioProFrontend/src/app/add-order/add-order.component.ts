@@ -11,9 +11,16 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class AddOrderComponent implements OnInit {
 
+  priorityLevels = [
+    { value: 'High', label: 'High' },
+    { value: 'Medium', label: 'Medium' },
+    { value: 'Low', label: 'Low' }
+  ];
   orders: any[] = [];
   dentists: any[] = [];
   medicalAids: any[] = [];
+  orderTypes:any[] =[];
+  orderStatus:any[] =[];
   orderDirections: any[] = [];
   addForm!: FormGroup;
   @ViewChild('imageCanvas', { static: true }) canvasRef!: ElementRef<HTMLCanvasElement>; 
@@ -33,6 +40,9 @@ export class AddOrderComponent implements OnInit {
       MedicalAidId: ['', Validators.required],
       MedicalAidNumber: ['', Validators.required],
       OrderDirectionId: ['', Validators.required],
+      PriorityLevel: ['', Validators.required],
+      OrderTypeId: ['', Validators.required], // Ensure OrderTypeId is included in the FormGroup
+      OrderStatusId: ['', Validators.required],
       X: ['', Validators.required],
       Y: ['', Validators.required],
       Width: ['', Validators.required],
@@ -50,6 +60,9 @@ export class AddOrderComponent implements OnInit {
     this.loadMedicalAids();
     // this.loadorderDirections();
     this.loadImageOnCanvas();
+    this.loadOrderDirections();
+    this.loadOrderTypes();
+    this.loadOrderStatuses();
   }
 
   loadDentists(): void {
@@ -65,18 +78,53 @@ export class AddOrderComponent implements OnInit {
     );
   }
 
-  loadDentist(): void {
-    this.dataService.getDentists().subscribe(
+  // loadDentist(): void {
+  //   this.dataService.getDentists().subscribe(
+  //     (data: any[]) => {
+  //       this.dentists = data;
+  //       console.log('Dentists loaded successfully:', this.dentists);
+  //     },
+  //     (error) => {
+  //       console.error('Error loading dentists:', error);
+  //     }
+  //   );
+  // }
+  loadOrderTypes(): void {
+    this.dataService.getOrderTypes().subscribe(
       (data: any[]) => {
-        this.dentists = data;
-        console.log('Dentists loaded successfully:', this.dentists);
+        this.orderTypes = data;
+        console.log('Order types loaded successfully:', this.orderTypes);
       },
       (error) => {
-        console.error('Error loading dentists:', error);
+        console.error('Error loading order types:', error);
       }
     );
   }
-  
+
+  loadOrderStatuses(): void {
+    this.dataService.getOrderStatuses().subscribe(
+      (data: any[]) => {
+        this.orderStatus = data;
+        console.log('Order statuses loaded successfully:', this.orderStatus);
+      },
+      (error) => {
+        console.error('Error loading order statuses:', error);
+      }
+    );
+  }
+
+  loadOrderDirections(): void {
+    this.dataService.getOrderDirections().subscribe(
+      (data: any[]) => {
+        this.orderDirections = data;
+        console.log('Order directions loaded successfully:', this.orderDirections);
+      },
+      (error) => {
+        console.log('Error loading order directions:', error);
+      }
+    );
+  }
+
   loadMedicalAids(): void {
     this.dataService.getMedicalAids().subscribe(
       (data: any[]) => {
@@ -176,6 +224,8 @@ export class AddOrderComponent implements OnInit {
         MedicalAidId: formData.MedicalAidId,
         MedicalAidNumber: formData.MedicalAidNumber,
         OrderDirectionId: formData.OrderDirectionId,
+        OrderTypeId: formData.OrderTypeId,
+        OrderStatusId: formData.OrderStatusId,
         EmergencyNumber: formData.EmergencyNumber,
         SpecialRequirements: formData.SpecialRequirements,
         DueDate: formData.DueDate,

@@ -37,17 +37,45 @@
             </select>
           </div>
     
-        <!-- Order Direction Selection Dropdown -->
-        <div class="form-group">
-          <label for="OrderDirectionId">Order Direction:</label>
-          <select formControlName="OrderDirectionId" class="form-control" id="OrderDirectionId" title="Select Order Direction">
-            <option *ngFor="let direction of orderDirections" [value]="direction.Id">
-              {{ direction.Id }} - {{ direction.Description }}
-            </option>
-          </select>
-        </div>
+       <!-- Order Type Selection Dropdown -->
+       <div class="form-group">
+        <label for="OrderTypeId">Order Type:</label>
+        <select formControlName="OrderTypeId" class="form-control" id="OrderTypeId">
+          <option *ngFor="let type of orderTypes" [ngValue]="type.orderTypeId">
+            {{ type.description }}
+          </option>
+        </select>
+      </div>
+      
+      <!-- Order Status Selection Dropdown -->
+      <div class="form-group">
+        <label for="OrderStatusId">Order Status:</label>
+        <select formControlName="OrderStatusId" class="form-control" id="OrderStatusId">
+          <option *ngFor="let status of orderStatus" [ngValue]="status.orderStatusId">
+            {{ status.description }}
+          </option>
+        </select>
+      </div>
+      
+      <!-- Order Direction Selection Dropdown -->
+      <div class="form-group">
+        <label for="OrderDirectionId">Order Direction:</label>
+        <select formControlName="OrderDirectionId" class="form-control" id="OrderDirectionId">
+          <option *ngFor="let direction of orderDirections" [ngValue]="direction.orderDirectionId">
+            {{ direction.description }}
+          </option>
+        </select>
+      </div>
+      
+      <div class="form-group">
+        <label for="PriorityLevel">Priority Level:</label>
+        <select formControlName="PriorityLevel" class="form-control" id="PriorityLevel">
+          <option disabled selected value="">Select Priority Level</option>
+          <option *ngFor="let level of priorityLevels" [value]="level.value">{{ level.label }}</option>
+        </select>
+      </div>
 
-
+      
       <div>
         <canvas #imageCanvas id="imageCanvas" width="100" height="50"></canvas>
       </div>

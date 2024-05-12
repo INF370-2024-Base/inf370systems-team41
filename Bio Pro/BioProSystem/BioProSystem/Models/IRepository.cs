@@ -24,6 +24,8 @@ namespace BioProSystem.Models
         Task<List<TeethShade>> GetTeethShadesAsync(List<int> teethshadeIds);
         Task<SelectedArea> GetSelectedAreaAsync(int areaId);
         Task<List<SelectedArea>> GetSelectedAreasAsync(List<int> areaIds);
-
+        Task<List<OrderType>> GetOrderTypesAsync();
+        Task<List<OrderStatus>> GetOrderStatusesAsync();
+        
     }
 }
