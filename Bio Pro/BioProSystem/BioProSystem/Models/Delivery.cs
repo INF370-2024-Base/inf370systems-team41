@@ -8,18 +8,22 @@ public partial class Delivery
 {
     [Key]
     public int DeliveryId { get; set; }
+    [Required]
 
-    public int OrderId { get; set; }
+    public string SystemOrderId { get; set; }
+    [Required]
 
-    public int EmployeeId { get; set; }
+    public string EmployeeId { get; set; }
+    [Required]
 
     public DateTime DeliveryDate { get; set; }
+    [Required]
 
-    public int? DeliveryStatusId { get; set; }
+    public string DeliveryStatusId { get; set; }
 
-    public virtual DeliveryStatus? DeliveryStatus { get; set; }
+    public virtual DeliveryStatus DeliveryStatus { get; set; } = null!;
 
     public virtual Employee Employee { get; set; } = null!;
 
-    public virtual SystemOrder Order { get; set; } = null!;
+    public virtual SystemOrder SystemOrder { get; set; } = null!;
 }

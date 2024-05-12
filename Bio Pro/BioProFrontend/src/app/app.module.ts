@@ -9,12 +9,16 @@ import { OpenOrdersComponent } from './open-orders/open-orders.component';
 import { Component, ViewChild } from '@angular/core';
 import { MaterialModule } from './shared/material.module';
 import { MatSidenav } from '@angular/material/sidenav';
+import { AddOrderComponent } from './add-order/add-order.component';
+import { OrdersComponent } from './orders/orders.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    OpenOrdersComponent
+    OpenOrdersComponent,
+    AddOrderComponent,
+    OrdersComponent
   ],
   imports: [
     BrowserModule,

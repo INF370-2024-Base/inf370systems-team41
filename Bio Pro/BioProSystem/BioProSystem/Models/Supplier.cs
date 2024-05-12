@@ -8,6 +8,7 @@ public partial class Supplier
 {
     [Key]
     public int SupplierId { get; set; }
+    [Required]
 
     public string SupplierName { get; set; } = null!;
 

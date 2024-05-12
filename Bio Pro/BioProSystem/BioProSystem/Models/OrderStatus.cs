@@ -9,9 +9,9 @@ public partial class OrderStatus
     [Key]
     public int OrderStatusId { get; set; }
 
-    public string OrderStatusState { get; set; } = null!;
+    [Required]
 
-    public string Description { get; set; } = null!;
+    public string Description { get; set; }
 
-    public virtual ICollection<OrderDetail> OrderDetails { get; set; } = new List<OrderDetail>();
+    public virtual ICollection<SystemOrder> OrderDetails { get; set; } = new List<SystemOrder>();
 }

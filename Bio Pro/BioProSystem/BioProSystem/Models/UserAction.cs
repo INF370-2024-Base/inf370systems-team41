@@ -9,7 +9,8 @@ public partial class UserAction
     [Key]
     public int ActionId { get; set; }
 
-    public int UserId { get; set; }
+    public string UserId { get; set; }
+    [Required]
 
     public string Description { get; set; } = null!;
 

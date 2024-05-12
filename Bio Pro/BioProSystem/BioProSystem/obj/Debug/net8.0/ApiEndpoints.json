@@ -1,0 +1,335 @@
+[
+  {
+    "ContainingType": "BioProSystem.Controllers.OrderController",
+    "Method": "Add",
+    "RelativePath": "AddOrders",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "OrderId",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "OrderDate",
+        "Type": "System.DateTime",
+        "IsRequired": false
+      },
+      {
+        "Name": "PatientName",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "PatientSurname",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "MedicalAidId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "MedicalAidNumber",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "OrderDirectionId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "SelectedMouthArea",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "EmergencyNumber",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "DueDate",
+        "Type": "System.DateTime",
+        "IsRequired": false
+      },
+      {
+        "Name": "SpecialRequirements",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "PriorityLevel",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Dentists",
+        "Type": "Microsoft.AspNetCore.Mvc.Rendering.SelectList",
+        "IsRequired": false
+      },
+      {
+        "Name": "MedicalAids",
+        "Type": "Microsoft.AspNetCore.Mvc.Rendering.SelectList",
+        "IsRequired": false
+      },
+      {
+        "Name": "OrderDirections",
+        "Type": "Microsoft.AspNetCore.Mvc.Rendering.SelectList",
+        "IsRequired": false
+      },
+      {
+        "Name": "PriorityLevels",
+        "Type": "Microsoft.AspNetCore.Mvc.Rendering.SelectList",
+        "IsRequired": false
+      },
+      {
+        "Name": "MouthArea.SelectedAreaId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "MouthArea.X",
+        "Type": "System.Decimal",
+        "IsRequired": false
+      },
+      {
+        "Name": "MouthArea.Y",
+        "Type": "System.Decimal",
+        "IsRequired": false
+      },
+      {
+        "Name": "MouthArea.Width",
+        "Type": "System.Decimal",
+        "IsRequired": false
+      },
+      {
+        "Name": "MouthArea.Height",
+        "Type": "System.Decimal",
+        "IsRequired": false
+      },
+      {
+        "Name": "MouthArea.SystemOrdersId",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "DentistId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "OpenOrderId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "OrderStatusId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "OrderWorkflowTimelineId",
+        "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      },
+      {
+        "Name": "OrderTypeId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "BioProSystem.Controllers.OrderController",
+    "Method": "GetDentists",
+    "RelativePath": "api/dentists",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "BioProSystem.Controllers.OrderController",
+    "Method": "GetMedicalAids",
+    "RelativePath": "api/medicalaids",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "BioProSystem.Controllers.LoginController",
+    "Method": "AssignRole",
+    "RelativePath": "AssignRole",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "emailAddress",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "roleName",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "BioProSystem.Controllers.TeethShadeController",
+    "Method": "GetTeethShadeColors",
+    "RelativePath": "colors",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[BioProSystem.Models.TeethShade, BioProSystem, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "BioProSystem.Controllers.OrderController",
+    "Method": "Create",
+    "RelativePath": "Create",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "BioProSystem.Controllers.LoginController",
+    "Method": "CreateRole",
+    "RelativePath": "CreateRole",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "roleName",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "BioProSystem.Controllers.OpenOrderController",
+    "Method": "GetAllOpenOrders",
+    "RelativePath": "GetAllOpenOrders",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "BioProSystem.Controllers.OrderController",
+    "Method": "GetAllSystemOrdersAsync",
+    "RelativePath": "GetAllOrders/{OrderId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "OrderId",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "BioProSystem.Controllers.OpenOrderController",
+    "Method": "GetOpenOrderAsync",
+    "RelativePath": "GetOpenOrder/{OpenOrderID}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "OpenOrderID",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "BioProSystem.Controllers.LoginController",
+    "Method": "GetUser",
+    "RelativePath": "GetSignInProfile/{emailAddress}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "emailAddress",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "BioProSystem.Controllers.LoginController",
+    "Method": "Login",
+    "RelativePath": "Login",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "uvm",
+        "Type": "BioProSystem.ViewModels.SystemUserViewModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "BioProSystem.Controllers.LoginController",
+    "Method": "Register",
+    "RelativePath": "Register",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "uvm",
+        "Type": "BioProSystem.ViewModels.SystemUserAddViewModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "BioProSystem.Controllers.LoginController",
+    "Method": "RoleTest",
+    "RelativePath": "RoleTest",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  }
+]

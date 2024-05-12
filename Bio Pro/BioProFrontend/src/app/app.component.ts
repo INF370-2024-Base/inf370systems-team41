@@ -7,5 +7,10 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   isSidenavOpen = true;
+  isOrdersMenuOpen = false;
   title = 'BioProSystem';
+  toggleOrdersMenu(): void {
+    this.isOrdersMenuOpen = !this.isOrdersMenuOpen;
+  }
+
 }

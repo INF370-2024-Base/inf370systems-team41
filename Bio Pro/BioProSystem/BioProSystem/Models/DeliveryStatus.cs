@@ -8,6 +8,7 @@ public partial class DeliveryStatus
 {
     [Key]
     public int DeliveryStatusId { get; set; }
+    [Required]
 
     public string Status { get; set; } = null!;
 

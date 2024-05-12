@@ -32,17 +32,11 @@ namespace BioProSystem.Models
 
     public virtual DbSet<JobTitle> JobTitles { get; set; }
 
-    public virtual DbSet<LatePayment> LatePayments { get; set; }
-
-    public virtual DbSet<Login> Logins { get; set; }
-
     public virtual DbSet<MediaFile> MediaFiles { get; set; }
 
     public virtual DbSet<MedicalAid> MedicalAids { get; set; }
 
     public virtual DbSet<OpenOrder> OpenOrders { get; set; }
-
-    public virtual DbSet<OrderDetail> OrderDetails { get; set; }
 
     public virtual DbSet<OrderDirection> OrderDirections { get; set; }
 
@@ -76,6 +70,8 @@ namespace BioProSystem.Models
 
     public virtual DbSet<Supplier> Suppliers { get; set; }
 
+    public virtual DbSet<SelectedArea> SelectedAreas { get; set; }
+
     public virtual DbSet<SystemOrder> SystemOrders { get; set; }
 
     public virtual DbSet<SystemUser> SystemUsers { get; set; }
@@ -84,13 +80,23 @@ namespace BioProSystem.Models
 
     public virtual DbSet<UserAction> UserActions { get; set; }
 
-    public virtual DbSet<WorkflowStatus> WorkflowStatuses { get; set; }
+    public virtual DbSet<EmployeeDailyHours> EmployeeDailyHours { get; set; }
 
-    public virtual DbSet<WorkflowStructure> WorkflowStructures { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-
+            modelBuilder.Entity<OrderWorkflowTimeline>()
+                .HasOne(owt => owt.systemOrder) 
+                .WithOne(so => so.OrderWorkflowTimeline)
+                .HasForeignKey<SystemOrder>(so => so.OrderWorkflowTimelineId);
+            modelBuilder.Entity<Payment>()
+                .HasOne(owt => owt.RefundPayments)
+                .WithOne(so => so.Payment)
+                .HasForeignKey<RefundPayment>(so => so.PaymentId);
+            modelBuilder.Entity<OrderWorkflowTimeline>()
+                .HasOne(owt => owt.systemOrder)
+                .WithOne(so => so.OrderWorkflowTimeline)
+                .HasForeignKey<SystemOrder>(so => so.OrderWorkflowTimelineId);
         }
 
     }

@@ -7,15 +7,20 @@ namespace BioProSystem.Models;
 public partial class OrderWorkflowTimeline
 {
     [Key]
-    public int? WorkflowStructureId { get; set; }
+    public int WorkflowStructureId { get; set; }
 
     public int? TimelineId { get; set; }
 
-    public int? OrderDetailId { get; set; }
+    [Required] 
+    public int SystemOrderId { get; set; }
+    [Required]
+    public int OrderDirectionId { get; set; }
+    [Required]
+    public string TimelineDetails { get; set; }
 
-    public virtual OrderDetail? OrderDetail { get; set; }
+    public virtual ProceduralTimeline? Timeline { get; set; } = null!;
 
-    public virtual ProceduralTimeline? Timeline { get; set; }
+    public virtual SystemOrder systemOrder { get; set; } = null!;
 
-    public virtual WorkflowStructure? WorkflowStructure { get; set; }
+    public virtual OrderDirection orderDirection { get; set; } = null!;
 }

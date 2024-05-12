@@ -8,16 +8,18 @@ public partial class MediaFile
 {
     [Key]
     public int MediaFileId { get; set; }
-
+    [Required]
+    public string SystemOrderId { get; set; }
     public string FileName { get; set; } = null!;
+    [Required]
 
     public byte[] FileSelf { get; set; } = null!;
 
-    public decimal FileSizeKb { get; set; }
+    public decimal? FileSizeKb { get; set; } = null!;
 
-    public DateTime ExportDate { get; set; }
+    public DateTime? ExportDate { get; set; } = null!;
 
-    public string? ExportStatus { get; set; }
+    public string? ExportStatus { get; set; } = null!;
 
-    public virtual ICollection<OrderDetail> OrderDetails { get; set; } = new List<OrderDetail>();
+    public virtual SystemOrder SystemOrder { get; set; } = null!;
 }

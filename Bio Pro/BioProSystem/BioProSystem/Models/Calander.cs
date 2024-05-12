@@ -9,13 +9,12 @@ public partial class Calander
     [Key]
     public int CalanderId { get; set; }
 
-    public int? TimelineId { get; set; }
+    public int TimelineId { get; set; }
 
-    public int? EventId { get; set; }
+    [Required]
 
     public string Title { get; set; } = null!;
 
-    public virtual CalanderScheduleEvent? Event { get; set; }
-
-    public virtual ProceduralTimeline? Timeline { get; set; }
+    public virtual ICollection<CalanderScheduleEvent>? Events { get; set; } = new List<CalanderScheduleEvent>();
+    public virtual ICollection<ProceduralTimeline>? Timeline { get; set; } = new List<ProceduralTimeline>();
 }
