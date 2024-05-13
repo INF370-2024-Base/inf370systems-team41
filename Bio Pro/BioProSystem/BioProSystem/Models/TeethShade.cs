@@ -16,5 +16,5 @@ public partial class TeethShade
 
     public string ColourCode { get; set; } = null!;
 
-    public virtual ICollection<SystemOrder> SystemOrders { get; set; } = new List<SystemOrder>();
+    public virtual ICollection<SystemOrder>? SystemOrders { get; set; } = new List<SystemOrder>();
 }

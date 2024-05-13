@@ -48,6 +48,11 @@
         "IsRequired": false
       },
       {
+        "Name": "EstimatedDurationInDays",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
         "Name": "OrderDirectionMaincategory",
         "Type": "System.String",
         "IsRequired": false
@@ -104,6 +109,11 @@
       },
       {
         "Name": "PriorityLevels",
+        "Type": "Microsoft.AspNetCore.Mvc.Rendering.SelectList",
+        "IsRequired": false
+      },
+      {
+        "Name": "TeethShades",
         "Type": "Microsoft.AspNetCore.Mvc.Rendering.SelectList",
         "IsRequired": false
       },
@@ -196,6 +206,26 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "BioProSystem.Controllers.OrderController",
+    "Method": "GetTeethShadeColors",
+    "RelativePath": "api/teethshades",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[BioProSystem.Models.TeethShade, BioProSystem, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
     "ContainingType": "BioProSystem.Controllers.LoginController",
     "Method": "AssignRole",
     "RelativePath": "AssignRole",
@@ -215,26 +245,6 @@
       }
     ],
     "ReturnTypes": []
-  },
-  {
-    "ContainingType": "BioProSystem.Controllers.TeethShadeController",
-    "Method": "GetTeethShadeColors",
-    "RelativePath": "colors",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [],
-    "ReturnTypes": [
-      {
-        "Type": "System.Collections.Generic.IEnumerable\u00601[[BioProSystem.Models.TeethShade, BioProSystem, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 200
-      }
-    ]
   },
   {
     "ContainingType": "BioProSystem.Controllers.OrderController",

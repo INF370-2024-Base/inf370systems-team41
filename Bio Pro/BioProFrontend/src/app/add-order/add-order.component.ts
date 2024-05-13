@@ -21,6 +21,8 @@ export class AddOrderComponent implements OnInit {
   medicalAids: any[] = [];
   orderTypes:any[] =[];
   orderStatus:any[] =[];
+  teethShades: any[] =[]; 
+  selectedTeethShadeIds: number[] = [];
   orderDirections: any[] = [];
   addForm!: FormGroup;
   @ViewChild('imageCanvas', { static: true }) canvasRef!: ElementRef<HTMLCanvasElement>; 
@@ -49,7 +51,7 @@ export class AddOrderComponent implements OnInit {
       Height: ['', Validators.required],
       EmergencyNumber: ['', Validators.required],
       SpecialRequirements: [''],
-     
+      SelectedTeethShadeIds: [[]],
       DueDate: ['', Validators.required],
       SelectedAreas: [[]] // Initialize SelectedAreas as an empty array
     });
@@ -63,6 +65,7 @@ export class AddOrderComponent implements OnInit {
     this.loadOrderDirections();
     this.loadOrderTypes();
     this.loadOrderStatuses();
+    this.loadTeethShades();
   }
 
   loadDentists(): void {
@@ -78,17 +81,33 @@ export class AddOrderComponent implements OnInit {
     );
   }
 
-  // loadDentist(): void {
-  //   this.dataService.getDentists().subscribe(
-  //     (data: any[]) => {
-  //       this.dentists = data;
-  //       console.log('Dentists loaded successfully:', this.dentists);
-  //     },
-  //     (error) => {
-  //       console.error('Error loading dentists:', error);
-  //     }
-  //   );
-  // }
+  loadTeethShades(): void {
+    this.dataService.getTeethShades().subscribe(
+      (data: any[]) => {
+        console.log('Teeth shades response:', data); // Log the response data
+        this.teethShades = data; // Update component property with fetched data
+        console.log('Teeth shades loaded successfully:', this.teethShades);
+      },
+      (error) => {
+        console.error('Error loading teeth shades:', error);
+      }
+    );
+  }
+  
+  toggleTeethShadeSelection(shadeId: number): void {
+    const index = this.selectedTeethShadeIds.indexOf(shadeId);
+    if (index === -1) {
+      this.selectedTeethShadeIds.push(shadeId);
+    } else {
+      this.selectedTeethShadeIds.splice(index, 1);
+    }
+  }
+
+  isSelected(shadeId: number): boolean {
+    return this.selectedTeethShadeIds.includes(shadeId);
+  }
+
+
   loadOrderTypes(): void {
     this.dataService.getOrderTypes().subscribe(
       (data: any[]) => {

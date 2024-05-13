@@ -8,7 +8,7 @@ import { OpenOrder } from '../shared/openorder';
 })
 export class DataService {
 
-  apiUrl = 'https://localhost:7280/api/';
+  apiUrl = 'https://localhost:7280/';
 
   httpOptions ={
     headers: new HttpHeaders({
@@ -20,53 +20,57 @@ export class DataService {
   }
 
   getOpenOrders(): Observable<any>{
-    return this.httpClient.get(`${this.apiUrl}GetAllOpenOrders`)
+    return this.httpClient.get(`${this.apiUrl}api/GetAllOpenOrders`)
     .pipe(map(result => result))
   }
 
 
   getOpenOrderId(openOrderID: string): Observable<OpenOrder>{
-    return this.httpClient.get<OpenOrder>(`${this.apiUrl}GetOpenOrder/` + openOrderID)
+    return this.httpClient.get<OpenOrder>(`${this.apiUrl}api/GetOpenOrder/` + openOrderID)
   }
 
   addOrder(orderData: any): Observable<any> {
-    return this.httpClient.post<any>(`${this.apiUrl}AddOrders`, orderData, this.httpOptions);
+    return this.httpClient.post<any>(`${this.apiUrl}api/AddOrders`, orderData, this.httpOptions);
   }
 
 
 
   getAllOrders(orderId: number): Observable<any[]> {
-    return this.httpClient.get<any[]>(`${this.apiUrl}GetAllOrders/${orderId}`);
+    return this.httpClient.get<any[]>(`${this.apiUrl}api/GetAllOrders/${orderId}`);
   }
 
   getAllOrderById(orderId: string): Observable<any> {
-    return this.httpClient.get<any>(`${this.apiUrl}GetAllOrder/${orderId}`);
+    return this.httpClient.get<any>(`${this.apiUrl}api/GetAllOrder/${orderId}`);
   }
 
   getDentists(): Observable<any[]> {
-    const endpoint = 'dentists'; // Update with correct endpoint for fetching dentists
+    const endpoint = 'api/dentists'; // Update with correct endpoint for fetching dentists
     return this.httpClient.get<any[]>(`${this.apiUrl}${endpoint}`);
   }
   getMedicalAids(): Observable<any[]> {
-    const endpoint = 'medicalaids'; // Update with correct endpoint for fetching medical aids
+    const endpoint = 'api/medicalaids'; // Update with correct endpoint for fetching medical aids
     return this.httpClient.get<any[]>(`${this.apiUrl}${endpoint}`);
   }
 
   getOrderTypes(): Observable<any[]> {
-    const endpoint = 'orderTypes'; // Correct endpoint for fetching order types
+    const endpoint = 'api/orderTypes'; // Correct endpoint for fetching order types
     return this.httpClient.get<any[]>(`${this.apiUrl}${endpoint}`);
   }
   
   getOrderStatuses(): Observable<any[]> {
-    const endpoint = 'orderStatuses'; // Correct endpoint for fetching order statuses
+    const endpoint = 'api/orderStatuses'; // Correct endpoint for fetching order statuses
     return this.httpClient.get<any[]>(`${this.apiUrl}${endpoint}`);
   }
   
   getOrderDirections(): Observable<any[]> {
-    const endpoint = 'orderDirections'; // Correct endpoint for fetching order directions
+    const endpoint = 'api/orderDirections'; // Correct endpoint for fetching order directions
     return this.httpClient.get<any[]>(`${this.apiUrl}${endpoint}`);
   }
-  
+
+  getTeethShades(): Observable<any[]> {
+    const endpoint = 'api/teethshades'; // Updated endpoint
+    return this.httpClient.get<any[]>(`${this.apiUrl}${endpoint}`);
+  }
 }
 
 

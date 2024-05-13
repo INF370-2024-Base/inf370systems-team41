@@ -1,1 +1,23 @@
-<p>orders works!</p>
+<!-- <p>orders works!</p> -->
+
+<div>
+    <h2>Search Orders</h2>
+    <label for="orderIdInput">Enter Order ID:</label>
+    <input type="text" id="orderIdInput" [(ngModel)]="orderId" />
+    <button (click)="searchOrders()">Search</button>
+  
+    <div *ngIf="orders.length > 0">
+      <h3>Search Results:</h3>
+      <ul>
+        <li *ngFor="let order of orders">
+          <strong>Order ID:</strong> {{ order.orderId }}<br>
+          <!-- Display other order properties here -->
+        </li>
+      </ul>
+    </div>
+  
+    <div *ngIf="orders.length === 0 && orderId.trim() !== ''">
+      <p>No orders found.</p>
+    </div>
+  </div>
+  

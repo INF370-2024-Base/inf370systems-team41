@@ -31,6 +31,9 @@ namespace BioProSystem.ViewModels
         public int? OrderDirectionId { get; set; }
         public string MouthArea { get; set; }
 
+        [Required(ErrorMessage = "Please enter the estimated duration in days.")]
+        public int EstimatedDurationInDays { get; set; }
+
         [Required]
         public string OrderDirectionMaincategory { get; set; }
         public string OrderDirectionSubcategory { get; set; }
@@ -51,6 +54,7 @@ namespace BioProSystem.ViewModels
         public SelectList MedicalAids { get; set; }
         public SelectList OrderDirections { get; set; }
         public SelectList PriorityLevels { get; set; }
+        public SelectList TeethShades { get; set; }
 
         public List<int> TeethShadesIds { get; set; }
         public List<int> SeletedAreasIds { get; set; }

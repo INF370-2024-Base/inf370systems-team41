@@ -68,22 +68,33 @@ namespace BioProSystem.Controllers
                         MouthArea=viewModel.MouthArea,
                         
                     };
-                    foreach (TeethShade teethShade in _repository.GetTeethShadesAsync(viewModel.TeethShadesIds).Result)
+
+                    var teethShades = await _repository.GetTeethShadesAsync(viewModel.TeethShadesIds);
+
+                    if (teethShades == null || !teethShades.Any())
+                    {
+                        return NotFound("No teeth shades found");
+                    }
+
+                    foreach (var teethShade in teethShades)
                     {
                         newOrder.TeethShades.Add(teethShade);
+                        teethShade.SystemOrders.Add(newOrder); // Assuming bidirectional association
                     }
+
                     foreach (SelectedArea selected in _repository.GetSelectedAreasAsync(viewModel.SeletedAreasIds).Result)
                     {
                         newOrder.SelectedAreas.Add(selected);
+
                     }
                     foreach (TeethShade teethShade in _repository.GetTeethShadesAsync(viewModel.TeethShadesIds).Result)
                     {
                         teethShade.SystemOrders.Add(newOrder);
                     }
-                    foreach (SelectedArea selected in _repository.GetSelectedAreasAsync(viewModel.SeletedAreasIds).Result)
-                    {
-                        selected.SystemOrders.Add(newOrder);
-                    }
+                  //  foreach (SelectedArea selected in _repository.GetSelectedAreasAsync(viewModel.SeletedAreasIds).Result)
+                  //  {
+                  //      selected.SystemOrders.Add(newOrder);
+                  //  }
                     OpenOrder newOpenOrder = new OpenOrder();
                     if (viewModel.OrderTypeId==1)
                     {
@@ -226,6 +237,27 @@ namespace BioProSystem.Controllers
             }
         }
 
+        // GET: api/teethshade/colors
+        [HttpGet("api/teethshades")]
+        public async Task<ActionResult<IEnumerable<TeethShade>>> GetTeethShadeColors()
+        {
+            try
+            {
+                var teethShades = await _repository.GetAllTeethShadesAsync(); // Await the asynchronous method
+
+                if (teethShades == null || !teethShades.Any())
+                {
+                    return NotFound("No teeth shades found");
+                }
+
+                return Ok(teethShades); // Return list of teeth shades as JSON response
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal Server Error: {ex.Message}"); // Handle and log any exceptions
+            }
+        }
+
         [HttpGet("Create")]
         public async Task<IActionResult> Create()
         {
@@ -239,7 +271,12 @@ namespace BioProSystem.Controllers
                 viewModel.OrderDirections = new SelectList(await _repository.GetOrderDirectionsAsync(), "OrderDirectionId", "Name");
                 viewModel.OrderType = new SelectList(await _repository.GetOrderTypesAsync(), "OrderTypeId", "Name");
                 viewModel.OrderStatus = new SelectList(await _repository.GetOrderStatusesAsync(), "OrderStatusId", "Name");
-               
+                var allTeethShades = await _repository.GetAllTeethShadesAsync();
+
+                // Create a SelectList for TeethShades with appropriate display and value fields
+                viewModel.TeethShades = new SelectList(allTeethShades, "TeethShadeId", "Colour", "ColourCode");
+
+
 
                 return View(viewModel);
             }

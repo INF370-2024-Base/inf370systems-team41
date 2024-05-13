@@ -91,6 +91,23 @@
           </div>
         </div>
       </div>
+       <div></div>
+
+      <div class="color-chart">
+  <h3>Select Teeth Shades</h3>
+  <div class="shade-container">
+    
+    <!-- Loop through teethShades array and display each shade -->
+    <div *ngFor="let shade of teethShades" class="shade-item" (click)="toggleTeethShadeSelection(shade.teethShadeId)">
+      <!-- Display color box with the shade's color -->
+      <div class="color-box" [style.background]="shade.colourCode"></div>
+      <div class="color-name">{{ shade.colourName }}</div>
+      <!-- Display check mark if shade is selected -->
+      <div *ngIf="isSelected(shade.teethShadeId)" class="selected-mark">&#10003;</div>
+    </div>
+  </div>
+</div>
+
       <!-- Additional Form Controls -->
       <div class="form-group">
         <label for="EmergencyNumber">Emergency Number:</label>
