@@ -70,6 +70,7 @@ namespace BioProSystem.Controllers
                     };
 
                     var teethShades = await _repository.GetTeethShadesAsync(viewModel.TeethShadesIds);
+                    var selectedAreas = await _repository.GetTeethShadesAsync(viewModel.SeletedAreasIds);
 
                     if (teethShades == null || !teethShades.Any())
                     {
@@ -82,19 +83,31 @@ namespace BioProSystem.Controllers
                         teethShade.SystemOrders.Add(newOrder); // Assuming bidirectional association
                     }
 
-                    foreach (SelectedArea selected in _repository.GetSelectedAreasAsync(viewModel.SeletedAreasIds).Result)
+                    if (selectedAreas == null || !selectedAreas.Any())
                     {
-                        newOrder.SelectedAreas.Add(selected);
+                        return NotFound("No teeth shades found");
+                    }
 
-                    }
-                    foreach (TeethShade teethShade in _repository.GetTeethShadesAsync(viewModel.TeethShadesIds).Result)
+                    foreach (var selectedarea in selectedAreas)
                     {
-                        teethShade.SystemOrders.Add(newOrder);
+                        newOrder.TeethShades.Add(selectedarea);
+                        selectedarea.SystemOrders.Add(newOrder); // Assuming bidirectional association
                     }
-                  //  foreach (SelectedArea selected in _repository.GetSelectedAreasAsync(viewModel.SeletedAreasIds).Result)
-                  //  {
-                  //      selected.SystemOrders.Add(newOrder);
-                  //  }
+
+                    //foreach (SelectedArea selected in _repository.GetSelectedAreasAsync(viewModel.SeletedAreasIds).Result)
+                    //{
+                    //    newOrder.SelectedAreas.Add(selected);
+
+                    //}
+                    //foreach (TeethShade teethShade in _repository.GetTeethShadesAsync(viewModel.TeethShadesIds).Result)
+                    //{
+                    //    teethShade.SystemOrders.Add(newOrder);
+                    //}
+                    //foreach (SelectedArea selected in _repository.GetSelectedAreasAsync(viewModel.SeletedAreasIds).Result)
+                    //{
+                    //    selected.SystemOrders.Add(newOrder);
+
+                    //}
                     OpenOrder newOpenOrder = new OpenOrder();
                     if (viewModel.OrderTypeId==1)
                     {
