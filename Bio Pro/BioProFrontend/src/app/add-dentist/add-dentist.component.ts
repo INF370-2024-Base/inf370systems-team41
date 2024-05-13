@@ -1,8 +1,9 @@
-// add-dentist.component.ts
 import { Component, OnInit } from '@angular/core';
+import { NgForm } from '@angular/forms'; // Import NgForm
 import { Router } from '@angular/router';
 import { DataService } from '../services/data.service';
 import { Dentist } from '../shared/dentist';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-add-dentist',
@@ -18,18 +19,35 @@ export class AddDentistComponent implements OnInit {
     address: ''
   };
 
-  constructor(private dataService: DataService, private router: Router) { }
+  constructor(
+    private dataService: DataService, 
+    private router: Router, 
+    private snackBar: MatSnackBar // Corrected constructor with MatSnackBar
+  ) { }
 
   ngOnInit(): void {
   }
 
-  addDentist() {
-    this.dataService.addDentist(this.addDentistAtt).subscribe({
-      next: (dentist) => {
-        this.router.navigate(['dentists']);
-        console.log(dentist);
-      }
-    });
+  addDentist(form: NgForm) {
+    if (form.valid) {
+      this.dataService.addDentist(this.addDentistAtt).subscribe({
+        next: (dentist) => {
+          this.router.navigate(['dentists']);
+          this.snackBar.open('Dentist added successfully!', 'Close', {
+            duration: 3000,
+            panelClass: ['snackbar-success'] // Optional: custom CSS class for styling
+          });
+          console.log(dentist);
+        },
+        error: (error) => {
+          this.snackBar.open('Error adding dentist: ' + error.message, 'Close', {
+            duration: 3000,
+            panelClass: ['snackbar-error'] // Optional: custom CSS class for styling
+          });
+          console.error('Error adding dentist:', error);
+        }
+      });
+    }
   }
 
   cancel() {

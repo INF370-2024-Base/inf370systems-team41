@@ -31,15 +31,15 @@ export class DataService {
     return this.httpClient.get<OpenOrder>(`${this.apiUrl}GetOpenOrder/` + openOrderID)
   }
 
-  addEmployee(addEmployeeAtt: Employee): Observable<Employee> {
-    return this.httpClient.post<Employee>(`${this.apiUrl}Employee/AddEmployee`, addEmployeeAtt)
-     .pipe(map(result => result));
+  addEmployee(employee: Employee): Observable<Employee> {
+    return this.httpClient.post<Employee>('https://localhost:44315/api/Employee/AddEmployee', employee);
   }
   
+  
   addDentist(dentist: Dentist): Observable<Dentist> {
-    return this.httpClient.post<Dentist>(`${this.apiUrl}Dentist/AddDentist`, dentist)
-    .pipe(map(result => result));
+    return this.httpClient.post<Dentist>('https://localhost:44315/api/Dentist/AddDentist', dentist);
   }
+  
 }
 
 

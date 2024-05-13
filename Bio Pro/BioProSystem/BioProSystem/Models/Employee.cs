@@ -9,7 +9,7 @@ public partial class Employee
     [Key]
     public int EmployeeId { get; set; }
 
-    public int SystemUserId { get; set; }
+    public string SystemUserId { get; set; }
 
     public int? JobTitleId { get; set; }
     [Required]

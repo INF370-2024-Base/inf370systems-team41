@@ -11,6 +11,7 @@ import { MaterialModule } from './shared/material.module';
 import { MatSidenav } from '@angular/material/sidenav';
 import { AddEmployeeComponent } from './add-employee/add-employee.component';
 import { AddDentistComponent } from './add-dentist/add-dentist.component';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 
 @NgModule({
@@ -26,7 +27,8 @@ import { AddDentistComponent } from './add-dentist/add-dentist.component';
     ReactiveFormsModule,
     HttpClientModule,
     FormsModule,
-    BrowserAnimationsModule,MaterialModule
+    BrowserAnimationsModule,MaterialModule,
+    MatSnackBarModule
   ],
   providers: [],
   bootstrap: [AppComponent]

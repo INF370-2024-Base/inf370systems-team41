@@ -16,6 +16,8 @@ namespace BioProSystem.Models
         Task<Employee> GetEmployeeByIdAsync(int id);
         Task<Employee> UpdateEmployeeAsync(Employee employee);
         Task<bool> DeleteEmployeeAsync(Employee employee);
+
+        Task<Employee> AddEmployeeWithSystemUserAsync(Employee employee, string systemUserEmail);
         //Dentist 
         Task<Dentist[]> GetAllDentistsAsync();
         Task<Dentist> GetDentistAsync(int dentistId);

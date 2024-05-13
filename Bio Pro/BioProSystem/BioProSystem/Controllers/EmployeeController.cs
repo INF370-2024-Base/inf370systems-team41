@@ -29,7 +29,7 @@ namespace BioProSystem.Controllers
                 // Create a new Employee entity
                 var employee = new Employee
                 {
-                    UserId = model.UserId,
+                    //UserId = model.UserId,
                     JobTitleId = model.JobTitleId,
                     FirstName = model.FirstName,
                     LastName = model.LastName,

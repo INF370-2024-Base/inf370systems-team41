@@ -1,8 +1,10 @@
 // add-employee.component.ts
 import { Component, OnInit } from '@angular/core';
+import { NgForm } from '@angular/forms'; // Import NgForm
 import { Router } from '@angular/router';
 import { DataService } from '../services/data.service';
 import { Employee } from '../shared/employee';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-add-employee',
@@ -27,18 +29,32 @@ export class AddEmployeeComponent implements OnInit {
     { id: 4, title: 'Delivery' }
   ];
 
-  constructor(private dataService: DataService, private router: Router) { }
-
+  constructor(
+    private dataService: DataService,
+    private router: Router,
+    private snackBar: MatSnackBar // Inject MatSnackBar
+  ) { }
   ngOnInit(): void {
   }
 
-  addEmployee() {
-    this.dataService.addEmployee(this.addEmployeeAtt).subscribe({
-      next: (employee) => {
-        this.router.navigate(['employees']);
-        console.log(employee);
-      }
-    });
+  addEmployee(form: NgForm) {
+    if (form.valid) {
+      this.dataService.addEmployee(this.addEmployeeAtt).subscribe({
+        next: (employee: Employee) => {
+          this.snackBar.open(`Employee added successfully`, 'Close', {
+            duration: 3000,
+            panelClass: ['success-snackbar'] // Optional: custom CSS class for styling
+          });
+          this.router.navigate(['employees']);
+        },
+        error: (error: any) => {
+          this.snackBar.open(`Error adding employee: ${error.message}`, 'Close', {
+            duration: 3000,
+            panelClass: ['error-snackbar'] // Optional: custom CSS class for styling
+          });
+        }
+      });
+    }
   }
 
   cancel() {

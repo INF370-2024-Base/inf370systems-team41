@@ -3,7 +3,7 @@
     <h1>Add New Employee</h1>
     <div class="row">
       <div class="col-6">
-        <form #form="ngForm" (ngSubmit)="addEmployee()" novalidate>
+        <form #form="ngForm" (ngSubmit)="addEmployee(form)" novalidate>
           <div class="row mb-3">
             <label for="firstName" class="col-sm-2 col-form-label">First Name</label>
             <input type="text" class="form-control" id="firstName" name="firstName" [(ngModel)]="addEmployeeAtt.firstName" required #firstNameField="ngModel">

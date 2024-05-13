@@ -3,11 +3,7 @@
     <h1>Add New Dentist</h1>
     <div class="row">
       <div class="col-6">
-        <form #form="ngForm" (ngSubmit)="addDentist()" novalidate>
-          <div class="row mb-3">
-            <label for="dentistId" class="col-sm-2 col-form-label">Dentist ID</label>
-            <input type="number" class="form-control" id="dentistId" name="dentistId" [(ngModel)]="addDentistAtt.dentistId" required #dentistIdField="ngModel">
-          </div>
+        <form #form="ngForm" (ngSubmit)="addDentist(form)" novalidate>
           <div class="row mb-3">
             <label for="lastName" class="col-sm-2 col-form-label">Last Name</label>
             <input type="text" class="form-control" id="lastName" name="lastName" [(ngModel)]="addDentistAtt.lastName" required #lastNameField="ngModel">
