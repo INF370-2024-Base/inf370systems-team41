@@ -74,6 +74,7 @@ namespace BioProSystem.Models
         {
             // Find the SystemUser by email
             var systemUser = await _appDbContext.SystemUsers.SingleOrDefaultAsync(u => u.Email == systemUserEmail);
+            Console.WriteLine(systemUserEmail);
 
             if (systemUser == null)
             {

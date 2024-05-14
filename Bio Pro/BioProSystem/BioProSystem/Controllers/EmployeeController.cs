@@ -29,7 +29,7 @@ namespace BioProSystem.Controllers
                 // Create a new Employee entity
                 var employee = new Employee
                 {
-                    //UserId = model.UserId,
+                    SystemUserId = model.UserId,
                     JobTitleId = model.JobTitleId,
                     FirstName = model.FirstName,
                     LastName = model.LastName,
@@ -48,9 +48,9 @@ namespace BioProSystem.Controllers
                     return Ok(employee);
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return StatusCode(500, "Internal Server Error. Please contact support.");
+                return StatusCode(500, ex.Message+"Internal Server Error. Please contact support.");
             }
 
             return BadRequest("Failed to add employee.");
