@@ -18,23 +18,24 @@ namespace BioProSystem.Controllers
 
         // POST api/Employee/AddEmployee
         [HttpPost("AddEmployee")]
-        public async Task<IActionResult> AddEmployee(EmployeeViewModel model)
+        public async Task<IActionResult> AddEmployee(SystemEmployeeAddViewModel model)
         {
             try
             {
                 // Find or create the JobTitle entity for the role
                 var jobTitle = await _repository.GetJobTitleByIdAsync((int)model.JobTitleId);
                 if (jobTitle == null) return BadRequest("JobTitle not found.");
-
+                var systemUser = _repository.GetsystemUserAsync(model.EmailAddress).Result;
+                if (systemUser == null) return BadRequest("Create User First");
                 // Create a new Employee entity
                 var employee = new Employee
                 {
-                    SystemUserId = model.UserId,
+                    SystemUserId = systemUser.Id,
                     JobTitleId = model.JobTitleId,
-                    FirstName = model.FirstName,
-                    LastName = model.LastName,
-                    CellphoneNumber = model.CellphoneNumber,
-                    Email = model.Email,
+                    FirstName = systemUser.Name,
+                    LastName = systemUser.Surname,
+                    CellphoneNumber = model.PhoneNumber,
+                    Email = systemUser.Email,
                     Address = model.Address,
                     JobTitle = jobTitle // Assign the JobTitle
                 };
@@ -131,5 +132,57 @@ namespace BioProSystem.Controllers
                 return StatusCode(500, "Internal Server Error. Please contact support.");
             }
         }
+
+        [HttpPost("AddDailyHours")]
+        public async Task<IActionResult> AddDailyHours(EmployeeDailyHoursViewModel model)
+        {
+            try
+            {
+                var employee = await _repository.GetEmployeeByIdAsync(model.EmployeeId);
+                if (employee == null) return NotFound("Employee not found.");
+
+                var dailyHours = new EmployeeDailyHours
+                {
+                    WorkDate = model.WorkDate,
+                    Hours = model.Hours,
+                    //Employees = employee // Assuming Employee has a navigation property for EmployeeDailyHours
+                };
+
+                _repository.Add(dailyHours);
+
+                if (await _repository.SaveChangesAsync())
+                {
+                    return Ok(dailyHours);
+                }
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message + "Internal Server Error. Please contact support.");
+            }
+
+            return BadRequest("Failed to add daily hours.");
+        }
+
+        [HttpGet("GetDailyHours/{id}")]
+        public async Task<IActionResult> GetDailyHours(int id)
+        {
+            try
+            {
+                var employee = await _repository.GetEmployeeByIdAsync(id);
+                if (employee == null) return NotFound("Employee not found.");
+
+                var dailyHours = employee.EmployeeDailyHours; // Accessing through the navigation property
+
+                if (!dailyHours.Any()) return NotFound("No daily hours found for this employee.");
+
+                return Ok(dailyHours);
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, "Internal Server Error. Please contact support.");
+            }
+        }
+
+
     }
 }

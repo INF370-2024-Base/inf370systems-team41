@@ -5,30 +5,22 @@
       <div class="col-6">
         <form #form="ngForm" (ngSubmit)="addEmployee(form)" novalidate>
           <div class="row mb-3">
-            <label for="firstName" class="col-sm-2 col-form-label">First Name</label>
-            <input type="text" class="form-control" id="firstName" name="firstName" [(ngModel)]="addEmployeeAtt.firstName" required #firstNameField="ngModel">
-          </div>
-          <div class="row mb-3">
-            <label for="lastName" class="col-sm-2 col-form-label">Last Name</label>
-            <input type="text" class="form-control" id="lastName" name="lastName" [(ngModel)]="addEmployeeAtt.lastName" required #lastNameField="ngModel">
-          </div>
-          <div class="row mb-3">
             <label for="jobTitle" class="col-sm-2 col-form-label">Job Title</label>
-            <select class="form-control" id="jobTitle" name="jobTitle" [(ngModel)]="addEmployeeAtt.jobTitleId" required>
+            <select class="form-control" id="jobTitle" name="jobTitle" [(ngModel)]="addEmployeeAtt.JobTitleId" required>
               <option *ngFor="let title of jobTitles" [value]="title.id">{{ title.title }}</option>
             </select>
           </div>
           <div class="row mb-3">
             <label for="cellphoneNumber" class="col-sm-2 col-form-label">Cell Phone Number</label>
-            <input type="tel" class="form-control" id="cellphoneNumber" name="cellphoneNumber" [(ngModel)]="addEmployeeAtt.cellphoneNumber" required #cellphoneNumberField="ngModel">
+            <input type="tel" class="form-control" id="cellphoneNumber" name="cellphoneNumber" [(ngModel)]="addEmployeeAtt.PhoneNumber" required #cellphoneNumberField="ngModel">
           </div>
           <div class="row mb-3">
             <label for="email" class="col-sm-2 col-form-label">Email</label>
-            <input type="email" class="form-control" id="email" name="email" [(ngModel)]="addEmployeeAtt.email" required #emailField="ngModel">
+            <input type="email" class="form-control" id="email" name="email" [(ngModel)]="addEmployeeAtt.EmailAddress" required #emailField="ngModel">
           </div>
           <div class="row mb-3">
             <label for="address" class="col-sm-2 col-form-label">Address</label>
-            <input type="text" class="form-control" id="address" name="address" [(ngModel)]="addEmployeeAtt.address" #addressField="ngModel">
+            <input type="text" class="form-control" id="address" name="address" [(ngModel)]="addEmployeeAtt.Address" #addressField="ngModel">
           </div>
           <button type="submit" class="btn-add" [disabled]="form.invalid">Add</button>
           <button type="button" class="btn-cancel" (click)="cancel()">Cancel</button>

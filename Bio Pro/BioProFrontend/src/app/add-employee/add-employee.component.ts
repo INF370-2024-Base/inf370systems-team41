@@ -13,13 +13,11 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class AddEmployeeComponent implements OnInit {
   addEmployeeAtt: Employee = {
-    userId: 0,
-    jobTitleId: null,
-    firstName: '',
-    lastName: '',
-    cellphoneNumber: '',
-    email: '',
-    address: ''
+    
+    JobTitleId: null,
+    EmailAddress: '',
+    PhoneNumber: '',
+    Address: ''
   };
 
   jobTitles = [

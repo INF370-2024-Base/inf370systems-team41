@@ -2,7 +2,7 @@
 {
     public class EmployeeViewModel
     {
-        public string UserId { get; set; }
+        public string SystemUserId { get; set; }
         public int? JobTitleId { get; set; } // This will be 1 for Admin, 2 for Lab Manager, 3 for Technician
         public string FirstName { get; set; }
         public string LastName { get; set; }

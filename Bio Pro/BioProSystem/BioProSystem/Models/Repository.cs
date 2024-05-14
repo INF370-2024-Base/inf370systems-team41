@@ -120,5 +120,35 @@ namespace BioProSystem.Models
             _appDbContext.Dentists.Remove(dentist);
         }
         //End of Dentist 
+
+        // Implementation for EmployeeDailyHours
+        public async Task<EmployeeDailyHours> AddEmployeeDailyHoursAsync(EmployeeDailyHours employeeDailyHours)
+        {
+            _appDbContext.EmployeeDailyHours.Add(employeeDailyHours);
+            await _appDbContext.SaveChangesAsync();
+            return employeeDailyHours;
+        }
+
+        public async Task<IEnumerable<EmployeeDailyHours>> GetAllEmployeeDailyHoursAsync()
+        {
+            return await _appDbContext.EmployeeDailyHours.ToListAsync();
+        }
+
+        public async Task<EmployeeDailyHours> GetEmployeeDailyHoursAsync(int id)
+        {
+            return await _appDbContext.EmployeeDailyHours.FindAsync(id);
+        }
+
+        public async Task<bool> UpdateEmployeeDailyHoursAsync(EmployeeDailyHours employeeDailyHours)
+        {
+            _appDbContext.Entry(employeeDailyHours).State = EntityState.Modified;
+            return await _appDbContext.SaveChangesAsync() > 0;
+        }
+
+        public async Task<bool> DeleteEmployeeDailyHoursAsync(EmployeeDailyHours employeeDailyHours)
+        {
+            _appDbContext.EmployeeDailyHours.Remove(employeeDailyHours);
+            return await _appDbContext.SaveChangesAsync() > 0;
+        }
     }
 }

@@ -80,6 +80,22 @@
   },
   {
     "ContainingType": "BioProSystem.Controllers.EmployeeController",
+    "Method": "AddDailyHours",
+    "RelativePath": "api/Employee/AddDailyHours",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "model",
+        "Type": "BioProSystem.ViewModels.EmployeeDailyHoursViewModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "BioProSystem.Controllers.EmployeeController",
     "Method": "AddEmployee",
     "RelativePath": "api/Employee/AddEmployee",
     "HttpMethod": "POST",
@@ -88,7 +104,7 @@
     "Parameters": [
       {
         "Name": "model",
-        "Type": "BioProSystem.ViewModels.EmployeeViewModel",
+        "Type": "BioProSystem.ViewModels.SystemEmployeeAddViewModel",
         "IsRequired": true
       }
     ],
@@ -126,6 +142,22 @@
       {
         "Name": "model",
         "Type": "BioProSystem.ViewModels.EmployeeViewModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "BioProSystem.Controllers.EmployeeController",
+    "Method": "GetDailyHours",
+    "RelativePath": "api/Employee/GetDailyHours/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
         "IsRequired": true
       }
     ],

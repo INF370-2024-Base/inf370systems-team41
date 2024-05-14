@@ -25,5 +25,11 @@ namespace BioProSystem.Models
         void UpdateDentist(Dentist dentist);
         void DeleteDentist(Dentist dentist);
 
+        // New methods for EmployeeDailyHours
+        Task<EmployeeDailyHours> AddEmployeeDailyHoursAsync(EmployeeDailyHours employeeDailyHours);
+        Task<IEnumerable<EmployeeDailyHours>> GetAllEmployeeDailyHoursAsync();
+        Task<EmployeeDailyHours> GetEmployeeDailyHoursAsync(int id);
+        Task<bool> UpdateEmployeeDailyHoursAsync(EmployeeDailyHours employeeDailyHours);
+        Task<bool> DeleteEmployeeDailyHoursAsync(EmployeeDailyHours employeeDailyHours);
     }
 }
