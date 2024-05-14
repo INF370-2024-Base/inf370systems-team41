@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace BioProSystem.Migrations
 {
     /// <inheritdoc />
-    public partial class addedSelectedArea : Migration
+    public partial class SwappedErdRelations : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -141,7 +141,6 @@ namespace BioProSystem.Migrations
                 {
                     MedicalAidId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    MedicalAidNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     MedicalAidName = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
@@ -155,8 +154,7 @@ namespace BioProSystem.Migrations
                 {
                     OpenOrderId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    EstimatedDurationInDays = table.Column<int>(type: "int", nullable: false)
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -164,16 +162,19 @@ namespace BioProSystem.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "OrderDirectionStates",
+                name: "OrderDirections",
                 columns: table => new
                 {
-                    OrderDirectionStateId = table.Column<int>(type: "int", nullable: false)
+                    OrderDirectionId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    StateDescription = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Instructions = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    OrderDirectionStateId = table.Column<int>(type: "int", nullable: false),
+                    EstimatedDurationInDays = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_OrderDirectionStates", x => x.OrderDirectionStateId);
+                    table.PrimaryKey("PK_OrderDirections", x => x.OrderDirectionId);
                 });
 
             migrationBuilder.CreateTable(
@@ -217,6 +218,22 @@ namespace BioProSystem.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Payments", x => x.PaymentId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "SelectedAreas",
+                columns: table => new
+                {
+                    SelectedAreaId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    X = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Y = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Width = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Height = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SelectedAreas", x => x.SelectedAreaId);
                 });
 
             migrationBuilder.CreateTable(
@@ -492,7 +509,7 @@ namespace BioProSystem.Migrations
                     Lastname = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     DentistId = table.Column<int>(type: "int", nullable: false),
                     MedicalAidId = table.Column<int>(type: "int", nullable: false),
-                    CellphoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    MedicalAidNumber = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -512,23 +529,23 @@ namespace BioProSystem.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "OrderDirections",
+                name: "OrderDirectionStates",
                 columns: table => new
                 {
-                    OrderDirectionId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Instructions = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     OrderDirectionStateId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    StateDescription = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Ratio = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    OrderDirectionsOrderDirectionId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_OrderDirections", x => x.OrderDirectionId);
+                    table.PrimaryKey("PK_OrderDirectionStates", x => x.OrderDirectionStateId);
                     table.ForeignKey(
-                        name: "FK_OrderDirections_OrderDirectionStates_OrderDirectionStateId",
-                        column: x => x.OrderDirectionStateId,
-                        principalTable: "OrderDirectionStates",
-                        principalColumn: "OrderDirectionStateId",
+                        name: "FK_OrderDirectionStates_OrderDirections_OrderDirectionsOrderDirectionId",
+                        column: x => x.OrderDirectionsOrderDirectionId,
+                        principalTable: "OrderDirections",
+                        principalColumn: "OrderDirectionId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -611,6 +628,33 @@ namespace BioProSystem.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "OrderWorkflowTimelines",
+                columns: table => new
+                {
+                    WorkflowStructureId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    TimelineId = table.Column<int>(type: "int", nullable: true),
+                    SystemOrderId = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    OrderDirectionId = table.Column<int>(type: "int", nullable: false),
+                    TimelineDetails = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_OrderWorkflowTimelines", x => x.WorkflowStructureId);
+                    table.ForeignKey(
+                        name: "FK_OrderWorkflowTimelines_OrderDirections_OrderDirectionId",
+                        column: x => x.OrderDirectionId,
+                        principalTable: "OrderDirections",
+                        principalColumn: "OrderDirectionId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_OrderWorkflowTimelines_ProceduralTimelines_TimelineId",
+                        column: x => x.TimelineId,
+                        principalTable: "ProceduralTimelines",
+                        principalColumn: "ProceduralTimelineId");
+                });
+
+            migrationBuilder.CreateTable(
                 name: "EmployeeEmployeeDailyHours",
                 columns: table => new
                 {
@@ -632,33 +676,6 @@ namespace BioProSystem.Migrations
                         principalTable: "Employees",
                         principalColumn: "EmployeeId",
                         onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "OrderWorkflowTimelines",
-                columns: table => new
-                {
-                    WorkflowStructureId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    TimelineId = table.Column<int>(type: "int", nullable: true),
-                    SystemOrderId = table.Column<int>(type: "int", nullable: false),
-                    OrderDirectionId = table.Column<int>(type: "int", nullable: false),
-                    TimelineDetails = table.Column<string>(type: "nvarchar(max)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_OrderWorkflowTimelines", x => x.WorkflowStructureId);
-                    table.ForeignKey(
-                        name: "FK_OrderWorkflowTimelines_OrderDirections_OrderDirectionId",
-                        column: x => x.OrderDirectionId,
-                        principalTable: "OrderDirections",
-                        principalColumn: "OrderDirectionId",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_OrderWorkflowTimelines_ProceduralTimelines_TimelineId",
-                        column: x => x.TimelineId,
-                        principalTable: "ProceduralTimelines",
-                        principalColumn: "ProceduralTimelineId");
                 });
 
             migrationBuilder.CreateTable(
@@ -688,7 +705,7 @@ namespace BioProSystem.Migrations
                 {
                     OrderId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     DentistId = table.Column<int>(type: "int", nullable: false),
-                    OpenOrderId = table.Column<int>(type: "int", nullable: false),
+                    OpenOrderId = table.Column<int>(type: "int", nullable: true),
                     OrderStatusId = table.Column<int>(type: "int", nullable: false),
                     OrderWorkflowTimelineId = table.Column<int>(type: "int", nullable: true),
                     OrderTypeId = table.Column<int>(type: "int", nullable: false),
@@ -697,7 +714,8 @@ namespace BioProSystem.Migrations
                     SpecialRequirements = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     PriorityLevel = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     MouthArea = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    TotalAmountDue = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
+                    TotalAmountDue = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
+                    EmergencyNumber = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -712,8 +730,7 @@ namespace BioProSystem.Migrations
                         name: "FK_SystemOrders_OpenOrders_OpenOrderId",
                         column: x => x.OpenOrderId,
                         principalTable: "OpenOrders",
-                        principalColumn: "OpenOrderId",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "OpenOrderId");
                     table.ForeignKey(
                         name: "FK_SystemOrders_OrderStatuses_OrderStatusId",
                         column: x => x.OrderStatusId,
@@ -887,23 +904,24 @@ namespace BioProSystem.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "SelectedAreas",
+                name: "SelectedAreaSystemOrder",
                 columns: table => new
                 {
-                    SelectedAreaId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    X = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    Y = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    Width = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    Height = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    SystemOrdersId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    SelectedAreasSelectedAreaId = table.Column<int>(type: "int", nullable: false),
+                    SystemOrdersOrderId = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_SelectedAreas", x => x.SelectedAreaId);
+                    table.PrimaryKey("PK_SelectedAreaSystemOrder", x => new { x.SelectedAreasSelectedAreaId, x.SystemOrdersOrderId });
                     table.ForeignKey(
-                        name: "FK_SelectedAreas_SystemOrders_SystemOrdersId",
-                        column: x => x.SystemOrdersId,
+                        name: "FK_SelectedAreaSystemOrder_SelectedAreas_SelectedAreasSelectedAreaId",
+                        column: x => x.SelectedAreasSelectedAreaId,
+                        principalTable: "SelectedAreas",
+                        principalColumn: "SelectedAreaId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_SelectedAreaSystemOrder_SystemOrders_SystemOrdersOrderId",
+                        column: x => x.SystemOrdersOrderId,
                         principalTable: "SystemOrders",
                         principalColumn: "OrderId",
                         onDelete: ReferentialAction.Cascade);
@@ -1056,9 +1074,9 @@ namespace BioProSystem.Migrations
                 column: "SystemOrderId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_OrderDirections_OrderDirectionStateId",
-                table: "OrderDirections",
-                column: "OrderDirectionStateId");
+                name: "IX_OrderDirectionStates_OrderDirectionsOrderDirectionId",
+                table: "OrderDirectionStates",
+                column: "OrderDirectionsOrderDirectionId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_OrderPayments_OrderId1",
@@ -1112,9 +1130,9 @@ namespace BioProSystem.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_SelectedAreas_SystemOrdersId",
-                table: "SelectedAreas",
-                column: "SystemOrdersId");
+                name: "IX_SelectedAreaSystemOrder_SystemOrdersOrderId",
+                table: "SelectedAreaSystemOrder",
+                column: "SystemOrdersOrderId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_StakeWriteOffs_StockId",
@@ -1150,7 +1168,8 @@ namespace BioProSystem.Migrations
                 name: "IX_SystemOrders_OpenOrderId",
                 table: "SystemOrders",
                 column: "OpenOrderId",
-                unique: true);
+                unique: true,
+                filter: "[OpenOrderId] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_SystemOrders_OrderStatusId",
@@ -1220,6 +1239,9 @@ namespace BioProSystem.Migrations
                 name: "MediaFiles");
 
             migrationBuilder.DropTable(
+                name: "OrderDirectionStates");
+
+            migrationBuilder.DropTable(
                 name: "OrderPayments");
 
             migrationBuilder.DropTable(
@@ -1232,7 +1254,7 @@ namespace BioProSystem.Migrations
                 name: "RefundPayments");
 
             migrationBuilder.DropTable(
-                name: "SelectedAreas");
+                name: "SelectedAreaSystemOrder");
 
             migrationBuilder.DropTable(
                 name: "StakeWriteOffs");
@@ -1266,6 +1288,9 @@ namespace BioProSystem.Migrations
 
             migrationBuilder.DropTable(
                 name: "Payments");
+
+            migrationBuilder.DropTable(
+                name: "SelectedAreas");
 
             migrationBuilder.DropTable(
                 name: "Stocks");
@@ -1311,9 +1336,6 @@ namespace BioProSystem.Migrations
 
             migrationBuilder.DropTable(
                 name: "ProceduralTimelines");
-
-            migrationBuilder.DropTable(
-                name: "OrderDirectionStates");
 
             migrationBuilder.DropTable(
                 name: "Calanders");

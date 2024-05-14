@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BioProSystem.Migrations
 {
     [DbContext(typeof(DentalProSystemTestDBContext))]
-    [Migration("20240511130743_addedSelectedArea")]
-    partial class addedSelectedArea
+    [Migration("20240514193421_SwappedErdRelations")]
+    partial class SwappedErdRelations
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -358,10 +358,6 @@ namespace BioProSystem.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("MedicalAidNumber")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.HasKey("MedicalAidId");
 
                     b.ToTable("MedicalAids");
@@ -378,9 +374,6 @@ namespace BioProSystem.Migrations
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("EstimatedDurationInDays")
-                        .HasColumnType("int");
 
                     b.HasKey("OpenOrderId");
 
@@ -399,6 +392,9 @@ namespace BioProSystem.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("EstimatedDurationInDays")
+                        .HasColumnType("int");
+
                     b.Property<string>("Instructions")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -407,8 +403,6 @@ namespace BioProSystem.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("OrderDirectionId");
-
-                    b.HasIndex("OrderDirectionStateId");
 
                     b.ToTable("OrderDirections");
                 });
@@ -421,11 +415,19 @@ namespace BioProSystem.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("OrderDirectionStateId"));
 
+                    b.Property<int>("OrderDirectionsOrderDirectionId")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("Ratio")
+                        .HasColumnType("decimal(18,2)");
+
                     b.Property<string>("StateDescription")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("OrderDirectionStateId");
+
+                    b.HasIndex("OrderDirectionsOrderDirectionId");
 
                     b.ToTable("OrderDirectionStates");
                 });
@@ -500,8 +502,9 @@ namespace BioProSystem.Migrations
                     b.Property<int>("OrderDirectionId")
                         .HasColumnType("int");
 
-                    b.Property<int>("SystemOrderId")
-                        .HasColumnType("int");
+                    b.Property<string>("SystemOrderId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("TimelineDetails")
                         .IsRequired()
@@ -548,10 +551,6 @@ namespace BioProSystem.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PatientId"));
 
-                    b.Property<string>("CellphoneNumber")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int>("DentistId")
                         .HasColumnType("int");
 
@@ -565,6 +564,10 @@ namespace BioProSystem.Migrations
 
                     b.Property<int>("MedicalAidId")
                         .HasColumnType("int");
+
+                    b.Property<string>("MedicalAidNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("PatientId");
 
@@ -674,10 +677,6 @@ namespace BioProSystem.Migrations
                     b.Property<decimal>("Height")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<string>("SystemOrdersId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<decimal>("Width")
                         .HasColumnType("decimal(18,2)");
 
@@ -688,8 +687,6 @@ namespace BioProSystem.Migrations
                         .HasColumnType("decimal(18,2)");
 
                     b.HasKey("SelectedAreaId");
-
-                    b.HasIndex("SystemOrdersId");
 
                     b.ToTable("SelectedAreas");
                 });
@@ -840,11 +837,15 @@ namespace BioProSystem.Migrations
                     b.Property<DateTime>("DueDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("EmergencyNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("MouthArea")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("OpenOrderId")
+                    b.Property<int?>("OpenOrderId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("OrderDate")
@@ -866,7 +867,7 @@ namespace BioProSystem.Migrations
                     b.Property<string>("SpecialRequirements")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<decimal>("TotalAmountDue")
+                    b.Property<decimal?>("TotalAmountDue")
                         .HasColumnType("decimal(18,2)");
 
                     b.HasKey("OrderId");
@@ -874,7 +875,8 @@ namespace BioProSystem.Migrations
                     b.HasIndex("DentistId");
 
                     b.HasIndex("OpenOrderId")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasFilter("[OpenOrderId] IS NOT NULL");
 
                     b.HasIndex("OrderStatusId");
 
@@ -1186,6 +1188,21 @@ namespace BioProSystem.Migrations
                     b.ToTable("PasswordManagementSystemUser");
                 });
 
+            modelBuilder.Entity("SelectedAreaSystemOrder", b =>
+                {
+                    b.Property<int>("SelectedAreasSelectedAreaId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("SystemOrdersOrderId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("SelectedAreasSelectedAreaId", "SystemOrdersOrderId");
+
+                    b.HasIndex("SystemOrdersOrderId");
+
+                    b.ToTable("SelectedAreaSystemOrder");
+                });
+
             modelBuilder.Entity("SystemOrderTeethShade", b =>
                 {
                     b.Property<string>("SystemOrdersOrderId")
@@ -1291,15 +1308,15 @@ namespace BioProSystem.Migrations
                     b.Navigation("SystemOrder");
                 });
 
-            modelBuilder.Entity("BioProSystem.Models.OrderDirection", b =>
+            modelBuilder.Entity("BioProSystem.Models.OrderDirectionState", b =>
                 {
-                    b.HasOne("BioProSystem.Models.OrderDirectionState", "OrderDirectionState")
-                        .WithMany("OrderDirections")
-                        .HasForeignKey("OrderDirectionStateId")
+                    b.HasOne("BioProSystem.Models.OrderDirection", "OrderDirections")
+                        .WithMany("OrderDirectionSteps")
+                        .HasForeignKey("OrderDirectionsOrderDirectionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("OrderDirectionState");
+                    b.Navigation("OrderDirections");
                 });
 
             modelBuilder.Entity("BioProSystem.Models.OrderPayment", b =>
@@ -1390,17 +1407,6 @@ namespace BioProSystem.Migrations
                     b.Navigation("Payment");
                 });
 
-            modelBuilder.Entity("BioProSystem.Models.SelectedArea", b =>
-                {
-                    b.HasOne("BioProSystem.Models.SystemOrder", "SystemOrders")
-                        .WithMany("SelectedAreas")
-                        .HasForeignKey("SystemOrdersId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("SystemOrders");
-                });
-
             modelBuilder.Entity("BioProSystem.Models.StakeWriteOff", b =>
                 {
                     b.HasOne("BioProSystem.Models.Stock", "Stock")
@@ -1460,9 +1466,7 @@ namespace BioProSystem.Migrations
 
                     b.HasOne("BioProSystem.Models.OpenOrder", "OpenOrder")
                         .WithOne("systemOrder")
-                        .HasForeignKey("BioProSystem.Models.SystemOrder", "OpenOrderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("BioProSystem.Models.SystemOrder", "OpenOrderId");
 
                     b.HasOne("BioProSystem.Models.OrderStatus", "OrderStatus")
                         .WithMany("OrderDetails")
@@ -1598,6 +1602,21 @@ namespace BioProSystem.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("SelectedAreaSystemOrder", b =>
+                {
+                    b.HasOne("BioProSystem.Models.SelectedArea", null)
+                        .WithMany()
+                        .HasForeignKey("SelectedAreasSelectedAreaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("BioProSystem.Models.SystemOrder", null)
+                        .WithMany()
+                        .HasForeignKey("SystemOrdersOrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("SystemOrderTeethShade", b =>
                 {
                     b.HasOne("BioProSystem.Models.SystemOrder", null)
@@ -1661,11 +1680,8 @@ namespace BioProSystem.Migrations
             modelBuilder.Entity("BioProSystem.Models.OrderDirection", b =>
                 {
                     b.Navigation("OrderDetails");
-                });
 
-            modelBuilder.Entity("BioProSystem.Models.OrderDirectionState", b =>
-                {
-                    b.Navigation("OrderDirections");
+                    b.Navigation("OrderDirectionSteps");
                 });
 
             modelBuilder.Entity("BioProSystem.Models.OrderStatus", b =>
@@ -1725,8 +1741,6 @@ namespace BioProSystem.Migrations
                     b.Navigation("MediaFiles");
 
                     b.Navigation("OrderPayments");
-
-                    b.Navigation("SelectedAreas");
 
                     b.Navigation("StockItems");
                 });

@@ -124,7 +124,6 @@ namespace BioProSystem.Controllers
 
                         newOpenOrder.Description = orderdirection.Description;
                         newOpenOrder.systemOrder = newOrder;
-                         newOpenOrder.EstimatedDurationInDays = 1; //needs updating
                         _repository.Add(newOpenOrder);
                     }
                     var newPatient = new Patient();
@@ -203,6 +202,23 @@ namespace BioProSystem.Controllers
         }
 
         [HttpGet("GetAllOrders/{OrderId}")]
+        public async Task<IActionResult> GetSystemOrdersByIdAsync(string OrderId)
+        {
+            try
+            {
+                var result = await _repository.GetSystemOrderByIdAsync(OrderId);
+
+                if (result == null)
+                    return NotFound("No order found");
+
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal Server Error: {ex.Message}");
+            }
+        }
+        [HttpGet("GetAllOrders/{OrderId}")]
         public async Task<IActionResult> GetAllSystemOrdersAsync(string OrderId)
         {
             try
@@ -219,6 +235,7 @@ namespace BioProSystem.Controllers
                 return StatusCode(500, $"Internal Server Error: {ex.Message}");
             }
         }
+
         [HttpGet("api/ordertypes")]
         public async Task<IActionResult> GetOrderTypes()
         {

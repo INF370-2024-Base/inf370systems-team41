@@ -372,9 +372,6 @@ namespace BioProSystem.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("EstimatedDurationInDays")
-                        .HasColumnType("int");
-
                     b.HasKey("OpenOrderId");
 
                     b.ToTable("OpenOrders");
@@ -392,16 +389,14 @@ namespace BioProSystem.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("EstimatedDurationInDays")
+                        .HasColumnType("int");
+
                     b.Property<string>("Instructions")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("OrderDirectionStateId")
-                        .HasColumnType("int");
-
                     b.HasKey("OrderDirectionId");
-
-                    b.HasIndex("OrderDirectionStateId");
 
                     b.ToTable("OrderDirections");
                 });
@@ -414,11 +409,19 @@ namespace BioProSystem.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("OrderDirectionStateId"));
 
+                    b.Property<int>("OrderDirectionsId")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("Ratio")
+                        .HasColumnType("decimal(18,2)");
+
                     b.Property<string>("StateDescription")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("OrderDirectionStateId");
+
+                    b.HasIndex("OrderDirectionsId");
 
                     b.ToTable("OrderDirectionStates");
                 });
@@ -829,6 +832,7 @@ namespace BioProSystem.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("EmergencyNumber")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("MouthArea")
@@ -1298,15 +1302,15 @@ namespace BioProSystem.Migrations
                     b.Navigation("SystemOrder");
                 });
 
-            modelBuilder.Entity("BioProSystem.Models.OrderDirection", b =>
+            modelBuilder.Entity("BioProSystem.Models.OrderDirectionState", b =>
                 {
-                    b.HasOne("BioProSystem.Models.OrderDirectionState", "OrderDirectionState")
-                        .WithMany("OrderDirections")
-                        .HasForeignKey("OrderDirectionStateId")
+                    b.HasOne("BioProSystem.Models.OrderDirection", "OrderDirections")
+                        .WithMany("OrderDirectionSteps")
+                        .HasForeignKey("OrderDirectionsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("OrderDirectionState");
+                    b.Navigation("OrderDirections");
                 });
 
             modelBuilder.Entity("BioProSystem.Models.OrderPayment", b =>
@@ -1670,11 +1674,8 @@ namespace BioProSystem.Migrations
             modelBuilder.Entity("BioProSystem.Models.OrderDirection", b =>
                 {
                     b.Navigation("OrderDetails");
-                });
 
-            modelBuilder.Entity("BioProSystem.Models.OrderDirectionState", b =>
-                {
-                    b.Navigation("OrderDirections");
+                    b.Navigation("OrderDirectionSteps");
                 });
 
             modelBuilder.Entity("BioProSystem.Models.OrderStatus", b =>

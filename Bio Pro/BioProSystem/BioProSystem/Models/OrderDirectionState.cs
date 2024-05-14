@@ -12,5 +12,8 @@ public partial class OrderDirectionState
 
     public string StateDescription { get; set; }
 
-    public virtual ICollection<OrderDirection> OrderDirections { get; set; } = new List<OrderDirection>();
+    public decimal Ratio { get; set; }
+
+    public int OrderDirectionsId { get; set; }
+    public virtual OrderDirection OrderDirections { get; set; }
 }
