@@ -12,14 +12,16 @@ import { MatSidenav } from '@angular/material/sidenav';
 import { AddEmployeeComponent } from './add-employee/add-employee.component';
 import { AddDentistComponent } from './add-dentist/add-dentist.component';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
-
+import { DentistProfileComponent } from './dentist-profile/dentist-profile.component';
+import { MatTableModule } from '@angular/material/table';
 
 @NgModule({
   declarations: [
     AppComponent,
     OpenOrdersComponent,
     AddEmployeeComponent,
-    AddDentistComponent
+    AddDentistComponent,
+    DentistProfileComponent
   ],
   imports: [
     BrowserModule,
@@ -28,7 +30,8 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     HttpClientModule,
     FormsModule,
     BrowserAnimationsModule,MaterialModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatTableModule
   ],
   providers: [],
   bootstrap: [AppComponent]

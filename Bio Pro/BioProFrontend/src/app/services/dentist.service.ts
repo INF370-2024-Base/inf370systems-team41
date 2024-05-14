@@ -16,5 +16,14 @@ export class DentistService {
     return this.httpClient.post<Dentist>(`${this.apiUrl}/AddDentist`, dentist);
   }
 
+  getAllDentists(): Observable<Dentist[]> {
+    return this.httpClient.get<Dentist[]>(`${this.apiUrl}/GetAllDentists`);
+  }
+
+  searchDentists(query: string): Observable<Dentist[]> {
+    return this.httpClient.get<Dentist[]>(`${this.apiUrl}/GetAllDentists?query=${query}`);
+  }
+
   // Add other CRUD operations as needed
 }
+
