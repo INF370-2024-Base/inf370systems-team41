@@ -1,8 +1,9 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { DataService } from '../services/data.service';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { SystemOrderViewModel } from '../shared/SystemOrderViewModel ';
 
 @Component({
   selector: 'app-add-order',
@@ -24,9 +25,12 @@ export class AddOrderComponent implements OnInit {
   teethShades: any[] =[]; 
   selectedTeethShadeIds: number[] = [];
   orderDirections: any[] = [];
+  rectangles:number[] = []; // Array to store rectangles
+  selectedIndices:number[] = [];
+  areas:any[] = [];
   addForm!: FormGroup;
-  @ViewChild('imageCanvas', { static: true }) canvasRef!: ElementRef<HTMLCanvasElement>; 
 
+  @ViewChild('imageCanvas', { static: true }) canvasRef!: ElementRef<HTMLCanvasElement>; 
   constructor(
     private dataService: DataService,
     private httpClient: HttpClient,
@@ -45,11 +49,11 @@ export class AddOrderComponent implements OnInit {
       PriorityLevel: ['', Validators.required],
       OrderTypeId: ['', Validators.required], // Ensure OrderTypeId is included in the FormGroup
       OrderStatusId: ['', Validators.required],
-      X: ['', Validators.required],
-      Y: ['', Validators.required],
-      Width: ['', Validators.required],
-      Height: ['', Validators.required],
-      EmergencyNumber: ['', Validators.required],
+      // X: ['', Validators.required],
+      // Y: ['', Validators.required],
+      // Width: ['', Validators.required],
+      // Height: ['', Validators.required],
+      EmergencyNumber: ['', [Validators.required, Validators.minLength(10)]],
       SpecialRequirements: [''],
       SelectedTeethShadeIds: [[]],
       DueDate: ['', Validators.required],
@@ -60,14 +64,87 @@ export class AddOrderComponent implements OnInit {
   ngOnInit(): void {
     this.loadDentists();
     this.loadMedicalAids();
-    // this.loadorderDirections();
+    this.loadSelectedAreas();
     this.loadImageOnCanvas();
     this.loadOrderDirections();
     this.loadOrderTypes();
     this.loadOrderStatuses();
     this.loadTeethShades();
+    
+    console.log(this.areas)
   }
-
+  selectedAreas: number[] = [];
+   
+  loadImageOnCanvas(): void {
+    const canvas = this.canvasRef.nativeElement;
+    const ctx = canvas.getContext('2d');
+  
+    if (ctx) {
+      const imageUrl = 'assets/images/mouth area.png';
+  
+      const img = new Image();
+      img.onload = () => {
+        canvas.width = img.width;
+        canvas.height = img.height;
+        ctx.drawImage(img, 0, 0);
+  
+        canvas.addEventListener('click', (event: MouseEvent) => {
+          const clickX = event.offsetX;
+          const clickY = event.offsetY;
+  
+          const clickedArea = this.areas.find((area: Area) => {
+            const {x, y, width, height} = area;
+            return (
+              clickX >= x &&
+              clickX <= (x + width) &&
+              clickY >= y &&
+              clickY <= (y + height)
+            );
+          }) as Area;
+  
+          if (clickedArea) {
+            const areaIndex = this.selectedAreas.indexOf(clickedArea.selectedAreaId);
+            if (areaIndex !== -1) {
+              // Area already selected, deselect it
+              this.selectedAreas.splice(areaIndex, 1);
+              this.updateFormValues()
+            } else {
+              // Area not selected, select it
+              this.selectedAreas.push(clickedArea.selectedAreaId);
+              this.updateFormValues()
+            }
+            this.drawShapes(ctx, img, this.areas, this.selectedAreas); // Pass selected areas for highlighting
+          }
+        });
+      };
+  
+      img.src = imageUrl;
+    }
+    
+  }
+  
+  drawShapes(ctx: CanvasRenderingContext2D, img: HTMLImageElement, areas: any[], selectedAreas: number[]) {
+    let canvas = document.getElementById('myCanvas') as HTMLCanvasElement;
+    ctx = canvas.getContext('2d')!;
+    ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear previous drawings
+    ctx.drawImage(img, 0, 0);
+  
+    for (const area of areas) {
+      const { x, y, width, height } = area;
+      ctx.strokeRect(x, y, width, height); // Draw all area outlines
+  
+      if (selectedAreas.includes(area.selectedAreaId)) {
+        // Highlight selected areas with a different color or style
+        ctx.fillStyle = 'lightblue'; // Example highlight color
+        ctx.fillRect(x, y, width, height);
+      }
+    }
+  }
+  
+  updateFormValues() {
+    // Update your form logic here with selectedAreas list
+    console.log('Selected areas:', this.selectedAreas); // Example usage
+  }
   loadDentists(): void {
     this.dataService.getDentists().subscribe(
       (data: any[]) => {
@@ -98,8 +175,10 @@ export class AddOrderComponent implements OnInit {
     const index = this.selectedTeethShadeIds.indexOf(shadeId);
     if (index === -1) {
       this.selectedTeethShadeIds.push(shadeId);
+      console.log(this.selectedTeethShadeIds)
     } else {
       this.selectedTeethShadeIds.splice(index, 1);
+      console.log(this.selectedTeethShadeIds)
     }
   }
 
@@ -116,6 +195,17 @@ export class AddOrderComponent implements OnInit {
       },
       (error) => {
         console.error('Error loading order types:', error);
+      }
+    );
+  }
+  loadSelectedAreas(): void {
+    this.dataService.getSelecetedAreas().subscribe(
+      (data: any[]) => {
+        this.areas = data;
+        console.log('Selected Areas loaded successfully:', this.areas);
+      },
+      (error) => {
+        console.error('Error loading Selected Areass:', error);
       }
     );
   }
@@ -156,120 +246,85 @@ export class AddOrderComponent implements OnInit {
     );
   }
   
-  loadImageOnCanvas(): void {
-    const canvas = this.canvasRef.nativeElement;
-    const ctx = canvas.getContext('2d');
   
-    if (ctx) {
-      const imageUrl = 'assets/images/mouth area.png';
-      const rectangles: { x: number; y: number; width: number; height: number; }[] = [];
   
-      const img = new Image();
-      img.onload = () => {
-        canvas.width = img.width;
-        canvas.height = img.height;
-        ctx.drawImage(img, 0, 0);
   
-        canvas.addEventListener('mousedown', (event: MouseEvent) => {
-          const rectStartX = event.offsetX;
-          const rectStartY = event.offsetY;
-          let rectWidth = 0;
-          let rectHeight = 0;
-  
-          const mouseMoveHandler = (moveEvent: MouseEvent) => {
-            rectWidth = moveEvent.offsetX - rectStartX;
-            rectHeight = moveEvent.offsetY - rectStartY;
-            this.drawShapes(ctx, img, rectangles); // Use drawShapes to redraw the canvas
-          };
-  
-          const mouseUpHandler = () => {
-            canvas.removeEventListener('mousemove', mouseMoveHandler);
-            const rect = { x: rectStartX, y: rectStartY, width: rectWidth, height: rectHeight };
-            rectangles.push(rect);
-            this.drawShapes(ctx, img, rectangles); // Use drawShapes to draw the shapes
-            this.updateFormValues(rectangles);
-          };
-          
-          
-  
-          canvas.addEventListener('mousemove', mouseMoveHandler);
-          canvas.addEventListener('mouseup', mouseUpHandler);
-        });
-      };
-  
-      img.src = imageUrl;
-    }
-  }
-  
-  drawShapes(ctx: CanvasRenderingContext2D, img: HTMLImageElement, rectangles: { x: number; y: number; width: number; height: number; }[]): void {
-    ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
-    ctx.drawImage(img, 0, 0);
-  
-    for (const rect of rectangles) {
-      ctx.fillStyle = 'rgba(255, 0, 0, 0.3)';
-      ctx.fillRect(rect.x, rect.y, rect.width, rect.height);
-    }
-  }
-  
-  updateFormValues(rectangles: any[]): void {
-    // Extract unique selected areas using a Set to avoid duplicates
-    const uniqueAreas = Array.from(new Set(rectangles.map(rect => JSON.stringify(rect))))
-      .map(str => JSON.parse(str));
-  
-    // Map the unique areas to the format expected by the form control
-    const selectedAreas = uniqueAreas.map(area => ({
-      X: area.x,
-      Y: area.y,
-      Width: area.width,
-      Height: area.height
-    }));
-  
-    // Update the form control with the new selected areas
-    this.addForm.patchValue({
-      SelectedAreas: selectedAreas
-    });
-  }
   
   
   onSubmit(): void {
+    console.log("test")
     if (this.addForm.valid) {
       const formData = this.addForm.value;
-      const systemOrder = {
-        OrderId: formData.OrderId,
-        DentistId: formData.DentistId,
-        OrderDate: formData.OrderDate,
-        PatientName: formData.PatientName,
-        PatientSurname: formData.PatientSurname,
-        MedicalAidId: formData.MedicalAidId,
-        MedicalAidNumber: formData.MedicalAidNumber,
-        OrderDirectionId: formData.OrderDirectionId,
-        OrderTypeId: formData.OrderTypeId,
-        OrderStatusId: formData.OrderStatusId,
-        EmergencyNumber: formData.EmergencyNumber,
-        SpecialRequirements: formData.SpecialRequirements,
-        DueDate: formData.DueDate,
-        MouthArea: {
-          X: formData.X,
-          Y: formData.Y,
-          Width: formData.Width,
-          Height: formData.Height
-        }
-      };
-  
-      this.dataService.addOrder(systemOrder).subscribe(
+      const viewModel = new SystemOrderViewModel;
+      viewModel.OrderId = formData.OrderId;
+      viewModel.DentistId = formData.DentistId;
+      viewModel.OrderDate = formData.OrderDate;
+      viewModel.PatientName = formData.PatientName;
+      viewModel.PatientSurname = formData.PatientSurname;
+      viewModel.MedicalAidId = formData.MedicalAidId;
+      viewModel.MedicalAidNumber = formData.MedicalAidNumber;
+      viewModel.OrderDirectionId = formData.OrderDirectionId;
+      viewModel.OrderTypeId = formData.OrderTypeId;
+    viewModel.OrderStatusId = formData.OrderStatusId;
+    viewModel.EmergencyNumber = formData.EmergencyNumber;
+    viewModel.SpecialRequirements = formData.SpecialRequirements;
+    viewModel.DueDate = formData.DueDate;
+    viewModel.PriorityLevel = formData.PriorityLevel;
+    viewModel.TeethShadesIds = this.selectedTeethShadeIds; // Assuming this is an array of IDs
+    viewModel.SeletedAreasIds = this.selectedAreas; // Assuming this is an array of IDs
+    viewModel.MouthArea = this.selectedAreas.toString(); // Convert to string if necessary
+
+      console.log(viewModel)
+      this.dataService.addOrder(viewModel).subscribe(
         () => {
           console.log('SystemOrder added successfully!');
           this.router.navigate(['/orders']);
         },
-        error => {
-          console.error('Error adding SystemOrder:', error);
-        }
+        // (error: HttpErrorResponse) => {
+        //   if (error.status === 400) {
+        //     console.error('Server validation error:', error);
+        //     if (error.error instanceof ErrorEvent) {
+        //       // A client-side or network error occurred. Handle it accordingly.
+        //       console.error('An error occurred:', error.error.message);
+        //     } else {
+        //       // The backend returned an unsuccessful response code.
+        //       // The response body may contain clues as to what went wrong.
+        //       console.error(
+        //         `Backend returned code ${error.status}, ` +
+        //         `body was: ${error.error}`);
+        //     }
+        //   } else {
+        //     console.error('Unexpected error:', error);
+        //   }
+        // }
       );
     }
+  
+    else{
+      Object.keys(this.addForm.controls).forEach(field => {
+        const control = this.addForm.get(field);
+        if(control)
+        if (control.invalid) {
+          console.log(`Field ${field} is invalid. Error: `, control.errors);
+        }
+      });
+    }
+    
   }
   
   cancel(): void {
     this.addForm.get('SpecialRequirements')?.reset('');
     this.router.navigate(['/orders']);
   }
+  hasError(controlName: string, errorName: string) {
+    return this.addForm.controls[controlName].hasError(errorName);
+   }
 }  
+interface Area {
+  selectedAreaId: number;
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+  
+}

@@ -9,7 +9,7 @@ import { HttpClient } from '@angular/common/http';
 export class OrdersComponent implements OnInit {
   orderId: string = '';
   orders: any[] = [];
-  baseUrl: string ='https://localhost:7280/api/';
+  baseUrl: string ='https://localhost:44315/Api/';
 
   constructor(private http: HttpClient) { }
 
@@ -17,10 +17,11 @@ export class OrdersComponent implements OnInit {
   }
   searchOrders() {
     if (this.orderId.trim() !== '') {
-      const url = `${this.baseUrl}/GetAllOrders/${this.orderId}`;
+      const url = `${this.baseUrl}GetAllOrders/${this.orderId}`;
       this.http.get<any>(url)
         .subscribe(
           (data) => {
+            console.log(data)
             if (data) {
               this.orders = [data]; // Assuming the response is a single order or array of orders
             } else {

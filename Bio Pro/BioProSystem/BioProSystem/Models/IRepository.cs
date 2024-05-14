@@ -15,7 +15,7 @@ namespace BioProSystem.Models
         Task<IEnumerable<OrderDirection>> GetOrderDirectionsAsync();
         Task<IEnumerable<TeethShade>> GetAllTeethShadesAsync(); // Method to fetch all teeth shades
         Task<IEnumerable<SystemOrder>> GetAllSystemOrdersAsync();
-
+        Task<IEnumerable<SelectedArea>> GetSelectedAreasAsync();
         Task<SystemOrder> GetSystemOrderByIdAsync(string orderId);
         Task<bool> CheckSystemPatient(string medicalAidNumber);
         Task<Patient> GetPatientByMedicalAidNumber(string medicalAidNumber);
@@ -25,6 +25,7 @@ namespace BioProSystem.Models
         Task<SelectedArea> GetSelectedAreaAsync(int areaId);
         Task<List<SelectedArea>> GetSelectedAreasAsync(List<int> areaIds);
         Task<List<OrderType>> GetOrderTypesAsync();
+        Task<OrderDirection> GetOrderDirectionById(int orderDirectionId);
         Task<List<OrderStatus>> GetOrderStatusesAsync();
         
     }

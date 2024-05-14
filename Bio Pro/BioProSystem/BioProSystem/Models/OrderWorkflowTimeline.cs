@@ -12,7 +12,7 @@ public partial class OrderWorkflowTimeline
     public int? TimelineId { get; set; }
 
     [Required] 
-    public int SystemOrderId { get; set; }
+    public string SystemOrderId { get; set; }
     [Required]
     public int OrderDirectionId { get; set; }
     [Required]

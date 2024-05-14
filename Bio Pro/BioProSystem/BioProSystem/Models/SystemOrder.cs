@@ -23,17 +23,12 @@ public partial class SystemOrder
     public string PriorityLevel { get; set; } //
     [Required]
     public string MouthArea { get; set; }  //
-    [Required]
-    public string OrderDirectionMaincategory { get; set; }
-    [Required]
-    public string OrderDirectionSubcategory { get; set; }
     public decimal? TotalAmountDue { get; set; } //
-    public string? EmergencyNumber { get; set; }  //
+    public string EmergencyNumber { get; set; }  //
     public virtual ICollection<Delivery>? Deliveries { get; set; } = new List<Delivery>(); // 
     public virtual ICollection<SelectedArea> SelectedAreas { get; set; } = new List<SelectedArea>(); //
     public virtual Dentist Dentist { get; set; } = null!; // 
     public virtual ICollection<Discount>? Discounts { get; set; } = new List<Discount>(); //
-
     public virtual ICollection<Employee>? Employees { get; set; } = new List<Employee>(); // 
     public virtual ICollection<OrderPayment>? OrderPayments { get; set; } = new List<OrderPayment>(); //
     public virtual ICollection<TeethShade> TeethShades { get; set; } = new List<TeethShade>(); //

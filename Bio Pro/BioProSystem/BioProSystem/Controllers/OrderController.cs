@@ -13,6 +13,8 @@ using Microsoft.Extensions.Options;
 
 namespace BioProSystem.Controllers
 {
+    [ApiController]
+    [Route("Api/")]
     public class OrderController : Controller
     {
         private readonly UserManager<SystemUser> _userManager;
@@ -31,7 +33,7 @@ namespace BioProSystem.Controllers
             _repository = repository;
         }
 
-
+        [HttpGet]
         public IActionResult Index()
         {
             return View();
@@ -63,14 +65,22 @@ namespace BioProSystem.Controllers
                         DueDate = viewModel.DueDate,
                         OrderTypeId = viewModel.OrderTypeId,
                         OrderStatusId = viewModel.OrderStatusId,
-                        OrderDirectionMaincategory = viewModel.OrderDirectionMaincategory,
-                        OrderDirectionSubcategory = viewModel.OrderDirectionSubcategory,
                         MouthArea=viewModel.MouthArea,
-                        
+                                                
                     };
+                    var newOrderWorkflowTimelines = new OrderWorkflowTimeline
+                    {
+                        SystemOrderId = newOrder.OrderId,
+                        systemOrder = newOrder,
+                        OrderDirectionId = viewModel.OrderDirectionId,
+                        TimelineDetails="Start Date:"+viewModel.OrderDate.ToShortDateString()+"\n"+"Due Date:"+viewModel.DueDate.ToShortDateString(),
 
+
+                    };
+                    var orderdirection = await _repository.GetOrderDirectionById(viewModel.OrderDirectionId);
                     var teethShades = await _repository.GetTeethShadesAsync(viewModel.TeethShadesIds);
-                    var selectedAreas = await _repository.GetTeethShadesAsync(viewModel.SeletedAreasIds);
+                    var selectedAreas = await _repository.GetSelectedAreasAsync(viewModel.SeletedAreasIds);
+                    orderdirection.OrderDetails.Add(newOrderWorkflowTimelines);
 
                     if (teethShades == null || !teethShades.Any())
                     {
@@ -90,7 +100,7 @@ namespace BioProSystem.Controllers
 
                     foreach (var selectedarea in selectedAreas)
                     {
-                        newOrder.TeethShades.Add(selectedarea);
+                        newOrder.SelectedAreas.Add(selectedarea);
                         selectedarea.SystemOrders.Add(newOrder); // Assuming bidirectional association
                     }
 
@@ -112,13 +122,24 @@ namespace BioProSystem.Controllers
                     if (viewModel.OrderTypeId==1)
                     {
 
-                        newOpenOrder.Description = viewModel.OrderDirectionMaincategory;
+                        newOpenOrder.Description = orderdirection.Description;
                         newOpenOrder.systemOrder = newOrder;
                          newOpenOrder.EstimatedDurationInDays = 1; //needs updating
                         _repository.Add(newOpenOrder);
                     }
                     var newPatient = new Patient();
+                    Console.WriteLine("is true" + await _repository.CheckSystemPatient(viewModel.MedicalAidNumber));
                     if (await _repository.CheckSystemPatient(viewModel.MedicalAidNumber))
+                    {
+                        newPatient.FirsName = _repository.GetPatientByMedicalAidNumber(viewModel.MedicalAidNumber).Result.FirsName;
+                        newPatient.Lastname = _repository.GetPatientByMedicalAidNumber(viewModel.MedicalAidNumber).Result.Lastname;
+                        newPatient.DentistId = _repository.GetPatientByMedicalAidNumber(viewModel.MedicalAidNumber).Result.DentistId;
+                        newPatient.MedicalAidId = _repository.GetPatientByMedicalAidNumber(viewModel.MedicalAidNumber).Result.MedicalAidId;
+                        newPatient.MedicalAidNumber = _repository.GetPatientByMedicalAidNumber(viewModel.MedicalAidNumber).Result.MedicalAidNumber;
+
+                        
+                    }
+                    else
                     {
                         newPatient.FirsName = viewModel.PatientName;
                         newPatient.Lastname = viewModel.PatientSurname;
@@ -126,16 +147,7 @@ namespace BioProSystem.Controllers
                         newPatient.MedicalAidId = viewModel.MedicalAidId;
                         newPatient.MedicalAidNumber = viewModel.MedicalAidNumber;
                         _repository.Add(newPatient);
-                    }
-                    else
-                    {
-
-                        newPatient.FirsName = _repository.GetPatientByMedicalAidNumber(viewModel.MedicalAidNumber).Result.FirsName;
-                        newPatient.Lastname = _repository.GetPatientByMedicalAidNumber(viewModel.MedicalAidNumber).Result.Lastname;
-                        newPatient.DentistId = _repository.GetPatientByMedicalAidNumber(viewModel.MedicalAidNumber).Result.DentistId;
-                        newPatient.MedicalAidId = _repository.GetPatientByMedicalAidNumber(viewModel.MedicalAidNumber).Result.MedicalAidId;
-                        newPatient.MedicalAidNumber = _repository.GetPatientByMedicalAidNumber(viewModel.MedicalAidNumber).Result.MedicalAidNumber;
-
+                       
                     }      
                     SelectedArea selectedArea = new SelectedArea();
                     _repository.Add(newOrder);
@@ -270,34 +282,53 @@ namespace BioProSystem.Controllers
                 return StatusCode(500, $"Internal Server Error: {ex.Message}"); // Handle and log any exceptions
             }
         }
-
-        [HttpGet("Create")]
-        public async Task<IActionResult> Create()
+        [HttpGet("api/selectedareas")]
+        public async Task<ActionResult<IEnumerable<TeethShade>>> GetSelectedAreas()
         {
-            var viewModel = new SystemOrderViewModel();
-
             try
             {
-                // Populate dropdown lists asynchronously
-                viewModel.Dentists = new SelectList(await _repository.GetDentistsAsync(), "DentistId", "FullName");
-                viewModel.MedicalAids = new SelectList(await _repository.GetMedicalAidsAsync(), "MedicalAidId", "Name");
-                viewModel.OrderDirections = new SelectList(await _repository.GetOrderDirectionsAsync(), "OrderDirectionId", "Name");
-                viewModel.OrderType = new SelectList(await _repository.GetOrderTypesAsync(), "OrderTypeId", "Name");
-                viewModel.OrderStatus = new SelectList(await _repository.GetOrderStatusesAsync(), "OrderStatusId", "Name");
-                var allTeethShades = await _repository.GetAllTeethShadesAsync();
+                var selectedAreas = await _repository.GetSelectedAreasAsync(); // Await the asynchronous method
 
-                // Create a SelectList for TeethShades with appropriate display and value fields
-                viewModel.TeethShades = new SelectList(allTeethShades, "TeethShadeId", "Colour", "ColourCode");
+                if (selectedAreas == null || !selectedAreas.Any())
+                {
+                    return NotFound("No teeth shades found");
+                }
 
-
-
-                return View(viewModel);
+                return Ok(selectedAreas); // Return list of teeth shades as JSON response
             }
             catch (Exception ex)
             {
-                return StatusCode(500, $"Internal Server Error: {ex.Message}");
+                return StatusCode(500, $"Internal Server Error: {ex.Message}"); // Handle and log any exceptions
             }
         }
+
+        //[HttpGet("Create")]
+        //public async Task<IActionResult> Create()
+        //{
+        //    var viewModel = new SystemOrderViewModel();
+
+        //    try
+        //    {
+        //        // Populate dropdown lists asynchronously
+        //        viewModel.Dentists = new SelectList(await _repository.GetDentistsAsync(), "DentistId", "FullName");
+        //        viewModel.MedicalAids = new SelectList(await _repository.GetMedicalAidsAsync(), "MedicalAidId", "Name");
+        //        viewModel.OrderDirections = new SelectList(await _repository.GetOrderDirectionsAsync(), "OrderDirectionId", "Name");
+        //        viewModel.OrderType = new SelectList(await _repository.GetOrderTypesAsync(), "OrderTypeId", "Name");
+        //        viewModel.OrderStatus = new SelectList(await _repository.GetOrderStatusesAsync(), "OrderStatusId", "Name");
+        //        var allTeethShades = await _repository.GetAllTeethShadesAsync();
+
+        //        // Create a SelectList for TeethShades with appropriate display and value fields
+        //        viewModel.TeethShades = new SelectList(allTeethShades, "TeethShadeId", "Colour", "ColourCode");
+
+
+
+        //        return View(viewModel);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return StatusCode(500, $"Internal Server Error: {ex.Message}");
+        //    }
+        //}
 
     }
 }

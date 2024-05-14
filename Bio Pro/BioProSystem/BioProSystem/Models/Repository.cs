@@ -92,7 +92,10 @@ namespace BioProSystem.Models
             IQueryable<MedicalAid> query = _appDbContext.MedicalAids.Where(p => p.MedicalAidId == medicalAidId);
             return await query.FirstOrDefaultAsync();
         }
-
+        public async Task<IEnumerable<SelectedArea>> GetSelectedAreasAsync()
+        {
+            return await _appDbContext.SelectedAreas.ToListAsync();
+        }
         public async Task<IEnumerable<TeethShade>> GetAllTeethShadesAsync()
         {
             return await _appDbContext.TeethShades.ToListAsync();
@@ -120,6 +123,10 @@ namespace BioProSystem.Models
         public async Task<SystemOrder> GetSystemOrderByIdAsync(string orderId)
         {
             return await _appDbContext.SystemOrders.FirstOrDefaultAsync(o => o.OrderId == orderId);
+        }
+        public async Task<OrderDirection> GetOrderDirectionById(int orderDirectionId)
+        {
+            return await _appDbContext.OrderDirections.FirstOrDefaultAsync(o => o.OrderDirectionId == orderDirectionId);
         }
 
         public async Task<bool> SaveChangesAsync()

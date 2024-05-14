@@ -2,13 +2,14 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map, Observable, Subject } from 'rxjs';
 import { OpenOrder } from '../shared/openorder';
+import { SystemOrderViewModel } from '../shared/SystemOrderViewModel ';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DataService {
 
-  apiUrl = 'https://localhost:7280/';
+  apiUrl = 'https://localhost:44315/api/';
 
   httpOptions ={
     headers: new HttpHeaders({
@@ -20,17 +21,18 @@ export class DataService {
   }
 
   getOpenOrders(): Observable<any>{
-    return this.httpClient.get(`${this.apiUrl}api/GetAllOpenOrders`)
+    return this.httpClient.get(`${this.apiUrl}GetAllOpenOrders`)
     .pipe(map(result => result))
   }
 
 
   getOpenOrderId(openOrderID: string): Observable<OpenOrder>{
-    return this.httpClient.get<OpenOrder>(`${this.apiUrl}api/GetOpenOrder/` + openOrderID)
+    return this.httpClient.get<OpenOrder>(`${this.apiUrl}GetOpenOrder/` + openOrderID)
   }
 
-  addOrder(orderData: any): Observable<any> {
-    return this.httpClient.post<any>(`${this.apiUrl}api/AddOrders`, orderData, this.httpOptions);
+  addOrder(orderData: SystemOrderViewModel): Observable<any> {
+    console.log(orderData)
+    return this.httpClient.post<SystemOrderViewModel>(`${this.apiUrl}AddOrders`, orderData);
   }
 
 
@@ -38,13 +40,19 @@ export class DataService {
   getAllOrders(orderId: number): Observable<any[]> {
     return this.httpClient.get<any[]>(`${this.apiUrl}api/GetAllOrders/${orderId}`);
   }
-
+  createNewOrder(OrderDetails: any): Observable<any> {
+    return this.httpClient.post<any>(`${this.apiUrl}AddOrders`,OrderDetails);
+  }
   getAllOrderById(orderId: string): Observable<any> {
     return this.httpClient.get<any>(`${this.apiUrl}api/GetAllOrder/${orderId}`);
   }
 
   getDentists(): Observable<any[]> {
     const endpoint = 'api/dentists'; // Update with correct endpoint for fetching dentists
+    return this.httpClient.get<any[]>(`${this.apiUrl}${endpoint}`);
+  }
+  getSelecetedAreas(): Observable<any[]> {
+    const endpoint = 'api/selectedareas'; // Update with correct endpoint for fetching dentists
     return this.httpClient.get<any[]>(`${this.apiUrl}${endpoint}`);
   }
   getMedicalAids(): Observable<any[]> {
