@@ -149,7 +149,6 @@ namespace BioProSystem.Controllers
                         _repository.Add(newPatient);
                        
                     }      
-                    SelectedArea selectedArea = new SelectedArea();
                     _repository.Add(newOrder);
                     if (await _repository.SaveChangesAsync())
                     {

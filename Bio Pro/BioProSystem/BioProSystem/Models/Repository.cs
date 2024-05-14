@@ -25,7 +25,7 @@ namespace BioProSystem.Models
         }
         public async Task<OpenOrder[]> GetAllOpenOrdersAsync()
         {
-            IQueryable<OpenOrder> query = _appDbContext.OpenOrders.Include(o=>o.systemOrder).ThenInclude(emp=>emp.Employees).Include(o=>o.systemOrder.Dentist);
+            IQueryable<OpenOrder> query = _appDbContext.OpenOrders;
             return await query.ToArrayAsync();
         }
         public async Task<OpenOrder> GetOpenOrdersAsync(int openOrderID)
