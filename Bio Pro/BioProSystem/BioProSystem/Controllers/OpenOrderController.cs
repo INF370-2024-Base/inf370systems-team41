@@ -33,8 +33,8 @@ namespace BioProSystem.Controllers
 
         [HttpGet]
         [Route("GetAllOpenOrders")]
-        [Authorize(AuthenticationSchemes = "Bearer")]
-        [Authorize(Roles = "Admin, Manager")]
+        //[Authorize(AuthenticationSchemes = "Bearer")]
+        //[Authorize(Roles = "Admin, Manager")]
         public async Task<IActionResult> GetAllOpenOrders()
         { 
             try
