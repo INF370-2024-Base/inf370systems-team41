@@ -85,7 +85,7 @@
         <label for="OrderDirectionId">Order Direction:</label>
         <select formControlName="OrderDirectionId" class="form-control" id="OrderDirectionId" required>
           <option *ngFor="let direction of orderDirections" [ngValue]="direction.orderDirectionId">
-            {{ direction.description }}
+            {{ direction.description }} {{direction.instructions}}
           </option>
         </select>
         <!-- <div *ngIf="hasError('OrderDirectionId', 'required')" class="text-danger">Order Direction is required</div> -->

@@ -9,9 +9,17 @@
     <div *ngIf="orders.length > 0">
       <h3>Search Results:</h3>
       <ul>
-        <li *ngFor="let order of orders">
-          <strong>Order ID:</strong> {{ order.orderId }}<br>
-          <!-- Display other order properties here -->
+        <li *ngFor="let order of ordersInfo">
+          <strong>Order ID:</strong> {{ order.systemOrder.orderId }}<br>
+          <strong>Teethshades</strong>
+          <div *ngFor="let teethshade of order.teethshades">
+            <div class="color-box" [style.background]="teethshade.colourCode" style="width: 30px;
+        height: 30px;
+        border: 1px solid #000;">
+        </div>
+      </div>
+          <canvas id="myCanvas{{order.systemOrder.orderId}}" width="500" height="500"></canvas>
+          
         </li>
       </ul>
     </div>

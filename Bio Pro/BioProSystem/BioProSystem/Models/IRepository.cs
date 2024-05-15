@@ -1,4 +1,5 @@
 ﻿using BioProSystem.Models;
+using BioProSystem.ViewModels;
 
 namespace BioProSystem.Models
 {
@@ -27,6 +28,14 @@ namespace BioProSystem.Models
         Task<List<OrderType>> GetOrderTypesAsync();
         Task<OrderDirection> GetOrderDirectionById(int orderDirectionId);
         Task<List<OrderStatus>> GetOrderStatusesAsync();
-        
+        Task<OrderWorkflowTimeline> GetOrderTimelineByIdAsync(int orderTimelinId);
+        Task<OrderStatus> GetOrderStatusByIdAsync(int orderStatusId);
+        Task<OrderType> GetOrderTypeByIdAsync(int ordertypeId);
+
+        Task<MedicalAid> GetMedicalAidByIdAsync(int medicalAidId);
+
+        Task<Dentist> GetDentistdByIdAsync(int dentistId);
+        Task<SystemOrderViewModel> GetAllSystemOrdersInformationAsync(string orderId);
+
     }
 }

@@ -1,4 +1,5 @@
 ﻿using BioProSystem.Models;
+using BioProSystem.ViewModels;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
@@ -105,15 +106,47 @@ namespace BioProSystem.Models
         {
             return await _appDbContext.SystemOrders.ToListAsync();
         }
+        public async Task<SystemOrderViewModel> GetAllSystemOrdersInformationAsync(string orderId)
+        {
+            SystemOrderViewModel orderinformation=new SystemOrderViewModel();
+            orderinformation.systemOrder = GetSystemOrderByIdAsync(orderId).Result;
+            orderinformation.Dentist = GetDentistdByIdAsync(orderinformation.systemOrder.DentistId).Result;
+            orderinformation.Timeline=GetOrderTimelineByIdAsync(orderinformation.systemOrder.OrderWorkflowTimelineId).Result;
+            orderinformation.patient=GetPatientByMedicalAidNumber(orderinformation.systemOrder.PatientMedicalAidNumber).Result;
+            orderinformation.OrderStatus=GetOrderStatusByIdAsync(orderinformation.systemOrder.OrderStatusId).Result;
+            orderinformation.OrderType = GetOrderTypeByIdAsync(orderinformation.systemOrder.OrderTypeId).Result;
+            orderinformation.orderDirection=GetOrderDirectionById(orderinformation.Timeline.OrderDirectionId).Result;
+            foreach(TeethShade teethShades in orderinformation.systemOrder.TeethShades)
+            {
+                orderinformation.Teethshades.Add(teethShades);
+            }
+            foreach (SelectedArea selectedArea in orderinformation.systemOrder.SelectedAreas)
+            {
+                orderinformation.SelectedAreas.Add(selectedArea);
+            }
+
+
+
+            return orderinformation;
+        }
         public async Task<IEnumerable<Dentist>> GetDentistsAsync()
         {
             return await _appDbContext.Dentists.ToListAsync();
+        }
+        public async Task<Dentist> GetDentistdByIdAsync(int dentistId)
+        {
+            return await _appDbContext.Dentists.FirstOrDefaultAsync(o => o.DentistId == dentistId);
         }
 
         public async Task<IEnumerable<MedicalAid>> GetMedicalAidsAsync()
         {
             return await _appDbContext.MedicalAids.ToListAsync();
         }
+        public async Task<MedicalAid> GetMedicalAidByIdAsync(int medicalAidId)
+        {
+            return await _appDbContext.MedicalAids.FirstOrDefaultAsync(o => o.MedicalAidId == medicalAidId);
+        }
+
 
         public async Task<IEnumerable<OrderDirection>> GetOrderDirectionsAsync()
         {
@@ -122,7 +155,7 @@ namespace BioProSystem.Models
 
         public async Task<SystemOrder> GetSystemOrderByIdAsync(string orderId)
         {
-            return await _appDbContext.SystemOrders.FirstOrDefaultAsync(o => o.OrderId == orderId);
+            return await _appDbContext.SystemOrders.Include(s=>s.TeethShades).Include(s=>s.SelectedAreas).FirstOrDefaultAsync(o => o.OrderId == orderId);
         }
         public async Task<OrderDirection> GetOrderDirectionById(int orderDirectionId)
         {
@@ -138,10 +171,22 @@ namespace BioProSystem.Models
         {
             return await _appDbContext.OrderTypes.ToListAsync();
         }
-
+        public async Task<OrderType> GetOrderTypeByIdAsync(int ordertypeId)
+        {
+            return await _appDbContext.OrderTypes.Where(o=>o.OrderTypeId== ordertypeId).FirstOrDefaultAsync();
+        }
         public async Task<List<OrderStatus>> GetOrderStatusesAsync()
         {
             return await _appDbContext.OrderStatuses.ToListAsync();
         }
+        public async Task<OrderStatus> GetOrderStatusByIdAsync(int orderStatusId)
+        {
+            return await _appDbContext.OrderStatuses.Where(o => o.OrderStatusId == orderStatusId).FirstOrDefaultAsync();
+        }
+        public async Task<OrderWorkflowTimeline> GetOrderTimelineByIdAsync(int orderTimelinId)
+        {
+            return await _appDbContext.OrderWorkflowTimelines.Where(o => o.WorkflowStructureId == orderTimelinId).FirstOrDefaultAsync();
+        }
+
     }
 }

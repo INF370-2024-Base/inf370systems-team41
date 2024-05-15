@@ -12,7 +12,7 @@ public partial class SystemOrder
     public int DentistId { get; set; } //
     public int? OpenOrderId { get; set; }  //
     public int OrderStatusId { get; set; } //
-    public int? OrderWorkflowTimelineId { get; set; } //
+    public int OrderWorkflowTimelineId { get; set; } //
     public int OrderTypeId { get; set; } //
     [Required]
     public DateTime DueDate { get; set; } //
@@ -25,6 +25,7 @@ public partial class SystemOrder
     public string MouthArea { get; set; }  //
     public decimal? TotalAmountDue { get; set; } //
     public string EmergencyNumber { get; set; }  //
+    public string PatientMedicalAidNumber { get; set; }    
     public virtual ICollection<Delivery>? Deliveries { get; set; } = new List<Delivery>(); // 
     public virtual ICollection<SelectedArea> SelectedAreas { get; set; } = new List<SelectedArea>(); //
     public virtual Dentist Dentist { get; set; } = null!; // 

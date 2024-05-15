@@ -37,14 +37,14 @@ export class DataService {
 
 
 
-  getAllOrders(orderId: number): Observable<any[]> {
-    return this.httpClient.get<any[]>(`${this.apiUrl}api/api/GetAllOrders/${orderId}`);
+  getAllOrders(): Observable<any[]> {
+    return this.httpClient.get<any[]>(`${this.apiUrl}Api/GetAllOrders`);
   }
-  createNewOrder(OrderDetails: any): Observable<any> {
-    return this.httpClient.post<any>(`${this.apiUrl}api/AddOrders`,OrderDetails);
+  getAllOrderInfo(orderId: string): Observable<any[]> {
+    return this.httpClient.get<any[]>(`${this.apiUrl}Api/GetAllOrderInfo/${orderId}`);
   }
   getAllOrderById(orderId: string): Observable<any> {
-    return this.httpClient.get<any>(`${this.apiUrl}api/api/GetAllOrder/${orderId}`);
+    return this.httpClient.get<any>(`${this.apiUrl}Api/GetOrdersById/${orderId}`);
   }
 
   getDentists(): Observable<any[]> {

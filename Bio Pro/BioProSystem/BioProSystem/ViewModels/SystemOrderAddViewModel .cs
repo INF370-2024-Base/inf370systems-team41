@@ -4,9 +4,8 @@ using System.ComponentModel.DataAnnotations;
 
 namespace BioProSystem.ViewModels
 {
-    public class SystemOrderAddrViewModel
+    public class SystemOrderAddViewModel
     {
-        private readonly IRepository _repository;
 
         [Required(ErrorMessage = "Please enter valid Order ID.")]
         public string OrderId { get; set; }

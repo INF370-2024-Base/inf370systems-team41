@@ -45,14 +45,13 @@ namespace BioProSystem.Controllers
         [Route("AddOrders")]
         //[Authorize(AuthenticationSchemes = "Bearer")]
         //[Authorize(Roles = "Admin, Manager")]
-        public async Task<IActionResult> Add(SystemOrderViewModel viewModel)
+        public async Task<IActionResult> Add(SystemOrderAddViewModel viewModel)
         {
             if (ModelState.IsValid)
             {
                 try
                 {
-                    //ADD the TEETHSHADING !!!!!!!!!
-                    //var selectedMouthArea = JsonConvert.DeserializeObject<SelectedArea>(viewModel.SelectedMouthArea);
+
 
                     var newOrder = new SystemOrder
                     {
@@ -66,6 +65,7 @@ namespace BioProSystem.Controllers
                         OrderTypeId = viewModel.OrderTypeId,
                         OrderStatusId = viewModel.OrderStatusId,
                         MouthArea=viewModel.MouthArea,
+                        PatientMedicalAidNumber=viewModel.MedicalAidNumber
                                                 
                     };
                     var newOrderWorkflowTimelines = new OrderWorkflowTimeline
@@ -104,20 +104,7 @@ namespace BioProSystem.Controllers
                         selectedarea.SystemOrders.Add(newOrder); // Assuming bidirectional association
                     }
 
-                    //foreach (SelectedArea selected in _repository.GetSelectedAreasAsync(viewModel.SeletedAreasIds).Result)
-                    //{
-                    //    newOrder.SelectedAreas.Add(selected);
 
-                    //}
-                    //foreach (TeethShade teethShade in _repository.GetTeethShadesAsync(viewModel.TeethShadesIds).Result)
-                    //{
-                    //    teethShade.SystemOrders.Add(newOrder);
-                    //}
-                    //foreach (SelectedArea selected in _repository.GetSelectedAreasAsync(viewModel.SeletedAreasIds).Result)
-                    //{
-                    //    selected.SystemOrders.Add(newOrder);
-
-                    //}
                     OpenOrder newOpenOrder = new OpenOrder();
                     if (viewModel.OrderTypeId==1)
                     {
@@ -201,7 +188,7 @@ namespace BioProSystem.Controllers
             }
         }
 
-        [HttpGet("GetAllOrders/{OrderId}")]
+        [HttpGet("GetOrdersById/{OrderId}")]
         public async Task<IActionResult> GetSystemOrdersByIdAsync(string OrderId)
         {
             try
@@ -218,12 +205,29 @@ namespace BioProSystem.Controllers
                 return StatusCode(500, $"Internal Server Error: {ex.Message}");
             }
         }
-        [HttpGet("GetAllOrders/{OrderId}")]
-        public async Task<IActionResult> GetAllSystemOrdersAsync(string OrderId)
+        [HttpGet("GetAllOrders")]
+        public async Task<IActionResult> GetAllSystemOrdersAsync()
         {
             try
             {
-                var result = await _repository.GetSystemOrderByIdAsync(OrderId);
+                var result = await _repository.GetAllSystemOrdersAsync();
+
+                if (result == null)
+                    return NotFound("No order found");
+
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal Server Error: {ex.Message}");
+            }
+        }
+        [HttpGet("GetAllOrderInfo/{OrderId}")]
+        public async Task<IActionResult> GetAllOrderInfo(string OrderId)
+        {
+            try
+            {
+                var result = await _repository.GetAllSystemOrdersInformationAsync(OrderId);
 
                 if (result == null)
                     return NotFound("No order found");
