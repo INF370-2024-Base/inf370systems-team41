@@ -81,6 +81,6 @@ export class DataService {
   }
 
   updateOrder(order: any): Observable<any> {
-    return this.httpClient.put(`${this.apiUrl}Api/UpdateOrder`, order, this.httpOptions);
+    return this.httpClient.put(`${this.apiUrl}Api/UpdateOrder`, order);
   }
 }

@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DataService } from '../services/data.service';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-edit-order-modal',
@@ -20,6 +21,8 @@ export class EditOrderModalComponent implements OnInit {
   selectedTeethShadeIds: number[] = [];
   orderDirections: any[] = [];
   selectedAreas: number[] = [];
+  uploadedFiles: File[] = [];
+  uploadedFileUrls: SafeUrl[] = [];
 
   priorityLevels = [
     { value: 'High', label: 'High' },
@@ -29,10 +32,11 @@ export class EditOrderModalComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private dataService: DataService
+    private dataService: DataService,
+    private sanitizer: DomSanitizer
   ) {
     this.editForm = this.formBuilder.group({
-      OrderId: ['', Validators.required],
+      OrderId: [{ value: '', disabled: true }, Validators.required],
       DentistId: ['', Validators.required],
       OrderDate: ['', Validators.required],
       PatientName: ['', Validators.required],
@@ -47,7 +51,8 @@ export class EditOrderModalComponent implements OnInit {
       SpecialRequirements: [''],
       SelectedTeethShadeIds: [[]],
       DueDate: ['', Validators.required],
-      SelectedAreas: [[]]
+      SelectedAreas: [[]],
+      MediaFiles: [null]
     });
   }
 
@@ -63,9 +68,27 @@ export class EditOrderModalComponent implements OnInit {
 
   patchForm() {
     if (this.order) {
-      this.editForm.patchValue(this.order);
-      this.selectedTeethShadeIds = this.order.SelectedTeethShadeIds;
-      this.selectedAreas = this.order.SelectedAreas;
+      this.editForm.patchValue({
+        OrderId: this.order.systemOrder.orderId,
+        DentistId: this.order.systemOrder.dentistId,
+        OrderDate: this.order.systemOrder.orderDate,
+        PatientName: this.order.systemOrder.patientName,
+        PatientSurname: this.order.systemOrder.patientSurname,
+        MedicalAidId: this.order.systemOrder.medicalAidId,
+        MedicalAidNumber: this.order.systemOrder.medicalAidNumber,
+        OrderDirectionId: this.order.systemOrder.orderDirectionId,
+        PriorityLevel: this.order.systemOrder.priorityLevel,
+        OrderTypeId: this.order.systemOrder.orderTypeId,
+        OrderStatusId: this.order.systemOrder.orderStatusId,
+        EmergencyNumber: this.order.systemOrder.emergencyNumber,
+        SpecialRequirements: this.order.systemOrder.specialRequirements,
+        DueDate: this.order.systemOrder.dueDate,
+        SelectedTeethShadeIds: this.order.selectedTeethShadeIds,
+        SelectedAreas: this.order.selectedAreas
+      });
+
+      this.selectedTeethShadeIds = this.order.selectedTeethShadeIds || [];
+      this.selectedAreas = this.order.selectedAreas || [];
     }
   }
 
@@ -144,13 +167,33 @@ export class EditOrderModalComponent implements OnInit {
     }
   }
 
+  onFileSelected(event: any): void {
+    const files: FileList = event.target.files;
+    for (let i = 0; i < files.length; i++) {
+      this.uploadedFiles.push(files[i]);
+      const url = this.sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(files[i]));
+      this.uploadedFileUrls.push(url);
+    }
+  }
+
   onSubmit(): void {
     if (this.editForm.valid) {
       const updatedOrder = this.editForm.value;
       updatedOrder.SelectedTeethShadeIds = this.selectedTeethShadeIds;
       updatedOrder.SelectedAreas = this.selectedAreas;
 
-      this.dataService.updateOrder(updatedOrder).subscribe(
+      const formData = new FormData();
+      for (const key in updatedOrder) {
+        if (updatedOrder.hasOwnProperty(key)) {
+          formData.append(key, updatedOrder[key]);
+        }
+      }
+
+      for (let file of this.uploadedFiles) {
+        formData.append('MediaFiles', file, file.name);
+      }
+
+      this.dataService.updateOrder(formData).subscribe(
         () => {
           console.log('Order updated successfully');
           this.close.emit();
