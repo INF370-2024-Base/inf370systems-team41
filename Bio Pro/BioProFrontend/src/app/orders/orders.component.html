@@ -1,31 +1,29 @@
-<!-- <p>orders works!</p> -->
+<div class="orders-container">
+  <h2>Orders</h2>
+  <label for="orderIdInput">Enter Order ID:</label>
+  <input type="text" id="orderIdInput" [(ngModel)]="orderId" />
+  <button (click)="searchOrders()">Search</button>
 
-<div>
-    <h2>Search Orders</h2>
-    <label for="orderIdInput">Enter Order ID:</label>
-    <input type="text" id="orderIdInput" [(ngModel)]="orderId" />
-    <button (click)="searchOrders()">Search</button>
-  
-    <div *ngIf="orders.length > 0">
-      <h3>Search Results:</h3>
-      <ul>
-        <li *ngFor="let order of ordersInfo">
-          <strong>Order ID:</strong> {{ order.systemOrder.orderId }}<br>
-          <strong>Teethshades</strong>
-          <div *ngFor="let teethshade of order.teethshades">
-            <div class="color-box" [style.background]="teethshade.colourCode" style="width: 30px;
-        height: 30px;
-        border: 1px solid #000;">
+  <div *ngIf="orders.length > 0" class="order-list">
+    <ul>
+      <li *ngFor="let order of ordersInfo" class="order-item">
+        <div class="order-details">
+          <span><strong>Order ID:</strong> {{ order.systemOrder.orderId }}</span><br>
+          <span><strong>Patient Name:</strong> {{ order.systemOrder.patientName }}</span>
         </div>
-      </div>
-          <canvas id="myCanvas{{order.systemOrder.orderId}}" width="500" height="500"></canvas>
-          
-        </li>
-      </ul>
-    </div>
-  
-    <div *ngIf="orders.length === 0 && orderId.trim() !== ''">
-      <p>No orders found.</p>
-    </div>
+        <div class="order-actions">
+          <span class="status-pill">{{ order.systemOrder.status }}</span>
+          <button class="edit-button" (click)="editOrder(order.systemOrder.orderId)">✏️</button>
+          <button class="trash-button" (click)="deleteOrder(order.systemOrder.orderId)">🗑️</button>
+        </div>
+      </li>
+    </ul>
   </div>
-  
+
+  <div *ngIf="orders.length === 0 && orderId.trim() !== ''">
+    <p>No orders found.</p>
+  </div>
+
+  <!-- Edit Modal -->
+  <app-edit-order-modal *ngIf="selectedOrder" [order]="selectedOrder" (close)="closeModal()"></app-edit-order-modal>
+</div>

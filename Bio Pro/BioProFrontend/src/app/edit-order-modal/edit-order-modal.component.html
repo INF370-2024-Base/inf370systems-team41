@@ -1,0 +1,145 @@
+<div class="modal">
+    <div class="modal-content">
+      <span class="close" (click)="cancel()">&times;</span>
+      <h2>Edit Order</h2>
+  
+      <form [formGroup]="editForm" (ngSubmit)="onSubmit()">
+        <!-- Order ID Input -->
+        <div class="form-group">
+          <label for="OrderId">Order ID:</label>
+          <input required type="text" formControlName="OrderId" class="form-control" id="OrderId" placeholder="Enter Order ID" [readonly]="true">
+        </div>
+  
+        <!-- Dentist Selection Dropdown -->
+        <div class="form-group">
+          <label for="DentistId">Dentist:</label>
+          <select required formControlName="DentistId" class="form-control" id="DentistId">
+            <option *ngFor="let dentist of dentists" [ngValue]="dentist.dentistId">
+              {{ dentist.firstName }} {{ dentist.lastName }}
+            </option>
+          </select>
+        </div>
+  
+        <!-- Order Date Input -->
+        <div class="form-group">
+          <label for="OrderDate">Order Date:</label>
+          <input required type="date" formControlName="OrderDate" class="form-control" id="OrderDate" placeholder="Select Order Date">
+        </div>
+  
+        <!-- Medical Aid Selection Dropdown -->
+        <div class="form-group">
+          <label for="MedicalAidId">Medical Aid:</label>
+          <select formControlName="MedicalAidId" class="form-control" id="MedicalAidId" required>
+            <option disabled selected value="">Select Medical Aid</option>
+            <option *ngFor="let medicalAid of medicalAids" [ngValue]="medicalAid.medicalAidId">
+              {{ medicalAid.medicalAidName }}
+            </option>
+          </select>
+        </div>
+  
+        <!-- Patient Name Input -->
+        <div class="form-group">
+          <label for="PatientName">Patient Name:</label>
+          <input required type="text" formControlName="PatientName" class="form-control" id="PatientName" placeholder="Enter patient name">
+        </div>
+  
+        <!-- Patient Surname Input -->
+        <div class="form-group">
+          <label for="PatientSurname">Patient Surname:</label>
+          <input required type="text" formControlName="PatientSurname" class="form-control" id="PatientSurname" placeholder="Enter patient surname">
+        </div>
+  
+        <!-- Medical Aid Number Input -->
+        <div class="form-group">
+          <label for="MedicalAidNumber">Medical Aid Number:</label>
+          <input required type="text" formControlName="MedicalAidNumber" class="form-control" id="MedicalAidNumber" placeholder="Enter medical aid number">
+        </div>
+  
+        <!-- Order Type Selection Dropdown -->
+        <div class="form-group">
+          <label for="OrderTypeId">Order Type:</label>
+          <select formControlName="OrderTypeId" class="form-control" id="OrderTypeId" required>
+            <option *ngFor="let type of orderTypes" [ngValue]="type.orderTypeId">
+              {{ type.description }}
+            </option>
+          </select>
+        </div>
+  
+        <!-- Order Status Selection Dropdown -->
+        <div class="form-group">
+          <label for="OrderStatusId">Order Status:</label>
+          <select formControlName="OrderStatusId" class="form-control" id="OrderStatusId" required>
+            <option *ngFor="let status of orderStatus" [ngValue]="status.orderStatusId">
+              {{ status.description }}
+            </option>
+          </select>
+        </div>
+  
+        <!-- Order Direction Selection Dropdown -->
+        <div class="form-group">
+          <label for="OrderDirectionId">Order Direction:</label>
+          <select formControlName="OrderDirectionId" class="form-control" id="OrderDirectionId" required>
+            <option *ngFor="let direction of orderDirections" [ngValue]="direction.orderDirectionId">
+              {{ direction.description }} {{direction.instructions}}
+            </option>
+          </select>
+        </div>
+  
+        <!-- Priority Level Selection Dropdown -->
+        <div class="form-group">
+          <label for="PriorityLevel">Priority Level:</label>
+          <select formControlName="PriorityLevel" class="form-control" id="PriorityLevel" required>
+            <option disabled selected value="">Select Priority Level</option>
+            <option *ngFor="let level of priorityLevels" [value]="level.value">{{ level.label }}</option>
+          </select>
+        </div>
+  
+        <!-- Selected Areas Display -->
+        <div *ngIf="selectedAreas.length > 0">
+          <h3>Selected Areas:</h3>
+          <div *ngFor="let areaId of selectedAreas; let i = index">
+            <div class="form-group">
+              <label>Area {{ i + 1 }}:</label>
+              <label>{{areaId}}</label>
+            </div>
+          </div>
+        </div>
+  
+        <!-- Teeth Shades Selection -->
+        <div class="color-chart">
+          <h3>Select Teeth Shades</h3>
+          <div class="shade-container">
+            <div *ngFor="let shade of teethShades" class="shade-item" (click)="toggleTeethShadeSelection(shade.teethShadeId)">
+              <div class="color-box" [style.background]="shade.colourCode">
+                <div class="selected-mark" *ngIf="selectedTeethShadeIds.includes(shade.teethShadeId)">&#10003;</div>
+              </div>
+              <div class="color-name">{{ shade.colourName }}</div>
+            </div>
+          </div>
+        </div>
+  
+        <!-- Emergency Number Input -->
+        <div class="form-group">
+          <label for="EmergencyNumber">Emergency Number:</label>
+          <input required type="text" formControlName="EmergencyNumber" class="form-control" id="EmergencyNumber" placeholder="Enter Emergency Contact Number">
+        </div>
+  
+        <!-- Special Requirements Input -->
+        <div class="form-group">
+          <label for="SpecialRequirements">Special Requirements:</label>
+          <textarea formControlName="SpecialRequirements" class="form-control" id="SpecialRequirements" placeholder="Enter any special requirements" required></textarea>
+        </div>
+  
+        <!-- Due Date Input -->
+        <div class="form-group">
+          <label for="DueDate">Due Date:</label>
+          <input type="date" formControlName="DueDate" class="form-control" id="DueDate" placeholder="Select Due Date">
+        </div>
+  
+        <!-- Submit and Cancel Buttons -->
+        <button type="submit" class="btn btn-primary">Save</button>
+        <button type="button" class="btn btn-secondary" (click)="cancel()">Cancel</button>
+      </form>
+    </div>
+  </div>
+  

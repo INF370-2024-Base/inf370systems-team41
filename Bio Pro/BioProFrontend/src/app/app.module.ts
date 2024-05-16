@@ -11,6 +11,7 @@ import { MaterialModule } from './shared/material.module';
 import { MatSidenav } from '@angular/material/sidenav';
 import { AddOrderComponent } from './add-order/add-order.component';
 import { OrdersComponent } from './orders/orders.component';
+import { EditOrderModalComponent } from './edit-order-modal/edit-order-modal.component';
 
 
 @NgModule({
@@ -18,7 +19,8 @@ import { OrdersComponent } from './orders/orders.component';
     AppComponent,
     OpenOrdersComponent,
     AddOrderComponent,
-    OrdersComponent
+    OrdersComponent,
+    EditOrderModalComponent
   ],
   imports: [
     BrowserModule,
