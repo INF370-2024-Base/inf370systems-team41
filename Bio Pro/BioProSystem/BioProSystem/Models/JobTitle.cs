@@ -12,4 +12,6 @@ public partial class JobTitle
     public string TitleName { get; set; }
 
     public virtual ICollection<Employee> Employees { get; set; } = new List<Employee>();
+
+    public virtual ICollection<OrderDirectionState> OrderDirectionstates { get; set; }
 }

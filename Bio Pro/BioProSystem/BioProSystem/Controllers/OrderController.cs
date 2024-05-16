@@ -74,9 +74,11 @@ namespace BioProSystem.Controllers
                         systemOrder = newOrder,
                         OrderDirectionId = viewModel.OrderDirectionId,
                         TimelineDetails="Start Date:"+viewModel.OrderDate.ToShortDateString()+"\n"+"Due Date:"+viewModel.DueDate.ToShortDateString(),
+                        
 
 
                     };
+                    _repository.Add(newOrderWorkflowTimelines);
                     var orderdirection = await _repository.GetOrderDirectionById(viewModel.OrderDirectionId);
                     var teethShades = await _repository.GetTeethShadesAsync(viewModel.TeethShadesIds);
                     var selectedAreas = await _repository.GetSelectedAreasAsync(viewModel.SeletedAreasIds);
@@ -319,6 +321,104 @@ namespace BioProSystem.Controllers
             catch (Exception ex)
             {
                 return StatusCode(500, $"Internal Server Error: {ex.Message}"); // Handle and log any exceptions
+            }
+        }
+
+        [HttpGet("GetPendingOrders")]
+        public async Task<ActionResult<IEnumerable<SystemOrder>>> GetPendingOrders()
+        {
+            try
+            {
+                var pendingOrders = await _repository.GetPendingSystemOrders();
+                if(pendingOrders == null || !pendingOrders.Any())
+                {
+                    return NotFound("No pending orders found");
+                }
+                else
+                {
+                    return Ok(pendingOrders);
+                }
+            }
+            catch(Exception ex)
+            {
+                return StatusCode(500, $"Internal Server Error: {ex.Message}");
+            }
+
+        }
+        [HttpPut]
+        [Route("ApprovePendingOrder/{orderId}")]
+        public async Task<ActionResult<IEnumerable<SystemOrder>>> ApprovePendingOrders(string orderId)
+        {
+            try
+            {
+                var pendingOrders = await _repository.GetSystemOrderByIdAsync(orderId);
+                if (pendingOrders == null)
+                {
+                    return NotFound("No pending orders found");
+                }
+                if (pendingOrders.OrderStatusId != 1)
+                {
+                    return NotFound("Order is not a pending orders found");
+                }
+                else
+                {
+                    pendingOrders.OrderStatusId = 2;
+                    OrderWorkflowTimeline timeline = _repository.GetOrdertimeFlowBySystemOrderId(orderId).Result;
+                    List<Employee> employees = new List<Employee>();
+                    employees=_repository.AssignAvailableTechnicians(timeline.OrderDirectionId,pendingOrders.OrderId);
+                    foreach(Employee employee in employees)
+                    {
+                        employee.SystemOrders.Add(pendingOrders);
+                        pendingOrders.Employees.Add(employee);
+                    }
+                }
+                if (await _repository.SaveChangesAsync())
+                {
+                    return Ok(pendingOrders);
+                }
+                else
+                {
+                    ModelState.AddModelError(string.Empty, "Failed to save changes.");
+                    return BadRequest(ModelState);
+                }
+            }
+            catch(Exception ex)
+            {
+                return StatusCode(500, $"Internal Server Error: {ex.Message}");
+            }
+        }
+        [HttpPut]
+        [Route("DissaprovePendingOrder/{orderId}")]
+        public async Task<ActionResult<IEnumerable<SystemOrder>>> DissaprovePendingOrders(string orderId)
+        {
+            try
+            {
+                var pendingOrders = await _repository.GetSystemOrderByIdAsync(orderId);
+                if (pendingOrders == null )
+                {
+                    return NotFound("No pending orders found");
+                }
+                if(pendingOrders.OrderStatusId!=1)
+                {
+                    return NotFound("Order is already in progres. Please cancel order instead");
+                }
+                else
+                {
+                    pendingOrders.OrderStatusId = 4;
+                }
+                if (await _repository.SaveChangesAsync())
+                {
+                    return Ok(pendingOrders);
+                }
+                else
+                {
+                    ModelState.AddModelError(string.Empty, "Failed to save changes.");
+                    return BadRequest(ModelState);
+                }
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal Server Error: {ex.Message}");
             }
         }
 

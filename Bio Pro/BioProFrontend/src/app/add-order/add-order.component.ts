@@ -1,9 +1,10 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { DataService } from '../services/data.service';
+import { DataService } from '../services/order.service';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { SystemOrderViewModel } from '../shared/SystemOrderViewModel ';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-add-order',
@@ -35,7 +36,7 @@ export class AddOrderComponent implements OnInit {
     private dataService: DataService,
     private httpClient: HttpClient,
     private router: Router,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,private snackBar:MatSnackBar
   ) {
     this.addForm = this.formBuilder.group({
       OrderId: ['', Validators.required],
@@ -185,6 +186,11 @@ export class AddOrderComponent implements OnInit {
   isSelected(shadeId: number): boolean {
     return this.selectedTeethShadeIds.includes(shadeId);
   }
+  showSnackBar(forgetmessage:string) {
+    this.snackBar.open(forgetmessage, 'Dismiss', {
+      duration: 3000, 
+    });
+  }
 
 
   loadOrderTypes(): void {
@@ -252,63 +258,58 @@ export class AddOrderComponent implements OnInit {
   
   
   onSubmit(): void {
-    console.log("test")
-    if (this.addForm.valid) {
-      const formData = this.addForm.value;
-      const viewModel = new SystemOrderViewModel;
-      viewModel.OrderId = formData.OrderId;
-      viewModel.DentistId = formData.DentistId;
-      viewModel.OrderDate = formData.OrderDate;
-      viewModel.PatientName = formData.PatientName;
-      viewModel.PatientSurname = formData.PatientSurname;
-      viewModel.MedicalAidId = formData.MedicalAidId;
-      viewModel.MedicalAidNumber = formData.MedicalAidNumber;
-      viewModel.OrderDirectionId = formData.OrderDirectionId;
-      viewModel.OrderTypeId = formData.OrderTypeId;
-    viewModel.OrderStatusId = formData.OrderStatusId;
-    viewModel.EmergencyNumber = formData.EmergencyNumber;
-    viewModel.SpecialRequirements = formData.SpecialRequirements;
-    viewModel.DueDate = formData.DueDate;
-    viewModel.PriorityLevel = formData.PriorityLevel;
-    viewModel.TeethShadesIds = this.selectedTeethShadeIds; // Assuming this is an array of IDs
-    viewModel.SeletedAreasIds = this.selectedAreas; // Assuming this is an array of IDs
-    viewModel.MouthArea = this.selectedAreas.toString(); // Convert to string if necessary
-
-      console.log(viewModel)
-      this.dataService.addOrder(viewModel).subscribe(
-        () => {
-          console.log('SystemOrder added successfully!');
-          this.router.navigate(['/orders']);
-        },
-        // (error: HttpErrorResponse) => {
-        //   if (error.status === 400) {
-        //     console.error('Server validation error:', error);
-        //     if (error.error instanceof ErrorEvent) {
-        //       // A client-side or network error occurred. Handle it accordingly.
-        //       console.error('An error occurred:', error.error.message);
-        //     } else {
-        //       // The backend returned an unsuccessful response code.
-        //       // The response body may contain clues as to what went wrong.
-        //       console.error(
-        //         `Backend returned code ${error.status}, ` +
-        //         `body was: ${error.error}`);
-        //     }
-        //   } else {
-        //     console.error('Unexpected error:', error);
-        //   }
-        // }
-      );
-    }
-  
-    else{
-      Object.keys(this.addForm.controls).forEach(field => {
-        const control = this.addForm.get(field);
-        if(control)
-        if (control.invalid) {
-          console.log(`Field ${field} is invalid. Error: `, control.errors);
-        }
-      });
-    }
+    if(this.selectedTeethShadeIds.length<1)
+      {
+        this.showSnackBar(`Teethshades are required`)
+      }
+      else{
+        if(this.selectedAreas.length<1)
+          {
+            this.showSnackBar(`SelectedAreas are required`)
+          }
+          else{
+            if (this.addForm.valid) {
+              const formData = this.addForm.value;
+              const viewModel = new SystemOrderViewModel;
+              viewModel.OrderId = formData.OrderId;
+              viewModel.DentistId = formData.DentistId;
+              viewModel.OrderDate = formData.OrderDate;
+              viewModel.PatientName = formData.PatientName;
+              viewModel.PatientSurname = formData.PatientSurname;
+              viewModel.MedicalAidId = formData.MedicalAidId;
+              viewModel.MedicalAidNumber = formData.MedicalAidNumber;
+              viewModel.OrderDirectionId = formData.OrderDirectionId;
+              viewModel.OrderTypeId = formData.OrderTypeId;
+            viewModel.OrderStatusId = formData.OrderStatusId;
+            viewModel.EmergencyNumber = formData.EmergencyNumber;
+            viewModel.SpecialRequirements = formData.SpecialRequirements;
+            viewModel.DueDate = formData.DueDate;
+            viewModel.PriorityLevel = formData.PriorityLevel;
+            viewModel.TeethShadesIds = this.selectedTeethShadeIds; // Assuming this is an array of IDs
+            viewModel.SeletedAreasIds = this.selectedAreas; // Assuming this is an array of IDs
+            viewModel.MouthArea = this.selectedAreas.toString(); // Convert to string if necessary
+        
+              console.log(viewModel)
+              this.dataService.addOrder(viewModel).subscribe(
+                () => {
+                  console.log('SystemOrder added successfully!');
+                  this.router.navigate(['/orders']);
+                },
+              )
+            }
+          
+            else{
+              Object.keys(this.addForm.controls).forEach(field => {
+                const control = this.addForm.get(field);
+                if(control)
+                if (control.invalid) {
+                  this.showSnackBar(`${field} is required`)
+                }
+              });
+            }
+          }
+      }
+   
     
   }
   

@@ -2,6 +2,7 @@
 using BioProSystem.ViewModels;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using System.Linq;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace BioProSystem.Models
@@ -28,6 +29,47 @@ namespace BioProSystem.Models
         {
             IQueryable<OpenOrder> query = _appDbContext.OpenOrders;
             return await query.ToArrayAsync();
+        }
+        public List<Employee> AssignAvailableTechnicians(int orderDirectionId,string systemOrderId)
+        {
+            // Get all employees who have less than 3 active orders
+            var availableEmployees = _appDbContext.Employees
+                .Where(e => e.SystemOrders.Count(so => so.OrderStatusId == 2) < 3)
+                .ToList();  // Convert to List to allow modifications
+
+            var orderDirectionSteps = _appDbContext.OrderDirectionStates
+                .Where(o => o.OrderDirectionsId == orderDirectionId)
+                .ToList();  // Convert to List for better iteration
+           OrderWorkflowTimeline timeline = GetOrdertimeFlowBySystemOrderId(systemOrderId).Result;
+            var assignedEmployees = new List<Employee>();
+
+            foreach (var orderDirectionStep in orderDirectionSteps)
+            {
+                // Find an available employee matching the job title
+                var employee = availableEmployees
+            .Where(e => e.JobTitleId == orderDirectionStep.JobTitleId)
+            .OrderBy(e => e.SystemOrders.Count(so => so.OrderStatusId == 2))
+            .FirstOrDefault();
+
+                if (employee != null)
+                {
+                    timeline.EmployeeeOrderDetails += employee.FirstName + " " + employee.LastName + "assigned to step:" + orderDirectionStep.StateDescription+".";
+                    // Assign the employee and remove from the available list
+                    assignedEmployees.Add(employee); // Ensure the same employee is not assigned to multiple steps
+                }
+                else
+                {
+                    throw new Exception("No employees found for " + orderDirectionStep.StateDescription);
+                }
+            }
+
+            return assignedEmployees;
+        }
+
+        public async Task<OrderWorkflowTimeline> GetOrdertimeFlowBySystemOrderId(string systemOrderId)
+        {
+            IQueryable<OrderWorkflowTimeline> query = _appDbContext.OrderWorkflowTimelines.Where(o=>o.SystemOrderId== systemOrderId);
+            return await query.FirstOrDefaultAsync();
         }
         public async Task<OpenOrder> GetOpenOrdersAsync(int openOrderID)
         {
@@ -58,6 +100,12 @@ namespace BioProSystem.Models
             IQueryable<SelectedArea> query = _appDbContext.SelectedAreas.Where(c => c.SelectedAreaId == areaId);
             return await query.FirstOrDefaultAsync();
         }
+        public async Task<List<SystemOrder>> GetPendingSystemOrders()
+        {
+            IQueryable<SystemOrder> pendingOrders = _appDbContext.SystemOrders.Where(o => o.OrderStatusId == 1);
+            return await pendingOrders.ToListAsync();
+        }
+
         public async Task<List<SelectedArea>> GetSelectedAreasAsync(List<int> areaIds)
         {
             List<SelectedArea> areaIdsList = new List<SelectedArea>();

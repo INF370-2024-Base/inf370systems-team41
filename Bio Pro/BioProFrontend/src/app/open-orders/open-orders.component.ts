@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { OpenOrder } from '../shared/openorder';
-import { DataService } from '../services/data.service';
+import { DataService } from '../services/order.service';
 import { Router } from '@angular/router';
 
 @Component({

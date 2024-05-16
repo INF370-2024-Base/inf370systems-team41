@@ -18,6 +18,8 @@ public partial class OrderWorkflowTimeline
     [Required]
     public string TimelineDetails { get; set; }
 
+    public string? EmployeeeOrderDetails { get; set; }
+
     public virtual ProceduralTimeline? Timeline { get; set; } = null!;
 
     public virtual SystemOrder systemOrder { get; set; } = null!;

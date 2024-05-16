@@ -30,7 +30,6 @@ namespace BioProSystem.Controllers
             _configuration = configuration;
             _repository = repository;
         }
-
         [HttpGet]
         [Route("GetAllOpenOrders")]
         //[Authorize(AuthenticationSchemes = "Bearer")]
@@ -42,9 +41,9 @@ namespace BioProSystem.Controllers
                 var results = await _repository.GetAllOpenOrdersAsync();
                 return Ok(results);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return StatusCode(500, "Internal Server Error. Please contact support.");
+                return StatusCode(500, "Internal Server Error. Please contact support."+ex.Message);
             }
         }
 

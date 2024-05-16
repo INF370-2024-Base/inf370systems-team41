@@ -79,6 +79,18 @@ export class DataService {
     const endpoint = 'api/api/teethshades'; // Updated endpoint
     return this.httpClient.get<any[]>(`${this.apiUrl}${endpoint}`);
   }
+  getPendingOrders():Observable<any[]> {
+    const endpoint = 'Api/GetPendingOrders'; // Updated endpoint
+    return this.httpClient.get<any[]>(`${this.apiUrl}${endpoint}`);
+  }
+  apporvePendingOrder(orderId:number):Observable<number> {
+    const endpoint = `Api/ApprovePendingOrder/${orderId}`; // Updated endpoint
+    return this.httpClient.put<number>(`${this.apiUrl}${endpoint}`,orderId);
+  }
+  dissaprovePendingOrders(orderId:number):Observable<number> {
+    const endpoint = `Api/ApprovePendingOrder/${orderId}`; // Updated endpoint
+    return this.httpClient.put<number>(`${this.apiUrl}${endpoint}`,orderId);
+  }
 }
 
 

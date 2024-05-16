@@ -9,10 +9,7 @@ public partial class OpenOrder
     [Key]
     public int OpenOrderId { get; set; }
     [Required]
-
     public string? Description { get; set; }
-    
     [Required]
-
     public virtual SystemOrder systemOrder { get; set; } = null!;
 }

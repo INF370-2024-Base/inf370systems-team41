@@ -15,5 +15,7 @@ public partial class OrderDirectionState
     public decimal Ratio { get; set; }
 
     public int OrderDirectionsId { get; set; }
+    public int JobTitleId { get; set; }
     public virtual OrderDirection OrderDirections { get; set; }
+    public virtual JobTitle JobTitle { get; set; }
 }

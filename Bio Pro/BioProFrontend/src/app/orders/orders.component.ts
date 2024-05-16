@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { DataService } from '../services/data.service';
+import { DataService } from '../services/order.service';
+import { switchMap,forkJoin,of } from 'rxjs';
 
 @Component({
   selector: 'app-orders',
@@ -14,24 +15,6 @@ export class OrdersComponent implements OnInit {
   baseUrl: string ='https://localhost:44315/Api/';
   constructor(private http: HttpClient,private dataservices:DataService) { }
   private isDrawing: boolean = false;
-  ngOnInit(): void {
-    
-    this.dataservices.getAllOrders().subscribe(result => {
-      let allOrders:any[] = result
-      if(Array.isArray(allOrders))
-      {
-        allOrders.forEach((element) => {
-        this.orders.push(element)
-        this.getOrderInfo()
-        });
-      }
-    })
-    
-    console.log(this.orders)
-    
-    console.log(this.ordersInfo)
-   
-  }
   ngAfterViewChecked(): void {
     if (this.ordersInfo.length > 0 && !this.isDrawing) {
       this.isDrawing = true;
@@ -39,9 +22,33 @@ export class OrdersComponent implements OnInit {
     }
 
   }
+  ngOnInit(): void {
+    this.getOrdersAndInfo();
+  }
+  
+  getOrdersAndInfo() {
+    this.dataservices.getAllOrders().pipe(
+      switchMap((allOrders: any[]) => {
+        if (Array.isArray(allOrders)) {
+          this.orders = allOrders;
+          return forkJoin(this.orders.map(order => this.dataservices.getAllOrderInfo(order.orderId)));
+        } else {
+          console.error('No orders found.');
+          return of([]); // Empty observable
+        }
+      })
+    ).subscribe(
+      (orderInfos: any[]) => {
+        this.ordersInfo = orderInfos;
+        console.log('Orders and order info retrieved:', this.orders, this.ordersInfo);
+      },
+      (error) => {
+        console.error('Error fetching orders or order info:', error);
+      }
+    );
+  }
   getOrderInfo()
   {
-    this.ordersInfo=[]
     this.orders.forEach((order) => {
       console.log(order); 
       this.dataservices.getAllOrderInfo(order.orderId).subscribe(
@@ -102,6 +109,7 @@ export class OrdersComponent implements OnInit {
           (data) => {
             console.log(data)
             if (data) {
+              this.ordersInfo=[]
               this.orders = [data]; 
               this.getOrderInfo()// Assuming the response is a single order or array of orders
               this.isDrawing = false;

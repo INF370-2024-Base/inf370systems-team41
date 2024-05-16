@@ -36,6 +36,9 @@ namespace BioProSystem.Models
 
         Task<Dentist> GetDentistdByIdAsync(int dentistId);
         Task<SystemOrderViewModel> GetAllSystemOrdersInformationAsync(string orderId);
+        Task<List<SystemOrder>> GetPendingSystemOrders();
+        List<Employee> AssignAvailableTechnicians(int orderDirectionId, string systemOrderId);
+        Task<OrderWorkflowTimeline> GetOrdertimeFlowBySystemOrderId(string systemOrderId);
 
     }
 }

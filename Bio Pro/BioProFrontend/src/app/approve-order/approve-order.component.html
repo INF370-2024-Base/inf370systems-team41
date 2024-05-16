@@ -1,0 +1,6 @@
+
+<div *ngFor="let pendingorder of pendingOrders">
+    {{pendingorder.orderId}}
+    <button (click)="approveOrder(pendingorder.orderId)">Approve</button>
+    <button (click)="dissaproveOrder(pendingorder.orderId)">Dissapprove</button>
+</div>
