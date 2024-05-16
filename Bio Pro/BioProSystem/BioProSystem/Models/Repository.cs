@@ -32,30 +32,22 @@ namespace BioProSystem.Models
         }
         public List<Employee> AssignAvailableTechnicians(int orderDirectionId,string systemOrderId)
         {
-            // Get all employees who have less than 3 active orders
             var availableEmployees = _appDbContext.Employees
                 .Where(e => e.SystemOrders.Count(so => so.OrderStatusId == 2) < 3)
-                .ToList();  // Convert to List to allow modifications
+                .ToList();  
 
-            var orderDirectionSteps = _appDbContext.OrderDirectionStates
-                .Where(o => o.OrderDirectionsId == orderDirectionId)
-                .ToList();  // Convert to List for better iteration
+            var orderDirectionSteps = _appDbContext.OrderDirectionStates.Where(o => o.OrderDirectionsId == orderDirectionId).ToList(); 
            OrderWorkflowTimeline timeline = GetOrdertimeFlowBySystemOrderId(systemOrderId).Result;
             var assignedEmployees = new List<Employee>();
 
             foreach (var orderDirectionStep in orderDirectionSteps)
             {
-                // Find an available employee matching the job title
-                var employee = availableEmployees
-            .Where(e => e.JobTitleId == orderDirectionStep.JobTitleId)
-            .OrderBy(e => e.SystemOrders.Count(so => so.OrderStatusId == 2))
-            .FirstOrDefault();
+                var employee = availableEmployees.Where(e => e.JobTitleId == orderDirectionStep.JobTitleId).OrderBy(e => e.SystemOrders.Count(so => so.OrderStatusId == 2)).FirstOrDefault();
 
                 if (employee != null)
                 {
                     timeline.EmployeeeOrderDetails += employee.FirstName + " " + employee.LastName + "assigned to step:" + orderDirectionStep.StateDescription+".";
-                    // Assign the employee and remove from the available list
-                    assignedEmployees.Add(employee); // Ensure the same employee is not assigned to multiple steps
+                    assignedEmployees.Add(employee);
                 }
                 else
                 {
