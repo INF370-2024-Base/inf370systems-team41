@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using BioProSystem.Models;
 using BioProSystem.ViewModels;
+using System.Text.RegularExpressions;
 
 namespace BioProSystem.Controllers
 {
@@ -14,6 +15,21 @@ namespace BioProSystem.Controllers
         public EmployeeController(IRepository repository)
         {
             _repository = repository;
+        }
+
+        [HttpGet]
+        [Route("GetAllEmployee")]
+        public async Task<IActionResult> GetAllEmployee()
+        {
+            try
+            {
+                var employee = await _repository.GetAllEmployeeAsync();
+                return Ok(employee);
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, "Internal Server Error. Please contact support.");
+            }
         }
 
         // POST api/Employee/AddEmployee
@@ -133,56 +149,22 @@ namespace BioProSystem.Controllers
             }
         }
 
-        [HttpPost("AddDailyHours")]
-        public async Task<IActionResult> AddDailyHours(EmployeeDailyHoursViewModel model)
+        [HttpPost]
+        [Route("capture-daily-hours/{employeeId}")]
+        public async Task<IActionResult> CaptureEmployeeDailyHours(int employeeId, EmployeeDailyHoursViewModel newDailyHours)
         {
             try
             {
-                var employee = await _repository.GetEmployeeByIdAsync(model.EmployeeId);
-                if (employee == null) return NotFound("Employee not found.");
-
-                var dailyHours = new EmployeeDailyHours
-                {
-                    WorkDate = model.WorkDate,
-                    Hours = model.Hours,
-                    //Employees = employee // Assuming Employee has a navigation property for EmployeeDailyHours
-                };
-
-                _repository.Add(dailyHours);
-
-                if (await _repository.SaveChangesAsync())
-                {
-                    return Ok(dailyHours);
-                }
+                EmployeeDailyHours employeeDailyHours= new EmployeeDailyHours { WorkDate = newDailyHours.WorkDate, Hours=newDailyHours.Hours };
+                await _repository.CaptureEmployeeDailyHoursAsync(employeeId, employeeDailyHours);
+                return Ok(newDailyHours);
             }
             catch (Exception ex)
             {
-                return StatusCode(500, ex.Message + "Internal Server Error. Please contact support.");
-            }
-
-            return BadRequest("Failed to add daily hours.");
-        }
-
-        [HttpGet("GetDailyHours/{id}")]
-        public async Task<IActionResult> GetDailyHours(int id)
-        {
-            try
-            {
-                var employee = await _repository.GetEmployeeByIdAsync(id);
-                if (employee == null) return NotFound("Employee not found.");
-
-                var dailyHours = employee.EmployeeDailyHours; // Accessing through the navigation property
-
-                if (!dailyHours.Any()) return NotFound("No daily hours found for this employee.");
-
-                return Ok(dailyHours);
-            }
-            catch (Exception)
-            {
-                return StatusCode(500, "Internal Server Error. Please contact support.");
+                // Log the exception or return a meaningful error message
+                return StatusCode(500, "An error occurred while capturing daily hours.");
             }
         }
-
 
     }
 }

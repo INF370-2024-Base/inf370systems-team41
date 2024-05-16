@@ -11,6 +11,7 @@ namespace BioProSystem.Models
         Task<OpenOrder> GetOpenOrdersAsync(int custId);
         Task<SystemUser> GetsystemUserAsync(string systemUserEmail);
         //Employee
+        Task<Employee[]> GetAllEmployeeAsync();
         Task<JobTitle> GetJobTitleByIdAsync(int id);
         Task<IEnumerable<Employee>> GetAllEmployeesAsync();
         Task<Employee> GetEmployeeByIdAsync(int id);
@@ -26,10 +27,7 @@ namespace BioProSystem.Models
         void DeleteDentist(Dentist dentist);
 
         // New methods for EmployeeDailyHours
-        Task<EmployeeDailyHours> AddEmployeeDailyHoursAsync(EmployeeDailyHours employeeDailyHours);
-        Task<IEnumerable<EmployeeDailyHours>> GetAllEmployeeDailyHoursAsync();
-        Task<EmployeeDailyHours> GetEmployeeDailyHoursAsync(int id);
-        Task<bool> UpdateEmployeeDailyHoursAsync(EmployeeDailyHours employeeDailyHours);
-        Task<bool> DeleteEmployeeDailyHoursAsync(EmployeeDailyHours employeeDailyHours);
+        Task CaptureEmployeeDailyHoursAsync(int employeeId, EmployeeDailyHours newDailyHours);
+
     }
 }

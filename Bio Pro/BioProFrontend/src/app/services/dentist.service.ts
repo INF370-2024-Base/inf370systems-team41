@@ -24,6 +24,13 @@ export class DentistService {
     return this.httpClient.get<Dentist[]>(`${this.apiUrl}/GetAllDentists?query=${query}`);
   }
 
+  editDentist(dentistId: number, dentist: Dentist): Observable<Dentist> {
+    return this.httpClient.put<Dentist>(`${this.apiUrl}/EditDentist/${dentistId}`, dentist);
+  }
+  
+  deleteDentist(dentistId: number): Observable<any> {
+    return this.httpClient.delete(`${this.apiUrl}/DeleteDentist/${dentistId}`);
+  }
   // Add other CRUD operations as needed
 }
 

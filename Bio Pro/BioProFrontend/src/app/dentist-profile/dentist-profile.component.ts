@@ -40,5 +40,33 @@ export class DentistProfileComponent implements OnInit {
       );
     }
   }
+
+  // In your component.ts
+editDentist(dentist: Dentist) {
+  this.dentistService.editDentist(dentist.dentistId, dentist).subscribe(
+    editedDentist => {
+      console.log('Dentist edited successfully:', editedDentist);
+      // Handle success, e.g., show a success message or refresh the list
+    },
+    error => {
+      console.error('Error editing dentist:', error);
+      // Handle error, e.g., show an error message
+    }
+  );
+}
+
+deleteDentist(dentist: Dentist) {
+  this.dentistService.deleteDentist(dentist.dentistId).subscribe(
+    () => {
+      console.log('Dentist deleted successfully');
+      // Handle success, e.g., remove the dentist from the list or show a success message
+    },
+    error => {
+      console.error('Error deleting dentist:', error);
+      // Handle error, e.g., show an error message
+    }
+  );
+}
+
 }
 

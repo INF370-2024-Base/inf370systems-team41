@@ -44,6 +44,11 @@ namespace BioProSystem.Models
         }
 
         //Employee
+        public async Task<Employee[]> GetAllEmployeeAsync()
+        {
+            IQueryable<Employee> query = _appDbContext.Employees;
+            return await query.ToArrayAsync();
+        }
         public async Task<JobTitle> GetJobTitleByIdAsync(int id)
         {
             return await _appDbContext.JobTitles.FindAsync(id);
@@ -122,33 +127,21 @@ namespace BioProSystem.Models
         //End of Dentist 
 
         // Implementation for EmployeeDailyHours
-        public async Task<EmployeeDailyHours> AddEmployeeDailyHoursAsync(EmployeeDailyHours employeeDailyHours)
+
+        public async Task CaptureEmployeeDailyHoursAsync(int employeeId, EmployeeDailyHours newDailyHours)
         {
-            _appDbContext.EmployeeDailyHours.Add(employeeDailyHours);
+            var employee = await _appDbContext.Employees.FindAsync(employeeId);
+            if (employee == null)
+            {
+                throw new KeyNotFoundException($"No employee found with ID: {employeeId}");
+            }
+
+            newDailyHours.Employees.Add(employee);
+            employee.EmployeeDailyHours.Add(newDailyHours);
+
             await _appDbContext.SaveChangesAsync();
-            return employeeDailyHours;
         }
 
-        public async Task<IEnumerable<EmployeeDailyHours>> GetAllEmployeeDailyHoursAsync()
-        {
-            return await _appDbContext.EmployeeDailyHours.ToListAsync();
-        }
 
-        public async Task<EmployeeDailyHours> GetEmployeeDailyHoursAsync(int id)
-        {
-            return await _appDbContext.EmployeeDailyHours.FindAsync(id);
-        }
-
-        public async Task<bool> UpdateEmployeeDailyHoursAsync(EmployeeDailyHours employeeDailyHours)
-        {
-            _appDbContext.Entry(employeeDailyHours).State = EntityState.Modified;
-            return await _appDbContext.SaveChangesAsync() > 0;
-        }
-
-        public async Task<bool> DeleteEmployeeDailyHoursAsync(EmployeeDailyHours employeeDailyHours)
-        {
-            _appDbContext.EmployeeDailyHours.Remove(employeeDailyHours);
-            return await _appDbContext.SaveChangesAsync() > 0;
-        }
     }
 }
