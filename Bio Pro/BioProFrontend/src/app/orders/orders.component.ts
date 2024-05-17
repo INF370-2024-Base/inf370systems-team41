@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { DataService } from '../services/order.service';
 import { switchMap,forkJoin,of } from 'rxjs';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-orders',
@@ -13,7 +14,7 @@ export class OrdersComponent implements OnInit {
   orders: any[] = [];
   ordersInfo:any[]=[];
   baseUrl: string ='https://localhost:44315/Api/';
-  constructor(private http: HttpClient,private dataservices:DataService) { }
+  constructor(private http: HttpClient,private dataservices:DataService,private snackBar:MatSnackBar) { }
   private isDrawing: boolean = false;
   ngAfterViewChecked(): void {
     if (this.ordersInfo.length > 0 && !this.isDrawing) {
@@ -111,20 +112,35 @@ export class OrdersComponent implements OnInit {
             if (data) {
               this.ordersInfo=[]
               this.orders = [data]; 
-              this.getOrderInfo()// Assuming the response is a single order or array of orders
+              this.getOrderInfo()
               this.isDrawing = false;
             } else {
-              this.orders = []; // Reset orders array if no data found
+              this.ordersInfo=[]
+              this.orders = [data]; 
+              this.getOrderInfo() // Reset orders array if no data found
+              this.isDrawing = false;
             }
           },
-          (error) => {
-            console.error('Error fetching orders:', error);
-            this.orders = []; // Reset orders array on error
+          (error:HttpErrorResponse) => {
+            if (error.status === 404) {
+              // Show the snackbar when a 404 error occurs
+              this.showSnackBar();
+            }
           }
         );
     } else {
-      this.orders = []; // Reset orders array if search input is empty
+      this.getOrderInfo()
+      this.isDrawing = false;
     }
+  }
+  clearSeacrhOrders() {
+    this.getOrdersAndInfo();
+    this.orderId=""
+  }
+  showSnackBar() {
+    this.snackBar.open('No orders with that id found found.', 'Dismiss', {
+      duration: 3000, 
+    });
   }
 }
 
