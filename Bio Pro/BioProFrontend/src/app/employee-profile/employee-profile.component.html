@@ -1,0 +1,29 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-12 d-flex justify-content-between align-items-center">
+      <div class="col-md-6 d-flex align-items-center">
+        <input  matInput [(ngModel)]="searchQuery" placeholder="Search Employee..." class="w-100 mr-2"  (ngModelChange)="onOrderIdChange($event)"/>
+        <button (click)="searchEmployees()" class="btn btn-outline-primary">Search</button>
+      </div>
+      <div class="col-md-6 d-flex justify-content-end">
+        <a href="#" class="btn btn-primary mb-3" routerLink="/addEmployee">Add Employee</a>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card-container">
+        <div class="card mb-3 example-card" *ngFor="let employee of employees">
+          <div class="card-body">
+            <h5 class="card-title">{{employee.firstName}} {{employee.lastName}}</h5>
+            <p class="card-text"><strong>Email:</strong> {{employee.email}}</p>
+            <p class="card-text"><strong>Phone Number:</strong> {{employee.cellphone}}</p>
+            <p class="card-text"><strong>Address:</strong> {{employee.address}}</p>
+            <button (click)="editEmployee(employee)" class="btn btn-warning">Edit</button>
+            <button (click)="deleteEmployee(employee)" class="btn btn-danger">Delete</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

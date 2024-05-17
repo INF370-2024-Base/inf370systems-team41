@@ -20,6 +20,7 @@ export class OrdersComponent implements OnInit {
     if (this.ordersInfo.length > 0 && !this.isDrawing) {
       this.isDrawing = true;
       this.drawShapes();
+      console.log("drawing")
     }
 
   }
@@ -50,11 +51,13 @@ export class OrdersComponent implements OnInit {
   }
   getOrderInfo()
   {
+    this.ordersInfo=[]
     this.orders.forEach((order) => {
       console.log(order); 
       this.dataservices.getAllOrderInfo(order.orderId).subscribe(
         (result: any) => {
             this.ordersInfo.push(result);
+            this.isDrawing = false;
                    },
         (error) => {
           console.error('Error fetching order info:', error);
@@ -130,7 +133,7 @@ export class OrdersComponent implements OnInit {
         );
     } else {
       this.getOrderInfo()
-      this.isDrawing = false;
+
     }
   }
   clearSeacrhOrders() {
@@ -141,6 +144,16 @@ export class OrdersComponent implements OnInit {
     this.snackBar.open('No orders with that id found found.', 'Dismiss', {
       duration: 3000, 
     });
+  }
+  onOrderIdChange(newOrderId: string) {
+    if (newOrderId.trim() === '') {
+      this.getOrdersAndInfo()
+    } else {
+      // Filter restaurants based on query
+      this.orders = this.orders.filter((d) => d.orderId.toLowerCase().includes(newOrderId));
+      this.getOrderInfo()
+
+    }
   }
 }
 

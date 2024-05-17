@@ -227,6 +227,111 @@ namespace BioProSystem.Models
         {
             return await _appDbContext.OrderWorkflowTimelines.Where(o => o.WorkflowStructureId == orderTimelinId).FirstOrDefaultAsync();
         }
+        //emily
+        //Employee
+        public async Task<Employee[]> GetAllEmployeeAsync()
+        {
+            IQueryable<Employee> query = _appDbContext.Employees;
+            return await query.ToArrayAsync();
+        }
+        public async Task<JobTitle> GetJobTitleByIdAsync(int id)
+        {
+            return await _appDbContext.JobTitles.FindAsync(id);
+        }
+        public async Task<Employee> GetEmployeeByIdAsync(int id)
+        {
+            return await _appDbContext.Employees.FindAsync(id);
+        }
+        public async Task<Employee> GetEmployeeByEmailAsync(string email)
+        {
+
+            IQueryable<Employee> query = _appDbContext.Employees.Where(e => e.Email == email);
+            return await query.FirstOrDefaultAsync();
+        }
+
+        public async Task<IEnumerable<Employee>> GetAllEmployeesAsync()
+        {
+            return await _appDbContext.Employees.ToListAsync();
+        }
+
+        public async Task<Employee> UpdateEmployeeAsync(Employee employee)
+        {
+            _appDbContext.Entry(employee).State = EntityState.Modified;
+            await _appDbContext.SaveChangesAsync();
+            return employee;
+        }
+
+        public async Task<bool> DeleteEmployeeAsync(Employee employee)
+        {
+            _appDbContext.Employees.Remove(employee);
+            return await _appDbContext.SaveChangesAsync() > 0;
+        }
+        public async Task<Employee> AddEmployeeWithSystemUserAsync(Employee employee, string systemUserEmail)
+        {
+            // Find the SystemUser by email
+            var systemUser = await _appDbContext.SystemUsers.SingleOrDefaultAsync(u => u.Email == systemUserEmail);
+            Console.WriteLine(systemUserEmail);
+
+            if (systemUser == null)
+            {
+                throw new Exception("SystemUser not found for the provided email.");
+            }
+
+            // Link the SystemUser to the Employee by setting SystemUserId
+            employee.SystemUserId = systemUser.Id;
+
+            // Add the new employee to the repository
+            _appDbContext.Employees.Add(employee);
+            await _appDbContext.SaveChangesAsync(); // Save the new Employee
+
+            return employee;
+        }
+
+        //End of Employee
+        //Dentist
+        public async Task<Dentist[]> GetAllDentistsAsync()
+        {
+            IQueryable<Dentist> query = _appDbContext.Dentists;
+            return await query.ToArrayAsync();
+        }
+
+        public async Task<Dentist> GetDentistAsync(int dentistId)
+        {
+            IQueryable<Dentist> query = _appDbContext.Dentists.Where(d => d.DentistId == dentistId);
+            return await query.FirstOrDefaultAsync();
+        }
+
+        public void AddDentist(Dentist dentist)
+        {
+            _appDbContext.Dentists.Add(dentist);
+        }
+
+        public void UpdateDentist(Dentist dentist)
+        {
+            _appDbContext.Entry(dentist).State = EntityState.Modified;
+        }
+
+        public void DeleteDentist(Dentist dentist)
+        {
+            _appDbContext.Dentists.Remove(dentist);
+        }
+        //End of Dentist 
+
+        // Implementation for EmployeeDailyHours
+
+        public async Task CaptureEmployeeDailyHoursAsync(int employeeId, EmployeeDailyHours newDailyHours)
+        {
+            var employee = await _appDbContext.Employees.FindAsync(employeeId);
+            if (employee == null)
+            {
+                throw new KeyNotFoundException($"No employee found with ID: {employeeId}");
+            }
+
+            newDailyHours.Employees.Add(employee);
+            employee.EmployeeDailyHours.Add(newDailyHours);
+
+            await _appDbContext.SaveChangesAsync();
+        }
 
     }
 }

@@ -1,0 +1,28 @@
+<!-- add-dentist.component.html -->
+<div class="container">
+    <h1>Add New Dentist</h1>
+    <div class="row">
+      <div class="col-6">
+        <form #form="ngForm" (ngSubmit)="addDentist(form)" novalidate>
+          <div class="row mb-3">
+            <label for="lastName" class="col-sm-2 col-form-label">Last Name</label>
+            <input type="text" class="form-control" id="lastName" name="lastName" [(ngModel)]="addDentistAtt.lastName" required #lastNameField="ngModel">
+          </div>
+          <div class="row mb-3">
+            <label for="firstName" class="col-sm-2 col-form-label">First Name</label>
+            <input type="text" class="form-control" id="firstName" name="firstName" [(ngModel)]="addDentistAtt.firstName" required #firstNameField="ngModel">
+          </div>
+          <div class="row mb-3">
+            <label for="contactDetail" class="col-sm-2 col-form-label">Contact Detail</label>
+            <input type="text" class="form-control" id="contactDetail" name="contactDetail" [(ngModel)]="addDentistAtt.contactDetail" required #contactDetailField="ngModel">
+          </div>
+          <div class="row mb-3">
+            <label for="address" class="col-sm-2 col-form-label">Address</label>
+            <input type="text" class="form-control" id="address" name="address" [(ngModel)]="addDentistAtt.address" #addressField="ngModel">
+          </div>
+          <button type="submit" class="btn-add" [disabled]="form.invalid">Add</button>
+          <button type="button" class="btn-cancel" (click)="cancel()">Cancel</button>
+        </form>
+      </div>
+    </div>
+</div>

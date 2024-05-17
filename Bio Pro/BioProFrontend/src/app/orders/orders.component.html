@@ -4,7 +4,7 @@
   <div class="container">
     <div style="display: flex; gap: 10px; align-items: center;text-align: center;">
       <mat-form-field class="search-field" style="flex-grow: 1;">
-          <input matInput [(ngModel)]="orderId" placeholder="Enter Order ID">
+          <input matInput [(ngModel)]="orderId" placeholder="Enter Order ID" (ngModelChange)="onOrderIdChange($event)">
       </mat-form-field>
       <button mat-raised-button color="primary" style="width: 100px; height: 40px; display: flex; justify-content: center; align-items: center;" (click)="searchOrders()">Search</button>
     <button mat-raised-button color="warn" style="width: 100px; height: 40px; display: flex; justify-content: center; align-items: center;" (click)="clearSeacrhOrders()">Clear</button>  </div>

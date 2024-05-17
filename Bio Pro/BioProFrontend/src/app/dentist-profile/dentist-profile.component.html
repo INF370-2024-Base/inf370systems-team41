@@ -1,0 +1,35 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-12 d-flex justify-content-between align-items-center">
+      <div class="col-md-6 d-flex align-items-center">
+        <input [(ngModel)]="searchQuery" placeholder="Search Dentist..." class="w-100 mr-2" />
+        <button (click)="search()" class="btn btn-outline-primary">Search</button>
+      </div>
+      <div class="col-md-6 d-flex justify-content-end">
+        <a href="#" class="btn btn-primary mb-3" routerLink="/addDentist">Add Dentist</a>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card-container">
+        <mat-card *ngFor="let dentist of filteredDentists" class="mb-3 example-card">
+          <mat-card-header>
+            <div mat-card-avatar class="mr-2">
+              <!-- Placeholder for avatar image -->
+            </div>
+            <mat-card-title>{{dentist.firstName}} {{dentist.lastName}}</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <p><strong>Contact Detail:</strong> {{dentist.contactDetail}}</p>
+            <p><strong>Address:</strong> {{dentist.address}}</p>
+          </mat-card-content>
+          <mat-card-actions>
+            <button mat-raised-button color="primary" (click)="editDentist(dentist)">Edit</button>
+            <button mat-raised-button color="warn" (click)="deleteDentist(dentist)">Delete</button>
+          </mat-card-actions>        
+        </mat-card>
+      </div>
+    </div>
+  </div>
+</div>

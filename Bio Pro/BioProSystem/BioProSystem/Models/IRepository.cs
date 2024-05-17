@@ -39,6 +39,24 @@ namespace BioProSystem.Models
         Task<List<SystemOrder>> GetPendingSystemOrders();
         List<Employee> AssignAvailableTechnicians(int orderDirectionId, string systemOrderId);
         Task<OrderWorkflowTimeline> GetOrdertimeFlowBySystemOrderId(string systemOrderId);
+        //Employee
+        Task<Employee[]> GetAllEmployeeAsync();
+        Task<JobTitle> GetJobTitleByIdAsync(int id);
+        Task<IEnumerable<Employee>> GetAllEmployeesAsync();
+        Task<Employee> GetEmployeeByIdAsync(int id);
+        Task<Employee> UpdateEmployeeAsync(Employee employee);
+        Task<bool> DeleteEmployeeAsync(Employee employee);
+        Task<Employee> GetEmployeeByEmailAsync(string email);
+        Task<Employee> AddEmployeeWithSystemUserAsync(Employee employee, string systemUserEmail);
+        //Dentist 
+        Task<Dentist[]> GetAllDentistsAsync();
+        Task<Dentist> GetDentistAsync(int dentistId);
+        void AddDentist(Dentist dentist);
+        void UpdateDentist(Dentist dentist);
+        void DeleteDentist(Dentist dentist);
+
+        // New methods for EmployeeDailyHours
+        Task CaptureEmployeeDailyHoursAsync(int employeeId, EmployeeDailyHours newDailyHours);
 
     }
 }
