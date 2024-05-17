@@ -12,6 +12,16 @@ import { MatSidenav } from '@angular/material/sidenav';
 import { AddOrderComponent } from './add-order/add-order.component';
 import { OrdersComponent } from './orders/orders.component';
 import { ApproveOrderComponent } from './approve-order/approve-order.component';
+import { AddEmployeeComponent } from './add-employee/add-employee.component';
+import { AddDentistComponent } from './add-dentist/add-dentist.component';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { DentistProfileComponent } from './dentist-profile/dentist-profile.component';
+import { MatTableModule } from '@angular/material/table';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { EmployeeProfileComponent } from './employee-profile/employee-profile.component';
+import { CaptureEmployeeHoursComponent } from './capture-employee-hours/capture-employee-hours.component';
 
 
 @NgModule({
@@ -20,7 +30,12 @@ import { ApproveOrderComponent } from './approve-order/approve-order.component';
     OpenOrdersComponent,
     AddOrderComponent,
     OrdersComponent,
-    ApproveOrderComponent
+    ApproveOrderComponent,
+    AddEmployeeComponent,
+    AddDentistComponent,
+    DentistProfileComponent,
+    EmployeeProfileComponent,
+    CaptureEmployeeHoursComponent
   ],
   imports: [
     BrowserModule,
@@ -28,7 +43,12 @@ import { ApproveOrderComponent } from './approve-order/approve-order.component';
     ReactiveFormsModule,
     HttpClientModule,
     FormsModule,
-    BrowserAnimationsModule,MaterialModule
+    BrowserAnimationsModule,MaterialModule,
+    MatSnackBarModule,
+    MatTableModule,
+    MatButtonModule,
+    MatCardModule,
+    MatGridListModule
   ],
   providers: [],
   bootstrap: [AppComponent]

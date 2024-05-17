@@ -1,0 +1,50 @@
+.flex-me {
+    display: inline-flex;
+    flex-flow: row wrap;
+  }
+  
+  .example-card {
+    max-width: 400px;
+    width: fit-content;
+    height:max-content;
+  }
+  .container {
+    margin-top: 20px;
+  }
+  
+  .row {
+    margin-bottom: 20px;
+  }
+  
+  .card-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  .card-container mat-card {
+    flex-basis: calc(25% - 32px); /* Adjusts the initial size of each card */
+    margin: 8px; /* Space around each card */
+  }
+  
+  /* Adjustments for smaller screens */
+  @media (max-width: 600px) {
+   .card-container mat-card {
+      flex-basis: 100%; /* Full width on small screens */
+    }
+  }
+  
+  /* Adjustments for medium screens */
+  @media (min-width: 601px) and (max-width: 1024px) {
+   .card-container mat-card {
+      flex-basis: calc(50% - 32px); /* Half width on medium screens */
+    }
+  }
+  
+  /* Adjustments for large screens */
+  @media (min-width: 1025px) {
+   .card-container mat-card {
+      flex-basis: calc(33.333% - 32px); /* One-third width on large screens */
+    }
+  }
+  
