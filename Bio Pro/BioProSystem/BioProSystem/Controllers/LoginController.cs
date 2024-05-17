@@ -12,7 +12,7 @@ using System.Text;
 
 namespace BioProSystem.Controllers
 {
-    [ApiController]
+ 
     public class LoginController : Controller
     {
         private readonly UserManager<SystemUser> _userManager;
