@@ -60,7 +60,7 @@ export class EditOrderModalComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log('Incoming order data:', this.order); // Debug log for incoming order data
+    console.log('Incoming order data:', this.order); 
     this.loadDentists();
     this.loadMedicalAids();
     this.loadOrderTypes();
@@ -79,7 +79,7 @@ export class EditOrderModalComponent implements OnInit {
         OrderId: this.order.systemOrder.orderId,
         DentistId: this.order.systemOrder.dentistId,
         OrderDate: orderDate,
-        PatientName: this.order.patient.firsName,  // Note: Correct the spelling if necessary
+        PatientName: this.order.patient.firsName,  
         PatientSurname: this.order.patient.lastname,
         MedicalAidId: this.order.patient.medicalAidId,
         MedicalAidNumber: this.order.patient.medicalAidNumber,
@@ -94,13 +94,13 @@ export class EditOrderModalComponent implements OnInit {
         SelectedAreas: this.order.selectedAreas
       };
 
-      console.log('Data to be patched into the form:', patchData); // Debug log for data to be patched
+      console.log('Data to be patched into the form:', patchData); 
       this.editForm.patchValue(patchData);
 
       this.selectedTeethShadeIds = this.order.selectedTeethShadeIds || [];
       this.selectedAreas = this.order.selectedAreas || [];
-      console.log('Selected Teeth Shades:', this.selectedTeethShadeIds); // Debug log for selected teeth shades
-      console.log('Selected Areas:', this.selectedAreas); // Debug log for selected areas
+      console.log('Selected Teeth Shades:', this.selectedTeethShadeIds); 
+      console.log('Selected Areas:', this.selectedAreas); 
     }
   }
 
@@ -108,7 +108,7 @@ export class EditOrderModalComponent implements OnInit {
     this.dataService.getDentists().subscribe(
       (data: any[]) => {
         this.dentists = data;
-        console.log('Loaded dentists:', this.dentists); // Debug log for loaded dentists
+        console.log('Loaded dentists:', this.dentists); 
       },
       (error) => {
         console.error('Error loading dentists:', error);
@@ -120,7 +120,7 @@ export class EditOrderModalComponent implements OnInit {
     this.dataService.getMedicalAids().subscribe(
       (data: any[]) => {
         this.medicalAids = data;
-        console.log('Loaded medical aids:', this.medicalAids); // Debug log for loaded medical aids
+        console.log('Loaded medical aids:', this.medicalAids); 
       },
       (error) => {
         console.error('Error loading medical aids:', error);
@@ -132,7 +132,7 @@ export class EditOrderModalComponent implements OnInit {
     this.dataService.getOrderTypes().subscribe(
       (data: any[]) => {
         this.orderTypes = data;
-        console.log('Loaded order types:', this.orderTypes); // Debug log for loaded order types
+        console.log('Loaded order types:', this.orderTypes);
       },
       (error) => {
         console.error('Error loading order types:', error);
@@ -144,7 +144,7 @@ export class EditOrderModalComponent implements OnInit {
     this.dataService.getOrderStatuses().subscribe(
       (data: any[]) => {
         this.orderStatus = data;
-        console.log('Loaded order statuses:', this.orderStatus); // Debug log for loaded order statuses
+        console.log('Loaded order statuses:', this.orderStatus); 
       },
       (error) => {
         console.error('Error loading order statuses:', error);
@@ -156,7 +156,7 @@ export class EditOrderModalComponent implements OnInit {
     this.dataService.getTeethShades().subscribe(
       (data: any[]) => {
         this.teethShades = data;
-        console.log('Loaded teeth shades:', this.teethShades); // Debug log for loaded teeth shades
+        console.log('Loaded teeth shades:', this.teethShades);
       },
       (error) => {
         console.error('Error loading teeth shades:', error);
@@ -168,7 +168,7 @@ export class EditOrderModalComponent implements OnInit {
     this.dataService.getOrderDirections().subscribe(
       (data: any[]) => {
         this.orderDirections = data;
-        console.log('Loaded order directions:', this.orderDirections); // Debug log for loaded order directions
+        console.log('Loaded order directions:', this.orderDirections);
       },
       (error) => {
         console.error('Error loading order directions:', error);

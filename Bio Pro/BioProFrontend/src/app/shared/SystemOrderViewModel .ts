@@ -19,7 +19,7 @@ export class SystemOrderViewModel {
   OpenOrderId: number;
   OrderStatusId: number;
   OrderWorkflowTimelineId: number;
-  Status: string;  // Ensure this field exists
+  Status: string;  
 
   constructor() {
     this.OrderId = '';
