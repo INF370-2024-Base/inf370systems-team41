@@ -2,11 +2,13 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DataService } from '../services/data.service';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-edit-order-modal',
   templateUrl: './edit-order-modal.component.html',
-  styleUrls: ['./edit-order-modal.component.scss']
+  styleUrls: ['./edit-order-modal.component.scss'],
+  providers: [DatePipe]
 })
 export class EditOrderModalComponent implements OnInit {
   @Input() order: any;
@@ -22,7 +24,7 @@ export class EditOrderModalComponent implements OnInit {
   orderDirections: any[] = [];
   selectedAreas: number[] = [];
   uploadedFiles: File[] = [];
-  uploadedFileUrls: SafeUrl[] = [];
+  uploadedFileUrls: { url: SafeUrl, name: string }[] = [];
 
   priorityLevels = [
     { value: 'High', label: 'High' },
@@ -33,7 +35,8 @@ export class EditOrderModalComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private dataService: DataService,
-    private sanitizer: DomSanitizer
+    private sanitizer: DomSanitizer,
+    private datePipe: DatePipe
   ) {
     this.editForm = this.formBuilder.group({
       OrderId: [{ value: '', disabled: true }, Validators.required],
@@ -57,6 +60,7 @@ export class EditOrderModalComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    console.log('Incoming order data:', this.order); // Debug log for incoming order data
     this.loadDentists();
     this.loadMedicalAids();
     this.loadOrderTypes();
@@ -68,27 +72,35 @@ export class EditOrderModalComponent implements OnInit {
 
   patchForm() {
     if (this.order) {
-      this.editForm.patchValue({
+      const orderDate = this.datePipe.transform(this.order.systemOrder.orderDate, 'yyyy-MM-dd');
+      const dueDate = this.datePipe.transform(this.order.systemOrder.dueDate, 'yyyy-MM-dd');
+      
+      const patchData = {
         OrderId: this.order.systemOrder.orderId,
         DentistId: this.order.systemOrder.dentistId,
-        OrderDate: this.order.systemOrder.orderDate,
-        PatientName: this.order.systemOrder.patientName,
-        PatientSurname: this.order.systemOrder.patientSurname,
-        MedicalAidId: this.order.systemOrder.medicalAidId,
-        MedicalAidNumber: this.order.systemOrder.medicalAidNumber,
-        OrderDirectionId: this.order.systemOrder.orderDirectionId,
+        OrderDate: orderDate,
+        PatientName: this.order.patient.firsName,  // Note: Correct the spelling if necessary
+        PatientSurname: this.order.patient.lastname,
+        MedicalAidId: this.order.patient.medicalAidId,
+        MedicalAidNumber: this.order.patient.medicalAidNumber,
+        OrderDirectionId: this.order.orderDirection.orderDirectionId,
         PriorityLevel: this.order.systemOrder.priorityLevel,
         OrderTypeId: this.order.systemOrder.orderTypeId,
         OrderStatusId: this.order.systemOrder.orderStatusId,
         EmergencyNumber: this.order.systemOrder.emergencyNumber,
         SpecialRequirements: this.order.systemOrder.specialRequirements,
-        DueDate: this.order.systemOrder.dueDate,
+        DueDate: dueDate,
         SelectedTeethShadeIds: this.order.selectedTeethShadeIds,
         SelectedAreas: this.order.selectedAreas
-      });
+      };
+
+      console.log('Data to be patched into the form:', patchData); // Debug log for data to be patched
+      this.editForm.patchValue(patchData);
 
       this.selectedTeethShadeIds = this.order.selectedTeethShadeIds || [];
       this.selectedAreas = this.order.selectedAreas || [];
+      console.log('Selected Teeth Shades:', this.selectedTeethShadeIds); // Debug log for selected teeth shades
+      console.log('Selected Areas:', this.selectedAreas); // Debug log for selected areas
     }
   }
 
@@ -96,6 +108,7 @@ export class EditOrderModalComponent implements OnInit {
     this.dataService.getDentists().subscribe(
       (data: any[]) => {
         this.dentists = data;
+        console.log('Loaded dentists:', this.dentists); // Debug log for loaded dentists
       },
       (error) => {
         console.error('Error loading dentists:', error);
@@ -107,6 +120,7 @@ export class EditOrderModalComponent implements OnInit {
     this.dataService.getMedicalAids().subscribe(
       (data: any[]) => {
         this.medicalAids = data;
+        console.log('Loaded medical aids:', this.medicalAids); // Debug log for loaded medical aids
       },
       (error) => {
         console.error('Error loading medical aids:', error);
@@ -118,6 +132,7 @@ export class EditOrderModalComponent implements OnInit {
     this.dataService.getOrderTypes().subscribe(
       (data: any[]) => {
         this.orderTypes = data;
+        console.log('Loaded order types:', this.orderTypes); // Debug log for loaded order types
       },
       (error) => {
         console.error('Error loading order types:', error);
@@ -129,6 +144,7 @@ export class EditOrderModalComponent implements OnInit {
     this.dataService.getOrderStatuses().subscribe(
       (data: any[]) => {
         this.orderStatus = data;
+        console.log('Loaded order statuses:', this.orderStatus); // Debug log for loaded order statuses
       },
       (error) => {
         console.error('Error loading order statuses:', error);
@@ -140,6 +156,7 @@ export class EditOrderModalComponent implements OnInit {
     this.dataService.getTeethShades().subscribe(
       (data: any[]) => {
         this.teethShades = data;
+        console.log('Loaded teeth shades:', this.teethShades); // Debug log for loaded teeth shades
       },
       (error) => {
         console.error('Error loading teeth shades:', error);
@@ -151,6 +168,7 @@ export class EditOrderModalComponent implements OnInit {
     this.dataService.getOrderDirections().subscribe(
       (data: any[]) => {
         this.orderDirections = data;
+        console.log('Loaded order directions:', this.orderDirections); // Debug log for loaded order directions
       },
       (error) => {
         console.error('Error loading order directions:', error);
@@ -172,7 +190,7 @@ export class EditOrderModalComponent implements OnInit {
     for (let i = 0; i < files.length; i++) {
       this.uploadedFiles.push(files[i]);
       const url = this.sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(files[i]));
-      this.uploadedFileUrls.push(url);
+      this.uploadedFileUrls.push({ url, name: files[i].name });
     }
   }
 
@@ -181,19 +199,11 @@ export class EditOrderModalComponent implements OnInit {
       const updatedOrder = this.editForm.value;
       updatedOrder.SelectedTeethShadeIds = this.selectedTeethShadeIds;
       updatedOrder.SelectedAreas = this.selectedAreas;
-
-      const formData = new FormData();
-      for (const key in updatedOrder) {
-        if (updatedOrder.hasOwnProperty(key)) {
-          formData.append(key, updatedOrder[key]);
-        }
-      }
-
-      for (let file of this.uploadedFiles) {
-        formData.append('MediaFiles', file, file.name);
-      }
-
-      this.dataService.updateOrder(formData).subscribe(
+  
+      console.log('Sending update request to:', `${this.dataService.apiUrl}Api/UpdateOrder`);
+      console.log('Data being sent:', updatedOrder);
+  
+      this.dataService.updateOrder(updatedOrder).subscribe(
         () => {
           console.log('Order updated successfully');
           this.close.emit();
@@ -211,6 +221,9 @@ export class EditOrderModalComponent implements OnInit {
       });
     }
   }
+  
+  
+  
 
   cancel(): void {
     this.close.emit();

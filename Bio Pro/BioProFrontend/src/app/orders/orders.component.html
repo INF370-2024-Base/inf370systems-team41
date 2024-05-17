@@ -9,10 +9,10 @@
       <li *ngFor="let order of ordersInfo" class="order-item">
         <div class="order-details">
           <span><strong>Order ID:</strong> {{ order.systemOrder.orderId }}</span><br>
-          <span><strong>Patient Name:</strong> {{ order.systemOrder.patientName }}</span>
+          <span><strong>Patient Name:</strong> {{ order.patient.firsName }} {{ order.patient.lastname }}</span>
         </div>
         <div class="order-actions">
-          <span class="status-pill">{{ order.systemOrder.status }}</span>
+          <span class="status-pill">{{ order.orderStatus.description }}</span>
           <button class="edit-button" (click)="editOrder(order.systemOrder.orderId)">✏️</button>
           <button class="trash-button" (click)="deleteOrder(order.systemOrder.orderId)">🗑️</button>
         </div>

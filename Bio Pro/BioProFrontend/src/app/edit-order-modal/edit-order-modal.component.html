@@ -145,8 +145,10 @@
       <!-- Display Uploaded Files -->
       <div *ngIf="uploadedFileUrls.length > 0">
         <h3>Uploaded Files:</h3>
-        <div *ngFor="let url of uploadedFileUrls">
-          <img [src]="url" class="uploaded-image">
+        <div *ngFor="let file of uploadedFileUrls">
+          <a [href]="file.url" [download]="file.name">
+            <img [src]="file.url" class="uploaded-image">
+          </a>
         </div>
       </div>
 

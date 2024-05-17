@@ -13,6 +13,8 @@ export class OrdersComponent implements OnInit {
   ordersInfo: any[] = [];
   baseUrl: string = 'https://localhost:44315/Api/';
   selectedOrder: any = null;
+  showStatusModal: boolean = false;
+  selectedOrderForStatus: any = null;
 
   constructor(private http: HttpClient, private dataservices: DataService) { }
 
@@ -34,7 +36,7 @@ export class OrdersComponent implements OnInit {
       this.dataservices.getAllOrderInfo(order.orderId).subscribe(
         (result: any) => {
           this.ordersInfo.push(result);
-          console.log(this.ordersInfo); // Log the ordersInfo to inspect its structure
+          console.log(this.ordersInfo); 
         },
         (error) => {
           console.error('Error fetching order info:', error);
@@ -68,6 +70,7 @@ export class OrdersComponent implements OnInit {
 
   editOrder(orderId: string): void {
     this.selectedOrder = this.ordersInfo.find(order => order.systemOrder.orderId === orderId);
+    console.log('Selected order for editing:', this.selectedOrder); // Debug log for selected order
   }
 
   closeModal(): void {
@@ -76,6 +79,31 @@ export class OrdersComponent implements OnInit {
 
   deleteOrder(orderId: string): void {
     console.log('Delete order:', orderId);
-    // Implement your delete order logic here
+  }
+
+  openStatusModal(order: any): void {
+    this.selectedOrderForStatus = order;
+    this.showStatusModal = true;
+  }
+
+  closeStatusModal(): void {
+    this.selectedOrderForStatus = null;
+    this.showStatusModal = false;
+  }
+
+  updateOrderStatus(newStatusId: number): void {
+    if (this.selectedOrderForStatus) {
+      this.selectedOrderForStatus.systemOrder.orderStatusId = newStatusId;
+      this.dataservices.updateOrder(this.selectedOrderForStatus.systemOrder).subscribe(
+        () => {
+          console.log('Order status updated successfully');
+          this.closeStatusModal();
+          this.getOrderInfo();
+        },
+        (error) => {
+          console.error('Error updating order status:', error);
+        }
+      );
+    }
   }
 }

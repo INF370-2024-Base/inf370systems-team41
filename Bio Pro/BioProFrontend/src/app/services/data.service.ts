@@ -79,8 +79,10 @@ export class DataService {
     const endpoint = 'api/api/teethshades'; // Updated endpoint
     return this.httpClient.get<any[]>(`${this.apiUrl}${endpoint}`);
   }
-
+  
   updateOrder(order: any): Observable<any> {
-    return this.httpClient.put(`${this.apiUrl}Api/UpdateOrder`, order);
+    return this.httpClient.put(`${this.apiUrl}Api/UpdateOrder`, order, this.httpOptions);
   }
+  
+  
 }
