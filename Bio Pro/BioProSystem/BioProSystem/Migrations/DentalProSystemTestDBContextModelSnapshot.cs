@@ -47,11 +47,7 @@ namespace BioProSystem.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CalanderId"));
 
-<<<<<<< HEAD
                     b.Property<int>("TimelineId")
-=======
-                    b.Property<int?>("TimelineId")
->>>>>>> Feature/Add-Admin_profile
                         .HasColumnType("int");
 
                     b.Property<string>("Title")
@@ -71,15 +67,11 @@ namespace BioProSystem.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CalanderScheduleEventId"));
 
-<<<<<<< HEAD
                     b.Property<string>("CalanderId")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("CalanderId1")
-=======
-                    b.Property<int>("CalanderId")
->>>>>>> Feature/Add-Admin_profile
                         .HasColumnType("int");
 
                     b.Property<DateTime>("CalanderScheduleEventDateTime")
@@ -91,11 +83,7 @@ namespace BioProSystem.Migrations
 
                     b.HasKey("CalanderScheduleEventId");
 
-<<<<<<< HEAD
                     b.HasIndex("CalanderId1");
-=======
-                    b.HasIndex("CalanderId");
->>>>>>> Feature/Add-Admin_profile
 
                     b.ToTable("CalanderScheduleEvents");
                 });
@@ -116,14 +104,9 @@ namespace BioProSystem.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-<<<<<<< HEAD
                     b.Property<string>("SystemOrderId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
-=======
-                    b.Property<int>("SystemOrderId")
-                        .HasColumnType("int");
->>>>>>> Feature/Add-Admin_profile
 
                     b.HasKey("DecisionLogId");
 
@@ -143,15 +126,11 @@ namespace BioProSystem.Migrations
                     b.Property<DateTime>("DeliveryDate")
                         .HasColumnType("datetime2");
 
-<<<<<<< HEAD
                     b.Property<string>("DeliveryStatusId")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("DeliveryStatusId1")
-=======
-                    b.Property<int>("DeliveryStatusId")
->>>>>>> Feature/Add-Admin_profile
                         .HasColumnType("int");
 
                     b.Property<string>("EmployeeId")
@@ -161,14 +140,9 @@ namespace BioProSystem.Migrations
                     b.Property<int>("EmployeeId1")
                         .HasColumnType("int");
 
-<<<<<<< HEAD
                     b.Property<string>("SystemOrderId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
-=======
-                    b.Property<int>("SystemOrderId")
-                        .HasColumnType("int");
->>>>>>> Feature/Add-Admin_profile
 
                     b.HasKey("DeliveryId");
 
@@ -243,14 +217,9 @@ namespace BioProSystem.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-<<<<<<< HEAD
                     b.Property<string>("SystemOrderId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
-=======
-                    b.Property<int>("SystemOrderId")
-                        .HasColumnType("int");
->>>>>>> Feature/Add-Admin_profile
 
                     b.HasKey("DiscountId");
 
@@ -363,14 +332,9 @@ namespace BioProSystem.Migrations
                     b.Property<decimal?>("FileSizeKb")
                         .HasColumnType("decimal(18,2)");
 
-<<<<<<< HEAD
                     b.Property<string>("SystemOrderId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
-=======
-                    b.Property<int>("SystemOrderId")
-                        .HasColumnType("int");
->>>>>>> Feature/Add-Admin_profile
 
                     b.HasKey("MediaFileId");
 
@@ -391,13 +355,6 @@ namespace BioProSystem.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-<<<<<<< HEAD
-=======
-                    b.Property<string>("MedicalAidNumber")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
->>>>>>> Feature/Add-Admin_profile
                     b.HasKey("MedicalAidId");
 
                     b.ToTable("MedicalAids");
@@ -415,12 +372,6 @@ namespace BioProSystem.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-<<<<<<< HEAD
-=======
-                    b.Property<int>("EstimatedDurationInDays")
-                        .HasColumnType("int");
-
->>>>>>> Feature/Add-Admin_profile
                     b.HasKey("OpenOrderId");
 
                     b.ToTable("OpenOrders");
@@ -438,7 +389,6 @@ namespace BioProSystem.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-<<<<<<< HEAD
                     b.Property<int>("EstimatedDurationInDays")
                         .HasColumnType("int");
 
@@ -446,15 +396,6 @@ namespace BioProSystem.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-=======
-                    b.Property<string>("Instructions")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("OrderDirectionStateId")
-                        .HasColumnType("int");
-
->>>>>>> Feature/Add-Admin_profile
                     b.HasKey("OrderDirectionId");
 
                     b.ToTable("OrderDirections");
@@ -557,7 +498,6 @@ namespace BioProSystem.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("WorkflowStructureId"));
 
-<<<<<<< HEAD
                     b.Property<string>("EmployeeeOrderDetails")
                         .HasColumnType("nvarchar(max)");
 
@@ -567,13 +507,6 @@ namespace BioProSystem.Migrations
                     b.Property<string>("SystemOrderId")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-=======
-                    b.Property<int>("OrderDirectionId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("SystemOrderId")
-                        .HasColumnType("int");
->>>>>>> Feature/Add-Admin_profile
 
                     b.Property<string>("TimelineDetails")
                         .IsRequired()
@@ -906,22 +839,15 @@ namespace BioProSystem.Migrations
                     b.Property<DateTime>("DueDate")
                         .HasColumnType("datetime2");
 
-<<<<<<< HEAD
                     b.Property<string>("EmergencyNumber")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-=======
->>>>>>> Feature/Add-Admin_profile
                     b.Property<string>("MouthArea")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-<<<<<<< HEAD
                     b.Property<int?>("OpenOrderId")
-=======
-                    b.Property<int>("OpenOrderId")
->>>>>>> Feature/Add-Admin_profile
                         .HasColumnType("int");
 
                     b.Property<DateTime>("OrderDate")
@@ -933,7 +859,6 @@ namespace BioProSystem.Migrations
                     b.Property<int>("OrderTypeId")
                         .HasColumnType("int");
 
-<<<<<<< HEAD
                     b.Property<int>("OrderWorkflowTimelineId")
                         .HasColumnType("int");
 
@@ -941,11 +866,6 @@ namespace BioProSystem.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-=======
-                    b.Property<int?>("OrderWorkflowTimelineId")
-                        .HasColumnType("int");
-
->>>>>>> Feature/Add-Admin_profile
                     b.Property<string>("PriorityLevel")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -953,11 +873,7 @@ namespace BioProSystem.Migrations
                     b.Property<string>("SpecialRequirements")
                         .HasColumnType("nvarchar(max)");
 
-<<<<<<< HEAD
                     b.Property<decimal?>("TotalAmountDue")
-=======
-                    b.Property<decimal>("TotalAmountDue")
->>>>>>> Feature/Add-Admin_profile
                         .HasColumnType("decimal(18,2)");
 
                     b.HasKey("OrderId");
@@ -965,24 +881,15 @@ namespace BioProSystem.Migrations
                     b.HasIndex("DentistId");
 
                     b.HasIndex("OpenOrderId")
-<<<<<<< HEAD
                         .IsUnique()
                         .HasFilter("[OpenOrderId] IS NOT NULL");
-=======
-                        .IsUnique();
->>>>>>> Feature/Add-Admin_profile
 
                     b.HasIndex("OrderStatusId");
 
                     b.HasIndex("OrderTypeId");
 
                     b.HasIndex("OrderWorkflowTimelineId")
-<<<<<<< HEAD
                         .IsUnique();
-=======
-                        .IsUnique()
-                        .HasFilter("[OrderWorkflowTimelineId] IS NOT NULL");
->>>>>>> Feature/Add-Admin_profile
 
                     b.ToTable("SystemOrders");
                 });
@@ -1128,7 +1035,6 @@ namespace BioProSystem.Migrations
                     b.Property<int>("EmployeesEmployeeId")
                         .HasColumnType("int");
 
-<<<<<<< HEAD
                     b.Property<string>("SystemOrdersOrderId")
                         .HasColumnType("nvarchar(450)");
 
@@ -1136,15 +1042,6 @@ namespace BioProSystem.Migrations
 
                     b.HasIndex("SystemOrdersOrderId");
 
-=======
-                    b.Property<int>("SystemOrdersOrderId")
-                        .HasColumnType("int");
-
-                    b.HasKey("EmployeesEmployeeId", "SystemOrdersOrderId");
-
-                    b.HasIndex("SystemOrdersOrderId");
-
->>>>>>> Feature/Add-Admin_profile
                     b.ToTable("EmployeeSystemOrder");
                 });
 
@@ -1296,7 +1193,6 @@ namespace BioProSystem.Migrations
                     b.ToTable("PasswordManagementSystemUser");
                 });
 
-<<<<<<< HEAD
             modelBuilder.Entity("SelectedAreaSystemOrder", b =>
                 {
                     b.Property<int>("SelectedAreasSelectedAreaId")
@@ -1322,18 +1218,6 @@ namespace BioProSystem.Migrations
 
                     b.HasKey("SystemOrdersOrderId", "TeethShadesTeethShadeId");
 
-=======
-            modelBuilder.Entity("SystemOrderTeethShade", b =>
-                {
-                    b.Property<int>("SystemOrdersOrderId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("TeethShadesTeethShadeId")
-                        .HasColumnType("int");
-
-                    b.HasKey("SystemOrdersOrderId", "TeethShadesTeethShadeId");
-
->>>>>>> Feature/Add-Admin_profile
                     b.HasIndex("TeethShadesTeethShadeId");
 
                     b.ToTable("SystemOrderTeethShade");
@@ -1343,11 +1227,7 @@ namespace BioProSystem.Migrations
                 {
                     b.HasOne("BioProSystem.Models.Calander", "Calander")
                         .WithMany("Events")
-<<<<<<< HEAD
                         .HasForeignKey("CalanderId1")
-=======
-                        .HasForeignKey("CalanderId")
->>>>>>> Feature/Add-Admin_profile
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -1369,7 +1249,6 @@ namespace BioProSystem.Migrations
                 {
                     b.HasOne("BioProSystem.Models.DeliveryStatus", "DeliveryStatus")
                         .WithMany("Deliveries")
-<<<<<<< HEAD
                         .HasForeignKey("DeliveryStatusId1")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -1382,20 +1261,6 @@ namespace BioProSystem.Migrations
 
                     b.HasOne("BioProSystem.Models.SystemOrder", "SystemOrder")
                         .WithMany("Deliveries")
-=======
-                        .HasForeignKey("DeliveryStatusId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("BioProSystem.Models.Employee", "Employee")
-                        .WithMany("Deliveries")
-                        .HasForeignKey("EmployeeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("BioProSystem.Models.SystemOrder", "SystemOrder")
-                        .WithMany("Deliveries")
->>>>>>> Feature/Add-Admin_profile
                         .HasForeignKey("SystemOrderId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -1429,7 +1294,6 @@ namespace BioProSystem.Migrations
                     b.HasOne("BioProSystem.Models.SystemUser", "SystemUser")
                         .WithMany("Employees")
                         .HasForeignKey("SystemUserId")
-<<<<<<< HEAD
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -1454,32 +1318,6 @@ namespace BioProSystem.Migrations
                     b.HasOne("BioProSystem.Models.JobTitle", "JobTitle")
                         .WithMany("OrderDirectionstates")
                         .HasForeignKey("JobTitleId")
-=======
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("JobTitle");
-
-                    b.Navigation("SystemUser");
-                });
-
-            modelBuilder.Entity("BioProSystem.Models.MediaFile", b =>
-                {
-                    b.HasOne("BioProSystem.Models.SystemOrder", "SystemOrder")
-                        .WithMany("MediaFiles")
-                        .HasForeignKey("SystemOrderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("SystemOrder");
-                });
-
-            modelBuilder.Entity("BioProSystem.Models.OrderDirection", b =>
-                {
-                    b.HasOne("BioProSystem.Models.OrderDirectionState", "OrderDirectionState")
-                        .WithMany("OrderDirections")
-                        .HasForeignKey("OrderDirectionStateId")
->>>>>>> Feature/Add-Admin_profile
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -1616,11 +1454,7 @@ namespace BioProSystem.Migrations
                 {
                     b.HasOne("BioProSystem.Models.SystemOrder", "Order")
                         .WithMany("StockItems")
-<<<<<<< HEAD
                         .HasForeignKey("OrderId1")
-=======
-                        .HasForeignKey("OrderId")
->>>>>>> Feature/Add-Admin_profile
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -1645,7 +1479,6 @@ namespace BioProSystem.Migrations
 
                     b.HasOne("BioProSystem.Models.OpenOrder", "OpenOrder")
                         .WithOne("systemOrder")
-<<<<<<< HEAD
                         .HasForeignKey("BioProSystem.Models.SystemOrder", "OpenOrderId");
 
                     b.HasOne("BioProSystem.Models.OrderStatus", "OrderStatus")
@@ -1663,27 +1496,8 @@ namespace BioProSystem.Migrations
                     b.HasOne("BioProSystem.Models.OrderWorkflowTimeline", "OrderWorkflowTimeline")
                         .WithOne("systemOrder")
                         .HasForeignKey("BioProSystem.Models.SystemOrder", "OrderWorkflowTimelineId")
-=======
-                        .HasForeignKey("BioProSystem.Models.SystemOrder", "OpenOrderId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("BioProSystem.Models.OrderStatus", "OrderStatus")
-                        .WithMany("OrderDetails")
-                        .HasForeignKey("OrderStatusId")
->>>>>>> Feature/Add-Admin_profile
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("BioProSystem.Models.OrderType", "OrderType")
-                        .WithMany("systemOrders")
-                        .HasForeignKey("OrderTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("BioProSystem.Models.OrderWorkflowTimeline", "OrderWorkflowTimeline")
-                        .WithOne("systemOrder")
-                        .HasForeignKey("BioProSystem.Models.SystemOrder", "OrderWorkflowTimelineId");
 
                     b.Navigation("Dentist");
 
@@ -1803,7 +1617,6 @@ namespace BioProSystem.Migrations
                         .IsRequired();
                 });
 
-<<<<<<< HEAD
             modelBuilder.Entity("SelectedAreaSystemOrder", b =>
                 {
                     b.HasOne("BioProSystem.Models.SelectedArea", null)
@@ -1819,8 +1632,6 @@ namespace BioProSystem.Migrations
                         .IsRequired();
                 });
 
-=======
->>>>>>> Feature/Add-Admin_profile
             modelBuilder.Entity("SystemOrderTeethShade", b =>
                 {
                     b.HasOne("BioProSystem.Models.SystemOrder", null)
@@ -1869,12 +1680,9 @@ namespace BioProSystem.Migrations
                 {
                     b.Navigation("Employees");
 
-<<<<<<< HEAD
                     b.Navigation("OrderDirectionstates");
                 });
 
-=======
->>>>>>> Feature/Add-Admin_profile
             modelBuilder.Entity("BioProSystem.Models.MedicalAid", b =>
                 {
                     b.Navigation("Patients");

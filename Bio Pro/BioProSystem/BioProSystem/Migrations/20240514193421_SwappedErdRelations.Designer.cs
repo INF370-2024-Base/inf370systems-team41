@@ -12,13 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BioProSystem.Migrations
 {
     [DbContext(typeof(DentalProSystemTestDBContext))]
-<<<<<<<< HEAD:Bio Pro/BioProSystem/BioProSystem/Migrations/20240514193421_SwappedErdRelations.Designer.cs
     [Migration("20240514193421_SwappedErdRelations")]
     partial class SwappedErdRelations
-========
-    [Migration("20240513212917_employee1")]
-    partial class employee1
->>>>>>>> Feature/Add-Admin_profile:Bio Pro/BioProSystem/BioProSystem/Migrations/20240513212917_employee1.Designer.cs
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -55,11 +50,7 @@ namespace BioProSystem.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CalanderId"));
 
-<<<<<<<< HEAD:Bio Pro/BioProSystem/BioProSystem/Migrations/20240514193421_SwappedErdRelations.Designer.cs
                     b.Property<int>("TimelineId")
-========
-                    b.Property<int?>("TimelineId")
->>>>>>>> Feature/Add-Admin_profile:Bio Pro/BioProSystem/BioProSystem/Migrations/20240513212917_employee1.Designer.cs
                         .HasColumnType("int");
 
                     b.Property<string>("Title")
@@ -79,15 +70,11 @@ namespace BioProSystem.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CalanderScheduleEventId"));
 
-<<<<<<<< HEAD:Bio Pro/BioProSystem/BioProSystem/Migrations/20240514193421_SwappedErdRelations.Designer.cs
                     b.Property<string>("CalanderId")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("CalanderId1")
-========
-                    b.Property<int>("CalanderId")
->>>>>>>> Feature/Add-Admin_profile:Bio Pro/BioProSystem/BioProSystem/Migrations/20240513212917_employee1.Designer.cs
                         .HasColumnType("int");
 
                     b.Property<DateTime>("CalanderScheduleEventDateTime")
@@ -99,11 +86,7 @@ namespace BioProSystem.Migrations
 
                     b.HasKey("CalanderScheduleEventId");
 
-<<<<<<<< HEAD:Bio Pro/BioProSystem/BioProSystem/Migrations/20240514193421_SwappedErdRelations.Designer.cs
                     b.HasIndex("CalanderId1");
-========
-                    b.HasIndex("CalanderId");
->>>>>>>> Feature/Add-Admin_profile:Bio Pro/BioProSystem/BioProSystem/Migrations/20240513212917_employee1.Designer.cs
 
                     b.ToTable("CalanderScheduleEvents");
                 });
@@ -124,14 +107,9 @@ namespace BioProSystem.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-<<<<<<<< HEAD:Bio Pro/BioProSystem/BioProSystem/Migrations/20240514193421_SwappedErdRelations.Designer.cs
                     b.Property<string>("SystemOrderId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
-========
-                    b.Property<int>("SystemOrderId")
-                        .HasColumnType("int");
->>>>>>>> Feature/Add-Admin_profile:Bio Pro/BioProSystem/BioProSystem/Migrations/20240513212917_employee1.Designer.cs
 
                     b.HasKey("DecisionLogId");
 
@@ -151,15 +129,11 @@ namespace BioProSystem.Migrations
                     b.Property<DateTime>("DeliveryDate")
                         .HasColumnType("datetime2");
 
-<<<<<<<< HEAD:Bio Pro/BioProSystem/BioProSystem/Migrations/20240514193421_SwappedErdRelations.Designer.cs
                     b.Property<string>("DeliveryStatusId")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("DeliveryStatusId1")
-========
-                    b.Property<int>("DeliveryStatusId")
->>>>>>>> Feature/Add-Admin_profile:Bio Pro/BioProSystem/BioProSystem/Migrations/20240513212917_employee1.Designer.cs
                         .HasColumnType("int");
 
                     b.Property<string>("EmployeeId")
@@ -169,14 +143,9 @@ namespace BioProSystem.Migrations
                     b.Property<int>("EmployeeId1")
                         .HasColumnType("int");
 
-<<<<<<<< HEAD:Bio Pro/BioProSystem/BioProSystem/Migrations/20240514193421_SwappedErdRelations.Designer.cs
                     b.Property<string>("SystemOrderId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
-========
-                    b.Property<int>("SystemOrderId")
-                        .HasColumnType("int");
->>>>>>>> Feature/Add-Admin_profile:Bio Pro/BioProSystem/BioProSystem/Migrations/20240513212917_employee1.Designer.cs
 
                     b.HasKey("DeliveryId");
 
@@ -251,14 +220,9 @@ namespace BioProSystem.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-<<<<<<<< HEAD:Bio Pro/BioProSystem/BioProSystem/Migrations/20240514193421_SwappedErdRelations.Designer.cs
                     b.Property<string>("SystemOrderId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
-========
-                    b.Property<int>("SystemOrderId")
-                        .HasColumnType("int");
->>>>>>>> Feature/Add-Admin_profile:Bio Pro/BioProSystem/BioProSystem/Migrations/20240513212917_employee1.Designer.cs
 
                     b.HasKey("DiscountId");
 
@@ -371,14 +335,9 @@ namespace BioProSystem.Migrations
                     b.Property<decimal?>("FileSizeKb")
                         .HasColumnType("decimal(18,2)");
 
-<<<<<<<< HEAD:Bio Pro/BioProSystem/BioProSystem/Migrations/20240514193421_SwappedErdRelations.Designer.cs
                     b.Property<string>("SystemOrderId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
-========
-                    b.Property<int>("SystemOrderId")
-                        .HasColumnType("int");
->>>>>>>> Feature/Add-Admin_profile:Bio Pro/BioProSystem/BioProSystem/Migrations/20240513212917_employee1.Designer.cs
 
                     b.HasKey("MediaFileId");
 
@@ -399,13 +358,6 @@ namespace BioProSystem.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-<<<<<<<< HEAD:Bio Pro/BioProSystem/BioProSystem/Migrations/20240514193421_SwappedErdRelations.Designer.cs
-========
-                    b.Property<string>("MedicalAidNumber")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
->>>>>>>> Feature/Add-Admin_profile:Bio Pro/BioProSystem/BioProSystem/Migrations/20240513212917_employee1.Designer.cs
                     b.HasKey("MedicalAidId");
 
                     b.ToTable("MedicalAids");
@@ -423,12 +375,6 @@ namespace BioProSystem.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-<<<<<<<< HEAD:Bio Pro/BioProSystem/BioProSystem/Migrations/20240514193421_SwappedErdRelations.Designer.cs
-========
-                    b.Property<int>("EstimatedDurationInDays")
-                        .HasColumnType("int");
-
->>>>>>>> Feature/Add-Admin_profile:Bio Pro/BioProSystem/BioProSystem/Migrations/20240513212917_employee1.Designer.cs
                     b.HasKey("OpenOrderId");
 
                     b.ToTable("OpenOrders");
@@ -446,12 +392,9 @@ namespace BioProSystem.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-<<<<<<<< HEAD:Bio Pro/BioProSystem/BioProSystem/Migrations/20240514193421_SwappedErdRelations.Designer.cs
                     b.Property<int>("EstimatedDurationInDays")
                         .HasColumnType("int");
 
-========
->>>>>>>> Feature/Add-Admin_profile:Bio Pro/BioProSystem/BioProSystem/Migrations/20240513212917_employee1.Designer.cs
                     b.Property<string>("Instructions")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -559,14 +502,9 @@ namespace BioProSystem.Migrations
                     b.Property<int>("OrderDirectionId")
                         .HasColumnType("int");
 
-<<<<<<<< HEAD:Bio Pro/BioProSystem/BioProSystem/Migrations/20240514193421_SwappedErdRelations.Designer.cs
                     b.Property<string>("SystemOrderId")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-========
-                    b.Property<int>("SystemOrderId")
-                        .HasColumnType("int");
->>>>>>>> Feature/Add-Admin_profile:Bio Pro/BioProSystem/BioProSystem/Migrations/20240513212917_employee1.Designer.cs
 
                     b.Property<string>("TimelineDetails")
                         .IsRequired()
@@ -899,22 +837,15 @@ namespace BioProSystem.Migrations
                     b.Property<DateTime>("DueDate")
                         .HasColumnType("datetime2");
 
-<<<<<<<< HEAD:Bio Pro/BioProSystem/BioProSystem/Migrations/20240514193421_SwappedErdRelations.Designer.cs
                     b.Property<string>("EmergencyNumber")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-========
->>>>>>>> Feature/Add-Admin_profile:Bio Pro/BioProSystem/BioProSystem/Migrations/20240513212917_employee1.Designer.cs
                     b.Property<string>("MouthArea")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-<<<<<<<< HEAD:Bio Pro/BioProSystem/BioProSystem/Migrations/20240514193421_SwappedErdRelations.Designer.cs
                     b.Property<int?>("OpenOrderId")
-========
-                    b.Property<int>("OpenOrderId")
->>>>>>>> Feature/Add-Admin_profile:Bio Pro/BioProSystem/BioProSystem/Migrations/20240513212917_employee1.Designer.cs
                         .HasColumnType("int");
 
                     b.Property<DateTime>("OrderDate")
@@ -936,11 +867,7 @@ namespace BioProSystem.Migrations
                     b.Property<string>("SpecialRequirements")
                         .HasColumnType("nvarchar(max)");
 
-<<<<<<<< HEAD:Bio Pro/BioProSystem/BioProSystem/Migrations/20240514193421_SwappedErdRelations.Designer.cs
                     b.Property<decimal?>("TotalAmountDue")
-========
-                    b.Property<decimal>("TotalAmountDue")
->>>>>>>> Feature/Add-Admin_profile:Bio Pro/BioProSystem/BioProSystem/Migrations/20240513212917_employee1.Designer.cs
                         .HasColumnType("decimal(18,2)");
 
                     b.HasKey("OrderId");
@@ -948,12 +875,8 @@ namespace BioProSystem.Migrations
                     b.HasIndex("DentistId");
 
                     b.HasIndex("OpenOrderId")
-<<<<<<<< HEAD:Bio Pro/BioProSystem/BioProSystem/Migrations/20240514193421_SwappedErdRelations.Designer.cs
                         .IsUnique()
                         .HasFilter("[OpenOrderId] IS NOT NULL");
-========
-                        .IsUnique();
->>>>>>>> Feature/Add-Admin_profile:Bio Pro/BioProSystem/BioProSystem/Migrations/20240513212917_employee1.Designer.cs
 
                     b.HasIndex("OrderStatusId");
 
@@ -1107,7 +1030,6 @@ namespace BioProSystem.Migrations
                     b.Property<int>("EmployeesEmployeeId")
                         .HasColumnType("int");
 
-<<<<<<<< HEAD:Bio Pro/BioProSystem/BioProSystem/Migrations/20240514193421_SwappedErdRelations.Designer.cs
                     b.Property<string>("SystemOrdersOrderId")
                         .HasColumnType("nvarchar(450)");
 
@@ -1115,15 +1037,6 @@ namespace BioProSystem.Migrations
 
                     b.HasIndex("SystemOrdersOrderId");
 
-========
-                    b.Property<int>("SystemOrdersOrderId")
-                        .HasColumnType("int");
-
-                    b.HasKey("EmployeesEmployeeId", "SystemOrdersOrderId");
-
-                    b.HasIndex("SystemOrdersOrderId");
-
->>>>>>>> Feature/Add-Admin_profile:Bio Pro/BioProSystem/BioProSystem/Migrations/20240513212917_employee1.Designer.cs
                     b.ToTable("EmployeeSystemOrder");
                 });
 
@@ -1275,7 +1188,6 @@ namespace BioProSystem.Migrations
                     b.ToTable("PasswordManagementSystemUser");
                 });
 
-<<<<<<<< HEAD:Bio Pro/BioProSystem/BioProSystem/Migrations/20240514193421_SwappedErdRelations.Designer.cs
             modelBuilder.Entity("SelectedAreaSystemOrder", b =>
                 {
                     b.Property<int>("SelectedAreasSelectedAreaId")
@@ -1301,18 +1213,6 @@ namespace BioProSystem.Migrations
 
                     b.HasKey("SystemOrdersOrderId", "TeethShadesTeethShadeId");
 
-========
-            modelBuilder.Entity("SystemOrderTeethShade", b =>
-                {
-                    b.Property<int>("SystemOrdersOrderId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("TeethShadesTeethShadeId")
-                        .HasColumnType("int");
-
-                    b.HasKey("SystemOrdersOrderId", "TeethShadesTeethShadeId");
-
->>>>>>>> Feature/Add-Admin_profile:Bio Pro/BioProSystem/BioProSystem/Migrations/20240513212917_employee1.Designer.cs
                     b.HasIndex("TeethShadesTeethShadeId");
 
                     b.ToTable("SystemOrderTeethShade");
@@ -1322,11 +1222,7 @@ namespace BioProSystem.Migrations
                 {
                     b.HasOne("BioProSystem.Models.Calander", "Calander")
                         .WithMany("Events")
-<<<<<<<< HEAD:Bio Pro/BioProSystem/BioProSystem/Migrations/20240514193421_SwappedErdRelations.Designer.cs
                         .HasForeignKey("CalanderId1")
-========
-                        .HasForeignKey("CalanderId")
->>>>>>>> Feature/Add-Admin_profile:Bio Pro/BioProSystem/BioProSystem/Migrations/20240513212917_employee1.Designer.cs
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -1348,7 +1244,6 @@ namespace BioProSystem.Migrations
                 {
                     b.HasOne("BioProSystem.Models.DeliveryStatus", "DeliveryStatus")
                         .WithMany("Deliveries")
-<<<<<<<< HEAD:Bio Pro/BioProSystem/BioProSystem/Migrations/20240514193421_SwappedErdRelations.Designer.cs
                         .HasForeignKey("DeliveryStatusId1")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -1361,20 +1256,6 @@ namespace BioProSystem.Migrations
 
                     b.HasOne("BioProSystem.Models.SystemOrder", "SystemOrder")
                         .WithMany("Deliveries")
-========
-                        .HasForeignKey("DeliveryStatusId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("BioProSystem.Models.Employee", "Employee")
-                        .WithMany("Deliveries")
-                        .HasForeignKey("EmployeeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("BioProSystem.Models.SystemOrder", "SystemOrder")
-                        .WithMany("Deliveries")
->>>>>>>> Feature/Add-Admin_profile:Bio Pro/BioProSystem/BioProSystem/Migrations/20240513212917_employee1.Designer.cs
                         .HasForeignKey("SystemOrderId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -1408,7 +1289,6 @@ namespace BioProSystem.Migrations
                     b.HasOne("BioProSystem.Models.SystemUser", "SystemUser")
                         .WithMany("Employees")
                         .HasForeignKey("SystemUserId")
-<<<<<<<< HEAD:Bio Pro/BioProSystem/BioProSystem/Migrations/20240514193421_SwappedErdRelations.Designer.cs
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -1433,32 +1313,6 @@ namespace BioProSystem.Migrations
                     b.HasOne("BioProSystem.Models.OrderDirection", "OrderDirections")
                         .WithMany("OrderDirectionSteps")
                         .HasForeignKey("OrderDirectionsOrderDirectionId")
-========
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("JobTitle");
-
-                    b.Navigation("SystemUser");
-                });
-
-            modelBuilder.Entity("BioProSystem.Models.MediaFile", b =>
-                {
-                    b.HasOne("BioProSystem.Models.SystemOrder", "SystemOrder")
-                        .WithMany("MediaFiles")
-                        .HasForeignKey("SystemOrderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("SystemOrder");
-                });
-
-            modelBuilder.Entity("BioProSystem.Models.OrderDirection", b =>
-                {
-                    b.HasOne("BioProSystem.Models.OrderDirectionState", "OrderDirectionState")
-                        .WithMany("OrderDirections")
-                        .HasForeignKey("OrderDirectionStateId")
->>>>>>>> Feature/Add-Admin_profile:Bio Pro/BioProSystem/BioProSystem/Migrations/20240513212917_employee1.Designer.cs
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -1587,11 +1441,7 @@ namespace BioProSystem.Migrations
                 {
                     b.HasOne("BioProSystem.Models.SystemOrder", "Order")
                         .WithMany("StockItems")
-<<<<<<<< HEAD:Bio Pro/BioProSystem/BioProSystem/Migrations/20240514193421_SwappedErdRelations.Designer.cs
                         .HasForeignKey("OrderId1")
-========
-                        .HasForeignKey("OrderId")
->>>>>>>> Feature/Add-Admin_profile:Bio Pro/BioProSystem/BioProSystem/Migrations/20240513212917_employee1.Designer.cs
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -1616,7 +1466,6 @@ namespace BioProSystem.Migrations
 
                     b.HasOne("BioProSystem.Models.OpenOrder", "OpenOrder")
                         .WithOne("systemOrder")
-<<<<<<<< HEAD:Bio Pro/BioProSystem/BioProSystem/Migrations/20240514193421_SwappedErdRelations.Designer.cs
                         .HasForeignKey("BioProSystem.Models.SystemOrder", "OpenOrderId");
 
                     b.HasOne("BioProSystem.Models.OrderStatus", "OrderStatus")
@@ -1631,24 +1480,6 @@ namespace BioProSystem.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-========
-                        .HasForeignKey("BioProSystem.Models.SystemOrder", "OpenOrderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("BioProSystem.Models.OrderStatus", "OrderStatus")
-                        .WithMany("OrderDetails")
-                        .HasForeignKey("OrderStatusId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("BioProSystem.Models.OrderType", "OrderType")
-                        .WithMany("systemOrders")
-                        .HasForeignKey("OrderTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
->>>>>>>> Feature/Add-Admin_profile:Bio Pro/BioProSystem/BioProSystem/Migrations/20240513212917_employee1.Designer.cs
                     b.HasOne("BioProSystem.Models.OrderWorkflowTimeline", "OrderWorkflowTimeline")
                         .WithOne("systemOrder")
                         .HasForeignKey("BioProSystem.Models.SystemOrder", "OrderWorkflowTimelineId");
@@ -1771,7 +1602,6 @@ namespace BioProSystem.Migrations
                         .IsRequired();
                 });
 
-<<<<<<<< HEAD:Bio Pro/BioProSystem/BioProSystem/Migrations/20240514193421_SwappedErdRelations.Designer.cs
             modelBuilder.Entity("SelectedAreaSystemOrder", b =>
                 {
                     b.HasOne("BioProSystem.Models.SelectedArea", null)
@@ -1787,8 +1617,6 @@ namespace BioProSystem.Migrations
                         .IsRequired();
                 });
 
-========
->>>>>>>> Feature/Add-Admin_profile:Bio Pro/BioProSystem/BioProSystem/Migrations/20240513212917_employee1.Designer.cs
             modelBuilder.Entity("SystemOrderTeethShade", b =>
                 {
                     b.HasOne("BioProSystem.Models.SystemOrder", null)
