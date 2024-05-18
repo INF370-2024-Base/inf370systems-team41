@@ -7,7 +7,7 @@ import { SystemOrderViewModel } from '../shared/SystemOrderViewModel ';
 @Injectable({
   providedIn: 'root'
 })
-export class DataService {
+export class OrderService {
 
   apiUrl = 'https://localhost:44315/';
 
@@ -24,7 +24,12 @@ export class DataService {
     return this.httpClient.get(`${this.apiUrl}GetAllOpenOrders`)
     .pipe(map(result => result))
   }
-
+  updateOpenOrder(openOrder: OpenOrder): Observable<void> {
+    return this.httpClient.put<void>(`${this.apiUrl}/EditOpenOrder/${openOrder.openOrderId}`, openOrder);
+  }
+  updateOrder(order: any): Observable<any> {
+    return this.httpClient.put(`${this.apiUrl}Api/UpdateOrder`, order, this.httpOptions);
+  }
 
   getOpenOrderId(openOrderID: string): Observable<OpenOrder>{
     return this.httpClient.get<OpenOrder>(`${this.apiUrl}GetOpenOrder/` + openOrderID)

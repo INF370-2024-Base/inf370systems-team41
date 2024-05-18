@@ -19,7 +19,7 @@ export class SystemOrderViewModel {
     OpenOrderId: number;
     OrderStatusId: number;
     OrderWorkflowTimelineId: number;
-  
+    mediaFileViewModels:MediaFileViewModel[]=[]
     constructor() {
       this.OrderId = '';
       this.DentistId = 0;
@@ -43,5 +43,11 @@ export class SystemOrderViewModel {
       this.OrderStatusId = 0;
       this.OrderWorkflowTimelineId = 0;
     }
+  }
+  export class MediaFileViewModel{
+    FileName:string='example.txt';
+    FileSelf:string  = "new Uint8Array";
+    FileSizeKb:number=1024;
+    SystemOrderId:string=""
   }
 

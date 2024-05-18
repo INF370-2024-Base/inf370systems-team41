@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { DataService } from '../services/order.service';
+import { OrderService } from '../services/order.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
@@ -9,7 +9,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class ApproveOrderComponent implements OnInit {
 
-  constructor( private dataService: DataService,private snackBar: MatSnackBar) {}
+  constructor( private dataService: OrderService,private snackBar: MatSnackBar) {}
 pendingOrders:any[]=[]
 
 

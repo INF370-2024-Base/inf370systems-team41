@@ -1,0 +1,95 @@
+<div class="modal">
+  <div class="modal-content">
+    <span class="close" (click)="cancel()">&times;</span>
+    <h2>Edit Order</h2>
+
+    <form [formGroup]="editForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="OrderId">Order ID:</label>
+        <input required type="text" formControlName="OrderId" class="form-control" id="OrderId" placeholder="Enter Order ID" [readonly]="true">
+      </div>
+
+      <div class="form-group">
+        <label for="DentistId">Dentist:</label>
+        <select required formControlName="DentistId" class="form-control" id="DentistId">
+          <option *ngFor="let dentist of dentists" [ngValue]="dentist.dentistId">
+            {{ dentist.firstName }} {{ dentist.lastName }}
+          </option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="MedicalAidId">Medical Aid:</label>
+        <select formControlName="MedicalAidId" class="form-control" id="MedicalAidId" required>
+          <option disabled selected value="">Select Medical Aid</option>
+          <option *ngFor="let medicalAid of medicalAids" [ngValue]="medicalAid.medicalAidId">
+            {{ medicalAid.medicalAidName }}
+          </option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="PatientName">Patient Name:</label>
+        <input required type="text" formControlName="PatientName" class="form-control" id="PatientName" placeholder="Enter patient name">
+      </div>
+
+      <div class="form-group">
+        <label for="PatientSurname">Patient Surname:</label>
+        <input required type="text" formControlName="PatientSurname" class="form-control" id="PatientSurname" placeholder="Enter patient surname">
+      </div>
+
+      <div class="form-group">
+        <label for="MedicalAidNumber">Medical Aid Number:</label>
+        <input required type="text" formControlName="MedicalAidNumber" class="form-control" id="MedicalAidNumber" placeholder="Enter medical aid number">
+      </div>
+
+      <div class="form-group">
+        <label for="OrderStatusId">Order Status:</label>
+        <select formControlName="OrderStatusId" class="form-control" id="OrderStatusId" required>
+          <option *ngFor="let status of orderStatus" [ngValue]="status.orderStatusId">
+            {{ status.description }}
+          </option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="PriorityLevel">Priority Level:</label>
+        <select formControlName="PriorityLevel" class="form-control" id="PriorityLevel" required>
+          <option disabled selected value="">Select Priority Level</option>
+          <option *ngFor="let level of priorityLevels" [value]="level.value">{{ level.label }}</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="EmergencyNumber">Emergency Number:</label>
+        <input required type="text" formControlName="EmergencyNumber" class="form-control" id="EmergencyNumber" placeholder="Enter Emergency Contact Number">
+      </div>
+
+      <div class="form-group">
+        <label for="SpecialRequirements">Special Requirements:</label>
+        <textarea formControlName="SpecialRequirements" class="form-control" id="SpecialRequirements" placeholder="Enter any special requirements" required></textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="DueDate">Due Date:</label>
+        <input type="date" formControlName="DueDate" class="form-control" id="DueDate" placeholder="Select Due Date">
+      </div>
+
+      <div class="form-group">
+        <label for="MediaFiles">Upload Media Files:</label>
+        <input type="file" id="MediaFiles" (change)="onFileSelected($event)" multiple>
+      </div>
+
+      <div *ngIf="uploadedFileUrls.length > 0">
+        <h3>Uploaded Files:</h3>
+        <div *ngFor="let file of uploadedFileUrls">
+          <a [href]="file.url" [download]="file.name">
+            <img [src]="file.url" class="uploaded-image">
+          </a>
+        </div>
+      </div>
+
+      <button type="submit" class="btn btn-primary">Save</button>
+      <button type="button" class="btn btn-secondary" (click)="cancel()">Cancel</button>
+    </form>
+  </div>
+</div>

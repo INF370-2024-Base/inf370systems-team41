@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { DataService } from '../services/order.service';
+import { OrderService } from '../services/order.service';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -33,7 +33,7 @@ export class AddOrderComponent implements OnInit {
 
   @ViewChild('imageCanvas', { static: true }) canvasRef!: ElementRef<HTMLCanvasElement>; 
   constructor(
-    private dataService: DataService,
+    private dataService: OrderService,
     private httpClient: HttpClient,
     private router: Router,
     private formBuilder: FormBuilder,private snackBar:MatSnackBar
@@ -71,7 +71,6 @@ export class AddOrderComponent implements OnInit {
     this.loadOrderTypes();
     this.loadOrderStatuses();
     this.loadTeethShades();
-    
     console.log(this.areas)
   }
   selectedAreas: number[] = [];

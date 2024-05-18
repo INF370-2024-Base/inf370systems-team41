@@ -73,9 +73,7 @@ export class DataService {
     return this.httpClient.get<any>(`${this.apiUrl}GetSignInProfile/${EmailAddress}`)
   }
 
-  updateOpenOrder(openOrder: OpenOrder): Observable<void> {
-    return this.httpClient.put<void>(`${this.apiUrl}/EditOpenOrder/${openOrder.openOrderId}`, openOrder);
-  }
+ 
 }
 
 

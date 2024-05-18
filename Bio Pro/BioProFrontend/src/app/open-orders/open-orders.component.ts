@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { OpenOrder } from '../shared/openorder';
-import { DataService } from '../services/order.service';
+import { OrderService } from '../services/order.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
 })
 export class OpenOrdersComponent implements OnInit {
   OpenOrders:OpenOrder[] = []
-  constructor(private dataService: DataService,private router: Router) { }
+  constructor(private dataService: OrderService,private router: Router) { }
 
   ngOnInit(): void {
     this.GetOpenOrder()

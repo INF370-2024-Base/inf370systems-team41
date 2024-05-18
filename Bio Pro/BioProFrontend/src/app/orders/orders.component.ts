@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { DataService } from '../services/order.service';
+import { OrderService } from '../services/order.service';
 import { switchMap,forkJoin,of } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
-
+import { MatDialog } from '@angular/material/dialog';
+import { EditOrderModalComponent } from '../edit-order-modal/edit-order-modal.component';
 @Component({
   selector: 'app-orders',
   templateUrl: './orders.component.html',
@@ -13,8 +14,11 @@ export class OrdersComponent implements OnInit {
   orderId: string = '';
   orders: any[] = [];
   ordersInfo:any[]=[];
+  selectedOrder: any = null;
+  showStatusModal: boolean = false;
+  selectedOrderForStatus: any = null;
   baseUrl: string ='https://localhost:44315/Api/';
-  constructor(private http: HttpClient,private dataservices:DataService,private snackBar:MatSnackBar) { }
+  constructor(private dialog: MatDialog,private http: HttpClient,private dataservices:OrderService,private snackBar:MatSnackBar) { }
   private isDrawing: boolean = false;
   ngAfterViewChecked(): void {
     if (this.ordersInfo.length > 0 && !this.isDrawing) {
@@ -153,6 +157,52 @@ export class OrdersComponent implements OnInit {
       this.orders = this.orders.filter((d) => d.orderId.toLowerCase().includes(newOrderId));
       this.getOrderInfo()
 
+    }
+  }
+  editOrder(orderId: string): void {
+    const selectedOrder = this.ordersInfo.find(order => order.systemOrder.orderId === orderId);
+  console.log('Selected order for editing:', selectedOrder); // Debug log for selected order
+
+  const dialogRef = this.dialog.open(EditOrderModalComponent, {
+    data: { order: selectedOrder }
+  });
+
+  dialogRef.afterClosed().subscribe(result => {
+    console.log(`Dialog result: ${result}`);
+    this.closeModal();
+    location.reload();
+  });
+}
+  openStatusModal(order: any): void {
+    this.selectedOrderForStatus = order;
+    this.showStatusModal = true;
+  }
+  closeModal(): void {
+    this.selectedOrder = null;
+  }
+
+  deleteOrder(orderId: string): void {
+    console.log('Delete order:', orderId);
+  }
+
+  closeStatusModal(): void {
+    this.selectedOrderForStatus = null;
+    this.showStatusModal = false;
+  }
+
+  updateOrderStatus(newStatusId: number): void {
+    if (this.selectedOrderForStatus) {
+      this.selectedOrderForStatus.systemOrder.orderStatusId = newStatusId;
+      this.dataservices.updateOrder(this.selectedOrderForStatus.systemOrder).subscribe(
+        () => {
+          console.log('Order status updated successfully');
+          this.closeStatusModal();
+          this.getOrderInfo();
+        },
+        (error) => {
+          console.error('Error updating order status:', error);
+        }
+      );
     }
   }
 }

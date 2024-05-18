@@ -17,7 +17,8 @@
             Order ID: {{ order.systemOrder.orderId }}- Patient: {{ order.patient.firsName }} {{ order.patient.lastname }}
           </mat-panel-title>
         </mat-expansion-panel-header>
-    
+        <button class="edit-button" (click)="editOrder(order.systemOrder.orderId)">✏️</button>
+        <button class="trash-button" (click)="deleteOrder(order.systemOrder.orderId)">🗑️</button>
         <p>Order Status: {{ order.orderStatus.description }}</p>
         <p>Order Type: {{ order.orderType.description }}</p>
         <p>Order Direction: {{ order.orderDirection.description }}</p>
@@ -37,4 +38,4 @@
       <p>No orders found.</p>
     </div>
   </div>
-  
+  <app-edit-order-modal *ngIf="selectedOrder" (close)="closeModal()"></app-edit-order-modal>

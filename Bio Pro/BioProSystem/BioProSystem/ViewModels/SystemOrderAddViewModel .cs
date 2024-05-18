@@ -36,7 +36,7 @@ namespace BioProSystem.ViewModels
 
         public DateTime DueDate { get; set; }
         [Required]
-      
+
         public string? SpecialRequirements { get; set; }
         [Required]
         public string PriorityLevel { get; set; }
@@ -50,6 +50,7 @@ namespace BioProSystem.ViewModels
         public SelectList? OrderDirections { get; set; }
         public SelectList? PriorityLevels { get; set; }
         public SelectList? TeethShades { get; set; }
+       public MediaFileViewModel[] mediaFileViewModels { get; set; }  
 
         public List<int> TeethShadesIds { get; set; }
         public List<int> SeletedAreasIds { get; set; }

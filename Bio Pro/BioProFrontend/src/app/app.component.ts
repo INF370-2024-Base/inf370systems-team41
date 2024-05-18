@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { DataService } from './services/order.service';
+import { OrderService } from './services/order.service';
 
 @Component({
   selector: 'app-root',
@@ -15,7 +15,7 @@ export class AppComponent {
   }
   isLoggedIn = false;
   user:any;
-  constructor(public dataService:DataService) {}
+  constructor(public dataService:OrderService) {}
   isSignedIn:boolean=false
   ngOnInit() {
     this.user=JSON.parse(sessionStorage.getItem('User')!)

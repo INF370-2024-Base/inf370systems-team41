@@ -136,11 +136,95 @@ namespace BioProSystem.Controllers
                         newPatient.MedicalAidNumber = viewModel.MedicalAidNumber;
                         _repository.Add(newPatient);
                        
-                    }      
+                    }   
+                    Dentist dentist=_repository.GetDentistdByIdAsync(viewModel.DentistId).Result;
+                    dentist.SystemOrders.Add(newOrder);
                     _repository.Add(newOrder);
                     if (await _repository.SaveChangesAsync())
                     {
                         return Ok(newOrder);
+                    }
+                    else
+                    {
+                        ModelState.AddModelError(string.Empty, "Failed to save changes.");
+                        return BadRequest(ModelState);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError(string.Empty, $"An error occurred: {ex.Message}");
+                    return BadRequest(ModelState);
+                }
+            }
+            else
+            {
+                return BadRequest(ModelState);
+            }
+        }
+        [HttpPut]
+        [Route("UpdateOrder")]
+        //[Authorize(AuthenticationSchemes = "Bearer")]
+        //[Authorize(Roles = "Admin, Manager")]
+        public async Task<IActionResult> Update(SystemOrderAddViewModel viewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    var editedOrder = _repository.GetSystemOrderByIdAsync(viewModel.OrderId).Result;
+                    if (editedOrder != null)
+                    {
+
+                        editedOrder.PriorityLevel = viewModel.PriorityLevel;
+                        editedOrder.EmergencyNumber = viewModel.EmergencyNumber;
+                        editedOrder.SpecialRequirements = viewModel.SpecialRequirements;
+                        editedOrder.DueDate = viewModel.DueDate;
+                        var newPatient = new Patient();
+                         editedOrder.DentistId = viewModel.DentistId;
+                        
+                        if(viewModel.mediaFileViewModels.Length > 0)
+                        {
+                            foreach(MediaFileViewModel mediaFile in viewModel.mediaFileViewModels)
+                            {
+                                MediaFile mediaFile1 = new MediaFile();
+                                mediaFile1.FileName = mediaFile.FileName;
+                                mediaFile1.FileSelf = Convert.FromBase64String(mediaFile.FileSelf);
+                                mediaFile1.FileSizeKb = mediaFile.FileSizeKb;
+                                editedOrder.MediaFiles.Add(mediaFile1);
+                                mediaFile1.SystemOrderId = editedOrder.OrderId;
+                            }
+                            
+                        }
+                        if (editedOrder.PatientMedicalAidNumber != viewModel.MedicalAidNumber)
+                        {
+                            editedOrder.PatientMedicalAidNumber = viewModel.MedicalAidNumber;
+
+                            if (await _repository.CheckSystemPatient(viewModel.MedicalAidNumber))
+                            {
+                                newPatient.FirsName = _repository.GetPatientByMedicalAidNumber(viewModel.MedicalAidNumber).Result.FirsName;
+                                newPatient.Lastname = _repository.GetPatientByMedicalAidNumber(viewModel.MedicalAidNumber).Result.Lastname;
+                                newPatient.DentistId = _repository.GetPatientByMedicalAidNumber(viewModel.MedicalAidNumber).Result.DentistId;
+                                newPatient.MedicalAidId = _repository.GetPatientByMedicalAidNumber(viewModel.MedicalAidNumber).Result.MedicalAidId;
+                                newPatient.MedicalAidNumber = _repository.GetPatientByMedicalAidNumber(viewModel.MedicalAidNumber).Result.MedicalAidNumber;
+
+
+                            }
+                            else
+                            {
+                                newPatient.FirsName = viewModel.PatientName;
+                                newPatient.Lastname = viewModel.PatientSurname;
+                                newPatient.DentistId = viewModel.DentistId;
+                                newPatient.MedicalAidId = viewModel.MedicalAidId;
+                                newPatient.MedicalAidNumber = viewModel.MedicalAidNumber;
+                                _repository.Add(newPatient);
+
+                            }
+                        }
+                    }
+
+                    if (await _repository.SaveChangesAsync())
+                    {
+                        return Ok(editedOrder);
                     }
                     else
                     {
