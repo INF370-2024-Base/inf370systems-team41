@@ -1,0 +1,16 @@
+<h1>Login</h1>
+<form (ngSubmit)="onSubmit()">
+  <div class="form-group">
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email" [(ngModel)]="user.EmailAddress" required>
+  </div>
+  <div class="form-group">
+    <label for="password">Password:</label>
+    <input type="password" id="password" name="password" [(ngModel)]="user.Password" required>
+  </div>
+  <button type="submit">Login</button>
+  <button>Forgot Password</button>
+  
+</form>
+
+

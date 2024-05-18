@@ -22,6 +22,8 @@ import { MatCardModule } from '@angular/material/card';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { EmployeeProfileComponent } from './employee-profile/employee-profile.component';
 import { CaptureEmployeeHoursComponent } from './capture-employee-hours/capture-employee-hours.component';
+import { AuthInterceptor } from './services/auth-interceptor';
+import { LoginComponent } from './login/login.component';
 
 
 @NgModule({
@@ -35,7 +37,7 @@ import { CaptureEmployeeHoursComponent } from './capture-employee-hours/capture-
     AddDentistComponent,
     DentistProfileComponent,
     EmployeeProfileComponent,
-    CaptureEmployeeHoursComponent
+    CaptureEmployeeHoursComponent,LoginComponent
   ],
   imports: [
     BrowserModule,

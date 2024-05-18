@@ -9,12 +9,12 @@ import { AddDentistComponent } from './add-dentist/add-dentist.component';
 import { DentistProfileComponent } from './dentist-profile/dentist-profile.component'; // Import DentistProfileComponent
 import { CaptureEmployeeHoursComponent } from './capture-employee-hours/capture-employee-hours.component';
 import { EmployeeProfileComponent } from './employee-profile/employee-profile.component';
+import { LoginComponent } from './login/login.component';
 
 
 const routes: Routes = [
   
   {path: 'openOrder', component: OpenOrdersComponent},  
-  {path: '', redirectTo: 'openOrder', pathMatch: 'full'},
   {path: 'addOrder', component: AddOrderComponent},
   { path: 'orders', component: OrdersComponent },
   { path: 'approval', component: ApproveOrderComponent },
@@ -25,6 +25,8 @@ const routes: Routes = [
   { path: 'employeeProfile', component:  EmployeeProfileComponent},
   { path: 'Dentist', component:  DentistProfileComponent},
   { path: 'employee', component:  EmployeeProfileComponent},
+  {path: 'login', component: LoginComponent}, 
+  {path: '', redirectTo: 'login', pathMatch: 'full'},
 
 ];
 

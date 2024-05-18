@@ -8,7 +8,7 @@
 </mat-toolbar>
 
 <mat-sidenav-container>
-  <mat-sidenav #sidenav mode="side" [(opened)]="isSidenavOpen" class="side-container">
+  <mat-sidenav #sidenav mode="side" [(opened)]="isSidenavOpen" class="side-container " *ngIf="isLoggedIn">
     <mat-nav-list>
       <!-- <a mat-list-item class="nav-link" [routerLink]="['/dashboard']">Dashboard</a> -->
       <a mat-list-item class="nav-link" routerLink="/employeeProfile"> Employee Profile</a>
