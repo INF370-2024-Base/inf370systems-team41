@@ -6,6 +6,7 @@ import { DatePipe } from '@angular/common';
 import { MAT_DIALOG_DATA,MatDialogRef  } from '@angular/material/dialog';
 import { SystemOrderViewModel } from '../shared/SystemOrderViewModel ';
 import { MediaFileViewModel } from '../shared/SystemOrderViewModel ';
+import { MatSnackBar } from '@angular/material/snack-bar';
 @Component({
   selector: 'app-edit-order-modal',
   templateUrl: './edit-order-modal.component.html',
@@ -38,7 +39,8 @@ export class EditOrderModalComponent implements OnInit {
     private formBuilder: FormBuilder,
     private dataService: OrderService,
     private sanitizer: DomSanitizer,
-    private datePipe: DatePipe
+    private datePipe: DatePipe,
+    private snackBar: MatSnackBar,
   ) {
     this.editForm = this.formBuilder.group({
       OrderId: [{ value: '', disabled: true }, Validators.required],
@@ -252,6 +254,7 @@ export class EditOrderModalComponent implements OnInit {
           console.log('Order updated successfully');
           // Close the modal only when the order update is successful
           this.dialogRef.close('Order success');
+          
         },
         (error) => {
           console.error('Error updating order:', error);
@@ -268,7 +271,7 @@ export class EditOrderModalComponent implements OnInit {
   }
   
   
-  
+ 
 
   cancel(): void {
     console.log('Cancel function executed'); 

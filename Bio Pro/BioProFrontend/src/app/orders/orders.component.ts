@@ -2,9 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { OrderService } from '../services/order.service';
 import { switchMap,forkJoin,of } from 'rxjs';
-import { MatSnackBar } from '@angular/material/snack-bar';
+
 import { MatDialog } from '@angular/material/dialog';
 import { EditOrderModalComponent } from '../edit-order-modal/edit-order-modal.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
+
 @Component({
   selector: 'app-orders',
   templateUrl: './orders.component.html',
@@ -24,7 +26,10 @@ export class OrdersComponent implements OnInit {
     if (this.ordersInfo.length > 0 && !this.isDrawing) {
       this.isDrawing = true;
       this.drawShapes();
-      console.log("drawing")
+      console.log("drawing");
+      // setTimeout(() => {
+      //   
+      // }, 2000); 
     }
 
   }
@@ -46,6 +51,8 @@ export class OrdersComponent implements OnInit {
     ).subscribe(
       (orderInfos: any[]) => {
         this.ordersInfo = orderInfos;
+        this.isDrawing= false;
+        console.log('It works');
         console.log('Orders and order info retrieved:', this.orders, this.ordersInfo);
       },
       (error) => {
@@ -131,7 +138,7 @@ export class OrdersComponent implements OnInit {
           (error:HttpErrorResponse) => {
             if (error.status === 404) {
               // Show the snackbar when a 404 error occurs
-              this.showSnackBar();
+              this.showSnackBar('No orders');
             }
           }
         );
@@ -144,8 +151,8 @@ export class OrdersComponent implements OnInit {
     this.getOrdersAndInfo();
     this.orderId=""
   }
-  showSnackBar() {
-    this.snackBar.open('No orders with that id found found.', 'Dismiss', {
+  showSnackBar(Message:string) {
+    this.snackBar.open(Message, 'Dismiss', {
       duration: 3000, 
     });
   }
@@ -170,7 +177,19 @@ export class OrdersComponent implements OnInit {
   dialogRef.afterClosed().subscribe(result => {
     console.log(`Dialog result: ${result}`);
     this.closeModal();
-    location.reload();
+    
+  //  this.getOrdersAndInfo();
+  //    this.getOrderInfo();
+  //    this.isDrawing =false;
+    //  this.ngOnInit();
+    //  this.getOrderInfo();
+     this.showSnackBar(result);
+    //  location.reload();
+     setTimeout(() => {
+      location.reload();
+    }, 2000); 
+  
+     
   });
 }
   openStatusModal(order: any): void {
@@ -205,6 +224,8 @@ export class OrdersComponent implements OnInit {
       );
     }
   }
+
+ 
 }
 
 

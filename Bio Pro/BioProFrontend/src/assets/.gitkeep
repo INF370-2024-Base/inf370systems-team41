@@ -1,0 +1,128 @@
+/* Sidenav container */
+body {
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f5f5f5;
+  }
+  
+  /* Navigation background container */
+  .nav-background {
+    position: relative;
+    width: 100%;
+    height: 70px; /* Adjust the height as needed */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    overflow: hidden;
+  }
+  
+  /* Navigation toolbar */
+  .nav-toolbar {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.8); /* Semi-transparent background */
+    color: #0a0a0a; /* Text color */
+    position: relative;
+    backdrop-filter: blur(10px); /* Blur effect for the background */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    border-radius: 8px; /* Rounded corners */
+    padding: 0 20px;
+    height: 100%; /* Ensures the toolbar fits the container */
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+  }
+  
+  /* Add a slight hover effect */
+  .nav-toolbar:hover {
+    transform: scale(1.02);
+    opacity: 0.9;
+  }
+  
+  .nav-toolbar mat-toolbar-row {
+    display: flex;
+    align-items: center;
+    width: 100%; /* Ensures the row takes the full width */
+  }
+  
+  /* Company logo */
+  .company-logo {
+    width: 40px; /* Reduce the logo size */
+    height: auto; /* Maintain aspect ratio */
+    margin-right: 20px; /* Add space between logo and title */
+  }
+  
+  /* Navigation title */
+  .nav-title {
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #fff; /* White color for better contrast */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); /* Text shadow for depth */
+  }
+.side-container {
+  width: 250px; /* Adjust the width of the sidenav */
+  background-color: #ffffff; /* White background for sidenav */
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* Navigation list items */
+.mat-nav-list {
+  width: 100%;
+  padding: 0;
+}
+
+.mat-nav-list a.mat-list-item {
+  display: flex;
+  align-items: center;
+  font-size: 16px; /* Adjust font size */
+  color: #333; /* Text color */
+  text-decoration: none; /* Remove underline */
+  padding: 15px 20px; /* Add padding for better spacing */
+  border-radius: 4px; /* Rounded corners */
+  margin: 5px 10px; /* Add margin for spacing */
+  transition: background-color 0.3s ease, color 0.3s ease; /* Smooth transition */
+}
+
+.mat-nav-list a.mat-list-item:hover {
+  background-color: #c1e7f0; /* Background color on hover */
+  color: #007b8f; /* Change text color on hover */
+}
+
+.mat-nav-list a.mat-list-item mat-icon {
+  margin-right: 10px; /* Space between icon and text */
+  color: #007b8f; /* Icon color */
+}
+
+.mat-nav-list a.sub-nav-link {
+  display: flex;
+  align-items: center;
+  padding-left: 40px; /* Add more padding to the left */
+  font-size: 14px; /* Slightly smaller font size */
+  color: #555; /* Slightly lighter text color */
+  transition: padding-left 0.3s ease; /* Smooth transition for padding */
+}
+
+.mat-nav-list a.sub-nav-link:hover {
+  background-color: #d9f1f6; /* Slightly different background color on hover */
+  color: #007b8f; /* Change text color on hover */
+  padding-left: 45px; /* Increase padding on hover */
+}
+
+.mat-nav-list a.sub-nav-link mat-icon {
+  margin-right: 10px; /* Space between icon and text */
+  color: #007b8f; /* Icon color */
+}
+
+/* Content container */
+.content-container {
+  padding: 20px; /* Add padding */
+  background-color: #f5f5f5; /* Light background color for content */
+  min-height: 100vh; /* Ensure it takes full height */
+}

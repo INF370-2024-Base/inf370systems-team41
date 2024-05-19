@@ -1,8 +1,129 @@
-.snackbar-success {
-    background-color: green;
-  }
-  
-  .snackbar-error {
-    background-color: red;
-  }
-  
+body {
+  background-color: #f5f5f5; /* Light gray background */
+  font-family: 'Roboto', sans-serif; /* Playful font */
+  color: #333; /* Dark text color */
+  padding: 20px; /* Add some padding */
+  overflow: hidden; /* Hide overflowing content */
+}
+
+/* Animated background gradients */
+@keyframes gradientAnimation {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Enhanced blue gradient animation */
+body {
+  background: linear-gradient(120deg, #aed9e0, #c2e2f3, #eaf1fa, #c2e2f3, #aed9e0);
+  background-size: 400% 400%;
+  animation: gradientAnimation 20s ease infinite;
+}
+
+.custom-select .placeholder {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  cursor: pointer;
+  font-style: italic; /* Italic font style */
+  color: #999; /* Light grey color */
+}
+
+.form-control {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+  margin-top: 5px;
+  background-color: #fff; /* White background */
+  color: #333; /* Dark text color */
+}
+
+/* Style the select dropdown arrow */
+.form-control:after {
+  content: '\25BC'; /* Unicode character for down arrow */
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  pointer-events: none; /* Ensure dropdown arrow doesn't interfere with clicking on select */
+}
+
+/* Style the placeholder text */
+option[value=""][disabled] {
+  color: #999; /* Gray placeholder text color */
+}
+
+/* Style the selected option text */
+option {
+  color: #333; /* Dark text color for selected option */
+}
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 30px;
+  background-color: #ffffff; /* White background */
+  border-radius: 10px; /* Add rounded corners */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add subtle shadow */
+}
+
+h1 {
+  margin-top: 0; /* Remove margin from the top of h1 */
+  color: #333; /* Dark text color */
+  font-size: 24px; /* Larger font size */
+}
+
+.form-group {
+  margin-bottom: 20px; /* Add margin between form elements */
+}
+
+label {
+  font-weight: bold; /* Make labels bold */
+}
+
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+select {
+  width: 100%; /* Set input and select width to 100% */
+  padding: 10px; /* Add padding to inputs and selects */
+  border: 1px solid #ccc; /* Add border to inputs and selects */
+  border-radius: 5px; /* Add rounded corners to inputs and selects */
+  box-sizing: border-box; /* Include padding and border in the element's total width and height */
+  margin-top: 5px; /* Add margin to the top of inputs and selects */
+}
+
+.btn-add,
+.btn-cancel {
+  padding: 10px 20px; /* Add padding to buttons */
+  border-radius: 5px; /* Add rounded corners to buttons */
+  cursor: pointer; /* Change cursor to pointer on buttons */
+  border: none; /* Remove default button border */
+  transition: background-color 0.3s; /* Add transition effect */
+}
+
+.btn-group {
+  display: flex; /* Use flexbox for button group */
+  justify-content: space-between; /* Distribute buttons evenly */
+}
+
+.btn-add {
+  background-color: green; /* Green background for Add button */
+  color: white; /* White text color for Add button */
+}
+
+.btn-cancel {
+  background-color: red; /* Red background for Cancel button */
+  color: white; /* White text color for Cancel button */
+}
+
+.btn-add i,
+.btn-cancel i {
+  margin-right: 5px; /* Add space between icon and text */
+}
+
+.btn-add:hover,
+.btn-cancel:hover {
+  filter: brightness(90%); /* Reduce brightness on hover */
+}

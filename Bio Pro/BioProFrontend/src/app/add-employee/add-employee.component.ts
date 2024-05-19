@@ -74,6 +74,6 @@ export class AddEmployeeComponent implements OnInit {
   
 
   cancel() {
-    this.router.navigate(['employees']);
+    this.router.navigate(['/employeeProfile']);
   }
 }

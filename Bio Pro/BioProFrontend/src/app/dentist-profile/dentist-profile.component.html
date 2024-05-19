@@ -1,35 +1,54 @@
-<div class="container">
-  <div class="row">
-    <div class="col-md-12 d-flex justify-content-between align-items-center">
-      <div class="col-md-6 d-flex align-items-center">
-        <input [(ngModel)]="searchQuery" placeholder="Search Dentist..." class="w-100 mr-2" />
-        <button (click)="search()" class="btn btn-outline-primary">Search</button>
-      </div>
-      <div class="col-md-6 d-flex justify-content-end">
-        <a href="#" class="btn btn-primary mb-3" routerLink="/addDentist">Add Dentist</a>
-      </div>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-md-12">
-      <div class="card-container">
-        <mat-card *ngFor="let dentist of filteredDentists" class="mb-3 example-card">
-          <mat-card-header>
-            <div mat-card-avatar class="mr-2">
-              <!-- Placeholder for avatar image -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Dentists</title>
+    <!-- Include Material Design icons -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <!-- Include favicon -->
+    <link rel="icon" type="image/png" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAArklEQVQ4T6WTwQ6CMBAE30BcIwSwhghQqIFQRCLZj0Ogml2t32VcmUpMEp7C6SYNkLxeyPEh6lUufD/On1CBphCnLzwSzQECzAOBm8v0IhrEom0ZaLpv7IXq9ehyQLuO/AHfJZw/YQygaYRZDm+Q8wAG04YwP/wCFeAz2NbwY3C9SAAAAAElFTkSuQmCC">
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 d-flex justify-content-between align-items-center">
+                <div class="col-md-6 d-flex align-items-center">
+                    <i class="material-icons mr-2">search</i>
+                    <mat-form-field class="search-field" style="flex-grow: 1;">
+                        <input matInput [(ngModel)]="searchQuery" placeholder="Search Dentist..." class="w-100 mr-2" />
+                    </mat-form-field>
+                    <button (click)="search()" class="btn btn-outline-primary">Search</button>
+                </div>
+                <div class="col-md-6 d-flex justify-content-end">
+                  <a href="#" class="btn btn-primary mb-3" routerLink="/addDentist" style="border-radius: 20px; padding: 10px 20px; color: #fff; background-color: #007bff; text-decoration: none; display: inline-block;">Add Dentist</a>
+
+                </div>
             </div>
-            <mat-card-title>{{dentist.firstName}} {{dentist.lastName}}</mat-card-title>
-          </mat-card-header>
-          <mat-card-content>
-            <p><strong>Contact Detail:</strong> {{dentist.contactDetail}}</p>
-            <p><strong>Address:</strong> {{dentist.address}}</p>
-          </mat-card-content>
-          <mat-card-actions>
-            <button mat-raised-button color="primary" (click)="editDentist(dentist)">Edit</button>
-            <button mat-raised-button color="warn" (click)="deleteDentist(dentist)">Delete</button>
-          </mat-card-actions>        
-        </mat-card>
-      </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card-container">
+                    <mat-card *ngFor="let dentist of filteredDentists" class="mb-3 example-card">
+                        <mat-card-header>
+                            <div mat-card-avatar class="mr-2">
+                                <i class="material-icons">local_hospital</i>
+                            </div>
+                            <mat-card-title>{{dentist.firstName}} {{dentist.lastName}}</mat-card-title>
+                        </mat-card-header>
+                        <mat-card-content>
+                            <!-- <p><strong>Specialization:</strong> {{dentist.specialization}}</p> -->
+                            <p><strong>Contact Detail:</strong> {{dentist.contactDetail}}</p>
+                            <p><strong>Address:</strong> {{dentist.address}}</p>
+                        </mat-card-content>
+                        <mat-card-actions>
+                            <button mat-raised-button color="primary" (click)="editDentist(dentist)">Edit</button>
+                            <button mat-raised-button color="warn" (click)="deleteDentist(dentist)">Delete</button>
+                        </mat-card-actions>        
+                    </mat-card>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
-</div>
+</body>
+</html>

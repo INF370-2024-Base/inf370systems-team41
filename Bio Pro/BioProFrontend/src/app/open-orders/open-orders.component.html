@@ -1,9 +1,16 @@
-
-<div *ngFor="let openOrder of OpenOrders">
-    <h2 >
-Open order ID: {{openOrder.openOrderId }}
-</h2>
-<p>
-    Description: {{ openOrder.description }}
-</p>
-</div>
+<body>
+<div class="row">
+    <div class="col-sm-3" *ngFor="let openOrder of OpenOrders">
+      <mat-card class="order-card" [@cardHover]="hoverState" (mouseenter)="toggleHover('hover')" (mouseleave)="toggleHover('rest')">
+        <mat-card-header>
+          <div mat-card-avatar class="example-header-image"></div>
+          <mat-card-title>OPEN ORDER (ID): {{ openOrder.openOrderId }}</mat-card-title>
+          <mat-card-subtitle>CURRENTLY: {{ openOrder.description }}</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-actions>
+          <!-- Add buttons here if needed -->
+        </mat-card-actions>
+      </mat-card>
+    </div>
+  </div>
+</body>

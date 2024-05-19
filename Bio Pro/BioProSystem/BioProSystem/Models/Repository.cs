@@ -144,7 +144,7 @@ namespace BioProSystem.Models
 
         public async Task<IEnumerable<SystemOrder>> GetAllSystemOrdersAsync()
         {
-            return await _appDbContext.SystemOrders.ToListAsync();
+            return  _appDbContext.SystemOrders.ToListAsync().Result;
         }
         public async Task<SystemOrderViewModel> GetAllSystemOrdersInformationAsync(string orderId)
         {

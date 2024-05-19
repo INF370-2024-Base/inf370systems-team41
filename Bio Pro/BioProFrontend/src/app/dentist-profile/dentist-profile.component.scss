@@ -1,50 +1,139 @@
-.flex-me {
-    display: inline-flex;
-    flex-flow: row wrap;
-  }
-  
-  .example-card {
-    max-width: 400px;
-    width: fit-content;
-    height:max-content;
-  }
-  .container {
-    margin-top: 20px;
-  }
-  
-  .row {
-    margin-bottom: 20px;
-  }
-  
-  .card-container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-  }
-  
-  .card-container mat-card {
-    flex-basis: calc(25% - 32px); /* Adjusts the initial size of each card */
-    margin: 8px; /* Space around each card */
-  }
-  
-  /* Adjustments for smaller screens */
-  @media (max-width: 600px) {
-   .card-container mat-card {
-      flex-basis: 100%; /* Full width on small screens */
-    }
-  }
-  
-  /* Adjustments for medium screens */
-  @media (min-width: 601px) and (max-width: 1024px) {
-   .card-container mat-card {
-      flex-basis: calc(50% - 32px); /* Half width on medium screens */
-    }
-  }
-  
-  /* Adjustments for large screens */
-  @media (min-width: 1025px) {
-   .card-container mat-card {
-      flex-basis: calc(33.333% - 32px); /* One-third width on large screens */
-    }
-  }
-  
+body {
+  background-color: #f5f5f5; /* Light gray background */
+  font-family: 'Roboto', sans-serif; /* Roboto font */
+  color: #333; /* Dark text color */
+  padding: 20px; /* Add some padding */
+  overflow: hidden; /* Hide overflowing content */
+}
+
+/* Animated background gradients */
+@keyframes gradientAnimation {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Enhanced blue gradient animation */
+body {
+  background: linear-gradient(120deg, #aed9e0, #c2e2f3, #eaf1fa, #c2e2f3, #aed9e0);
+  background-size: 400% 400%;
+  animation: gradientAnimation 20s ease infinite;
+}
+
+.container {
+  max-width: 1200px; /* Adjust container max-width as needed */
+  margin: 0 auto; /* Center container */
+}
+
+.row {
+  margin-bottom: 20px; /* Add margin between rows */
+}
+
+.col-md-12 {
+  width: 100%; /* Make columns full width */
+}
+
+.d-flex {
+  display: flex; /* Use flexbox for alignment */
+  align-items: center; /* Align items vertically */
+}
+
+.justify-content-between {
+  justify-content: space-between; /* Align items with space between them */
+}
+
+.align-items-center {
+  align-items: center; /* Align items vertically */
+}
+
+.card-container {
+  display: flex; /* Use flexbox for card layout */
+  flex-wrap: wrap; /* Wrap cards if needed */
+  gap: 20px; /* Add gap between cards */
+}
+
+.example-card {
+  width: calc(33.333% - 20px); /* Adjust card width */
+  margin-bottom: 20px; /* Add margin between cards */
+  overflow: hidden; /* Hide overflowing content */
+  position: relative; /* Position elements inside */
+  border-radius: 10px; /* Add rounded corners */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add subtle shadow */
+  transition: transform 0.3s, box-shadow 0.3s; /* Smooth transition */
+}
+
+.example-card:hover {
+  transform: translateY(-5px); /* Move card up on hover */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Increase shadow on hover */
+}
+
+/* Your existing CSS styles */
+
+/* Additional styles for favicon and avatar */
+
+
+.mat-card-content {
+  padding: 10px; /* Add padding to content area */
+}
+
+.mat-card-title, .mat-card-subtitle {
+  font-size: 16px; /* Adjust font size */
+  margin: 0; /* Remove default margin */
+  color: #333; /* Text color */
+}
+
+.mat-card-title {
+  font-weight: bold; /* Bold title */
+}
+
+.mat-card-subtitle {
+  font-style: italic; /* Italic subtitle */
+}
+
+.mat-card-actions {
+  display: flex; /* Align actions horizontally */
+  justify-content: flex-end; /* Align actions to the right */
+}
+
+.mat-card-actions button {
+  margin-left: 10px; /* Add space between buttons */
+}
+
+.btn {
+  display: inline-block; /* Make buttons inline-block */
+  padding: 10px 20px; /* Add padding to buttons */
+  border-radius: 5px; /* Add rounded corners to buttons */
+  cursor: pointer; /* Change cursor to pointer on buttons */
+  border: none; /* Remove default button border */
+  transition: background-color 0.3s; /* Add transition effect */
+}
+
+.search-field:focus-within {
+  border-color: #00509a; /* Darker blue border on focus */
+}
+
+.btn {
+  border-radius: 20px; /* Rounded edges for buttons */
+  padding: 10px 20px;
+}
+
+.btn-outline-primary {
+  margin-left: 10px;
+  //border: 2px solid #007bff; /* Add border */
+  color: #007bff; /* Text color */
+  background-color: transparent; /* Transparent background */
+  padding: 8px 20px; /* Add padding */
+  font-size: 16px; /* Increase font size */
+  border-radius: 20px; /* Rounded corners */
+  transition: all 0.3s ease; /* Add transition effect */
+}
+
+.btn-outline-primary:hover {
+  background-color: #007bff; /* Change background color on hover */
+  color: #fff; /* Change text color on hover */
+}
+
+.btn-outline-primary:hover {
+  background-color: #007bff; /* Change background color on hover */
+  color: #fff; /* Change text color on hover */
+}

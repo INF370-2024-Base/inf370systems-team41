@@ -1,24 +1,40 @@
-<div class="form-container">
-  <h2>Capture Employee Hours</h2>
-  <form (ngSubmit)="submitForm()">
-    <div class="form-group">
-      <label for="employee">Employee:</label>
-      <select id="employee" class="form-control" [(ngModel)]="selectedEmployeeId" name="employee" required>
-        <option *ngFor="let employee of employees" [value]="employee.employeeId">{{ employee.firstName }}</option>
-      </select>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Capture Employee Hours</title>
+    <!-- Include favicon -->
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+</head>
+<body>
+    <div class="form-container">
+        <h2>Capture Employee Hours</h2>
+        <form (ngSubmit)="submitForm()">
+            <div class="form-group">
+              <label for="employee" style="font-size: 16px;">Employee:</label>
+              <div>
+                <span style="font-style: italic; color: #999;">Select an Employee</span>
+              </div>
+                <select id="employee" class="form-control" [(ngModel)]="selectedEmployeeId" name="employee" required>
+                  
+                    <option *ngFor="let employee of employees" [value]="employee.employeeId">{{ employee.firstName }}</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="workDate" style="font-size: 16px;">Work Date:</label>
+                <input type="date" id="workDate" class="form-control" [(ngModel)]="workDate" name="workDate" required>
+            </div>
+            <div class="form-group">
+                <label for="clockInTime" style="font-size: 16px;">Clock In Time:</label>
+                <input type="time" id="clockInTime" class="form-control" [(ngModel)]="clockInTime" name="clockInTime" required>
+            </div>
+            <div class="form-group">
+                <label for="clockOutTime" style="font-size: 16px;">Clock Out Time:</label>
+                <input type="time" id="clockOutTime" class="form-control" [(ngModel)]="clockOutTime" name="clockOutTime" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
     </div>
-    <div class="form-group">
-      <label for="workDate">Work Date:</label>
-      <input type="date" id="workDate" class="form-control" [(ngModel)]="workDate" name="workDate" required>
-    </div>
-    <div class="form-group">
-      <label for="clockInTime">Clock In Time:</label>
-      <input type="time" id="clockInTime" class="form-control" [(ngModel)]="clockInTime" name="clockInTime" required>
-    </div>
-    <div class="form-group">
-      <label for="clockOutTime">Clock Out Time:</label>
-      <input type="time" id="clockOutTime" class="form-control" [(ngModel)]="clockOutTime" name="clockOutTime" required>
-    </div>
-    <button type="submit" class="btn btn-primary">Submit</button>
-  </form>
-</div>
+</body>
+</html>

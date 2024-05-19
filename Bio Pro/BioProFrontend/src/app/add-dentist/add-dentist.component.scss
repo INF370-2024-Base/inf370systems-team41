@@ -1,8 +1,75 @@
-.snackbar-success {
-    background-color: green;
-  }
-  
-  .snackbar-error {
-    background-color: red;
-  }
-  
+body {
+  background-color: #f5f5f5; /* Light gray background */
+  font-family: 'Roboto', sans-serif; /* Playful font */
+  color: #333; /* Dark text color */
+  padding: 20px; /* Add some padding */
+  overflow: hidden; /* Hide overflowing content */
+}
+
+/* Animated background gradients */
+@keyframes gradientAnimation {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Enhanced blue gradient animation */
+body {
+  background: linear-gradient(120deg, #aed9e0, #c2e2f3, #eaf1fa, #c2e2f3, #aed9e0);
+  background-size: 400% 400%;
+  animation: gradientAnimation 20s ease infinite;
+}
+
+.container {
+  max-width: 800px; /* Set the maximum width */
+  margin: 0 auto; /* Center the container */
+  padding: 30px; /* Add padding */
+  background-color: #ffffff; /* Set the background color */
+  border-radius: 10px; /* Add rounded corners */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add shadow */
+}
+
+h1 {
+  font-size: 24px; /* Set the font size */
+  margin-top: 0; /* Remove margin from the top */
+}
+
+.form-control {
+  width: calc(100% - 22px); /* Set the width of form controls */
+  padding: 10px; /* Add padding */
+  border: 1px solid #ccc; /* Add border */
+  border-radius: 5px; /* Add rounded corners */
+  margin-top: 5px; /* Add margin to the top */
+}
+
+.btn {
+  border: none; /* Remove border */
+  padding: 10px 20px; /* Add padding */
+  border-radius: 5px; /* Add rounded corners */
+  cursor: pointer; /* Set cursor to pointer */
+}
+
+.btn-primary {
+  background-color: #007bff; /* Set the background color */
+  color: #fff; /* Set the text color */
+}
+
+.btn-secondary {
+  background-color: #6c757d; /* Set the background color */
+  color: #fff; /* Set the text color */
+  margin-left: 10px; /* Add margin to the left */
+}
+
+.row {
+  margin-top: 20px; /* Add margin to the top */
+}
+
+.col-sm-2 {
+  font-size: 16px; /* Set the font size */
+  font-weight: bold; /* Set font weight to bold */
+}
+
+.material-icons {
+  vertical-align: middle; /* Align the icon vertically */
+  margin-right: 5px; /* Add margin to the right */
+}

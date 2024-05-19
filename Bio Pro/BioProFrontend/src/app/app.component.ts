@@ -8,11 +8,16 @@ import { OrderService } from './services/order.service';
 })
 export class AppComponent {
   isSidenavOpen = true;
+  isEmployeeMenuOpen = false;
   isOrdersMenuOpen = false;
   title = 'BioProSystem';
   toggleOrdersMenu(): void {
     this.isOrdersMenuOpen = !this.isOrdersMenuOpen;
   }
+  toggleEmployeeMenu() {
+    this.isEmployeeMenuOpen = !this.isEmployeeMenuOpen;
+  }
+
   isLoggedIn = false;
   user:any;
   constructor(public dataService:OrderService) {}
