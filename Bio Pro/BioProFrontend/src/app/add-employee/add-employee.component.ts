@@ -6,6 +6,8 @@ import { DataService } from '../services/data.service';
 import { Employee } from '../shared/employee';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { HttpErrorResponse } from '@angular/common/http';
+import { EmployeeService } from '../services/employee.service';
+import { error } from 'console';
 
 @Component({
   selector: 'app-add-employee',
@@ -21,19 +23,28 @@ export class AddEmployeeComponent implements OnInit {
     Address: ''
   };
 
-  jobTitles = [
-    { id: 1, title: 'Admin' },
-    { id: 2, title: 'Dental Technician' },
-    { id: 3, title: 'Lab Manager' },
-    { id: 4, title: 'Delivery' }
-  ];
+  jobTitles:any=[]
 
   constructor(
     private dataService: DataService,
+    private employeeService:EmployeeService,
     private router: Router,
     private snackBar: MatSnackBar // Inject MatSnackBar
   ) { }
   ngOnInit(): void {
+    this.getJobtitles()
+  }
+getJobtitles()
+  {
+  this.employeeService.getJobtitles().subscribe(results=>{
+  this.jobTitles=results
+  console.log(this.jobTitles)
+    }
+  ,
+  (error)=>{
+    console.log(error)
+    }
+  )
   }
 
   addEmployee(form: NgForm) {
@@ -52,9 +63,6 @@ export class AddEmployeeComponent implements OnInit {
             // A client-side or network error occurred. Handle it accordingly.
             errorMessage = `Error: ${error.error.message}`;
           } else {
-            // The backend returned an unsuccessful response code.
-            // The response body may contain clues as to what went wrong,
-            // so we check for known error messages.
             if (error.error.includes('Employee already exists')) {
               errorMessage = 'Error: Employee already exists';
             } else if (error.error.includes('JobTitle not found')) {

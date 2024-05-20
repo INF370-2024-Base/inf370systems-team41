@@ -3,10 +3,12 @@ using BioProSystem.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System.Diagnostics;
 using System.IdentityModel.Tokens.Jwt;
+using System.Net.Mail;
 using System.Security.Claims;
 using System.Text;
 
@@ -44,7 +46,7 @@ namespace BioProSystem.Controllers
                     Email = uvm.emailaddress,
                     Name = uvm.name,
                     Surname = uvm.surname,
-
+                    PhoneNumber=uvm.phonenumber
                 };
                 PasswordManagement management = new PasswordManagement();
                 management = new PasswordManagement()
@@ -57,6 +59,11 @@ namespace BioProSystem.Controllers
 
                 var result = await _userManager.CreateAsync(user, uvm.password);
 
+
+                var newRole = await _userManager.AddToRoleAsync(user, uvm.rolename);
+                if (result.Succeeded) return Ok();
+
+                return BadRequest(result.Errors);
                 if (result.Errors.Count() > 0) return StatusCode(StatusCodes.Status500InternalServerError, "Internal Server Error. Please contact support.");
             }
             else
@@ -174,6 +181,18 @@ namespace BioProSystem.Controllers
             if (result.Succeeded) return Ok();
 
             return BadRequest(result.Errors);
+        }
+        [HttpGet]
+        [Route("GetRoles")]
+        //change
+        public async Task<IActionResult> GetRoles()
+        {
+           
+
+            var result = await _roleManager.Roles.ToListAsync();
+            if (result.Any()) return Ok(result);
+
+            return BadRequest("No roles found");
         }
 
 

@@ -10,6 +10,12 @@ using BioProSystem.ViewModels;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Newtonsoft.Json;
 using Microsoft.Extensions.Options;
+using Microsoft.AspNetCore.Identity.UI.Services;
+using BioProSystem.EmailService;
+using System.Net;
+using System.Net.Mail;
+using System.Threading.Tasks;
+using Org.BouncyCastle.Crypto.Macs;
 
 namespace BioProSystem.Controllers
 {
@@ -22,15 +28,18 @@ namespace BioProSystem.Controllers
         private readonly IRepository _repository;
         private readonly IUserClaimsPrincipalFactory<SystemUser> _claimsPrincipalFactory;
         private readonly IConfiguration _configuration;
+        private readonly IEmailSender _emailSender;
+        private readonly EmailSettings _emailSettings;
 
-
-        public OrderController(UserManager<SystemUser> userManager, RoleManager<IdentityRole> roleManager, IUserClaimsPrincipalFactory<SystemUser> claimsPrincipalFactory, IConfiguration configuration, IRepository repository)
+        public OrderController(IOptions<EmailSettings> emailSettings, IEmailSender emailSender,UserManager<SystemUser> userManager, RoleManager<IdentityRole> roleManager, IUserClaimsPrincipalFactory<SystemUser> claimsPrincipalFactory, IConfiguration configuration, IRepository repository)
         {
             _userManager = userManager;
             _roleManager = roleManager;
             _claimsPrincipalFactory = claimsPrincipalFactory;
             _configuration = configuration;
             _repository = repository;
+            _emailSender = emailSender;
+            _emailSettings = emailSettings.Value;
         }
 
         [HttpGet]
@@ -38,7 +47,18 @@ namespace BioProSystem.Controllers
         {
             return View();
         }
-
+        [HttpPost]
+        [Route("SendEmail")]
+        public async Task<IActionResult> SendTestEmail(EmailViewModel email)
+        {
+            var client = new SmtpClient(_emailSettings.SmtpServer, _emailSettings.SmtpPort)
+            {
+                Credentials = new NetworkCredential(_emailSettings.Username, _emailSettings.Password),
+                EnableSsl = true
+            };
+            await _emailSender.SendEmailAsync(email.Email, email.Emailheader, email.EmailContent);
+            return Ok("Email sent successfully");
+        }
 
         // POST: /Order/Add
         [HttpPost]
@@ -48,7 +68,11 @@ namespace BioProSystem.Controllers
         public async Task<IActionResult> Add(SystemOrderAddViewModel viewModel)
         {
             if (ModelState.IsValid)
-            {
+            { var CheckOrder=_repository.GetSystemOrderByIdAsync(viewModel.OrderId).Result;
+                if (CheckOrder != null)
+                {
+                    return BadRequest("Order Id Already exists");
+                }
                 try
                 {
 
@@ -63,7 +87,7 @@ namespace BioProSystem.Controllers
                         PriorityLevel = viewModel.PriorityLevel,
                         DueDate = viewModel.DueDate,
                         OrderTypeId = viewModel.OrderTypeId,
-                        OrderStatusId = viewModel.OrderStatusId,
+                        OrderStatusId = 1,
                         MouthArea=viewModel.MouthArea,
                         PatientMedicalAidNumber=viewModel.MedicalAidNumber
                                                 
@@ -140,8 +164,13 @@ namespace BioProSystem.Controllers
                     Dentist dentist=_repository.GetDentistdByIdAsync(viewModel.DentistId).Result;
                     dentist.SystemOrders.Add(newOrder);
                     _repository.Add(newOrder);
+
                     if (await _repository.SaveChangesAsync())
-                    {
+                    { EmailViewModel email=new EmailViewModel();
+                        email.Email = "bioprosystem717@gmail.com";
+                        email.Emailheader = "New " + orderdirection.Description + " ID:" + newOrder.OrderId;
+                        email.EmailContent = " Good Day Sir.\n Hope all is well.\n A new order is pending approval on the system.\n Please approve or reject at your earliest convenience";
+                        SendTestEmail(email);
                         return Ok(newOrder);
                     }
                     else
@@ -168,7 +197,7 @@ namespace BioProSystem.Controllers
         public async Task<IActionResult> Update(SystemOrderAddViewModel viewModel)
         {
             if (ModelState.IsValid)
-            {
+            { 
                 try
                 {
                     var editedOrder = _repository.GetSystemOrderByIdAsync(viewModel.OrderId).Result;
@@ -179,6 +208,7 @@ namespace BioProSystem.Controllers
                         editedOrder.EmergencyNumber = viewModel.EmergencyNumber;
                         editedOrder.SpecialRequirements = viewModel.SpecialRequirements;
                         editedOrder.DueDate = viewModel.DueDate;
+                        editedOrder.OrderStatusId = viewModel.OrderStatusId;
                         var newPatient = new Patient();
                          editedOrder.DentistId = viewModel.DentistId;
                         
@@ -449,8 +479,16 @@ namespace BioProSystem.Controllers
                     pendingOrders.OrderStatusId = 2;
                     OrderWorkflowTimeline timeline = _repository.GetOrdertimeFlowBySystemOrderId(orderId).Result;
                     List<Employee> employees = new List<Employee>();
-                    employees=_repository.AssignAvailableTechnicians(timeline.OrderDirectionId,pendingOrders.OrderId);
-                    foreach(Employee employee in employees)
+                    try
+                    {
+                        employees = _repository.AssignAvailableTechnicians(timeline.OrderDirectionId, pendingOrders.OrderId);
+                    }
+                    catch (Exception ex)
+                    {
+                        // Catch the exception thrown by AssignAvailableTechnicians and rethrow it
+                        return BadRequest(ex.Message);
+                    }
+                    foreach (Employee employee in employees)
                     {
                         employee.SystemOrders.Add(pendingOrders);
                         pendingOrders.Employees.Add(employee);

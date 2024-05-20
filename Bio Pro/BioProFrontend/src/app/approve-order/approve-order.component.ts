@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { OrderService } from '../services/order.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { error } from 'console';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-approve-order',
@@ -11,6 +13,7 @@ export class ApproveOrderComponent implements OnInit {
 
   constructor( private dataService: OrderService,private snackBar: MatSnackBar) {}
 pendingOrders:any[]=[]
+pendingOrdersData:any[]=[]
 
 
   ngOnInit(): void {
@@ -18,16 +21,25 @@ pendingOrders:any[]=[]
       (result: any[]) => {
           result.forEach((element) => {
             this.pendingOrders.push(element);
+            if(this.pendingOrders.length>0)
+            {this.pendingOrders.forEach(element => {
+              this.dataService.getAllOrderInfo(element.orderId).subscribe(results=>{
+                this.pendingOrdersData.push(results)
+                console.log(this.pendingOrdersData)
+                })
+
+            });}
+            
           });
       }
       ,(error) => {
-        this.showSnackBar()
+        this.showSnackBar("No pending orders found.")
       }
     );
     console.log( this.pendingOrders)
   }
-  showSnackBar() {
-    this.snackBar.open('No pending orders found.', 'Dismiss', {
+  showSnackBar(message:string) {
+    this.snackBar.open(message, 'Dismiss', {
       duration: 3000, 
     });
   }
@@ -35,9 +47,14 @@ pendingOrders:any[]=[]
   this.dataService.apporvePendingOrder(orderId).subscribe(result=>{
     console.log(result)
     location.reload()
-  })
+  },
+(error:HttpErrorResponse)=>
+{
+console.log(error)
+}
+)
   }
-  dissaproveOrder(orderId:number){
+  rejectOrder(orderId:number){
     this.dataService.dissaprovePendingOrders(orderId).subscribe(result=>{
       console.log(result)
       location.reload()

@@ -40,6 +40,7 @@ namespace BioProSystem.Models
         List<Employee> AssignAvailableTechnicians(int orderDirectionId, string systemOrderId);
         Task<OrderWorkflowTimeline> GetOrdertimeFlowBySystemOrderId(string systemOrderId);
         //Employee
+        Task<List<JobTitle>> GetJobTitlesAsync();
         Task<Employee[]> GetAllEmployeeAsync();
         Task<JobTitle> GetJobTitleByIdAsync(int id);
         Task<IEnumerable<Employee>> GetAllEmployeesAsync();
@@ -57,6 +58,7 @@ namespace BioProSystem.Models
 
         // New methods for EmployeeDailyHours
         Task CaptureEmployeeDailyHoursAsync(int employeeId, EmployeeDailyHours newDailyHours);
-
+        //Jacques
+        
     }
 }

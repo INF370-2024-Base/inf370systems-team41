@@ -25,6 +25,7 @@ import { CaptureEmployeeHoursComponent } from './capture-employee-hours/capture-
 import { AuthInterceptor } from './services/auth-interceptor';
 import { LoginComponent } from './login/login.component';
 import { EditOrderModalComponent } from './edit-order-modal/edit-order-modal.component';
+import { AddUserComponent } from './add-user/add-user.component';
 
 
 @NgModule({
@@ -38,7 +39,7 @@ import { EditOrderModalComponent } from './edit-order-modal/edit-order-modal.com
     AddDentistComponent,
     DentistProfileComponent,
     EmployeeProfileComponent,
-    CaptureEmployeeHoursComponent,LoginComponent,EditOrderModalComponent
+    CaptureEmployeeHoursComponent,LoginComponent,EditOrderModalComponent, AddUserComponent
   ],
   imports: [
     BrowserModule,

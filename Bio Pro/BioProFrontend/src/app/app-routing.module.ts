@@ -10,6 +10,7 @@ import { DentistProfileComponent } from './dentist-profile/dentist-profile.compo
 import { CaptureEmployeeHoursComponent } from './capture-employee-hours/capture-employee-hours.component';
 import { EmployeeProfileComponent } from './employee-profile/employee-profile.component';
 import { LoginComponent } from './login/login.component';
+import { AddUserComponent } from './add-user/add-user.component';
 
 
 const routes: Routes = [
@@ -26,6 +27,7 @@ const routes: Routes = [
   { path: 'Dentist', component:  DentistProfileComponent},
   { path: 'employee', component:  EmployeeProfileComponent},
   {path: 'login', component: LoginComponent}, 
+  {path: 'adduser', component: AddUserComponent}, 
   {path: '', redirectTo: 'login', pathMatch: 'full'},
 
 ];

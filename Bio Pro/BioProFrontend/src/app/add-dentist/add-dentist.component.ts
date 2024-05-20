@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { NgForm } from '@angular/forms'; // Import NgForm
+import { Form, FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms'; 
 import { Router } from '@angular/router';
 import { DataService } from '../services/data.service';
 import { Dentist } from '../shared/dentist';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { PhoneChecker } from '../validators/Validators';
+
 
 @Component({
   selector: 'app-add-dentist',
@@ -11,26 +13,38 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styleUrls: ['./add-dentist.component.scss']
 })
 export class AddDentistComponent implements OnInit {
-  addDentistAtt: Dentist = {
-    dentistId: 0,
-    lastName: '',
-    firstName: '',
-    contactDetail: '',
-    address: ''
-  };
 
+  addDentistForm:FormGroup
   constructor(
     private dataService: DataService, 
     private router: Router, 
-    private snackBar: MatSnackBar // Corrected constructor with MatSnackBar
-  ) { }
+    private snackBar: MatSnackBar, // Corrected constructor with MatSnackBar
+    private fb: FormBuilder
+  ) 
+  {this.addDentistForm = this.fb.group({
+    LastName: ['', Validators.required],
+    FirstName: ['', Validators.required],
+    ContactDetail:['',Validators.required],
+    Address:['',Validators.required]
+  }); }
 
   ngOnInit(): void {
   }
-
-  addDentist(form: NgForm) {
-    if (form.valid) {
-      this.dataService.addDentist(this.addDentistAtt).subscribe({
+dentist:Dentist={
+  dentistId:0,
+  lastName:"",
+  firstName:"",
+  contactDetail:"",
+  address:""
+}
+  addDentist() {
+    if (this.addDentistForm.valid) {
+      console.log(this.addDentistForm.value);
+      this.dentist.address=this.addDentistForm.value.Address
+      this.dentist.contactDetail=this.addDentistForm.value.ContactDetail
+      this.dentist.firstName=this.addDentistForm.value.FirstName
+      this.dentist.lastName=this.addDentistForm.value.LastName  
+      this.dataService.addDentist(this.dentist).subscribe({
         next: (dentist) => {
           this.router.navigate(['Dentist']);
           this.snackBar.open('Dentist added successfully!', 'Close', {
@@ -48,6 +62,8 @@ export class AddDentistComponent implements OnInit {
         }
       });
     }
+    else
+    this.snackBar.open("Not all fields are valid")
   }
 
   cancel() {

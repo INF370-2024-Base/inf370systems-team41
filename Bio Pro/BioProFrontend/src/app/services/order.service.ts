@@ -93,9 +93,36 @@ export class OrderService {
     return this.httpClient.put<number>(`${this.apiUrl}${endpoint}`,orderId);
   }
   dissaprovePendingOrders(orderId:number):Observable<number> {
-    const endpoint = `Api/ApprovePendingOrder/${orderId}`; // Updated endpoint
+    const endpoint = `Api/DissaprovePendingOrder/${orderId}`; // Updated endpoint
     return this.httpClient.put<number>(`${this.apiUrl}${endpoint}`,orderId);
   }
+  updateOrderAndDeliveryStatus(orderId: string, orderStatusId: number, deliveryStatusId: number): Observable<any> {
+    return this.httpClient.put(`${this.apiUrl}/Delivery/RecordOrderDelivery/`, { orderId, orderStatusId, deliveryStatusId });
+  }
+
+  searchDeliveryOrder(orderId: string): Observable<any> {
+    return this.httpClient.get(`${this.apiUrl}/Delivery/SearchDeliveryOrder/${orderId}`);
+  }
+
+  trackOrderDelivery(orderId: string): Observable<any> {
+    return this.httpClient.get(`${this.apiUrl}/Delivery/TrackOrderDelivery/${orderId}`);
+  }
+
+  getAllOrdersWithoutTimeline(): Observable<any[]> {
+    return this.httpClient.get<any[]>(`${this.apiUrl}/ProceduralTimeline/GetAllOrdersWithoutTimeline`);
+  }
+
+  addOrdersToTimeline(data: any): Observable<any> {
+    return this.httpClient.post<any>(`${this.apiUrl}/ProceduralTimeline/AddOrdersToTimeline`, data);
+}
+
+getOrderStatus(orderId: string): Observable<any> {
+  return this.httpClient.get<any>(`${this.apiUrl}/orders/${orderId}/status`);
+}
+
+getPendingSystemOrders(): Observable<any[]> {
+  return this.httpClient.get<any[]>(`${this.apiUrl}/Timeline/GetOrdersWithoutPendingStatus`);
+}
 }
 
 

@@ -18,7 +18,10 @@ export class OrdersComponent implements OnInit {
   ordersInfo:any[]=[];
   selectedOrder: any = null;
   showStatusModal: boolean = false;
+  selectedFilter:any
+  orderTypes:any[]=[]
   selectedOrderForStatus: any = null;
+  originalOrders:any[]=[]
   baseUrl: string ='https://localhost:44315/Api/';
   constructor(private dialog: MatDialog,private http: HttpClient,private dataservices:OrderService,private snackBar:MatSnackBar) { }
   private isDrawing: boolean = false;
@@ -42,7 +45,14 @@ export class OrdersComponent implements OnInit {
       switchMap((allOrders: any[]) => {
         if (Array.isArray(allOrders)) {
           this.orders = allOrders;
+          this.originalOrders=allOrders
+          this.dataservices.getOrderTypes().subscribe(results=>
+            {
+              this.orderTypes=results
+            }
+          )
           return forkJoin(this.orders.map(order => this.dataservices.getAllOrderInfo(order.orderId)));
+          
         } else {
           console.error('No orders found.');
           return of([]); // Empty observable
@@ -128,11 +138,13 @@ export class OrdersComponent implements OnInit {
               this.orders = [data]; 
               this.getOrderInfo()
               this.isDrawing = false;
+
             } else {
               this.ordersInfo=[]
               this.orders = [data]; 
               this.getOrderInfo() // Reset orders array if no data found
               this.isDrawing = false;
+  
             }
           },
           (error:HttpErrorResponse) => {
@@ -150,6 +162,8 @@ export class OrdersComponent implements OnInit {
   clearSeacrhOrders() {
     this.getOrdersAndInfo();
     this.orderId=""
+    this.selectedFilter=0
+    this.onFilterChange(null);
   }
   showSnackBar(Message:string) {
     this.snackBar.open(Message, 'Dismiss', {
@@ -159,6 +173,9 @@ export class OrdersComponent implements OnInit {
   onOrderIdChange(newOrderId: string) {
     if (newOrderId.trim() === '') {
       this.getOrdersAndInfo()
+      this.selectedFilter=0
+      this.onFilterChange(null);
+      
     } else {
       // Filter restaurants based on query
       this.orders = this.orders.filter((d) => d.orderId.toLowerCase().includes(newOrderId));
@@ -177,14 +194,7 @@ export class OrdersComponent implements OnInit {
   dialogRef.afterClosed().subscribe(result => {
     console.log(`Dialog result: ${result}`);
     this.closeModal();
-    
-  //  this.getOrdersAndInfo();
-  //    this.getOrderInfo();
-  //    this.isDrawing =false;
-    //  this.ngOnInit();
-    //  this.getOrderInfo();
      this.showSnackBar(result);
-    //  location.reload();
      setTimeout(() => {
       location.reload();
     }, 2000); 
@@ -224,7 +234,19 @@ export class OrdersComponent implements OnInit {
       );
     }
   }
+  onFilterChange(event: any)
+  {
+    console.log(this.selectedFilter)
+    if (this.selectedFilter == 0) {
+      this.orders=[...this.originalOrders]
+      this.getOrderInfo()
+    } else {
+      this.orders=[...this.originalOrders]
+      this.orders = this.orders.filter((d) => d.orderTypeId==this.selectedFilter);
+      this.getOrderInfo()
 
+    }
+  }
  
 }
 

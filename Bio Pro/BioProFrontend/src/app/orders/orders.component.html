@@ -6,6 +6,13 @@
       <mat-form-field class="search-field" style="flex-grow: 1;">
           <input matInput [(ngModel)]="orderId" placeholder="Enter Order ID" (ngModelChange)="onOrderIdChange($event)">
       </mat-form-field>
+      <mat-form-field class="filter-field">
+        <mat-label>Filter By</mat-label>
+        <mat-select [(ngModel)]="selectedFilter" (selectionChange)="onFilterChange($event)">
+            <mat-option value="0">No Filter</mat-option>
+            <mat-option *ngFor="let ordertype of orderTypes" [value]="ordertype.orderTypeId">{{ ordertype.description }}</mat-option>
+        </mat-select>
+    </mat-form-field>
       <button mat-raised-button color="primary" style="width: 100px; height: 40px; display: flex; justify-content: center; align-items: center;" (click)="searchOrders()">Search</button>
     <button mat-raised-button color="warn" style="width: 100px; height: 40px; display: flex; justify-content: center; align-items: center;" (click)="clearSeacrhOrders()">Clear</button>  </div>
   

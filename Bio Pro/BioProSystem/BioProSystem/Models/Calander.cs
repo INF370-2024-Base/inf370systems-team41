@@ -9,7 +9,7 @@ public partial class Calander
     [Key]
     public int CalanderId { get; set; }
 
-    public int TimelineId { get; set; }
+    public int? TimelineId { get; set; }
 
     [Required]
 

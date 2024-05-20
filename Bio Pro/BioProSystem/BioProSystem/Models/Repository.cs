@@ -52,6 +52,7 @@ namespace BioProSystem.Models
                 else
                 {
                     throw new Exception("No employees found for " + orderDirectionStep.StateDescription);
+
                 }
             }
 
@@ -238,6 +239,10 @@ namespace BioProSystem.Models
         {
             return await _appDbContext.JobTitles.FindAsync(id);
         }
+        public async Task<List<JobTitle>> GetJobTitlesAsync()
+        {
+            return await _appDbContext.JobTitles.ToListAsync();
+        }
         public async Task<Employee> GetEmployeeByIdAsync(int id)
         {
             return await _appDbContext.Employees.FindAsync(id);
@@ -295,6 +300,7 @@ namespace BioProSystem.Models
             return await query.ToArrayAsync();
         }
 
+    
         public async Task<Dentist> GetDentistAsync(int dentistId)
         {
             IQueryable<Dentist> query = _appDbContext.Dentists.Where(d => d.DentistId == dentistId);
@@ -332,6 +338,7 @@ namespace BioProSystem.Models
 
             await _appDbContext.SaveChangesAsync();
         }
+
 
     }
 }

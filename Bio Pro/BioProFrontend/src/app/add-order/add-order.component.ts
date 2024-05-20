@@ -5,6 +5,9 @@ import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { SystemOrderViewModel } from '../shared/SystemOrderViewModel ';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { DateValidator } from '../validators/Validators';
+import { PhoneChecker } from '../validators/Validators';
+import { error } from 'console';
 
 @Component({
   selector: 'app-add-order',
@@ -39,7 +42,7 @@ export class AddOrderComponent implements OnInit {
     private formBuilder: FormBuilder,private snackBar:MatSnackBar
   ) {
     this.addForm = this.formBuilder.group({
-      OrderId: ['', Validators.required],
+      OrderId: ['', [Validators.required,Validators.maxLength(7),Validators.minLength(7)]],
       DentistId: ['', Validators.required],
       OrderDate: ['', Validators.required],
       PatientName: ['', Validators.required],
@@ -49,15 +52,10 @@ export class AddOrderComponent implements OnInit {
       OrderDirectionId: ['', Validators.required],
       PriorityLevel: ['', Validators.required],
       OrderTypeId: ['', Validators.required], // Ensure OrderTypeId is included in the FormGroup
-      OrderStatusId: ['', Validators.required],
-      // X: ['', Validators.required],
-      // Y: ['', Validators.required],
-      // Width: ['', Validators.required],
-      // Height: ['', Validators.required],
-      EmergencyNumber: ['', [Validators.required, Validators.minLength(10)]],
+      EmergencyNumber: ['', [Validators.required,PhoneChecker.SouthAfricanPhoneNumberValidator()]],
       SpecialRequirements: [''],
       SelectedTeethShadeIds: [[]],
-      DueDate: ['', Validators.required],
+      DueDate: ['', [Validators.required,DateValidator.dateGreaterThanToday()]],
       SelectedAreas: [[]] // Initialize SelectedAreas as an empty array
     });
   }
@@ -268,33 +266,41 @@ export class AddOrderComponent implements OnInit {
           }
           else{
             if (this.addForm.valid) {
-              const formData = this.addForm.value;
-              const viewModel = new SystemOrderViewModel;
-              viewModel.OrderId = formData.OrderId;
-              viewModel.DentistId = formData.DentistId;
-              viewModel.OrderDate = formData.OrderDate;
-              viewModel.PatientName = formData.PatientName;
-              viewModel.PatientSurname = formData.PatientSurname;
-              viewModel.MedicalAidId = formData.MedicalAidId;
-              viewModel.MedicalAidNumber = formData.MedicalAidNumber;
-              viewModel.OrderDirectionId = formData.OrderDirectionId;
-              viewModel.OrderTypeId = formData.OrderTypeId;
-            viewModel.OrderStatusId = formData.OrderStatusId;
-            viewModel.EmergencyNumber = formData.EmergencyNumber;
-            viewModel.SpecialRequirements = formData.SpecialRequirements;
-            viewModel.DueDate = formData.DueDate;
-            viewModel.PriorityLevel = formData.PriorityLevel;
-            viewModel.TeethShadesIds = this.selectedTeethShadeIds; // Assuming this is an array of IDs
-            viewModel.SeletedAreasIds = this.selectedAreas; // Assuming this is an array of IDs
-            viewModel.MouthArea = this.selectedAreas.toString(); // Convert to string if necessary
-        
-              console.log(viewModel)
-              this.dataService.addOrder(viewModel).subscribe(
-                () => {
-                  console.log('SystemOrder added successfully!');
-                  this.router.navigate(['/orders']);
-                },
-              )
+          
+                    
+                    const formData = this.addForm.value;
+                    const viewModel = new SystemOrderViewModel;
+                    viewModel.OrderId = formData.OrderId;
+                    viewModel.DentistId = formData.DentistId;
+                    viewModel.OrderDate = formData.OrderDate;
+                    viewModel.PatientName = formData.PatientName;
+                    viewModel.PatientSurname = formData.PatientSurname;
+                    viewModel.MedicalAidId = formData.MedicalAidId;
+                    viewModel.MedicalAidNumber = formData.MedicalAidNumber;
+                    viewModel.OrderDirectionId = formData.OrderDirectionId;
+                    viewModel.OrderTypeId = formData.OrderTypeId;
+                    viewModel.OrderStatusId = 1;
+                    viewModel.EmergencyNumber = formData.EmergencyNumber;
+                    viewModel.SpecialRequirements = formData.SpecialRequirements;
+                    viewModel.DueDate = formData.DueDate;
+                    viewModel.PriorityLevel = formData.PriorityLevel;
+                    viewModel.TeethShadesIds = this.selectedTeethShadeIds; // Assuming this is an array of IDs
+                    viewModel.SeletedAreasIds = this.selectedAreas; // Assuming this is an array of IDs
+                    viewModel.MouthArea = this.selectedAreas.toString(); // Convert to string if necessary
+                
+                      console.log(viewModel)
+                      this.dataService.addOrder(viewModel).subscribe(
+                        (result) => {
+                          console.log('SystemOrder added successfully!');
+                          this.router.navigate(['/orders']);
+                        },
+                      (error:HttpErrorResponse)=>
+                      {
+                        this.showSnackBar(error.error)
+                      }
+                      )
+                                   
+                             
             }
           
             else{
@@ -308,8 +314,6 @@ export class AddOrderComponent implements OnInit {
             }
           }
       }
-   
-    
   }
   
   cancel(): void {

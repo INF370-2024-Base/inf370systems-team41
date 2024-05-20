@@ -170,6 +170,21 @@ namespace BioProSystem.Controllers
                 return StatusCode(500, "An error occurred while capturing daily hours.");
             }
         }
+        [HttpGet]
+        [Route("getjobtitles")]
+        public async Task<ActionResult<List<JobTitle>>> GetJobtitles()
+        {
+             var result = await _repository.GetJobTitlesAsync();
+                if(result!=null)
+                { return Ok(result); }
+                else
+                {
+                    return NotFound("No Jobtitiles found");
+                }
+
+            
+
+        }
 
     }
 }

@@ -1,6 +1,6 @@
 // dentist.ts
 export interface Dentist {
-    dentistId: number;
+  dentistId: number;
     lastName: string;
     firstName: string;
     contactDetail: string;

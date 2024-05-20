@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Employee } from '../shared/employee';
 import { DailyHours } from '../shared/dailyhours';
+import { addEmployee } from '../shared/addEmployee';
 
 @Injectable({
   providedIn: 'root'
@@ -19,6 +20,13 @@ export class EmployeeService {
 
   searchEmployees(searchString: string): Observable<Employee[]> {
     return this.httpClient.get<Employee[]>(`${this.apiUrl}/SearchEmployees?searchString=${searchString}`);
+  }
+  getJobtitles(): Observable<any[]> {
+    return this.httpClient.get<any[]>(`${this.apiUrl}/getjobtitles`);
+  }
+  addEmployee(employee: Employee): Observable<Employee> {
+    return this.httpClient.post<Employee>(`${this.apiUrl}/AddEmployee`, employee);
+    
   }
 
   editEmployee(id: number, employee: Employee): Observable<Employee> {

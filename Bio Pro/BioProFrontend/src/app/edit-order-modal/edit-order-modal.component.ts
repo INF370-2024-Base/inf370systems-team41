@@ -269,10 +269,6 @@ export class EditOrderModalComponent implements OnInit {
       });
     }
   }
-  
-  
- 
-
   cancel(): void {
     console.log('Cancel function executed'); 
     this.dialogRef.close('Order update canceled');

@@ -47,7 +47,7 @@ namespace BioProSystem.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CalanderId"));
 
-                    b.Property<int>("TimelineId")
+                    b.Property<int?>("TimelineId")
                         .HasColumnType("int");
 
                     b.Property<string>("Title")

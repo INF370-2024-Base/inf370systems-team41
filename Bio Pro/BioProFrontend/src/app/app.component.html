@@ -25,6 +25,10 @@
           <mat-icon>person</mat-icon> <!-- Icon for profile -->
           All Employees
         </a>
+        <a mat-list-item class="nav-link" routerLink="/adduser" (click)="isSidenavOpen = !isSidenavOpen">
+          <mat-icon>add_circle_outline</mat-icon> <!-- Icon for dentist profile -->
+          Add User
+        </a>
         <ng-container *ngIf="isEmployeeMenuOpen">
           <a mat-list-item class="sub-nav-link" routerLink="/captureEmployeeDailyHours" (click)="isSidenavOpen = !isSidenavOpen">
             <mat-icon>schedule</mat-icon> <!-- Icon for schedule/hours -->

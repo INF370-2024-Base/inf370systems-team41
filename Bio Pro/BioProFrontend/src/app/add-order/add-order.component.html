@@ -9,7 +9,7 @@
           <input required type="text" formControlName="OrderId" class="form-control" id="OrderId" placeholder="Enter Order ID">
           
         </div>
-        <!-- <div *ngIf="hasError('OrderId', 'required')" class="text-danger">Order ID is required</div> -->
+        <div *ngIf="addForm.get('OrderId')?.invalid" class="text-danger">Order ID is required and must be 7 characters long</div>
     
        <!-- Dentist Selection Dropdown -->
        <div class="form-group">
@@ -20,14 +20,14 @@
           </option>
         </select>
       </div>
-      <!-- <div *ngIf="hasError('DentistId', 'required')" class="text-danger">Dentist is required</div> -->
+      <div *ngIf="hasError('DentistId', 'required')" class="text-danger">Dentist is required</div>
 
         <!-- Order Date Input -->
         <div class="form-group">
           <label for="OrderDate">Order Date:</label>
           <input required type="date" formControlName="OrderDate" class="form-control" id="OrderDate" placeholder="Select Order Date">
         </div>
-        <!-- <div *ngIf="hasError('OrderDate', 'required')" class="text-danger">Order Date is required</div> -->
+        <div *ngIf="hasError('OrderDate', 'required')" class="text-danger">Order Date is required</div>
     
         <!-- Medical Aid Selection Dropdown -->
         <div class="form-group">
@@ -38,22 +38,22 @@
                 {{ medicalAid.medicalAidId }} - {{ medicalAid.medicalAidName }}
               </option>
             </select>
-            <!-- <div *ngIf="hasError('MedicalAidId', 'required')" class="text-danger">Medical aid is required</div> -->
+            <div *ngIf="hasError('MedicalAidId', 'required')" class="text-danger">Medical aid is required</div>
           </div>
           <div class="form-group">
             <label for="PatientName">Patient Name:</label>
             <input required type="text" formControlName="PatientName" class="form-control" id="PatientName" placeholder="Enter patient name">
-            <!-- <div *ngIf="hasError('PatientName', 'required')" class="text-danger">Patient name is required</div> -->
+            <div *ngIf="hasError('PatientName', 'required')" class="text-danger">Patient name is required</div>
           </div>
           <div class="form-group">
             <label for="PatientSurname">Patient Surname:</label>
             <input required type="text" formControlName="PatientSurname" class="form-control" id="PatientSurname" placeholder="Enter patient surname">
-            <!-- <div *ngIf="hasError('PatientSurname', 'required')" class="text-danger">Patient surname is required</div> -->
+            <div *ngIf="hasError('PatientSurname', 'required')" class="text-danger">Patient surname is required</div>
           </div>
           <div class="form-group">
             <label for="MedicalAidNumber">Medical Aid Number:</label>
             <input required type="text" formControlName="MedicalAidNumber" class="form-control" id="MedicalAidNumber" placeholder="Enter medical aid number">
-            <!-- <div *ngIf="hasError('MedicalAidNumber', 'required')" class="text-danger">Medical aid is required</div> -->
+            <div *ngIf="hasError('MedicalAidNumber', 'required')" class="text-danger">Medical aid is required</div>
           </div>
     
        <!-- Order Type Selection Dropdown -->
@@ -64,20 +64,8 @@
             {{ type.description }}
           </option>
         </select>
-        <!-- <div *ngIf="hasError('OrderTypeId', 'required')" class="text-danger">Order Type is required</div> -->
-      </div>
-      
-      <!-- Order Status Selection Dropdown -->
-      <div class="form-group">
-        <label for="OrderStatusId">Order Status:</label>
-        <select formControlName="OrderStatusId" class="form-control" id="OrderStatusId" required>
-          <option *ngFor="let status of orderStatus" [ngValue]="status.orderStatusId">
-            {{ status.description }}
-          </option>
-        </select>
-        <!-- <div *ngIf="hasError('OrderStatusId', 'required')" class="text-danger">Order Status is required</div> -->
-      </div>
-      
+        <div *ngIf="hasError('OrderTypeId', 'required')" class="text-danger">Order Type is required</div>
+      </div>      
       <!-- Order Direction Selection Dropdown -->
       <div class="form-group">
         <label for="OrderDirectionId">Order Direction:</label>
@@ -86,7 +74,7 @@
             {{ direction.description }} {{direction.instructions}}
           </option>
         </select>
-        <!-- <div *ngIf="hasError('OrderDirectionId', 'required')" class="text-danger">Order Direction is required</div> -->
+        <div *ngIf="hasError('OrderDirectionId', 'required')" class="text-danger">Order Direction is required</div>
       </div>
       
       <div class="form-group">
@@ -95,7 +83,7 @@
           <option disabled selected value="">Select Priority Level</option>
           <option *ngFor="let level of priorityLevels" [value]="level.value">{{ level.label }}</option>
         </select>
-        <!-- <div *ngIf="hasError('PriorityLevel', 'required')" class="text-danger">Priority Level is required</div> -->
+        <div *ngIf="hasError('PriorityLevel', 'required')" class="text-danger">Priority Level is required</div>
       </div>
       
 
@@ -113,7 +101,7 @@
           </div>
         </div>
       </div>
-      <!-- <div *ngIf="selectedAreas.length == 0" class="text-danger">Area is required</div> -->
+      <div *ngIf="selectedAreas.length == 0" class="text-danger">Area is required</div>
       <div class="color-chart">
   <h3>Select Teeth Shades</h3>
   <div class="shade-container" style="display: flex;
@@ -137,19 +125,18 @@
     </div>
   </div>
 </div>
-<!-- <div *ngIf="selectedTeethShadeIds.length == 0" class="text-danger">Theeth Shade is required</div> -->
+<div *ngIf="selectedTeethShadeIds.length == 0" class="text-danger">Theeth Shade is required</div>
       <!-- Additional Form Controls -->
       <div class="form-group">
         <label for="EmergencyNumber">Emergency Number:</label>
         <input required type="text" formControlName="EmergencyNumber" class="form-control" id="EmergencyNumber" placeholder="Enter Emergency Contact Number">
-        <!-- <div *ngIf="hasError('EmergencyNumber', 'required')" class="text-danger">Emergency Number is required</div> -->
-
+        <div *ngIf="addForm.get('EmergencyNumber')?.invalid" class="text-danger">Emergency Number is required and must be valid length</div>
       </div>
       
       <div class="form-group">
         <label for="SpecialRequirements">Special Requirements:</label>
         <textarea formControlName="SpecialRequirements" class="form-control" id="SpecialRequirements" placeholder="Enter any special requirements" required></textarea>        
-        <!-- <div *ngIf="hasError('SpecialRequirements', 'required')" class="text-danger">Special Requirements is required</div> -->
+        <div *ngIf="hasError('SpecialRequirements', 'required')" class="text-danger">Special Requirements is required</div>
 
       </div>
 
@@ -157,7 +144,7 @@
       <div class="form-group">
         <label for="DueDate">Due Date:</label>
         <input type="date" formControlName="DueDate" class="form-control" id="DueDate" placeholder="Select Due Date">  
-        <!-- <div *ngIf="hasError('DueDate', 'required')" class="text-danger">Due Date is required</div> -->
+        <div *ngIf="addForm.get('DueDate')?.invalid" class="text-danger">Due Date is required and must be a future date </div>
       </div>
       <!-- Submit and Cancel Buttons -->
       <button type="submit" class="btn btn-primary">Submit</button>
@@ -169,6 +156,5 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/zone.js/0.8.26/zone.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.8/hammer.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/reflect-metadata/0.1.10/Reflect.js"></script>
-  <!-- Angular Material Scripts -->
   <script src="https://cdn.jsdelivr.net/npm/@angular/material/bundles/material.umd.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@angular/cdk/bundles/cdk.umd.js"></script>

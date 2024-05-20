@@ -22,7 +22,7 @@
                           <span style="font-style: italic; color: #999;">Select a job title</span>
                           <select class="form-control" id="jobTitle" name="jobTitle" [(ngModel)]="addEmployeeAtt.JobTitleId" required>
                               <!-- <option value="" disabled selected>Select a job title</option> -->
-                              <option *ngFor="let title of jobTitles" [value]="title.id">{{ title.title }}</option>
+                              <option *ngFor="let title of jobTitles" [value]="title.id">{{ title.titleName }}</option>
                           </select>
                       </div>                                
                     </div>                    
