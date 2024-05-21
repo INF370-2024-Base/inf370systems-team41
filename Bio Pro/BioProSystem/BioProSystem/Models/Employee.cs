@@ -31,6 +31,6 @@ public partial class Employee
 
     public virtual ICollection<SystemOrder> SystemOrders { get; set; } = new List<SystemOrder>();
     public virtual ICollection<EmployeeDailyHours> EmployeeDailyHours { get; set; } = new List<EmployeeDailyHours>();
-
+    public virtual ICollection<SystemOrderSteps> SystemOrderSteps { get; set; } = new List<SystemOrderSteps>();
     public virtual SystemUser SystemUser { get; set; } = null!;
 }

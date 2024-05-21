@@ -33,6 +33,7 @@ export class AddOrderComponent implements OnInit {
   selectedIndices:number[] = [];
   areas:any[] = [];
   addForm!: FormGroup;
+  orderdirection:any
 
   @ViewChild('imageCanvas', { static: true }) canvasRef!: ElementRef<HTMLCanvasElement>; 
   constructor(
@@ -224,7 +225,17 @@ export class AddOrderComponent implements OnInit {
       }
     );
   }
-
+  getOrderDirection(event: any): void {
+    const selectedOrderDirectionId = event.target.value;
+    console.log('Selected Order Direction ID:', selectedOrderDirectionId);
+    this.dataService.getOrderDirectionById(selectedOrderDirectionId).subscribe(Result=>{
+      this.orderdirection=Result
+      console.log(this.orderdirection)
+    })
+   
+  
+    // Add your logic here to handle the selected order direction
+  }
   loadOrderDirections(): void {
     this.dataService.getOrderDirections().subscribe(
       (data: any[]) => {
@@ -287,11 +298,21 @@ export class AddOrderComponent implements OnInit {
                     viewModel.TeethShadesIds = this.selectedTeethShadeIds; // Assuming this is an array of IDs
                     viewModel.SeletedAreasIds = this.selectedAreas; // Assuming this is an array of IDs
                     viewModel.MouthArea = this.selectedAreas.toString(); // Convert to string if necessary
-                
+                const today=new Date()
                       console.log(viewModel)
                       this.dataService.addOrder(viewModel).subscribe(
                         (result) => {
                           console.log('SystemOrder added successfully!');
+                          const dueDate = new Date(viewModel.DueDate);
+
+                          // Calculate the adjusted date by subtracting the estimated duration
+                          const adjustedDueDate = new Date(dueDate);
+                          adjustedDueDate.setDate(dueDate.getDate() - this.orderdirection.estimatedDurationInDays);
+
+                          // Compare the adjusted due date with today
+                          if (adjustedDueDate < today) {
+                            alert("Due dates will not be autofilled on approval");
+                         }
                           this.router.navigate(['/orders']);
                         },
                       (error:HttpErrorResponse)=>

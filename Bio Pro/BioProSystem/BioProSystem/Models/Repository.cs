@@ -37,17 +37,61 @@ namespace BioProSystem.Models
                 .ToList();  
 
             var orderDirectionSteps = _appDbContext.OrderDirectionStates.Where(o => o.OrderDirectionsId == orderDirectionId).ToList(); 
+            
            OrderWorkflowTimeline timeline = GetOrdertimeFlowBySystemOrderId(systemOrderId).Result;
             var assignedEmployees = new List<Employee>();
+            var systemorder=GetSystemOrderByIdAsync(systemOrderId).Result;
+            bool tooLate = false;
 
+            int estimatedDays = GetOrderDirectionById(orderDirectionId).Result.EstimatedDurationInDays;
+            if (systemorder.DueDate.AddDays(-1 * estimatedDays)<DateTime.Now)
+            {
+                tooLate = true;
+            }
             foreach (var orderDirectionStep in orderDirectionSteps)
             {
                 var employee = availableEmployees.Where(e => e.JobTitleId == orderDirectionStep.JobTitleId).OrderBy(e => e.SystemOrders.Count(so => so.OrderStatusId == 2)).FirstOrDefault();
-
+                var newStep = new SystemOrderSteps();
+                int stepcount = GetSystemOrderByIdAsync(systemOrderId).Result.SystemOrderSteps.Count+1;
+               
+                
                 if (employee != null)
                 {
                     timeline.EmployeeeOrderDetails += employee.FirstName + " " + employee.LastName + "assigned to step:" + orderDirectionStep.StateDescription+".";
                     assignedEmployees.Add(employee);
+                    newStep.Employee = employee;
+                    newStep.SystemOrderId=systemOrderId;
+                    if (stepcount == 1)
+                    {
+                        newStep.IsCurrentStep = true;
+                    }
+                    if (tooLate)
+                    {
+
+                    }
+                    else 
+                    {
+
+                        if (stepcount == 1)
+                        {
+                            newStep.StartDateForStep = DateTime.Now;
+                            newStep.DueDateForStep = GetSystemOrderByIdAsync(systemOrderId).Result.DueDate.AddDays((-1 * estimatedDays) + estimatedDays * (double)orderDirectionStep.Ratio - 1);
+                        }
+                        else
+                        {
+                            newStep.StartDateForStep = GetSystemOrderByIdAsync(systemOrderId).Result.SystemOrderSteps.ToList()[stepcount - 2].DueDateForStep;
+                            if (GetSystemOrderByIdAsync(systemOrderId).Result.SystemOrderSteps.ToList()[stepcount - 2].DueDateForStep.HasValue)
+                            {
+                                newStep.DueDateForStep = GetSystemOrderByIdAsync(systemOrderId).Result.SystemOrderSteps.ToList()[stepcount - 2].DueDateForStep.Value.AddDays(estimatedDays * (double)orderDirectionStep.Ratio);
+                            }
+                        }
+                    }
+                   
+                    newStep.Description = orderDirectionStep.StateDescription;
+                    newStep.EmployeeId=employee.EmployeeId;
+                    newStep.SystemOrderId=systemOrderId;
+                    systemorder.SystemOrderSteps.Add(newStep);
+                    employee.SystemOrderSteps.Add(newStep);
                 }
                 else
                 {
@@ -196,7 +240,7 @@ namespace BioProSystem.Models
 
         public async Task<SystemOrder> GetSystemOrderByIdAsync(string orderId)
         {
-            return await _appDbContext.SystemOrders.Include(s=>s.TeethShades).Include(s=>s.SelectedAreas).FirstOrDefaultAsync(o => o.OrderId == orderId);
+            return await _appDbContext.SystemOrders.Include(s=>s.TeethShades).Include(s=>s.SelectedAreas).Include(s=>s.SystemOrderSteps).Include(s=>s.OrderWorkflowTimeline).FirstOrDefaultAsync(o => o.OrderId == orderId);
         }
         public async Task<OrderDirection> GetOrderDirectionById(int orderDirectionId)
         {

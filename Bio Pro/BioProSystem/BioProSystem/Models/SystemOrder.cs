@@ -40,5 +40,6 @@ public partial class SystemOrder
     public virtual OrderStatus? OrderStatus { get; set; } = null!; //
     public virtual OrderType? OrderType { get; set; } = null!; //
     public virtual OrderWorkflowTimeline? OrderWorkflowTimeline { get; set; } = null!; //
+    public virtual ICollection<SystemOrderSteps> SystemOrderSteps { get; set; } = new List<SystemOrderSteps>();
 
 }

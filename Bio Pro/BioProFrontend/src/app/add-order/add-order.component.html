@@ -69,13 +69,13 @@
       <!-- Order Direction Selection Dropdown -->
       <div class="form-group">
         <label for="OrderDirectionId">Order Direction:</label>
-        <select formControlName="OrderDirectionId" class="form-control" id="OrderDirectionId" required>
-          <option *ngFor="let direction of orderDirections" [ngValue]="direction.orderDirectionId">
-            {{ direction.description }} {{direction.instructions}}
-          </option>
+        <select formControlName="OrderDirectionId" class="form-control" id="OrderDirectionId" (change)="getOrderDirection($event)" required>
+            <option *ngFor="let direction of orderDirections" [value]="direction.orderDirectionId">
+                {{ direction.description }} {{ direction.instructions }}
+            </option>
         </select>
         <div *ngIf="hasError('OrderDirectionId', 'required')" class="text-danger">Order Direction is required</div>
-      </div>
+    </div>
       
       <div class="form-group">
         <label for="PriorityLevel">Priority Level:</label>

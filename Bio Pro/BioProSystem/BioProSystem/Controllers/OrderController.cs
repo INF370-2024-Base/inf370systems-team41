@@ -321,6 +321,23 @@ namespace BioProSystem.Controllers
                 return StatusCode(500, $"Internal Server Error: {ex.Message}");
             }
         }
+        [HttpGet("GetOrderDirectionById/{OrderDirectionId}")]
+        public async Task<IActionResult> GetOrderDirectionByIdAsync(int OrderDirectionId)
+        {
+            try
+            {
+                var result = await _repository.GetOrderDirectionById(OrderDirectionId);
+
+                if (result == null)
+                    return NotFound("No order found");
+
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal Server Error: {ex.Message}");
+            }
+        }
         [HttpGet("GetAllOrders")]
         public async Task<IActionResult> GetAllSystemOrdersAsync()
         {

@@ -4,6 +4,7 @@ using BioProSystem.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BioProSystem.Migrations
 {
     [DbContext(typeof(DentalProSystemTestDBContext))]
-    partial class DentalProSystemTestDBContextModelSnapshot : ModelSnapshot
+    [Migration("20240521164015_optionalDueDate")]
+    partial class optionalDueDate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -902,9 +905,6 @@ namespace BioProSystem.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SysteorderStepId"));
 
-                    b.Property<bool>("Completed")
-                        .HasColumnType("bit");
-
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -914,9 +914,6 @@ namespace BioProSystem.Migrations
 
                     b.Property<int>("EmployeeId")
                         .HasColumnType("int");
-
-                    b.Property<bool>("IsCurrentStep")
-                        .HasColumnType("bit");
 
                     b.Property<DateTime?>("StartDateForStep")
                         .HasColumnType("datetime2");

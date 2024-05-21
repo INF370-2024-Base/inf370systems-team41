@@ -51,6 +51,9 @@ export class OrderService {
   getAllOrderById(orderId: string): Observable<any> {
     return this.httpClient.get<any>(`${this.apiUrl}Api/GetOrdersById/${orderId}`);
   }
+  getOrderDirectionById(orderdirectionId:number): Observable<any>{
+    return this.httpClient.get<any>(`${this.apiUrl}Api/GetOrderDirectionById/${orderdirectionId}`);
+  }
 
   getDentists(): Observable<any[]> {
     const endpoint = 'api/api/dentists'; // Update with correct endpoint for fetching dentists
@@ -79,6 +82,8 @@ export class OrderService {
     const endpoint = 'api/api/orderDirections'; // Correct endpoint for fetching order directions
     return this.httpClient.get<any[]>(`${this.apiUrl}${endpoint}`);
   }
+  
+  
 
   getTeethShades(): Observable<any[]> {
     const endpoint = 'api/api/teethshades'; // Updated endpoint
