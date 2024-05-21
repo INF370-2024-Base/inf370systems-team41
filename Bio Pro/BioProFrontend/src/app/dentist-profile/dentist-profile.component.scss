@@ -3,7 +3,8 @@ body {
   font-family: 'Roboto', sans-serif; /* Roboto font */
   color: #333; /* Dark text color */
   padding: 20px; /* Add some padding */
-  overflow: hidden; /* Hide overflowing content */
+  overflow-x: hidden; /* Hide horizontal overflow */
+    overflow-y: auto; //* Hide overflowing content */
 }
 
 /* Animated background gradients */
@@ -136,4 +137,23 @@ body {
 .btn-outline-primary:hover {
   background-color: #007bff; /* Change background color on hover */
   color: #fff; /* Change text color on hover */
+}
+@media only screen and (max-width: 768px) {
+  .container {
+    padding: 20px;
+  }
+
+  .example-card {
+    width: calc(50% - 20px); /* Adjust card width for smaller screens */
+  }
+}
+
+@media only screen and (max-width: 576px) {
+  .container {
+    padding: 15px;
+  }
+
+  .example-card {
+    width: calc(100% - 20px); /* Adjust card width for even smaller screens */
+  }
 }
