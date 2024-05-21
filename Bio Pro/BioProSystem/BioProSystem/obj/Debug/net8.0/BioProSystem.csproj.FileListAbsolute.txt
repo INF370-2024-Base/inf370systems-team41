@@ -389,3 +389,6 @@ C:\Users\piete\Local Storage\Uni\370\Project repo\inf370systems-team41\Bio Pro\B
 C:\Users\piete\Local Storage\Uni\370\Project repo\inf370systems-team41\Bio Pro\BioProSystem\BioProSystem\bin\Debug\net8.0\BouncyCastle.Cryptography.dll
 C:\Users\piete\Local Storage\Uni\370\Project repo\inf370systems-team41\Bio Pro\BioProSystem\BioProSystem\bin\Debug\net8.0\MailKit.dll
 C:\Users\piete\Local Storage\Uni\370\Project repo\inf370systems-team41\Bio Pro\BioProSystem\BioProSystem\bin\Debug\net8.0\MimeKit.dll
+C:\Users\leze7\Desktop\UNI 2024\INF 370\Project\A2\Bio Pro\BioProSystem\BioProSystem\bin\Debug\net8.0\BouncyCastle.Cryptography.dll
+C:\Users\leze7\Desktop\UNI 2024\INF 370\Project\A2\Bio Pro\BioProSystem\BioProSystem\bin\Debug\net8.0\MailKit.dll
+C:\Users\leze7\Desktop\UNI 2024\INF 370\Project\A2\Bio Pro\BioProSystem\BioProSystem\bin\Debug\net8.0\MimeKit.dll

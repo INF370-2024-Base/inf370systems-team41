@@ -3,7 +3,7 @@ body {
   font-family: 'Roboto', sans-serif; /* Playful font */
   color: #333; /* Dark text color */
   padding: 20px; /* Add some padding */
-  overflow: hidden; /* Hide overflowing content */
+  overflow-y: auto; /* Allow vertical scrolling */
 }
 
 /* Animated background gradients */
@@ -39,7 +39,7 @@ h1 {
   padding: 10px; /* Add padding */
   border: 1px solid #ccc; /* Add border */
   border-radius: 5px; /* Add rounded corners */
-  margin-top: 5px; /* Add margin to the top */
+  margin-top: 10px; /* Add margin to the top */
 }
 
 .btn {
@@ -47,6 +47,7 @@ h1 {
   padding: 10px 20px; /* Add padding */
   border-radius: 5px; /* Add rounded corners */
   cursor: pointer; /* Set cursor to pointer */
+  margin-top: 20px; /* Add margin to the top */
 }
 
 .btn-primary {
