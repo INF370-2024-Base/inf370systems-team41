@@ -53,6 +53,7 @@ email:any
     this.deliveryService.createdelivery(delivery).subscribe(
       result=>{
       console.log(result)
+      location.reload()
       },
       (error:HttpErrorResponse)=>
         {

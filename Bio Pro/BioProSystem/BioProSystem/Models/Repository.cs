@@ -168,7 +168,7 @@ namespace BioProSystem.Models
         }
         public async Task<List<SystemOrder>> GetFinishedSystemWithoutDeliveriesOrders()
         {
-            IQueryable<SystemOrder> query = _appDbContext.SystemOrders.Where(o => o.OrderStatusId == 3).Include(o=>o.Deliveries).Where(o=>o.Deliveries==null);
+            IQueryable<SystemOrder> query = _appDbContext.SystemOrders.Where(o => o.OrderStatusId == 3).Include(o=>o.Deliveries).Where(o=>o.Deliveries.Count<1);
             return await query.ToListAsync();
         }
         public async Task<List<SystemOrder>> GetOrdersInProgressAndNoTimeline()
