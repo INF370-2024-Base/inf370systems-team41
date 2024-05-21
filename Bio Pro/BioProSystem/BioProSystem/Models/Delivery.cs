@@ -13,13 +13,13 @@ public partial class Delivery
     public string SystemOrderId { get; set; }
     [Required]
 
-    public string EmployeeId { get; set; }
+    public int EmployeeId { get; set; }
+
+
+    public DateTime? DeliveryDate { get; set; }
     [Required]
 
-    public DateTime DeliveryDate { get; set; }
-    [Required]
-
-    public string DeliveryStatusId { get; set; }
+    public int DeliveryStatusId { get; set; }
 
     public virtual DeliveryStatus DeliveryStatus { get; set; } = null!;
 

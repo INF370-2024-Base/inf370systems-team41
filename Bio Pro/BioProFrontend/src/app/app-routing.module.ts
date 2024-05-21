@@ -11,6 +11,9 @@ import { CaptureEmployeeHoursComponent } from './capture-employee-hours/capture-
 import { EmployeeProfileComponent } from './employee-profile/employee-profile.component';
 import { LoginComponent } from './login/login.component';
 import { AddUserComponent } from './add-user/add-user.component';
+import { AddProceduralTimeline } from './add-order-proceduraltimeline/add-order-proceduraltimeline.component';
+import { DeliveriesComponent } from './deliveries/deliveries.component';
+import { AddDeliveryComponent } from './add-delivery/add-delivery.component';
 
 
 const routes: Routes = [
@@ -28,6 +31,9 @@ const routes: Routes = [
   { path: 'employee', component:  EmployeeProfileComponent},
   {path: 'login', component: LoginComponent}, 
   {path: 'adduser', component: AddUserComponent}, 
+  {path: 'addproceduraltimeline', component: AddProceduralTimeline}, 
+  {path: 'deliveries', component: DeliveriesComponent}, 
+  {path: 'addDelivery', component: AddDeliveryComponent}, 
   {path: '', redirectTo: 'login', pathMatch: 'full'},
 
 ];

@@ -4,99 +4,113 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add User</title>
-
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.1.12/angular-material.min.css">
 </head>
 <body>
-  <div class="container">
-  <h1>Add User</h1>
-  <form [formGroup]="userForm" (ngSubmit)="addUser()">
-      <div class="form-group">
-          <label for="surname">Surname:</label>
-          <input id="surname" formControlName="surname" type="text" class="form-control">
-          <div *ngIf="userForm.get('surname')?.invalid && userForm.get('surname')?.touched" class="invalid-feedback">
-              Surname is required.
-          </div>
-      </div>
+    <div class="container">
+        <h1>Add User</h1>
+        <form [formGroup]="userForm" (ngSubmit)="addUser()">
+            <div class="form-group">
+                <mat-form-field appearance="outline">
+                    <mat-label><i class="material-icons">person</i> Surname</mat-label>
+                    <input matInput id="surname" formControlName="surname" type="text">
+                    <mat-error *ngIf="userForm.get('surname')?.invalid && userForm.get('surname')?.touched">
+                        Surname is required.
+                    </mat-error>
+                </mat-form-field>
+            </div>
 
-      <div class="form-group">
-          <label for="name">Name:</label>
-          <input id="name" formControlName="name" type="text" class="form-control">
-          <div *ngIf="userForm.get('name')?.invalid && userForm.get('name')?.touched" class="invalid-feedback">
-              Name is required.
-          </div>
-      </div>
+            <div class="form-group">
+                <mat-form-field appearance="outline">
+                    <mat-label><i class="material-icons">person</i> Name</mat-label>
+                    <input matInput id="name" formControlName="name" type="text">
+                    <mat-error *ngIf="userForm.get('name')?.invalid && userForm.get('name')?.touched">
+                        Name is required.
+                    </mat-error>
+                </mat-form-field>
+            </div>
 
-      <div class="form-group">
-          <label for="emailAddress">Email Address:</label>
-          <input id="emailAddress" formControlName="emailAddress" type="email" class="form-control">
-          <div *ngIf="userForm.get('emailAddress')?.invalid && userForm.get('emailAddress')?.touched"
-              class="invalid-feedback">
-              Valid email address is required.
-          </div>
-      </div>
+            <div class="form-group">
+                <mat-form-field appearance="outline">
+                    <mat-label><i class="material-icons">email</i> Email Address</mat-label>
+                    <input matInput id="emailAddress" formControlName="emailAddress" type="email">
+                    <mat-error *ngIf="userForm.get('emailAddress')?.invalid && userForm.get('emailAddress')?.touched">
+                        Valid email address is required.
+                    </mat-error>
+                </mat-form-field>
+            </div>
 
-      <div class="form-group">
-          <label for="password">Password:</label>
-          <input id="password" formControlName="password" type="password" class="form-control">
-          <div *ngIf="userForm.get('password')?.invalid && userForm.get('password')?.touched"
-              class="invalid-feedback">
-              Password is required (minimum length 6, must contain special character, must contain uppercase letter).
-          </div>
-      </div>
+            <div class="form-group">
+                <mat-form-field appearance="outline">
+                    <mat-label><i class="material-icons">lock</i> Password</mat-label>
+                    <input matInput id="password" formControlName="password" type="password">
+                    <mat-error *ngIf="userForm.get('password')?.invalid && userForm.get('password')?.touched">
+                        Password is required (minimum length 6, must contain special character, must contain uppercase letter).
+                    </mat-error>
+                </mat-form-field>
+            </div>
 
-      <div class="form-group">
-          <label for="phoneNumber">Phone Number:</label>
-          <input id="phoneNumber" formControlName="phoneNumber" type="text" class="form-control">
-          <div *ngIf="userForm.get('phoneNumber')?.invalid && userForm.get('phoneNumber')?.touched"
-              class="invalid-feedback">
-              Phone number is required and must be valid.
-          </div>
-      </div>
+            <div class="form-group">
+                <mat-form-field appearance="outline">
+                    <mat-label><i class="material-icons">phone</i> Phone Number</mat-label>
+                    <input matInput id="phoneNumber" formControlName="phoneNumber" type="text">
+                    <mat-error *ngIf="userForm.get('phoneNumber')?.invalid && userForm.get('phoneNumber')?.touched">
+                        Phone number is required and must be valid.
+                    </mat-error>
+                </mat-form-field>
+            </div>
 
-      <div class="form-group">
-          <label for="rolename">Role Name:</label>
-          <select id="rolename" formControlName="rolename" class="form-control">
-              <option *ngFor="let role of UserRoles" [value]="role.name">{{ role.name }}</option>
-          </select>
-          <div *ngIf="userForm.get('rolename')?.invalid && userForm.get('rolename')?.touched"
-              class="invalid-feedback">
-              Role name is required.
-          </div>
-      </div>
+            <div class="form-group">
+                <mat-form-field appearance="outline">
+                    <mat-label><i class="material-icons">assignment_ind</i> Role Name</mat-label>
+                    <mat-select id="rolename" formControlName="rolename">
+                        <mat-option *ngFor="let role of UserRoles" [value]="role.name">{{ role.name }}</mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="userForm.get('rolename')?.invalid && userForm.get('rolename')?.touched">
+                        Role name is required.
+                    </mat-error>
+                </mat-form-field>
+            </div>
 
-      <div class="form-group">
-          <label for="isEmployee">Is Employee:</label>
-          <input id="isEmployee" type="checkbox" (change)="toggleEmployee()">
-      </div>
+            <div class="form-group">
+                <mat-checkbox id="isEmployee" (change)="toggleEmployee()"><i class="material-icons">work</i> Is Employee</mat-checkbox>
+            </div>
 
-      <div *ngIf="isEmployee">
-          <h2>Employee Details</h2>
-          <div [formGroup]="employeeform">
-              <div class="form-group">
-                  <label for="JobTitleId">Job Title:</label>
-                  <select id="JobTitleId" formControlName="JobTitleId" class="form-control">
-                      <option *ngFor="let job of jobtitles" [value]="job.jobTitleId">{{ job.titleName }}</option>
-                  </select>
-                  <div *ngIf="employeeform.get('JobTitleId')?.invalid && employeeform.get('JobTitleId')?.touched"
-                      class="invalid-feedback">
-                      Job title is required.
-                  </div>
-              </div>
+            <div *ngIf="isEmployee">
+                <h2>Employee Details</h2>
+                <div [formGroup]="employeeform">
+                    <div class="form-group">
+                        <mat-form-field appearance="outline">
+                            <mat-label><i class="material-icons">work</i> Job Title</mat-label>
+                            <mat-select id="JobTitleId" formControlName="JobTitleId">
+                                <mat-option *ngFor="let job of jobtitles" [value]="job.jobTitleId">{{ job.titleName }}</mat-option>
+                            </mat-select>
+                            <mat-error *ngIf="employeeform.get('JobTitleId')?.invalid && employeeform.get('JobTitleId')?.touched">
+                                Job title is required.
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
 
-              <div class="form-group">
-                  <label for="Address">Address:</label>
-                  <input id="Address" formControlName="Address" type="text" class="form-control">
-                  <div *ngIf="employeeform.get('Address')?.invalid && employeeform.get('Address')?.touched"
-                      class="invalid-feedback">
-                      Address is required.
-                  </div>
-              </div>
-          </div>
-      </div>
+                    <div class="form-group">
+                        <mat-form-field appearance="outline">
+                            <mat-label><i class="material-icons">home</i> Address</mat-label>
+                            <input matInput id="Address" formControlName="Address" type="text">
+                            <mat-error *ngIf="employeeform.get('Address')?.invalid && employeeform.get('Address')?.touched">
+                                Address is required.
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
 
-      <button type="submit" class="btn btn-primary">Add User</button>
-  </form>
-</div>
+            <button mat-raised-button color="primary" type="submit">Add User</button>
+        </form>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.2/angular.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.1.12/angular-material.min.js"></script>
 </body>
 </html>
+

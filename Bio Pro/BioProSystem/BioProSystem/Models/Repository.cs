@@ -161,6 +161,21 @@ namespace BioProSystem.Models
             
             return await query.FirstOrDefaultAsync();
         }
+        public async Task<SystemOrder> GetSystemOrderByWorkflowId(int workflowtimelineId)
+        {
+            IQueryable<SystemOrder> query = _appDbContext.SystemOrders.Where(o=>o.OrderWorkflowTimelineId== workflowtimelineId);
+            return await query.FirstOrDefaultAsync();
+        }
+        public async Task<List<SystemOrder>> GetFinishedSystemWithoutDeliveriesOrders()
+        {
+            IQueryable<SystemOrder> query = _appDbContext.SystemOrders.Where(o => o.OrderStatusId == 3).Include(o=>o.Deliveries).Where(o=>o.Deliveries==null);
+            return await query.ToListAsync();
+        }
+        public async Task<List<SystemOrder>> GetOrdersInProgressAndNoTimeline()
+        {
+            IQueryable<SystemOrder> query = _appDbContext.SystemOrders.Where(c => c.OrderStatusId==2).Include(o=>o.OrderWorkflowTimeline).Where(ow=>ow.OrderWorkflowTimeline.TimelineId==null);
+            return await query.ToListAsync();
+        }
         public async Task<bool> CheckSystemPatient(string medicalAidNumber)
         {
             IQueryable<Patient> query = _appDbContext.Patients.Where(p => p.MedicalAidNumber == medicalAidNumber);
@@ -383,6 +398,10 @@ namespace BioProSystem.Models
             await _appDbContext.SaveChangesAsync();
         }
 
-
+        public async Task<List<Delivery>> GetDeliveries()
+        {
+          
+            return await _appDbContext.Deliveries.Include(d=>d.DeliveryStatus).Include(e=>e.Employee).ToListAsync(); 
+        }
     }
 }

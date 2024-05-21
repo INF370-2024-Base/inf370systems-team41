@@ -59,6 +59,9 @@ namespace BioProSystem.Models
         // New methods for EmployeeDailyHours
         Task CaptureEmployeeDailyHoursAsync(int employeeId, EmployeeDailyHours newDailyHours);
         //Jacques
-        
+        Task<List<SystemOrder>> GetOrdersInProgressAndNoTimeline();
+        Task<SystemOrder> GetSystemOrderByWorkflowId(int workflowtimelineId);
+        Task<List<SystemOrder>> GetFinishedSystemWithoutDeliveriesOrders();
+        Task<List<Delivery>> GetDeliveries();
     }
 }

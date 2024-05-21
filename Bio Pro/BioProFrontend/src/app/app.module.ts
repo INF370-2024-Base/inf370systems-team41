@@ -26,6 +26,9 @@ import { AuthInterceptor } from './services/auth-interceptor';
 import { LoginComponent } from './login/login.component';
 import { EditOrderModalComponent } from './edit-order-modal/edit-order-modal.component';
 import { AddUserComponent } from './add-user/add-user.component';
+import {  AddProceduralTimeline } from './add-order-proceduraltimeline/add-order-proceduraltimeline.component';
+import { DeliveriesComponent } from './deliveries/deliveries.component';
+import { AddDeliveryComponent } from './add-delivery/add-delivery.component';
 
 
 @NgModule({
@@ -39,7 +42,7 @@ import { AddUserComponent } from './add-user/add-user.component';
     AddDentistComponent,
     DentistProfileComponent,
     EmployeeProfileComponent,
-    CaptureEmployeeHoursComponent,LoginComponent,EditOrderModalComponent, AddUserComponent
+    CaptureEmployeeHoursComponent,LoginComponent,EditOrderModalComponent, AddUserComponent, AddProceduralTimeline, DeliveriesComponent, AddDeliveryComponent
   ],
   imports: [
     BrowserModule,

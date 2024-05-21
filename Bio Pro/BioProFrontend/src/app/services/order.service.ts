@@ -128,6 +128,14 @@ getOrderStatus(orderId: string): Observable<any> {
 getPendingSystemOrders(): Observable<any[]> {
   return this.httpClient.get<any[]>(`${this.apiUrl}/Timeline/GetOrdersWithoutPendingStatus`);
 }
+getOrdersWithNoTimelineAndInProgress():Observable<any[]>
+{
+  return this.httpClient.get<any[]>(`${this.apiUrl}Api/GetOrdersInProgressAndNullTimlines`);
+}
+getFinishedOrders():Observable<any[]>
+{
+  return this.httpClient.get<any[]>(`${this.apiUrl}Api/GetFinishedOrders`);
+}
 }
 
 

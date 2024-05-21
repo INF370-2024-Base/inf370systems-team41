@@ -1,66 +1,71 @@
-<!-- add-dentist.component.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add New Dentist</title>
-    <!-- Include Material Icons -->
+    <!-- Include Angular Material Icons -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <!-- Include Bootstrap CSS -->
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        /* Add custom styles here */
-    </style>
+    <!-- Include Angular Material CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/@angular/material@12.2.13/prebuilt-themes/indigo-pink.css" rel="stylesheet">
 </head>
 <body>
     <div class="container">
-        <h1>Add New Dentist</h1>
+        <h1><mat-icon>person_add</mat-icon> Add New Dentist</h1>
         <div class="row">
             <div class="col-md-6">
                 <form [formGroup]="addDentistForm" (ngSubmit)="addDentist()" novalidate>
                     <div class="form-group">
-                        <label for="LastName">Surname:</label>
-                        <input id="LastName" formControlName="LastName" type="text" class="form-control">
-                        <div *ngIf="addDentistForm.get('LastName')?.invalid && addDentistForm.get('LastName')?.touched" class="invalid-feedback">
-                            Surname is required.
-                        </div>
+                        <mat-form-field appearance="outline">
+                            <mat-label><mat-icon>person</mat-icon> Surname</mat-label>
+                            <input matInput id="LastName" formControlName="LastName" type="text">
+                            <mat-error *ngIf="addDentistForm.get('LastName')?.invalid && addDentistForm.get('LastName')?.touched">
+                                Surname is required.
+                            </mat-error>
+                        </mat-form-field>
                     </div>
                   
                     <div class="form-group">
-                        <label for="FirstName">Name:</label>
-                        <input id="FirstName" formControlName="FirstName" type="text" class="form-control">
-                        <div *ngIf="addDentistForm.get('FirstName')?.invalid && addDentistForm.get('FirstName')?.touched" class="invalid-feedback">
-                            Name is required.
-                        </div>
+                        <mat-form-field appearance="outline">
+                            <mat-label><mat-icon>person</mat-icon> Name</mat-label>
+                            <input matInput id="FirstName" formControlName="FirstName" type="text">
+                            <mat-error *ngIf="addDentistForm.get('FirstName')?.invalid && addDentistForm.get('FirstName')?.touched">
+                                Name is required.
+                            </mat-error>
+                        </mat-form-field>
                     </div>
                   
                     <div class="form-group">
-                        <label for="ContactDetail">Contact details:</label>
-                        <input id="ContactDetail" formControlName="ContactDetail" class="form-control">
-                        <div *ngIf="addDentistForm.get('ContactDetail')?.invalid && addDentistForm.get('ContactDetail')?.touched" class="invalid-feedback">
-                            Contact details is required
-                        </div>
+                        <mat-form-field appearance="outline">
+                            <mat-label><mat-icon>phone</mat-icon> Contact details</mat-label>
+                            <input matInput id="ContactDetail" formControlName="ContactDetail">
+                            <mat-error *ngIf="addDentistForm.get('ContactDetail')?.invalid && addDentistForm.get('ContactDetail')?.touched">
+                                Contact details are required.
+                            </mat-error>
+                        </mat-form-field>
                     </div>
                   
                     <div class="form-group">
-                        <label for="Address">Address:</label>
-                        <input id="Address" formControlName="Address" class="form-control">
-                        <div *ngIf="addDentistForm.get('Address')?.invalid && addDentistForm.get('Address')?.touched" class="invalid-feedback">
-                            Address is required
-                        </div>
+                        <mat-form-field appearance="outline">
+                            <mat-label><mat-icon>location_on</mat-icon> Address</mat-label>
+                            <input matInput id="Address" formControlName="Address">
+                            <mat-error *ngIf="addDentistForm.get('Address')?.invalid && addDentistForm.get('Address')?.touched">
+                                Address is required.
+                            </mat-error>
+                        </mat-form-field>
                     </div>
-                    <button type="submit" class="btn btn-primary">
-                        <span class="material-icons">add</span> Add
+                    <button mat-raised-button color="primary" type="submit" style="margin-right: 10px;">
+                        <mat-icon>add</mat-icon> Add
                     </button>
-                    <button type="button" class="btn btn-secondary" (click)="cancel()">
-                        <span class="material-icons">cancel</span> Cancel
-                    </button>
+                    <button mat-raised-button color="warn" type="button" (click)="cancel()" style="margin-left: 50px;">
+                        <mat-icon>cancel</mat-icon> Cancel
+                    </button>                    
                 </form>
             </div>
         </div>
     </div>
     
+    <!-- Angular and Angular Material dependencies -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/core-js/2.5.3/core.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/zone.js/0.8.26/zone.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.8/hammer.js"></script>
@@ -69,3 +74,5 @@
     <script src="https://cdn.jsdelivr.net/npm/@angular/cdk/bundles/cdk.umd.js"></script>
 </body>
 </html>
+
+

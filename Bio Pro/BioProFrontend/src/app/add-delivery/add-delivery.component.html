@@ -1,0 +1,27 @@
+<mat-accordion>
+    <mat-expansion-panel *ngFor="let order of orderInfo">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Order ID: {{ order.systemOrder.orderId }}- Patient: {{ order.patient.firsName }} {{ order.patient.lastname }}
+          <button class="edit-button" (click)="createdeliveries(order.systemOrder.orderId)">Create Delivery</button>
+        </mat-panel-title>
+        <mat-panel-description>
+            
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+
+      <p>Order Status: {{ order.orderStatus.description }}</p>
+      <p>Order Type: {{ order.orderType.description }}</p>
+      <p>Order Direction: {{ order.orderDirection.description }}</p>
+      <p>Timeline Details: {{ order.timeline.timelineDetails }}</p>
+  
+      <strong>Teethshades</strong>
+      <div *ngFor="let teethshade of order.teethshades">
+        <div class="color-box" [style.background]="teethshade.colourCode" style="width: 30px; height: 30px; border: 1px solid #000;"></div>
+        <span>{{ teethshade.colourName }}</span>
+      </div>
+    </mat-expansion-panel>
+  </mat-accordion>
+  <div *ngIf="orderInfo.length==0">
+No finished orders without a started delivery
+  </div>

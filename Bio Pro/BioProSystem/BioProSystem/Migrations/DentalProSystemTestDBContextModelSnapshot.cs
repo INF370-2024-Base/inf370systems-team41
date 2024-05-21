@@ -123,21 +123,13 @@ namespace BioProSystem.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("DeliveryId"));
 
-                    b.Property<DateTime>("DeliveryDate")
+                    b.Property<DateTime?>("DeliveryDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("DeliveryStatusId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("DeliveryStatusId1")
+                    b.Property<int>("DeliveryStatusId")
                         .HasColumnType("int");
 
-                    b.Property<string>("EmployeeId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("EmployeeId1")
+                    b.Property<int>("EmployeeId")
                         .HasColumnType("int");
 
                     b.Property<string>("SystemOrderId")
@@ -146,9 +138,9 @@ namespace BioProSystem.Migrations
 
                     b.HasKey("DeliveryId");
 
-                    b.HasIndex("DeliveryStatusId1");
+                    b.HasIndex("DeliveryStatusId");
 
-                    b.HasIndex("EmployeeId1");
+                    b.HasIndex("EmployeeId");
 
                     b.HasIndex("SystemOrderId");
 
@@ -1289,13 +1281,13 @@ namespace BioProSystem.Migrations
                 {
                     b.HasOne("BioProSystem.Models.DeliveryStatus", "DeliveryStatus")
                         .WithMany("Deliveries")
-                        .HasForeignKey("DeliveryStatusId1")
+                        .HasForeignKey("DeliveryStatusId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("BioProSystem.Models.Employee", "Employee")
                         .WithMany("Deliveries")
-                        .HasForeignKey("EmployeeId1")
+                        .HasForeignKey("EmployeeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

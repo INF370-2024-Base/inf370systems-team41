@@ -10,6 +10,7 @@ export class AppComponent {
   isSidenavOpen = true;
   isEmployeeMenuOpen = false;
   isOrdersMenuOpen = false;
+  isDeliveriesMenuOpen = false;
   title = 'BioProSystem';
   toggleOrdersMenu(): void {
     this.isOrdersMenuOpen = !this.isOrdersMenuOpen;
@@ -17,7 +18,10 @@ export class AppComponent {
   toggleEmployeeMenu() {
     this.isEmployeeMenuOpen = !this.isEmployeeMenuOpen;
   }
-
+  toggleDeliveriesMenu()
+  {
+    this.isDeliveriesMenuOpen = !this.isDeliveriesMenuOpen;
+  }
   isLoggedIn = false;
   user:any;
   constructor(public dataService:OrderService) {}

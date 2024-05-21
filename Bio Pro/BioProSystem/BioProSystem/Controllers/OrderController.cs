@@ -147,9 +147,7 @@ namespace BioProSystem.Controllers
                         newPatient.Lastname = _repository.GetPatientByMedicalAidNumber(viewModel.MedicalAidNumber).Result.Lastname;
                         newPatient.DentistId = _repository.GetPatientByMedicalAidNumber(viewModel.MedicalAidNumber).Result.DentistId;
                         newPatient.MedicalAidId = _repository.GetPatientByMedicalAidNumber(viewModel.MedicalAidNumber).Result.MedicalAidId;
-                        newPatient.MedicalAidNumber = _repository.GetPatientByMedicalAidNumber(viewModel.MedicalAidNumber).Result.MedicalAidNumber;
-
-                        
+                        newPatient.MedicalAidNumber = _repository.GetPatientByMedicalAidNumber(viewModel.MedicalAidNumber).Result.MedicalAidNumber;                      
                     }
                     else
                     {
@@ -159,7 +157,6 @@ namespace BioProSystem.Controllers
                         newPatient.MedicalAidId = viewModel.MedicalAidId;
                         newPatient.MedicalAidNumber = viewModel.MedicalAidNumber;
                         _repository.Add(newPatient);
-                       
                     }   
                     Dentist dentist=_repository.GetDentistdByIdAsync(viewModel.DentistId).Result;
                     dentist.SystemOrders.Add(newOrder);
@@ -303,6 +300,19 @@ namespace BioProSystem.Controllers
                 return StatusCode(500, $"Internal Server Error: {ex.Message}");
             }
         }
+        [HttpGet("GetOrdersInProgressAndNullTimlines")]
+        public async Task<IActionResult> GetOrdersInProgressAndNullTimlines()
+        {
+            try
+            {
+                var orders = await _repository.GetOrdersInProgressAndNoTimeline(); // Await the asynchronous method
+                return Ok(orders); // Return list of dentists as JSON response
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal Server Error: {ex.Message}");
+            }
+        }
 
         [HttpGet("GetOrdersById/{OrderId}")]
         public async Task<IActionResult> GetSystemOrdersByIdAsync(string OrderId)
@@ -344,6 +354,23 @@ namespace BioProSystem.Controllers
             try
             {
                 var result = await _repository.GetAllSystemOrdersAsync();
+
+                if (result == null)
+                    return NotFound("No order found");
+
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal Server Error: {ex.Message}");
+            }
+        }
+        [HttpGet("GetFinishedOrders")]
+        public async Task<IActionResult> GetFinishedOrders()
+        {
+            try
+            {
+                var result = await _repository.GetFinishedSystemWithoutDeliveriesOrders();
 
                 if (result == null)
                     return NotFound("No order found");

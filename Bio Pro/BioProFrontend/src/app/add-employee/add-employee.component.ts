@@ -17,7 +17,7 @@ import { error } from 'console';
 export class AddEmployeeComponent implements OnInit {
   addEmployeeAtt: Employee = {
     
-    JobTitleId: null,
+    JobTitleId: 0,
     EmailAddress: '',
     PhoneNumber: '',
     Address: ''
@@ -49,6 +49,8 @@ getJobtitles()
 
   addEmployee(form: NgForm) {
     if (form.valid) {
+      this.addEmployeeAtt=form.value
+      console.log(this.addEmployeeAtt)
       this.dataService.addEmployee(this.addEmployeeAtt).subscribe({
         next: (employee: Employee) => {
           this.snackBar.open(`Employee added successfully`, 'Close', {
@@ -58,23 +60,19 @@ getJobtitles()
           this.router.navigate(['employees']);
         },
         error: (error: HttpErrorResponse) => {
-          let errorMessage = 'Error adding employee';
-          if (error.error instanceof ErrorEvent) {
-            // A client-side or network error occurred. Handle it accordingly.
-            errorMessage = `Error: ${error.error.message}`;
-          } else {
-            if (error.error.includes('Employee already exists')) {
-              errorMessage = 'Error: Employee already exists';
-            } else if (error.error.includes('JobTitle not found')) {
-              errorMessage = 'Error: JobTitle not found';
+          error: (error: HttpErrorResponse) => {
+            let errorMessage = 'Error adding employee';
+            if (error.error && typeof error.error === 'object') { // Check if it's an object
+              errorMessage = error.error.message || 'Unknown error'; // Access specific property or default message
             } else {
+              // Handle other error types (e.g., network errors)
               errorMessage = `Error Code: ${error.status}\nMessage: ${error.error}`;
             }
+            this.snackBar.open(errorMessage, 'Close', {
+              duration: 3000,
+              panelClass: ['error-snackbar']
+            });
           }
-          this.snackBar.open(errorMessage, 'Close', {
-            duration: 3000,
-            panelClass: ['error-snackbar'] // Optional: custom CSS class for styling
-          });
         }
       });
     }

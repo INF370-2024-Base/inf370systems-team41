@@ -21,14 +21,15 @@
   <mat-sidenav-container>
     <mat-sidenav #sidenav mode="side" [(opened)]="isSidenavOpen" class="side-container" *ngIf="isLoggedIn">
       <mat-nav-list>
-        <a mat-list-item class="nav-link" (click)="toggleEmployeeMenu()" [routerLink]="['/employeeProfile']">
-          <mat-icon>person</mat-icon> <!-- Icon for profile -->
-          All Employees
-        </a>
         <a mat-list-item class="nav-link" routerLink="/adduser" (click)="isSidenavOpen = !isSidenavOpen">
           <mat-icon>add_circle_outline</mat-icon> <!-- Icon for dentist profile -->
           Add User
         </a>
+        <a mat-list-item class="nav-link" (click)="toggleEmployeeMenu()" [routerLink]="['/employeeProfile']">
+          <mat-icon>person</mat-icon> <!-- Icon for profile -->
+          All Employees
+        </a>
+        
         <ng-container *ngIf="isEmployeeMenuOpen">
           <a mat-list-item class="sub-nav-link" routerLink="/captureEmployeeDailyHours" (click)="isSidenavOpen = !isSidenavOpen">
             <mat-icon>schedule</mat-icon> <!-- Icon for schedule/hours -->
@@ -39,8 +40,22 @@
           <mat-icon>medical_services</mat-icon> <!-- Icon for dentist profile -->
           Dentist Profiles
         </a>
+        <a mat-list-item class="nav-link" (click)="isSidenavOpen = !isSidenavOpen" [routerLink]="['/addproceduraltimeline']">
+          <mat-icon>add_circle_outline</mat-icon> 
+          Create Timeline
+        </a>
+        <a mat-list-item class="nav-link" (click)="toggleDeliveriesMenu()" [routerLink]="['/deliveries']">
+          <mat-icon>local_shipping</mat-icon> 
+          Deliveries
+        </a>
+        <ng-container *ngIf="isDeliveriesMenuOpen">
+          <a mat-list-item class="sub-nav-link" [routerLink]="['/addDelivery']" (click)="isSidenavOpen = !isSidenavOpen">
+            <mat-icon>add_circle_outline</mat-icon> <!-- Icon for new order -->
+            New Delivery
+          </a>
+        </ng-container>
         <a mat-list-item class="nav-link" (click)="toggleOrdersMenu()" [routerLink]="['/orders']">
-          <mat-icon>assignment</mat-icon> <!-- Icon for orders -->
+          <mat-icon>folder</mat-icon> <!-- Icon for orders -->
           Orders
         </a>
         <ng-container *ngIf="isOrdersMenuOpen">
