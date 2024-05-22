@@ -14,6 +14,7 @@ import { AddUserComponent } from './add-user/add-user.component';
 import { AddProceduralTimeline } from './add-order-proceduraltimeline/add-order-proceduraltimeline.component';
 import { DeliveriesComponent } from './deliveries/deliveries.component';
 import { AddDeliveryComponent } from './add-delivery/add-delivery.component';
+import { HomeComponent } from './home/home.component';
 
 
 const routes: Routes = [
@@ -35,7 +36,7 @@ const routes: Routes = [
   {path: 'deliveries', component: DeliveriesComponent}, 
   {path: 'addDelivery', component: AddDeliveryComponent}, 
   {path: '', redirectTo: 'login', pathMatch: 'full'},
-
+  {path: 'home', component: HomeComponent},
 ];
 
 @NgModule({
