@@ -77,19 +77,22 @@ export class AddOrderComponent implements OnInit {
   loadImageOnCanvas(): void {
     const canvas = this.canvasRef.nativeElement;
     const ctx = canvas.getContext('2d');
+    const scaleFactor = 0.5; // Adjust this scale factor to make the canvas bigger
   
     if (ctx) {
       const imageUrl = 'assets/images/mouth area.png';
   
       const img = new Image();
       img.onload = () => {
-        canvas.width = img.width;
-        canvas.height = img.height;
-        ctx.drawImage(img, 0, 0);
+        // Set desired canvas dimensions
+        canvas.width = img.width * scaleFactor;
+        canvas.height = img.height * scaleFactor;
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height); // Draw scaled image
   
         canvas.addEventListener('click', (event: MouseEvent) => {
-          const clickX = event.offsetX;
-          const clickY = event.offsetY;
+          // Adjust click coordinates for scaling
+          const clickX = event.offsetX / scaleFactor;
+          const clickY = event.offsetY / scaleFactor;
   
           const clickedArea = this.areas.find((area: Area) => {
             const {x, y, width, height} = area;
@@ -112,30 +115,30 @@ export class AddOrderComponent implements OnInit {
               this.selectedAreas.push(clickedArea.selectedAreaId);
               this.updateFormValues()
             }
-            this.drawShapes(ctx, img, this.areas, this.selectedAreas); // Pass selected areas for highlighting
+            this.drawShapes(ctx, img, this.areas, this.selectedAreas, scaleFactor); // Pass selected areas for highlighting
           }
         });
       };
   
       img.src = imageUrl;
     }
-    
   }
   
-  drawShapes(ctx: CanvasRenderingContext2D, img: HTMLImageElement, areas: any[], selectedAreas: number[]) {
+  drawShapes(ctx: CanvasRenderingContext2D, img: HTMLImageElement, areas: any[], selectedAreas: number[], scaleFactor: number) {
     let canvas = document.getElementById('myCanvas') as HTMLCanvasElement;
     ctx = canvas.getContext('2d')!;
     ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear previous drawings
-    ctx.drawImage(img, 0, 0);
+    ctx.drawImage(img, 0, 0, canvas.width, canvas.height); // Draw scaled image
   
     for (const area of areas) {
       const { x, y, width, height } = area;
-      ctx.strokeRect(x, y, width, height); // Draw all area outlines
+      // Draw scaled rectangles
+      ctx.strokeRect(x * scaleFactor, y * scaleFactor, width * scaleFactor, height * scaleFactor);
   
       if (selectedAreas.includes(area.selectedAreaId)) {
         // Highlight selected areas with a different color or style
         ctx.fillStyle = 'lightblue'; // Example highlight color
-        ctx.fillRect(x, y, width, height);
+        ctx.fillRect(x * scaleFactor, y * scaleFactor, width * scaleFactor, height * scaleFactor);
       }
     }
   }
@@ -144,6 +147,8 @@ export class AddOrderComponent implements OnInit {
     // Update your form logic here with selectedAreas list
     console.log('Selected areas:', this.selectedAreas); // Example usage
   }
+  
+  
   loadDentists(): void {
     this.dataService.getDentists().subscribe(
       (data: any[]) => {

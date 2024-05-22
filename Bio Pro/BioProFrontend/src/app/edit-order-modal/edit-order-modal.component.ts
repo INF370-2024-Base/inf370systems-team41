@@ -188,30 +188,47 @@ export class EditOrderModalComponent implements OnInit {
 
   onFileSelected(event: any): void {
     const files: FileList = event.target.files;
+    const maxFileSize = 10 * 1024 * 1024; // 10MB
+
+    console.log('Files selected:', files);
+
     for (let i = 0; i < files.length; i++) {
-      const file = files[i];
-      const reader = new FileReader();
-  
-      reader.onload = (e: any) => {
-        const fileContent = e.target.result;
-        const byteArray = new Uint8Array(fileContent);
-        const url = this.sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(file));
-  
-        this.uploadedFiles.push({
-          name: file.name,
-          size: file.size,
-          content: byteArray
-        });
-        console.log(this.uploadedFiles)
-        this.uploadedFileUrls.push({ url, name: file.name });
-      };
-  
-      reader.readAsArrayBuffer(file);
+        const file = files[i];
+        console.log(`File ${file.name} size: ${file.size} bytes`);
+
+
+        if (file.size > maxFileSize) {
+          console.log(`File ${file.name} exceeds the maximum file size.`);
+          alert(`File ${file.name} is too large. Maximum file size is 5MB.`);
+          continue; // Skip the file and move to the next one
+        }
+
+        console.log(`Processing file: ${file.name}`);
+
+        const reader = new FileReader();
+
+        reader.onload = (e: any) => {
+            const fileContent = e.target.result;
+            const byteArray = new Uint8Array(fileContent);
+            const url = this.sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(file));
+
+            this.uploadedFiles.push({
+                name: file.name,
+                size: file.size,
+                content: byteArray
+            });
+            console.log(this.uploadedFiles);
+            this.uploadedFileUrls.push({ url, name: file.name });
+        };
+
+        reader.readAsArrayBuffer(file);
     }
-  }
+}
+
+
   
 
-  onSubmit(): void {
+  onSubmit(): void { console.log('onSubmit called');
     if (this.editForm.valid) {
       const formData = this.editForm.value;
       const viewModel = new SystemOrderViewModel;
@@ -236,39 +253,57 @@ export class EditOrderModalComponent implements OnInit {
       viewModel.SeletedAreasIds.push(area.selectedAreaId)
     });
     viewModel.MouthArea = this.selectedAreas.toString();
-    this.uploadedFiles.forEach(file => {
-      let mediaFileViewModel: MediaFileViewModel = new MediaFileViewModel(); // Create a new instance
-  mediaFileViewModel.FileName = file.name;
-  mediaFileViewModel.FileSelf = btoa(String.fromCharCode(...new Uint8Array(file.content)));;
-  mediaFileViewModel.FileSizeKb = file.size;
-  mediaFileViewModel.SystemOrderId=viewModel.OrderId
-  viewModel.mediaFileViewModels.push(mediaFileViewModel); // Push each file info into the array
-    });
-    
-  
-      console.log('Sending update request to:', `${this.dataService.apiUrl}Api/UpdateOrder`);
-      console.log('Data being sent:', viewModel);
-  
-      this.dataService.updateOrder(viewModel).subscribe(
+    console.log('Mapping mediaFileViewModels');
+    try {
+        viewModel.mediaFileViewModels = this.uploadedFiles.map(file => {
+            const mediaFileViewModel = new MediaFileViewModel();
+            mediaFileViewModel.FileName = file.name;
+            mediaFileViewModel.FileSelf = this.encodeFileContent(file.content);
+            mediaFileViewModel.FileSizeKb = file.size;
+            mediaFileViewModel.SystemOrderId = viewModel.OrderId;
+            return mediaFileViewModel;
+        });
+    } catch (error) {
+        console.error('Error while mapping mediaFileViewModels:', error);
+        throw error; // Rethrow the error after logging it
+    }
+
+    console.log('Sending update request to:', `${this.dataService.apiUrl}Api/UpdateOrder`);
+    console.log('Data being sent:', viewModel);
+
+    this.dataService.updateOrder(viewModel).subscribe(
         () => {
-          console.log('Order updated successfully');
-          // Close the modal only when the order update is successful
-          this.dialogRef.close('Order success');
-          
+            console.log('Order updated successfully');
+            this.dialogRef.close('Order success');
         },
         (error) => {
-          console.error('Error updating order:', error);
+            console.error('Error updating order:', error);
         }
-      );
-    } else {
-      Object.keys(this.editForm.controls).forEach(field => {
+    );
+} else {
+    console.log('Form is invalid');
+    Object.keys(this.editForm.controls).forEach(field => {
         const control = this.editForm.get(field);
         if (control && control.invalid) {
-          console.log(`Field ${field} is invalid. Error: `, control.errors);
+            console.log(`Field ${field} is invalid. Error: `, control.errors);
         }
-      });
-    }
-  }
+    });
+}
+}
+
+// Helper method for more efficient Base64 encoding
+encodeFileContent(content: ArrayBuffer): string {
+let binary = '';
+const bytes = new Uint8Array(content);
+const len = bytes.byteLength;
+
+for (let i = 0; i < len; i++) {
+    binary += String.fromCharCode(bytes[i]);
+}
+
+return btoa(binary);
+
+}
   cancel(): void {
     console.log('Cancel function executed'); 
     this.dialogRef.close('Order update canceled');
