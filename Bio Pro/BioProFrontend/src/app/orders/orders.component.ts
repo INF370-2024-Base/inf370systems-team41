@@ -2,17 +2,32 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { OrderService } from '../services/order.service';
 import { switchMap,forkJoin,of } from 'rxjs';
-
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; 
 import { MatDialog } from '@angular/material/dialog';
 import { EditOrderModalComponent } from '../edit-order-modal/edit-order-modal.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { trigger, state, style, transition, animate } from '@angular/animations';
 
 @Component({
   selector: 'app-orders',
   templateUrl: './orders.component.html',
-  styleUrls: ['./orders.component.scss']
+  styleUrls: ['./orders.component.scss'],
+  animations: [
+    trigger('cardHover', [
+      state('rest', style({
+        transform: 'translateY(0)',
+        boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)'
+      })),
+      state('hover', style({
+        transform: 'translateY(-5px)',
+        boxShadow: '0 8px 16px rgba(0, 0, 0, 0.2)'
+      })),
+      transition('rest <=> hover', animate('0.3s ease'))
+    ])
+  ]
 })
 export class OrdersComponent implements OnInit {
+  hoverState: string = 'rest';
   orderId: string = '';
   orders: any[] = [];
   ordersInfo:any[]=[];
@@ -40,6 +55,10 @@ export class OrdersComponent implements OnInit {
     this.getOrdersAndInfo();
   }
   
+  toggleHover(state: string) {
+    this.hoverState = state;
+  }
+
   getOrdersAndInfo() {
     this.dataservices.getAllOrders().pipe(
       switchMap((allOrders: any[]) => {

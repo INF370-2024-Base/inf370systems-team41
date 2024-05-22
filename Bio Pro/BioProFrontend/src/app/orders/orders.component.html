@@ -1,48 +1,69 @@
 <!-- <p>orders works!</p> -->
-
-<div>
+<body>
+  <div class="scroll-container">
   <div class="container">
-    <div style="display: flex; gap: 10px; align-items: center;text-align: center;">
-      <mat-form-field class="search-field" style="flex-grow: 1;">
-          <input matInput [(ngModel)]="orderId" placeholder="Enter Order ID" (ngModelChange)="onOrderIdChange($event)">
+    <div class="search-filter">
+      <mat-form-field class="search-field">
+        <mat-icon matPrefix>search</mat-icon>
+        <input matInput [(ngModel)]="orderId" placeholder="Enter Order ID" (ngModelChange)="onOrderIdChange($event)">
       </mat-form-field>
       <mat-form-field class="filter-field">
         <mat-label>Filter By</mat-label>
         <mat-select [(ngModel)]="selectedFilter" (selectionChange)="onFilterChange($event)">
-            <mat-option value="0">No Filter</mat-option>
-            <mat-option *ngFor="let ordertype of orderTypes" [value]="ordertype.orderTypeId">{{ ordertype.description }}</mat-option>
+          <mat-option value="0">No Filter</mat-option>
+          <mat-option *ngFor="let ordertype of orderTypes" [value]="ordertype.orderTypeId">{{ ordertype.description }}</mat-option>
         </mat-select>
-    </mat-form-field>
-      <button mat-raised-button color="primary" style="width: 100px; height: 40px; display: flex; justify-content: center; align-items: center;" (click)="searchOrders()">Search</button>
-    <button mat-raised-button color="warn" style="width: 100px; height: 40px; display: flex; justify-content: center; align-items: center;" (click)="clearSeacrhOrders()">Clear</button>  </div>
-  
-  
+      </mat-form-field>
+      <button mat-raised-button color="primary" class="action-button" style="margin-right: 10px;" (click)="searchOrders()">
+        <mat-icon>search</mat-icon>Search
+      </button>
+      <button mat-raised-button color="warn" class="action-button" style="margin-right: 10px;" (click)="clearSeacrhOrders()">
+        <mat-icon>clear</mat-icon>Clear
+      </button>
+      
+    </div>
+
     <mat-accordion>
       <mat-expansion-panel *ngFor="let order of ordersInfo">
         <mat-expansion-panel-header>
           <mat-panel-title>
-            Order ID: {{ order.systemOrder.orderId }}- Patient: {{ order.patient.firsName }} {{ order.patient.lastname }}
-          </mat-panel-title>
+            <mat-icon>assignment</mat-icon>
+            Order ID: {{ order.systemOrder.orderId }} - Patient: {{ order.patient.firstName }} {{ order.patient.lastname }}
+          </mat-panel-title>          
         </mat-expansion-panel-header>
-        <button class="edit-button" (click)="editOrder(order.systemOrder.orderId)">✏️</button>
-        <button class="trash-button" (click)="deleteOrder(order.systemOrder.orderId)">🗑️</button>
-        <p>Order Status: {{ order.orderStatus.description }}</p>
-        <p>Order Type: {{ order.orderType.description }}</p>
-        <p>Order Direction: {{ order.orderDirection.description }}</p>
-        <p>Timeline Details: {{ order.timeline.timelineDetails }}</p>
+        
+        <div class="order-details">
+          <p><strong>Order Status:</strong> {{ order.orderStatus.description }}</p>
+          <p><strong>Order Type:</strong> {{ order.orderType.description }}</p>
+          <p><strong>Order Direction:</strong> {{ order.orderDirection.description }}</p>
+          <p><strong>Timeline Details:</strong> {{ order.timeline.timelineDetails }}</p>
     
-        <strong>Teethshades</strong>
-        <div *ngFor="let teethshade of order.teethshades">
-          <div class="color-box" [style.background]="teethshade.colourCode" style="width: 30px; height: 30px; border: 1px solid #000;"></div>
-          <span>{{ teethshade.colourName }}</span>
+          <strong>Teethshades:</strong>
+          <div class="teethshades">
+            <div *ngFor="let teethshade of order.teethshades" class="teethshade-item">
+              <div class="color-box" [style.background]="teethshade.colourCode"></div>
+              <span>{{ teethshade.colourName }}</span>
+            </div>
+          </div>
+
+          <canvas id="myCanvas{{order.systemOrder.orderId}}" width="500" height="500"></canvas>
         </div>
-        <br> 
-        <canvas id="myCanvas{{order.systemOrder.orderId}}" width="500" height="500"></canvas>
+        
+        <div class="action-icons">
+          <button mat-raised-button color="primary" class="edit-button" (click)="editOrder(order.systemOrder.orderId)">
+            <mat-icon>edit</mat-icon>Edit
+          </button>
+          <button mat-raised-button color="warn" class="trash-button" (click)="deleteOrder(order.systemOrder.orderId)">
+            <mat-icon>delete</mat-icon>Delete
+          </button>
+        </div>
       </mat-expansion-panel>
     </mat-accordion>
-  
+
     <div *ngIf="orders.length === 0 && orderId.trim() !== ''">
       <p>No orders found.</p>
     </div>
   </div>
   <app-edit-order-modal *ngIf="selectedOrder" (close)="closeModal()"></app-edit-order-modal>
+  </div>
+</body>

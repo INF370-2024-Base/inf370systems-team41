@@ -1,95 +1,115 @@
-<div class="modal">
-  <div class="modal-content">
-    <span class="close" (click)="cancel()">&times;</span>
-    <h2>Edit Order</h2>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Edit Order</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+</head>
+<body>
 
-    <form [formGroup]="editForm" (ngSubmit)="onSubmit()">
-      <div class="form-group">
-        <label for="OrderId">Order ID:</label>
-        <input required type="text" formControlName="OrderId" class="form-control" id="OrderId" placeholder="Enter Order ID" [readonly]="true">
-      </div>
-
-      <div class="form-group">
-        <label for="DentistId">Dentist:</label>
-        <select required formControlName="DentistId" class="form-control" id="DentistId">
-          <option *ngFor="let dentist of dentists" [ngValue]="dentist.dentistId">
-            {{ dentist.firstName }} {{ dentist.lastName }}
-          </option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label for="MedicalAidId">Medical Aid:</label>
-        <select formControlName="MedicalAidId" class="form-control" id="MedicalAidId" required>
-          <option disabled selected value="">Select Medical Aid</option>
-          <option *ngFor="let medicalAid of medicalAids" [ngValue]="medicalAid.medicalAidId">
-            {{ medicalAid.medicalAidName }}
-          </option>
-        </select>
-      </div>
-
-      <div class="form-group">
-        <label for="PatientName">Patient Name:</label>
-        <input required type="text" formControlName="PatientName" class="form-control" id="PatientName" placeholder="Enter patient name">
-      </div>
-
-      <div class="form-group">
-        <label for="PatientSurname">Patient Surname:</label>
-        <input required type="text" formControlName="PatientSurname" class="form-control" id="PatientSurname" placeholder="Enter patient surname">
-      </div>
-
-      <div class="form-group">
-        <label for="MedicalAidNumber">Medical Aid Number:</label>
-        <input required type="text" formControlName="MedicalAidNumber" class="form-control" id="MedicalAidNumber" placeholder="Enter medical aid number">
-      </div>
-
-      <div class="form-group">
-        <label for="OrderStatusId">Order Status:</label>
-        <select formControlName="OrderStatusId" class="form-control" id="OrderStatusId" required>
-          <option *ngFor="let status of orderStatus" [ngValue]="status.orderStatusId">
-            {{ status.description }}
-          </option>
-        </select>
-      </div>
-
-      <div class="form-group">
-        <label for="PriorityLevel">Priority Level:</label>
-        <select formControlName="PriorityLevel" class="form-control" id="PriorityLevel" required>
-          <option disabled selected value="">Select Priority Level</option>
-          <option *ngFor="let level of priorityLevels" [value]="level.value">{{ level.label }}</option>
-        </select>
-      </div>
-
-      <div class="form-group">
-        <label for="EmergencyNumber">Emergency Number:</label>
-        <input required type="text" formControlName="EmergencyNumber" class="form-control" id="EmergencyNumber" placeholder="Enter Emergency Contact Number">
-      </div>
-
-      <div class="form-group">
-        <label for="SpecialRequirements">Special Requirements:</label>
-        <textarea formControlName="SpecialRequirements" class="form-control" id="SpecialRequirements" placeholder="Enter any special requirements" required></textarea>
-      </div>
-
-      <div class="form-group">
-        <label for="DueDate">Due Date:</label>
-        <input type="date" formControlName="DueDate" class="form-control" id="DueDate" placeholder="Select Due Date">
-      </div>
-
-      <div class="form-group">
-        <label for="MediaFiles">Upload Media Files:</label>
-        <input type="file" id="MediaFiles" (change)="onFileSelected($event)" multiple>
-      </div>
-
-      <div *ngIf="uploadedFileUrls.length > 0">
-        <h3>Uploaded Files:</h3>
-        <div *ngFor="let file of uploadedFileUrls">
-          <a [href]="file.url" [download]="file.name">
-            <img [src]="file.url" class="uploaded-image">
-          </a>
+  <div class="modal">
+    <div class="modal-content">
+      <span class="close" (click)="cancel()">&times;</span>
+      <h2>EDIT ORDER</h2>
+  
+      <form [formGroup]="editForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+          <label for="OrderId"><i class="material-icons">assignment</i> Order ID:</label>
+          <input required type="text" formControlName="OrderId" class="form-control" id="OrderId" placeholder="Enter Order ID" [readonly]="true">
         </div>
-      </div>
-
-      <button type="submit" class="btn btn-primary">Save</button>
-      <button type="button" class="btn btn-secondary" (click)="cancel()">Cancel</button>
-    </form>
+  
+        <div class="form-group">
+          <label for="DentistId"><i class="material-icons">person</i> Dentist:</label>
+          <select required formControlName="DentistId" class="form-control" id="DentistId">
+            <option *ngFor="let dentist of dentists" [ngValue]="dentist.dentistId">
+              {{ dentist.firstName }} {{ dentist.lastName }}
+            </option>
+          </select>
+        </div>
+  
+        <div class="form-group">
+          <label for="MedicalAidId"><i class="material-icons">local_hospital</i> Medical Aid:</label>
+          <select formControlName="MedicalAidId" class="form-control" id="MedicalAidId" required>
+            <option disabled selected value="">Select Medical Aid</option>
+            <option *ngFor="let medicalAid of medicalAids" [ngValue]="medicalAid.medicalAidId">
+              {{ medicalAid.medicalAidName }}
+            </option>
+          </select>
+        </div>
+  
+        <div class="form-group">
+          <label for="PatientName"><i class="material-icons">person</i> Patient Name:</label>
+          <input required type="text" formControlName="PatientName" class="form-control" id="PatientName" placeholder="Enter patient name">
+        </div>
+  
+        <div class="form-group">
+          <label for="PatientSurname"><i class="material-icons">person</i> Patient Surname:</label>
+          <input required type="text" formControlName="PatientSurname" class="form-control" id="PatientSurname" placeholder="Enter patient surname">
+        </div>
+  
+        <div class="form-group">
+          <label for="MedicalAidNumber"><i class="material-icons">local_hospital</i> Medical Aid Number:</label>
+          <input required type="text" formControlName="MedicalAidNumber" class="form-control" id="MedicalAidNumber" placeholder="Enter medical aid number">
+        </div>
+  
+        <div class="form-group">
+          <label for="OrderStatusId"><i class="material-icons">assignment</i> Order Status:</label>
+          <select formControlName="OrderStatusId" class="form-control" id="OrderStatusId" required>
+            <option *ngFor="let status of orderStatus" [ngValue]="status.orderStatusId">
+              {{ status.description }}
+            </option>
+          </select>
+        </div>
+  
+        <div class="form-group">
+          <label for="PriorityLevel"><i class="material-icons">priority_high</i> Priority Level:</label>
+          <select formControlName="PriorityLevel" class="form-control" id="PriorityLevel" required>
+            <option disabled selected value="">Select Priority Level</option>
+            <option *ngFor="let level of priorityLevels" [value]="level.value">{{ level.label }}</option>
+          </select>
+        </div>
+  
+        <div class="form-group">
+          <label for="EmergencyNumber"><i class="material-icons">phone</i> Emergency Number:</label>
+          <input required type="text" formControlName="EmergencyNumber" class="form-control" id="EmergencyNumber" placeholder="Enter Emergency Contact Number">
+        </div>
+  
+        <div class="form-group">
+          <label for="SpecialRequirements"><i class="material-icons">notes</i> Special Requirements:</label>
+          <textarea formControlName="SpecialRequirements" class="form-control" id="SpecialRequirements" placeholder="Enter any special requirements" required></textarea>
+        </div>
+  
+        <div class="form-group">
+          <label for="DueDate"><i class="material-icons">date_range</i> Due Date:</label>
+          <input type="date" formControlName="DueDate" class="form-control" id="DueDate" placeholder="Select Due Date">
+        </div>
+  
+        <div class="form-group" style="margin-bottom: 15px; ">
+          <label for="MediaFiles" style="font-weight: bold; display: flex; margin-bottom: 5px; color: black;">
+            <i class="material-icons" style="margin-right: 8px;">attach_file</i> Upload Media Files:
+          </label>
+          <input type="file" id="MediaFiles" (change)="onFileSelected($event)" multiple style="display: inline-block; padding: 8px 12px; border: 1px solid #ccc; border-radius: 5px; background-color: #f0f0f0; color: #333; font-size: 14px; cursor: pointer;">
+        </div>
+        
+  
+        <div *ngIf="uploadedFileUrls.length > 0" style="text-align: center;">
+          <h3 style="margin-bottom: 10px;">Uploaded Files:</h3>
+          <div style="display: inline-block;">
+            <div *ngFor="let file of uploadedFileUrls" style="display: inline-block; margin-right: 10px;">
+              <a [href]="file.url" [download]="file.name">
+                <img [src]="file.url" class="uploaded-image" style="max-width: 100px; max-height: 100px; border: 1px solid #ccc; border-radius: 5px; margin-bottom: 10px;">
+              </a>
+            </div>
+          </div>
+        </div>
+        
+  
+        <button type="submit" class="btn btn-primary"> Save</button>
+        <button type="button" class="btn btn-secondary" (click)="cancel()"> Cancel</button>
+      </form>
+    </div>
   </div>
-</div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+</body>
+</html>

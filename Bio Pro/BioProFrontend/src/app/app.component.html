@@ -40,20 +40,7 @@
           <mat-icon>medical_services</mat-icon> <!-- Icon for dentist profile -->
           Dentist Profiles
         </a>
-        <a mat-list-item class="nav-link" (click)="isSidenavOpen = !isSidenavOpen" [routerLink]="['/addproceduraltimeline']">
-          <mat-icon>add_circle_outline</mat-icon> 
-          Create Timeline
-        </a>
-        <a mat-list-item class="nav-link" (click)="toggleDeliveriesMenu()" [routerLink]="['/deliveries']">
-          <mat-icon>local_shipping</mat-icon> 
-          Deliveries
-        </a>
-        <ng-container *ngIf="isDeliveriesMenuOpen">
-          <a mat-list-item class="sub-nav-link" [routerLink]="['/addDelivery']" (click)="isSidenavOpen = !isSidenavOpen">
-            <mat-icon>add_circle_outline</mat-icon> <!-- Icon for new order -->
-            New Delivery
-          </a>
-        </ng-container>
+       
         <a mat-list-item class="nav-link" (click)="toggleOrdersMenu()" [routerLink]="['/orders']">
           <mat-icon>folder</mat-icon> <!-- Icon for orders -->
           Orders
@@ -70,6 +57,20 @@
           <a mat-list-item class="sub-nav-link" [routerLink]="['/approval']" (click)="isSidenavOpen = !isSidenavOpen">
             <mat-icon>check_circle</mat-icon> <!-- Icon for approve orders -->
             Approve Orders
+          </a>
+        </ng-container>
+        <a mat-list-item class="nav-link" (click)="isSidenavOpen = !isSidenavOpen" [routerLink]="['/addproceduraltimeline']">
+          <mat-icon>add_circle_outline</mat-icon> 
+          Create Timeline
+        </a>
+        <a mat-list-item class="nav-link" (click)="toggleDeliveriesMenu()" [routerLink]="['/deliveries']">
+          <mat-icon>local_shipping</mat-icon> 
+          Deliveries
+        </a>
+        <ng-container *ngIf="isDeliveriesMenuOpen">
+          <a mat-list-item class="sub-nav-link" [routerLink]="['/addDelivery']" (click)="isSidenavOpen = !isSidenavOpen">
+            <mat-icon>add_circle_outline</mat-icon> <!-- Icon for new order -->
+            New Delivery
           </a>
         </ng-container>
       </mat-nav-list>

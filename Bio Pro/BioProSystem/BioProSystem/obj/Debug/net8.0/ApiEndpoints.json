@@ -394,6 +394,16 @@
   },
   {
     "ContainingType": "BioProSystem.Controllers.OrderController",
+    "Method": "GetFinishedOrders",
+    "RelativePath": "Api/GetFinishedOrders",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "BioProSystem.Controllers.OrderController",
     "Method": "GetOrderDirectionByIdAsync",
     "RelativePath": "Api/GetOrderDirectionById/{OrderDirectionId}",
     "HttpMethod": "GET",
@@ -422,6 +432,16 @@
         "IsRequired": true
       }
     ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "BioProSystem.Controllers.OrderController",
+    "Method": "GetOrdersInProgressAndNullTimlines",
+    "RelativePath": "Api/GetOrdersInProgressAndNullTimlines",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
     "ReturnTypes": []
   },
   {
@@ -511,6 +531,32 @@
         "IsRequired": false
       }
     ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "BioProSystem.Controllers.DeliveryController",
+    "Method": "CreateDelivery",
+    "RelativePath": "delivery/createDelivery",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "viewModel",
+        "Type": "BioProSystem.ViewModels.DeliverAddViewModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "BioProSystem.Controllers.DeliveryController",
+    "Method": "GetDeliveries",
+    "RelativePath": "delivery/GetDeliveries",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
     "ReturnTypes": []
   },
   {
@@ -605,6 +651,32 @@
     "IsController": true,
     "Order": 0,
     "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "BioProSystem.Controllers.ProceduralTimelineController",
+    "Method": "Index",
+    "RelativePath": "timeline",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "BioProSystem.Controllers.ProceduralTimelineController",
+    "Method": "CreateTimeline",
+    "RelativePath": "timeline/CreateTimeline",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "viewModel",
+        "Type": "BioProSystem.ViewModels.ProceduralTimelineViewModel",
+        "IsRequired": true
+      }
+    ],
     "ReturnTypes": []
   }
 ]

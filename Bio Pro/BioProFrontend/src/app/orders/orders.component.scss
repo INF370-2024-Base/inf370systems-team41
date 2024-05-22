@@ -1,46 +1,113 @@
 /* Styling for OrdersComponent */
+body {
+  background-color: #f5f5f5; /* Light gray background */
+  font-family: 'Roboto', sans-serif; /* Playful font */
+  color: #333; /* Dark text color */
+  padding: 20px; /* Add some padding */
+  overflow: hidden; /* Hide overflowing content */
+}
 
-h2 {
-    color: #333;
+/* Animated background gradients */
+@keyframes gradientAnimation {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Enhanced blue gradient animation */
+body {
+  background: linear-gradient(120deg, #aed9e0, #c2e2f3, #eaf1fa, #c2e2f3, #aed9e0);
+  background-size: 400% 400%;
+  animation: gradientAnimation 20s ease infinite;
+}
+
+.row {
+  margin-top: 20px; /* Add some margin to separate the rows from the top */
+}
+.container {
+  width: 80%; /* Adjust the width as needed */
+  margin: 0 auto; /* Center the container horizontally */
+  padding: 20px;
+}
+
+.search-filter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.search-field,
+.filter-field {
+  width: calc(50% - 5px); /* Adjust width for smaller screens */
+  margin-bottom: 10px; /* Add some space between fields */
+}
+
+/* Action Buttons */
+.action-button {
+  width: calc(50% - 5px); /* Adjust width for smaller screens */
+  margin-left: 5px; /* Add a small gap between buttons */
+}
+
+.order-details {
+  padding: 20px;
+  background-color: #f9f9f9;
+  margin-bottom: 20px;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.teethshades {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.teethshade-item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.color-box {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+}
+
+p {
+  margin: 10px 0;
+}
+
+canvas {
+  margin-top: 20px;
+  border: 1px solid #ddd;
+}
+
+.action-icons {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.edit-button,
+.trash-button {
+  margin-left: 10px;
+}
+
+.scroll-container {
+  height: calc(100vh - 150px); // Adjust the height as needed
+  overflow-y: auto;
+}
+.search-field, .filter-field {
+  margin-right: 20px; /* Adjust the margin as needed */
+}
+
+@media only screen and (max-width: 768px) {
+  .search-field,
+  .filter-field,
+  .action-button {
+    width: 100%; /* Adjust width for smaller screens */
+    margin-left: 0; /* Reset margin for smaller screens */
+    margin-bottom: 10px; /* Add some space between fields and buttons */
   }
-  
-  label {
-    font-weight: bold;
-  }
-  
-  input[type="text"] {
-    padding: 8px;
-    margin-right: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-  }
-  
-  button {
-    padding: 8px 12px;
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  
-  button:hover {
-    background-color: #0056b3;
-  }
-  
-  ul {
-    list-style-type: none;
-    padding: 0;
-  }
-  
-  li {
-    margin-bottom: 10px;
-    border: 1px solid #ccc;
-    padding: 10px;
-    border-radius: 4px;
-  }
-  
-  p {
-    color: #f00;
-  }
-  
+}
