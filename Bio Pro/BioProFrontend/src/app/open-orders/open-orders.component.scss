@@ -1,76 +1,95 @@
-.example-header-image {
-  background-image: url('https://picsum.photos/150/150');
-  background-size: cover;
-}
 body {
-    background-color: #f5f5f5; /* Light gray background */
-    font-family: 'Roboto', sans-serif; /* Playful font */
-    color: #333; /* Dark text color */
-    padding: 20px; /* Add some padding */
-    overflow: hidden; /* Hide overflowing content */
-  }
-  
-  /* Animated background gradients */
-  @keyframes gradientAnimation {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
-  }
-  
-  /* Enhanced blue gradient animation */
-  body {
-    background: linear-gradient(120deg, #aed9e0, #c2e2f3, #eaf1fa, #c2e2f3, #aed9e0);
-    background-size: 400% 400%;
-    animation: gradientAnimation 20s ease infinite;
-  }
-  
-  
-  .row {
-    margin-top: 20px; /* Add some margin to separate the rows from the top */
-  }
-  
-  .order-card {
-    margin-bottom: 20px; /* Add some space between each card */
-    height: 150px; /* Increase the height for a more spacious feel */
-    overflow: hidden; /* Hide overflowing content */
-    position: relative; /* Position elements inside */
-    border-radius: 10px; /* Add rounded corners */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add subtle shadow */
-    transition: transform 0.3s, box-shadow 0.3s; /* Smooth transition */
-  }
-  
-  .order-card:hover {
-    transform: translateY(-5px); /* Move card up on hover */
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Increase shadow on hover */
-  }
-  
-  
-  .mat-card-content {
-    padding: 10px; /* Add padding to content area */
-  }
-  
-  .mat-card-title, .mat-card-subtitle {
-    font-size: 16px; /* Adjust font size */
-    margin: 0; /* Remove default margin */
-    color: #333; /* Text color */
-  }
-  
-  .mat-card-title {
-    font-weight: bold; /* Bold title */
-  }
-  
-  .mat-card-subtitle {
-    font-style: italic; /* Italic subtitle */
-  }
-  
-  .mat-card-actions {
-    display: flex; /* Align actions horizontally */
-    justify-content: flex-end; /* Align actions to the right */
-  }
-  
-  .mat-card-actions button {
-    margin-left: 10px; /* Add space between buttons */
-  }
-  
-  /* Additional decorative elements */
-  
+  background-color: #f5f5f5;
+  font-family: 'Roboto', sans-serif;
+  color: #333;
+  padding: 20px;
+  overflow: auto;
+  overflow-y: auto;
+  font-size: medium;
+}
+
+/* Animated background gradients */
+@keyframes gradientAnimation {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Enhanced blue gradient animation */
+body {
+  background: linear-gradient(120deg, #aed9e0, #c2e2f3, #eaf1fa, #c2e2f3, #aed9e0);
+  background-size: 400% 400%;
+  animation: gradientAnimation 20s ease infinite;
+}
+
+/* Container styles */
+/* Container styles */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px; /* Add padding */
+}
+
+/* Row styles */
+.row {
+  margin-top: 20px;
+}
+
+/* Order card styles */
+.order-card {
+  // width: calc(33.333% - 20px);
+  margin-bottom: 20px;
+  overflow: hidden;
+  position: relative;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s, box-shadow 0.3s;
+  background-color: #fff;
+}
+
+.order-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.order-card-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.order-card-icon {
+  font-size: 50px;
+  color: #333;
+  margin-right: 10px;
+}
+
+.order-card-title {
+  font-size: 16px;
+  font-weight: bold;
+  margin: 0;
+  color: #333;
+}
+
+.order-card-subtitle {
+  font-size: 16px;
+  font-style: italic;
+  color: #333;
+}
+
+.order-card-text {
+  margin-bottom: 10px;
+}
+
+/* Gradient background for order cards */
+.order-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 140%;
+  height: 100%;
+  background: linear-gradient(45deg, #f0f0f0, #ffffff);
+  z-index: -1;
+  border-radius: 10px;
+}

@@ -1,35 +1,189 @@
 .color-chart {
-    padding: 20px;
+  margin-top: 20px;
+}
+
+.shade-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 10px;
+}
+
+.shade-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.color-box {
+  width: 50px;
+  height: 50px;
+  margin-bottom: 10px;
+  position: relative;
+  border-radius: 10px;
+  background: linear-gradient(45deg, #f5f5f5, #ffffff);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.selected-mark {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  color: #888;
+  font-size: 18px;
+}
+
+.color-name {
+  text-align: center;
+  font-family: 'Arial', sans-serif;
+  font-size: 14px;
+  color: #333;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-top: 5px;
+}
+
+
+body {
+  background: linear-gradient(120deg, #aed9e0, #c2e2f3, #eaf1fa, #c2e2f3, #aed9e0);
+  background-size: 400% 400%;
+  animation: gradientAnimation 20s ease infinite;
+  font-family: 'Roboto', sans-serif;
+  color: #bdb6b6;
+  padding: 20px;
+  overflow-y: auto; /* Allow vertical scrolling */
+}
+
+@keyframes gradientAnimation {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.container {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+h1 {
+  font-size: 24px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+mat-form-field {
+  width: 100%;
+}
+
+.mat-form-field-appearance-outline .mat-form-field-flex {
+  background-color: inherit; /* Inherit background color */
+}
+
+.mat-form-field-appearance-outline .mat-form-field-underline {
+  display: block;
+}
+
+.mat-form-field-appearance-outline .mat-form-field-subscript-wrapper {
+  padding: 0;
+}
+
+.mat-error {
+  font-size: 12px;
+  color: #e74c3c;
+  @media (max-width: 768px) {
+      font-size: 11px;
   }
-  
-  .shade-container {
-    display: flex;
-    flex-wrap: wrap;
+  @media (max-width: 480px) {
+      font-size: 10px;
   }
-  
-  .shade-item {
-    width: 100px;
-    height: 100px;
-    margin: 10px;
-    cursor: pointer;
+}
+
+.mat-checkbox {
+  margin-top: 15px;
+  @media (max-width: 768px) {
+      margin-top: 12px;
   }
-  
-  .color-box {
-    width: 100%;
-    height: 80px;
-    border-radius: 5px;
+  @media (max-width: 480px) {
+      margin-top: 10px;
   }
-  
-  .color-name {
-    text-align: center;
-    margin-top: 5px;
+}
+
+.mat-raised-button {
+  margin-top: 20px;
+  display: block;
+  width: 100%;
+  @media (max-width: 768px) {
+      margin-top: 15px;
   }
-  
-  .selected-mark {
-    position: absolute;
-    top: 5px;
-    right: 5px;
-    font-size: 20px;
-    color: green;
+  @media (max-width: 480px) {
+      margin-top: 10px;
   }
+}
+
+mat-label i.material-icons {
+  vertical-align: middle;
+  margin-right: 8px;
+  @media (max-width: 768px) {
+      margin-right: 6px;
+  }
+  @media (max-width: 480px) {
+      margin-right: 4px;
+  }
+}
+
+mat-label {
+  font-size: 1.2em;
+  font-weight: bold;
+  @media (max-width: 768px) {
+      font-size: 1.1em;
+  }
+  @media (max-width: 480px) {
+      font-size: 1em;
+  }
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  padding: 10px 10px;
+  border: none;
+  border-radius: 5px;
+  font-size: 12px;
   
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  color: #fff;
+}
+
+.btn-primary {
+  background-color: #007bff;
+  margin-right: 40px;
+}
+
+.btn-secondary {
+  background-color: #6c757d;
+}
+
+.btn-icon {
+  margin-right: 5px;
+}
+
+
+.button-container {
+  margin-top: 10px;
+}
+
+// #myCanvas {
+//   max-width: 550px; /* Set maximum width */
+//   max-height: 700px; /* Set maximum height */
+//   width: 100%; /* Ensure canvas width fills its container */
+//   height: auto; /* Allow canvas height to adjust proportionally */
+// }

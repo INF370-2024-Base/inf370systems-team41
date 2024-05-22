@@ -1,0 +1,65 @@
+.delivery-body {
+    background: linear-gradient(120deg, #aed9e0, #c2e2f3, #eaf1fa, #c2e2f3, #aed9e0);
+    background-size: 400% 400%;
+    animation: gradientAnimation 20s ease infinite;
+    font-family: 'Roboto', sans-serif;
+    color: #333;
+    padding: 20px;
+    margin: 0 auto;
+    overflow-y: auto; /* Allow vertical scrolling */
+    max-height: 80vh;  /* Allow vertical scrolling */
+}
+
+.delivery-card {
+    margin-bottom: 20px;
+    background-color: #fff; /* Add a white background */
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    padding: 20px; /* Add padding inside the card */
+    transition: transform 0.3s, box-shadow 0.3s; /* Smooth transition */
+    
+    &:hover {
+        transform: translateY(-5px); /* Lift up on hover */
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Increase shadow on hover */
+    }
+}
+
+mat-list-item {
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    border-bottom: 1px solid #e0e0e0; /* Add bottom border */
+    transition: background-color 0.3s; /* Smooth background transition */
+    
+    &:hover {
+        background-color: #f9f9f9; /* Light background on hover */
+    }
+    
+    mat-icon {
+        margin-right: 15px;
+        font-size: 24px; /* Adjust icon size */
+        color: #555; /* Set icon color */
+    }
+    
+    &:last-child {
+        border-bottom: none; /* Remove bottom border from last list item */
+    }
+}
+
+
+@media (max-width: 768px) {
+    .delivery-header {
+        font-size: 20px; /* Adjust font size for smaller screens */
+    }
+
+    mat-list-item {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 10px 15px; /* Adjust padding for smaller screens */
+    }
+
+    mat-icon {
+        margin-right: 0;
+        margin-bottom: 8px; /* Adjust spacing between icon and text for smaller screens */
+    }
+}

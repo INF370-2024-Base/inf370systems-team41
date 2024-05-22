@@ -1,0 +1,138 @@
+
+body {
+    background-color: #f5f5f5;
+    font-family: 'Roboto', sans-serif;
+    color: #333;
+    padding: 20px;
+    overflow: auto;
+    font-size: medium;
+  }
+  
+  /* Animated background gradients */
+  @keyframes gradientAnimation {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+  
+  /* Enhanced blue gradient animation */
+  body {
+    background: linear-gradient(120deg, #aed9e0, #c2e2f3, #eaf1fa, #c2e2f3, #aed9e0);
+    background-size: 400% 400%;
+    animation: gradientAnimation 20s ease infinite;
+  }
+  
+  /* Main title styles */
+  .main-title {
+    font-size: 48px;
+    color: #4d4a4a;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    margin-bottom: 24px;
+    text-shadow: 2px 2px 4px rgba(124, 124, 124, 0.5);
+  }
+  
+  /* Container styles */
+  .container {
+    max-width: 1200px;
+    margin: auto;
+  }
+  
+  /* Row styles */
+  .row {
+    margin-top: 30px;
+  }
+  
+  /* Button styles */
+  .btn {
+    border-radius: 20px;
+    padding: 8px 10px;
+    font-size: 12px;
+  }
+ 
+  
+
+  .card-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 70px;
+    justify-content: flex-end;
+  }
+  
+  /* Accordion styles */
+  mat-accordion {
+    width: 100%;
+  }
+  
+  mat-expansion-panel {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+  
+  mat-expansion-panel:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  }
+  
+  mat-expansion-panel-header {
+    border-bottom: 1px solid #e0e0e0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  mat-panel-title {
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+  }
+  
+  mat-panel-description {
+    display: flex;
+    align-items: center;
+  }
+
+  .reject-button, .approve-button {
+  border-radius: 20px;
+  padding: 1px 6px;  /* Reduced padding to make the buttons even smaller */
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: unset;
+}
+
+.reject-button {
+  background-color: #9c9c9c;
+  color: #fff;
+}
+
+.reject-button:hover {
+  background-color: #a71d2a;
+}
+
+.approve-button {
+  background-color: #3a51ff;
+  color: #fff;
+  margin-right: 10px;
+  margin-left: 350px;;
+}
+
+.approve-button:hover {
+  background-color: #122dfb;
+}
+
+  
+  .approve-button:hover {
+    background-color: #122dfb;
+  }
+
+  /* Spacer styles */
+  .spacer {
+    flex: 1;
+  }
+  

@@ -1,6 +1,7 @@
 <!-- <p>orders works!</p> -->
 <body>
   <div class="scroll-container">
+    <h1 style="font-size: 48px; color: #4d4a4a; text-align: center; text-transform: uppercase; letter-spacing: 3px; margin-bottom: 24px; text-shadow: 2px 2px 4px rgba(124, 124, 124, 0.5);">ORDERS</h1>
   <div class="container">
     <div class="search-filter">
       <mat-form-field class="search-field">
@@ -54,7 +55,7 @@
             <mat-icon>edit</mat-icon>Edit
           </button>
           <button mat-raised-button color="warn" class="trash-button" (click)="deleteOrder(order.systemOrder.orderId)">
-            <mat-icon>delete</mat-icon>Delete
+            <mat-icon>cancel</mat-icon>Cancel
           </button>
         </div>
       </mat-expansion-panel>

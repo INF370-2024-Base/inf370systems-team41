@@ -11,7 +11,9 @@
 </head>
 <body>
     <div class="container">
-        <h1><mat-icon>person_add</mat-icon> Add New Dentist</h1>
+        <h1 style="font-size: 28px; color: #333; text-align: center; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 20px;">
+            <mat-icon style="vertical-align: middle; margin-right: 8px;">person_add</mat-icon> Add New Dentist
+        </h1>        
         <div class="row">
             <div class="col-md-6">
                 <form [formGroup]="addDentistForm" (ngSubmit)="addDentist()" novalidate>

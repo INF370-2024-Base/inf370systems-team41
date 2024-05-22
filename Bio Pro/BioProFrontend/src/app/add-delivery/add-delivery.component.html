@@ -1,8 +1,10 @@
-<mat-accordion>
-    <mat-expansion-panel *ngFor="let order of orderInfo">
+<body class="delivery-body">
+  <h1 style="font-size: 48px; color: #4d4a4a; text-align: center; text-transform: uppercase; letter-spacing: 3px; margin-bottom: 24px; text-shadow: 2px 2px 4px rgba(124, 124, 124, 0.5);">NEW DELIVERIES</h1>
+  <mat-accordion>
+    <mat-expansion-panel *ngFor="let order of orderInfo" class="delivery-panel">
       <mat-expansion-panel-header>
         <mat-panel-title>
-          Order ID: {{ order.systemOrder.orderId }}- Patient: {{ order.patient.firsName }} {{ order.patient.lastname }}
+          <span class="order-details">Order ID: {{ order.systemOrder.orderId }} - Patient: {{ order.patient.firstName }} {{ order.patient.lastName }}</span>
           <button class="edit-button" (click)="createdeliveries(order.systemOrder.orderId)">Create Delivery</button>
         </mat-panel-title>
         <mat-panel-description>
@@ -10,18 +12,19 @@
         </mat-panel-description>
       </mat-expansion-panel-header>
 
-      <p>Order Status: {{ order.orderStatus.description }}</p>
-      <p>Order Type: {{ order.orderType.description }}</p>
-      <p>Order Direction: {{ order.orderDirection.description }}</p>
-      <p>Timeline Details: {{ order.timeline.timelineDetails }}</p>
+      <p class="order-info">Order Status: {{ order.orderStatus.description }}</p>
+      <p class="order-info">Order Type: {{ order.orderType.description }}</p>
+      <p class="order-info">Order Direction: {{ order.orderDirection.description }}</p>
+      <p class="order-info">Timeline Details: {{ order.timeline.timelineDetails }}</p>
   
       <strong>Teethshades</strong>
-      <div *ngFor="let teethshade of order.teethshades">
-        <div class="color-box" [style.background]="teethshade.colourCode" style="width: 30px; height: 30px; border: 1px solid #000;"></div>
-        <span>{{ teethshade.colourName }}</span>
+      <div *ngFor="let teethshade of order.teethshades" class="teethshade">
+        <div class="color-box" [style.background]="teethshade.colourCode"></div>
+        <span class="shade-name">{{ teethshade.colourName }}</span>
       </div>
     </mat-expansion-panel>
   </mat-accordion>
-  <div *ngIf="orderInfo.length==0">
-No finished orders without a started delivery
-  </div>
+  <div *ngIf="orderInfo.length === 0" class="no-deliveries alert-message">
+    <span class="icon">&#9888;</span> No NEW DELIVERIES can be processed until an order has been COMPLETED.
+</div>
+</body>

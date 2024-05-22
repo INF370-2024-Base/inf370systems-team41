@@ -1,16 +1,24 @@
 <body>
-<div class="row">
-    <div class="col-sm-3" *ngFor="let openOrder of OpenOrders">
-      <mat-card class="order-card" [@cardHover]="hoverState" (mouseenter)="toggleHover('hover')" (mouseleave)="toggleHover('rest')">
-        <mat-card-header>
-          <div mat-card-avatar class="example-header-image"></div>
-          <mat-card-title>OPEN ORDER (ID): {{ openOrder.openOrderId }}</mat-card-title>
-          <mat-card-subtitle>CURRENTLY: {{ openOrder.description }}</mat-card-subtitle>
-        </mat-card-header>
-        <mat-card-actions>
-          <!-- Add buttons here if needed -->
-        </mat-card-actions>
-      </mat-card>
+  <h1 style="font-size: 48px; color: #4d4a4a; text-align: center; text-transform: uppercase; letter-spacing: 3px; margin-bottom: 24px; text-shadow: 2px 2px 4px rgba(124, 124, 124, 0.5);">OPEN ORDERS</h1>
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-3" *ngFor="let openOrder of OpenOrders">
+        <mat-card class="order-card" [@cardHover]="hoverState" (mouseenter)="toggleHover('hover')" (mouseleave)="toggleHover('rest')">
+          <mat-card-header>
+            <!-- Material icon on the left side -->
+            <mat-icon class="example-header-icon">work</mat-icon>
+            <div>
+              <mat-card-title>OPEN ORDER (ID): {{ openOrder.openOrderId }}</mat-card-title>
+              <mat-card-subtitle>CURRENTLY: {{ openOrder.description }}</mat-card-subtitle>
+            </div>
+          </mat-card-header>
+          <mat-card-actions>
+            <!-- Add buttons here if needed -->
+          </mat-card-actions>
+        </mat-card>
+      </div>
     </div>
   </div>
 </body>
+
+

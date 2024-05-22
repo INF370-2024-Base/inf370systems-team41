@@ -1,154 +1,167 @@
 
-<div class="container">
-    <h2>Add New Order</h2>
-  
+<body>
+  <div class="container">
+    <h1 style="font-size: 48px; color: #4d4a4a; text-align: center; text-transform: uppercase; letter-spacing: 3px; margin-bottom: 24px; text-shadow: 2px 2px 4px rgba(124, 124, 124, 0.5);">NEW ORDER</h1>
+
     <form [formGroup]="addForm" (ngSubmit)="onSubmit()">
-        <!-- Order ID Input -->
-        <div class="form-group">
-          <label for="OrderId">Order ID:</label>
-          <input required type="text" formControlName="OrderId" class="form-control" id="OrderId" placeholder="Enter Order ID">
-          
-        </div>
-        <div *ngIf="addForm.get('OrderId')?.invalid" class="text-danger">Order ID is required and must be 7 characters long</div>
-    
-       <!-- Dentist Selection Dropdown -->
-       <div class="form-group">
-        <label for="DentistId">Dentist:</label>
-        <select required formControlName="DentistId" class="form-control" id="DentistId" >
+      <!-- Order ID Input -->
+      <div class="form-group">
+        <label for="OrderId"><i class="material-icons">assignment</i> Order ID:</label>
+        <input required type="text" formControlName="OrderId" class="form-control" id="OrderId" placeholder="Enter Order ID">
+        <div *ngIf="addForm.get('OrderId')?.invalid" class="text-danger" style="font-size: 12px;">Order ID is required and must be 7 characters long</div>
+      </div>
+
+      <!-- Dentist Selection Dropdown -->
+      <div class="form-group">
+        <label for="DentistId"><i class="material-icons">person</i> Dentist:</label>
+        <select required formControlName="DentistId" class="form-control" id="DentistId">
           <option *ngFor="let dentist of dentists" [ngValue]="dentist.dentistId">
             {{ dentist.firstName }} {{ dentist.lastName }}
           </option>
         </select>
+        <div *ngIf="hasError('DentistId', 'required')" class="text-danger" style="font-size: 12px;">Dentist is required</div>
       </div>
-      <div *ngIf="hasError('DentistId', 'required')" class="text-danger">Dentist is required</div>
 
-        <!-- Order Date Input -->
-        <div class="form-group">
-          <label for="OrderDate">Order Date:</label>
-          <input required type="date" formControlName="OrderDate" class="form-control" id="OrderDate" placeholder="Select Order Date">
-        </div>
-        <div *ngIf="hasError('OrderDate', 'required')" class="text-danger">Order Date is required</div>
-    
-        <!-- Medical Aid Selection Dropdown -->
-        <div class="form-group">
-            <label for="MedicalAidId">Medical Aid:</label>
-            <select formControlName="MedicalAidId" class="form-control" id="MedicalAidId" required>
-              <option disabled selected value="">Select Medical Aid</option>
-              <option *ngFor="let medicalAid of medicalAids" [ngValue]="medicalAid.medicalAidId">
-                {{ medicalAid.medicalAidId }} - {{ medicalAid.medicalAidName }}
-              </option>
-            </select>
-            <div *ngIf="hasError('MedicalAidId', 'required')" class="text-danger">Medical aid is required</div>
-          </div>
-          <div class="form-group">
-            <label for="PatientName">Patient Name:</label>
-            <input required type="text" formControlName="PatientName" class="form-control" id="PatientName" placeholder="Enter patient name">
-            <div *ngIf="hasError('PatientName', 'required')" class="text-danger">Patient name is required</div>
-          </div>
-          <div class="form-group">
-            <label for="PatientSurname">Patient Surname:</label>
-            <input required type="text" formControlName="PatientSurname" class="form-control" id="PatientSurname" placeholder="Enter patient surname">
-            <div *ngIf="hasError('PatientSurname', 'required')" class="text-danger">Patient surname is required</div>
-          </div>
-          <div class="form-group">
-            <label for="MedicalAidNumber">Medical Aid Number:</label>
-            <input required type="text" formControlName="MedicalAidNumber" class="form-control" id="MedicalAidNumber" placeholder="Enter medical aid number">
-            <div *ngIf="hasError('MedicalAidNumber', 'required')" class="text-danger">Medical aid is required</div>
-          </div>
-    
-       <!-- Order Type Selection Dropdown -->
-       <div class="form-group">
-        <label for="OrderTypeId">Order Type:</label>
+      <!-- Order Date Input -->
+      <div class="form-group">
+        <label for="OrderDate"><i class="material-icons">event</i> Order Date:</label>
+        <input required type="date" formControlName="OrderDate" class="form-control" id="OrderDate" placeholder="Select Order Date">
+        <div *ngIf="hasError('OrderDate', 'required')" class="text-danger" style="font-size: 12px;">Order Date is required</div>
+      </div>
+
+      <!-- Medical Aid Selection Dropdown -->
+      <div class="form-group">
+        <label for="MedicalAidId"><i class="material-icons">local_hospital</i> Medical Aid:</label>
+        <select formControlName="MedicalAidId" class="form-control" id="MedicalAidId" required>
+          <option disabled selected value="">Select Medical Aid</option>
+          <option *ngFor="let medicalAid of medicalAids" [ngValue]="medicalAid.medicalAidId">
+            {{ medicalAid.medicalAidId }} - {{ medicalAid.medicalAidName }}
+          </option>
+        </select>
+        <div *ngIf="hasError('MedicalAidId', 'required')" class="text-danger" style="font-size: 12px;">Medical aid is required</div>
+      </div>
+
+      <!-- Patient Name Input -->
+      <div class="form-group">
+        <label for="PatientName"><i class="material-icons">person</i> Patient Name:</label>
+        <input required type="text" formControlName="PatientName" class="form-control" id="PatientName" placeholder="Enter patient name">
+        <div *ngIf="hasError('PatientName', 'required')" class="text-danger" style="font-size: 12px;">Patient name is required</div>
+      </div>
+
+      <!-- Patient Surname Input -->
+      <div class="form-group">
+        <label for="PatientSurname"><i class="material-icons">person</i> Patient Surname:</label>
+        <input required type="text" formControlName="PatientSurname" class="form-control" id="PatientSurname" placeholder="Enter patient surname">
+        <div *ngIf="hasError('PatientSurname', 'required')" class="text-danger" style="font-size: 12px;">Patient surname is required</div>
+      </div>
+
+      <!-- Medical Aid Number Input -->
+      <div class="form-group">
+        <label for="MedicalAidNumber"><i class="material-icons">assignment_ind</i> Medical Aid Number:</label>
+        <input required type="text" formControlName="MedicalAidNumber" class="form-control" id="MedicalAidNumber" placeholder="Enter medical aid number">
+        <div *ngIf="hasError('MedicalAidNumber', 'required')" class="text-danger" style="font-size: 12px;">Medical aid is required</div>
+      </div>
+
+      <!-- Order Type Selection Dropdown -->
+      <div class="form-group">
+        <label for="OrderTypeId"><i class="material-icons">assignment</i> Order Type:</label>
         <select formControlName="OrderTypeId" class="form-control" id="OrderTypeId" required>
           <option *ngFor="let type of orderTypes" [ngValue]="type.orderTypeId">
             {{ type.description }}
           </option>
         </select>
-        <div *ngIf="hasError('OrderTypeId', 'required')" class="text-danger">Order Type is required</div>
-      </div>      
+        <div *ngIf="hasError('OrderTypeId', 'required')" class="text-danger" style="font-size: 12px;">Order Type is required</div>
+      </div>
+    
       <!-- Order Direction Selection Dropdown -->
       <div class="form-group">
-        <label for="OrderDirectionId">Order Direction:</label>
+        <label for="OrderDirectionId"><i class="material-icons">navigation</i> Order Direction:</label>
         <select formControlName="OrderDirectionId" class="form-control" id="OrderDirectionId" (change)="getOrderDirection($event)" required>
             <option *ngFor="let direction of orderDirections" [value]="direction.orderDirectionId">
                 {{ direction.description }} {{ direction.instructions }}
             </option>
         </select>
-        <div *ngIf="hasError('OrderDirectionId', 'required')" class="text-danger">Order Direction is required</div>
+        <div *ngIf="hasError('OrderDirectionId', 'required')" class="text-danger" style="font-size: 12px;">Order Direction is required</div>
     </div>
       
-      <div class="form-group">
-        <label for="PriorityLevel">Priority Level:</label>
-        <select formControlName="PriorityLevel" class="form-control" id="PriorityLevel" required> 
-          <option disabled selected value="">Select Priority Level</option>
-          <option *ngFor="let level of priorityLevels" [value]="level.value">{{ level.label }}</option>
-        </select>
-        <div *ngIf="hasError('PriorityLevel', 'required')" class="text-danger">Priority Level is required</div>
-      </div>
-      
-
-      
-      <div>
-        <canvas #imageCanvas id="myCanvas" width="100" height="50"></canvas>
-      </div>
-      
-      <!-- Display Selected Areas (Read-only) -->
-      <div *ngIf="selectedAreas.length > 0">  <h3>Selected Areas:</h3>
-        <div *ngFor="let areaId of selectedAreas ; let i = index">
-          <div class="form-group">
-            <label>Area {{ i + 1 }}:</label>
-            <label>{{areaId}}</label>
-          </div>
+    <div class="form-group">
+      <label for="PriorityLevel"><i class="material-icons">priority_high</i> Priority Level:</label>
+      <select formControlName="PriorityLevel" class="form-control" id="PriorityLevel" required> 
+        <option disabled selected value="">Select Priority Level</option>
+        <option *ngFor="let level of priorityLevels" [value]="level.value">{{ level.label }}</option>
+      </select>
+      <div *ngIf="hasError('PriorityLevel', 'required')" class="text-danger" style="font-size: 12px;">Priority Level is required</div>
+    </div>
+    
+    <div>
+      <canvas #imageCanvas id="myCanvas" width="100" height="125"></canvas>
+    </div>
+    
+    <!-- Display Selected Areas (Read-only) -->
+    <div *ngIf="selectedAreas.length > 0"> 
+      <h3 style="font-size: 1.5rem; text-align: center; margin-bottom: 20px;"><i class="material-icons">priority_high</i> Selected Areas:</h3>
+    
+      <div *ngFor="let areaId of selectedAreas ; let i = index">
+        <div class="form-group">
+          <label>Area {{ i + 1 }}:</label>
+          <label>{{areaId}}</label>
         </div>
       </div>
-      <div *ngIf="selectedAreas.length == 0" class="text-danger">Area is required</div>
-      <div class="color-chart">
-  <h3>Select Teeth Shades</h3>
-  <div class="shade-container" style="display: flex;
-  flex-wrap: wrap;">
-    <!-- Loop through teethShades array and display each shade -->
-    <div *ngFor="let shade of teethShades" class="shade-item" (click)="toggleTeethShadeSelection(shade.teethShadeId)" style="margin-right: 10px;
-    margin-bottom: 10px;
-    position: relative;">
-      <!-- Display color box with the shade's color -->
-      <div class="color-box" [style.background]="shade.colourCode" style="width: 30px;
-      height: 30px;
-      border: 1px solid #000;">
-      <div style="position: absolute;
-      top: 5px;
-      right: 5px;" class="selected-mark" *ngIf="selectedTeethShadeIds.includes(shade.teethShadeId)">&#10003;</div>      
-
-      </div>
-      <div class="color-name">{{ shade.colourName }}</div>
-      <!-- Display check mark if shade is selected -->
-       
     </div>
-  </div>
-</div>
-<div *ngIf="selectedTeethShadeIds.length == 0" class="text-danger">Theeth Shade is required</div>
-      <!-- Additional Form Controls -->
-      <div class="form-group">
-        <label for="EmergencyNumber">Emergency Number:</label>
-        <input required type="text" formControlName="EmergencyNumber" class="form-control" id="EmergencyNumber" placeholder="Enter Emergency Contact Number">
-        <div *ngIf="addForm.get('EmergencyNumber')?.invalid" class="text-danger">Emergency Number is required and must be valid length</div>
-      </div>
+    <div *ngIf="selectedAreas.length == 0" class="text-danger" style="font-size: 12px;">Area is required</div>
+    
+    <div class="color-chart">
+      <h3 style="display: flex; align-items: center; font-family: 'Arial', sans-serif; font-size: 20px; color: #555; text-transform: uppercase; letter-spacing: 1px; margin-top: 20px;">
+        <i class="material-icons" style="margin-right: 10px; font-size: 24px;">color_lens</i>
+        Select Teeth Shades
+      </h3>
       
-      <div class="form-group">
-        <label for="SpecialRequirements">Special Requirements:</label>
-        <textarea formControlName="SpecialRequirements" class="form-control" id="SpecialRequirements" placeholder="Enter any special requirements" required></textarea>        
-        <div *ngIf="hasError('SpecialRequirements', 'required')" class="text-danger">Special Requirements is required</div>
-
+      <div class="shade-container" style="display: flex; flex-wrap: wrap;">
+        <!-- Loop through teethShades array and display each shade -->
+        <div *ngFor="let shade of teethShades" class="shade-item" (click)="toggleTeethShadeSelection(shade.teethShadeId)" style="margin-right: 10px; margin-bottom: 10px; position: relative;">
+          <!-- Display color box with the shade's color -->
+          <div class="color-box" [style.background]="shade.colourCode" style="width: 30px; height: 30px;">
+            <div style="position: absolute; top: 5px; right: 5px;" class="selected-mark" *ngIf="selectedTeethShadeIds.includes(shade.teethShadeId)">&#10003;</div>      
+          </div>
+          <div class="color-name">{{ shade.colourName }}</div>
+          <!-- Display check mark if shade is selected -->
+        </div>
       </div>
-
-      
-      <div class="form-group">
-        <label for="DueDate">Due Date:</label>
-        <input type="date" formControlName="DueDate" class="form-control" id="DueDate" placeholder="Select Due Date">  
-        <div *ngIf="addForm.get('DueDate')?.invalid" class="text-danger">Due Date is required and must be a future date </div>
-      </div>
+    </div>
+    <div *ngIf="selectedTeethShadeIds.length == 0" class="text-danger" style="font-size: 12px;">Theeth Shade is required</div>
+    
+    <!-- Additional Form Controls -->
+    <div class="form-group">
+      <label for="EmergencyNumber"><i class="material-icons">phone</i> Emergency Number:</label>
+      <input required type="text" formControlName="EmergencyNumber" class="form-control" id="EmergencyNumber" placeholder="Enter Emergency Contact Number">
+      <div *ngIf="addForm.get('EmergencyNumber')?.invalid" class="text-danger" style="font-size: 12px;">Emergency Number is required and must be valid length</div>
+    </div>
+    
+    <div class="form-group">
+      <label for="SpecialRequirements"><i class="material-icons">notes</i> Special Requirements:</label>
+      <textarea formControlName="SpecialRequirements" class="form-control" id="SpecialRequirements" placeholder="Enter any special requirements" required></textarea>        
+      <div *ngIf="hasError('SpecialRequirements', 'required')" class="text-danger" style="font-size: 12px;">Special Requirements is required</div>
+    </div>
+    
+    <div class="form-group">
+      <label for="DueDate"><i class="material-icons">date_range</i> Due Date:</label>
+      <input type="date" formControlName="DueDate" class="form-control" id="DueDate" placeholder="Select Due Date">  
+      <div *ngIf="addForm.get('DueDate')?.invalid" class="text-danger" style="font-size: 12px;">Due Date is required and must be a future date </div>
+    </div>
+    
       <!-- Submit and Cancel Buttons -->
-      <button type="submit" class="btn btn-primary">Submit</button>
-      <button type="button" class="btn btn-secondary" (click)="cancel()">Cancel</button>
+      <button type="submit" class="btn btn-primary">
+        <span class="btn-icon">
+          <i class="material-icons">check</i>
+        </span>
+        Submit
+      </button>
+      <button type="button" class="btn btn-secondary" onclick="cancel()">
+        <span class="btn-icon">
+          <i class="material-icons">cancel</i>
+        </span>
+        Cancel
+      </button>
     </form>
   </div>
   
@@ -158,3 +171,5 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/reflect-metadata/0.1.10/Reflect.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@angular/material/bundles/material.umd.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@angular/cdk/bundles/cdk.umd.js"></script>
+
+</body>

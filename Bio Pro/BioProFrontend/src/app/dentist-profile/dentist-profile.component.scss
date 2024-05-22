@@ -1,10 +1,11 @@
+/* Body styles */
 body {
-  background-color: #f5f5f5; /* Light gray background */
-  font-family: 'Roboto', sans-serif; /* Roboto font */
-  color: #333; /* Dark text color */
-  padding: 20px; /* Add some padding */
-  overflow-x: hidden; /* Hide horizontal overflow */
-    overflow-y: auto; //* Hide overflowing content */
+  background-color: #f5f5f5;
+  font-family: 'Roboto', sans-serif;
+  color: #333;
+  padding: 20px;
+  overflow: auto;
+  font-size: medium;
 }
 
 /* Animated background gradients */
@@ -21,139 +22,179 @@ body {
   animation: gradientAnimation 20s ease infinite;
 }
 
+/* Container styles */
 .container {
-  max-width: 1200px; /* Adjust container max-width as needed */
-  margin: 0 auto; /* Center container */
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
+/* Row styles */
 .row {
-  margin-bottom: 20px; /* Add margin between rows */
+  margin-top: 20px;
 }
 
-.col-md-12 {
-  width: 100%; /* Make columns full width */
+/* Search field styles */
+.search-field {
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  padding: 12px 20px;
+  border-radius: 25px;
+  width: 100%;
+  max-width: 800px;
+  transition: border-color 0.3s;
 }
 
-.d-flex {
-  display: flex; /* Use flexbox for alignment */
-  align-items: center; /* Align items vertically */
+.search-field input {
+  flex-grow: 1;
 }
 
-.justify-content-between {
-  justify-content: space-between; /* Align items with space between them */
-}
-
-.align-items-center {
-  align-items: center; /* Align items vertically */
-}
-
-.card-container {
-  display: flex; /* Use flexbox for card layout */
-  flex-wrap: wrap; /* Wrap cards if needed */
-  gap: 20px; /* Add gap between cards */
-}
-
-.example-card {
-  width: calc(33.333% - 20px); /* Adjust card width */
-  margin-bottom: 20px; /* Add margin between cards */
-  overflow: hidden; /* Hide overflowing content */
-  position: relative; /* Position elements inside */
-  border-radius: 10px; /* Add rounded corners */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add subtle shadow */
-  transition: transform 0.3s, box-shadow 0.3s; /* Smooth transition */
-}
-
-.example-card:hover {
-  transform: translateY(-5px); /* Move card up on hover */
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Increase shadow on hover */
-}
-
-/* Your existing CSS styles */
-
-/* Additional styles for favicon and avatar */
-
-
-.mat-card-content {
-  padding: 10px; /* Add padding to content area */
-}
-
-.mat-card-title, .mat-card-subtitle {
-  font-size: 16px; /* Adjust font size */
-  margin: 0; /* Remove default margin */
-  color: #333; /* Text color */
-}
-
-.mat-card-title {
-  font-weight: bold; /* Bold title */
-}
-
-.mat-card-subtitle {
-  font-style: italic; /* Italic subtitle */
-}
-
-.mat-card-actions {
-  display: flex; /* Align actions horizontally */
-  justify-content: flex-end; /* Align actions to the right */
-}
-
-.mat-card-actions button {
-  margin-left: 10px; /* Add space between buttons */
-}
-
-.btn {
-  display: inline-block; /* Make buttons inline-block */
-  padding: 10px 20px; /* Add padding to buttons */
-  border-radius: 5px; /* Add rounded corners to buttons */
-  cursor: pointer; /* Change cursor to pointer on buttons */
-  border: none; /* Remove default button border */
-  transition: background-color 0.3s; /* Add transition effect */
+.search-field mat-icon {
+  margin-right: 10px;
 }
 
 .search-field:focus-within {
-  border-color: #00509a; /* Darker blue border on focus */
+  border-color: #00509a;
 }
 
+/* Button styles */
 .btn {
-  border-radius: 20px; /* Rounded edges for buttons */
+  border-radius: 20px;
   padding: 10px 20px;
+  font-size: 14px;
 }
 
 .btn-outline-primary {
   margin-left: 10px;
-  //border: 2px solid #007bff; /* Add border */
-  color: #007bff; /* Text color */
-  background-color: transparent; /* Transparent background */
-  padding: 8px 20px; /* Add padding */
-  font-size: 16px; /* Increase font size */
-  border-radius: 20px; /* Rounded corners */
-  transition: all 0.3s ease; /* Add transition effect */
 }
 
-.btn-outline-primary:hover {
-  background-color: #007bff; /* Change background color on hover */
-  color: #fff; /* Change text color on hover */
+.btn-secondary {
+  background-color: #558dbd;
+  color: #fff;
+  border: none;
 }
 
-.btn-outline-primary:hover {
-  background-color: #007bff; /* Change background color on hover */
-  color: #fff; /* Change text color on hover */
+.btn-outline-danger {
+  border-color: #dc3545;
+  color: #dc3545;
+  transition: color 0.3s;
 }
-@media only screen and (max-width: 768px) {
+
+.btn-outline-danger:hover {
+  background-color: #dc3545;
+  color: white;
+}
+
+a.btn {
+  margin-left: 10px;
+}
+
+.mr-2 {
+  margin-right: 10px;
+}
+
+/* Primary button styles */
+a.btn.btn-primary.rounded-btn {
+  background-color: #007bff;
+  color: #fff;
+  border-radius: 20px;
+  padding: 10px 30px;
+  text-decoration: none;
+  margin-right: auto;
+}
+
+a.btn.btn-primary.rounded-btn:hover {
+  background-color: #0056b3;
+}
+
+/* Card container styles */
+.card-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+}
+
+/* Card styles */
+.card {
+  width: calc(33.333% - 20px);
+  margin-bottom: 20px;
+  overflow: hidden;
+  position: relative;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s, box-shadow 0.3s;
+  background-color: #fff;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.card-body {
+  padding: 20px;
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.example-header-image {
+  font-size: 50px;
+  color: #333;
+  margin-right: 10px;
+}
+
+.card-title {
+  font-size: 18px;
+  font-weight: bold;
+  margin: 0;
+  color: #333;
+}
+
+.card-text {
+  margin-bottom: 10px;
+}
+
+/* Gradient background for cards */
+.card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(45deg, #f0f0f0, #ffffff);
+  z-index: -1;
+  border-radius: 10px;
+}
+
+/* Responsive styles */
+@media screen and (max-width: 768px) {
+  .card {
+    width: calc(50% - 20px);
+  }
+}
+
+@media screen and (max-width: 576px) {
   .container {
-    padding: 20px;
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+  .btn {
+    width: 100%; /* Set buttons to full width */
+    margin-top: 10px; /* Add margin between buttons */
   }
 
-  .example-card {
-    width: calc(50% - 20px); /* Adjust card width for smaller screens */
-  }
-}
-
-@media only screen and (max-width: 576px) {
-  .container {
-    padding: 15px;
+  a.btn.btn-primary.rounded-btn,
+  .btn-secondary {
+    margin-left: 0; /* Remove left margin for primary and secondary buttons */
   }
 
-  .example-card {
-    width: calc(100% - 20px); /* Adjust card width for even smaller screens */
+  .card {
+    width: calc(100% - 20px);
   }
 }

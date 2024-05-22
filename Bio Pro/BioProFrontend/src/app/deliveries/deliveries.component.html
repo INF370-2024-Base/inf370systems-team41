@@ -1,37 +1,46 @@
-<div *ngFor="let delivery of deliveries" class="mb-3">
-    <mat-card>
-      <mat-card-header>
-        <mat-card-title>Delivery Details</mat-card-title>
-      </mat-card-header>
-      <mat-card-content>
-        <mat-list>
-          <mat-list-item>
-            <mat-icon matListIcon>local_shipping</mat-icon>
-            <h4 matLine>Delivery ID</h4>
-            <p matLine>{{ delivery.deliveryId }}</p>
-          </mat-list-item>
-          <mat-list-item *ngIf="delivery.deliveryDate != null">
-            <mat-icon matListIcon>date_range</mat-icon>
-            <h4 matLine>Delivery Date</h4>
-            <p matLine>{{ delivery.deliveryDate | date: 'mediumDate' }}</p>
-          </mat-list-item>
-          <mat-list-item>
-            <mat-icon matListIcon>info</mat-icon>
-            <h4 matLine>Delivery Status</h4>
-            <p matLine>{{ delivery.deliveryStatus?.status }}</p>
-          </mat-list-item>
-          <mat-list-item>
-            <mat-icon matListIcon>person</mat-icon>
-            <h4 matLine>Employee</h4>
-            <p matLine>{{ delivery.employee.firstName }} {{ delivery.employee.lastName }}</p>
-          </mat-list-item>
-          <mat-list-item>
-            <mat-icon matListIcon>assignment</mat-icon>
-            <h4 matLine>System Order ID</h4>
-            <p matLine>{{ delivery.systemOrderId }}</p>
-          </mat-list-item>
-        </mat-list>
-      </mat-card-content>
-    </mat-card>
+
+<body class="delivery-body">
+
+  <h1 style="font-size: 48px; color: #333; text-align: center; text-transform: uppercase; letter-spacing: 3px; margin-bottom: 20px;">
+    <i class="fas fa-user-plus" style="vertical-align: middle; margin-right: 8px;"></i> DELIVERIES
+</h1> 
+  <div *ngFor="let delivery of deliveries" class="mb-3 delivery-card">
+    
+      <mat-card>
+          <mat-card-header class="delivery-header">
+            <!-- <mat-card-title class="delivery-title" style="font-size: 28px; color: #333; text-align: center; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 20px;">
+              <i class="fas fa-user-plus" style="vertical-align: middle; margin-right: 8px;"></i> Delivery
+          </mat-card-title>           -->
+          </mat-card-header>
+          <mat-card-content>
+              <mat-list>
+                  <mat-list-item>
+                      <mat-icon matListIcon>local_shipping</mat-icon>
+                      <h4 matLine>Delivery ID</h4>
+                      <p matLine>{{ delivery.deliveryId }}</p>
+                  </mat-list-item>
+                  <mat-list-item *ngIf="delivery.deliveryDate != null">
+                      <mat-icon matListIcon>date_range</mat-icon>
+                      <h4 matLine>Delivery Date</h4>
+                      <p matLine>{{ delivery.deliveryDate | date: 'mediumDate' }}</p>
+                  </mat-list-item>
+                  <mat-list-item>
+                      <mat-icon matListIcon>info</mat-icon>
+                      <h4 matLine>Delivery Status</h4>
+                      <p matLine>{{ delivery.deliveryStatus?.status }}</p>
+                  </mat-list-item>
+                  <mat-list-item>
+                      <mat-icon matListIcon>person</mat-icon>
+                      <h4 matLine>Employee</h4>
+                      <p matLine>{{ delivery.employee.firstName }} {{ delivery.employee.lastName }}</p>
+                  </mat-list-item>
+                  <mat-list-item>
+                      <mat-icon matListIcon>assignment</mat-icon>
+                      <h4 matLine>System Order ID</h4>
+                      <p matLine>{{ delivery.systemOrderId }}</p>
+                  </mat-list-item>
+              </mat-list>
+          </mat-card-content>
+      </mat-card>
   </div>
-  
+</body>
