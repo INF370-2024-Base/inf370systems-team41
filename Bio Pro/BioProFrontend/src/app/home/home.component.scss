@@ -1,140 +1,88 @@
-:host { 
-    display: contents; 
+.home-text {
+  margin-top: 0;
+  position: absolute;
+  top: 50%;
+  left: 0; 
+  transform: translateY(-50%);
+  z-index: 1;
+  text-align: center; 
+}
+
+.home-text3 {
+  font-size: 58px; 
+  color: #333; 
+  text-transform: uppercase; 
+  letter-spacing: 3px; 
+  margin-bottom: 20px; 
+  font-weight: bold; 
+  text-shadow: 2px 2px 4px rgba(154, 136, 136, 0.825); 
+}
+
+.home-text4, .home-text1 {
+  opacity: 1; 
+  color: #8a8989; 
+  font-size: 22px; 
+  position: relative; 
+}
+
+.home-text4::before, .home-text1::before {
+  content: attr(data-content); 
+  position: absolute; 
+  top: 0;
+  left: 0;
+  color: transparent; 
+  text-shadow: 1px 1px 2px rgba(145, 148, 148, 0.705); 
+  z-index: -1; 
+}
+
+.home-text4::before {
+  color: #ccc; 
+  text-shadow: 0 0 5px rgba(200, 200, 200, 0.5); 
+}
+
+.home-text1::before {
+  color: #ccc; 
+  text-shadow: 0 0 5px rgba(200, 200, 200, 0.5); 
+}
+
+.home-text4::before {
+  left: 0;
+}
+
+.home-text1::before {
+  left: 2px; 
+}
+
+
+.home-logo {
+  position: absolute;
+  height: auto;
+  width: auto;
+  max-height: 450px; /* Increased max-height for the logo */
+  max-width: 495px; /* Increased max-width for the logo */
+  top: 30%;
+  right: 20px; /* Adjusted to move the logo more to the right */
+  transform: translateY(-50%); /* Centering the logo vertically */
+  z-index: 2; /* Ensuring the logo is above the text */
+  animation: pulse 5s infinite alternate; 
+}
+@keyframes pulse {
+  from {
+    transform: scale(1); /* Initial scale */
+    opacity: 1; /* Initial opacity */
   }
-  .home-container {
-    width: 100%;
-    height: auto;
-    display: flex;
-    overflow: hidden;
-    min-height: 100vh;
-    align-items: center;
-    flex-direction: column;
+  to {
+    transform: scale(1.1); /* Slightly larger scale */
+    opacity: 0.8; /* Lower opacity */
   }
-  .home-main {
-    width: 100%;
-    display: flex;
-    position: relative;
-    align-items: center;
-    flex-direction: column;
-  }
-  .home-blur-background {
-    top: 0px;
-    left: auto;
-    right: 0px;
-    width: 100%;
-    bottom: auto;
-    filter: blur(60px);
-    height: 70vh;
-    display: flex;
-    position: absolute;
-    align-items: center;
-    flex-direction: column;
-    background-color: #f2f2f2;
-  }
-  .home-hero {
-    width: 100%;
-    height: 996px;
-    display: flex;
-    padding: var(--dl-space-space-doubleunit);
-    z-index: 100;
-    max-width: 1110px;
-    align-items: center;
-    flex-direction: row;
-    justify-content: space-between;
-  }
-  .home-container1 {
-    flex: 0 0 auto;
-    width: auto;
-    height: auto;
-    display: flex;
-    align-items: flex-start;
-    flex-direction: column;
-  }
-  .home-text {
-    width: 583px;
-    font-weight: 900;
-    margin-bottom: var(--dl-space-space-doubleunit);
-  }
-  .home-text1 {
-    font-size: 50px;
-  }
-  .home-text2 {
-    font-size: 72px;
-  }
-  .home-text3 {
-    font-size: 72px;
-  }
-  .home-image {
-    flex: 1;
-    width: 550px;
-    height: 356px;
-    align-self: center;
-    margin-top: 1px;
-    object-fit: cover;
-  }
-  .home-turquoise-cirble {
-    top: 439px;
-    left: auto;
-    right: 430px;
-    width: 170px;
-    bottom: auto;
-    filter: blur(60px);
-    opacity: 0.6;
-    position: absolute;
-    object-fit: cover;
-  }
-  .home-purple-circle {
-    top: -100px;
-    left: auto;
-    right: -26px;
-    width: 410px;
-    bottom: auto;
-    filter: blur(60px);
-    height: 496px;
-    opacity: 0.4;
-    position: absolute;
-    object-fit: cover;
-  }
-  .home-left {
-    top: 254px;
-    left: -53px;
-    width: 420px;
-    position: absolute;
-    object-fit: cover;
-  }
-  .home-right {
-    right: -50px;
-    width: 612px;
-    bottom: 196px;
-    position: absolute;
-    object-fit: cover;
-  }
-  .home-purple-circle1 {
-    left: -99px;
-    width: 500px;
-    bottom: -210px;
-    filter: blur(60px);
-    height: 538px;
-    opacity: 0.4;
-    position: absolute;
-    object-fit: cover;
-  }
-  @media(max-width: 991px) {
-    .home-hero {
-      height: auto;
-      flex-direction: column;
-    }
-    .home-container1 {
-      align-items: center;
-      margin-bottom: var(--dl-space-space-doubleunit);
-    }
-    .home-text {
-      text-align: center;
-    }
-  }
-  @media(max-width: 767px) {
-    .home-text {
-      font-size: 50px;
-      text-align: center;
-    }
-  }
+}
+.background {
+  position:absolute; /* Using fixed positioning to cover the viewport */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0; /* Setting the z-index to be below the text */
+  opacity: 0.7; /* Making the background slightly transparent */
+}
