@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { EmployeeService } from '../services/employee.service';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { DailyHours } from '../shared/dailyhours';
-import { Employee } from '../shared/employee';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-capture-employee-hours',
@@ -10,45 +10,61 @@ import { Employee } from '../shared/employee';
   styleUrls: ['./capture-employee-hours.component.scss']
 })
 export class CaptureEmployeeHoursComponent implements OnInit {
-  selectedEmployeeId: number | null = null; // Track selected employee ID
-  workDate: Date = new Date(); // Initialize with current date
-  clockInTime: string = ''; // Initialize with empty string
-  clockOutTime: string = ''; // Initialize with empty string
   employees: any[] = []; // Assuming employees are fetched from the service
+  captureHoursForm: FormGroup;
 
-  constructor(private employeeService: EmployeeService) {}
+  constructor(
+    private employeeService: EmployeeService,
+    private fb: FormBuilder,
+    private snackBar: MatSnackBar
+  ) {
+    this.captureHoursForm = this.fb.group({
+      employee: [null, Validators.required],
+      workDate: [new Date().toISOString().split('T')[0], Validators.required], // Initialize with current date
+      clockInTime: ['', Validators.required],
+      clockOutTime: ['', Validators.required]
+    });
+  }
 
   ngOnInit(): void {
     this.fetchEmployees();
   }
 
   fetchEmployees(): void {
-    this.employeeService.getAllEmployees().subscribe(employees => {
-      this.employees = employees;
-    });
+    this.employeeService.getAllEmployees().subscribe(
+      employees => {
+        this.employees = employees;
+      },
+      error => {
+        this.openSnackBar('Failed to fetch employees');
+        console.error(error);
+      }
+    );
   }
 
   submitForm(): void {
-    if (!this.selectedEmployeeId) {
-      console.error('No employee selected');
+    if (this.captureHoursForm.invalid) {
+      this.openSnackBar('Form is invalid');
+      console.error('Form is invalid');
       return;
     }
 
+    const formValues = this.captureHoursForm.value;
     const dailyHours: DailyHours = {
-      EmployeeId: this.selectedEmployeeId,
-      WorkDate: this.workDate,
-      Hours: this.calculateHoursWorked(this.clockInTime, this.clockOutTime)
+      EmployeeId: formValues.employee,
+      WorkDate: formValues.workDate,
+      Hours: this.calculateHoursWorked(formValues.clockInTime, formValues.clockOutTime)
     };
 
     // Send daily hours to backend
-    this.employeeService.captureEmployeeDailyHours(this.selectedEmployeeId,dailyHours).subscribe(
-     response => {
-       console.log(response);
-         // Handle success response here
+    this.employeeService.captureEmployeeDailyHours(formValues.employee, dailyHours).subscribe(
+      response => {
+        console.log(response);
+        this.openSnackBar('Employee hours captured successfully');
       },
-       error => {
+      error => {
         console.error(error);
-        // Handle error response here
+        this.openSnackBar('Failed to capture employee hours');
       }
     );
   }
@@ -65,5 +81,10 @@ export class CaptureEmployeeHoursComponent implements OnInit {
 
     return hoursWorked;
   }
-}
 
+  openSnackBar(message: string) {
+    this.snackBar.open(message, 'Close', {
+      duration: 5000, // Duration in milliseconds
+    });
+  }
+}

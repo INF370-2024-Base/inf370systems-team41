@@ -8,8 +8,6 @@
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <!-- Include Material Icons -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <!-- Include the compiled SCSS file -->
-    
 </head>
 <body>
   <h1 class="main-title">ORDER APPROVALS</h1>
@@ -30,15 +28,15 @@
                   <mat-icon>clear</mat-icon> Reject
                 </button>
               </div>
-              
-              <span class="spacer"></span> 
+              <span class="spacer"></span>
             </mat-panel-description>
           </mat-expansion-panel-header>
-          
-          <p>Order Status: {{ pendingOrder.orderStatus.description }}</p>
-          <p>Order Type: {{ pendingOrder.orderType.description }}</p>
-          <p>Order Direction: {{ pendingOrder.orderDirection.description }}</p>
-          <p>Dentist: {{ pendingOrder.dentist.firstName }} {{ pendingOrder.dentist.lastName }}</p>
+          <div class="order-details">
+            <p><strong>Order Status:</strong> {{ pendingOrder.orderStatus.description }}</p>
+            <p><strong>Order Type:</strong> {{ pendingOrder.orderType.description }}</p>
+            <p><strong>Order Direction:</strong> {{ pendingOrder.orderDirection.description }}</p>
+            <p><strong>Dentist:</strong> {{ pendingOrder.dentist.firstName }} {{ pendingOrder.dentist.lastName }}</p>
+          </div>
         </mat-expansion-panel>
       </mat-accordion>
     </div>
