@@ -6,46 +6,92 @@
     <title>Add New Employee</title>
     <!-- Include favicon -->
     <link rel="icon" type="image/x-icon" href="favicon.ico">
-    <!-- Include Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <!-- Include Angular Material CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.1.12/angular-material.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
 </head>
 <body>
     <div class="container">
-        <h1 style="font-size: 28px; color: #333; text-align: center; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 20px;">
-            <i class="fas fa-user-plus" style="vertical-align: middle; margin-right: 8px;"></i> Add New Employee
-        </h1>        
-        <div class="row">
-            <div class="col-12">
-                <form #form="ngForm" (ngSubmit)="addEmployee(form)" novalidate>
-                    <div class="form-group">
-                        <label for="jobTitle" style="font-size: 16px;"><i class="fas fa-briefcase"></i> Job Title :</label>
-                        <div class="custom-select">
-                            <span style="font-style: italic; color: #999;">Select a job title</span>
-                            <select class="form-control" id="jobTitle" name="jobTitle" [(ngModel)]="addEmployeeAtt.JobTitleId" required>
-                                <!-- <option value="" disabled selected>Select a job title</option> -->
-                                <option *ngFor="let title of jobTitles" [value]="title.id">{{ title.titleName }}</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="cellphoneNumber" style="font-size: 16px;"><i class="fas fa-phone"></i> Phone Number :</label>
-                        <input type="tel" class="form-control" id="cellphoneNumber" name="cellphoneNumber" [(ngModel)]="addEmployeeAtt.PhoneNumber" required #cellphoneNumberField="ngModel" placeholder="Enter cell phone number">
-                    </div>
-                    <div class="form-group">
-                        <label for="email" style="font-size: 16px;"><i class="fas fa-envelope"></i> Email :</label>
-                        <input type="email" class="form-control" id="email" name="email" [(ngModel)]="addEmployeeAtt.EmailAddress" required #emailField="ngModel" placeholder="Enter email address">
-                    </div>
-                    <div class="form-group">
-                        <label for="address" style="font-size: 16px;"><i class="fas fa-map-marker-alt"></i> Address :</label>
-                        <input type="text" class="form-control" id="address" name="address" [(ngModel)]="addEmployeeAtt.Address" #addressField="ngModel" placeholder="Enter address">
-                    </div>
-                    <div class="form-group btn-group">
-                        <button type="submit" class="btn-add" [disabled]="form.invalid"><i class="fas fa-plus"></i> Add</button>
-                        <button type="button" class="btn-cancel" (click)="cancel()"><i class="fas fa-times"></i> Cancel</button>
-                    </div>
-                </form>
+        <h1 style="font-size: 48px; color: #4d4a4a; text-align: center; text-transform: uppercase; letter-spacing: 3px; margin-bottom: 24px; text-shadow: 2px 2px 4px rgba(124, 124, 124, 0.5);">ADD NEW EMPLOYEE</h1> 
+        <form [formGroup]="employeeForm" (ngSubmit)="addEmployee()">
+            <!-- First Name -->
+            <div class="form-group">
+                <mat-form-field appearance="outline">
+                    <mat-label><i class="material-icons">person</i> First Name</mat-label>
+                    <input matInput id="firstName" formControlName="FirstName" type="text" placeholder="First Name">
+                    <mat-error *ngIf="employeeForm.get('FirstName')?.invalid && employeeForm.get('FirstName')?.touched">
+                        First name is required.
+                    </mat-error>
+                </mat-form-field>
             </div>
-        </div>
+
+            <!-- Last Name -->
+            <div class="form-group">
+                <mat-form-field appearance="outline">
+                    <mat-label><i class="material-icons">person</i> Last Name</mat-label>
+                    <input matInput id="lastName" formControlName="LastName" type="text" placeholder="Last Name">
+                    <mat-error *ngIf="employeeForm.get('LastName')?.invalid && employeeForm.get('LastName')?.touched">
+                        Last name is required.
+                    </mat-error>
+                </mat-form-field>
+            </div>
+
+            <!-- Job Title -->
+            <div class="form-group">
+                <mat-form-field appearance="outline">
+                    <mat-label><i class="material-icons">work</i> Job Title</mat-label>
+                    <mat-select id="JobTitleId" formControlName="JobTitleId">
+                        <mat-option *ngFor="let job of jobTitles" [value]="job.jobTitleId">{{ job.titleName }}</mat-option>
+                      </mat-select>
+                    <mat-error *ngIf="employeeForm.get('JobTitleId')?.invalid && employeeForm.get('JobTitleId')?.touched">
+                        Job title is required.
+                    </mat-error>
+                </mat-form-field>
+            </div>
+
+            <!-- Email Address -->
+            <div class="form-group">
+                <mat-form-field appearance="outline">
+                    <mat-label><i class="material-icons">email</i> Email Address</mat-label>
+                    <input matInput id="emailAddress" formControlName="EmailAddress" type="email" placeholder="Email Address">
+                    <mat-error *ngIf="employeeForm.get('EmailAddress')?.invalid && employeeForm.get('EmailAddress')?.touched">
+                        Valid email address is required.
+                    </mat-error>
+                </mat-form-field>
+            </div>
+
+            <!-- Phone Number -->
+            <div class="form-group">
+                <mat-form-field appearance="outline">
+                    <mat-label><i class="material-icons">phone</i> Phone Number</mat-label>
+                    <input matInput id="phoneNumber" formControlName="PhoneNumber" type="text" placeholder="Phone Number">
+                    <mat-error *ngIf="employeeForm.get('PhoneNumber')?.invalid && employeeForm.get('PhoneNumber')?.touched">
+                        Valid phone number is required.
+                    </mat-error>
+                </mat-form-field>
+            </div>
+
+            <!-- Address -->
+            <div class="form-group">
+                <mat-form-field appearance="outline">
+                    <mat-label><i class="material-icons">home</i> Address</mat-label>
+                    <input matInput id="address" formControlName="Address" type="text" placeholder="Address">
+                    <mat-error *ngIf="employeeForm.get('Address')?.invalid && employeeForm.get('Address')?.touched">
+                        Address is required.
+                    </mat-error>
+                </mat-form-field>
+            </div>
+
+            <!-- Submit and Cancel Buttons -->
+            <div class="form-group">
+                <button mat-raised-button color="primary" type="submit">Add Employee</button>
+                <button mat-raised-button color="warn" type="button" (click)="cancel()">Cancel</button>
+            </div>
+        </form>
     </div>
+
+    <!-- Include Angular Material JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.1.12/angular-material.min.js"></script>
 </body>
 </html>

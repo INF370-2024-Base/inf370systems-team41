@@ -1,149 +1,76 @@
-/* Body styles */
-/* Body styles */
+
 body {
-  background-color: #f5f5f5;
-  font-family: 'Roboto', sans-serif;
-  color: #333;
-  padding: 20px;
-  overflow: hidden; /* Assuming you want to hide overflowing content */
-}
-
-/* Animated background gradients */
-@keyframes gradientAnimation {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
-
-/* Enhanced blue gradient animation */
-body {
-  background: linear-gradient(120deg, #aed9e0, #c2e2f3, #eaf1fa, #c2e2f3, #aed9e0);
-  background-size: 400% 400%;
-  animation: gradientAnimation 20s ease infinite;
-}
-
-/* Custom select styles */
-.custom-select .placeholder {
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  cursor: pointer;
-  font-style: italic;
-  color: #999;
-}
-
-/* Form control styles */
-.form-control {
-  width: 100%;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  box-sizing: border-box;
-  margin-top: 5px;
-  background-color: #fff;
-  color: #333;
-}
-
-/* Select dropdown arrow styles */
-.form-control:after {
-  content: '\25BC';
-  position: absolute;
-  top: 50%;
-  right: 10px;
-  transform: translateY(-50%);
-  pointer-events: none;
-}
-
-/* Placeholder text styles */
-option[value=""][disabled] {
-  color: #999;
-}
-
-/* Selected option text styles */
-option {
-  color: #333;
-}
-
-/* Container styles */
-.container {
-  width: 100%;
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 30px;
-  background-color: #ffffff;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-/* Heading styles */
-h1 {
-  margin-top: 0;
-  color: #333;
-  font-size: 24px;
-}
-
-/* Form group styles */
-.form-group {
-  margin-bottom: 20px;
-}
-
-/* Label styles */
-label {
-  font-weight: bold;
-}
-
-/* Button styles */
-.btn-add,
-.btn-cancel {
-  padding: 10px 20px;
-  border-radius: 5px;
-  cursor: pointer;
-  border: none;
-  transition: background-color 0.3s;
-}
-
-/* Button group styles */
-.btn-group {
-  display: flex;
-  justify-content: space-between;
-}
-
-/* Add button styles */
-.btn-add {
-  background-color: green;
-  color: white;
-}
-
-/* Cancel button styles */
-.btn-cancel {
-  background-color: red;
-  color: white;
-}
-
-/* Button icon styles */
-.btn-add i,
-.btn-cancel i {
-  margin-right: 5px;
-}
-
-/* Button hover styles */
-.btn-add:hover,
-.btn-cancel:hover {
-  filter: brightness(90%);
-}
-
-/* Responsive styles */
-@media only screen and (max-width: 768px) {
-  .container {
+    background: linear-gradient(120deg, #aed9e0, #c2e2f3, #eaf1fa, #c2e2f3, #aed9e0);
+    background-size: 400% 400%;
+    animation: gradientAnimation 20s ease infinite;
+    font-family: 'Roboto', sans-serif;
+    color: #333;
     padding: 20px;
-  }
+    overflow-y: auto;
 }
 
-@media only screen and (max-width: 576px) {
-  .container {
-    padding: 15px;
-  }
-  .form-control {
+@keyframes gradientAnimation {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+.container {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+h1 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+mat-form-field {
     width: 100%;
-  }
+}
+
+.mat-form-field-appearance-outline .mat-form-field-flex {
+    background-color: inherit; /* Inherit background color */
+}
+
+.mat-form-field-appearance-outline .mat-form-field-underline {
+    display: block;
+}
+
+.mat-form-field-appearance-outline .mat-form-field-subscript-wrapper {
+    padding: 0;
+}
+
+.mat-error {
+    font-size: 12px;
+    color: #e74c3c;
+}
+
+.mat-checkbox {
+    margin-top: 15px;
+}
+
+.mat-raised-button {
+    margin-top: 20px;
+    display: block;
+    width: 100%;
+}
+
+mat-label i.material-icons {
+    vertical-align: middle;
+    margin-right: 8px;
+}
+
+mat-label {
+    font-size: 1.2em;
+    font-weight: bold;
 }

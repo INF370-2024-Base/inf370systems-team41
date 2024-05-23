@@ -1,97 +1,149 @@
-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Order</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.1.12/angular-material.min.css">
+</head>
 <body>
-  <div class="container">
-    <h1 style="font-size: 48px; color: #4d4a4a; text-align: center; text-transform: uppercase; letter-spacing: 3px; margin-bottom: 24px; text-shadow: 2px 2px 4px rgba(124, 124, 124, 0.5);">NEW ORDER</h1>
+    <div class="container">
+        <h1 style="font-size: 48px; color: #4d4a4a; text-align: center; text-transform: uppercase; letter-spacing: 3px; margin-bottom: 24px; text-shadow: 2px 2px 4px rgba(124, 124, 124, 0.5);">NEW ORDER</h1>
 
-    <form [formGroup]="addForm" (ngSubmit)="onSubmit()">
-      <!-- Order ID Input -->
-      <div class="form-group">
-        <label for="OrderId"><i class="material-icons">assignment</i> Order ID:</label>
-        <input required type="text" formControlName="OrderId" class="form-control" id="OrderId" placeholder="Enter Order ID">
-        <div *ngIf="addForm.get('OrderId')?.invalid" class="text-danger" style="font-size: 12px;">Order ID is required and must be 7 characters long</div>
-      </div>
+        <form [formGroup]="addForm" (ngSubmit)="onSubmit()">
+            <!-- Order ID Input -->
+            <div class="form-group">
+                <mat-form-field appearance="outline">
+                    <mat-label><i class="material-icons">assignment</i> Order ID</mat-label>
+                    <input matInput id="OrderId" formControlName="OrderId" type="text" placeholder="Enter Order ID">
+                    <mat-error *ngIf="addForm.get('OrderId')?.invalid && addForm.get('OrderId')?.touched">
+                        Order ID is required and must be 7 characters long.
+                    </mat-error>
+                </mat-form-field>
+            </div>
 
-      <!-- Dentist Selection Dropdown -->
-      <div class="form-group">
-        <label for="DentistId"><i class="material-icons">person</i> Dentist:</label>
-        <select required formControlName="DentistId" class="form-control" id="DentistId">
-          <option *ngFor="let dentist of dentists" [ngValue]="dentist.dentistId">
-            {{ dentist.firstName }} {{ dentist.lastName }}
-          </option>
-        </select>
-        <div *ngIf="hasError('DentistId', 'required')" class="text-danger" style="font-size: 12px;">Dentist is required</div>
-      </div>
+            <!-- Dentist Selection Dropdown -->
+            <div class="form-group">
+                <mat-form-field appearance="outline">
+                    <mat-label><i class="material-icons">person</i> Dentist</mat-label>
+                    <mat-select id="DentistId" formControlName="DentistId">
+                        <mat-option *ngFor="let dentist of dentists" [value]="dentist.dentistId">
+                            {{ dentist.firstName }} {{ dentist.lastName }}
+                        </mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="addForm.get('DentistId')?.invalid && addForm.get('DentistId')?.touched">
+                        Dentist is required.
+                    </mat-error>
+                </mat-form-field>
+            </div>
 
-      <!-- Order Date Input -->
-      <div class="form-group">
-        <label for="OrderDate"><i class="material-icons">event</i> Order Date:</label>
-        <input required type="date" formControlName="OrderDate" class="form-control" id="OrderDate" placeholder="Select Order Date">
-        <div *ngIf="hasError('OrderDate', 'required')" class="text-danger" style="font-size: 12px;">Order Date is required</div>
-      </div>
+            <!-- Order Date Input -->
+            <div class="form-group">
+                <mat-form-field appearance="outline">
+                    <mat-label><i class="material-icons">event</i> Order Date</mat-label>
+                    <input matInput id="OrderDate" formControlName="OrderDate" type="date" placeholder="Select Order Date">
+                    <mat-error *ngIf="addForm.get('OrderDate')?.invalid && addForm.get('OrderDate')?.touched">
+                        Order Date is required.
+                    </mat-error>
+                </mat-form-field>
+            </div>
 
-      <!-- Medical Aid Selection Dropdown -->
-      <div class="form-group">
-        <label for="MedicalAidId"><i class="material-icons">local_hospital</i> Medical Aid:</label>
-        <select formControlName="MedicalAidId" class="form-control" id="MedicalAidId" required>
-          <option disabled selected value="">Select Medical Aid</option>
-          <option *ngFor="let medicalAid of medicalAids" [ngValue]="medicalAid.medicalAidId">
-            {{ medicalAid.medicalAidId }} - {{ medicalAid.medicalAidName }}
-          </option>
-        </select>
-        <div *ngIf="hasError('MedicalAidId', 'required')" class="text-danger" style="font-size: 12px;">Medical aid is required</div>
-      </div>
+            <!-- Medical Aid Selection Dropdown -->
+            <div class="form-group">
+                <mat-form-field appearance="outline">
+                    <mat-label><i class="material-icons">local_hospital</i> Medical Aid</mat-label>
+                    <mat-select id="MedicalAidId" formControlName="MedicalAidId">
+                        <mat-option disabled selected value="">Select Medical Aid</mat-option>
+                        <mat-option *ngFor="let medicalAid of medicalAids" [value]="medicalAid.medicalAidId">
+                            {{ medicalAid.medicalAidName }}
+                        </mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="addForm.get('MedicalAidId')?.invalid && addForm.get('MedicalAidId')?.touched">
+                        Medical Aid is required.
+                    </mat-error>
+                </mat-form-field>
+            </div>
 
-      <!-- Patient Name Input -->
-      <div class="form-group">
-        <label for="PatientName"><i class="material-icons">person</i> Patient Name:</label>
-        <input required type="text" formControlName="PatientName" class="form-control" id="PatientName" placeholder="Enter patient name">
-        <div *ngIf="hasError('PatientName', 'required')" class="text-danger" style="font-size: 12px;">Patient name is required</div>
-      </div>
+            <!-- Medical Aid Number Input -->
+            <div class="form-group">
+                <mat-form-field appearance="outline">
+                    <mat-label><i class="material-icons">assignment_ind</i> Medical Aid Number</mat-label>
+                    <input matInput id="MedicalAidNumber" formControlName="MedicalAidNumber" type="text" placeholder="Enter medical aid number">
+                    <mat-error *ngIf="addForm.get('MedicalAidNumber')?.invalid && addForm.get('MedicalAidNumber')?.touched">
+                        Medical Aid Number is required.
+                    </mat-error>
+                </mat-form-field>
+            </div>
 
-      <!-- Patient Surname Input -->
-      <div class="form-group">
-        <label for="PatientSurname"><i class="material-icons">person</i> Patient Surname:</label>
-        <input required type="text" formControlName="PatientSurname" class="form-control" id="PatientSurname" placeholder="Enter patient surname">
-        <div *ngIf="hasError('PatientSurname', 'required')" class="text-danger" style="font-size: 12px;">Patient surname is required</div>
-      </div>
+            <!-- Patient Name Input -->
+            <div class="form-group">
+                <mat-form-field appearance="outline">
+                    <mat-label><i class="material-icons">person</i> Patient Name</mat-label>
+                    <input matInput id="PatientName" formControlName="PatientName" type="text" placeholder="Enter patient name">
+                    <mat-error *ngIf="addForm.get('PatientName')?.invalid && addForm.get('PatientName')?.touched">
+                        Patient Name is required.
+                    </mat-error>
+                </mat-form-field>
+            </div>
 
-      <!-- Medical Aid Number Input -->
-      <div class="form-group">
-        <label for="MedicalAidNumber"><i class="material-icons">assignment_ind</i> Medical Aid Number:</label>
-        <input required type="text" formControlName="MedicalAidNumber" class="form-control" id="MedicalAidNumber" placeholder="Enter medical aid number">
-        <div *ngIf="hasError('MedicalAidNumber', 'required')" class="text-danger" style="font-size: 12px;">Medical aid is required</div>
-      </div>
+            <!-- Patient Surname Input -->
+            <div class="form-group">
+                <mat-form-field appearance="outline">
+                    <mat-label><i class="material-icons">person</i> Patient Surname</mat-label>
+                    <input matInput id="PatientSurname" formControlName="PatientSurname" type="text" placeholder="Enter patient surname">
+                    <mat-error *ngIf="addForm.get('PatientSurname')?.invalid && addForm.get('PatientSurname')?.touched">
+                        Patient Surname is required.
+                    </mat-error>
+                </mat-form-field>
+            </div>
 
-      <!-- Order Type Selection Dropdown -->
-      <div class="form-group">
-        <label for="OrderTypeId"><i class="material-icons">assignment</i> Order Type:</label>
-        <select formControlName="OrderTypeId" class="form-control" id="OrderTypeId" required>
-          <option *ngFor="let type of orderTypes" [ngValue]="type.orderTypeId">
-            {{ type.description }}
-          </option>
-        </select>
-        <div *ngIf="hasError('OrderTypeId', 'required')" class="text-danger" style="font-size: 12px;">Order Type is required</div>
-      </div>
-    
-      <!-- Order Direction Selection Dropdown -->
-      <div class="form-group">
-        <label for="OrderDirectionId"><i class="material-icons">navigation</i> Order Direction:</label>
-        <select formControlName="OrderDirectionId" class="form-control" id="OrderDirectionId" (change)="getOrderDirection($event)" required>
-            <option *ngFor="let direction of orderDirections" [value]="direction.orderDirectionId">
-                {{ direction.description }} {{ direction.instructions }}
-            </option>
-        </select>
-        <div *ngIf="hasError('OrderDirectionId', 'required')" class="text-danger" style="font-size: 12px;">Order Direction is required</div>
-    </div>
-      
-    <div class="form-group">
-      <label for="PriorityLevel"><i class="material-icons">priority_high</i> Priority Level:</label>
-      <select formControlName="PriorityLevel" class="form-control" id="PriorityLevel" required> 
-        <option disabled selected value="">Select Priority Level</option>
-        <option *ngFor="let level of priorityLevels" [value]="level.value">{{ level.label }}</option>
-      </select>
-      <div *ngIf="hasError('PriorityLevel', 'required')" class="text-danger" style="font-size: 12px;">Priority Level is required</div>
-    </div>
+            <!-- Order Type Selection Dropdown -->
+            <div class="form-group">
+                <mat-form-field appearance="outline">
+                    <mat-label><i class="material-icons">assignment</i> Order Type</mat-label>
+                    <mat-select id="OrderTypeId" formControlName="OrderTypeId">
+                        <mat-option *ngFor="let type of orderTypes" [value]="type.orderTypeId">
+                            {{ type.description }}
+                        </mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="addForm.get('OrderTypeId')?.invalid && addForm.get('OrderTypeId')?.touched">
+                        Order Type is required.
+                    </mat-error>
+                </mat-form-field>
+            </div>
+
+            <!-- Order Direction Selection Dropdown -->
+            <div class="form-group">
+                <mat-form-field appearance="outline">
+                    <mat-label><i class="material-icons">navigation</i> Order Direction</mat-label>
+                    <mat-select id="OrderDirectionId" formControlName="OrderDirectionId" (selectionChange)="getOrderDirection($event)">
+                        <mat-option *ngFor="let direction of orderDirections" [value]="direction.orderDirectionId">
+                            {{ direction.description }} {{ direction.instructions }}
+                        </mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="addForm.get('OrderDirectionId')?.invalid && addForm.get('OrderDirectionId')?.touched">
+                        Order Direction is required.
+                    </mat-error>
+                </mat-form-field>
+            </div>
+
+            <!-- Priority Level Selection Dropdown -->
+            <div class="form-group">
+                <mat-form-field appearance="outline">
+                    <mat-label><i class="material-icons">priority_high</i> Priority Level</mat-label>
+                    <mat-select id="PriorityLevel" formControlName="PriorityLevel">
+                        <mat-option disabled selected value="">Select Priority Level</mat-option>
+                        <mat-option *ngFor="let level of priorityLevels" [value]="level.value">
+                            {{ level.label }}
+                        </mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="addForm.get('PriorityLevel')?.invalid && addForm.get('PriorityLevel')?.touched">
+                        Priority Level is required.
+                    </mat-error>
+                </mat-form-field>
+            </div>
     
     <div>
       <canvas #imageCanvas id="myCanvas" width="100" height="125"></canvas>
@@ -130,39 +182,47 @@
     </div>
     <div *ngIf="selectedTeethShadeIds.length == 0" class="text-danger" style="font-size: 12px;">Theeth Shade is required</div>
     
-    <!-- Additional Form Controls -->
-    <div class="form-group">
-      <label for="EmergencyNumber"><i class="material-icons">phone</i> Emergency Number:</label>
-      <input required type="text" formControlName="EmergencyNumber" class="form-control" id="EmergencyNumber" placeholder="Enter Emergency Contact Number">
-      <div *ngIf="addForm.get('EmergencyNumber')?.invalid" class="text-danger" style="font-size: 12px;">Emergency Number is required and must be valid length</div>
+       <!-- Emergency Number Input -->
+       <div class="form-group">
+        <mat-form-field appearance="outline">
+            <mat-label><i class="material-icons">phone</i> Emergency Number</mat-label>
+            <input matInput id="EmergencyNumber" formControlName="EmergencyNumber" type="text" placeholder="Enter Emergency Contact Number">
+            <mat-error *ngIf="addForm.get('EmergencyNumber')?.invalid && addForm.get('EmergencyNumber')?.touched">
+                Emergency Number is required and must be valid length.
+            </mat-error>
+        </mat-form-field>
     </div>
-    
+
+    <!-- Special Requirements Input -->
     <div class="form-group">
-      <label for="SpecialRequirements"><i class="material-icons">notes</i> Special Requirements:</label>
-      <textarea formControlName="SpecialRequirements" class="form-control" id="SpecialRequirements" placeholder="Enter any special requirements" required></textarea>        
-      <div *ngIf="hasError('SpecialRequirements', 'required')" class="text-danger" style="font-size: 12px;">Special Requirements is required</div>
+        <mat-form-field appearance="outline">
+            <mat-label><i class="material-icons">notes</i> Special Requirements</mat-label>
+            <textarea matInput id="SpecialRequirements" formControlName="SpecialRequirements" placeholder="Enter any special requirements"></textarea>
+            <mat-error *ngIf="addForm.get('SpecialRequirements')?.invalid && addForm.get('SpecialRequirements')?.touched">
+                Special Requirements is required.
+            </mat-error>
+        </mat-form-field>
     </div>
-    
+
+    <!-- Due Date Input -->
     <div class="form-group">
-      <label for="DueDate"><i class="material-icons">date_range</i> Due Date:</label>
-      <input type="date" formControlName="DueDate" class="form-control" id="DueDate" placeholder="Select Due Date">  
-      <div *ngIf="addForm.get('DueDate')?.invalid" class="text-danger" style="font-size: 12px;">Due Date is required and must be a future date </div>
+        <mat-form-field appearance="outline">
+            <mat-label><i class="material-icons">date_range</i> Due Date</mat-label>
+            <input matInput id="DueDate" formControlName="DueDate" type="date" placeholder="Select Due Date">
+            <mat-error *ngIf="addForm.get('DueDate')?.invalid && addForm.get('DueDate')?.touched">
+                Due Date is required and must be a future date.
+            </mat-error>
+        </mat-form-field>
     </div>
-    
-      <!-- Submit and Cancel Buttons -->
-      <button type="submit" class="btn btn-primary">
-        <span class="btn-icon">
-          <i class="material-icons">check</i>
-        </span>
-        Submit
-      </button>
-      <button type="button" class="btn btn-secondary" onclick="cancel()">
-        <span class="btn-icon">
-          <i class="material-icons">cancel</i>
-        </span>
-        Cancel
-      </button>
-    </form>
+
+    <!-- Submit and Cancel Buttons -->
+    <button mat-raised-button color="primary" type="submit">
+        <i class="material-icons">check</i> Submit
+    </button>
+    <button mat-raised-button color="warn" type="button" (click)="cancel()">
+        <i class="material-icons">cancel</i> Cancel
+    </button>
+</form>
   </div>
   
   <script src="https://cdnjs.cloudflare.com/ajax/libs/core-js/2.5.3/core.js"></script>
