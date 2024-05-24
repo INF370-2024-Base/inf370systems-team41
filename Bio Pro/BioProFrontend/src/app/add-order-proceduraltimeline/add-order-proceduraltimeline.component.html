@@ -22,6 +22,9 @@
         </div>
         
             <mat-list>
+                <mat-error *ngIf="orderInfo.length==0">
+                    No in progress orders without procedural timeline
+                </mat-error>
                 <mat-list-item *ngFor="let order of orderInfo">
                     <mat-checkbox [checked]="systemOrderIds.includes(order.orderId)" (change)="toggleOrderSelection(order)">
                         <span><i class="material-icons">assignment</i> {{ order.systemOrder.orderId}} -{{ order.orderDirection.description }} - Due Date:{{ order.systemOrder.dueDate|date }}</span>

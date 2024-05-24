@@ -381,7 +381,10 @@ namespace BioProSystem.Models
             _appDbContext.Dentists.Remove(dentist);
         }
         //End of Dentist 
-
+        public async Task<MediaFile> GetImageDataFromId(int imageID)
+        {
+            return _appDbContext.MediaFiles.Where(i=>i.MediaFileId== imageID).FirstOrDefault();
+        }
         // Implementation for EmployeeDailyHours
 
         public async Task CaptureEmployeeDailyHoursAsync(int employeeId, EmployeeDailyHours newDailyHours)

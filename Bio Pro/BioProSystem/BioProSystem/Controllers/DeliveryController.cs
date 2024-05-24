@@ -50,12 +50,15 @@ namespace BioProSystem.Controllers
             if (ModelState.IsValid)
             {
                 Employee driver = _repository.GetEmployeeByEmailAsync(viewModel.EmployeeEmail).Result;
+                if (driver==null)
+                {
+                    return BadRequest("Not currently signed in as an employee");
+                }
                 Delivery delivery = new Delivery
                 {
                     DeliveryStatusId = 1,
                     EmployeeId = driver.EmployeeId,
                     SystemOrderId = viewModel.SystemOrderId
-
                 };
 
                 

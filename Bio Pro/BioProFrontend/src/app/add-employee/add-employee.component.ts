@@ -59,7 +59,7 @@ export class AddEmployeeComponent implements OnInit {
             panelClass: ['success-snackbar']
           });
           // Navigate to the desired route after successful submission
-          this.router.navigate(['/employees']); // Example: Navigate to the employees list
+          this.router.navigate(['/employee']); // Example: Navigate to the employees list
         },
         error: (error: HttpErrorResponse) => {
           let errorMessage = 'Error adding employee';

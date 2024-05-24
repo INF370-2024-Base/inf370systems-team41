@@ -19,7 +19,7 @@
                 <div class="col-md-6 d-flex align-items-center">
                     <i class="material-icons mr-2">search</i>
                     <mat-form-field class="search-field" style="flex-grow: 1;">
-                        <input matInput [(ngModel)]="searchQuery" placeholder="Search Dentist..." class="w-100 mr-2" />
+                        <input matInput [(ngModel)]="searchQuery" (ngModelChange)="onSearchChange($event)" placeholder="Search Dentist..." class="w-100 mr-2" />
                     </mat-form-field>
                     <button (click)="search()" class="btn btn-outline-primary rounded-btn">Search</button>
                 </div>

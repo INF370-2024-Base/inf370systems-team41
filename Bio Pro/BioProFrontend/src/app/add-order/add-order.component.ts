@@ -231,16 +231,14 @@ export class AddOrderComponent implements OnInit {
     );
   }
   getOrderDirection(event: any): void {
-    const selectedOrderDirectionId = event.target.value;
+    console.log(event.source);
+    const selectedOrderDirectionId = event.value;
     console.log('Selected Order Direction ID:', selectedOrderDirectionId);
-    this.dataService.getOrderDirectionById(selectedOrderDirectionId).subscribe(Result=>{
-      this.orderdirection=Result
-      console.log(this.orderdirection)
-    })
-   
-  
-    // Add your logic here to handle the selected order direction
-  }
+    this.dataService.getOrderDirectionById(selectedOrderDirectionId).subscribe(result => {
+        this.orderdirection = result;
+        console.log(this.orderdirection);
+    });
+}
   loadOrderDirections(): void {
     this.dataService.getOrderDirections().subscribe(
       (data: any[]) => {
@@ -309,12 +307,9 @@ export class AddOrderComponent implements OnInit {
                         (result) => {
                           console.log('SystemOrder added successfully!');
                           const dueDate = new Date(viewModel.DueDate);
-
-                          // Calculate the adjusted date by subtracting the estimated duration
                           const adjustedDueDate = new Date(dueDate);
+                          console.log(this.orderdirection)
                           adjustedDueDate.setDate(dueDate.getDate() - this.orderdirection.estimatedDurationInDays);
-
-                          // Compare the adjusted due date with today
                           if (adjustedDueDate < today) {
                             alert("Due dates will not be autofilled on approval");
                          }

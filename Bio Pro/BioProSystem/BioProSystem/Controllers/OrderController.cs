@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using BioProSystem.Models;
+using System.IO;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
@@ -40,6 +41,24 @@ namespace BioProSystem.Controllers
             _repository = repository;
             _emailSender = emailSender;
             _emailSettings = emailSettings.Value;
+        }
+        [HttpPost]
+        [Route("DownloadMediaFile")]
+        public IActionResult DownloadImage(int imageId)
+        {
+            MediaFile media = _repository.GetImageDataFromId(imageId).Result;
+
+            if (media == null || media.FileSelf == null) 
+            {
+                return NotFound(); 
+            }
+
+            string fileName = "converted_image.png";
+            byte[] imageBytes = media.FileSelf;
+            string filePath = Path.Combine(Directory.GetCurrentDirectory(), fileName);
+            System.IO.File.WriteAllBytes(filePath, imageBytes);
+
+            return PhysicalFile(filePath, "image/png", fileName);
         }
 
         [HttpGet]

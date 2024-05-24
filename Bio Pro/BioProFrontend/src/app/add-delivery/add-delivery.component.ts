@@ -4,6 +4,7 @@ import { OrderService } from '../services/order.service';
 import { error } from 'console';
 import { HttpErrorResponse } from '@angular/common/http';
 import { DeliverAddViewModel } from '../shared/deliverAddViewModel';
+import { MatSnackBar } from '@angular/material/snack-bar';
 @Component({
   selector: 'app-add-delivery',
   templateUrl: './add-delivery.component.html',
@@ -11,7 +12,7 @@ import { DeliverAddViewModel } from '../shared/deliverAddViewModel';
 })
 export class AddDeliveryComponent implements OnInit {
 
-  constructor(private deliveryService:DeliveryService,private orderService:OrderService) { 
+  constructor(private snackBar:MatSnackBar,private deliveryService:DeliveryService,private orderService:OrderService) { 
 
   }
 orders:any[]=[]
@@ -57,8 +58,13 @@ email:any
       },
       (error:HttpErrorResponse)=>
         {
-          console.error(error)
+          this.showSnackBar(error.error)
         }
     )
+  }
+  showSnackBar(message:string) {
+    this.snackBar.open(message, 'Dismiss', {
+      duration: 3000, 
+    });
   }
 }

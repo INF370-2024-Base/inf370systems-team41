@@ -77,6 +77,7 @@ export class AddProceduralTimeline implements OnInit {
           this.timelineServices.addOrder(this.proceduralTimeline).subscribe(result=>
             {
               console.log(result)
+              location.reload()
             },
             (error: HttpErrorResponse) => console.log(error)
           )

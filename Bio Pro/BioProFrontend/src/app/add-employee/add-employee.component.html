@@ -42,8 +42,9 @@
                 <mat-form-field appearance="outline">
                     <mat-label><i class="material-icons">work</i> Job Title</mat-label>
                     <mat-select id="JobTitleId" formControlName="JobTitleId">
-                        <mat-option *ngFor="let job of jobTitles" [value]="job.jobTitleId">{{ job.titleName }}</mat-option>
+                        <mat-option *ngFor="let job of jobtitles" [value]="job.jobTitleId">{{ job.titleName }}</mat-option>
                       </mat-select>
+                    
                     <mat-error *ngIf="employeeForm.get('JobTitleId')?.invalid && employeeForm.get('JobTitleId')?.touched">
                         Job title is required.
                     </mat-error>

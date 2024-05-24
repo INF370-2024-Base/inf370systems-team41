@@ -24,6 +24,7 @@ export class DentistProfileComponent implements OnInit {
       this.dentists = dentists;
       // Initially, set filteredDentists to all dentists
       this.filteredDentists = [...this.dentists];
+      console.log( this.filteredDentists)
     });
   }
 
@@ -67,6 +68,21 @@ deleteDentist(dentist: Dentist) {
     }
   );
 }
+onSearchChange(searchCriteria: string) {
+    if (searchCriteria.trim() === '') {
+      this.fetchDentists();
+    } else {
+      console.log(searchCriteria)
+      // Filter restaurants based on query
+      this.filteredDentists = this.dentists.filter((d) => {
+        let fullName = (d.firstName + ' ' + d.lastName).toLowerCase();
+        return d.firstName.toLowerCase().includes(searchCriteria) ||
+              d.address?.toLowerCase().includes(searchCriteria) ||
+              d.lastName.toLowerCase().includes(searchCriteria) ||
+              fullName.includes(searchCriteria);
+      });
+    }
+  }
 
 }
 

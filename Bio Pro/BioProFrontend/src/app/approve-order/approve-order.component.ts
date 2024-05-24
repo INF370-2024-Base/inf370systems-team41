@@ -16,28 +16,24 @@ pendingOrders:any[]=[]
 pendingOrdersData:any[]=[]
 
 
-  ngOnInit(): void {
-    this.dataService.getPendingOrders().subscribe(
-      (result: any[]) => {
-          result.forEach((element) => {
-            this.pendingOrders.push(element);
-            if(this.pendingOrders.length>0)
-            {this.pendingOrders.forEach(element => {
-              this.dataService.getAllOrderInfo(element.orderId).subscribe(results=>{
-                this.pendingOrdersData.push(results)
-                console.log(this.pendingOrdersData)
-                })
+ngOnInit(): void {
+  this.dataService.getPendingOrders().subscribe(
+    async (result: any[]) => {
+      this.pendingOrders = result;
+      this.pendingOrdersData = [];
 
-            });}
-            
-          });
+      for (const element of this.pendingOrders) {
+        const results = await this.dataService.getAllOrderInfo(element.orderId).toPromise();
+        this.pendingOrdersData.push(results);
+        console.log(this.pendingOrdersData);
       }
-      ,(error) => {
-        this.showSnackBar("No pending orders found.")
-      }
-    );
-    console.log( this.pendingOrders)
-  }
+    },
+    (error) => {
+      this.showSnackBar("No pending orders found.");
+    }
+  );
+}
+
   showSnackBar(message:string) {
     this.snackBar.open(message, 'Dismiss', {
       duration: 3000, 
@@ -50,7 +46,7 @@ pendingOrdersData:any[]=[]
   },
 (error:HttpErrorResponse)=>
 {
-console.log(error)
+  this.showSnackBar(error.error)
 }
 )
   }

@@ -55,7 +55,7 @@ namespace BioProSystem.Models
         void AddDentist(Dentist dentist);
         void UpdateDentist(Dentist dentist);
         void DeleteDentist(Dentist dentist);
-
+        Task<MediaFile> GetImageDataFromId(int imageID);
         // New methods for EmployeeDailyHours
         Task CaptureEmployeeDailyHoursAsync(int employeeId, EmployeeDailyHours newDailyHours);
         //Jacques
