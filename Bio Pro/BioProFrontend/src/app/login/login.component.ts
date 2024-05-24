@@ -41,7 +41,7 @@ export class LoginComponent implements OnInit {
     this.dataService.checkSignInStatus()
       .subscribe(() => {
         if( sessionStorage.getItem('User')!=undefined)
-        {this.router.navigate(['/openOrder']);
+        {this.router.navigate(['/home']);
         this.appComponent.getSignInUser();} 
       });
   }

@@ -53,7 +53,6 @@
   left: 2px; 
 }
 
-
 .home-logo {
   position: absolute;
   height: auto;
@@ -77,7 +76,7 @@
   }
 }
 .background {
-  position:absolute; /* Using fixed positioning to cover the viewport */
+  position: absolute; /* Using fixed positioning to cover the viewport */
   top: 0;
   left: 0;
   width: 100%;
@@ -85,4 +84,91 @@
   object-fit: cover;
   z-index: 0; /* Setting the z-index to be below the text */
   opacity: 0.7; /* Making the background slightly transparent */
+}
+
+/* Responsive styles */
+@media (max-width: 1200px) {
+  .home-text3 {
+    font-size: 48px;
+  }
+  
+  .home-logo {
+    max-height: 400px;
+    max-width: 400px;
+  }
+}
+
+@media (max-width: 992px) {
+  .home-text3 {
+    font-size: 40px;
+  }
+  
+  .home-text4, .home-text1 {
+    font-size: 20px;
+  }
+  
+  .home-logo {
+    max-height: 350px;
+    max-width: 350px;
+  }
+}
+
+@media (max-width: 768px) {
+  .home-text {
+    top: 45%;
+  }
+
+  .home-text3 {
+    font-size: 36px;
+  }
+  
+  .home-text4, .home-text1 {
+    font-size: 18px;
+  }
+  
+  .home-logo {
+    max-height: 300px;
+    max-width: 300px;
+    right: 10px;
+  }
+}
+
+@media (max-width: 576px) {
+  .home-text {
+    top: 40%;
+  }
+
+  .home-text3 {
+    font-size: 30px;
+  }
+  
+  .home-text4, .home-text1 {
+    font-size: 16px;
+  }
+  
+  .home-logo {
+    max-height: 250px;
+    max-width: 250px;
+    right: 5px;
+  }
+}
+
+@media (max-width: 400px) {
+  .home-text {
+    top: 35%;
+  }
+
+  .home-text3 {
+    font-size: 24px;
+  }
+  
+  .home-text4, .home-text1 {
+    font-size: 14px;
+  }
+  
+  .home-logo {
+    max-height: 200px;
+    max-width: 200px;
+    right: 0;
+  }
 }

@@ -4,77 +4,62 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add New Dentist</title>
-    <!-- Include Angular Material Icons -->
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- Include favicon -->
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
     <!-- Include Angular Material CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/@angular/material@12.2.13/prebuilt-themes/indigo-pink.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.1.12/angular-material.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
 </head>
 <body>
     <div class="container">
-        <h1 style="font-size: 28px; color: #333; text-align: center; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 20px;">
-            <mat-icon style="vertical-align: middle; margin-right: 8px;">person_add</mat-icon> Add New Dentist
-        </h1>        
-        <div class="row">
-            <div class="col-md-6">
-                <form [formGroup]="addDentistForm" (ngSubmit)="addDentist()" novalidate>
-                    <div class="form-group">
-                        <mat-form-field appearance="outline">
-                            <mat-label><mat-icon>person</mat-icon> Surname</mat-label>
-                            <input matInput id="LastName" formControlName="LastName" type="text">
-                            <mat-error *ngIf="addDentistForm.get('LastName')?.invalid && addDentistForm.get('LastName')?.touched">
-                                Surname is required.
-                            </mat-error>
-                        </mat-form-field>
-                    </div>
-                  
-                    <div class="form-group">
-                        <mat-form-field appearance="outline">
-                            <mat-label><mat-icon>person</mat-icon> Name</mat-label>
-                            <input matInput id="FirstName" formControlName="FirstName" type="text">
-                            <mat-error *ngIf="addDentistForm.get('FirstName')?.invalid && addDentistForm.get('FirstName')?.touched">
-                                Name is required.
-                            </mat-error>
-                        </mat-form-field>
-                    </div>
-                  
-                    <div class="form-group">
-                        <mat-form-field appearance="outline">
-                            <mat-label><mat-icon>phone</mat-icon> Contact details</mat-label>
-                            <input matInput id="ContactDetail" formControlName="ContactDetail">
-                            <mat-error *ngIf="addDentistForm.get('ContactDetail')?.invalid && addDentistForm.get('ContactDetail')?.touched">
-                                Contact details are required.
-                            </mat-error>
-                        </mat-form-field>
-                    </div>
-                  
-                    <div class="form-group">
-                        <mat-form-field appearance="outline">
-                            <mat-label><mat-icon>location_on</mat-icon> Address</mat-label>
-                            <input matInput id="Address" formControlName="Address">
-                            <mat-error *ngIf="addDentistForm.get('Address')?.invalid && addDentistForm.get('Address')?.touched">
-                                Address is required.
-                            </mat-error>
-                        </mat-form-field>
-                    </div>
-                    <button mat-raised-button color="primary" type="submit" style="margin-right: 10px;">
-                        <mat-icon>add</mat-icon> Add
-                    </button>
-                    <button mat-raised-button color="warn" type="button" (click)="cancel()" style="margin-left: 50px;">
-                        <mat-icon>cancel</mat-icon> Cancel
-                    </button>                    
-                </form>
+        <h1 style="font-size: 48px; color: #4d4a4a; text-align: center; text-transform: uppercase; letter-spacing: 3px; margin-bottom: 24px; text-shadow: 2px 2px 4px rgba(124, 124, 124, 0.5);">ADD NEW DENTIST</h1> 
+        <form [formGroup]="addDentistForm" (ngSubmit)="addDentist()" novalidate>
+            <div class="form-group">
+                <mat-form-field appearance="outline">
+                    <mat-label><i class="material-icons">person</i> Surname</mat-label>
+                    <input matInput id="LastName" formControlName="LastName" type="text" placeholder="Surname">
+                    <mat-error *ngIf="addDentistForm.get('LastName')?.invalid && addDentistForm.get('LastName')?.touched">
+                        Surname is required.
+                    </mat-error>
+                </mat-form-field>
             </div>
-        </div>
+            <div class="form-group">
+                <mat-form-field appearance="outline">
+                    <mat-label><i class="material-icons">person</i> Name</mat-label>
+                    <input matInput id="FirstName" formControlName="FirstName" type="text" placeholder="Name">
+                    <mat-error *ngIf="addDentistForm.get('FirstName')?.invalid && addDentistForm.get('FirstName')?.touched">
+                        Name is required.
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <div class="form-group">
+                <mat-form-field appearance="outline">
+                    <mat-label><i class="material-icons">phone</i> Contact details</mat-label>
+                    <input matInput id="ContactDetail" formControlName="ContactDetail" placeholder="Contact details">
+                    <mat-error *ngIf="addDentistForm.get('ContactDetail')?.invalid && addDentistForm.get('ContactDetail')?.touched">
+                        Contact details are required.
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <div class="form-group">
+                <mat-form-field appearance="outline">
+                    <mat-label><i class="material-icons">location_on</i> Address</mat-label>
+                    <input matInput id="Address" formControlName="Address" placeholder="Address">
+                    <mat-error *ngIf="addDentistForm.get('Address')?.invalid && addDentistForm.get('Address')?.touched">
+                        Address is required.
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <div class="form-group">
+                <button mat-raised-button color="primary" type="submit">Add Dentist</button>
+                <button mat-raised-button color="warn" type="button" (click)="cancel()">Cancel</button>
+            </div>
+        </form>
     </div>
     
-    <!-- Angular and Angular Material dependencies -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/core-js/2.5.3/core.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/zone.js/0.8.26/zone.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.8/hammer.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/reflect-metadata/0.1.10/Reflect.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@angular/material/bundles/material.umd.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@angular/cdk/bundles/cdk.umd.js"></script>
+    
+    <!-- Include Angular Material JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.1.12/angular-material.min.js"></script>
 </body>
 </html>
-
-
