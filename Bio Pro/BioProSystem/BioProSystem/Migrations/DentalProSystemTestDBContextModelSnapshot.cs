@@ -1260,7 +1260,7 @@ namespace BioProSystem.Migrations
                     b.HasOne("BioProSystem.Models.Calander", "Calander")
                         .WithMany("Events")
                         .HasForeignKey("CalanderId1")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.SetNull)
                         .IsRequired();
 
                     b.Navigation("Calander");
@@ -1339,7 +1339,7 @@ namespace BioProSystem.Migrations
                     b.HasOne("BioProSystem.Models.SystemOrder", "SystemOrder")
                         .WithMany("MediaFiles")
                         .HasForeignKey("SystemOrderId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.SetNull)
                         .IsRequired();
 
                     b.Navigation("SystemOrder");
@@ -1416,13 +1416,13 @@ namespace BioProSystem.Migrations
                     b.HasOne("BioProSystem.Models.Dentist", "Dentist")
                         .WithMany("Patients")
                         .HasForeignKey("DentistId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.SetNull)
                         .IsRequired();
 
                     b.HasOne("BioProSystem.Models.MedicalAid", "MedicalAid")
                         .WithMany("Patients")
                         .HasForeignKey("MedicalAidId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Dentist");
@@ -1468,13 +1468,13 @@ namespace BioProSystem.Migrations
                     b.HasOne("BioProSystem.Models.StockCategory", "StockCategory")
                         .WithMany("Stocks")
                         .HasForeignKey("StockCategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.SetNull)
                         .IsRequired();
 
                     b.HasOne("BioProSystem.Models.Supplier", "Supplier")
                         .WithMany("Stocks")
                         .HasForeignKey("SupplierId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.SetNull)
                         .IsRequired();
 
                     b.Navigation("StockCategory");
