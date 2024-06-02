@@ -4,6 +4,7 @@ using BioProSystem.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BioProSystem.Migrations
 {
     [DbContext(typeof(DentalProSystemTestDBContext))]
-    partial class DentalProSystemTestDBContextModelSnapshot : ModelSnapshot
+    [Migration("20240602075017_referenrial-PartOne")]
+    partial class referenrialPartOne
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -498,7 +501,7 @@ namespace BioProSystem.Migrations
 
                     b.Property<string>("SystemOrderId")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("TimelineDetails")
                         .IsRequired()
@@ -510,6 +513,9 @@ namespace BioProSystem.Migrations
                     b.HasKey("WorkflowStructureId");
 
                     b.HasIndex("OrderDirectionId");
+
+                    b.HasIndex("SystemOrderId")
+                        .IsUnique();
 
                     b.HasIndex("TimelineId");
 
@@ -548,7 +554,7 @@ namespace BioProSystem.Migrations
                     b.Property<int>("DentistId")
                         .HasColumnType("int");
 
-                    b.Property<string>("FirstName")
+                    b.Property<string>("FirsName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -880,9 +886,6 @@ namespace BioProSystem.Migrations
 
                     b.HasIndex("OrderTypeId");
 
-                    b.HasIndex("OrderWorkflowTimelineId")
-                        .IsUnique();
-
                     b.ToTable("SystemOrders");
                 });
 
@@ -896,9 +899,6 @@ namespace BioProSystem.Migrations
 
                     b.Property<bool>("Completed")
                         .HasColumnType("bit");
-
-                    b.Property<DateTime?>("DateCompleted")
-                        .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -1394,6 +1394,12 @@ namespace BioProSystem.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("BioProSystem.Models.SystemOrder", "systemOrder")
+                        .WithOne("OrderWorkflowTimeline")
+                        .HasForeignKey("BioProSystem.Models.OrderWorkflowTimeline", "SystemOrderId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.HasOne("BioProSystem.Models.ProceduralTimeline", "Timeline")
                         .WithMany("OrderWorkflowTimeline")
                         .HasForeignKey("TimelineId");
@@ -1401,6 +1407,8 @@ namespace BioProSystem.Migrations
                     b.Navigation("Timeline");
 
                     b.Navigation("orderDirection");
+
+                    b.Navigation("systemOrder");
                 });
 
             modelBuilder.Entity("BioProSystem.Models.PasswordManagement", b =>
@@ -1528,12 +1536,6 @@ namespace BioProSystem.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("BioProSystem.Models.OrderWorkflowTimeline", "OrderWorkflowTimeline")
-                        .WithOne("systemOrder")
-                        .HasForeignKey("BioProSystem.Models.SystemOrder", "OrderWorkflowTimelineId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
                     b.Navigation("Dentist");
 
                     b.Navigation("OpenOrder");
@@ -1541,8 +1543,6 @@ namespace BioProSystem.Migrations
                     b.Navigation("OrderStatus");
 
                     b.Navigation("OrderType");
-
-                    b.Navigation("OrderWorkflowTimeline");
                 });
 
             modelBuilder.Entity("BioProSystem.Models.SystemOrderSteps", b =>
@@ -1767,12 +1767,6 @@ namespace BioProSystem.Migrations
                     b.Navigation("systemOrders");
                 });
 
-            modelBuilder.Entity("BioProSystem.Models.OrderWorkflowTimeline", b =>
-                {
-                    b.Navigation("systemOrder")
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("BioProSystem.Models.Payment", b =>
                 {
                     b.Navigation("OrderPayment");
@@ -1814,6 +1808,8 @@ namespace BioProSystem.Migrations
                     b.Navigation("MediaFiles");
 
                     b.Navigation("OrderPayments");
+
+                    b.Navigation("OrderWorkflowTimeline");
 
                     b.Navigation("StockItems");
 

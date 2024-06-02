@@ -4,6 +4,7 @@ using BioProSystem.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BioProSystem.Migrations
 {
     [DbContext(typeof(DentalProSystemTestDBContext))]
-    partial class DentalProSystemTestDBContextModelSnapshot : ModelSnapshot
+    [Migration("20240602090932_possibleFix")]
+    partial class possibleFix
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -548,7 +551,7 @@ namespace BioProSystem.Migrations
                     b.Property<int>("DentistId")
                         .HasColumnType("int");
 
-                    b.Property<string>("FirstName")
+                    b.Property<string>("FirsName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -896,9 +899,6 @@ namespace BioProSystem.Migrations
 
                     b.Property<bool>("Completed")
                         .HasColumnType("bit");
-
-                    b.Property<DateTime?>("DateCompleted")
-                        .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
                         .IsRequired()

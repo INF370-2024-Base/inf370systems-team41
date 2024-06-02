@@ -11,6 +11,7 @@ namespace BioProSystem.Models
         public DateTime? DueDateForStep { get; set; }
 
         public DateTime? StartDateForStep { get; set; }
+        public DateTime? DateCompleted { get; set; }
 
         public string Description { get; set; }
 

@@ -291,7 +291,7 @@ export class AddOrderComponent implements OnInit {
                     viewModel.PatientSurname = formData.PatientSurname;
                     viewModel.MedicalAidId = formData.MedicalAidId;
                     viewModel.MedicalAidNumber = formData.MedicalAidNumber;
-                    viewModel.OrderDirectionId = formData.OrderDirectionId;
+                    viewModel.OrderDirectionId = this.orderdirection.orderDirectionId;
                     viewModel.OrderTypeId = formData.OrderTypeId;
                     viewModel.OrderStatusId = 1;
                     viewModel.EmergencyNumber = formData.EmergencyNumber;
@@ -317,6 +317,7 @@ export class AddOrderComponent implements OnInit {
                         },
                       (error:HttpErrorResponse)=>
                       {
+                        console.log(error)
                         this.showSnackBar(error.error)
                       }
                       )

@@ -4,6 +4,7 @@ using BioProSystem.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BioProSystem.Migrations
 {
     [DbContext(typeof(DentalProSystemTestDBContext))]
-    partial class DentalProSystemTestDBContextModelSnapshot : ModelSnapshot
+    [Migration("20240602071427_referential_integ")]
+    partial class referential_integ
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -548,7 +551,7 @@ namespace BioProSystem.Migrations
                     b.Property<int>("DentistId")
                         .HasColumnType("int");
 
-                    b.Property<string>("FirstName")
+                    b.Property<string>("FirsName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -896,9 +899,6 @@ namespace BioProSystem.Migrations
 
                     b.Property<bool>("Completed")
                         .HasColumnType("bit");
-
-                    b.Property<DateTime?>("DateCompleted")
-                        .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -1525,13 +1525,13 @@ namespace BioProSystem.Migrations
                     b.HasOne("BioProSystem.Models.OrderType", "OrderType")
                         .WithMany("systemOrders")
                         .HasForeignKey("OrderTypeId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("BioProSystem.Models.OrderWorkflowTimeline", "OrderWorkflowTimeline")
                         .WithOne("systemOrder")
                         .HasForeignKey("BioProSystem.Models.SystemOrder", "OrderWorkflowTimelineId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Dentist");
@@ -1550,13 +1550,13 @@ namespace BioProSystem.Migrations
                     b.HasOne("BioProSystem.Models.Employee", "Employee")
                         .WithMany("SystemOrderSteps")
                         .HasForeignKey("EmployeeId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("BioProSystem.Models.SystemOrder", "SystemOrders")
                         .WithMany("SystemOrderSteps")
                         .HasForeignKey("SystemOrderId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Employee");
@@ -1569,7 +1569,7 @@ namespace BioProSystem.Migrations
                     b.HasOne("BioProSystem.Models.SystemUser", "User")
                         .WithMany("UserActions")
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.SetNull)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("User");

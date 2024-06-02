@@ -17,6 +17,7 @@ using System.Net;
 using System.Net.Mail;
 using System.Threading.Tasks;
 using Org.BouncyCastle.Crypto.Macs;
+using Microsoft.Extensions.Logging;
 
 namespace BioProSystem.Controllers
 {
@@ -24,6 +25,7 @@ namespace BioProSystem.Controllers
     [Route("Api/")]
     public class OrderController : Controller
     {
+        private readonly ILogger<OrderController> _logger;
         private readonly UserManager<SystemUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly IRepository _repository;
@@ -32,7 +34,7 @@ namespace BioProSystem.Controllers
         private readonly IEmailSender _emailSender;
         private readonly EmailSettings _emailSettings;
 
-        public OrderController(IOptions<EmailSettings> emailSettings, IEmailSender emailSender,UserManager<SystemUser> userManager, RoleManager<IdentityRole> roleManager, IUserClaimsPrincipalFactory<SystemUser> claimsPrincipalFactory, IConfiguration configuration, IRepository repository)
+        public OrderController(ILogger<OrderController> logger,IOptions<EmailSettings> emailSettings, IEmailSender emailSender,UserManager<SystemUser> userManager, RoleManager<IdentityRole> roleManager, IUserClaimsPrincipalFactory<SystemUser> claimsPrincipalFactory, IConfiguration configuration, IRepository repository)
         {
             _userManager = userManager;
             _roleManager = roleManager;
@@ -41,6 +43,7 @@ namespace BioProSystem.Controllers
             _repository = repository;
             _emailSender = emailSender;
             _emailSettings = emailSettings.Value;
+            _logger = logger;
         }
         [HttpPost]
         [Route("DownloadMediaFile")]
@@ -98,7 +101,7 @@ namespace BioProSystem.Controllers
 
                     var newOrder = new SystemOrder
                     {
-                        OrderId = viewModel.OrderId,//dropdown
+                        OrderId = viewModel.OrderId,
                         DentistId = viewModel.DentistId,//dropdown or small search pop-up
                         OrderDate = viewModel.OrderDate,//calendar select
                         EmergencyNumber = viewModel.EmergencyNumber,
@@ -117,15 +120,18 @@ namespace BioProSystem.Controllers
                         systemOrder = newOrder,
                         OrderDirectionId = viewModel.OrderDirectionId,
                         TimelineDetails="Start Date:"+viewModel.OrderDate.ToShortDateString()+"\n"+"Due Date:"+viewModel.DueDate.ToShortDateString(),
-                        
-
-
+                       
                     };
+                    
                     _repository.Add(newOrderWorkflowTimelines);
+                    await _repository.SaveChangesAsync();
+                    
                     var orderdirection = await _repository.GetOrderDirectionById(viewModel.OrderDirectionId);
                     var teethShades = await _repository.GetTeethShadesAsync(viewModel.TeethShadesIds);
                     var selectedAreas = await _repository.GetSelectedAreasAsync(viewModel.SeletedAreasIds);
                     orderdirection.OrderDetails.Add(newOrderWorkflowTimelines);
+                    newOrder.OrderWorkflowTimelineId = newOrderWorkflowTimelines.WorkflowStructureId;
+                    newOrder.OrderWorkflowTimeline = newOrderWorkflowTimelines;
 
                     if (teethShades == null || !teethShades.Any())
                     {
@@ -153,7 +159,6 @@ namespace BioProSystem.Controllers
                     OpenOrder newOpenOrder = new OpenOrder();
                     if (viewModel.OrderTypeId==1)
                     {
-
                         newOpenOrder.Description = orderdirection.Description;
                         newOpenOrder.systemOrder = newOrder;
                         _repository.Add(newOpenOrder);
@@ -162,7 +167,7 @@ namespace BioProSystem.Controllers
                     Console.WriteLine("is true" + await _repository.CheckSystemPatient(viewModel.MedicalAidNumber));
                     if (await _repository.CheckSystemPatient(viewModel.MedicalAidNumber))
                     {
-                        newPatient.FirsName = _repository.GetPatientByMedicalAidNumber(viewModel.MedicalAidNumber).Result.FirsName;
+                        newPatient.FirstName = _repository.GetPatientByMedicalAidNumber(viewModel.MedicalAidNumber).Result.FirstName;
                         newPatient.Lastname = _repository.GetPatientByMedicalAidNumber(viewModel.MedicalAidNumber).Result.Lastname;
                         newPatient.DentistId = _repository.GetPatientByMedicalAidNumber(viewModel.MedicalAidNumber).Result.DentistId;
                         newPatient.MedicalAidId = _repository.GetPatientByMedicalAidNumber(viewModel.MedicalAidNumber).Result.MedicalAidId;
@@ -170,35 +175,60 @@ namespace BioProSystem.Controllers
                     }
                     else
                     {
-                        newPatient.FirsName = viewModel.PatientName;
+                        newPatient.FirstName = viewModel.PatientName;
                         newPatient.Lastname = viewModel.PatientSurname;
                         newPatient.DentistId = viewModel.DentistId;
                         newPatient.MedicalAidId = viewModel.MedicalAidId;
+                        newPatient.MedicalAid = await _repository.GetMedicalAidByMedicalAidId(viewModel.MedicalAidId);
                         newPatient.MedicalAidNumber = viewModel.MedicalAidNumber;
+                        newPatient.Dentist=_repository.GetDentistdByIdAsync(viewModel.DentistId).Result;
                         _repository.Add(newPatient);
+                        try
+                        {
+   
+
+                            if (await _repository.SaveChangesAsync())
+                            {
+                               
+                            }
+                            else
+                            {
+                                // Failed to save changes
+                                return BadRequest("Failed to save new patient.");
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            // Log the exception
+                            _logger.LogError(ex, "Error adding new patient.");
+                            return StatusCode(500, "Internal server error: " + ex.InnerException.Message);
+                        }
                     }   
                     Dentist dentist=_repository.GetDentistdByIdAsync(viewModel.DentistId).Result;
                     dentist.SystemOrders.Add(newOrder);
+                    dentist.Patients.Add(newPatient);
                     _repository.Add(newOrder);
+                    List<SystemUser> labManagers = _userManager.GetUsersInRoleAsync("Lab Manager").Result.ToList();
 
-                    if (await _repository.SaveChangesAsync())
-                    { EmailViewModel email=new EmailViewModel();
-                        email.Email = "bioprosystem717@gmail.com";
-                        email.Emailheader = "New " + orderdirection.Description + " ID:" + newOrder.OrderId;
-                        email.EmailContent = " Good Day Sir.\n Hope all is well.\n A new order is pending approval on the system.\n Please approve or reject at your earliest convenience";
-                        SendTestEmail(email);
-                        return Ok(newOrder);
-                    }
-                    else
+                    foreach (SystemUser labManager in labManagers)
                     {
-                        ModelState.AddModelError(string.Empty, "Failed to save changes.");
-                        return BadRequest(ModelState);
+                        if(labManager!=null)
+                        { 
+                            EmailViewModel email = new EmailViewModel();
+                            email.Email = labManager.Email;
+                            email.Emailheader = "New " + orderdirection.Description + " ID:" + newOrder.OrderId;
+                            email.EmailContent = " Good Day.\n Hope all is well.\n A new order is pending approval on the system.\n Please approve or reject at your earliest convenience";
+                            SendTestEmail(email);
+                        }
                     }
+                   
+                        return Ok(newOrder);
+                  
                 }
                 catch (Exception ex)
                 {
                     ModelState.AddModelError(string.Empty, $"An error occurred: {ex.Message}");
-                    return BadRequest(ModelState);
+                    return StatusCode(500, "Internal server error: " + ex.InnerException.Message);
                 }
             }
             else
@@ -247,7 +277,7 @@ namespace BioProSystem.Controllers
 
                             if (await _repository.CheckSystemPatient(viewModel.MedicalAidNumber))
                             {
-                                newPatient.FirsName = _repository.GetPatientByMedicalAidNumber(viewModel.MedicalAidNumber).Result.FirsName;
+                                newPatient.FirstName = _repository.GetPatientByMedicalAidNumber(viewModel.MedicalAidNumber).Result.FirstName;
                                 newPatient.Lastname = _repository.GetPatientByMedicalAidNumber(viewModel.MedicalAidNumber).Result.Lastname;
                                 newPatient.DentistId = _repository.GetPatientByMedicalAidNumber(viewModel.MedicalAidNumber).Result.DentistId;
                                 newPatient.MedicalAidId = _repository.GetPatientByMedicalAidNumber(viewModel.MedicalAidNumber).Result.MedicalAidId;
@@ -257,7 +287,7 @@ namespace BioProSystem.Controllers
                             }
                             else
                             {
-                                newPatient.FirsName = viewModel.PatientName;
+                                newPatient.FirstName = viewModel.PatientName;
                                 newPatient.Lastname = viewModel.PatientSurname;
                                 newPatient.DentistId = viewModel.DentistId;
                                 newPatient.MedicalAidId = viewModel.MedicalAidId;
@@ -589,7 +619,7 @@ namespace BioProSystem.Controllers
                 }
                 else
                 {
-                    pendingOrders.OrderStatusId = 4;
+                    pendingOrders.OrderStatusId = 7;
                 }
                 if (await _repository.SaveChangesAsync())
                 {

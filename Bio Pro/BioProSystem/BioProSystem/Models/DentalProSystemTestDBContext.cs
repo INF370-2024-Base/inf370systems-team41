@@ -88,7 +88,8 @@ namespace BioProSystem.Models
             modelBuilder.Entity<OrderWorkflowTimeline>()
                 .HasOne(owt => owt.systemOrder) 
                 .WithOne(so => so.OrderWorkflowTimeline)
-                .HasForeignKey<SystemOrder>(so => so.OrderWorkflowTimelineId);
+                .HasForeignKey<SystemOrder>(so => so.OrderWorkflowTimelineId)
+                .OnDelete(DeleteBehavior.NoAction);
             modelBuilder.Entity<Payment>()
                 .HasOne(owt => owt.RefundPayments)
                 .WithOne(so => so.Payment)
@@ -96,7 +97,42 @@ namespace BioProSystem.Models
             modelBuilder.Entity<OrderWorkflowTimeline>()
                 .HasOne(owt => owt.systemOrder)
                 .WithOne(so => so.OrderWorkflowTimeline)
-                .HasForeignKey<SystemOrder>(so => so.OrderWorkflowTimelineId);
+                .HasForeignKey<SystemOrder>(so => so.OrderWorkflowTimelineId)
+                .OnDelete(DeleteBehavior.Restrict); ;
+
+            modelBuilder.Entity<SystemOrderSteps>()
+                .HasOne(sos => sos.SystemOrders)
+                .WithMany(so => so.SystemOrderSteps)
+                .HasForeignKey(sos => sos.SystemOrderId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<SystemOrder>()
+             .HasOne(so => so.OrderType)
+             .WithMany(ot => ot.systemOrders)
+             .HasForeignKey(so => so.OrderTypeId)
+             .OnDelete(DeleteBehavior.Restrict);
+
+                
+
+            // SystemOrderSteps -> Employees
+            modelBuilder.Entity<SystemOrderSteps>()
+                .HasOne(sos => sos.Employee)
+                .WithMany(e => e.SystemOrderSteps)
+                .HasForeignKey(sos => sos.EmployeeId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            // SystemOrderSteps -> SystemOrders
+            modelBuilder.Entity<SystemOrderSteps>()
+                .HasOne(sos => sos.SystemOrders)
+                .WithMany(so => so.SystemOrderSteps)
+                .HasForeignKey(sos => sos.SystemOrderId)
+                .OnDelete(DeleteBehavior.Restrict);
+  
+            modelBuilder.Entity<UserAction>()
+                .HasOne(ua => ua.User)
+                .WithMany(u => u.UserActions)
+                .HasForeignKey(ua => ua.UserId)
+                .OnDelete(DeleteBehavior.SetNull);
         }
 
     }

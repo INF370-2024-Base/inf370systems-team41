@@ -95,7 +95,8 @@ namespace BioProSystem.Models
                 }
                 else
                 {
-                    throw new Exception("No employees found for " + orderDirectionStep.StateDescription);
+                    JobTitle jobNeeded = GetJobTitleByIdAsync(orderDirectionStep.JobTitleId).Result;
+                    throw new Exception("No employees found for " + orderDirectionStep.StateDescription+".Employee with Job title: "+ jobNeeded.TitleName+" needed.");
 
                 }
             }
@@ -224,9 +225,6 @@ namespace BioProSystem.Models
             {
                 orderinformation.SelectedAreas.Add(selectedArea);
             }
-
-
-
             return orderinformation;
         }
         public async Task<IEnumerable<Dentist>> GetDentistsAsync()
@@ -243,6 +241,10 @@ namespace BioProSystem.Models
             return await _appDbContext.MedicalAids.ToListAsync();
         }
         public async Task<MedicalAid> GetMedicalAidByIdAsync(int medicalAidId)
+        {
+            return await _appDbContext.MedicalAids.FirstOrDefaultAsync(o => o.MedicalAidId == medicalAidId);
+        }
+        public async Task<MedicalAid> GetOrderWorkFlow(int medicalAidId)
         {
             return await _appDbContext.MedicalAids.FirstOrDefaultAsync(o => o.MedicalAidId == medicalAidId);
         }
