@@ -1,13 +1,17 @@
-﻿using BioProSystem.Models;
+﻿using BioProSystem.EmailService;
+using BioProSystem.Models;
 using BioProSystem.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System.Diagnostics;
 using System.IdentityModel.Tokens.Jwt;
+using System.Net;
 using System.Net.Mail;
 using System.Security.Claims;
 using System.Text;
@@ -22,14 +26,18 @@ namespace BioProSystem.Controllers
         private readonly IRepository _repository;
         private readonly IUserClaimsPrincipalFactory<SystemUser> _claimsPrincipalFactory;
         private readonly IConfiguration _configuration;
+        private readonly IEmailSender _emailSender;
+        private readonly EmailSettings _emailSettings;
 
-        public LoginController(UserManager<SystemUser> userManager, RoleManager<IdentityRole> roleManager, IUserClaimsPrincipalFactory<SystemUser> claimsPrincipalFactory, IConfiguration configuration, IRepository repository)
+        public LoginController(IEmailSender emailSender, IOptions<EmailSettings> emailSettings, UserManager<SystemUser> userManager, RoleManager<IdentityRole> roleManager, IUserClaimsPrincipalFactory<SystemUser> claimsPrincipalFactory, IConfiguration configuration, IRepository repository)
         {
             _userManager = userManager;
             _roleManager = roleManager;
             _claimsPrincipalFactory = claimsPrincipalFactory;
             _configuration = configuration;
             _repository = repository;
+            _emailSender = emailSender;
+            _emailSettings = emailSettings.Value;
         }
         [HttpPost]
         [Route("Register")]
@@ -143,8 +151,96 @@ namespace BioProSystem.Controllers
                 user = user.UserName
             });
         }
+        [HttpPut]
+        [Route("UpdatePassword")]
+        public async Task<IActionResult> UpdatePassword(UpdateUser user)
+        {
+            if(user.UserEmail != null)
+            {
+                SystemUser userToUpdate = _repository.GetsystemUserAsync(user.UserEmail).Result;
+                if (userToUpdate != null)
+                {
+                    var result=await _userManager.ChangePasswordAsync(userToUpdate, user.OldPassword, user.NewPassword);
+                    if (result.Succeeded)
+                    {
+                        return Ok(result);
+                    }
+                    else
+                    {
+                        return BadRequest(result.Errors.Select(o=>o.Description));
+                    }
+                }
+                else
+                {
+                   return BadRequest("user with email not found");
+                }
+            }
+            else
+            {
+                return BadRequest("No user Id sent");
+            }
 
+        }
+        [HttpPut]
+        [Route("ResetPassword")]
+        public async Task<IActionResult> ResetPassword(ResetPassword user)
+        {
+            if (user.UserEmail != null)
+            {
+                SystemUser userToUpdate = _repository.GetsystemUserAsync(user.UserEmail).Result;
+                if (userToUpdate != null)
+                {
+                    var token = await _userManager.GeneratePasswordResetTokenAsync(userToUpdate);
+                    var result = await _userManager.ResetPasswordAsync(userToUpdate, token, user.NewPassword);
+                    if (result.Succeeded)
+                    {
+                        return Ok(result);
+                    }
+                    else
+                    {
+                        return BadRequest(result.Errors.Select(o => o.Description));
+                    }
+                }
+                else
+                {
+                    return BadRequest("user with email not found");
+                }
+            }
+            else
+            {
+                return BadRequest("No user Id sent");
+            }
+
+        }
         [HttpPost]
+        [Route("SendResetEmail")]
+        public async Task<IActionResult> SendResetEmail(string email)
+        {
+            if (email != null)
+            {
+                SystemUser userToUpdate = _repository.GetsystemUserAsync(email).Result;
+                if (userToUpdate != null)
+                {
+                    EmailViewModel newemail = new EmailViewModel();
+                    newemail.Email = email;
+                    newemail.Emailheader = "Reset Password";
+                    newemail.EmailContent = "http://localhost:4200/employeeProfile";
+                    SendTestEmail(newemail);
+                    return Ok(email);
+                }
+                else
+                {
+                    return BadRequest("User with email not found");
+                }
+            }
+            else
+            {
+                return BadRequest("No user Id sent");
+            }
+        }
+
+
+            [HttpPost]
         [Route("CreateRole")]
         public async Task<IActionResult> CreateRole(string roleName)
         {
@@ -221,6 +317,18 @@ namespace BioProSystem.Controllers
             {
                 return StatusCode(500, "Internal Server Error. Please contact support");
             }
+        }
+        [HttpPost]
+        [Route("SendEmail")]
+        public async Task<IActionResult> SendTestEmail(EmailViewModel email)
+        {
+            var client = new SmtpClient(_emailSettings.SmtpServer, _emailSettings.SmtpPort)
+            {
+                Credentials = new NetworkCredential(_emailSettings.Username, _emailSettings.Password),
+                EnableSsl = true
+            };
+            await _emailSender.SendEmailAsync(email.Email, email.Emailheader, email.EmailContent);
+            return Ok("Email sent successfully");
         }
     }
 }

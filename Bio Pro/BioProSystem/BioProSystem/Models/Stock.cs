@@ -22,7 +22,8 @@ public partial class Stock
     public int MinimumStockLevel { get; set; }
 
     public string? ReorderPoint { get; set; }
-
+    
+    public bool CurrentlyInUse { get; set; } = true;
     public virtual ICollection<StakeWriteOff> StakeWriteOffs { get; set; } = new List<StakeWriteOff>();
     public virtual ICollection<StockItem> StockItem { get; set; } = new List<StockItem>();
 
