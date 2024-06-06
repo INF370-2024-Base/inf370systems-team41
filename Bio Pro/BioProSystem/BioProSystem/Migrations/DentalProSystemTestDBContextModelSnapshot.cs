@@ -254,6 +254,9 @@ namespace BioProSystem.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<bool>("isActiveEmployee")
+                        .HasColumnType("bit");
+
                     b.HasKey("EmployeeId");
 
                     b.HasIndex("JobTitleId");
@@ -991,6 +994,9 @@ namespace BioProSystem.Migrations
                     b.Property<string>("UserName")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
+
+                    b.Property<bool>("isActiveUser")
+                        .HasColumnType("bit");
 
                     b.HasKey("Id");
 

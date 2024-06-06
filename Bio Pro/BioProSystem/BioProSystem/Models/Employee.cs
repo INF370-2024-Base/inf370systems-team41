@@ -24,6 +24,7 @@ public partial class Employee
     public string Email { get; set; }
 
     public string? Address { get; set; }
+    public bool isActiveEmployee { get; set; } = true;
 
     public virtual ICollection<Delivery> Deliveries { get; set; } = new List<Delivery>();
 

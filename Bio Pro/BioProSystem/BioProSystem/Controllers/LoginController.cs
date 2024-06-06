@@ -187,14 +187,22 @@ namespace BioProSystem.Controllers
         {
             if (user.UserEmail != null)
             {
-                SystemUser userToUpdate = _repository.GetsystemUserAsync(user.UserEmail).Result;
+                SystemUser userToUpdate = await _repository.GetsystemUserAsync(user.UserEmail);
                 if (userToUpdate != null)
                 {
                     var token = await _userManager.GeneratePasswordResetTokenAsync(userToUpdate);
                     var result = await _userManager.ResetPasswordAsync(userToUpdate, token, user.NewPassword);
                     if (result.Succeeded)
                     {
-                        return Ok(result);
+                        try
+                        {
+                            await _repository.SaveChangesAsync();
+                            return Ok(result);
+                        }
+                        catch (DbUpdateConcurrencyException ex)
+                        {
+                            return Conflict("Concurrency conflict: the user has been modified by another process.");
+                        }
                     }
                     else
                     {
@@ -203,30 +211,29 @@ namespace BioProSystem.Controllers
                 }
                 else
                 {
-                    return BadRequest("user with email not found");
+                    return BadRequest("User with email not found");
                 }
             }
             else
             {
                 return BadRequest("No user Id sent");
             }
-
         }
         [HttpPost]
-        [Route("SendResetEmail")]
-        public async Task<IActionResult> SendResetEmail(string email)
+        [Route("SendResetEmail/{emailAddress}")]
+        public async Task<IActionResult> SendResetEmail( string emailAddress)
         {
-            if (email != null)
+            if (emailAddress != null)
             {
-                SystemUser userToUpdate = _repository.GetsystemUserAsync(email).Result;
+                SystemUser userToUpdate = _repository.GetsystemUserAsync(emailAddress).Result;
                 if (userToUpdate != null)
                 {
                     EmailViewModel newemail = new EmailViewModel();
-                    newemail.Email = email;
+                    newemail.Email = emailAddress;
                     newemail.Emailheader = "Reset Password";
                     newemail.EmailContent = "http://localhost:4200/employeeProfile";
                     SendTestEmail(newemail);
-                    return Ok(email);
+                    return Ok(newemail);
                 }
                 else
                 {
@@ -267,7 +274,7 @@ namespace BioProSystem.Controllers
 
         [HttpPost]
         [Route("AssignRole")]
-        //change
+        
         public async Task<IActionResult> AssignRole(string emailAddress, string roleName)
         {
             var user = await _userManager.FindByEmailAsync(emailAddress);
@@ -278,9 +285,56 @@ namespace BioProSystem.Controllers
 
             return BadRequest(result.Errors);
         }
+        [HttpPut]
+        [Route("EditUser")]
+        public async Task<IActionResult> EditUser(EditUser user)
+        {
+            var userToEdit = await _userManager.FindByEmailAsync(user.OldEmail);
+            var employeeToEdit = await _repository.GetEmployeeByEmailAsync(user.OldEmail);
+            if (userToEdit == null) return NotFound("Email not found in system.");
+
+            try
+            {
+                userToEdit.PhoneNumber = user.Phonenumber;
+                userToEdit.Surname = user.Surname;
+                userToEdit.Name = user.Name;
+
+                if (user.UpdatedEmail != null)
+                {
+                    var emailResult = await _userManager.SetEmailAsync(userToEdit, user.UpdatedEmail);
+                    if (emailResult.Succeeded)
+                    {
+                        await _userManager.SetUserNameAsync(userToEdit, user.UpdatedEmail);
+                        await _repository.SaveChangesAsync();
+                        await _userManager.UpdateNormalizedUserNameAsync(userToEdit);
+                        await _userManager.UpdateNormalizedEmailAsync(userToEdit);
+                    }
+                    else
+                    {
+                        return BadRequest(emailResult.Errors);
+                    }
+                }
+
+                if (employeeToEdit != null)
+                {
+                    employeeToEdit.CellphoneNumber = user.Phonenumber;
+                    employeeToEdit.FirstName = user.Name;
+                    employeeToEdit.LastName = user.Surname;
+                    employeeToEdit.Email = user.UpdatedEmail;
+                }
+
+                await _repository.SaveChangesAsync();
+                return Ok(userToEdit);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
         [HttpGet]
         [Route("GetRoles")]
-        //change
+       
         public async Task<IActionResult> GetRoles()
         {
            
@@ -304,7 +358,6 @@ namespace BioProSystem.Controllers
         [Route("GetSignInProfile/{emailAddress}")]
         public async Task<IActionResult> GetUser(string emailAddress)
         {
-            Console.WriteLine("email add:" + emailAddress);
             try
             {
                 var result = await _repository.GetsystemUserAsync(emailAddress);

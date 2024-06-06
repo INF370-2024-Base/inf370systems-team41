@@ -30,6 +30,7 @@ import {  AddProceduralTimeline } from './add-order-proceduraltimeline/add-order
 import { DeliveriesComponent } from './deliveries/deliveries.component';
 import { AddDeliveryComponent } from './add-delivery/add-delivery.component';
 import { HomeComponent } from './home/home.component';
+import { TestingBackendComponent } from './testing-backend/testing-backend.component';
 
 
 @NgModule({
@@ -43,7 +44,7 @@ import { HomeComponent } from './home/home.component';
     AddDentistComponent,
     DentistProfileComponent,
     EmployeeProfileComponent,
-    CaptureEmployeeHoursComponent,LoginComponent,EditOrderModalComponent, AddUserComponent, AddProceduralTimeline, DeliveriesComponent, AddDeliveryComponent, HomeComponent
+    CaptureEmployeeHoursComponent,LoginComponent,EditOrderModalComponent, AddUserComponent, AddProceduralTimeline, DeliveriesComponent, AddDeliveryComponent, HomeComponent, TestingBackendComponent
   ],
   imports: [
     BrowserModule,

@@ -15,6 +15,7 @@ import { AddProceduralTimeline } from './add-order-proceduraltimeline/add-order-
 import { DeliveriesComponent } from './deliveries/deliveries.component';
 import { AddDeliveryComponent } from './add-delivery/add-delivery.component';
 import { HomeComponent } from './home/home.component';
+import { TestingBackendComponent } from './testing-backend/testing-backend.component';
 
 
 const routes: Routes = [
@@ -35,8 +36,9 @@ const routes: Routes = [
   {path: 'addproceduraltimeline', component: AddProceduralTimeline}, 
   {path: 'deliveries', component: DeliveriesComponent}, 
   {path: 'addDelivery', component: AddDeliveryComponent}, 
-  {path: '', redirectTo: 'login', pathMatch: 'full'},
+  {path: '', redirectTo: 'test', pathMatch: 'full'},
   {path: 'home', component: HomeComponent},
+  {path: 'test', component: TestingBackendComponent},
 ];
 
 @NgModule({
