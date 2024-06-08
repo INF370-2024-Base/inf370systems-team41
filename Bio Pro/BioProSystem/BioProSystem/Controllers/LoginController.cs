@@ -295,6 +295,15 @@ namespace BioProSystem.Controllers
 
             try
             {
+                var result = await _userManager.AddToRoleAsync(userToEdit, user.Role);
+                if (result.Succeeded)
+                {
+
+                }
+                else
+                {
+                    return BadRequest(result.Errors);
+                }
                 userToEdit.PhoneNumber = user.Phonenumber;
                 userToEdit.Surname = user.Surname;
                 userToEdit.Name = user.Name;
@@ -332,6 +341,46 @@ namespace BioProSystem.Controllers
             }
         }
 
+        [HttpPut]
+        [Route("RemoveAccess/{userEmail}")]
+
+        public async Task<IActionResult> RemoveAccess(string userEmail)
+        {
+            SystemUser user= await _userManager.FindByEmailAsync(userEmail);
+            Employee employee=await _repository.GetEmployeeByEmailAsync(userEmail);
+            if (user != null) 
+            { 
+                user.isActiveUser = false;
+                var result= await _userManager.SetLockoutEnabledAsync(user,true);
+                if(result.Succeeded)
+                {
+                    var lockoutresult = await _userManager.SetLockoutEndDateAsync(user, DateTimeOffset.MaxValue);
+                    if (!lockoutresult.Succeeded)
+                    {
+                        return BadRequest(lockoutresult.Errors);
+                    }
+
+                }
+                else
+                {
+                    return BadRequest(result.Errors);   
+                }
+                var updateResult = await _userManager.UpdateAsync(user);
+                if (!updateResult.Succeeded)
+                {
+                    return BadRequest(updateResult.Errors);
+                }
+                if(employee!=null)
+                {
+                    employee.isActiveEmployee = false;
+                }
+                return Ok(user);
+            }
+            else
+            {
+                return BadRequest("User not found");
+            }
+        }
         [HttpGet]
         [Route("GetRoles")]
        

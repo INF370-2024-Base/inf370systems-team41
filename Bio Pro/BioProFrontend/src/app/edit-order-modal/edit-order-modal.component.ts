@@ -79,7 +79,7 @@ export class EditOrderModalComponent implements OnInit {
         OrderId: this.order.systemOrder.orderId,
         DentistId: this.order.systemOrder.dentistId,
         OrderDate: orderDate,
-        PatientName: this.order.patient.firsName,  
+        PatientName: this.order.patient.firstName,  
         PatientSurname: this.order.patient.lastname,
         MedicalAidId: this.order.patient.medicalAidId,
         MedicalAidNumber: this.order.patient.medicalAidNumber,

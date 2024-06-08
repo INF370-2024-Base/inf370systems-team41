@@ -144,7 +144,37 @@ export class OrdersComponent implements OnInit {
        
     });
 }
+isImage(base64String: string): boolean {
+  try {
+    const binary = atob(base64String);
+    const firstByte = binary.charCodeAt(0);
+    const secondByte = binary.charCodeAt(1);
 
+    // Check for PNG (89 50), JPEG (FF D8), GIF (47 49)
+    if ((firstByte === 0x89 && secondByte === 0x50) || // PNG
+        (firstByte === 0xFF && secondByte === 0xD8) || // JPEG
+        (firstByte === 0x47 && secondByte === 0x49)) { // GIF
+      return true;
+    }
+  } catch (e) {
+    return false;
+  }
+  return false;
+}
+getBase64ImageSrc(base64String: string): string {
+  if (this.isImage(base64String)) {
+    return `data:image/png;base64,${base64String}`;
+  }
+  return '';
+}
+downloadFile(base64String: string, fileName: string) {
+  const link = document.createElement('a');
+  link.href = `data:application/octet-stream;base64,${base64String}`;
+  link.download = fileName;
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+}
   searchOrders() {
     if (this.orderId.trim() !== '') {
       const url = `${this.baseUrl}GetOrdersById/${this.orderId}`;

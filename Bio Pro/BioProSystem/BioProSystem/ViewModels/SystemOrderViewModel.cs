@@ -17,5 +17,7 @@ namespace BioProSystem.ViewModels
         public OrderWorkflowTimeline Timeline { get; set; }
         public Patient patient { get; set; }
         public OrderDirection orderDirection { get; set; }
+
+        public List<SystemOrderSteps>? SystemOrderSteps { get; set; }
     }
 }

@@ -76,6 +76,10 @@ namespace BioProSystem.Models
 
     public virtual DbSet<SystemUser> SystemUsers { get; set; }
 
+        public virtual DbSet<SystemOrderSteps> SystemOrderSteps { get; set; }
+
+        public virtual DbSet<StockType> StockTypes { get; set; }
+
     public virtual DbSet<TeethShade> TeethShades { get; set; }
 
     public virtual DbSet<UserAction> UserActions { get; set; }

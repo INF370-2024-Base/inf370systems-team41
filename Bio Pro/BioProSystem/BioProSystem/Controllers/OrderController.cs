@@ -575,6 +575,17 @@ namespace BioProSystem.Controllers
                     try
                     {
                         employees = _repository.AssignAvailableTechnicians(timeline.OrderDirectionId, pendingOrders.OrderId);
+                        if(employees!=null)
+                        { 
+                            foreach (Employee employee in employees)
+                            {
+                                EmailViewModel emailViewModel = new EmailViewModel();
+                                emailViewModel.Emailheader = "New Order:" + orderId;
+                                emailViewModel.EmailContent = "You have been assigned to order:" + orderId + ". For more information view the Order info on system";
+                                emailViewModel.Email = employee.Email;
+                                SendTestEmail(emailViewModel);
+                            }
+                        }
                     }
                     catch (Exception ex)
                     {

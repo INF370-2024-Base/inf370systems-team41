@@ -18,6 +18,7 @@ export class TestingBackendComponent implements OnInit {
   editedUser:EditUser={
     Surname:"Schoeman",
     Name:"Pieter",
+    Role:"employee",
     Phonenumber:"0845678945",
     OldEmail:"bioprosystem717EmployeeNineUpdatedTwo@gmail.com",
     UpdatedEmail:"bioprosystem717EmployeeNineUpdatedTwo@gmail.com"

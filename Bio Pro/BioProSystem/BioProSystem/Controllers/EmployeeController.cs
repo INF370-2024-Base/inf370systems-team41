@@ -79,35 +79,30 @@ namespace BioProSystem.Controllers
         }
 
         // PUT api/Employee/EditEmployee
-        [HttpPut("EditEmployee/{id}")]
-        public async Task<IActionResult> EditEmployee(int id, EmployeeViewModel model)
+        [HttpPut("EditEmployee")]
+        public async Task<IActionResult> EditEmployee(EditEmployee employeeToEdit)
         {
             try
             {
-                var employee = await _repository.GetEmployeeByIdAsync(id);
+                var employee = await _repository.GetEmployeeByIdAsync(employeeToEdit.EmployeeId);
                 if (employee == null) return NotFound("Employee not found.");
 
                 // Update employee details
-                employee.FirstName = model.FirstName;
-                employee.LastName = model.LastName;
-                employee.CellphoneNumber = model.CellphoneNumber;
-                employee.Email = model.Email;
-                employee.Address = model.Address;
+                employee.JobTitleId= employeeToEdit.JobTitleId;
+                employee.Address = employeeToEdit.Address;
 
-                // Update the employee in the repository
-                var updatedEmployee = await _repository.UpdateEmployeeAsync(employee);
-                if (updatedEmployee != null)
+                if (await _repository.SaveChangesAsync())
                 {
-                    return Ok(updatedEmployee);
+                    return Ok(employee);
                 }
                 else
                 {
                     return BadRequest("Failed to update employee.");
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return StatusCode(500, "Internal Server Error. Please contact support.");
+                return StatusCode(500,ex.Message);
             }
         }
 
@@ -122,9 +117,14 @@ namespace BioProSystem.Controllers
                 if (employee == null) return NotFound("Employee not found.");
 
                 // Delete the employee
-                if (await _repository.DeleteEmployeeAsync(employee))
+                employee.isActiveEmployee = false;
+                if (await _repository.SaveChangesAsync())
                 {
                     return Ok(new { message = "Employee deleted successfully." });
+                }
+                else
+                {
+                   return BadRequest("Unable to save changes");
                 }
             }
             catch (Exception)

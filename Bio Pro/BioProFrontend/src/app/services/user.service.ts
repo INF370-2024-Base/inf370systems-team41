@@ -50,6 +50,10 @@ export class UserServices {
     return this.httpClient.put<EditUser>(`${this.apiUrl}EditUser`,user)
     .pipe(map(result => result))
   }
+  RemoveAccess(userEmail:string): Observable<string>{
+    return this.httpClient.put<string>(`${this.apiUrl}RemoveAccess/${userEmail}`,userEmail)
+    .pipe(map(result => result))
+  }
 }
 
 

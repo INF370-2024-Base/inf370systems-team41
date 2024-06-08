@@ -34,6 +34,13 @@
         </mat-expansion-panel-header>
         
         <div class="order-details">
+          <div *ngIf="order.systemOrderSteps!=null">
+            <p><strong>Ordersteps</strong><p>
+            <div *ngFor="let steps of order.systemOrderSteps">
+          
+          <p>{{steps.description}}: {{steps.employee.firstName}} {{steps.employee.lastName}}</p>
+        </div>
+        </div>
           <p><strong>Order Status:</strong> {{ order.orderStatus.description }}</p>
           <p><strong>Order Type:</strong> {{ order.orderType.description }}</p>
           <p><strong>Order Direction:</strong> {{ order.orderDirection.description }}</p>
@@ -47,7 +54,23 @@
             </div>
           </div>
 
-          <canvas id="myCanvas{{order.systemOrder.orderId}}" width="500" height="500"></canvas>
+          <div>
+            <canvas id="myCanvas{{order.systemOrder.orderId}}" width="50" height="50" style="width: 100px;height: 100px;"></canvas>
+            <div *ngIf="order.systemOrder.mediaFiles" class="media-container">
+              <div *ngFor="let media of order.systemOrder.mediaFiles">
+                <div *ngIf="isImage(media.fileSelf)">
+                  <img [src]="getBase64ImageSrc(media.fileSelf)" alt="Base64 Image" class="image-item">
+                </div>
+                <div *ngIf="!isImage(media.fileSelf)" style="position: relative;">
+                  <div class="file-item" (click)="downloadFile(media.fileSelf, media.fileName)" style="width: 100px;height: 100px;">
+                    <mat-icon class="fileIcon">insert_drive_file</mat-icon>
+                    <p class="file-name">{{ media.fileName }}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
         </div>
         
         <div class="action-icons">
@@ -68,3 +91,45 @@
   <app-edit-order-modal *ngIf="selectedOrder" (close)="closeModal()"></app-edit-order-modal>
   </div>
 </body>
+<style>
+.media-container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.image-item {
+  width: 100px;
+  height: 100px;
+  margin: 5px; /* Adjust as needed */
+}
+
+.file-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  width: 100px;
+  height: 100px;
+}
+
+.fileIcon {
+  font-size: 50px;
+  margin-bottom: 5px;
+}
+.file-name {
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  max-width: 100px; 
+  font-size: 10px;
+  justify-content: center;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.file-item:hover .file-name {
+  max-width: none; 
+  overflow: visible;
+}
+</style>

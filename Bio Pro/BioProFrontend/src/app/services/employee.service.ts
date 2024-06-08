@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { Employee } from '../shared/employee';
 import { DailyHours } from '../shared/dailyhours';
 import { addEmployee } from '../shared/addEmployee';
+import { EditEmployee } from '../shared/EditEmployee';
 
 @Injectable({
   providedIn: 'root'
@@ -29,8 +30,8 @@ export class EmployeeService {
     
   }
 
-  editEmployee(id: number, employee: Employee): Observable<Employee> {
-    return this.httpClient.put<Employee>(`${this.apiUrl}/EditEmployee/${id}`, employee);
+  editEmployee(Employee:EditEmployee): Observable<EditEmployee> {
+    return this.httpClient.put<EditEmployee>(`${this.apiUrl}/EditEmployee`, Employee);
   }
 
   deleteEmployee(id: number): Observable<any> {

@@ -90,6 +90,7 @@ namespace BioProSystem.Models
                     newStep.Description = orderDirectionStep.StateDescription;
                     newStep.EmployeeId=employee.EmployeeId;
                     newStep.SystemOrderId=systemOrderId;
+                    _appDbContext.Add(newStep);
                     systemorder.SystemOrderSteps.Add(newStep);
                     employee.SystemOrderSteps.Add(newStep);
                 }
@@ -207,6 +208,10 @@ namespace BioProSystem.Models
         {
             return await _appDbContext.SystemOrders.ToListAsync();
         }
+        public async Task<List<SystemOrderSteps>> GetAllSystemOrderStepsAsync(string orderId)
+        {
+            return await _appDbContext.SystemOrderSteps.Where(sos=>sos.SystemOrderId==orderId).Include(sos=>sos.Employee).ToListAsync();
+        }
         public async Task<SystemOrderViewModel> GetAllSystemOrdersInformationAsync(string orderId)
         {
             SystemOrderViewModel orderinformation=new SystemOrderViewModel();
@@ -217,7 +222,11 @@ namespace BioProSystem.Models
             orderinformation.OrderStatus=GetOrderStatusByIdAsync(orderinformation.systemOrder.OrderStatusId).Result;
             orderinformation.OrderType = GetOrderTypeByIdAsync(orderinformation.systemOrder.OrderTypeId).Result;
             orderinformation.orderDirection=GetOrderDirectionById(orderinformation.Timeline.OrderDirectionId).Result;
-            foreach(TeethShade teethShades in orderinformation.systemOrder.TeethShades)
+            if (orderinformation.systemOrder.SystemOrderSteps.Any())
+            { 
+                orderinformation.SystemOrderSteps = await GetAllSystemOrderStepsAsync(orderId); 
+            }
+            foreach (TeethShade teethShades in orderinformation.systemOrder.TeethShades)
             {
                 orderinformation.Teethshades.Add(teethShades);
             }
@@ -257,7 +266,7 @@ namespace BioProSystem.Models
 
         public async Task<SystemOrder> GetSystemOrderByIdAsync(string orderId)
         {
-            return await _appDbContext.SystemOrders.Include(s=>s.TeethShades).Include(s=>s.SelectedAreas).Include(s=>s.SystemOrderSteps).Include(s=>s.OrderWorkflowTimeline).FirstOrDefaultAsync(o => o.OrderId == orderId);
+            return await _appDbContext.SystemOrders.Include(s=>s.TeethShades).Include(s=>s.SelectedAreas).Include(s=>s.SystemOrderSteps).Include(s=>s.OrderWorkflowTimeline).Include(s=>s.SystemOrderSteps).Include(s=>s.MediaFiles).FirstOrDefaultAsync(o => o.OrderId == orderId);
         }
         public async Task<OrderDirection> GetOrderDirectionById(int orderDirectionId)
         {
