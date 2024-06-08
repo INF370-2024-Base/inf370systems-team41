@@ -99,6 +99,10 @@
             "Swashbuckle.AspNetCore.SwaggerUi": {
               "target": "Package",
               "version": "[6.5.0, )"
+            },
+            "Twilio": {
+              "target": "Package",
+              "version": "[7.1.1, )"
             }
           },
           "imports": [

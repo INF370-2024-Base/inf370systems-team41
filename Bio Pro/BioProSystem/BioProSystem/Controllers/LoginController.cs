@@ -15,6 +15,8 @@ using System.Net;
 using System.Net.Mail;
 using System.Security.Claims;
 using System.Text;
+using Twilio.Types;
+using Twilio.Rest.Api.V2010.Account;
 
 namespace BioProSystem.Controllers
 {
@@ -218,6 +220,20 @@ namespace BioProSystem.Controllers
             {
                 return BadRequest("No user Id sent");
             }
+        }
+        [HttpPost]
+        [Route("SendSMS")]
+        public void SendSms(string toPhoneNumber, string message)
+        {
+            var messageOptions = new CreateMessageOptions(new PhoneNumber(toPhoneNumber))
+            {
+                Body = message,
+                From = new PhoneNumber("+12073009158")               
+            };
+
+            var messageResponse = MessageResource.Create(messageOptions);
+
+            Console.WriteLine(messageResponse.Sid);
         }
         [HttpPost]
         [Route("SendResetEmail/{emailAddress}")]
