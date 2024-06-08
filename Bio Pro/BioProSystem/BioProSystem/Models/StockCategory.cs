@@ -10,6 +10,7 @@ public partial class StockCategory
     public int StockCategoryId { get; set; }
     [Required]
     public string Description { get; set; } = null!;
-
+    public int StockTypeId { get; set; }
+    public virtual StockType StockType { get; set; }
     public virtual ICollection<Stock> Stocks { get; set; } = new List<Stock>();
 }

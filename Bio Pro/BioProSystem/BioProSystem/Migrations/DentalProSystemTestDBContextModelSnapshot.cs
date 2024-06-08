@@ -766,7 +766,12 @@ namespace BioProSystem.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("StockTypeId")
+                        .HasColumnType("int");
+
                     b.HasKey("StockCategoryId");
+
+                    b.HasIndex("StockTypeId");
 
                     b.ToTable("StockCategories");
                 });
@@ -799,6 +804,23 @@ namespace BioProSystem.Migrations
                     b.HasIndex("StockId1");
 
                     b.ToTable("StockItems");
+                });
+
+            modelBuilder.Entity("BioProSystem.Models.StockType", b =>
+                {
+                    b.Property<int>("StockTypeId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("StockTypeId"));
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("StockTypeId");
+
+                    b.ToTable("StockType");
                 });
 
             modelBuilder.Entity("BioProSystem.Models.Supplier", b =>
@@ -1494,6 +1516,17 @@ namespace BioProSystem.Migrations
                     b.Navigation("Supplier");
                 });
 
+            modelBuilder.Entity("BioProSystem.Models.StockCategory", b =>
+                {
+                    b.HasOne("BioProSystem.Models.StockType", "StockType")
+                        .WithMany("StockCategories")
+                        .HasForeignKey("StockTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("StockType");
+                });
+
             modelBuilder.Entity("BioProSystem.Models.StockItem", b =>
                 {
                     b.HasOne("BioProSystem.Models.SystemOrder", "Order")
@@ -1805,6 +1838,11 @@ namespace BioProSystem.Migrations
             modelBuilder.Entity("BioProSystem.Models.StockCategory", b =>
                 {
                     b.Navigation("Stocks");
+                });
+
+            modelBuilder.Entity("BioProSystem.Models.StockType", b =>
+                {
+                    b.Navigation("StockCategories");
                 });
 
             modelBuilder.Entity("BioProSystem.Models.Supplier", b =>
