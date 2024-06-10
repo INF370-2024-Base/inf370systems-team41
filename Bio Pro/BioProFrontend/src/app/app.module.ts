@@ -31,6 +31,7 @@ import { DeliveriesComponent } from './deliveries/deliveries.component';
 import { AddDeliveryComponent } from './add-delivery/add-delivery.component';
 import { HomeComponent } from './home/home.component';
 import { TestingBackendComponent } from './testing-backend/testing-backend.component';
+import { CommonModule, DatePipe } from '@angular/common';
 
 
 @NgModule({
@@ -58,9 +59,10 @@ import { TestingBackendComponent } from './testing-backend/testing-backend.compo
     MatTableModule,
     MatButtonModule,
     MatCardModule,
-    MatGridListModule
+    MatGridListModule,
+    CommonModule,
   ],
-  providers: [],
+  providers: [DatePipe],
   bootstrap: [AppComponent]
 })
 

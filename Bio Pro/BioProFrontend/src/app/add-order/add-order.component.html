@@ -43,7 +43,7 @@
             <div class="form-group">
                 <mat-form-field appearance="outline">
                     <mat-label><i class="material-icons">event</i> Order Date</mat-label>
-                    <input matInput id="OrderDate" formControlName="OrderDate" type="date" placeholder="Select Order Date">
+                    <input matInput id="OrderDate" formControlName="OrderDate" type="date" placeholder="Select Order Date" [max]="todayDate">
                     <mat-error *ngIf="addForm.get('OrderDate')?.invalid && addForm.get('OrderDate')?.touched">
                         Order Date is required.
                     </mat-error>
@@ -208,7 +208,7 @@
     <div class="form-group">
         <mat-form-field appearance="outline">
             <mat-label><i class="material-icons">date_range</i> Due Date</mat-label>
-            <input matInput id="DueDate" formControlName="DueDate" type="date" placeholder="Select Due Date">
+            <input matInput id="DueDate" formControlName="DueDate" type="date" placeholder="Select Due Date" [min]="twoDaysAhead">
             <mat-error *ngIf="addForm.get('DueDate')?.invalid && addForm.get('DueDate')?.touched">
                 Due Date is required and must be a future date.
             </mat-error>

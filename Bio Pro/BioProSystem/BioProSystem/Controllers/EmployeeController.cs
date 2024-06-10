@@ -115,9 +115,13 @@ namespace BioProSystem.Controllers
             {
                 var employee = await _repository.GetEmployeeByIdAsync(id);
                 if (employee == null) return NotFound("Employee not found.");
-
+                if (!employee.isActiveEmployee)
+                {
+                    return BadRequest("Employee already removed");
+                }
                 // Delete the employee
                 employee.isActiveEmployee = false;
+                
                 if (await _repository.SaveChangesAsync())
                 {
                     return Ok(new { message = "Employee deleted successfully." });

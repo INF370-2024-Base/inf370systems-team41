@@ -101,13 +101,18 @@ namespace BioProSystem.Controllers
 
             if (isPasswordValid)
             {
+                var islockedou = user.LockoutEnd > DateTime.UtcNow;
+                if (user.LockoutEnd>DateTime.UtcNow)
+                {
+                    return BadRequest("User does not have access");
+                }
                 try
                 {
                     return await GenerateJWTToken(user);
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
-                    return StatusCode(StatusCodes.Status500InternalServerError, "Internal Server Error. Please contact support.");
+                    return StatusCode(StatusCodes.Status500InternalServerError, "Contact support");
                 }
             }
             else
@@ -174,7 +179,7 @@ namespace BioProSystem.Controllers
                 }
                 else
                 {
-                   return BadRequest("user with email not found");
+                   return BadRequest("User with email not found");
                 }
             }
             else
@@ -237,7 +242,7 @@ namespace BioProSystem.Controllers
         }
         [HttpPost]
         [Route("SendResetEmail/{emailAddress}")]
-        public async Task<IActionResult> SendResetEmail( string emailAddress)
+        public async Task<IActionResult> SendResetEmail(string emailAddress)
         {
             if (emailAddress != null)
             {
@@ -311,15 +316,22 @@ namespace BioProSystem.Controllers
 
             try
             {
-                var result = await _userManager.AddToRoleAsync(userToEdit, user.Role);
-                if (result.Succeeded)
+                if(_userManager.GetRolesAsync(userToEdit).Result.FirstOrDefault().ToUpper() != user.Role.ToUpper())
                 {
+                    var test=_userManager.GetRolesAsync(userToEdit).Result;
+                    _userManager.RemoveFromRoleAsync(userToEdit, _userManager.GetRolesAsync(userToEdit).Result.FirstOrDefault());
+                    var result = await _userManager.AddToRoleAsync(userToEdit, user.Role);
+                    if (result.Succeeded)
+                    {
 
+                    }
+                    else
+                    {
+                        return BadRequest(result.Errors);
+                    }
                 }
-                else
-                {
-                    return BadRequest(result.Errors);
-                }
+                
+             
                 userToEdit.PhoneNumber = user.Phonenumber;
                 userToEdit.Surname = user.Surname;
                 userToEdit.Name = user.Name;
@@ -427,7 +439,7 @@ namespace BioProSystem.Controllers
             {
                 var result = await _repository.GetsystemUserAsync(emailAddress);
 
-                if (result == null) return NotFound("Course does not exist");
+                if (result == null) return NotFound("user does not exist");
 
                 return Ok(result);
             }

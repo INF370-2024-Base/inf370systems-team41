@@ -309,7 +309,7 @@ return btoa(binary);
     this.dialogRef.close('Order update canceled');
   }
 }
-interface CustomFile {
+export interface CustomFile {
   name: string;
   size: number;
   content: Uint8Array;

@@ -95,13 +95,7 @@ try
     builder.Services.AddTransient<IEmailSender, EmailSender>();
 
     TwilioClient.Init("AC86d1707a6b753792ad3349750438461d", "7dcea0d06d0e65ce4e568fe34f9b6c3c");
-    var outgoingCallerIds = OutgoingCallerIdResource.Read();
 
-    // Process the response
-    foreach (var outgoingCallerId in outgoingCallerIds)
-    {
-        Console.WriteLine(outgoingCallerId.PhoneNumber);
-    }
 }
 catch (Exception ex)
 {

@@ -30,14 +30,12 @@ export class OrderService {
   updateOrder(order: any): Observable<any> {
     return this.httpClient.put(`${this.apiUrl}Api/UpdateOrder`, order, this.httpOptions);
   }
+  addOrder(order: any): Observable<any> {
+    return this.httpClient.post(`${this.apiUrl}Api/AddOrders`, order, this.httpOptions);
+  }
 
   getOpenOrderId(openOrderID: string): Observable<OpenOrder>{
     return this.httpClient.get<OpenOrder>(`${this.apiUrl}GetOpenOrder/` + openOrderID)
-  }
-
-  addOrder(orderData: SystemOrderViewModel): Observable<any> {
-    console.log(orderData)
-    return this.httpClient.post<SystemOrderViewModel>(`${this.apiUrl}api/AddOrders`, orderData);
   }
 
 

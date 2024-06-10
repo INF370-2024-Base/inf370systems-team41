@@ -55,7 +55,6 @@
           </div>
 
           <div>
-            <canvas id="myCanvas{{order.systemOrder.orderId}}" width="50" height="50" style="width: 100px;height: 100px;"></canvas>
             <div *ngIf="order.systemOrder.mediaFiles" class="media-container">
               <div *ngFor="let media of order.systemOrder.mediaFiles">
                 <div *ngIf="isImage(media.fileSelf)">

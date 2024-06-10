@@ -154,7 +154,23 @@ namespace BioProSystem.Controllers
                         newOrder.SelectedAreas.Add(selectedarea);
                         selectedarea.SystemOrders.Add(newOrder); // Assuming bidirectional association
                     }
+                    if (viewModel.mediaFileViewModels.Length > 0)
+                    {
+                        foreach (MediaFileViewModel mediaFile in viewModel.mediaFileViewModels)
+                        { if(mediaFile.FileName != "example.txt") {
+                                MediaFile mediaFileToCreate = new MediaFile();
+                                mediaFileToCreate.FileName = mediaFile.FileName;
+                                mediaFileToCreate.FileSelf = Convert.FromBase64String(mediaFile.FileSelf);
+                                mediaFileToCreate.FileSizeKb = mediaFile.FileSizeKb;
+                                newOrder.MediaFiles.Add(mediaFileToCreate);
+                                mediaFileToCreate.SystemOrderId = newOrder.OrderId;
+                                _repository.Add(mediaFileToCreate);
+                                await _repository.SaveChangesAsync();
+                            }
+                            
+                        }
 
+                    }
 
                     OpenOrder newOpenOrder = new OpenOrder();
                     if (viewModel.OrderTypeId==1)
@@ -228,7 +244,7 @@ namespace BioProSystem.Controllers
                 catch (Exception ex)
                 {
                     ModelState.AddModelError(string.Empty, $"An error occurred: {ex.Message}");
-                    return StatusCode(500, "Internal server error: " + ex.InnerException.Message);
+                    return StatusCode(500, "Internal server error: " + ex.Message);
                 }
             }
             else

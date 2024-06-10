@@ -302,7 +302,7 @@ namespace BioProSystem.Models
         //Employee
         public async Task<Employee[]> GetAllEmployeeAsync()
         {
-            IQueryable<Employee> query = _appDbContext.Employees;
+            IQueryable<Employee> query = _appDbContext.Employees.Where(e=>e.isActiveEmployee);
             return await query.ToArrayAsync();
         }
         public async Task<JobTitle> GetJobTitleByIdAsync(int id)
@@ -373,7 +373,7 @@ namespace BioProSystem.Models
     
         public async Task<Dentist> GetDentistAsync(int dentistId)
         {
-            IQueryable<Dentist> query = _appDbContext.Dentists.Where(d => d.DentistId == dentistId);
+            IQueryable<Dentist> query = _appDbContext.Dentists.Where(d => d.DentistId == dentistId).Include(d=>d.SystemOrders).Include(s=>s.Patients);
             return await query.FirstOrDefaultAsync();
         }
 

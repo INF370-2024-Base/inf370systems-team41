@@ -7,6 +7,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UserServices } from '../services/user.service';
 import { EditUser } from '../shared/EditUser';
 import { error } from 'console';
+import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -33,7 +34,7 @@ export class LoginComponent implements OnInit {
           sessionStorage.setItem('Token', JSON.stringify(result));
           this.checkSignInStatusAndNavigate(); 
         },
-        (error) => {
+        (error:HttpErrorResponse) => {
           console.log(error)
           alert(error)
         }

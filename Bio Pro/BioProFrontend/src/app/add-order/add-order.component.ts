@@ -1,13 +1,15 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, Sanitizer } from '@angular/core';
 import { OrderService } from '../services/order.service';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { SystemOrderViewModel } from '../shared/SystemOrderViewModel ';
+import { MediaFileViewModel, SystemOrderViewModel } from '../shared/SystemOrderViewModel ';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { DateValidator } from '../validators/Validators';
 import { PhoneChecker } from '../validators/Validators';
 import { error } from 'console';
+import { DatePipe } from '@angular/common';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-add-order',
@@ -33,14 +35,18 @@ export class AddOrderComponent implements OnInit {
   selectedIndices:number[] = [];
   areas:any[] = [];
   addForm!: FormGroup;
-  orderdirection:any
-
+  orderdirection:any;
+   today = new Date();
+  todayDate = this.datePipe.transform(new Date(this.today.setDate(this.today.getDate())), 'yyyy-MM-dd');
+  twoDaysAhead = this.datePipe.transform(new Date(this.today.setDate(this.today.getDate() + 2)), 'yyyy-MM-dd');
+  uploadedFiles:CustomFile[] = [];
   @ViewChild('imageCanvas', { static: true }) canvasRef!: ElementRef<HTMLCanvasElement>; 
+
   constructor(
     private dataService: OrderService,
     private httpClient: HttpClient,
     private router: Router,
-    private formBuilder: FormBuilder,private snackBar:MatSnackBar
+    private formBuilder: FormBuilder,private snackBar:MatSnackBar,private datePipe: DatePipe,private sanitizer:DomSanitizer
   ) {
     this.addForm = this.formBuilder.group({
       OrderId: ['', [Validators.required,Validators.maxLength(7),Validators.minLength(7)]],
@@ -263,80 +269,166 @@ export class AddOrderComponent implements OnInit {
     );
   }
   
+  async saveCanvasAsImage(): Promise<void> {
+    return new Promise((resolve, reject) => {
+      let canvas = document.getElementById('myCanvas') as HTMLCanvasElement;
+      const dataURL = canvas.toDataURL('image/png');
   
+      // Convert data URL to Blob
+      const blob = this.dataURLtoBlob(dataURL);
   
+      // Read Blob as Uint8Array
+      const fileReader = new FileReader();
+      fileReader.onload = () => {
+        try {
+          const arrayBuffer = fileReader.result as ArrayBuffer;
+          const uint8Array = new Uint8Array(arrayBuffer);
+          const maxFileSize = 10 * 1024 * 1024; // 10MB
   
+          const fileSize = uint8Array.byteLength;
+          console.log(`File TeethAreas.png size: ${fileSize} bytes`);
   
-  
-  onSubmit(): void {
-    if(this.selectedTeethShadeIds.length<1)
-      {
-        this.showSnackBar(`Teethshades are required`)
-      }
-      else{
-        if(this.selectedAreas.length<1)
-          {
-            this.showSnackBar(`SelectedAreas are required`)
+          if (fileSize > maxFileSize) {
+            console.log(`File TeethAreas.png exceeds the maximum file size.`);
+            alert(`File TeethAreas.png is too large. Maximum file size is 10MB.`);
+            reject(new Error('File size exceeds the maximum limit'));
+            return; // Skip processing if file size exceeds limit
           }
-          else{
-            if (this.addForm.valid) {
+  
+          console.log('Processing file: TeethAreas.png');
           
-                    
-                    const formData = this.addForm.value;
-                    const viewModel = new SystemOrderViewModel;
-                    viewModel.OrderId = formData.OrderId;
-                    viewModel.DentistId = formData.DentistId;
-                    viewModel.OrderDate = formData.OrderDate;
-                    viewModel.PatientName = formData.PatientName;
-                    viewModel.PatientSurname = formData.PatientSurname;
-                    viewModel.MedicalAidId = formData.MedicalAidId;
-                    viewModel.MedicalAidNumber = formData.MedicalAidNumber;
-                    viewModel.OrderDirectionId = this.orderdirection.orderDirectionId;
-                    viewModel.OrderTypeId = formData.OrderTypeId;
-                    viewModel.OrderStatusId = 1;
-                    viewModel.EmergencyNumber = formData.EmergencyNumber;
-                    viewModel.SpecialRequirements = formData.SpecialRequirements;
-                    viewModel.DueDate = formData.DueDate;
-                    viewModel.PriorityLevel = formData.PriorityLevel;
-                    viewModel.TeethShadesIds = this.selectedTeethShadeIds; // Assuming this is an array of IDs
-                    viewModel.SeletedAreasIds = this.selectedAreas; // Assuming this is an array of IDs
-                    viewModel.MouthArea = this.selectedAreas.toString(); // Convert to string if necessary
-                const today=new Date()
-                      console.log(viewModel)
-                      this.dataService.addOrder(viewModel).subscribe(
-                        (result) => {
-                          console.log('SystemOrder added successfully!');
-                          const dueDate = new Date(viewModel.DueDate);
-                          const adjustedDueDate = new Date(dueDate);
-                          console.log(this.orderdirection)
-                          adjustedDueDate.setDate(dueDate.getDate() - this.orderdirection.estimatedDurationInDays);
-                          if (adjustedDueDate < today) {
-                            alert("Due dates will not be autofilled on approval");
-                         }
-                          this.router.navigate(['/orders']);
-                        },
-                      (error:HttpErrorResponse)=>
-                      {
-                        console.log(error)
-                        this.showSnackBar(error.error)
-                      }
-                      )
-                                   
-                             
-            }
-          
-            else{
-              Object.keys(this.addForm.controls).forEach(field => {
-                const control = this.addForm.get(field);
-                if(control)
-                if (control.invalid) {
-                  this.showSnackBar(`${field} is required`)
-                }
-              });
-            }
-          }
-      }
+          const mediaFile = new MediaFileViewModel();
+          mediaFile.FileName = 'TeethAreas.png';
+          mediaFile.FileSelf = this.encodeFileContent(uint8Array);
+          mediaFile.FileSizeKb = Math.ceil(fileSize / 1024);
+          mediaFile.SystemOrderId = "1";
+  
+          const url = this.sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(blob));
+  
+          this.uploadedFiles.push({
+            name: mediaFile.FileName,
+            size: fileSize,
+            content: uint8Array
+          });
+          console.log(this.uploadedFiles);
+  
+          resolve();
+        } catch (error) {
+          reject(error);
+        }
+      };
+      fileReader.onerror = (error) => reject(error);
+      fileReader.readAsArrayBuffer(blob);
+    });
   }
+  
+  dataURLtoBlob(dataURL: string): Blob {
+    const byteString = atob(dataURL.split(',')[1]);
+    const mimeString = dataURL.split(',')[0].split(':')[1].split(';')[0];
+    const arrayBuffer = new ArrayBuffer(byteString.length);
+    const int8Array = new Uint8Array(arrayBuffer);
+    for (let i = 0; i < byteString.length; i++) {
+      int8Array[i] = byteString.charCodeAt(i);
+    }
+    return new Blob([arrayBuffer], { type: mimeString });
+  }
+  encodeFileContent(content: ArrayBuffer): string {
+    let binary = '';
+    const bytes = new Uint8Array(content);
+    const len = bytes.byteLength;
+    
+    for (let i = 0; i < len; i++) {
+        binary += String.fromCharCode(bytes[i]);
+    }
+    
+    return btoa(binary);
+    
+    }
+  
+  
+  
+  
+    async onSubmit(): Promise<void> {
+      if (this.selectedTeethShadeIds.length < 1) {
+        this.showSnackBar('Teethshades are required');
+      } else {
+        if (this.selectedAreas.length < 1) {
+          this.showSnackBar('SelectedAreas are required');
+        } else {
+          if (this.addForm.valid) {
+            try {
+              await this.saveCanvasAsImage(); // Ensure the canvas image is saved before proceeding
+    
+              const formData = this.addForm.value;
+              const viewModel = new SystemOrderViewModel();
+              viewModel.OrderId = formData.OrderId;
+              viewModel.DentistId = formData.DentistId;
+              viewModel.OrderDate = formData.OrderDate;
+              viewModel.PatientName = formData.PatientName;
+              viewModel.PatientSurname = formData.PatientSurname;
+              viewModel.MedicalAidId = formData.MedicalAidId;
+              viewModel.MedicalAidNumber = formData.MedicalAidNumber;
+              viewModel.OrderDirectionId = this.orderdirection.orderDirectionId;
+              viewModel.OrderTypeId = formData.OrderTypeId;
+              viewModel.OrderStatusId = 1;
+              viewModel.EmergencyNumber = formData.EmergencyNumber;
+              viewModel.SpecialRequirements = formData.SpecialRequirements;
+              viewModel.DueDate = formData.DueDate;
+              viewModel.PriorityLevel = formData.PriorityLevel;
+              viewModel.TeethShadesIds = this.selectedTeethShadeIds; // Assuming this is an array of IDs
+              viewModel.SeletedAreasIds = this.selectedAreas; // Assuming this is an array of IDs
+              viewModel.MouthArea = this.selectedAreas.toString(); // Convert to string if necessary
+    
+              const today = new Date();
+              console.log(this.uploadedFiles);
+    
+              try {
+                viewModel.mediaFileViewModels = [...this.uploadedFiles.map(file => {
+                  const mediaFileViewModel = new MediaFileViewModel();
+                  mediaFileViewModel.FileName = file.name;
+                  mediaFileViewModel.FileSelf = this.encodeFileContent(file.content);
+                  mediaFileViewModel.FileSizeKb = file.size;
+                  mediaFileViewModel.SystemOrderId = viewModel.OrderId;
+                  return mediaFileViewModel;
+                })];
+              } catch (error) {
+                console.error('Error while mapping mediaFileViewModels:', error);
+                throw error;
+              }
+    
+              console.log(viewModel);
+              this.dataService.addOrder(viewModel).subscribe(
+                (result) => {
+                  console.log('SystemOrder added successfully!');
+                  const dueDate = new Date(viewModel.DueDate);
+                  const adjustedDueDate = new Date(dueDate);
+                  console.log(this.orderdirection);
+                  adjustedDueDate.setDate(dueDate.getDate() - this.orderdirection.estimatedDurationInDays);
+                  if (adjustedDueDate < today) {
+                    alert('Due dates will not be autofilled on approval');
+                  }
+                  this.router.navigate(['/orders']);
+                },
+                (error: HttpErrorResponse) => {
+                  console.log(error);
+                  this.showSnackBar(error.error);
+                }
+              );
+            } catch (error) {
+              console.error('Error saving canvas as image or adding order:', error);
+              this.showSnackBar('An error occurred while processing your request. Please try again.');
+            }
+          } else {
+            Object.keys(this.addForm.controls).forEach(field => {
+              const control = this.addForm.get(field);
+              if (control && control.invalid) {
+                this.showSnackBar(`${field} is required`);
+              }
+            });
+          }
+        }
+      }
+    }
   
   cancel(): void {
     this.addForm.get('SpecialRequirements')?.reset('');
@@ -353,4 +445,9 @@ interface Area {
   width: number;
   height: number;
   
+}
+export interface CustomFile {
+  name: string;
+  size: number;
+  content: Uint8Array;
 }

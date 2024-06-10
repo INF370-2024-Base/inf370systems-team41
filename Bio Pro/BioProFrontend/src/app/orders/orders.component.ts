@@ -39,16 +39,8 @@ export class OrdersComponent implements OnInit {
   originalOrders:any[]=[]
   baseUrl: string ='https://localhost:44315/Api/';
   constructor(private dialog: MatDialog,private http: HttpClient,private dataservices:OrderService,private snackBar:MatSnackBar) { }
-  private isDrawing: boolean = false;
+
   ngAfterViewChecked(): void {
-    if (this.ordersInfo.length > 0 && !this.isDrawing) {
-      this.isDrawing = true;
-      this.drawShapes();
-      console.log("drawing");
-      // setTimeout(() => {
-      //   
-      // }, 2000); 
-    }
 
   }
   ngOnInit(): void {
@@ -80,7 +72,6 @@ export class OrdersComponent implements OnInit {
     ).subscribe(
       (orderInfos: any[]) => {
         this.ordersInfo = orderInfos;
-        this.isDrawing= false;
         console.log('It works');
         console.log('Orders and order info retrieved:', this.orders, this.ordersInfo);
       },
@@ -97,7 +88,6 @@ export class OrdersComponent implements OnInit {
       this.dataservices.getAllOrderInfo(order.orderId).subscribe(
         (result: any) => {
             this.ordersInfo.push(result);
-            this.isDrawing = false;
                    },
         (error) => {
           console.error('Error fetching order info:', error);
@@ -105,45 +95,7 @@ export class OrdersComponent implements OnInit {
       );
     });
   }
-  drawShapes() {
-    this.ordersInfo.forEach(order => {
-        // Get the canvas corresponding to the current order
-        let canvas = document.getElementById('myCanvas' + order.systemOrder.orderId) as HTMLCanvasElement;
-        const img = new Image();
-    img.src = 'assets/images/mouth area.png';
-    img.onload = () => {
-      if (canvas) {
-        
-        let ctx = canvas.getContext('2d')!;
-        const scaleFactor = 0.3; 
-          const desiredWidth = img.width * scaleFactor;
-          const desiredHeight = img.height * scaleFactor;
-          canvas.width = img.width* scaleFactor;
-        canvas.height = img.height* scaleFactor;
-          const offsetX = (canvas.width - desiredWidth) / 2; 
-          const offsetY = (canvas.height - desiredHeight) / 2; 
-
-          ctx.clearRect(0, 0, canvas.width, canvas.height);
-          ctx.drawImage(img, offsetX, offsetY, desiredWidth, desiredHeight);
-        
-        for (const area of order.selectedAreas) {
-            const { x, y, width, height } = area;
-            const scaledX = x * scaleFactor + offsetX;
-            const scaledY = y * scaleFactor + offsetY;
-            const scaledWidth = width * scaleFactor;
-            const scaledHeight = height * scaleFactor;
-            ctx.strokeRect(scaledX, scaledY, scaledWidth, scaledHeight);
-  ctx.fillStyle = 'lightblue';
-  ctx.fillRect(scaledX, scaledY, scaledWidth, scaledHeight);
-        }
-    } else {
-        console.error(`Canvas with id 'myCanvas${order.systemOrder.orderId}' not found`);
-    }
-    }
-        // Ensure the canvas exists
-       
-    });
-}
+  
 isImage(base64String: string): boolean {
   try {
     const binary = atob(base64String);
@@ -186,13 +138,11 @@ downloadFile(base64String: string, fileName: string) {
               this.ordersInfo=[]
               this.orders = [data]; 
               this.getOrderInfo()
-              this.isDrawing = false;
 
             } else {
               this.ordersInfo=[]
               this.orders = [data]; 
               this.getOrderInfo() // Reset orders array if no data found
-              this.isDrawing = false;
   
             }
           },
