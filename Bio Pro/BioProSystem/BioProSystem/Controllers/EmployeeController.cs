@@ -174,6 +174,47 @@ namespace BioProSystem.Controllers
                 return StatusCode(500, "An error occurred while capturing daily hours.");
             }
         }
+        [HttpDelete]
+        [Route("DeleteEmployeeDailyHours/{employeedDailyHoursId}")]
+        public async Task<IActionResult> DeleteEmployeeDailyHours(int employeedDailyHoursId)
+        {
+            try
+            {
+                EmployeeDailyHours employeeDailyHours = await _repository.GetEmployeeDailyHoursById(employeedDailyHoursId);
+                if (employeeDailyHours == null) return NotFound("Id not found");
+                _repository.Delete(employeeDailyHours);
+                if(await _repository.SaveChangesAsync())
+                {
+                    return Ok(employeeDailyHours);
+                }
+                else
+                {
+                    return BadRequest("Could not save changes");
+                }
+                
+            }
+            catch (Exception ex)
+            {
+                // Log the exception or return a meaningful error message
+                return StatusCode(500, "An error occurred while deleting daily hours."+ex.InnerException.Message);
+            }
+        }
+        [HttpGet]
+        [Route("GetEmployeeDailyHours")]
+        public async Task<ActionResult<List<EmployeeDailyHours>>> GetEmployeeDailyHours()
+        {
+            var result = await _repository.GetEmployeeDailyHours();
+            if (result != null)
+            { return Ok(result); }
+            else
+            {
+                return NotFound("No Jobtitiles found");
+            }
+
+
+
+        }
+
         [HttpGet]
         [Route("getjobtitles")]
         public async Task<ActionResult<List<JobTitle>>> GetJobtitles()

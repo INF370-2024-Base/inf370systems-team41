@@ -1589,7 +1589,7 @@ namespace BioProSystem.Migrations
                     b.HasOne("BioProSystem.Models.EmployeeDailyHours", null)
                         .WithMany()
                         .HasForeignKey("EmployeeDailyHoursId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.SetNull)
                         .IsRequired();
 
                     b.HasOne("BioProSystem.Models.Employee", null)

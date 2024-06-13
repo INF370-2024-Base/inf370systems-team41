@@ -7,6 +7,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { EditOrderModalComponent } from '../edit-order-modal/edit-order-modal.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { trigger, state, style, transition, animate } from '@angular/animations';
+import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
 
 @Component({
   selector: 'app-orders',
@@ -245,6 +246,28 @@ downloadFile(base64String: string, fileName: string) {
       this.getOrderInfo()
 
     }
+  }
+  deleteMediaFile(mediaFileId: number): void {
+     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      width: '250px',
+      data: 'Are you sure you want to delete this media file?'
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.dataservices.deleteMediaFile(mediaFileId).subscribe(
+          () => {
+            this.showSnackBar('Successfully deleted media file');
+            setTimeout(() => {
+              location.reload(); // Reload or update data as needed
+            }, 2000); 
+          },
+          (error: HttpErrorResponse) => {
+            console.error('Error deleting media file:', error.error);
+          }
+        );
+      }
+    });
   }
  
 }

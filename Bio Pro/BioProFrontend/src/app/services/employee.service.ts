@@ -43,4 +43,10 @@ export class EmployeeService {
     const url = `${this.apiUrl}/capture-daily-hours/${employeeId}`;
     return this.httpClient.post<DailyHours>(url, dailyHours);
   }
+  deleteEmployeeDailyHours(employeedDailyHoursId: number): Observable<any> {
+    return this.httpClient.delete(`${this.apiUrl}/DeleteEmployeeDailyHours/${employeedDailyHoursId}`);
+  }
+  getEmployeeDailyHours(): Observable<any> {
+    return this.httpClient.get(`${this.apiUrl}/GetEmployeeDailyHours`);
+  }
 }

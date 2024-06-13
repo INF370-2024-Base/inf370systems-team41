@@ -590,7 +590,7 @@ namespace BioProSystem.Controllers
                     List<Employee> employees = new List<Employee>();
                     try
                     {
-                        employees = _repository.AssignAvailableTechnicians(timeline.OrderDirectionId, pendingOrders.OrderId);
+                        employees = await _repository.AssignAvailableTechnicians(timeline.OrderDirectionId, pendingOrders.OrderId);
                         if(employees!=null)
                         { 
                             foreach (Employee employee in employees)
@@ -601,6 +601,10 @@ namespace BioProSystem.Controllers
                                 emailViewModel.Email = employee.Email;
                                 SendTestEmail(emailViewModel);
                             }
+                        }
+                        else
+                        {
+                            return BadRequest("Employees not found for order");
                         }
                     }
                     catch (Exception ex)
@@ -663,34 +667,32 @@ namespace BioProSystem.Controllers
                 return StatusCode(500, $"Internal Server Error: {ex.Message}");
             }
         }
+        [HttpDelete]
+        [Route("DeleteMediaFile/{mediaFileId}")]
+        public async Task<IActionResult> DeleteMediaFile(int mediaFileId)
+        {
+            try
+            {
+                MediaFile mediaFile = await _repository.GetMediaFileById(mediaFileId);
+                if (mediaFile == null) return NotFound("Id not found");
+                _repository.Delete(mediaFile);
+                if (await _repository.SaveChangesAsync())
+                {
+                    return Ok(mediaFile);
+                }
+                else
+                {
+                    return BadRequest("Could not save changes");
+                }
 
-        //[HttpGet("Create")]
-        //public async Task<IActionResult> Create()
-        //{
-        //    var viewModel = new SystemOrderViewModel();
+            }
+            catch (Exception ex)
+            {
+                // Log the exception or return a meaningful error message
+                return StatusCode(500, "An error occurred while deleting daily hours." + ex.InnerException.Message);
+            }
+        }
 
-        //    try
-        //    {
-        //        // Populate dropdown lists asynchronously
-        //        viewModel.Dentists = new SelectList(await _repository.GetDentistsAsync(), "DentistId", "FullName");
-        //        viewModel.MedicalAids = new SelectList(await _repository.GetMedicalAidsAsync(), "MedicalAidId", "Name");
-        //        viewModel.OrderDirections = new SelectList(await _repository.GetOrderDirectionsAsync(), "OrderDirectionId", "Name");
-        //        viewModel.OrderType = new SelectList(await _repository.GetOrderTypesAsync(), "OrderTypeId", "Name");
-        //        viewModel.OrderStatus = new SelectList(await _repository.GetOrderStatusesAsync(), "OrderStatusId", "Name");
-        //        var allTeethShades = await _repository.GetAllTeethShadesAsync();
-
-        //        // Create a SelectList for TeethShades with appropriate display and value fields
-        //        viewModel.TeethShades = new SelectList(allTeethShades, "TeethShadeId", "Colour", "ColourCode");
-
-
-
-        //        return View(viewModel);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return StatusCode(500, $"Internal Server Error: {ex.Message}");
-        //    }
-        //}
 
     }
 }

@@ -59,6 +59,16 @@
               <div *ngFor="let media of order.systemOrder.mediaFiles">
                 <div *ngIf="isImage(media.fileSelf)">
                   <img [src]="getBase64ImageSrc(media.fileSelf)" alt="Base64 Image" class="image-item">
+                  <div class="button-container">
+                    <button mat-icon-button (click)="downloadFile(media.fileSelf, media.fileName)">
+                      <mat-icon>file_download</mat-icon>
+                    </button>
+                    <div *ngIf="media.fileName !== 'TeethAreas.png'">
+                      <button mat-icon-button (click)="deleteMediaFile(media.mediaFileId)">
+                        <mat-icon>delete</mat-icon>
+                      </button>
+                    </div>
+                  </div>
                 </div>
                 <div *ngIf="!isImage(media.fileSelf)" style="position: relative;">
                   <div class="file-item" (click)="downloadFile(media.fileSelf, media.fileName)" style="width: 100px;height: 100px;">
@@ -102,6 +112,34 @@
   margin: 5px; /* Adjust as needed */
 }
 
+.button-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-top: 5px;
+  height: 20px;
+  width: 20px;
+}
+
+.mat-icon-button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 10px;
+  margin: 2px;
+  width: 28px; /* Adjust width to make buttons smaller */
+  height: 28px;
+  display: flex;
+  justify-content: center; /* Center horizontally */
+  align-items: center;  /* Adjust height to make buttons smaller */
+}
+
+.mat-icon-button:hover {
+  background-color: #0056b3;
+}
+
 .file-item {
   display: flex;
   flex-direction: column;
@@ -115,11 +153,12 @@
   font-size: 50px;
   margin-bottom: 5px;
 }
+
 .file-name {
   width: 100%;
   position: absolute;
   bottom: 0;
-  max-width: 100px; 
+  max-width: 100px;
   font-size: 10px;
   justify-content: center;
   text-align: center;
@@ -127,8 +166,10 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
 .file-item:hover .file-name {
-  max-width: none; 
+  max-width: none;
   overflow: visible;
 }
+
 </style>

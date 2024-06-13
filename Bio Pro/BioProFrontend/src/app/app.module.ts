@@ -32,6 +32,7 @@ import { AddDeliveryComponent } from './add-delivery/add-delivery.component';
 import { HomeComponent } from './home/home.component';
 import { TestingBackendComponent } from './testing-backend/testing-backend.component';
 import { CommonModule, DatePipe } from '@angular/common';
+import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-dialog.component';
 
 
 @NgModule({
@@ -45,7 +46,7 @@ import { CommonModule, DatePipe } from '@angular/common';
     AddDentistComponent,
     DentistProfileComponent,
     EmployeeProfileComponent,
-    CaptureEmployeeHoursComponent,LoginComponent,EditOrderModalComponent, AddUserComponent, AddProceduralTimeline, DeliveriesComponent, AddDeliveryComponent, HomeComponent, TestingBackendComponent
+    CaptureEmployeeHoursComponent,LoginComponent,EditOrderModalComponent, AddUserComponent, AddProceduralTimeline, DeliveriesComponent, AddDeliveryComponent, HomeComponent, TestingBackendComponent, ConfirmationDialogComponent
   ],
   imports: [
     BrowserModule,

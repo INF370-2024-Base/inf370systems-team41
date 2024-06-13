@@ -134,6 +134,10 @@ getFinishedOrders():Observable<any[]>
 {
   return this.httpClient.get<any[]>(`${this.apiUrl}Api/GetFinishedOrders`);
 }
+deleteMediaFile(mediaFileId:number):Observable<any[]>
+{
+  return this.httpClient.delete<any[]>(`${this.apiUrl}Api/DeleteMediaFile/${mediaFileId}`);
+}
 }
 
 

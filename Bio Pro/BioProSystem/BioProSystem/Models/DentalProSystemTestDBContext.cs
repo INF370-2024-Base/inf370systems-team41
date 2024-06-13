@@ -137,6 +137,8 @@ namespace BioProSystem.Models
                 .WithMany(u => u.UserActions)
                 .HasForeignKey(ua => ua.UserId)
                 .OnDelete(DeleteBehavior.SetNull);
+
+
         }
 
     }

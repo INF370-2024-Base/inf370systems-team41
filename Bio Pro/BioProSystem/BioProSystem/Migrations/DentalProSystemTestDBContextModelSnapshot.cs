@@ -820,7 +820,7 @@ namespace BioProSystem.Migrations
 
                     b.HasKey("StockTypeId");
 
-                    b.ToTable("StockType");
+                    b.ToTable("StockTypes");
                 });
 
             modelBuilder.Entity("BioProSystem.Models.Supplier", b =>

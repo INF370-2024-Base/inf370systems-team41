@@ -284,7 +284,7 @@ namespace BioProSystem.Migrations
                 column: "EmployeeDailyHoursId",
                 principalTable: "EmployeeDailyHours",
                 principalColumn: "EmployeeDailyHoursId",
-                onDelete: ReferentialAction.Restrict);
+                onDelete: ReferentialAction.Cascade);
 
             migrationBuilder.AddForeignKey(
                 name: "FK_EmployeeEmployeeDailyHours_Employees_EmployeesEmployeeId",
@@ -292,7 +292,7 @@ namespace BioProSystem.Migrations
                 column: "EmployeesEmployeeId",
                 principalTable: "Employees",
                 principalColumn: "EmployeeId",
-                onDelete: ReferentialAction.Restrict);
+                onDelete: ReferentialAction.Cascade);
 
             migrationBuilder.AddForeignKey(
                 name: "FK_Employees_JobTitles_JobTitleId",
@@ -828,7 +828,7 @@ namespace BioProSystem.Migrations
                 column: "EmployeeDailyHoursId",
                 principalTable: "EmployeeDailyHours",
                 principalColumn: "EmployeeDailyHoursId",
-                onDelete: ReferentialAction.SetNull);
+                onDelete: ReferentialAction.Cascade);
 
             migrationBuilder.AddForeignKey(
                 name: "FK_EmployeeEmployeeDailyHours_Employees_EmployeesEmployeeId",
@@ -836,7 +836,7 @@ namespace BioProSystem.Migrations
                 column: "EmployeesEmployeeId",
                 principalTable: "Employees",
                 principalColumn: "EmployeeId",
-                onDelete: ReferentialAction.SetNull);
+                onDelete: ReferentialAction.Cascade);
 
             migrationBuilder.AddForeignKey(
                 name: "FK_Employees_JobTitles_JobTitleId",

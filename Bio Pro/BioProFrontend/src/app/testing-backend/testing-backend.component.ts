@@ -152,5 +152,25 @@ address:"tersert"
           console.log(error)
         })
       }
+  deleteemployeeDailyHoursId=3
+      deleteEmployeeDailyHours()
+      {
+        this.employeeService.deleteEmployeeDailyHours(this.deleteemployeeDailyHoursId).subscribe(result=>{
+          console.log(result)
+        },error=>
+        {
+          console.log(error)
+        })
+      }
+      
+      getEmployeeDailyHours()
+      {
+        this.employeeService.getEmployeeDailyHours().subscribe(result=>{
+          console.log(result)
+        },error=>
+        {
+          console.log(error)
+        })
+      }
 
 }

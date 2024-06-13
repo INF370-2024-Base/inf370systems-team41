@@ -37,7 +37,7 @@ namespace BioProSystem.Models
         Task<Dentist> GetDentistdByIdAsync(int dentistId);
         Task<SystemOrderViewModel> GetAllSystemOrdersInformationAsync(string orderId);
         Task<List<SystemOrder>> GetPendingSystemOrders();
-        List<Employee> AssignAvailableTechnicians(int orderDirectionId, string systemOrderId);
+        Task<List<Employee>> AssignAvailableTechnicians(int orderDirectionId, string systemOrderId);
         Task<OrderWorkflowTimeline> GetOrdertimeFlowBySystemOrderId(string systemOrderId);
         //Employee
         Task<List<JobTitle>> GetJobTitlesAsync();
@@ -63,5 +63,10 @@ namespace BioProSystem.Models
         Task<SystemOrder> GetSystemOrderByWorkflowId(int workflowtimelineId);
         Task<List<SystemOrder>> GetFinishedSystemWithoutDeliveriesOrders();
         Task<List<Delivery>> GetDeliveries();
+
+        Task<EmployeeDailyHours> GetEmployeeDailyHoursById(int employeedDailyHoursId);
+        Task<List<EmployeeDailyHours>> GetEmployeeDailyHours();
+        Task<MediaFile> GetMediaFileById(int mediaFileId);
+
     }
 }

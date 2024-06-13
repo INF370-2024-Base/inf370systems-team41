@@ -30,80 +30,90 @@ namespace BioProSystem.Models
             IQueryable<OpenOrder> query = _appDbContext.OpenOrders;
             return await query.ToArrayAsync();
         }
-        public List<Employee> AssignAvailableTechnicians(int orderDirectionId,string systemOrderId)
+        public async Task<List<Employee>> AssignAvailableTechnicians(int orderDirectionId, string systemOrderId)
         {
-            var availableEmployees = _appDbContext.Employees
+            var availableEmployees = await _appDbContext.Employees
                 .Where(e => e.SystemOrders.Count(so => so.OrderStatusId == 2) < 3)
-                .ToList();  
+                .ToListAsync();
 
-            var orderDirectionSteps = _appDbContext.OrderDirectionStates.Where(o => o.OrderDirectionsId == orderDirectionId).ToList(); 
-            
-           OrderWorkflowTimeline timeline = GetOrdertimeFlowBySystemOrderId(systemOrderId).Result;
+            var orderDirectionSteps = await _appDbContext.OrderDirectionStates
+                .Where(o => o.OrderDirectionsId == orderDirectionId)
+                .ToListAsync();
+            if(orderDirectionSteps.Count==0)
+            {
+                throw new Exception("No orderdirection steps found");
+            }
+            OrderWorkflowTimeline timeline = await GetOrdertimeFlowBySystemOrderId(systemOrderId);
             var assignedEmployees = new List<Employee>();
-            var systemorder=GetSystemOrderByIdAsync(systemOrderId).Result;
+            var systemOrder = await GetSystemOrderByIdAsync(systemOrderId);
             bool tooLate = false;
 
-            int estimatedDays = GetOrderDirectionById(orderDirectionId).Result.EstimatedDurationInDays;
-            if (systemorder.DueDate.AddDays(-1 * estimatedDays)<DateTime.Now)
+            int estimatedDays = (await GetOrderDirectionById(orderDirectionId)).EstimatedDurationInDays;
+            if (systemOrder.DueDate.AddDays(-1 * estimatedDays) < DateTime.Now)
             {
                 tooLate = true;
             }
+
             foreach (var orderDirectionStep in orderDirectionSteps)
             {
-                var employee = availableEmployees.Where(e => e.JobTitleId == orderDirectionStep.JobTitleId).OrderBy(e => e.SystemOrders.Count(so => so.OrderStatusId == 2)).FirstOrDefault();
+                var employee = availableEmployees
+                    .Where(e => e.JobTitleId == orderDirectionStep.JobTitleId)
+                    .OrderBy(e => e.SystemOrders.Count(so => so.OrderStatusId == 2))
+                    .FirstOrDefault();
+
                 var newStep = new SystemOrderSteps();
-                int stepcount = GetSystemOrderByIdAsync(systemOrderId).Result.SystemOrderSteps.Count+1;
-               
-                
+                int stepcount = (await GetSystemOrderByIdAsync(systemOrderId)).SystemOrderSteps.Count + 1;
+
                 if (employee != null)
                 {
-                    timeline.EmployeeeOrderDetails += employee.FirstName + " " + employee.LastName + "assigned to step:" + orderDirectionStep.StateDescription+".";
+                    timeline.EmployeeeOrderDetails += $"{employee.FirstName} {employee.LastName} assigned to step: {orderDirectionStep.StateDescription}.";
                     assignedEmployees.Add(employee);
                     newStep.Employee = employee;
-                    newStep.SystemOrderId=systemOrderId;
+                    newStep.SystemOrderId = systemOrderId;
+
                     if (stepcount == 1)
                     {
                         newStep.IsCurrentStep = true;
                     }
-                    if (tooLate)
-                    {
 
-                    }
-                    else 
+                    if (!tooLate)
                     {
-
                         if (stepcount == 1)
                         {
                             newStep.StartDateForStep = DateTime.Now;
-                            newStep.DueDateForStep = GetSystemOrderByIdAsync(systemOrderId).Result.DueDate.AddDays((-1 * estimatedDays) + estimatedDays * (double)orderDirectionStep.Ratio - 1);
+                            newStep.DueDateForStep = systemOrder.DueDate.AddDays((-1 * estimatedDays) + estimatedDays * (double)orderDirectionStep.Ratio - 1);
                         }
                         else
                         {
-                            newStep.StartDateForStep = GetSystemOrderByIdAsync(systemOrderId).Result.SystemOrderSteps.ToList()[stepcount - 2].DueDateForStep;
-                            if (GetSystemOrderByIdAsync(systemOrderId).Result.SystemOrderSteps.ToList()[stepcount - 2].DueDateForStep.HasValue)
+                            var previousStep = (await GetSystemOrderByIdAsync(systemOrderId)).SystemOrderSteps.ElementAtOrDefault(stepcount - 2);
+                            if (previousStep != null)
                             {
-                                newStep.DueDateForStep = GetSystemOrderByIdAsync(systemOrderId).Result.SystemOrderSteps.ToList()[stepcount - 2].DueDateForStep.Value.AddDays(estimatedDays * (double)orderDirectionStep.Ratio);
+                                newStep.StartDateForStep = previousStep.DueDateForStep;
+                                newStep.DueDateForStep = previousStep.DueDateForStep?.AddDays(estimatedDays * (double)orderDirectionStep.Ratio);
                             }
                         }
                     }
-                   
+
                     newStep.Description = orderDirectionStep.StateDescription;
-                    newStep.EmployeeId=employee.EmployeeId;
-                    newStep.SystemOrderId=systemOrderId;
+                    newStep.EmployeeId = employee.EmployeeId;
+                    newStep.SystemOrderId = systemOrderId;
+
                     _appDbContext.Add(newStep);
-                    systemorder.SystemOrderSteps.Add(newStep);
+                    systemOrder.SystemOrderSteps.Add(newStep);
                     employee.SystemOrderSteps.Add(newStep);
                 }
                 else
                 {
-                    JobTitle jobNeeded = GetJobTitleByIdAsync(orderDirectionStep.JobTitleId).Result;
-                    throw new Exception("No employees found for " + orderDirectionStep.StateDescription+".Employee with Job title: "+ jobNeeded.TitleName+" needed.");
-
+                    JobTitle jobNeeded = await GetJobTitleByIdAsync(orderDirectionStep.JobTitleId);
+                    throw new Exception($"No employees found for {orderDirectionStep.StateDescription}. Employee with Job title: {jobNeeded.TitleName} needed.");
                 }
             }
 
+            await _appDbContext.SaveChangesAsync(); // Save changes to the database
+
             return assignedEmployees;
         }
+
 
         public async Task<OrderWorkflowTimeline> GetOrdertimeFlowBySystemOrderId(string systemOrderId)
         {
@@ -416,6 +426,20 @@ namespace BioProSystem.Models
         {
           
             return await _appDbContext.Deliveries.Include(d=>d.DeliveryStatus).Include(e=>e.Employee).ToListAsync(); 
+        }
+        public async Task<EmployeeDailyHours> GetEmployeeDailyHoursById(int employeedDailyHoursId)
+        {
+
+            return await _appDbContext.EmployeeDailyHours.Where(edh=>edh.EmployeeDailyHoursId== employeedDailyHoursId).FirstOrDefaultAsync();
+        }
+        public async Task<List<EmployeeDailyHours>> GetEmployeeDailyHours()
+        {
+
+            return await _appDbContext.EmployeeDailyHours.Include(emp=>emp.Employees).ToListAsync();
+        }
+        public async Task<MediaFile> GetMediaFileById(int mediaFileId)
+        {
+            return await _appDbContext.MediaFiles.Where(m=>m.MediaFileId==mediaFileId).FirstOrDefaultAsync();
         }
     }
 }
