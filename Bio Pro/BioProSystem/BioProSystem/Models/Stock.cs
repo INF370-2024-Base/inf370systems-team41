@@ -15,7 +15,7 @@ public partial class Stock
     [Required]
     public string StockName { get; set; } = null!;
     [Required]
-    public int QuantityAvailable { get; set; }
+    public decimal QuantityAvailable { get; set; }
     [Required]
     public int MaximumStockLevel { get; set; }
     [Required]
@@ -24,7 +24,9 @@ public partial class Stock
     public string? ReorderPoint { get; set; }
     
     public bool CurrentlyInUse { get; set; } = true;
-    public virtual ICollection<StakeWriteOff> StakeWriteOffs { get; set; } = new List<StakeWriteOff>();
+
+    public string Measurement { get; set; }
+    public virtual ICollection<StockWriteOff> StockWriteOffs { get; set; } = new List<StockWriteOff>();
     public virtual ICollection<StockItem> StockItem { get; set; } = new List<StockItem>();
 
     public virtual StockCategory StockCategory { get; set; } = null!;

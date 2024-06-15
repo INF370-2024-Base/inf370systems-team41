@@ -431,7 +431,7 @@ namespace BioProSystem.Migrations
                     b.Property<string>("OrderId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("OrderId1")
+                    b.Property<string>("OrderId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
@@ -444,7 +444,7 @@ namespace BioProSystem.Migrations
 
                     b.HasKey("OrderId");
 
-                    b.HasIndex("OrderId1");
+                    b.HasIndex("OrderId");
 
                     b.HasIndex("PaymentId");
 
@@ -712,7 +712,7 @@ namespace BioProSystem.Migrations
 
                     b.HasIndex("StockId");
 
-                    b.ToTable("StakeWriteOffs");
+                    b.ToTable("StockWriteOffs");
                 });
 
             modelBuilder.Entity("BioProSystem.Models.Stock", b =>
@@ -782,21 +782,21 @@ namespace BioProSystem.Migrations
                     b.Property<int>("OrderId")
                         .HasColumnType("int");
 
-                    b.Property<string>("OrderId1")
+                    b.Property<string>("OrderId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
-                    b.Property<int>("StockId1")
+                    b.Property<int>("StockId")
                         .HasColumnType("int");
 
                     b.HasKey("StockId");
 
-                    b.HasIndex("OrderId1");
+                    b.HasIndex("OrderId");
 
-                    b.HasIndex("StockId1");
+                    b.HasIndex("StockId");
 
                     b.ToTable("StockItems");
                 });
@@ -1371,7 +1371,7 @@ namespace BioProSystem.Migrations
                 {
                     b.HasOne("BioProSystem.Models.SystemOrder", "Order")
                         .WithMany("OrderPayments")
-                        .HasForeignKey("OrderId1")
+                        .HasForeignKey("OrderId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -1466,7 +1466,7 @@ namespace BioProSystem.Migrations
             modelBuilder.Entity("BioProSystem.Models.StakeWriteOff", b =>
                 {
                     b.HasOne("BioProSystem.Models.Stock", "Stock")
-                        .WithMany("StakeWriteOffs")
+                        .WithMany("StockWriteOffs")
                         .HasForeignKey("StockId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -1497,13 +1497,13 @@ namespace BioProSystem.Migrations
                 {
                     b.HasOne("BioProSystem.Models.SystemOrder", "Order")
                         .WithMany("StockItems")
-                        .HasForeignKey("OrderId1")
+                        .HasForeignKey("OrderId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("BioProSystem.Models.Stock", "Stock")
                         .WithMany("StockItem")
-                        .HasForeignKey("StockId1")
+                        .HasForeignKey("StockId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -1782,7 +1782,7 @@ namespace BioProSystem.Migrations
 
             modelBuilder.Entity("BioProSystem.Models.Stock", b =>
                 {
-                    b.Navigation("StakeWriteOffs");
+                    b.Navigation("StockWriteOffs");
 
                     b.Navigation("StockItem");
                 });

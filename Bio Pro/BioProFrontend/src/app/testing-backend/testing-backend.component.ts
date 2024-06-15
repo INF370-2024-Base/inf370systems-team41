@@ -11,6 +11,8 @@ import { EmployeeService } from '../services/employee.service';
 import { EditEmployee } from '../shared/EditEmployee';
 import { DentistService } from '../shared/dentist.service';
 import { Dentist } from '../shared/dentist';
+import { StockServices } from '../services/stock.service';
+import { AddStock, CaptureNewStockViewModel, StockWriteOffViewModel } from '../shared/Stock';
 
 @Component({
   selector: 'app-testing-backend',
@@ -50,7 +52,7 @@ firstName:"Pieter",
 contactDetail:"0811456789",
 address:"tersert"
 }
-  constructor(private userService:UserServices,private employeeService:EmployeeService,private dentistService:DentistService) { }
+  constructor(private userService:UserServices,private employeeService:EmployeeService,private dentistService:DentistService,private stockService:StockServices) { }
 
   ngOnInit(): void {
        
@@ -172,5 +174,81 @@ address:"tersert"
           console.log(error)
         })
       }
+      getAllStock()
+      {
+        this.stockService.getAllStock().subscribe(result=>{
+          console.log(result)
+        },error=>
+        {
+          console.log(error)
+        })
+      }
+      getAllStockCategories()
+      {
+        this.stockService.getAllStockCategories().subscribe(result=>{
+          console.log(result)
+        },error=>
+        {
+          console.log(error)
+        })
+      }
+      getAllStockTypes()
+      {
+        this.stockService.getAllStockTypes().subscribe(result=>{
+          console.log(result)
+        },error=>
+        {
+          console.log(error)
+        })
+      }
+stockAddTest:AddStock=
+{
+  stockCategoryId: 1,
+  supplierId: 10,
+  stockName: "Test Stock",
+  quantityAvailable: 200,
+  maximumStockLevel: 1000,
+  minimumStockLevel: 100,
+  reorderPoint: "50",
+  measurement:"ml"
+}
+      addStock()
+      {
+        this.stockService.addStock(this.stockAddTest).subscribe(result=>{
+          console.log(result)
+        },error=>
+        {
+          console.log(error)
+        })
+      }
+ stockWriteOffTest: StockWriteOffViewModel = {
+        stockId: 1,
+        quantityWrittenOff: 10,
+        writtenOffDate: new Date(),
+        reason: 'Damaged stock'
+    };
 
+captureNewStockTest: CaptureNewStockViewModel = {
+  stockId: 2,
+  amountAdded: 50.5
+};
+      addStockWriteOff()
+      {
+        this.stockService.addStockWriteOff(this.stockWriteOffTest).subscribe(result=>{
+          console.log(result)
+        },error=>
+        {
+          console.log(error)
+        })
+      }
+
+      captureNewStock()
+      {
+        this.stockService.captureNewStock(this.captureNewStockTest).subscribe(result=>{
+          console.log(result)
+        },error=>
+        {
+          console.log(error)
+        })
+      }
 }

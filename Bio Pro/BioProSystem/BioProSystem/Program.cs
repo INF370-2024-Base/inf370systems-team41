@@ -94,7 +94,7 @@ try
     // Register the email sender service
     builder.Services.AddTransient<IEmailSender, EmailSender>();
 
-    TwilioClient.Init("AC86d1707a6b753792ad3349750438461d", "7dcea0d06d0e65ce4e568fe34f9b6c3c");
+    TwilioClient.Init("AC61be70d65a7bd65169a56cf4be5cd574", "ecb1193339c64649ec450f8fda1bef99");
 
 }
 catch (Exception ex)

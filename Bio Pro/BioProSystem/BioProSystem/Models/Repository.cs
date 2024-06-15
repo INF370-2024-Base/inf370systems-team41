@@ -7,13 +7,13 @@ using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace BioProSystem.Models
 {
-    public class Repository :IRepository
+    public class Repository : IRepository
     {
         private readonly DentalProSystemTestDBContext _appDbContext;
 
         public Repository(DentalProSystemTestDBContext appDbContext)
         {
-                _appDbContext = appDbContext;
+            _appDbContext = appDbContext;
         }
 
         public void Add<T>(T entity) where T : class
@@ -39,7 +39,7 @@ namespace BioProSystem.Models
             var orderDirectionSteps = await _appDbContext.OrderDirectionStates
                 .Where(o => o.OrderDirectionsId == orderDirectionId)
                 .ToListAsync();
-            if(orderDirectionSteps.Count==0)
+            if (orderDirectionSteps.Count == 0)
             {
                 throw new Exception("No orderdirection steps found");
             }
@@ -117,7 +117,7 @@ namespace BioProSystem.Models
 
         public async Task<OrderWorkflowTimeline> GetOrdertimeFlowBySystemOrderId(string systemOrderId)
         {
-            IQueryable<OrderWorkflowTimeline> query = _appDbContext.OrderWorkflowTimelines.Where(o=>o.SystemOrderId== systemOrderId);
+            IQueryable<OrderWorkflowTimeline> query = _appDbContext.OrderWorkflowTimelines.Where(o => o.SystemOrderId == systemOrderId);
             return await query.FirstOrDefaultAsync();
         }
         public async Task<OpenOrder> GetOpenOrdersAsync(int openOrderID)
@@ -170,22 +170,22 @@ namespace BioProSystem.Models
         public async Task<SystemUser> GetsystemUserAsync(string systemUserEmail)
         {
             IQueryable<SystemUser> query = _appDbContext.SystemUsers.Where(c => c.Email == systemUserEmail);
-            
+
             return await query.FirstOrDefaultAsync();
         }
         public async Task<SystemOrder> GetSystemOrderByWorkflowId(int workflowtimelineId)
         {
-            IQueryable<SystemOrder> query = _appDbContext.SystemOrders.Where(o=>o.OrderWorkflowTimelineId== workflowtimelineId);
+            IQueryable<SystemOrder> query = _appDbContext.SystemOrders.Where(o => o.OrderWorkflowTimelineId == workflowtimelineId);
             return await query.FirstOrDefaultAsync();
         }
         public async Task<List<SystemOrder>> GetFinishedSystemWithoutDeliveriesOrders()
         {
-            IQueryable<SystemOrder> query = _appDbContext.SystemOrders.Where(o => o.OrderStatusId == 3).Include(o=>o.Deliveries).Where(o=>o.Deliveries.Count<1);
+            IQueryable<SystemOrder> query = _appDbContext.SystemOrders.Where(o => o.OrderStatusId == 3).Include(o => o.Deliveries).Where(o => o.Deliveries.Count < 1);
             return await query.ToListAsync();
         }
         public async Task<List<SystemOrder>> GetOrdersInProgressAndNoTimeline()
         {
-            IQueryable<SystemOrder> query = _appDbContext.SystemOrders.Where(c => c.OrderStatusId==2).Include(o=>o.OrderWorkflowTimeline).Where(ow=>ow.OrderWorkflowTimeline.TimelineId==null);
+            IQueryable<SystemOrder> query = _appDbContext.SystemOrders.Where(c => c.OrderStatusId == 2).Include(o => o.OrderWorkflowTimeline).Where(ow => ow.OrderWorkflowTimeline.TimelineId == null);
             return await query.ToListAsync();
         }
         public async Task<bool> CheckSystemPatient(string medicalAidNumber)
@@ -197,7 +197,7 @@ namespace BioProSystem.Models
 
         public async Task<Patient> GetPatientByMedicalAidNumber(string medicalAidNumber)
         {
-            IQueryable<Patient> query = _appDbContext.Patients.Where(p=>p.MedicalAidNumber== medicalAidNumber);
+            IQueryable<Patient> query = _appDbContext.Patients.Where(p => p.MedicalAidNumber == medicalAidNumber);
             return await query.FirstOrDefaultAsync();
         }
         public async Task<MedicalAid> GetMedicalAidByMedicalAidId(int medicalAidId)
@@ -220,21 +220,21 @@ namespace BioProSystem.Models
         }
         public async Task<List<SystemOrderSteps>> GetAllSystemOrderStepsAsync(string orderId)
         {
-            return await _appDbContext.SystemOrderSteps.Where(sos=>sos.SystemOrderId==orderId).Include(sos=>sos.Employee).ToListAsync();
+            return await _appDbContext.SystemOrderSteps.Where(sos => sos.SystemOrderId == orderId).Include(sos => sos.Employee).ToListAsync();
         }
         public async Task<SystemOrderViewModel> GetAllSystemOrdersInformationAsync(string orderId)
         {
-            SystemOrderViewModel orderinformation=new SystemOrderViewModel();
+            SystemOrderViewModel orderinformation = new SystemOrderViewModel();
             orderinformation.systemOrder = GetSystemOrderByIdAsync(orderId).Result;
             orderinformation.Dentist = GetDentistdByIdAsync(orderinformation.systemOrder.DentistId).Result;
-            orderinformation.Timeline=GetOrderTimelineByIdAsync(orderinformation.systemOrder.OrderWorkflowTimelineId).Result;
-            orderinformation.patient=GetPatientByMedicalAidNumber(orderinformation.systemOrder.PatientMedicalAidNumber).Result;
-            orderinformation.OrderStatus=GetOrderStatusByIdAsync(orderinformation.systemOrder.OrderStatusId).Result;
+            orderinformation.Timeline = GetOrderTimelineByIdAsync(orderinformation.systemOrder.OrderWorkflowTimelineId).Result;
+            orderinformation.patient = GetPatientByMedicalAidNumber(orderinformation.systemOrder.PatientMedicalAidNumber).Result;
+            orderinformation.OrderStatus = GetOrderStatusByIdAsync(orderinformation.systemOrder.OrderStatusId).Result;
             orderinformation.OrderType = GetOrderTypeByIdAsync(orderinformation.systemOrder.OrderTypeId).Result;
-            orderinformation.orderDirection=GetOrderDirectionById(orderinformation.Timeline.OrderDirectionId).Result;
+            orderinformation.orderDirection = GetOrderDirectionById(orderinformation.Timeline.OrderDirectionId).Result;
             if (orderinformation.systemOrder.SystemOrderSteps.Any())
-            { 
-                orderinformation.SystemOrderSteps = await GetAllSystemOrderStepsAsync(orderId); 
+            {
+                orderinformation.SystemOrderSteps = await GetAllSystemOrderStepsAsync(orderId);
             }
             foreach (TeethShade teethShades in orderinformation.systemOrder.TeethShades)
             {
@@ -276,7 +276,7 @@ namespace BioProSystem.Models
 
         public async Task<SystemOrder> GetSystemOrderByIdAsync(string orderId)
         {
-            return await _appDbContext.SystemOrders.Include(s=>s.TeethShades).Include(s=>s.SelectedAreas).Include(s=>s.SystemOrderSteps).Include(s=>s.OrderWorkflowTimeline).Include(s=>s.SystemOrderSteps).Include(s=>s.MediaFiles).FirstOrDefaultAsync(o => o.OrderId == orderId);
+            return await _appDbContext.SystemOrders.Include(s => s.TeethShades).Include(s => s.SelectedAreas).Include(s => s.SystemOrderSteps).Include(s => s.OrderWorkflowTimeline).Include(s => s.SystemOrderSteps).Include(s => s.MediaFiles).FirstOrDefaultAsync(o => o.OrderId == orderId);
         }
         public async Task<OrderDirection> GetOrderDirectionById(int orderDirectionId)
         {
@@ -294,7 +294,7 @@ namespace BioProSystem.Models
         }
         public async Task<OrderType> GetOrderTypeByIdAsync(int ordertypeId)
         {
-            return await _appDbContext.OrderTypes.Where(o=>o.OrderTypeId== ordertypeId).FirstOrDefaultAsync();
+            return await _appDbContext.OrderTypes.Where(o => o.OrderTypeId == ordertypeId).FirstOrDefaultAsync();
         }
         public async Task<List<OrderStatus>> GetOrderStatusesAsync()
         {
@@ -312,7 +312,7 @@ namespace BioProSystem.Models
         //Employee
         public async Task<Employee[]> GetAllEmployeeAsync()
         {
-            IQueryable<Employee> query = _appDbContext.Employees.Where(e=>e.isActiveEmployee);
+            IQueryable<Employee> query = _appDbContext.Employees.Where(e => e.isActiveEmployee);
             return await query.ToArrayAsync();
         }
         public async Task<JobTitle> GetJobTitleByIdAsync(int id)
@@ -380,10 +380,10 @@ namespace BioProSystem.Models
             return await query.ToArrayAsync();
         }
 
-    
+
         public async Task<Dentist> GetDentistAsync(int dentistId)
         {
-            IQueryable<Dentist> query = _appDbContext.Dentists.Where(d => d.DentistId == dentistId).Include(d=>d.SystemOrders).Include(s=>s.Patients);
+            IQueryable<Dentist> query = _appDbContext.Dentists.Where(d => d.DentistId == dentistId).Include(d => d.SystemOrders).Include(s => s.Patients);
             return await query.FirstOrDefaultAsync();
         }
 
@@ -404,7 +404,7 @@ namespace BioProSystem.Models
         //End of Dentist 
         public async Task<MediaFile> GetImageDataFromId(int imageID)
         {
-            return _appDbContext.MediaFiles.Where(i=>i.MediaFileId== imageID).FirstOrDefault();
+            return _appDbContext.MediaFiles.Where(i => i.MediaFileId == imageID).FirstOrDefault();
         }
         // Implementation for EmployeeDailyHours
 
@@ -424,22 +424,47 @@ namespace BioProSystem.Models
 
         public async Task<List<Delivery>> GetDeliveries()
         {
-          
-            return await _appDbContext.Deliveries.Include(d=>d.DeliveryStatus).Include(e=>e.Employee).ToListAsync(); 
+
+            return await _appDbContext.Deliveries.Include(d => d.DeliveryStatus).Include(e => e.Employee).ToListAsync();
         }
         public async Task<EmployeeDailyHours> GetEmployeeDailyHoursById(int employeedDailyHoursId)
         {
 
-            return await _appDbContext.EmployeeDailyHours.Where(edh=>edh.EmployeeDailyHoursId== employeedDailyHoursId).FirstOrDefaultAsync();
+            return await _appDbContext.EmployeeDailyHours.Where(edh => edh.EmployeeDailyHoursId == employeedDailyHoursId).FirstOrDefaultAsync();
         }
         public async Task<List<EmployeeDailyHours>> GetEmployeeDailyHours()
         {
 
-            return await _appDbContext.EmployeeDailyHours.Include(emp=>emp.Employees).ToListAsync();
+            return await _appDbContext.EmployeeDailyHours.Include(emp => emp.Employees).ToListAsync();
         }
         public async Task<MediaFile> GetMediaFileById(int mediaFileId)
         {
-            return await _appDbContext.MediaFiles.Where(m=>m.MediaFileId==mediaFileId).FirstOrDefaultAsync();
+            return await _appDbContext.MediaFiles.Where(m => m.MediaFileId == mediaFileId).FirstOrDefaultAsync();
+        }
+        //stock
+        public async Task<List<Stock>> GetAllStocks()
+        {
+            return await _appDbContext.Stocks.Include(s => s.StockCategory).Include(s => s.Supplier).ToListAsync();
+        }
+        public async Task<List<StockType>> GetAllStockTypes()
+        {
+            return await _appDbContext.StockType.Include(s => s.StockCategories).ToListAsync();
+        }
+        public async Task<List<StockCategory>> GetAllStockCategories()
+        {
+            return await _appDbContext.StockCategories.Include(s => s.StockType).ToListAsync();
+        }
+        public async Task<StockCategory> GetStockCategoryById(int stockCategoryId)
+        {
+            return await _appDbContext.StockCategories.Where(sc => sc.StockCategoryId == stockCategoryId).FirstOrDefaultAsync();
+        }
+        public async Task<Stock> GetStockById(int stockId)
+        {
+            return await _appDbContext.Stocks.Where(sc => sc.StockId == stockId).FirstOrDefaultAsync();
+        }
+        public async Task<StockType> GetStockTypeById(int stockTypeId)
+        {
+            return await _appDbContext.StockType.Where(sc => sc.StockTypeId == stockTypeId).FirstOrDefaultAsync();
         }
     }
 }

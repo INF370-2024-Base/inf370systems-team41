@@ -90,9 +90,6 @@ namespace BioProSystem.Migrations
                 name: "FK_OrderPayments_Payments_PaymentId",
                 table: "OrderPayments");
 
-            migrationBuilder.DropForeignKey(
-                name: "FK_OrderPayments_SystemOrders_OrderId1",
-                table: "OrderPayments");
 
             migrationBuilder.DropForeignKey(
                 name: "FK_OrderWorkflowTimelines_OrderDirections_OrderDirectionId",
@@ -135,15 +132,15 @@ namespace BioProSystem.Migrations
                 table: "SelectedAreaSystemOrder");
 
             migrationBuilder.DropForeignKey(
-                name: "FK_StakeWriteOffs_Stocks_StockId",
-                table: "StakeWriteOffs");
+                name: "FK_StockWriteOffs_Stocks_StockId",
+                table: "StockWriteOffs");
 
             migrationBuilder.DropForeignKey(
-                name: "FK_StockItems_Stocks_StockId1",
+                name: "FK_StockItems_Stocks_StockId",
                 table: "StockItems");
 
             migrationBuilder.DropForeignKey(
-                name: "FK_StockItems_SystemOrders_OrderId1",
+                name: "FK_StockItems_SystemOrders_OrderId",
                 table: "StockItems");
 
             migrationBuilder.DropForeignKey(
@@ -350,13 +347,6 @@ namespace BioProSystem.Migrations
                 principalColumn: "PaymentId",
                 onDelete: ReferentialAction.Restrict);
 
-            migrationBuilder.AddForeignKey(
-                name: "FK_OrderPayments_SystemOrders_OrderId1",
-                table: "OrderPayments",
-                column: "OrderId1",
-                principalTable: "SystemOrders",
-                principalColumn: "OrderId",
-                onDelete: ReferentialAction.Restrict);
 
             migrationBuilder.AddForeignKey(
                 name: "FK_OrderWorkflowTimelines_OrderDirections_OrderDirectionId",
@@ -439,25 +429,25 @@ namespace BioProSystem.Migrations
                 onDelete: ReferentialAction.Restrict);
 
             migrationBuilder.AddForeignKey(
-                name: "FK_StakeWriteOffs_Stocks_StockId",
-                table: "StakeWriteOffs",
+                name: "FK_StockWriteOffs_Stocks_StockId",
+                table: "StockWriteOffs",
                 column: "StockId",
                 principalTable: "Stocks",
                 principalColumn: "StockId",
                 onDelete: ReferentialAction.Restrict);
 
             migrationBuilder.AddForeignKey(
-                name: "FK_StockItems_Stocks_StockId1",
+                name: "FK_StockItems_Stocks_StockId",
                 table: "StockItems",
-                column: "StockId1",
+                column: "StockId",
                 principalTable: "Stocks",
                 principalColumn: "StockId",
                 onDelete: ReferentialAction.Restrict);
 
             migrationBuilder.AddForeignKey(
-                name: "FK_StockItems_SystemOrders_OrderId1",
+                name: "FK_StockItems_SystemOrders_OrderId",
                 table: "StockItems",
-                column: "OrderId1",
+                column: "OrderId",
                 principalTable: "SystemOrders",
                 principalColumn: "OrderId",
                 onDelete: ReferentialAction.Restrict);
@@ -634,9 +624,6 @@ namespace BioProSystem.Migrations
                 name: "FK_OrderPayments_Payments_PaymentId",
                 table: "OrderPayments");
 
-            migrationBuilder.DropForeignKey(
-                name: "FK_OrderPayments_SystemOrders_OrderId1",
-                table: "OrderPayments");
 
             migrationBuilder.DropForeignKey(
                 name: "FK_OrderWorkflowTimelines_OrderDirections_OrderDirectionId",
@@ -679,15 +666,15 @@ namespace BioProSystem.Migrations
                 table: "SelectedAreaSystemOrder");
 
             migrationBuilder.DropForeignKey(
-                name: "FK_StakeWriteOffs_Stocks_StockId",
-                table: "StakeWriteOffs");
+                name: "FK_StockWriteOffs_Stocks_StockId",
+                table: "StockWriteOffs");
 
             migrationBuilder.DropForeignKey(
-                name: "FK_StockItems_Stocks_StockId1",
+                name: "FK_StockItems_Stocks_StockId",
                 table: "StockItems");
 
             migrationBuilder.DropForeignKey(
-                name: "FK_StockItems_SystemOrders_OrderId1",
+                name: "FK_StockItems_SystemOrders_OrderId",
                 table: "StockItems");
 
             migrationBuilder.DropForeignKey(
@@ -892,12 +879,6 @@ namespace BioProSystem.Migrations
                 principalColumn: "PaymentId",
                 onDelete: ReferentialAction.SetNull);
 
-            migrationBuilder.AddForeignKey(
-                name: "FK_OrderPayments_SystemOrders_OrderId1",
-                table: "OrderPayments",
-                column: "OrderId1",
-                principalTable: "SystemOrders",
-                principalColumn: "OrderId");
 
             migrationBuilder.AddForeignKey(
                 name: "FK_OrderWorkflowTimelines_OrderDirections_OrderDirectionId",
@@ -976,23 +957,23 @@ namespace BioProSystem.Migrations
                 principalColumn: "OrderId");
 
             migrationBuilder.AddForeignKey(
-                name: "FK_StakeWriteOffs_Stocks_StockId",
-                table: "StakeWriteOffs",
+                name: "FK_StockWriteOffs_Stocks_StockId",
+                table: "StockWriteOffs",
                 column: "StockId",
                 principalTable: "Stocks",
                 principalColumn: "StockId");
 
             migrationBuilder.AddForeignKey(
-                name: "FK_StockItems_Stocks_StockId1",
+                name: "FK_StockItems_Stocks_StockId",
                 table: "StockItems",
-                column: "StockId1",
+                column: "StockId",
                 principalTable: "Stocks",
                 principalColumn: "StockId");
 
             migrationBuilder.AddForeignKey(
-                name: "FK_StockItems_SystemOrders_OrderId1",
+                name: "FK_StockItems_SystemOrders_OrderId",
                 table: "StockItems",
-                column: "OrderId1",
+                column: "OrderId",
                 principalTable: "SystemOrders",
                 principalColumn: "OrderId");
 

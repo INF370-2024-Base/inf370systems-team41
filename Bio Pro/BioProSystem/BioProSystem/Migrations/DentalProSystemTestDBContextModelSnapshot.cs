@@ -688,30 +688,6 @@ namespace BioProSystem.Migrations
                     b.ToTable("SelectedAreas");
                 });
 
-            modelBuilder.Entity("BioProSystem.Models.StakeWriteOff", b =>
-                {
-                    b.Property<int>("StakeWriteOffId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("StakeWriteOffId"));
-
-                    b.Property<int>("QuantityWrittenOff")
-                        .HasColumnType("int");
-
-                    b.Property<int>("StockId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("WriteOffDate")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("StakeWriteOffId");
-
-                    b.HasIndex("StockId");
-
-                    b.ToTable("StakeWriteOffs");
-                });
-
             modelBuilder.Entity("BioProSystem.Models.Stock", b =>
                 {
                     b.Property<int>("StockId")
@@ -726,11 +702,15 @@ namespace BioProSystem.Migrations
                     b.Property<int>("MaximumStockLevel")
                         .HasColumnType("int");
 
+                    b.Property<string>("Measurement")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("MinimumStockLevel")
                         .HasColumnType("int");
 
-                    b.Property<int>("QuantityAvailable")
-                        .HasColumnType("int");
+                    b.Property<decimal>("QuantityAvailable")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("ReorderPoint")
                         .HasColumnType("nvarchar(max)");
@@ -779,10 +759,7 @@ namespace BioProSystem.Migrations
             modelBuilder.Entity("BioProSystem.Models.StockItem", b =>
                 {
                     b.Property<int>("StockId")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("StockId"));
 
                     b.Property<int>("OrderId")
                         .HasColumnType("int");
@@ -791,17 +768,15 @@ namespace BioProSystem.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<int>("Quantity")
+                    b.Property<decimal>("Quantity")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("StockItemId")
                         .HasColumnType("int");
 
-                    b.Property<int>("StockId1")
-                        .HasColumnType("int");
-
-                    b.HasKey("StockId");
+                    b.HasKey("StockId", "OrderId");
 
                     b.HasIndex("OrderId1");
-
-                    b.HasIndex("StockId1");
 
                     b.ToTable("StockItems");
                 });
@@ -820,7 +795,35 @@ namespace BioProSystem.Migrations
 
                     b.HasKey("StockTypeId");
 
-                    b.ToTable("StockTypes");
+                    b.ToTable("StockType");
+                });
+
+            modelBuilder.Entity("BioProSystem.Models.StockWriteOff", b =>
+                {
+                    b.Property<int>("StockWriteOffId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("StockWriteOffId"));
+
+                    b.Property<decimal>("QuantityWrittenOff")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("Reason")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("StockId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("WriteOffDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("StockWriteOffId");
+
+                    b.HasIndex("StockId");
+
+                    b.ToTable("StockWriteOffs");
                 });
 
             modelBuilder.Entity("BioProSystem.Models.Supplier", b =>
@@ -1486,17 +1489,6 @@ namespace BioProSystem.Migrations
                     b.Navigation("Payment");
                 });
 
-            modelBuilder.Entity("BioProSystem.Models.StakeWriteOff", b =>
-                {
-                    b.HasOne("BioProSystem.Models.Stock", "Stock")
-                        .WithMany("StakeWriteOffs")
-                        .HasForeignKey("StockId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Stock");
-                });
-
             modelBuilder.Entity("BioProSystem.Models.Stock", b =>
                 {
                     b.HasOne("BioProSystem.Models.StockCategory", "StockCategory")
@@ -1537,11 +1529,22 @@ namespace BioProSystem.Migrations
 
                     b.HasOne("BioProSystem.Models.Stock", "Stock")
                         .WithMany("StockItem")
-                        .HasForeignKey("StockId1")
+                        .HasForeignKey("StockId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Order");
+
+                    b.Navigation("Stock");
+                });
+
+            modelBuilder.Entity("BioProSystem.Models.StockWriteOff", b =>
+                {
+                    b.HasOne("BioProSystem.Models.Stock", "Stock")
+                        .WithMany("StockWriteOffs")
+                        .HasForeignKey("StockId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Stock");
                 });
@@ -1830,9 +1833,9 @@ namespace BioProSystem.Migrations
 
             modelBuilder.Entity("BioProSystem.Models.Stock", b =>
                 {
-                    b.Navigation("StakeWriteOffs");
-
                     b.Navigation("StockItem");
+
+                    b.Navigation("StockWriteOffs");
                 });
 
             modelBuilder.Entity("BioProSystem.Models.StockCategory", b =>

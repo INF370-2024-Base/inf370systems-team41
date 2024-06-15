@@ -60,7 +60,7 @@ namespace BioProSystem.Models
 
     public virtual DbSet<RefundPayment> RefundPayments { get; set; }
 
-    public virtual DbSet<StakeWriteOff> StakeWriteOffs { get; set; }
+    public virtual DbSet<StockWriteOff> StockWriteOffs { get; set; }
 
     public virtual DbSet<Stock> Stocks { get; set; }
 
@@ -78,7 +78,7 @@ namespace BioProSystem.Models
 
         public virtual DbSet<SystemOrderSteps> SystemOrderSteps { get; set; }
 
-        public virtual DbSet<StockType> StockTypes { get; set; }
+        public virtual DbSet<StockType> StockType { get; set; }
 
     public virtual DbSet<TeethShade> TeethShades { get; set; }
 
@@ -116,8 +116,8 @@ namespace BioProSystem.Models
              .HasForeignKey(so => so.OrderTypeId)
              .OnDelete(DeleteBehavior.Restrict);
 
-                
-
+            modelBuilder.Entity<StockItem>()
+            .HasKey(si => new { si.StockId, si.OrderId });
             // SystemOrderSteps -> Employees
             modelBuilder.Entity<SystemOrderSteps>()
                 .HasOne(sos => sos.Employee)
@@ -137,9 +137,6 @@ namespace BioProSystem.Models
                 .WithMany(u => u.UserActions)
                 .HasForeignKey(ua => ua.UserId)
                 .OnDelete(DeleteBehavior.SetNull);
-
-
         }
-
     }
 }

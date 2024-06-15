@@ -67,6 +67,12 @@ namespace BioProSystem.Models
         Task<EmployeeDailyHours> GetEmployeeDailyHoursById(int employeedDailyHoursId);
         Task<List<EmployeeDailyHours>> GetEmployeeDailyHours();
         Task<MediaFile> GetMediaFileById(int mediaFileId);
-
+        //stock
+        Task<List<Stock>> GetAllStocks();
+        Task<List<StockType>> GetAllStockTypes();
+        Task<List<StockCategory>> GetAllStockCategories();
+        Task<StockCategory> GetStockCategoryById(int stockCategoryId);
+        Task<Stock> GetStockById(int stockId);
+        Task<StockType> GetStockTypeById(int stockTypeId);
     }
 }
