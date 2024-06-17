@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Form, FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms'; 
 import { Router } from '@angular/router';
-import { DataService } from '../services/data.service';
+import { DataService } from '../services/login.service';
 import { Dentist } from '../shared/dentist';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { PhoneChecker } from '../validators/Validators';

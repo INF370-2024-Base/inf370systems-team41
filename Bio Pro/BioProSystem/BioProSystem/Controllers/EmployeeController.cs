@@ -200,6 +200,18 @@ namespace BioProSystem.Controllers
             }
         }
         [HttpGet]
+        [Route("GetEmployeeInfoByEmail/{employeeEmail}")]
+        public async Task<ActionResult<Employee>> GetEmployeeInfoByEmail(string employeeEmail)
+        {
+            var result = await _repository.GetEmployeeByEmailAsync(employeeEmail);
+            if (result != null)
+            { return Ok(result); }
+            else
+            {
+                return NotFound("No employee found");
+            }
+        }
+        [HttpGet]
         [Route("GetEmployeeDailyHours")]
         public async Task<ActionResult<List<EmployeeDailyHours>>> GetEmployeeDailyHours()
         {

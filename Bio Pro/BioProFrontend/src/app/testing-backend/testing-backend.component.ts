@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { DataService } from '../services/data.service';
+import { DataService } from '../services/login.service';
 import { SystemUser } from '../shared/systemuser';
 import { AppComponent } from '../app.component';
 import { UserServices } from '../services/user.service';
@@ -245,6 +245,26 @@ captureNewStockTest: CaptureNewStockViewModel = {
       captureNewStock()
       {
         this.stockService.captureNewStock(this.captureNewStockTest).subscribe(result=>{
+          console.log(result)
+        },error=>
+        {
+          console.log(error)
+        })
+      }
+
+      getallusers()
+      {
+        this.userService.getAllUsers().subscribe(result=>{
+          console.log(result)
+        },error=>
+        {
+          console.log(error)
+        })
+      }
+
+      getEmployeeByEmail()
+      {
+        this.employeeService.getEmployeeByEmail(this.email).subscribe(result=>{
           console.log(result)
         },error=>
         {

@@ -460,5 +460,22 @@ namespace BioProSystem.Controllers
             await _emailSender.SendEmailAsync(email.Email, email.Emailheader, email.EmailContent);
             return Ok("Email sent successfully");
         }
+        [HttpGet]
+        [Route("GetAllCurrentUsers")]
+        public async Task<IActionResult> GetAllCurrentUsers()
+        {
+            try
+            {
+                List<SystemUser> users = await _repository.GetAllSystemUserActiveAsync();
+                if (users == null) return NotFound("No users found");
+
+                return Ok(users);
+            }
+            catch
+            {
+                return StatusCode(500, "Internal Server Error. Please contact support");
+            }
+
+        }
     }
 }

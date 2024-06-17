@@ -1,6 +1,6 @@
 // employee-profile.component.ts
 import { Component, OnInit } from '@angular/core';
-import { DataService } from '../services/data.service';
+import { DataService } from '../services/login.service';
 import { Employee } from '../shared/employee';
 import { EmployeeService } from '../services/employee.service';
 

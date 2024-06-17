@@ -11,6 +11,7 @@ namespace BioProSystem.Models
         Task<OpenOrder[]> GetAllOpenOrdersAsync();
         Task<OpenOrder> GetOpenOrdersAsync(int custId);
         Task<SystemUser> GetsystemUserAsync(string systemUserEmail);
+        Task<List<SystemUser>> GetAllSystemUserActiveAsync();
         Task<IEnumerable<Dentist>> GetDentistsAsync(); // Method to fetch all dentists
         Task<IEnumerable<MedicalAid>> GetMedicalAidsAsync(); // Method to fetch all medical aids
         Task<IEnumerable<OrderDirection>> GetOrderDirectionsAsync();
@@ -74,5 +75,6 @@ namespace BioProSystem.Models
         Task<StockCategory> GetStockCategoryById(int stockCategoryId);
         Task<Stock> GetStockById(int stockId);
         Task<StockType> GetStockTypeById(int stockTypeId);
+
     }
 }

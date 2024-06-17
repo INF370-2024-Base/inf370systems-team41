@@ -54,6 +54,10 @@ export class UserServices {
     return this.httpClient.put<string>(`${this.apiUrl}RemoveAccess/${userEmail}`,userEmail)
     .pipe(map(result => result))
   }
+  getAllUsers(): Observable<any>
+  {
+    return this.httpClient.get<any>(`${this.apiUrl}GetAllCurrentUsers`)
+  }
 }
 
 

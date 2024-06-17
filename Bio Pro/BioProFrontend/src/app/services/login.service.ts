@@ -70,6 +70,10 @@ export class DataService {
   {
     return this.httpClient.get<any>(`${this.apiUrl}GetSignInProfile/${EmailAddress}`)
   }
+  getAllUsers(): Observable<any>
+  {
+    return this.httpClient.get<any>(`${this.apiUrl}GetAllCurrentUsers`)
+  }
 
  
 }

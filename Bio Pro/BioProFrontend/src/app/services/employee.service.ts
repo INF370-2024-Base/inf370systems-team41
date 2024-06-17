@@ -37,7 +37,9 @@ export class EmployeeService {
   deleteEmployee(id: number): Observable<any> {
     return this.httpClient.delete(`${this.apiUrl}/DeleteEmployee/${id}`);
   }
-
+  getEmployeeByEmail(email: string): Observable<any> {
+    return this.httpClient.get(`${this.apiUrl}/GetEmployeeInfoByEmail/${email}`);
+  }
 
   captureEmployeeDailyHours(employeeId: number, dailyHours: DailyHours): Observable<any> {
     const url = `${this.apiUrl}/capture-daily-hours/${employeeId}`;

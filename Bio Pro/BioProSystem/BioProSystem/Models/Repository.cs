@@ -466,5 +466,9 @@ namespace BioProSystem.Models
         {
             return await _appDbContext.StockType.Where(sc => sc.StockTypeId == stockTypeId).FirstOrDefaultAsync();
         }
+        public async Task<List<SystemUser>> GetAllSystemUserActiveAsync()
+        {
+            return await _appDbContext.SystemUsers.Where(su => su.LockoutEnd < DateTime.Now || su.LockoutEnd == null).ToListAsync();
+        }
     }
 }
