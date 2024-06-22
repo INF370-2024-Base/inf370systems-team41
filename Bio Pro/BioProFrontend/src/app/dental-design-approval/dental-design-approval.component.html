@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Approvals</title>
+    <!-- Include Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Include Material Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body>
+  <h1 class="main-title">ORDER APPROVALS</h1>
+  <div class="container">
+    <div class="card-container">
+      <mat-accordion>
+        <mat-expansion-panel *ngFor="let pendingOrder of pendingOrdersData">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              Order ID: {{ pendingOrder.orderId }} - Due date: {{ pendingOrder.dueDate | date: 'shortDate' }}
+            </mat-panel-title>
+            <mat-panel-description>
+              <div style="display: flex; justify-content: flex-end;">
+                <button mat-raised-button color="primary" class="approve-button" (click)="approveOrder(pendingOrder.orderId)">
+                  <mat-icon>check</mat-icon> Approve
+                </button>
+                <button mat-raised-button color="warn" class="reject-button" (click)="rejectOrder(pendingOrder.orderId)">
+                  <mat-icon>clear</mat-icon> Reject
+                </button>
+              </div>
+              <span class="spacer"></span>
+            </mat-panel-description>
+          </mat-expansion-panel-header>
+          <div class="order-details">
+            <p><strong>Order Status:</strong> {{ pendingOrder.orderStatus.description }}</p>
+            <p><strong>Order Type:</strong> {{ pendingOrder.orderType.description }}</p>
+            <p><strong>Order Direction:</strong> {{ pendingOrder.orderWorkflowTimeline.orderDirection.description }}</p>
+            <p><strong>Dentist:</strong> {{ pendingOrder.dentist.firstName }} {{ pendingOrder.dentist.lastName }}</p>
+          </div>
+        </mat-expansion-panel>
+      </mat-accordion>
+    </div>
+  </div>
+</body>
+</html>

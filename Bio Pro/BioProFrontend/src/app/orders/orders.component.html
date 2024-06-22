@@ -63,8 +63,8 @@
                     <button mat-icon-button (click)="downloadFile(media.fileSelf, media.fileName)">
                       <mat-icon>file_download</mat-icon>
                     </button>
-                    <div *ngIf="media.fileName !== 'TeethAreas.png'">
-                      <button mat-icon-button (click)="deleteMediaFile(media.mediaFileId)">
+                    <div *ngIf="media.fileName !== 'TeethAreas.png' && !media.fileName.includes('DentalDesign')">
+                                          <button mat-icon-button (click)="deleteMediaFile(media.mediaFileId)">
                         <mat-icon>delete</mat-icon>
                       </button>
                     </div>

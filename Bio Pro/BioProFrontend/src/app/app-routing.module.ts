@@ -16,6 +16,8 @@ import { DeliveriesComponent } from './deliveries/deliveries.component';
 import { AddDeliveryComponent } from './add-delivery/add-delivery.component';
 import { HomeComponent } from './home/home.component';
 import { TestingBackendComponent } from './testing-backend/testing-backend.component';
+import { OrdersAwaitingDentalDesignComponent } from './orders-awaiting-dental-design/orders-awaiting-dental-design.component';
+import { DentalDesignApprovalComponent } from './dental-design-approval/dental-design-approval.component';
 
 
 const routes: Routes = [
@@ -23,6 +25,8 @@ const routes: Routes = [
   {path: 'openOrder', component: OpenOrdersComponent},  
   {path: 'addOrder', component: AddOrderComponent},
   { path: 'orders', component: OrdersComponent },
+  { path: 'orderAwaitingDentalDesign', component: OrdersAwaitingDentalDesignComponent },
+  { path: 'dentalDesignApproval', component: DentalDesignApprovalComponent },
   { path: 'approval', component: ApproveOrderComponent },
   { path: 'addEmployee', component: AddEmployeeComponent },
   { path: 'addDentist', component: AddDentistComponent },
@@ -36,7 +40,7 @@ const routes: Routes = [
   {path: 'addproceduraltimeline', component: AddProceduralTimeline}, 
   {path: 'deliveries', component: DeliveriesComponent}, 
   {path: 'addDelivery', component: AddDeliveryComponent}, 
-  {path: '', redirectTo: 'test', pathMatch: 'full'},
+  {path: '', redirectTo: 'login', pathMatch: 'full'},
   {path: 'home', component: HomeComponent},
   {path: 'test', component: TestingBackendComponent},
 ];

@@ -10,6 +10,8 @@ namespace BioProSystem.Models
         Task<bool> SaveChangesAsync();
         Task<OpenOrder[]> GetAllOpenOrdersAsync();
         Task<OpenOrder> GetOpenOrdersAsync(int custId);
+        Task<List<SystemOrder>> GetOrdersAwaitingDentalDesign();
+        Task<List<Employee>> GetEmployeesWithJobTitleId(int jobTitileId);
         Task<SystemUser> GetsystemUserAsync(string systemUserEmail);
         Task<List<SystemUser>> GetAllSystemUserActiveAsync();
         Task<IEnumerable<Dentist>> GetDentistsAsync(); // Method to fetch all dentists
@@ -37,7 +39,7 @@ namespace BioProSystem.Models
 
         Task<Dentist> GetDentistdByIdAsync(int dentistId);
         Task<SystemOrderViewModel> GetAllSystemOrdersInformationAsync(string orderId);
-        Task<List<SystemOrder>> GetPendingSystemOrders();
+        Task<List<SystemOrder>> GetSystemOrdersWithOrderStatusID(int orderStatusId);
         Task<List<Employee>> AssignAvailableTechnicians(int orderDirectionId, string systemOrderId);
         Task<OrderWorkflowTimeline> GetOrdertimeFlowBySystemOrderId(string systemOrderId);
         //Employee

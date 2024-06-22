@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { map, Observable, Subject } from 'rxjs';
 import { OpenOrder } from '../shared/openorder';
 import { SystemOrderViewModel } from '../shared/SystemOrderViewModel ';
+import { AddDentalDesignViewModel } from '../orders-awaiting-dental-design/orders-awaiting-dental-design.component';
 
 @Injectable({
   providedIn: 'root'
@@ -137,6 +138,26 @@ getFinishedOrders():Observable<any[]>
 deleteMediaFile(mediaFileId:number):Observable<any[]>
 {
   return this.httpClient.delete<any[]>(`${this.apiUrl}Api/DeleteMediaFile/${mediaFileId}`);
+}
+getOrdersAwaitingDentalDesign():Observable<any[]>
+{
+  return this.httpClient.get<any[]>(`${this.apiUrl}Api/GetOrdersAwaitingDentalDesign`);
+}
+sendDentalDesign(dentalDesign:AddDentalDesignViewModel):Observable<any[]>
+{
+  return this.httpClient.post<any[]>(`${this.apiUrl}Api/SendDentalDesign`,dentalDesign);
+}
+apporveDentalDesign(orderId:number):Observable<number> {
+  const endpoint = `Api/ApproveDentalDesign/${orderId}`; 
+  return this.httpClient.put<number>(`${this.apiUrl}${endpoint}`,orderId);
+}
+rejectDentalDesign(orderId:number):Observable<number> {
+  const endpoint = `Api/DisapproveDentalDesign/${orderId}`;
+  return this.httpClient.put<number>(`${this.apiUrl}${endpoint}`,orderId);
+}
+GetOrdersAwaitingDentalDesignApproval():Observable<any[]>
+{
+  return this.httpClient.get<any[]>(`${this.apiUrl}Api/GetOrdersAwaitingDentalDesignApproval`);
 }
 }
 

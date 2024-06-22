@@ -59,6 +59,14 @@
             <mat-icon>folder_open</mat-icon> <!-- Icon for open orders -->
             Open Orders
           </a>
+          <a mat-list-item class="sub-nav-link" [routerLink]="['/orderAwaitingDentalDesign']" (click)="isSidenavOpen = !isSidenavOpen">
+            <mat-icon>folder_open</mat-icon> <!-- Icon for open orders -->
+            Orders Awaiting Dental Design
+          </a>
+          <a mat-list-item class="sub-nav-link" [routerLink]="['/dentalDesignApproval']" (click)="isSidenavOpen = !isSidenavOpen">
+            <mat-icon>add_circle_outline</mat-icon> <!-- Icon for open orders -->
+            Approve dental designs
+          </a>
           <a mat-list-item class="sub-nav-link" [routerLink]="['/approval']" (click)="isSidenavOpen = !isSidenavOpen">
             <mat-icon>check_circle</mat-icon> <!-- Icon for approve orders -->
             Approve Orders

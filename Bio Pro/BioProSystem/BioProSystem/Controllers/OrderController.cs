@@ -18,6 +18,7 @@ using System.Net.Mail;
 using System.Threading.Tasks;
 using Org.BouncyCastle.Crypto.Macs;
 using Microsoft.Extensions.Logging;
+using static System.Net.WebRequestMethods;
 
 namespace BioProSystem.Controllers
 {
@@ -552,7 +553,7 @@ namespace BioProSystem.Controllers
         {
             try
             {
-                var pendingOrders = await _repository.GetPendingSystemOrders();
+                var pendingOrders = await _repository.GetSystemOrdersWithOrderStatusID(1);
                 if(pendingOrders == null || !pendingOrders.Any())
                 {
                     return NotFound("No pending orders found");
@@ -586,36 +587,15 @@ namespace BioProSystem.Controllers
                 else
                 {
                     pendingOrders.OrderStatusId = 2;
-                    OrderWorkflowTimeline timeline = _repository.GetOrdertimeFlowBySystemOrderId(orderId).Result;
-                    List<Employee> employees = new List<Employee>();
-                    try
+                    List<Employee> DentalDesigners = await _repository.GetEmployeesWithJobTitleId(4);
+                    foreach (Employee emp in DentalDesigners)   
                     {
-                        employees = await _repository.AssignAvailableTechnicians(timeline.OrderDirectionId, pendingOrders.OrderId);
-                        if(employees!=null)
-                        { 
-                            foreach (Employee employee in employees)
-                            {
-                                EmailViewModel emailViewModel = new EmailViewModel();
-                                emailViewModel.Emailheader = "New Order:" + orderId;
-                                emailViewModel.EmailContent = "You have been assigned to order:" + orderId + ". For more information view the Order info on system";
-                                emailViewModel.Email = employee.Email;
-                                SendTestEmail(emailViewModel);
-                            }
-                        }
-                        else
-                        {
-                            return BadRequest("Employees not found for order");
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        // Catch the exception thrown by AssignAvailableTechnicians and rethrow it
-                        return BadRequest(ex.Message);
-                    }
-                    foreach (Employee employee in employees)
-                    {
-                        employee.SystemOrders.Add(pendingOrders);
-                        pendingOrders.Employees.Add(employee);
+                        EmailViewModel email = new EmailViewModel();
+                        email.EmailContent = "There is a new dental design that needs your approval." + "http://localhost:4200/orderAwaitingDentalDesign";
+                        email.Emailheader = "New dental design";
+                        email.Email = emp.Email;
+                        SendTestEmail(email);
+
                     }
                 }
                 if (await _repository.SaveChangesAsync())
@@ -650,7 +630,7 @@ namespace BioProSystem.Controllers
                 }
                 else
                 {
-                    pendingOrders.OrderStatusId = 7;
+                    pendingOrders.OrderStatusId = 10;
                 }
                 if (await _repository.SaveChangesAsync())
                 {
@@ -692,7 +672,204 @@ namespace BioProSystem.Controllers
                 return StatusCode(500, "An error occurred while deleting daily hours." + ex.InnerException.Message);
             }
         }
+        [HttpGet]
+        [Route("GetOrdersAwaitingDentalDesign")]
+        public async Task<IActionResult> GetOrdersAwaitingDentalDesign()
+        {
+            try
+            {
+                var ordersAwaitingDentalDesign = await _repository.GetOrdersAwaitingDentalDesign();
+                if (ordersAwaitingDentalDesign == null)
+                { return NotFound("Id not found"); }
+                else
+                {
+                    return Ok(ordersAwaitingDentalDesign);
+                }
+                
+            }
+            catch (Exception ex)
+            {
+                // Log the exception or return a meaningful error message
+                return StatusCode(500, "An error occurred while deleting daily hours." + ex.InnerException.Message);
+            }
+        }
+        [HttpPost]
+        [Route("SendDentalDesign")]
+        public async Task<IActionResult> SendDentalDesign(AddDentalDesignViewModel dentalDesign)
+        {
+            try
+            {
+                MediaFile mediaFile1 = new MediaFile();
+                mediaFile1.FileName = dentalDesign.DentalDesign.FileName;
+                mediaFile1.FileSelf = Convert.FromBase64String(dentalDesign.DentalDesign.FileSelf);
+                mediaFile1.FileSizeKb = dentalDesign.DentalDesign.FileSizeKb;
 
+                SystemOrder order = await _repository.GetSystemOrderByIdAsync(dentalDesign.OrderId);
+                if (order == null)
+                { 
+                    return NotFound("Order not found"); 
+                }
+                mediaFile1.SystemOrderId = order.OrderId;
+                _repository.Add(mediaFile1);
+                order.MediaFiles.Add(mediaFile1);
+                order.OrderStatusId = 3;
+                
+                if(await _repository.SaveChangesAsync())
+                {
+                    List<Employee> labmanagers = await _repository.GetEmployeesWithJobTitleId(3);
+                    if(labmanagers.Count>0)
+                    {
+                        foreach (Employee employee in labmanagers)
+                        {
+                            EmailViewModel email = new EmailViewModel();
+                            email.EmailContent = "There is a new dental design that needs your approval." + "http://localhost:4200/dentalDesignApproval";
+                            email.Emailheader = "New dental design";
+                            email.Email = employee.Email;
+                            SendTestEmail(email);
+                        }
+                    }
+                    
+                    return Ok(mediaFile1);
+                }
+                else
+                {
+                    return BadRequest("Could not save changes to database");
+                }
 
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "An error occurred while deleting daily hours." + ex.InnerException.Message);
+            }
+        }
+        [HttpPut]
+        [Route("ApproveDentalDesign/{orderId}")]
+        public async Task<ActionResult<IEnumerable<SystemOrder>>> ApproveDentalDesign(string orderId)
+        {
+            try
+            {
+                var pendingOrders = await _repository.GetSystemOrderByIdAsync(orderId);
+                if (pendingOrders == null)
+                {
+                    return NotFound("No pending orders found");
+                }
+                if (pendingOrders.OrderStatusId != 3)
+                {
+                    return NotFound("Order is not a pending orders found");
+                }
+                else
+                {
+                    pendingOrders.OrderStatusId = 4;
+                    OrderWorkflowTimeline timeline = _repository.GetOrdertimeFlowBySystemOrderId(orderId).Result;
+                    List<Employee> employees = new List<Employee>();
+                    try
+                    {
+                        employees = await _repository.AssignAvailableTechnicians(timeline.OrderDirectionId, pendingOrders.OrderId);
+                        if (employees != null)
+                        {
+                            foreach (Employee employee in employees)
+                            {
+                                EmailViewModel emailViewModel = new EmailViewModel();
+                                emailViewModel.Emailheader = "New Order:" + orderId;
+                                emailViewModel.EmailContent = "You have been assigned to order:" + orderId + ". For more information view the Order info on system";
+                                emailViewModel.Email = employee.Email;
+                                SendTestEmail(emailViewModel);
+                            }
+                        }
+                        else
+                        {
+                            return BadRequest("Employees not found for order");
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        // Catch the exception thrown by AssignAvailableTechnicians and rethrow it
+                        return BadRequest(ex.Message);
+                    }
+                    foreach (Employee employee in employees)
+                    {
+                        employee.SystemOrders.Add(pendingOrders);
+                        pendingOrders.Employees.Add(employee);
+                    }
+                }
+                if (await _repository.SaveChangesAsync())
+                {
+                    return Ok(pendingOrders);
+                }
+                else
+                {
+                    ModelState.AddModelError(string.Empty, "Failed to save changes.");
+                    return BadRequest(ModelState);
+                }
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal Server Error: {ex.Message}");
+            }
+        }
+        [HttpPut]
+        [Route("DisapproveDentalDesign/{orderId}")]
+        public async Task<ActionResult<IEnumerable<SystemOrder>>> DisapproveDentalDesign(string orderId)
+        {
+            try
+            {
+                SystemOrder pendingOrders = await _repository.GetSystemOrderByIdAsync(orderId);
+                if (pendingOrders == null)
+                {
+                    return NotFound("No pending orders found");
+                }
+                if (pendingOrders.OrderStatusId != 3)
+                {
+                    return NotFound("Order is not a pending orders found");
+                }
+                else
+                {
+                    pendingOrders.OrderStatusId = 2;
+                    MediaFile filetodelete = pendingOrders.MediaFiles.FirstOrDefault(mediaFile => mediaFile.FileName.Contains("DentalDesign")); 
+                    if (filetodelete != null)
+                    {
+                        _repository.Delete(filetodelete);
+                    }
+                    else
+                    {
+                        return NotFound(filetodelete.FileName + " was not found. It might already be deleted");
+                    }
+                }
+                if (await _repository.SaveChangesAsync())
+                {
+                    return Ok(pendingOrders);
+                }
+                else
+                {
+                    ModelState.AddModelError(string.Empty, "Failed to save changes.");
+                    return BadRequest(ModelState);
+                }
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal Server Error: {ex.Message}");
+            }
+        }
+        [HttpGet]
+        [Route("GetOrdersAwaitingDentalDesignApproval")]
+        public async Task<IActionResult> GetOrdersAwaitingDentalDesignApproval()
+        {
+            try
+            {
+                var ordersAwaitingDentalDesign = await _repository.GetSystemOrdersWithOrderStatusID(3);
+                if (ordersAwaitingDentalDesign == null)
+                { return NotFound("Id not found"); }
+                else
+                {
+                    return Ok(ordersAwaitingDentalDesign);
+                }
+
+            }
+            catch (Exception ex)
+            {
+                // Log the exception or return a meaningful error message
+                return StatusCode(500, "An error occurred while deleting daily hours." + ex.InnerException.Message);
+            }
+        }
     }
 }

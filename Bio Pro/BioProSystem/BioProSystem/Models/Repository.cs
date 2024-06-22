@@ -125,6 +125,11 @@ namespace BioProSystem.Models
             IQueryable<OpenOrder> query = _appDbContext.OpenOrders.Where(c => c.OpenOrderId == openOrderID);
             return await query.FirstOrDefaultAsync();
         }
+        public async Task<List<Employee>> GetEmployeesWithJobTitleId(int jobTitileId)
+        {
+            List<Employee> query =await  _appDbContext.Employees.Where(c => c.JobTitleId==jobTitileId).ToListAsync();
+            return query;
+        }
         public async Task<TeethShade> GetTeethShadeAsync(int teethshadeIds)
         {
 
@@ -149,9 +154,9 @@ namespace BioProSystem.Models
             IQueryable<SelectedArea> query = _appDbContext.SelectedAreas.Where(c => c.SelectedAreaId == areaId);
             return await query.FirstOrDefaultAsync();
         }
-        public async Task<List<SystemOrder>> GetPendingSystemOrders()
+        public async Task<List<SystemOrder>> GetSystemOrdersWithOrderStatusID(int orderStatusId)
         {
-            IQueryable<SystemOrder> pendingOrders = _appDbContext.SystemOrders.Where(o => o.OrderStatusId == 1);
+            IQueryable<SystemOrder> pendingOrders = _appDbContext.SystemOrders.Where(o => o.OrderStatusId == orderStatusId).Include(s=>s.OrderStatus).Include(s=>s.OrderWorkflowTimeline).ThenInclude(o=>o.orderDirection).Include(s=>s.Dentist).Include(s=>s.OrderType);
             return await pendingOrders.ToListAsync();
         }
 
@@ -178,9 +183,14 @@ namespace BioProSystem.Models
             IQueryable<SystemOrder> query = _appDbContext.SystemOrders.Where(o => o.OrderWorkflowTimelineId == workflowtimelineId);
             return await query.FirstOrDefaultAsync();
         }
+        public async Task<List<SystemOrder>> GetOrdersAwaitingDentalDesign()
+        {
+            IQueryable<SystemOrder> query = _appDbContext.SystemOrders.Where(o => o.OrderStatusId == 2).Include(s=>s.MediaFiles).Include(s=>s.Dentist);
+            return await query.ToListAsync();
+        }
         public async Task<List<SystemOrder>> GetFinishedSystemWithoutDeliveriesOrders()
         {
-            IQueryable<SystemOrder> query = _appDbContext.SystemOrders.Where(o => o.OrderStatusId == 3).Include(o => o.Deliveries).Where(o => o.Deliveries.Count < 1);
+            IQueryable<SystemOrder> query = _appDbContext.SystemOrders.Where(o => o.OrderStatusId == 5).Include(o => o.Deliveries).Where(o => o.Deliveries.Count < 1);
             return await query.ToListAsync();
         }
         public async Task<List<SystemOrder>> GetOrdersInProgressAndNoTimeline()
