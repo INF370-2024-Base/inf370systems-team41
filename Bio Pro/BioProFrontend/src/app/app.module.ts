@@ -38,6 +38,7 @@ import { DentalDesignApprovalComponent } from './dental-design-approval/dental-d
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { EditEmployeeDialogComponent } from './edit-employee-dialog/edit-employee-dialog.component';
 import { MatDialogModule } from '@angular/material/dialog';
+import { DailyHoursProfileComponent } from './daily-hours-profile/daily-hours-profile.component';
 
 
 @NgModule({
@@ -53,7 +54,7 @@ import { MatDialogModule } from '@angular/material/dialog';
     EmployeeProfileComponent,
     CaptureEmployeeHoursComponent,LoginComponent,EditOrderModalComponent, AddUserComponent, AddProceduralTimeline, DeliveriesComponent, AddDeliveryComponent, HomeComponent, TestingBackendComponent, ConfirmationDialogComponent, OrdersAwaitingDentalDesignComponent, DentalDesignApprovalComponent,
     UserProfileComponent, 
-    EditEmployeeDialogComponent
+    EditEmployeeDialogComponent, DailyHoursProfileComponent,
   ],
   imports: [
     BrowserModule,
