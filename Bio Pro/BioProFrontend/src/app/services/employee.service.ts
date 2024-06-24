@@ -1,6 +1,6 @@
 // employee.service.ts
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Employee } from '../shared/employee';
 import { DailyHours } from '../shared/dailyhours';
@@ -50,5 +50,15 @@ export class EmployeeService {
   }
   getEmployeeDailyHours(): Observable<any> {
     return this.httpClient.get(`${this.apiUrl}/GetEmployeeDailyHours`);
+  }
+  getEmployeeDailyHoursByDate(date: Date): Observable<any> {
+    // Create query parameters
+    const params = new HttpParams().set('date', date.toISOString());
+
+    // Make the HTTP request
+    return this.httpClient.get(`${this.apiUrl}/GetEmployeeDailyHoursByDate`, { params });
+  }
+  getEmployeeDailyHoursByEmployeeEmail(email:string): Observable<any> {
+    return this.httpClient.get(`${this.apiUrl}/GetEmployeeDailyHoursByEmployee/${email}`);
   }
 }

@@ -13,6 +13,9 @@ import { DentistService } from '../shared/dentist.service';
 import { Dentist } from '../shared/dentist';
 import { StockServices } from '../services/stock.service';
 import { AddStock, CaptureNewStockViewModel, StockWriteOffViewModel } from '../shared/Stock';
+import { CaptureEmployeeHoursComponent } from '../capture-employee-hours/capture-employee-hours.component';
+import { DailyHours } from '../shared/dailyhours';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-testing-backend',
@@ -271,4 +274,72 @@ captureNewStockTest: CaptureNewStockViewModel = {
           console.log(error)
         })
       }
+  adddailyhours()
+  {
+    dailyHoursList.forEach(element => {
+      this.employeeService.captureEmployeeDailyHours(element.EmployeeId,element).subscribe(result=>{
+        console.log(result)
+      },
+      (error:HttpErrorResponse)=>
+      {
+        console.log(error.error)
+      })
+    });
+  }
+  getdailyhoursforJuneFourth()
+  {
+    const customDate = new Date('2024-06-04');
+      console.log(customDate)
+      this.employeeService.getEmployeeDailyHoursByDate(customDate).subscribe(result=>{
+        console.log(result)
+      },
+      (error:HttpErrorResponse)=>
+      {
+        console.log(error.error)
+      })
+  }
+  emailToTest:string="bioprosystem717Admin@gmail.com"
+  getdailyhoursforemployee()
+  {
+    
+      this.employeeService.getEmployeeDailyHoursByEmployeeEmail(this.emailToTest).subscribe(result=>{
+        console.log(result)
+      },
+      (error:HttpErrorResponse)=>
+      {
+        console.log(error.error)
+      })
+  }
 }
+const dailyHoursList: DailyHours[] = [
+  {
+    EmployeeId: 1,
+    WorkDate: new Date(), // Current date and time
+    Hours: 3,
+  },
+  {
+    EmployeeId: 1,
+    WorkDate: new Date('2024-06-01'), // Specific date (June 1, 2024)
+    Hours: 5,
+  },
+  {
+    EmployeeId: 3,
+    WorkDate: new Date('2024-06-02'), // Specific date (June 2, 2024)
+    Hours: 7,
+  },
+  {
+    EmployeeId: 4,
+    WorkDate: new Date('2024-06-03'), // Specific date (June 3, 2024)
+    Hours: 4,
+  },
+  {
+    EmployeeId: 5,
+    WorkDate: new Date('2024-06-04'), // Specific date (June 4, 2024)
+    Hours: 6,
+  },
+  {
+    EmployeeId: 6,
+    WorkDate: new Date('2024-06-04'), // Specific date (June 4, 2024)
+    Hours: 7,
+  },
+];

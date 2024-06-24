@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using BioProSystem.Models;
 using BioProSystem.ViewModels;
 using System.Text.RegularExpressions;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace BioProSystem.Controllers
 {
@@ -220,11 +221,33 @@ namespace BioProSystem.Controllers
             { return Ok(result); }
             else
             {
-                return NotFound("No Jobtitiles found");
+                return NotFound("No employee daily hours found");
             }
-
-
-
+        }
+        [HttpGet]
+        [Route("GetEmployeeDailyHoursByDate")]
+        public async Task<ActionResult<List<EmployeeDailyHours>>> GetEmployeeDailyHoursByDate(DateTime date)
+        {
+            var result = await _repository.GetEmployeeDailyHoursByDay(date);
+            if (result != null)
+            { return Ok(result); }
+            else
+            {
+                return NotFound("No employee daily hours found on:"+ date.Date.ToShortDateString());
+            }
+        }
+        [HttpGet]
+        [Route("GetEmployeeDailyHoursByEmployee/{email}")]
+        public async Task<ActionResult<List<EmployeeDailyHours>>> GetEmployeeDailyHoursByEmployee(string email)
+        {
+            Employee employee=await _repository.GetEmployeeByEmailAsync(email);
+            List<EmployeeDailyHours> result = await _repository.GetEmployeeDailyByEmployee(email);
+            if (result != null)
+            { return Ok(result); }
+            else
+            {
+                return NotFound("No employee daily hours found for:" + employee.FirstName+" "+employee.LastName); ;
+            }
         }
 
         [HttpGet]
