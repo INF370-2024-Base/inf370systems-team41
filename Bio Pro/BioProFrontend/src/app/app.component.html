@@ -59,6 +59,10 @@
             <mat-icon>folder_open</mat-icon> <!-- Icon for open orders -->
             Open Orders
           </a>
+          <a mat-list-item class="sub-nav-link" [routerLink]="['/employeeOrders']" (click)="isSidenavOpen = !isSidenavOpen">
+            <mat-icon>folder_open</mat-icon> <!-- Icon for open orders -->
+            Your Orders
+          </a>
           <a mat-list-item class="sub-nav-link" [routerLink]="['/orderAwaitingDentalDesign']" (click)="isSidenavOpen = !isSidenavOpen">
             <mat-icon>folder_open</mat-icon> <!-- Icon for open orders -->
             Orders Awaiting Dental Design

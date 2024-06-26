@@ -3,6 +3,11 @@ using System.Threading.Tasks;
 using BioProSystem.Models;
 using BioProSystem.ViewModels;
 using System.Text.RegularExpressions;
+using BioProSystem.EmailService;
+using System.Net;
+using Microsoft.AspNetCore.Identity.UI.Services;
+using Microsoft.Extensions.Options;
+using System.Net.Mail;
 
 namespace BioProSystem.Controllers
 {
@@ -11,10 +16,13 @@ namespace BioProSystem.Controllers
     public class EmployeeController : ControllerBase
     {
         private readonly IRepository _repository;
-
-        public EmployeeController(IRepository repository)
+        private readonly IEmailSender _emailSender;
+        private readonly EmailSettings _emailSettings;
+        public EmployeeController(IRepository repository, IOptions<EmailSettings> emailSettings, IEmailSender emailSender)
         {
             _repository = repository;
+            _emailSender = emailSender;
+            _emailSettings = emailSettings.Value;
         }
 
         [HttpGet]
@@ -238,10 +246,80 @@ namespace BioProSystem.Controllers
                 {
                     return NotFound("No Jobtitiles found");
                 }
-
-            
-
         }
 
+        [HttpGet]
+        [Route("GetCurrentOrders/{email}")]
+        public async Task<ActionResult<List<SystemOrder>>> GetJobtitles(string email)
+        {
+            var result = await _repository.GetSystemOrdersForEmployee(email);
+            
+            if (result != null)
+            { return Ok(result); }
+            else
+            {
+                return NotFound("No Jobtitiles found");
+            }
+        }
+
+        [HttpPut]
+        [Route("CompleteStepAndJob/{stepId}")]
+        public async Task<IActionResult> CompleteStepAndJob(int stepId)
+        {
+            SystemOrderSteps completedStep =await _repository.GetSystemOrderStepById(stepId);
+            SystemOrderSteps nextStep = await _repository.GetSystemOrderStepById(stepId+1);
+            
+            if (completedStep != null)
+            {
+                SystemOrder order = await _repository.GetSystemOrderByIdAsync(completedStep.SystemOrderId);
+                if (!completedStep.IsFinalStep)
+                {
+                    if (completedStep.IsCurrentStep)
+                    {
+                        completedStep.DateCompleted = DateTime.Now;
+                        completedStep.IsCurrentStep = false;
+                        nextStep.IsCurrentStep=true;
+                    }
+                }
+                else
+                {
+                    completedStep.DateCompleted = DateTime.Now;
+                    order.OrderStatusId = 5;
+                    List<Employee> drivers=await _repository.GetEmployeesWithJobTitleId(0, "Driver");
+                    foreach (Employee driver in drivers)
+                    {
+                        EmailViewModel emailViewModel = new EmailViewModel();
+                        emailViewModel.Email = driver.Email;
+                        emailViewModel.Emailheader = "New order to collect for delivery:"+order.OrderId+".";
+                        emailViewModel.EmailContent = "There is a new order that neads to be collected for delivery. Please notify admin when you are available to pick up order";
+                        SendTestEmail(emailViewModel);
+                    }
+                }
+                if(await _repository.SaveChangesAsync())
+                {
+                    return Ok(order);
+                }
+                else
+                {
+                    return BadRequest("Unable to save changes. Please contact support.");
+                }
+            }
+            else
+            {
+                return NotFound("Order not found.Please contact support.");
+            }
+
+        }
+        [HttpHead]
+        public async Task<IActionResult> SendTestEmail(EmailViewModel email)
+        {
+            var client = new SmtpClient(_emailSettings.SmtpServer, _emailSettings.SmtpPort)
+            {
+                Credentials = new NetworkCredential(_emailSettings.Username, _emailSettings.Password),
+                EnableSsl = true
+            };
+            await _emailSender.SendEmailAsync(email.Email, email.Emailheader, email.EmailContent);
+            return Ok("Email sent successfully");
+        }
     }
 }

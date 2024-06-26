@@ -11,7 +11,7 @@ namespace BioProSystem.Models
         Task<OpenOrder[]> GetAllOpenOrdersAsync();
         Task<OpenOrder> GetOpenOrdersAsync(int custId);
         Task<List<SystemOrder>> GetOrdersAwaitingDentalDesign();
-        Task<List<Employee>> GetEmployeesWithJobTitleId(int jobTitileId);
+        Task<List<Employee>> GetEmployeesWithJobTitleId(int jobTitileId, string jobTitleName = "");
         Task<SystemUser> GetsystemUserAsync(string systemUserEmail);
         Task<List<SystemUser>> GetAllSystemUserActiveAsync();
         Task<IEnumerable<Dentist>> GetDentistsAsync(); // Method to fetch all dentists
@@ -29,6 +29,8 @@ namespace BioProSystem.Models
         Task<SelectedArea> GetSelectedAreaAsync(int areaId);
         Task<List<SelectedArea>> GetSelectedAreasAsync(List<int> areaIds);
         Task<List<OrderType>> GetOrderTypesAsync();
+        Task<SystemOrder[]> GetSystemOrdersForEmployee(string employeeEmail);
+        Task<SystemOrderSteps> GetSystemOrderStepById(int stepId);
         Task<OrderDirection> GetOrderDirectionById(int orderDirectionId);
         Task<List<OrderStatus>> GetOrderStatusesAsync();
         Task<OrderWorkflowTimeline> GetOrderTimelineByIdAsync(int orderTimelinId);

@@ -66,14 +66,15 @@ namespace BioProSystem.Models
 
                 if (employee != null)
                 {
-                    timeline.EmployeeeOrderDetails += $"{employee.FirstName} {employee.LastName} assigned to step: {orderDirectionStep.StateDescription}.";
-                    assignedEmployees.Add(employee);
-                    newStep.Employee = employee;
-                    newStep.SystemOrderId = systemOrderId;
+                    
 
                     if (stepcount == 1)
                     {
                         newStep.IsCurrentStep = true;
+                    }
+                    if(orderDirectionStep==orderDirectionSteps.Last())
+                    {
+                        newStep.IsFinalStep = true;
                     }
 
                     if (!tooLate)
@@ -93,6 +94,10 @@ namespace BioProSystem.Models
                             }
                         }
                     }
+                    timeline.EmployeeeOrderDetails += $"{employee.FirstName} {employee.LastName} assigned to step: {orderDirectionStep.StateDescription}.";
+                    assignedEmployees.Add(employee);
+                    newStep.Employee = employee;
+                    newStep.SystemOrderId = systemOrderId;
 
                     newStep.Description = orderDirectionStep.StateDescription;
                     newStep.EmployeeId = employee.EmployeeId;
@@ -125,10 +130,21 @@ namespace BioProSystem.Models
             IQueryable<OpenOrder> query = _appDbContext.OpenOrders.Where(c => c.OpenOrderId == openOrderID);
             return await query.FirstOrDefaultAsync();
         }
-        public async Task<List<Employee>> GetEmployeesWithJobTitleId(int jobTitileId)
+        public async Task<List<Employee>> GetEmployeesWithJobTitleId(int jobTitileId,string jobTitleName="")
         {
-            List<Employee> query =await  _appDbContext.Employees.Where(c => c.JobTitleId==jobTitileId).ToListAsync();
-            return query;
+            if(jobTitleName != "")
+            {
+                List<Employee> query = await _appDbContext.Employees.Where(c => c.JobTitleId == jobTitileId).ToListAsync();
+                return query;
+            }
+            else
+            {
+                JobTitle jobtitle = await _appDbContext.JobTitles.Where(j => j.TitleName == jobTitleName).FirstOrDefaultAsync();
+                List<Employee> query = await _appDbContext.Employees.Where(c => c.JobTitleId== jobtitle.JobTitleId).ToListAsync();
+                return query;
+            }
+           
+            
         }
         public async Task<TeethShade> GetTeethShadeAsync(int teethshadeIds)
         {
@@ -324,6 +340,16 @@ namespace BioProSystem.Models
         {
             IQueryable<Employee> query = _appDbContext.Employees.Where(e => e.isActiveEmployee);
             return await query.ToArrayAsync();
+        }
+        public async Task<SystemOrder[]> GetSystemOrdersForEmployee(string employeeEmail)
+        {
+            IQueryable<SystemOrder> query = _appDbContext.SystemOrders.Include(o=>o.Employees).Where(o=>o.OrderStatusId==4 && o.Employees.Any(e=>e.Email==employeeEmail)).Include(o=>o.SystemOrderSteps).ThenInclude(step=>step.Employee);
+            return await query.ToArrayAsync();
+        }
+        public async Task<SystemOrderSteps> GetSystemOrderStepById(int stepId)
+        {
+            SystemOrderSteps query = await _appDbContext.SystemOrderSteps.Where(s=>s.SysteorderStepId==stepId).FirstOrDefaultAsync();
+            return query;
         }
         public async Task<JobTitle> GetJobTitleByIdAsync(int id)
         {

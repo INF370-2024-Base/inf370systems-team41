@@ -944,6 +944,9 @@ namespace BioProSystem.Migrations
                     b.Property<bool>("IsCurrentStep")
                         .HasColumnType("bit");
 
+                    b.Property<bool>("IsFinalStep")
+                        .HasColumnType("bit");
+
                     b.Property<DateTime?>("StartDateForStep")
                         .HasColumnType("datetime2");
 

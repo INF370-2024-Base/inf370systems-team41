@@ -19,6 +19,7 @@ namespace BioProSystem.Models
         public string  SystemOrderId { get; set; }
         public bool Completed { get; set; }=false;
         public bool IsCurrentStep { get; set; }=false ;
+        public bool IsFinalStep { get; set; } = false;
         public virtual SystemOrder SystemOrders { get; set; } = null;
         public virtual Employee Employee { get; set; } = null;
 

@@ -51,4 +51,10 @@ export class EmployeeService {
   getEmployeeDailyHours(): Observable<any> {
     return this.httpClient.get(`${this.apiUrl}/GetEmployeeDailyHours`);
   }
+  GetCurrentOrders(email:string): Observable<any> {
+    return this.httpClient.get(`${this.apiUrl}/GetCurrentOrders/${email}`);
+  }
+  CompleteStepAndJob(stepId:number): Observable<any> {
+    return this.httpClient.put(`${this.apiUrl}/CompleteStepAndJob/${stepId}`,stepId);
+  }
 }

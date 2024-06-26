@@ -1,0 +1,16 @@
+<p>employee-orders-and-steps works!</p>
+<div *ngFor="let order of orders">
+    <h1>{{order.orderId}}</h1>
+    <div *ngFor="let ordersteps of order.systemOrderSteps">
+        <div *ngIf="ordersteps.isCurrentStep">
+        <h3>Current:</h3>
+
+        <button *ngIf="ordersteps.employee.email==employeeEmail" (click)="CompleteStepOrOrder(ordersteps.systeorderStepId)">
+            complete step
+        </button> 
+    </div>
+        <h2>{{ordersteps.description}}</h2>
+        
+    </div>
+
+</div>
