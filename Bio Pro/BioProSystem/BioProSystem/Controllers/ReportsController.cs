@@ -81,6 +81,28 @@ namespace BioProSystem.Controllers
         }
 
 
+        [HttpGet("EmployeeWeeklyHours")]
+        public async Task<IActionResult> EmployeeWeeklyHours()
+        {
+            try
+            {
+                var employeeWeeklyHours = await _repository.GetEmployeeWeeklyHours();
+                if (employeeWeeklyHours.Count > 0)
+                {
+                    return Ok(employeeWeeklyHours);
+                }
+                else
+                {
+                    return NotFound("No hours found for any employee.");
+                }
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Internal Server Error. Please contact support. " + ex.Message);
+            }
+        }
+
+
     }
 
 }

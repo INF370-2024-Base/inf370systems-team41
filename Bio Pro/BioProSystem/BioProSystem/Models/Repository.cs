@@ -511,5 +511,48 @@ namespace BioProSystem.Models
             return stockCategories;
         }
 
+        public async Task<List<EmployeeDailyHours>> GetEmployeeWeeklyHours()
+        {
+            var employeeWeeklyHours = await _appDbContext.EmployeeDailyHours
+                .Include(edh => edh.Employees) // Include Employee navigation property if needed
+                .GroupBy(edh => new { edh.EmployeeDailyHoursId, Week = EF.Functions.DateDiffWeek(DateTime.MinValue, edh.WorkDate) })
+                .Select(g => new
+                {
+                    EmployeeId = g.Key.EmployeeDailyHoursId,
+                    Week = g.Key.Week,
+                    TotalHours = g.Sum(edh => edh.Hours)
+                })
+                .ToListAsync();
+
+            var result = new List<EmployeeDailyHours>();
+
+            foreach (var weeklyHour in employeeWeeklyHours)
+            {
+                var employee = await _appDbContext.Employees.FindAsync(weeklyHour.EmployeeId);
+                if (employee != null)
+                {
+                    // Find or create the EmployeeDailyHours entry for the specific week
+                    var dailyHour = employee.EmployeeDailyHours.FirstOrDefault(edh => EF.Functions.DateDiffWeek(DateTime.MinValue, edh.WorkDate) == weeklyHour.Week);
+                    if (dailyHour == null)
+                    {
+                        dailyHour = new EmployeeDailyHours
+                        {
+                            EmployeeDailyHoursId = employee.EmployeeId,
+                            WorkDate = DateTime.MinValue, // Placeholder date; adjust as per your needs
+                            Hours = 0 // Initialize to 0
+                        };
+                        employee.EmployeeDailyHours.Add(dailyHour);
+                    }
+
+                    // Assign the weekly hours
+                    dailyHour.WeeklyHours = weeklyHour.TotalHours;
+                    result.Add(dailyHour);
+                }
+            }
+
+            await _appDbContext.SaveChangesAsync(); // Save changes to persist WeeklyHours in database
+
+            return result;
+        }
     }
 }
