@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BioProSystem.Models
 {
@@ -9,6 +10,9 @@ namespace BioProSystem.Models
 
         public string Description { get; set; } = null!;
 
-        public virtual ICollection<StockCategory> StockCategories { get; set; } = new List<StockCategory>();   
+        public virtual ICollection<StockCategory> StockCategories { get; set; } = new List<StockCategory>();
+
+        [NotMapped]
+        public int StockCategoriesCount { get; set; }
     }
 }

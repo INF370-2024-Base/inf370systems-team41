@@ -480,5 +480,36 @@ namespace BioProSystem.Models
         {
             return await _appDbContext.SystemUsers.Where(su => su.LockoutEnd < DateTime.Now || su.LockoutEnd == null).ToListAsync();
         }
+
+
+        //Reprt
+        public async Task<List<StockType>> GetStockTypesCountByCategory()
+        {
+            var stockTypes = await _appDbContext.StockType
+                                           .Include(st => st.StockCategories)
+                                           .ToListAsync();
+
+            foreach (var stockType in stockTypes)
+            {
+                stockType.StockCategoriesCount = stockType.StockCategories.Count;
+            }
+
+            return stockTypes;
+        }
+
+        public async Task<List<StockCategory>> GetStockItemsCountByCategory()
+        {
+            var stockCategories = await _appDbContext.StockCategories
+                                                .Include(sc => sc.Stocks)
+                                                .ToListAsync();
+
+            foreach (var stockCategory in stockCategories)
+            {
+                stockCategory.StockItemsCount = stockCategory.Stocks.Count;
+            }
+
+            return stockCategories;
+        }
+
     }
 }
