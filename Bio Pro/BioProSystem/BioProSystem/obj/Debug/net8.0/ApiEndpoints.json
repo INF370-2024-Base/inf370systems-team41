@@ -447,6 +447,58 @@
   },
   {
     "ContainingType": "BioProSystem.Controllers.EmployeeController",
+    "Method": "GetEmployeeDailyHoursByDate",
+    "RelativePath": "api/Employee/GetEmployeeDailyHoursByDate",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "date",
+        "Type": "System.DateTime",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[BioProSystem.Models.EmployeeDailyHours, BioProSystem, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "BioProSystem.Controllers.EmployeeController",
+    "Method": "GetEmployeeDailyHoursByEmployee",
+    "RelativePath": "api/Employee/GetEmployeeDailyHoursByEmployee/{email}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "email",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[BioProSystem.Models.EmployeeDailyHours, BioProSystem, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "BioProSystem.Controllers.EmployeeController",
     "Method": "GetEmployeeInfoByEmail",
     "RelativePath": "api/Employee/GetEmployeeInfoByEmail/{employeeEmail}",
     "HttpMethod": "GET",
