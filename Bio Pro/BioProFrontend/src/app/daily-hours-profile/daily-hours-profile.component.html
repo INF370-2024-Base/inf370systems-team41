@@ -2,12 +2,18 @@
 <div *ngIf="!isLoading">
   <div>
     <label for="filterDate">Filter by Date:</label>
-    <input type="date" id="filterDate" (change)="onDateChange($event)" />
+    <input type="date" id="filterDate" (change)="onDateChange($event)" [(ngModel)]="selectedDate" />
   </div>
   <div>
     <label for="filterEmployeeName">Filter by Employee Name:</label>
-    <input type="text" id="filterEmployeeName" (input)="onNameChange($event)" />
+<select id="filterEmployeeName" (change)="onNameChange($event)" [(ngModel)]="selectedEmployeeEmail">
+  <option disabled selected value="">Select an employee</option>
+  <option *ngFor="let employee of employees" [value]="employee.email">
+    {{ employee.firstName }} {{ employee.lastName }}
+  </option>
+</select>
   </div>
+  <button (click)="clearData()">Clear filter</button>
   
   <table>
     <thead>
@@ -19,9 +25,9 @@
     </thead>
     <tbody>
       <tr *ngFor="let data of dailyHoursData">
-        <td>{{ data.workDate | date }}</td>
+        <td>{{ data.workDate |date }}</td>
         <td>{{ data.hours }}</td>
-        <td>{{ data.employee.firstName }}</td> // not sure about this naming
+        <td *ngFor="let employee of data.employees">{{ employee.firstName }}</td>
       </tr>
     </tbody>
   </table>
