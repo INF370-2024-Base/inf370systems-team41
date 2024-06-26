@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { EmployeeService } from '../services/employee.service';
 import { DailyHours } from '../shared/dailyhours';
-import { Employee } from '../shared/employee';
 import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
@@ -12,14 +11,13 @@ import { HttpErrorResponse } from '@angular/common/http';
 export class DailyHoursProfileComponent implements OnInit {
   dailyHours: DailyHours[] = [];
   employees: any[] = [];
-  combinedData: { WorkDate: Date; Hours: number; employeeName: string }[] = [];
-  filteredData: { WorkDate: Date; Hours: number; employeeName: string }[] = [];
   isLoading: boolean = true;
-  dailyHoursData:any[]=[]
+  dailyHoursData: any[] = [];
   filterDate: Date | null = null;
   selectedDate: string | null = null;
   filterEmployeeName: string = '';
   selectedEmployeeEmail: string = '';
+
   constructor(private employeeService: EmployeeService) { }
 
   ngOnInit(): void {
@@ -28,11 +26,14 @@ export class DailyHoursProfileComponent implements OnInit {
 
   fetchData(): void {
     this.isLoading = true;
+
     this.employeeService.getEmployeeDailyHours().subscribe(
+      
       (results) => {
         this.dailyHoursData = results;
         console.log('Fetched daily hours:', this.dailyHoursData);
         this.employeeService.getAllEmployees().subscribe(
+      
           (results) => {
             this.employees = results;
             this.isLoading=false
@@ -50,31 +51,33 @@ export class DailyHoursProfileComponent implements OnInit {
     );
   }
 
-
   onDateChange(event: any): void {
     this.filterDate = event.target.value ? new Date(event.target.value) : null;
-    if(this.filterDate!=null){
-      this.employeeService.getEmployeeDailyHoursByDate(this.filterDate).subscribe(results=>{
-        this.dailyHoursData=results
-        this.selectedEmployeeEmail=''
-      },(error:HttpErrorResponse)=>{
-          console.log(error.error)
-      }
-    )
+    if (this.filterDate != null) {
+      this.employeeService.getEmployeeDailyHoursByDate(this.filterDate).subscribe(
+        (results) => {
+          this.dailyHoursData = results;
+          this.selectedEmployeeEmail = '';
+        },
+        (error: HttpErrorResponse) => {
+          console.log(error.error);
+        }
+      );
     }
   }
- clearData()
- {
-  this.selectedDate=null
-  this.selectedEmployeeEmail=''
- }
+
+  clearData(): void {
+    this.selectedDate = null;
+    this.selectedEmployeeEmail = '';
+  }
+
   onNameChange(event: any): void {
     this.filterEmployeeName = event.target.value;
     this.employeeService.getEmployeeDailyHoursByEmployeeEmail(this.filterEmployeeName).subscribe(
       (results) => {
         this.dailyHoursData = results;
-        this.isLoading=false
-        this.selectedDate=null
+        this.isLoading = false;
+        this.selectedDate = null;
       },
       (error) => {
         console.error('Error fetching daily hours:', error);
@@ -82,4 +85,18 @@ export class DailyHoursProfileComponent implements OnInit {
       }
     );
   }
+  onDeleteDailyHour(dailyHourId: number): void {
+    this.employeeService.deleteEmployeeDailyHours(dailyHourId).subscribe(
+      () => {
+        console.log(`Successfully deleted daily hour with ID: ${dailyHourId}`);
+        // Optionally, refresh the list of daily hours after deletion
+        this.fetchData(); // Assuming fetchData() reloads the data from the backend
+      },
+      (error) => {
+        console.error('Error deleting daily hour:', error);
+        // Handle the error appropriately, e.g., showing an error message to the user
+      }
+    );
+  }
+
 }
