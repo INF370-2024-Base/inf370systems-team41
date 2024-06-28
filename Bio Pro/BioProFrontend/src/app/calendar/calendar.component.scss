@@ -1,0 +1,27 @@
+
+// .cal-container {
+//   display: block;
+//   margin: 0 auto;
+//   max-width: 900px;
+// }
+
+// .cal-event {
+//   border-radius: 0 !important; /* Remove rounded corners */
+//   margin: 0 !important; /* Remove margin */
+//   height: 100%;
+// }
+mwl-calendar-month-view .cal-day-events {
+  .cal-event {
+    padding: 5px 10px; /* Adjust as needed */
+    font-size: 14px; /* Adjust font size as needed */
+    border-radius: 40px; /* Adjust border radius for rounded corners */
+    background-color: #f0f0f0; /* Adjust background color */
+    color: #333; /* Adjust text color */
+  }
+}
+
+.large-button {
+  margin-left: 20px; /* Adjust padding as needed */
+  font-size: 16px; /* Adjust font size as needed */
+  background-color:red;
+}

@@ -20,7 +20,9 @@
     "@angular/platform-browser": "~13.2.0",
     "@angular/platform-browser-dynamic": "~13.2.0",
     "@angular/router": "~13.2.0",
+    "angular-calendar": "^0.28.26",
     "base64-arraybuffer": "^1.0.2",
+    "date-fns": "^2.22.1",
     "ngf-bootstrap": "^0.0.5",
     "rxjs": "~7.5.0",
     "zone.js": "~0.11.4"

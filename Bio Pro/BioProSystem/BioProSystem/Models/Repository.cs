@@ -463,6 +463,10 @@ namespace BioProSystem.Models
 
             return await _appDbContext.Deliveries.Include(d => d.DeliveryStatus).Include(e => e.Employee).ToListAsync();
         }
+        public async Task<List<CalanderScheduleEvent>> GetAllScheduledEvents()
+        {
+            return await _appDbContext.CalanderScheduleEvents.Include(c=>c.Calander).ToListAsync();
+        }
         public async Task<EmployeeDailyHours> GetEmployeeDailyHoursById(int employeedDailyHoursId)
         {
 

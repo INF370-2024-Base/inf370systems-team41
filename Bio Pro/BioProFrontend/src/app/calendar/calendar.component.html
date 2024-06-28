@@ -1,0 +1,24 @@
+<input type="text" [(ngModel)]="searchTerm" (ngModelChange)="onSearchTermChange($event)">
+<button mat-button class="large-button" (click)="clearSearch()">Clear</button>
+<div *ngIf="nosearch">
+<mwl-calendar-month-view
+    [viewDate]="viewDate"
+    [events]="filteredEvents.length > 0 ? filteredEvents : events"
+    [refresh]="refresh"
+    (dayClicked)="dayClicked()"
+    (eventClicked)="eventClicked($event.event)">
+  </mwl-calendar-month-view>
+</div>
+<div *ngIf="!nosearch">
+  <div  *ngFor="let singleEvent of filteredEvents">
+    <h1>{{singleEvent.start|date}} {{singleEvent.object.description}}</h1>
+  <mwl-calendar-day-view
+    [viewDate]="singleEvent.start"
+    [events]="[singleEvent]"
+    [refresh]="refresh"
+    (dayClicked)="dayClicked()"
+    (eventClicked)="eventClicked($event.event)">
+  </mwl-calendar-day-view>
+  <br>
+</div>
+</div>

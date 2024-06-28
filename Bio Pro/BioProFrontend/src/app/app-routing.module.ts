@@ -19,6 +19,7 @@ import { TestingBackendComponent } from './testing-backend/testing-backend.compo
 import { OrdersAwaitingDentalDesignComponent } from './orders-awaiting-dental-design/orders-awaiting-dental-design.component';
 import { DentalDesignApprovalComponent } from './dental-design-approval/dental-design-approval.component';
 import { EmployeeOrdersAndStepsComponent } from './employee-orders-and-steps/employee-orders-and-steps.component';
+import { CalendarComponent } from './calendar/calendar.component';
 
 
 const routes: Routes = [
@@ -41,10 +42,11 @@ const routes: Routes = [
   {path: 'addproceduraltimeline', component: AddProceduralTimeline}, 
   {path: 'deliveries', component: DeliveriesComponent}, 
   {path: 'addDelivery', component: AddDeliveryComponent}, 
-  {path: '', redirectTo: 'login', pathMatch: 'full'},
+  {path: '', redirectTo: 'calendar', pathMatch: 'full'},
   {path: 'home', component: HomeComponent},
   {path: 'test', component: TestingBackendComponent},
   {path: 'employeeOrders', component: EmployeeOrdersAndStepsComponent},
+  {path: 'calendar', component: CalendarComponent},
 ];
 
 @NgModule({

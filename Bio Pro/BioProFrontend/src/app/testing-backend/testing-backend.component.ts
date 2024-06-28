@@ -13,6 +13,8 @@ import { DentistService } from '../shared/dentist.service';
 import { Dentist } from '../shared/dentist';
 import { StockServices } from '../services/stock.service';
 import { AddStock, CaptureNewStockViewModel, StockWriteOffViewModel } from '../shared/Stock';
+import { CalendarService } from '../services/calendar.service';
+import { AddCalanderEventViewModel } from '../shared/calendarEvent';
 
 @Component({
   selector: 'app-testing-backend',
@@ -52,7 +54,7 @@ firstName:"Pieter",
 contactDetail:"0811456789",
 address:"tersert"
 }
-  constructor(private userService:UserServices,private employeeService:EmployeeService,private dentistService:DentistService,private stockService:StockServices) { }
+  constructor(private calendarService:CalendarService, private userService:UserServices,private employeeService:EmployeeService,private dentistService:DentistService,private stockService:StockServices) { }
 
   ngOnInit(): void {
        
@@ -271,4 +273,48 @@ captureNewStockTest: CaptureNewStockViewModel = {
           console.log(error)
         })
       }
+     addDummyevents()
+     {
+      const dummyEvents: AddCalanderEventViewModel[] = [
+        {
+          CalanderScheduleEventDateTime: new Date('2024-06-28T20:58:11'),
+          Description: 'Event 1',
+        },
+        {
+          CalanderScheduleEventDateTime: new Date('2024-06-29T20:58:11'),
+          Description: 'Event 2',
+        },
+        {
+          CalanderScheduleEventDateTime: new Date('2024-06-30T20:58:11'),
+          Description: 'Event 3',
+        },
+        {
+          CalanderScheduleEventDateTime: new Date('2024-07-01T20:58:11'),
+          Description: 'Event 4',
+        },
+        {
+          CalanderScheduleEventDateTime: new Date('2024-07-02T20:58:11'),
+          Description: 'Event 5',
+        },
+      ];
+      dummyEvents.forEach(element => {
+        this.calendarService.addCalendarEvent(element).subscribe(result=>{
+          console.log(result)
+        },error=>
+        {
+          console.log(error)
+        })
+      });
+     }
+     getCalendarEvenets()
+      {
+        this.calendarService.getAllCalendarEvent().subscribe(result=>{
+          console.log(result)
+        },error=>
+        {
+          console.log(error)
+        })
+      }
+      
 }
+ 

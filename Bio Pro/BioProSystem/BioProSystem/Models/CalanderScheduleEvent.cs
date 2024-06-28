@@ -15,7 +15,7 @@ public partial class CalanderScheduleEvent
 
     public string Description { get; set; } = null!;
 
-    public string CalanderId { get; set; }
+    public int CalanderId { get; set; }
 
     public virtual Calander Calander { get; set; }
 }

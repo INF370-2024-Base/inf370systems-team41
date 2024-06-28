@@ -36,6 +36,12 @@ import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-
 import { OrdersAwaitingDentalDesignComponent } from './orders-awaiting-dental-design/orders-awaiting-dental-design.component';
 import { DentalDesignApprovalComponent } from './dental-design-approval/dental-design-approval.component';
 import { EmployeeOrdersAndStepsComponent } from './employee-orders-and-steps/employee-orders-and-steps.component';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import { CalendarModule, DateAdapter } from 'angular-calendar';
+import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
+import { CalendarComponent } from './calendar/calendar.component';
+import { SearchBarComponent } from './search-bar/search-bar.component';
 
 
 @NgModule({
@@ -49,7 +55,8 @@ import { EmployeeOrdersAndStepsComponent } from './employee-orders-and-steps/emp
     AddDentistComponent,
     DentistProfileComponent,
     EmployeeProfileComponent,
-    CaptureEmployeeHoursComponent,LoginComponent,EditOrderModalComponent, AddUserComponent, AddProceduralTimeline, DeliveriesComponent, AddDeliveryComponent, HomeComponent, TestingBackendComponent, ConfirmationDialogComponent, OrdersAwaitingDentalDesignComponent, DentalDesignApprovalComponent, EmployeeOrdersAndStepsComponent
+    CaptureEmployeeHoursComponent,LoginComponent,EditOrderModalComponent, AddUserComponent, AddProceduralTimeline, DeliveriesComponent, AddDeliveryComponent, HomeComponent, TestingBackendComponent, 
+    ConfirmationDialogComponent, OrdersAwaitingDentalDesignComponent, DentalDesignApprovalComponent, EmployeeOrdersAndStepsComponent,CalendarComponent, SearchBarComponent
   ],
   imports: [
     BrowserModule,
@@ -64,7 +71,10 @@ import { EmployeeOrdersAndStepsComponent } from './employee-orders-and-steps/emp
     MatButtonModule,
     MatCardModule,
     MatGridListModule,
-    CommonModule,
+    CommonModule,   
+    MatDatepickerModule,
+    MatNativeDateModule,
+    CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory })
   ],
   providers: [DatePipe],
   bootstrap: [AppComponent]
