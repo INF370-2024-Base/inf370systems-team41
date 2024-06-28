@@ -10,15 +10,23 @@
   </mwl-calendar-month-view>
 </div>
 <div *ngIf="!nosearch">
-  <div  *ngFor="let singleEvent of filteredEvents">
-    <h1>{{singleEvent.start|date}} {{singleEvent.object.description}}</h1>
-  <mwl-calendar-day-view
-    [viewDate]="singleEvent.start"
-    [events]="[singleEvent]"
-    [refresh]="refresh"
-    (dayClicked)="dayClicked()"
-    (eventClicked)="eventClicked($event.event)">
-  </mwl-calendar-day-view>
-  <br>
-</div>
+  <div *ngFor="let singleEvent of filteredEvents" style="display: flex; flex-direction: column;">
+    <mat-accordion>
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            {{ singleEvent.start | date }} {{ singleEvent.object.description }}
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+          <mwl-calendar-day-view
+            [viewDate]="singleEvent.start"
+            [events]="[singleEvent]"
+            [refresh]="refresh"
+            (dayClicked)="dayClicked()"
+            (eventClicked)="eventClicked($event.event)">
+          </mwl-calendar-day-view>
+
+      </mat-expansion-panel>
+    </mat-accordion>
+  </div>
 </div>
