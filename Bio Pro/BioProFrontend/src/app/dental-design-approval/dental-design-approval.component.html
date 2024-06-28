@@ -16,11 +16,11 @@
       <mat-accordion>
         <mat-expansion-panel *ngFor="let pendingOrder of pendingOrdersData">
           <mat-expansion-panel-header>
-            <mat-panel-title>
+            <mat-panel-title class="mat-titl-panel">
               Order ID: {{ pendingOrder.orderId }} - Due date: {{ pendingOrder.dueDate | date: 'shortDate' }}
             </mat-panel-title>
             <mat-panel-description>
-              <div style="display: flex; justify-content: flex-end;">
+              <div class="button-container">
                 <button mat-raised-button color="primary" class="approve-button" (click)="approveOrder(pendingOrder.orderId)">
                   <mat-icon>check</mat-icon> Approve
                 </button>
@@ -28,7 +28,6 @@
                   <mat-icon>clear</mat-icon> Reject
                 </button>
               </div>
-              <span class="spacer"></span>
             </mat-panel-description>
           </mat-expansion-panel-header>
           <div class="order-details">
