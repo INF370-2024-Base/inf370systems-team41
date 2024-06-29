@@ -19,6 +19,9 @@ import { TestingBackendComponent } from './testing-backend/testing-backend.compo
 import { OrdersAwaitingDentalDesignComponent } from './orders-awaiting-dental-design/orders-awaiting-dental-design.component';
 import { DentalDesignApprovalComponent } from './dental-design-approval/dental-design-approval.component';
 import { DailyHoursProfileComponent } from './daily-hours-profile/daily-hours-profile.component';
+import { AddStockComponent } from './add-stock/add-stock.component';
+import { StockComponent } from './stock/stock.component';
+
 
 const routes: Routes = [
   
@@ -44,6 +47,8 @@ const routes: Routes = [
   {path: 'home', component: HomeComponent},
   {path: 'test', component: TestingBackendComponent},
   {path: 'dailyHoursProfile', component: DailyHoursProfileComponent},
+  {path: 'addStock', component: AddStockComponent},
+  {path: 'pageStock', component: StockComponent},
 ];
 
 @NgModule({

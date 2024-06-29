@@ -464,6 +464,10 @@ namespace BioProSystem.Models
         {
             return await _appDbContext.StockCategories.Include(s => s.StockType).ToListAsync();
         }
+        public async Task<List<Supplier>> GetAllSupplier()
+        {
+            return await _appDbContext.Suppliers.ToListAsync();
+        }
         public async Task<StockCategory> GetStockCategoryById(int stockCategoryId)
         {
             return await _appDbContext.StockCategories.Where(sc => sc.StockCategoryId == stockCategoryId).FirstOrDefaultAsync();

@@ -78,6 +78,7 @@ namespace BioProSystem.Models
         Task<StockCategory> GetStockCategoryById(int stockCategoryId);
         Task<Stock> GetStockById(int stockId);
         Task<StockType> GetStockTypeById(int stockTypeId);
+        Task<List<Supplier>> GetAllSupplier();
 
     }
 }

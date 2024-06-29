@@ -46,6 +46,10 @@ export class StockServices {
     return this.httpClient.put<CaptureNewStockViewModel>(`${this.apiUrl}CaptureNewStock`,stock)
     .pipe(map(result => result))
   }
+  getAllSupplier(): Observable<any>{
+    return this.httpClient.get(`${this.apiUrl}GetAllSupplier`)
+    .pipe(map(result => result))
+  }
   
 }
 

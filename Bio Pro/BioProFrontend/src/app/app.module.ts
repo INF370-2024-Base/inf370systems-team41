@@ -39,6 +39,10 @@ import { UserProfileComponent } from './user-profile/user-profile.component';
 import { EditEmployeeDialogComponent } from './edit-employee-dialog/edit-employee-dialog.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { DailyHoursProfileComponent } from './daily-hours-profile/daily-hours-profile.component';
+import { AddStockComponent } from './add-stock/add-stock.component';
+import { StockComponent } from './stock/stock.component';
+import { WriteOffModalComponent } from './write-off-modal/write-off-modal.component';
+import { CaptureNewStockModalComponent } from './capture-new-stock-modal/capture-new-stock-modal.component';
 
 
 @NgModule({
@@ -54,7 +58,7 @@ import { DailyHoursProfileComponent } from './daily-hours-profile/daily-hours-pr
     EmployeeProfileComponent,
     CaptureEmployeeHoursComponent,LoginComponent,EditOrderModalComponent, AddUserComponent, AddProceduralTimeline, DeliveriesComponent, AddDeliveryComponent, HomeComponent, TestingBackendComponent, ConfirmationDialogComponent, OrdersAwaitingDentalDesignComponent, DentalDesignApprovalComponent,
     UserProfileComponent, 
-    EditEmployeeDialogComponent, DailyHoursProfileComponent,
+    EditEmployeeDialogComponent, DailyHoursProfileComponent, AddStockComponent, StockComponent, WriteOffModalComponent, CaptureNewStockModalComponent,
   ],
   imports: [
     BrowserModule,

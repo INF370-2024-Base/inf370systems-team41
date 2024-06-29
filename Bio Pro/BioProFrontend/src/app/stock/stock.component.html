@@ -1,0 +1,45 @@
+<div *ngIf="isLoading" class="text-center">
+  <div class="spinner-border" role="status">
+    <span class="sr-only">Loading...</span>
+  </div>
+</div>
+
+<div *ngIf="!isLoading">
+  <h1 class="text-center text-uppercase" style="font-size: 48px; color: #4d4a4a; letter-spacing: 3px; margin-bottom: 24px; text-shadow: 2px 2px 4px rgba(124, 124, 124, 0.5);">
+    Stock List
+  </h1>
+
+  <div class="container">
+    <div class="row mb-3">
+      <div class="col-md-6">
+        <input type="text" placeholder="Search stock" (input)="onSearch($event)" class="form-control mb-3">
+      </div>
+    </div>
+
+    <table class="table table-bordered table-striped">
+      <thead class="thead-dark">
+        <tr>
+          <th>Stock Name</th>
+          <th>Quantity Available</th>
+          <th>Category</th>
+          <th>Supplier</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let stock of filteredStock">
+          <td>{{ stock.stockName }}</td>
+          <td>{{ stock.quantityAvailable }}</td>
+          <td>{{ stock.stockCategory.description }}</td>
+          <td>{{ stock.supplierId }}</td>
+          <td>
+            <button mat-button (click)="openWriteOffModal(stock)">Write Off</button>
+            <button mat-button (click)="openCaptureStockModal(stock)">Capture New Stock</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+  
