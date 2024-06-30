@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BioProSystem.Models;
 
@@ -36,5 +37,7 @@ public partial class Employee
     public virtual SystemUser SystemUser { get; set; } = null!;
 
     //report
-   
+
+    [NotMapped]
+    public List<(int Week, decimal TotalHours)> WeeklyHours { get; set; } = null;
 }

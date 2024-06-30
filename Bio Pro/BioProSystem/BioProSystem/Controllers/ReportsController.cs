@@ -80,29 +80,27 @@ namespace BioProSystem.Controllers
             }
         }
 
-
         [HttpGet("EmployeeWeeklyHours")]
         public async Task<IActionResult> EmployeeWeeklyHours()
         {
             try
             {
                 var employeeWeeklyHours = await _repository.GetEmployeeWeeklyHours();
-                if (employeeWeeklyHours.Count > 0)
-                {
-                    return Ok(employeeWeeklyHours);
-                }
-                else
+
+                if (employeeWeeklyHours == null || employeeWeeklyHours.Count == 0)
                 {
                     return NotFound("No hours found for any employee.");
                 }
+
+                return Ok(employeeWeeklyHours);
             }
             catch (Exception ex)
             {
-                return StatusCode(500, "Internal Server Error. Please contact support. " + ex.Message);
+                // Log the exception (ex) here as needed
+                return StatusCode(500, "Internal Server Error. Please contact support.");
             }
         }
 
 
     }
-
 }

@@ -2,6 +2,7 @@
 using BioProSystem.ViewModels;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
@@ -127,7 +128,7 @@ namespace BioProSystem.Models
         }
         public async Task<List<Employee>> GetEmployeesWithJobTitleId(int jobTitileId)
         {
-            List<Employee> query =await  _appDbContext.Employees.Where(c => c.JobTitleId==jobTitileId).ToListAsync();
+            List<Employee> query = await _appDbContext.Employees.Where(c => c.JobTitleId == jobTitileId).ToListAsync();
             return query;
         }
         public async Task<TeethShade> GetTeethShadeAsync(int teethshadeIds)
@@ -156,7 +157,7 @@ namespace BioProSystem.Models
         }
         public async Task<List<SystemOrder>> GetSystemOrdersWithOrderStatusID(int orderStatusId)
         {
-            IQueryable<SystemOrder> pendingOrders = _appDbContext.SystemOrders.Where(o => o.OrderStatusId == orderStatusId).Include(s=>s.OrderStatus).Include(s=>s.OrderWorkflowTimeline).ThenInclude(o=>o.orderDirection).Include(s=>s.Dentist).Include(s=>s.OrderType);
+            IQueryable<SystemOrder> pendingOrders = _appDbContext.SystemOrders.Where(o => o.OrderStatusId == orderStatusId).Include(s => s.OrderStatus).Include(s => s.OrderWorkflowTimeline).ThenInclude(o => o.orderDirection).Include(s => s.Dentist).Include(s => s.OrderType);
             return await pendingOrders.ToListAsync();
         }
 
@@ -185,7 +186,7 @@ namespace BioProSystem.Models
         }
         public async Task<List<SystemOrder>> GetOrdersAwaitingDentalDesign()
         {
-            IQueryable<SystemOrder> query = _appDbContext.SystemOrders.Where(o => o.OrderStatusId == 2).Include(s=>s.MediaFiles).Include(s=>s.Dentist);
+            IQueryable<SystemOrder> query = _appDbContext.SystemOrders.Where(o => o.OrderStatusId == 2).Include(s => s.MediaFiles).Include(s => s.Dentist);
             return await query.ToListAsync();
         }
         public async Task<List<SystemOrder>> GetFinishedSystemWithoutDeliveriesOrders()
@@ -511,48 +512,66 @@ namespace BioProSystem.Models
             return stockCategories;
         }
 
-        public async Task<List<EmployeeDailyHours>> GetEmployeeWeeklyHours()
+        public async Task<List<Employee>> GetEmployeeWeeklyHours()
         {
-            var employeeWeeklyHours = await _appDbContext.EmployeeDailyHours
-                .Include(edh => edh.Employees) // Include Employee navigation property if needed
-                .GroupBy(edh => new { edh.EmployeeDailyHoursId, Week = EF.Functions.DateDiffWeek(DateTime.MinValue, edh.WorkDate) })
-                .Select(g => new
-                {
-                    EmployeeId = g.Key.EmployeeDailyHoursId,
-                    Week = g.Key.Week,
-                    TotalHours = g.Sum(edh => edh.Hours)
-                })
-                .ToListAsync();
-
-            var result = new List<EmployeeDailyHours>();
-
-            foreach (var weeklyHour in employeeWeeklyHours)
+            try
             {
-                var employee = await _appDbContext.Employees.FindAsync(weeklyHour.EmployeeId);
-                if (employee != null)
-                {
-                    // Find or create the EmployeeDailyHours entry for the specific week
-                    var dailyHour = employee.EmployeeDailyHours.FirstOrDefault(edh => EF.Functions.DateDiffWeek(DateTime.MinValue, edh.WorkDate) == weeklyHour.Week);
-                    if (dailyHour == null)
+                // Step 1: Fetch employee daily hours with employee data included
+                var employeeDailyHours = await _appDbContext.EmployeeDailyHours
+                    .Include(edh => edh.Employees)
+                    .ToListAsync();
+
+                // Step 2: Calculate weekly hours grouped by EmployeeId and week
+                var employeeWeeklyHours = employeeDailyHours
+                    .SelectMany(edh => edh.Employees.Select(emp => new
                     {
-                        dailyHour = new EmployeeDailyHours
-                        {
-                            EmployeeDailyHoursId = employee.EmployeeId,
-                            WorkDate = DateTime.MinValue, // Placeholder date; adjust as per your needs
-                            Hours = 0 // Initialize to 0
-                        };
-                        employee.EmployeeDailyHours.Add(dailyHour);
+                        emp.EmployeeId,
+                        Week = GetIso8601WeekOfYear(edh.WorkDate),
+                        Hours = edh.Hours
+                    }))
+                    .GroupBy(e => new { e.EmployeeId, e.Week })
+                    .Select(g => new
+                    {
+                        g.Key.EmployeeId,
+                        g.Key.Week,
+                        TotalHours = g.Sum(e => e.Hours)
+                    })
+                    .ToList();
+
+                // Step 3: Fetch employees and include their daily hours
+                var employees = await _appDbContext.Employees
+                    .Include(e => e.EmployeeDailyHours)
+                    .ToListAsync();
+
+                // Step 4: Map weekly hours to employees
+                foreach (var employee in employees)
+                {
+                    var weeklyHours = new List<(int Week, decimal TotalHours)>();
+
+                    foreach (var weekGroup in employeeWeeklyHours.Where(e => e.EmployeeId == employee.EmployeeId))
+                    {
+                        weeklyHours.Add((weekGroup.Week, weekGroup.TotalHours));
                     }
 
-                    // Assign the weekly hours
-                    dailyHour.WeeklyHours = weeklyHour.TotalHours;
-                    result.Add(dailyHour);
+                    // Assign weekly hours to Employee
+                    employee.WeeklyHours = weeklyHours;
                 }
+
+                return employees;
             }
+            catch (Exception ex)
+            {
+                // Log the exception (ex) here as needed
+                throw new ApplicationException("Error fetching employee weekly hours.", ex);
+            }
+        }
 
-            await _appDbContext.SaveChangesAsync(); // Save changes to persist WeeklyHours in database
-
-            return result;
+        private int GetIso8601WeekOfYear(DateTime date)
+        {
+            var thursday = date.AddDays(3 - ((int)date.DayOfWeek + 6) % 7);
+            return CultureInfo.InvariantCulture.Calendar.GetWeekOfYear(thursday, CalendarWeekRule.FirstFourDayWeek, DayOfWeek.Monday);
         }
     }
 }
+
+
