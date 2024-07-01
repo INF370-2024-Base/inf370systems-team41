@@ -37,5 +37,6 @@ public partial class Employee
     public virtual ICollection<SystemOrderSteps> SystemOrderSteps { get; set; } = new List<SystemOrderSteps>();
     public virtual SystemUser SystemUser { get; set; } = null!;
 
-    public List<(int Month, int Year, decimal TotalHours)> MonthlyHours { get; set; } = new List<(int Month, int Year, decimal TotalHours)>();
+    //[NotMapped]
+   // public List<(int Month, int Year, decimal TotalHours)> MonthlyHours { get; set; } = new List<(int Month, int Year, decimal TotalHours)>();
 }

@@ -512,43 +512,25 @@ namespace BioProSystem.Models
             return stockCategories;
         }
 
-        public async Task<List<Employee>> GetEmployeesWithMonthlyHours()
+        public async Task<List<EmployeeHoursReport>> GetEmployeesWithMonthlyHours()
         {
-           
-            
-                var employees = await _appDbContext.Employees
-                    .Include(e => e.EmployeeDailyHours)
-                    .ToListAsync();
-
-                foreach (var employee in employees)
+            var employeeMonthlyHours = await _appDbContext.EmployeeDailyHours
+                .GroupBy(e => new { EmployeeId = e.Employees.FirstOrDefault().EmployeeId, Month = e.WorkDate.Month, Year = e.WorkDate.Year })
+                .Select(g => new EmployeeHoursReport
                 {
-                    if (employee.EmployeeDailyHours != null && employee.EmployeeDailyHours.Any())
-                    {
-                        var monthlyHours = employee.EmployeeDailyHours
-                            .GroupBy(dh => new { Month = dh.WorkDate.Month, Year = dh.WorkDate.Year })
-                            .Select(g => new
-                            {
-                                Month = g.Key.Month,
-                                Year = g.Key.Year,
-                                TotalHours = g.Sum(dh => dh.Hours)
-                            })
-                            .ToList();
+                    Employee = g.Select(e => e.Employees.FirstOrDefault()).FirstOrDefault(),
+                    Year = g.Key.Year,
+                    Month = g.Key.Month,
+                    TotalHours = g.Sum(x => x.Hours)
+                })
+                .ToListAsync();
 
-                        employee.MonthlyHours = monthlyHours.Select(mh => (Month: mh.Month, Year: mh.Year, TotalHours: mh.TotalHours)).ToList();
-                    }
-                    else
-                    {
-                        employee.MonthlyHours = new List<(int Month, int Year, decimal TotalHours)>();
-                    }
-                }
-
-                return employees;
+            return employeeMonthlyHours;
         }
-            
 
 
     }
-    
+
 }
 
 

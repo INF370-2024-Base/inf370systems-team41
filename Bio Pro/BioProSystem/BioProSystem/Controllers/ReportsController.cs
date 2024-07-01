@@ -80,45 +80,24 @@ namespace BioProSystem.Controllers
             }
         }
 
-        [HttpGet("EmployeeMonthlyHours")]
-        public async Task<IActionResult> EmployeeMonthlyHours()
+
+
+
+        [HttpGet]
+        [Route("GetEmployeesWithMonthlyHours")]
+        public async Task<IActionResult> GetEmployeesWithMonthlyHours()
         {
-            try
+            var result = await _repository.GetEmployeesWithMonthlyHours();
+            if (result != null)
+            { return Ok(result); }
+            else
             {
-                var employeesWithMonthlyHours = await _repository.GetEmployeesWithMonthlyHours();
+                return NotFound("No Jobtitiles found");
+            }
 
-                if (employeesWithMonthlyHours == null || employeesWithMonthlyHours.Count == 0)
-                {
-                    return NotFound("No hours found for any employee.");
-                }
 
-                var response = employeesWithMonthlyHours.Select(e => new
-                {
-                    EmployeeId = e.EmployeeId,
-                    FirstName = e.FirstName,
-                    LastName = e.LastName,
-                    MonthlyHours = e.MonthlyHours
-                }).ToList();
 
-                return Ok(response);
-            }
-            catch (ArgumentNullException ex)
-            {
-               // _logger.LogError(ex, "An argument was null.");
-                return BadRequest("An argument was null. Please check the request.");
-            }
-            catch (InvalidOperationException ex)
-            {
-               // _logger.LogError(ex, "An invalid operation occurred.");
-                return BadRequest("An invalid operation occurred. Please check the request.");
-            }
-            catch (Exception ex)
-            {
-                //_logger.LogError(ex, "An unexpected error occurred.");
-                return StatusCode(500, "Internal Server Error. Please contact support.");
-            }
         }
-
 
     }
 }

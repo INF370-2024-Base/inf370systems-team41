@@ -627,8 +627,8 @@
   },
   {
     "ContainingType": "BioProSystem.Controllers.ReportsController",
-    "Method": "EmployeeMonthlyHours",
-    "RelativePath": "api/Reports/EmployeeMonthlyHours",
+    "Method": "GetAllOrdersAsync",
+    "RelativePath": "api/Reports/GetAllOrders",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -637,8 +637,8 @@
   },
   {
     "ContainingType": "BioProSystem.Controllers.ReportsController",
-    "Method": "GetAllOrdersAsync",
-    "RelativePath": "api/Reports/GetAllOrders",
+    "Method": "GetEmployeesWithMonthlyHours",
+    "RelativePath": "api/Reports/GetEmployeesWithMonthlyHours",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
