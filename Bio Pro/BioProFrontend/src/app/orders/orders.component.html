@@ -45,7 +45,9 @@
           <p><strong>Order Type:</strong> {{ order.orderType.description }}</p>
           <p><strong>Order Direction:</strong> {{ order.orderDirection.description }}</p>
           <p><strong>Timeline Details:</strong> {{ order.timeline.timelineDetails }}</p>
-    
+          <div *ngFor="let stock of order.systemOrder.stockItems">
+          <p><strong>Stock amount used</strong> {{ stock.stock.stockName}}: {{stock.quantity}} {{stock.stock.measurement}}</p>
+        </div>
           <strong>Teethshades:</strong>
           <div class="teethshades">
             <div *ngFor="let teethshade of order.teethshades" class="teethshade-item">

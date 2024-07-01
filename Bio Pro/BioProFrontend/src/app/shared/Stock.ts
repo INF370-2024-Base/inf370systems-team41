@@ -57,3 +57,15 @@ export class CaptureNewStockViewModel {
         this.amountAdded = amountAdded;
     }
 }
+
+export class AddStockItemViewModel {
+    public StockId: number;
+    public OrderId: string;
+    public Quantity:Number;
+
+    constructor(stockId: number, orderId: string,quantity:number) {
+        this.StockId = stockId;
+        this.OrderId = orderId;
+        this.Quantity = quantity;
+    }
+}

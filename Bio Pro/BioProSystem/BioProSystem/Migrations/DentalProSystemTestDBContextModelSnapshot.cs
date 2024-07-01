@@ -74,6 +74,9 @@ namespace BioProSystem.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Information")
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("CalanderScheduleEventId");
 
                     b.HasIndex("CalanderId");
@@ -760,22 +763,19 @@ namespace BioProSystem.Migrations
                     b.Property<int>("StockId")
                         .HasColumnType("int");
 
-                    b.Property<int>("OrderId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("OrderId1")
-                        .IsRequired()
+                    b.Property<string>("OrderId")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<decimal>("Quantity")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<int>("StockItemId")
+                    b.Property<int>("StockItemId").ValueGeneratedOnAdd()
                         .HasColumnType("int");
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("StockItemId"));
 
                     b.HasKey("StockId", "OrderId");
 
-                    b.HasIndex("OrderId1");
+                    b.HasIndex("OrderId");
 
                     b.ToTable("StockItems");
                 });
@@ -1525,7 +1525,7 @@ namespace BioProSystem.Migrations
                 {
                     b.HasOne("BioProSystem.Models.SystemOrder", "Order")
                         .WithMany("StockItems")
-                        .HasForeignKey("OrderId1")
+                        .HasForeignKey("OrderId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

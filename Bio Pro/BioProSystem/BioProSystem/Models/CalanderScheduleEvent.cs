@@ -11,8 +11,7 @@ public partial class CalanderScheduleEvent
 
     public DateTime CalanderScheduleEventDateTime { get; set; }
 
-    [Required]
-
+    public string? Information { get; set; }
     public string Description { get; set; } = null!;
 
     public int CalanderId { get; set; }

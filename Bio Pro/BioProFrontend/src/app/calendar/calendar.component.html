@@ -4,9 +4,11 @@
   <button mat-button matSuffix mat-icon-button aria-label="Clear" (click)="clearSearch()">
     <mat-icon>clear</mat-icon>
   </button>
+  
 </mat-form-field>
 <div *ngIf="nosearch" [formGroup]="form">
   <mat-form-field appearance="outline" >
+    <mat-label>Pick calendar</mat-label>
     <mat-select  formControlName="Calendar" (selectionChange)="onCalendarChange($event)">
       <mat-option *ngFor="let calendar of calendars" [value]="calendar.calanderId">
         {{ calendar.title }}
@@ -14,6 +16,7 @@
     </mat-select>
   </mat-form-field>
   <mat-form-field appearance="outline" *ngIf="selectedCalendarId===2">
+    
     <mat-select  formControlName="Procedural" (selectionChange)="onTimelineChange($event)">
       <mat-option value="all">All Timelines</mat-option>
       <mat-option *ngFor="let ProceduralTimelinesevent of ProceduralTimelinesevents" [value]="ProceduralTimelinesevent.title">
@@ -22,7 +25,34 @@
     </mat-select>
   </mat-form-field>
   <div *ngIf="selectedCalendarId===1">
-<mwl-calendar-month-view
+    <button mat-button matSuffix mat-icon-button aria-label="Clear" (click)="addEventClicked($event)">
+      <mat-icon>add</mat-icon>
+      Add event
+    </button>
+    <div>
+      <button mat-button (click)="previousPeriod()">Previous</button>
+      <button mat-button (click)="nextPeriod()">Next</button>
+    
+      <mat-form-field appearance="outline">
+        <mat-label>View</mat-label>
+        <mat-select [(value)]="view" (selectionChange)="onViewChange($event.value)">
+          <mat-option value="week">Week View</mat-option>
+          <mat-option value="month">Month View</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <button mat-button (click)="BackToToday()" slot="end">Today</button>
+    </div>
+    <mwl-calendar-week-view
+    *ngIf="view === 'week'"
+    [viewDate]="viewDate"
+    [events]="filteredEvents.length > 0 ? filteredEvents : events"
+    [refresh]="refresh"
+    (dayClicked)="dayClicked()"
+    (eventClicked)="eventClicked($event.event)">
+  </mwl-calendar-week-view>
+
+  <mwl-calendar-month-view
+    *ngIf="view === 'month'"
     [viewDate]="viewDate"
     [events]="filteredEvents.length > 0 ? filteredEvents : events"
     [refresh]="refresh"
@@ -32,6 +62,9 @@
 </div>
 </div>
 <div *ngIf="selectedCalendarId===2">
+  <button mat-button (click)="previousPeriodForProc()">Previous</button>
+      <button mat-button (click)="nextPeriodForProc()">Next</button>
+      <button mat-button (click)="BackToToday()" slot="end">Today</button>
   <mwl-calendar-month-view
     [viewDate]="viewDate"
     [events]="filteredEvents.length > 0 ? filteredEvents : ProceduralTimelinesevents"

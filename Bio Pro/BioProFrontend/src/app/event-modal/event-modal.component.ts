@@ -22,20 +22,36 @@ export class EventModalComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: { event: CalendarEvent },
     private calendarService: CalendarService,private snackBar:MatSnackBar,private dialog: MatDialog
   ) {}
+
 selectedEvent:EditEvent=
 {
   DateOfEvent:this.data.event.start,
   TimeOfEvent:this.data.event.start.getHours()+":"+this.data.event.start.getMinutes(),
   TitleOfEvent:this.data.event.title,
+  EventInformation:this.data.event.object.information
+
 }
   ngOnInit(): void {
     console.log(this.data)
+    const minutes:string=this.data.event.start.getMinutes().toString().padStart(2, '0');
+    const hours:string=this.data.event.start.getHours().toString().padStart(2, '0');
+    
     this.selectedEvent=
 {
   DateOfEvent:this.data.event.start,
   TimeOfEvent:this.data.event.start.getHours()+":"+this.data.event.start.getMinutes(),
   TitleOfEvent:this.data.event.title,
+  EventInformation:this.data.event.object.information
 }
+if(this.data.event.start.getHours()<10)
+  {
+    this.selectedEvent.TimeOfEvent=hours+':'+this.data.event.start.getMinutes();
+  }
+  if(this.data.event.start.getMinutes()<10)
+    {
+      this.selectedEvent.TimeOfEvent=this.selectedEvent.TimeOfEvent.substring(0,2)+':'+minutes
+    }
+console.log(this.selectedEvent)
   }
   toggleEditMode(): void {
     if (this.isEditMode) {
@@ -46,19 +62,23 @@ selectedEvent:EditEvent=
               DateOfEvent:this.data.event.start,
               TimeOfEvent:this.data.event.start.getHours()+":"+this.data.event.start.getMinutes(),
               TitleOfEvent:this.data.event.title,
+              EventInformation:this.data.event.object.information
             }
             this.showSnackBar("Please fill in all input fields")
 
         }
         else{
-          this.selectedEvent.DateOfEvent=this.combineDateAndTime(this.selectedEvent.DateOfEvent,this.selectedEvent.TimeOfEvent)
           this.isEditMode = !this.isEditMode;
+          
+          this.selectedEvent.DateOfEvent = this.combineDateAndTime(this.selectedEvent.DateOfEvent, this.selectedEvent.TimeOfEvent);
+          const adjustedDateOfEvent = new Date(this.selectedEvent.DateOfEvent.setHours(this.selectedEvent.DateOfEvent.getHours() + 2))
           const eventToEdit:EditCalanderEventViewModel={
             Id:this.data.event.object.calanderScheduleEventId,
             Description:this.selectedEvent.TitleOfEvent,
-            CalanderScheduleEventDateTime:this.selectedEvent.DateOfEvent
-            
+            CalanderScheduleEventDateTime:new Date(adjustedDateOfEvent),
+            EventInformation:this.selectedEvent.EventInformation
           }
+          console.log('Event updated:', eventToEdit.CalanderScheduleEventDateTime);
          this.calendarService.updateCalendarEvent(eventToEdit).subscribe(() => {
         console.log('Event updated:', this.data.event);
         this.dialogRef.close(true);
@@ -73,18 +93,20 @@ selectedEvent:EditEvent=
       this.isEditMode = !this.isEditMode;
     }
     
-    console.log(this.selectedEvent)
+    
   }
   combineDateAndTime(date: Date, time: any): Date {
     const [hours, minutes] = time.split(':').map(Number);
     const combinedDate = new Date(date);
     combinedDate.setHours(hours, minutes);
+    console.log(combinedDate)
     return combinedDate;
   }
   onDateChange(date: Date): void {
     // Update the date part of the event object
-    this.selectedEvent.DateOfEvent = date;
-    this.selectedEvent.DateOfEvent = this.combineDateAndTime(date, this.selectedEvent.TimeOfEvent);
+    // this.selectedEvent.DateOfEvent = date;
+    // this.selectedEvent.DateOfEvent = this.combineDateAndTime(date, this.selectedEvent.TimeOfEvent);
+    // console.log(this.selectedEvent.DateOfEvent)
   }
   showSnackBar(message:string) {
     this.snackBar.open(message, 'Dismiss', {
@@ -115,5 +137,6 @@ class EditEvent{
   TitleOfEvent:string='';
   DateOfEvent:Date=new Date();
   TimeOfEvent:string='';
+  EventInformation:string='';
 }
 

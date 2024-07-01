@@ -4,9 +4,14 @@
     <mat-form-field appearance="fill" *ngIf="isEditMode">
       <mat-label>Title</mat-label>
       <input matInput placeholder="Title" [(ngModel)]="selectedEvent.TitleOfEvent" name="title">
+    </mat-form-field>
+    <mat-form-field appearance="fill" *ngIf="isEditMode">
+      <mat-label>Information</mat-label>
+      <input matInput placeholder="Additional information" [(ngModel)]="selectedEvent.EventInformation" name="title">
       
     </mat-form-field>
     <h2 *ngIf="!isEditMode">{{ selectedEvent.TitleOfEvent }}</h2>
+    <p *ngIf="!isEditMode">{{ selectedEvent.EventInformation }}</p>
     <mat-form-field appearance="fill" *ngIf="isEditMode">
       <mat-label>Start Date</mat-label>
       <div >

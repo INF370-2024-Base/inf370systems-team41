@@ -773,8 +773,9 @@ namespace BioProSystem.Migrations
                     b.Property<decimal>("Quantity")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<int>("StockItemId")
+                    b.Property<int>("StockItemId").ValueGeneratedOnAdd()
                         .HasColumnType("int");
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("StockItemId"));
 
                     b.HasKey("StockId", "OrderId");
 

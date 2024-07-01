@@ -10,6 +10,7 @@ namespace BioProSystem.ViewModels
         public DateTime CalanderScheduleEventDateTime { get; set; }
 
         public string Description { get; set; } = null!;
+        public string EventInformation { get; set; } = null!;
 
     }
 }

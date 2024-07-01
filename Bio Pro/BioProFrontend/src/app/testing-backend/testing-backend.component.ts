@@ -14,7 +14,7 @@ import { Dentist } from '../shared/dentist';
 import { StockServices } from '../services/stock.service';
 import { AddStock, CaptureNewStockViewModel, StockWriteOffViewModel } from '../shared/Stock';
 import { CalendarService } from '../services/calendar.service';
-import { AddCalanderEventViewModel } from '../shared/calendarEvent';
+import { EditCalanderEventViewModel } from '../shared/EditCalanderEvent';
 
 @Component({
   selector: 'app-testing-backend',
@@ -275,26 +275,36 @@ captureNewStockTest: CaptureNewStockViewModel = {
       }
      addDummyevents()
      {
-      const dummyEvents: AddCalanderEventViewModel[] = [
+      const dummyEvents: EditCalanderEventViewModel[] = [
         {
+          Id:0,
           CalanderScheduleEventDateTime: new Date('2024-06-28T20:58:11'),
           Description: 'Event 1',
+          EventInformation:'Test 1'
         },
         {
+          Id:0,
           CalanderScheduleEventDateTime: new Date('2024-06-29T20:58:11'),
           Description: 'Event 2',
+          EventInformation:'Test 2'
         },
         {
+          Id:0,
           CalanderScheduleEventDateTime: new Date('2024-06-30T20:58:11'),
           Description: 'Event 3',
+          EventInformation:'Test 3'
         },
         {
+          Id:0,
           CalanderScheduleEventDateTime: new Date('2024-07-01T20:58:11'),
           Description: 'Event 4',
+         EventInformation:'Test 4'
         },
         {
+          Id:0,
           CalanderScheduleEventDateTime: new Date('2024-07-02T20:58:11'),
           Description: 'Event 5',
+          EventInformation:'Test 5'
         },
       ];
       dummyEvents.forEach(element => {

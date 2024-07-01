@@ -4,6 +4,8 @@ import { map, Observable, Subject } from 'rxjs';
 import { OpenOrder } from '../shared/openorder';
 import { SystemOrderViewModel } from '../shared/SystemOrderViewModel ';
 import { AddDentalDesignViewModel } from '../orders-awaiting-dental-design/orders-awaiting-dental-design.component';
+import { AddMediaFileViewModel } from '../employee-orders-and-steps/employee-orders-and-steps.component';
+import { AddStockItemViewModel } from '../shared/Stock';
 
 @Injectable({
   providedIn: 'root'
@@ -34,6 +36,10 @@ export class OrderService {
   addOrder(order: any): Observable<any> {
     return this.httpClient.post(`${this.apiUrl}Api/AddOrders`, order, this.httpOptions);
   }
+  addMediaFile(mediaFile: AddMediaFileViewModel): Observable<AddMediaFileViewModel> {
+    return this.httpClient.post<AddMediaFileViewModel>(`${this.apiUrl}Api/AddMediaFile`, mediaFile, this.httpOptions);
+  }
+  
 
   getOpenOrderId(openOrderID: string): Observable<OpenOrder>{
     return this.httpClient.get<OpenOrder>(`${this.apiUrl}GetOpenOrder/` + openOrderID)

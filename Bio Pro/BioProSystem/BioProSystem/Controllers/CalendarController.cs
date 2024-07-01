@@ -42,42 +42,42 @@ namespace BioProSystem.Controllers
             _emailSender = emailSender;
             _emailSettings = emailSettings.Value;
         }
+        
         [HttpPost]
-        [Route("CreateCalenderScheduleEvent")]
+        [Route("CreateScheduledEvent")]
         //[Authorize(AuthenticationSchemes = "Bearer")]
         //[Authorize(Roles = "Admin, Manager")]
-        public async Task<IActionResult> CreateCalenderScheduleEvent(AddCalanderEventViewModel viewModel)
+        public async Task<IActionResult> CreateScheduledEvent(EditCalanderEventViewModel viewModel)
         {
-            if (ModelState.IsValid)
+            try
             {
-                
-                CalanderScheduleEvent newCalanderScheduleEvent = new CalanderScheduleEvent();
-                newCalanderScheduleEvent.CalanderId = 1;
-                newCalanderScheduleEvent.Description =viewModel.Description;
-                newCalanderScheduleEvent.CalanderScheduleEventDateTime = viewModel.CalanderScheduleEventDateTime;
-
-                _repository.Add(newCalanderScheduleEvent);
-                try
+                CalanderScheduleEvent calendarEvent = new CalanderScheduleEvent();
+                if (viewModel == null)
                 {
+                    return NotFound("No calendar events found");
+                }
+                else
+                {
+                    calendarEvent.CalanderScheduleEventDateTime = viewModel.CalanderScheduleEventDateTime;
+                    calendarEvent.Description = viewModel.Description;
+                    calendarEvent.Information = viewModel.EventInformation;
+                    calendarEvent.CalanderId = 1;
+                    _repository.Add(calendarEvent);
                     if (await _repository.SaveChangesAsync())
                     {
-                        return Ok(newCalanderScheduleEvent);
+                        return Ok(calendarEvent);
                     }
                     else
                     {
-                        ModelState.AddModelError(string.Empty, "Failed to save changes.");
-                        return BadRequest(ModelState);
+                        return BadRequest("No changes made");
                     }
+
                 }
-                catch (Exception ex)
-                {
-                    ModelState.AddModelError(string.Empty, $"An error occurred: {ex.Message}");
-                    return BadRequest(ModelState);
-                }
+
             }
-            else
+            catch (Exception ex)
             {
-                return BadRequest(ModelState);
+                return StatusCode(500, $"Internal Server Error: {ex.Message}");
             }
         }
         [HttpGet]
@@ -118,7 +118,8 @@ namespace BioProSystem.Controllers
                 {
                     calendarEvent.CalanderScheduleEventDateTime=viewModel.CalanderScheduleEventDateTime;
                     calendarEvent.Description=viewModel.Description;
-                    if(await _repository.SaveChangesAsync())
+                    calendarEvent.Information = viewModel.EventInformation;
+                    if (await _repository.SaveChangesAsync())
                     {
                         return Ok(calendarEvent);
                     }
@@ -135,6 +136,7 @@ namespace BioProSystem.Controllers
                 return StatusCode(500, $"Internal Server Error: {ex.Message}");
             }
         }
+    
         [HttpDelete]
         [Route("DeleteScheduledEvent/{eventID}")]
         public async Task<IActionResult> DeleteScheduledEvent(int eventID)

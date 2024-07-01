@@ -5,7 +5,7 @@ import { OpenOrder } from '../shared/openorder';
 import { SystemOrderViewModel } from '../shared/SystemOrderViewModel ';
 import { addUser } from '../shared/adduser';
 import { ResetPassword, UpdateUser } from '../shared/UpdateUser';
-import { AddStock, CaptureNewStockViewModel, StockWriteOffViewModel } from '../shared/Stock';
+import { AddStock, AddStockItemViewModel, CaptureNewStockViewModel, StockWriteOffViewModel } from '../shared/Stock';
 
 @Injectable({
   providedIn: 'root'
@@ -45,6 +45,9 @@ export class StockServices {
   captureNewStock(stock:CaptureNewStockViewModel): Observable<CaptureNewStockViewModel>{
     return this.httpClient.put<CaptureNewStockViewModel>(`${this.apiUrl}CaptureNewStock`,stock)
     .pipe(map(result => result))
+  }
+  addStockItem(stockitem: AddStockItemViewModel): Observable<AddStockItemViewModel> {
+    return this.httpClient.post<AddStockItemViewModel>(`${this.apiUrl}AddStockItem`, stockitem, this.httpOptions);
   }
   
 }

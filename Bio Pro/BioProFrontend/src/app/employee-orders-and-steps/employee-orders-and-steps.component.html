@@ -4,10 +4,18 @@
     <div *ngFor="let ordersteps of order.systemOrderSteps">
         <div *ngIf="ordersteps.isCurrentStep">
         <h3>Current:</h3>
-
-        <button *ngIf="ordersteps.employee.email==employeeEmail" (click)="CompleteStepOrOrder(ordersteps.systeorderStepId)">
+        <button  (click)="addEventClicked(order)"> Add stock</button>
+        <div class="form-group" style="margin-bottom: 15px; ">
+            <label for="MediaFiles" style=" display: flex; margin-bottom: 5px; color: black;">
+              <i class="material-icons" style="margin-right: 8px;">attach_file</i> Upload Media Files:
+            </label>
+            <input type="file" id="MediaFiles" (change)="onFileSelected($event)" multiple style="display: inline-block; padding: 8px 12px; border: 1px solid #ccc; border-radius: 5px; background-color: #f0f0f0; color: #333; font-size: 14px; cursor: pointer;">
+          </div>
+        <button *ngIf="ordersteps.employee.email==employeeEmail" (click)="CompleteStepOrOrder(ordersteps.systeorderStepId,order.orderId)">
+           
             complete step
         </button> 
+        <button  (click)="CompleteStepOrOrder(ordersteps.systeorderStepId,order.orderId)">complete step</button>
     </div>
         <h2>{{ordersteps.description}}</h2>
         

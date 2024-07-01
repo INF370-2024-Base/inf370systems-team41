@@ -580,14 +580,11 @@ namespace BioProSystem.Controllers
                 {
                     return NotFound("No pending orders found");
                 }
-                if (pendingOrders.OrderStatusId != 1)
-                {
-                    return NotFound("Order is not a pending orders found");
-                }
                 else
                 {
                     pendingOrders.OrderStatusId = 2;
                     List<Employee> DentalDesigners = await _repository.GetEmployeesWithJobTitleId(4);
+
                     foreach (Employee emp in DentalDesigners)   
                     {
                         EmailViewModel email = new EmailViewModel();
@@ -610,7 +607,7 @@ namespace BioProSystem.Controllers
             }
             catch(Exception ex)
             {
-                return StatusCode(500, $"Internal Server Error: {ex.Message}");
+                return StatusCode(500, $"Internal Server Error: {ex.InnerException.Message}");
             }
         }
         [HttpPut]
@@ -730,6 +727,45 @@ namespace BioProSystem.Controllers
                     }
                     
                     return Ok(mediaFile1);
+                }
+                else
+                {
+                    return BadRequest("Could not save changes to database");
+                }
+
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "An error occurred while deleting daily hours." + ex.InnerException.Message);
+            }
+        }
+        [HttpPost]
+        [Route("AddMediaFile")]
+        public async Task<IActionResult> SendDentalDesign(AddMediaFileViewModel mediaFileViewModels)
+        {
+            try
+            {
+                foreach(MediaFileViewModel mediaFile in mediaFileViewModels.mediaFileViewModels)
+                {
+                    MediaFile mediaFileNew = new MediaFile();
+                    mediaFileNew.FileName = mediaFile.FileName;
+                    mediaFileNew.FileSelf = Convert.FromBase64String(mediaFile.FileSelf);
+                    mediaFileNew.FileSizeKb = mediaFile.FileSizeKb;
+
+                    SystemOrder order = await _repository.GetSystemOrderByIdAsync(mediaFileViewModels.orderId);
+                    if (order == null)
+                    {
+                        return NotFound("Order not found");
+                    }
+                    mediaFileNew.SystemOrderId = order.OrderId;
+                    _repository.Add(mediaFileNew);
+                    order.MediaFiles.Add(mediaFileNew);
+                }
+              
+
+                if (await _repository.SaveChangesAsync())
+                {
+                    return Ok(mediaFileViewModels);
                 }
                 else
                 {

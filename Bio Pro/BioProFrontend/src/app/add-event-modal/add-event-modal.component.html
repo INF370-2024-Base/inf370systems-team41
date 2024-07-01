@@ -1,0 +1,43 @@
+<h2 mat-dialog-title>Event Details</h2>
+<mat-dialog-content>
+  <form #eventForm="ngForm">
+    <mat-form-field appearance="fill">
+      <mat-label>Title</mat-label>
+      <input matInput placeholder="Title" [(ngModel)]="addEvent.Description" name="title">
+    </mat-form-field>
+    <mat-form-field appearance="fill" >
+      <mat-label>Information</mat-label>
+      <input matInput placeholder="Additional information" [(ngModel)]="addEvent.EventInformation" name="title">
+      
+    </mat-form-field>
+    <mat-form-field appearance="fill" >
+      <mat-label>Start Date</mat-label>
+      <div >
+        <input
+          matInput
+          [matDatepicker]="startPicker"
+          placeholder="Select Date"
+          [(ngModel)]="addEvent.CalanderScheduleEventDateTime"
+          name="startDate"
+        >
+        <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
+        <mat-datepicker #startPicker></mat-datepicker>
+      </div>
+      
+    </mat-form-field>
+    <mat-form-field appearance="fill"  >
+      <mat-label>Time</mat-label>
+      <input
+        matInput
+        placeholder="Time"
+        [(ngModel)]="time"
+        name="startTime"
+        type="time"
+      >
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <button mat-button (click)="SubmitForm()">Save</button>
+</mat-dialog-actions>

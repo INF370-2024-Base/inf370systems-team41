@@ -116,8 +116,6 @@ namespace BioProSystem.Models
              .HasForeignKey(so => so.OrderTypeId)
              .OnDelete(DeleteBehavior.Restrict);
 
-            modelBuilder.Entity<StockItem>()
-            .HasKey(si => new { si.StockId, si.OrderId });
             // SystemOrderSteps -> Employees
             modelBuilder.Entity<SystemOrderSteps>()
                 .HasOne(sos => sos.Employee)
@@ -137,6 +135,21 @@ namespace BioProSystem.Models
                 .WithMany(u => u.UserActions)
                 .HasForeignKey(ua => ua.UserId)
                 .OnDelete(DeleteBehavior.SetNull);
+            modelBuilder.Entity<StockItem>()
+           .HasKey(si => si.StockItemId);
+
+            modelBuilder.Entity<StockItem>()
+                .HasOne(si => si.Order)
+                .WithMany(o => o.StockItems)
+                .HasForeignKey(si => si.OrderId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<StockItem>()
+                .HasOne(si => si.Stock)
+                .WithMany(s => s.StockItem)
+                .HasForeignKey(si => si.StockId)
+                .OnDelete(DeleteBehavior.Restrict);
+
         }
     }
 }

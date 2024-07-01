@@ -132,7 +132,7 @@ namespace BioProSystem.Models
         }
         public async Task<List<Employee>> GetEmployeesWithJobTitleId(int jobTitileId,string jobTitleName="")
         {
-            if(jobTitleName != "")
+            if(jobTitleName == "")
             {
                 List<Employee> query = await _appDbContext.Employees.Where(c => c.JobTitleId == jobTitileId).ToListAsync();
                 return query;
@@ -302,7 +302,7 @@ namespace BioProSystem.Models
 
         public async Task<SystemOrder> GetSystemOrderByIdAsync(string orderId)
         {
-            return await _appDbContext.SystemOrders.Include(s => s.TeethShades).Include(s => s.SelectedAreas).Include(s => s.SystemOrderSteps).Include(s => s.OrderWorkflowTimeline).Include(s => s.SystemOrderSteps).Include(s => s.MediaFiles).FirstOrDefaultAsync(o => o.OrderId == orderId);
+            return await _appDbContext.SystemOrders.Include(s => s.TeethShades).Include(s => s.SelectedAreas).Include(s => s.SystemOrderSteps).Include(s => s.OrderWorkflowTimeline).Include(s => s.SystemOrderSteps).Include(s => s.MediaFiles).Include(o=>o.StockItems).ThenInclude(s=>s.Stock).FirstOrDefaultAsync(o => o.OrderId == orderId);
         }
         public async Task<OrderDirection> GetOrderDirectionById(int orderDirectionId)
         {
@@ -426,6 +426,10 @@ namespace BioProSystem.Models
         public void AddDentist(Dentist dentist)
         {
             _appDbContext.Dentists.Add(dentist);
+        }
+        public void AddStockItem(StockItem stockItem)
+        {
+            _appDbContext.StockItems.Add(stockItem);
         }
 
         public void UpdateDentist(Dentist dentist)

@@ -10,11 +10,11 @@ public partial class StockItem
     public int StockItemId { get; set; }
     public int StockId { get; set; }
 
-    public int OrderId { get; set; }
+    public string OrderId { get; set; }
     [Required]
     public decimal Quantity { get; set; }
 
     public virtual SystemOrder Order { get; set; } = null!;
-
+    
     public virtual Stock Stock { get; set; } = null!;
 }

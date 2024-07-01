@@ -75,6 +75,62 @@ namespace BioProSystem.Controllers
                 return StatusCode(500, "Internal Server Error. Please contact support.");
             }
         }
+        [HttpPost]
+        [Route("AddStockItem")]
+        public async Task<IActionResult> AddStockItem(AddStockItemViewModel viewModel)
+        {
+            if (viewModel == null)
+            {
+                return BadRequest(ModelState);
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    // Retrieve existing entities
+                    SystemOrder order = await _repository.GetSystemOrderByIdAsync(viewModel.OrderId);
+                    Stock stock = await _repository.GetStockById(viewModel.StockId);
+
+                    if (order == null || stock == null)
+                    {
+                        return NotFound("Order or Stock not found.");
+                    }
+
+                    var newStock = new StockItem
+                    {
+                        OrderId = viewModel.OrderId,
+                        StockId = viewModel.StockId,
+                        Quantity = viewModel.Quantity
+                    };
+
+                    order.StockItems.Add(newStock);
+                    stock.StockItem.Add(newStock);
+
+                    _repository.Add(newStock);
+
+                    // Save changes
+                    if (await _repository.SaveChangesAsync())
+                    {
+                        order.StockItems.Add(newStock);
+                        stock.StockItem.Add(newStock);
+                        return Ok(newStock);
+                    }
+                    else
+                    {
+                        return BadRequest("Could not save to database");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    return BadRequest(ex.InnerException.Message);  // Use ex.Message to get the exception message
+                }
+            }
+            else
+            {
+                return BadRequest(ModelState);  // Return the ModelState errors if the model is invalid
+            }
+        }
         [HttpGet]
         [Route("GetAllStock")]
         public async Task<IActionResult> GetAllStock()

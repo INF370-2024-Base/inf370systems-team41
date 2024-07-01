@@ -58,6 +58,7 @@ namespace BioProSystem.Models
         Task<Dentist[]> GetAllDentistsAsync();
         Task<Dentist> GetDentistAsync(int dentistId);
         void AddDentist(Dentist dentist);
+        void AddStockItem(StockItem stockItem);
         void UpdateDentist(Dentist dentist);
         void DeleteDentist(Dentist dentist);
         Task<MediaFile> GetImageDataFromId(int imageID);

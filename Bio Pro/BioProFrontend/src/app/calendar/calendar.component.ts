@@ -9,6 +9,8 @@ import { EventModalComponent } from '../event-modal/event-modal.component';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ProcededuralTimelineViewComponent } from '../procededural-timeline-view/procededural-timeline-view.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { addMonths, subMonths, addWeeks, subWeeks } from 'date-fns';
+import { AddEventModalComponent } from '../add-event-modal/add-event-modal.component';
 
 @Component({
   selector: 'app-calendar',
@@ -24,6 +26,7 @@ export class CalendarComponent implements OnInit{
     Procedural:['']
   });}
   viewDate: Date = new Date();
+  view: 'month' | 'week' = 'week';
   form!: FormGroup;
   CalendarScheduleEvents:any[]=[]
   ProceduralTimelines:any[]=[]
@@ -194,6 +197,19 @@ nosearch:boolean=true
     });
     console.log('Event clicked:', event);
   }
+  addEventClicked(event: any): void {
+    const dialogRef = this.dialog.open(AddEventModalComponent, {
+      width: '300px',
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        // Refresh events if an event was edited or deleted
+        this.fetchCalendarScheduleEvents();
+      }
+    });
+    console.log('Event clicked:', event);
+  }
   proceduralTimelineEventClicked(event: any): void {
     const dialogRef = this.dialog.open(ProcededuralTimelineViewComponent, {
       width: '300px',
@@ -210,5 +226,41 @@ nosearch:boolean=true
     this.snackBar.open(message, 'Dismiss', {
       duration: 3000, 
     });
+  }
+  onViewChange(view: 'week' | 'month'): void {
+    this.view = view;
+    this.refresh.next(this.CalendarScheduleEvents); // Refresh the view
+  }
+  
+  nextPeriod(): void {
+    if (this.view === 'month') {
+      this.viewDate = addMonths(this.viewDate, 1);
+    } else if (this.view === 'week') {
+      this.viewDate = addWeeks(this.viewDate, 1);
+    }
+    this.refresh.next(this.CalendarScheduleEvents); // Refresh the view
+  }
+  
+  previousPeriod(): void {
+    if (this.view === 'month') {
+      this.viewDate = subMonths(this.viewDate, 1);
+    } else if (this.view === 'week') {
+      this.viewDate = subWeeks(this.viewDate, 1);
+    }
+    this.refresh.next(this.CalendarScheduleEvents); // Refresh the view
+  }
+  nextPeriodForProc(): void {
+    this.viewDate = addMonths(this.viewDate, 1);
+    this.refresh.next(this.CalendarScheduleEvents); // Refresh the view
+  }
+  
+  previousPeriodForProc(): void {
+    this.viewDate = subMonths(this.viewDate, 1);
+    this.refresh.next(this.CalendarScheduleEvents); // Refresh the view
+  }
+  
+  BackToToday()
+  {
+    this.viewDate=new Date()
   }
 }

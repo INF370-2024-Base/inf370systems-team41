@@ -1,0 +1,23 @@
+
+<button (click)="addStockItem()">Add stock item</button>
+<form [formGroup]="form">
+  <div formArrayName="stockItems">
+    <div *ngFor="let stockCtrl of stockItems.controls; let i = index" [formGroupName]="i">
+      <div class="form-group">
+        <mat-form-field appearance="outline">
+          <mat-label><i class="material-icons">work</i> Stock</mat-label>
+          <mat-select formControlName="StockId">
+            <mat-option *ngFor="let stockitem of allStock" [value]="stockitem.stockId">
+              {{ stockitem.stockName }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Quantity</mat-label>
+          <input matInput formControlName="Quantity">
+        </mat-form-field>
+      </div>
+    </div>
+  </div>
+  <button (click)="SubmitForm()">Submit</button>
+</form>

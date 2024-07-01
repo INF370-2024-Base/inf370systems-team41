@@ -6,6 +6,11 @@ import { MediaFileViewModel } from '../shared/SystemOrderViewModel ';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { CustomFile } from '../orders-awaiting-dental-design/orders-awaiting-dental-design.component';
+import { MatDialog } from '@angular/material/dialog';
+import { StockData, StockUsedComponent } from '../stock-used/stock-used.component';
+import { OrderService } from '../services/order.service';
+import { AddStockItemViewModel } from '../shared/Stock';
+import { StockServices } from '../services/stock.service';
 
 @Component({
   selector: 'app-employee-orders-and-steps',
@@ -14,7 +19,7 @@ import { CustomFile } from '../orders-awaiting-dental-design/orders-awaiting-den
 })
 export class EmployeeOrdersAndStepsComponent implements OnInit {
   editForm!: FormGroup;
-  constructor(private employeeService:EmployeeService, private formBuilder: FormBuilder,private sanitizer:DomSanitizer) {this.editForm = this.formBuilder.group({
+  constructor(private employeeService:EmployeeService,private orderService:OrderService, private stockService:StockServices, private formBuilder: FormBuilder,private sanitizer:DomSanitizer,private dialog:MatDialog) {this.editForm = this.formBuilder.group({
     MediaFiles: [null]
   }); }
 
@@ -35,61 +40,144 @@ export class EmployeeOrdersAndStepsComponent implements OnInit {
     })
 
  }
- CompleteStepOrOrder(stepId:number)
+ stockused:any[]=[]
+ addEventClicked(event: any): void {
+  const dialogRef = this.dialog.open(StockUsedComponent, {
+    width: '300px',
+    data:{ event }
+  });
+  dialogRef.afterClosed().subscribe(result => {
+    if (result) {
+      
+      this.stockUsed=result
+    }
+  });
+  console.log('Event clicked:', event);
+}
+uploadedFileUrls: { url: SafeUrl, name: string }[] = [];
+onFileSelected(event: any): void {
+  const files: FileList = event.target.files;
+  const maxFileSize = 10 * 1024 * 1024; // 10MB
+
+  console.log('Files selected:', files);
+
+  for (let i = 0; i < files.length; i++) {
+      const file = files[i];
+      console.log(`File ${file.name} size: ${file.size} bytes`);
+
+
+      if (file.size > maxFileSize) {
+        console.log(`File ${file.name} exceeds the maximum file size.`);
+        alert(`File ${file.name} is too large. Maximum file size is 5MB.`);
+        continue; // Skip the file and move to the next one
+      }
+
+      console.log(`Processing file: ${file.name}`);
+
+      const reader = new FileReader();
+
+      reader.onload = (e: any) => {
+          const fileContent = e.target.result;
+          const byteArray = new Uint8Array(fileContent);
+          const url = this.sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(file));
+
+          this.uploadedFiles.push({
+              name: file.name,
+              size: file.size,
+              content: byteArray
+          });
+          console.log(this.uploadedFiles);
+          this.uploadedFileUrls.push({ url, name: file.name });
+      };
+
+      reader.readAsArrayBuffer(file);
+  }
+}
+errorsFound:boolean=false
+mediaFileViewModels:MediaFileViewModel[]=[]
+ CompleteStepOrOrder(stepId:number,orderId:string)
  {
   console.log(stepId)
-  this.employeeService.CompleteStepAndJob(stepId).subscribe(result=>
+  
+  if(this.uploadedFiles.length>0)
+    { 
+        this.mediaFileViewModels = this.uploadedFiles.map(file => {
+        const mediaFileViewModel = new MediaFileViewModel();
+        mediaFileViewModel.FileName = file.name;
+        mediaFileViewModel.FileSelf = this.encodeFileContent(file.content);
+        mediaFileViewModel.FileSizeKb = file.size;
+        mediaFileViewModel.SystemOrderId = orderId;
+        return mediaFileViewModel;
+        });
+        const newMediaFile:AddMediaFileViewModel={
+          mediaFileViewModels:this.mediaFileViewModels,
+          orderId:orderId
+        }
+        this.orderService.addMediaFile(newMediaFile).subscribe(result=>
+          {
+            console.log(result)
+            },(error:HttpErrorResponse)=>{
+              console.log(error.error)
+            }
+        ) 
+
+    }
+    
+  if(this.stockUsed!=null)
     {
-      console.log(result)
-      this.getCurrentOrders()
-      },(error:HttpErrorResponse)=>{
-        console.log(error.error)
-}
-  )
+      
+      this.stockUsed.StockUsed.forEach(element => {
+        const stockToSend:AddStockItemViewModel=
+        {
+          StockId:element.StockId,
+          OrderId:this.stockUsed.OrderId,
+          Quantity:element.Quantity
+        }
+        this.stockService.addStockItem(stockToSend).subscribe(result=>
+          {
+            console.log(result)
+            },(error:HttpErrorResponse)=>{
+              console.log(error)
+              this.errorsFound=true;
+            }
+        )
+      });
+      if(!this.errorsFound)
+        {
+          this.employeeService.CompleteStepAndJob(stepId).subscribe(result=>
+          {
+            console.log(result)
+            this.getCurrentOrders()
+            },(error:HttpErrorResponse)=>{
+              console.log(error.error)
+            }
+          ) 
+      }
+       
+    }
+    else{
+      alert("Please pick stock used")
+    }
  }
- uploadedFileUrls!: { url: SafeUrl, name: string }
-  uploadedFiles!: CustomFile 
+stockUsed!:StockData
+uploadedFiles: CustomFile[]=[]
  
  onSubmit(orderId:string){
   
  }
-}
-export async function createMediaFile(orderId: string, file: File): Promise<MediaFileViewModel> {
-  const mediaFileViewModel: MediaFileViewModel = {
-    FileName: file.name,
-    FileSelf: await encodeFileContent(file),
-    FileSizeKb: file.size / 1024, // Convert bytes to kilobytes
-    SystemOrderId: orderId,
-  };
-  return mediaFileViewModel;
-}
-
-async function encodeFileContent(file: File): Promise<string> {
-  const arrayBuffer = await readFileAsArrayBuffer(file);
-  return encodeArrayBuffer(arrayBuffer);
-}
-
-function encodeArrayBuffer(content: ArrayBuffer): string {
+ encodeFileContent(content: ArrayBuffer): string {
   let binary = '';
   const bytes = new Uint8Array(content);
   const len = bytes.byteLength;
-
+  
   for (let i = 0; i < len; i++) {
-    binary += String.fromCharCode(bytes[i]);
+      binary += String.fromCharCode(bytes[i]);
   }
-
   return btoa(binary);
 }
-
-async function readFileAsArrayBuffer(file: File): Promise<ArrayBuffer> {
-  return new Promise((resolve) => {
-    const reader = new FileReader();
-    reader.onload = (event) => {
-      resolve(event.target?.result as ArrayBuffer);
-    };
-    reader.readAsArrayBuffer(file);
-  });
 }
-
-
-
+export class AddMediaFileViewModel
+{
+  mediaFileViewModels:MediaFileViewModel[]=[];
+  orderId:string=''
+}
