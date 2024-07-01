@@ -609,6 +609,12 @@ namespace BioProSystem.Migrations
                     b.Property<int>("CalanderId")
                         .HasColumnType("int");
 
+                    b.Property<DateTime>("EarliestDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("LatestDateTime")
+                        .HasColumnType("datetime2");
+
                     b.Property<DateTime>("TimeStamp")
                         .HasColumnType("datetime2");
 

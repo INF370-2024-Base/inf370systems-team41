@@ -1,0 +1,41 @@
+<h2 mat-dialog-title>Event Details</h2>
+<mat-dialog-content>
+  <div class="event-details">
+    <h3 mat-dialog-title>{{data.event.title}}</h3>
+    <div class="date-info">
+      <div class="date-item">
+        
+        <span class="date-label">Earliest Date:</span>
+        <span class="date-value">{{data.event.object.earliestDateTime | date: 'shortDate'}}</span>
+      </div>
+      <div class="date-item">
+        <span class="date-label">Latest Date:</span>
+        <span class="date-value">{{data.event.object.latestDateTime | date: 'shortDate'}}</span>
+      </div>
+    </div>
+    <div class="timeline-info">
+      <div *ngFor="let ow of data.event.object.orderWorkflowTimeline" class="timeline-item">
+        <div class="timeline-info-item">
+          <span class="timeline-label">System Order ID:</span>
+          <span class="timeline-value">{{ow.systemOrderId}}</span>
+        </div>
+        <div class="timeline-info-item">
+          <span class="timeline-label">Priority Level:</span>
+          <span class="timeline-value">{{ow.systemOrder.priorityLevel}}</span>
+        </div>
+        <div class="timeline-info-item">
+          <span class="timeline-label">Due Date:</span>
+          <span class="timeline-value">{{ow.systemOrder.dueDate | date: 'shortDate'}}</span>
+        </div>
+        <div class="timeline-info-item">
+          <span class="timeline-label">Order Date:</span>
+          <span class="timeline-value">{{ow.systemOrder.orderDate | date: 'shortDate'}}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <button mat-button mat-dialog-close>Close</button>
+</mat-dialog-actions>

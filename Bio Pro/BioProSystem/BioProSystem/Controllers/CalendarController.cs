@@ -16,6 +16,7 @@ using System.Net;
 using System.Net.Mail;
 using System.Threading.Tasks;
 using Org.BouncyCastle.Crypto.Macs;
+using System.Globalization;
 
 namespace BioProSystem.Controllers
 {
@@ -81,14 +82,14 @@ namespace BioProSystem.Controllers
         }
         [HttpGet]
         [Route("GetAllScheduledEvents")]
-        public async Task<IActionResult> GetDeliveries()
+        public async Task<IActionResult> GetAllScheduledEvents()
         {
             try
             {
                 List<CalanderScheduleEvent> events = await _repository.GetAllScheduledEvents();
                 if (events.Count == 0)
                 {
-                    return BadRequest("No deliveries found");
+                    return BadRequest("No events found");
                 }
                 else
                 {
@@ -101,6 +102,115 @@ namespace BioProSystem.Controllers
                 return StatusCode(500, $"Internal Server Error: {ex.Message}");
             }
         }
+
+        [HttpPut]
+        [Route("UpdateScheduledEvent")]
+        public async Task<IActionResult> UpdateScheduledEvent(EditCalanderEventViewModel viewModel)
+        {
+            try
+            {
+                CalanderScheduleEvent calendarEvent = await _repository.GetScheduledEventById(viewModel.Id);
+                if (calendarEvent == null)
+                {
+                    return NotFound("No calendar events found");
+                }
+                else
+                {
+                    calendarEvent.CalanderScheduleEventDateTime=viewModel.CalanderScheduleEventDateTime;
+                    calendarEvent.Description=viewModel.Description;
+                    if(await _repository.SaveChangesAsync())
+                    {
+                        return Ok(calendarEvent);
+                    }
+                    else
+                    {
+                        return BadRequest("No changes made");
+                    }
+                    
+                }
+
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal Server Error: {ex.Message}");
+            }
+        }
+        [HttpDelete]
+        [Route("DeleteScheduledEvent/{eventID}")]
+        public async Task<IActionResult> DeleteScheduledEvent(int eventID)
+        {
+            try
+            {
+                CalanderScheduleEvent calendarEvent = await _repository.GetScheduledEventById(eventID);
+                if (calendarEvent == null)
+                {
+                    return NotFound("Event not found");
+                }
+                else
+                {
+                    _repository.Delete(calendarEvent);
+                    if (await _repository.SaveChangesAsync())
+                    {
+                        return Ok(calendarEvent);
+                    }
+                    else
+                    {
+                        return BadRequest("No changes made");
+                    }
+
+                }
+
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal Server Error: {ex.Message}");
+            }
+        }
+        [HttpGet]
+        [Route("GetAllCalendars")]
+        public async Task<IActionResult> GetAllCalendars()
+        {
+            try
+            {
+                List<Calander> calendars = await _repository.GetAllCalendar();
+                if (calendars.Count == 0)
+                {
+                    return BadRequest("No events found");
+                }
+                else
+                {
+                    return Ok(calendars);
+                }
+
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal Server Error: {ex.Message}");
+            }
+        }
+        [HttpGet]
+        [Route("GetAllProceduralTimelines")]
+        public async Task<IActionResult> GetAllProceduralTimelines()
+        {
+            try
+            {
+                List<ProceduralTimeline> procduralTimelines = await _repository.GetAllProceduralTimelinesAsync();
+                if (procduralTimelines==null)
+                {
+                    return BadRequest("No procdural timelines found");
+                }
+                else
+                {
+                    return Ok(procduralTimelines);
+                }
+
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal Server Error: {ex.Message}");
+            }
+        }
+
     }
 }
 

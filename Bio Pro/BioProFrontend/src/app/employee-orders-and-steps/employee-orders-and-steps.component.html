@@ -1,4 +1,4 @@
-<p>employee-orders-and-steps works!</p>
+
 <div *ngFor="let order of orders">
     <h1>{{order.orderId}}</h1>
     <div *ngFor="let ordersteps of order.systemOrderSteps">
@@ -14,3 +14,6 @@
     </div>
 
 </div>
+<h1 *ngIf="orders.length==0">
+No orders found
+</h1>

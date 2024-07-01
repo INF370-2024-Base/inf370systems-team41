@@ -1,6 +1,27 @@
-<input type="text" [(ngModel)]="searchTerm" (ngModelChange)="onSearchTermChange($event)">
-<button mat-button class="large-button" (click)="clearSearch()">Clear</button>
-<div *ngIf="nosearch">
+<mat-form-field appearance="outline" *ngIf="selectedCalendarId === 1">
+  <mat-label>Search</mat-label>
+  <input matInput [(ngModel)]="searchTerm" (ngModelChange)="onSearchTermChange($event)" placeholder="Search events">
+  <button mat-button matSuffix mat-icon-button aria-label="Clear" (click)="clearSearch()">
+    <mat-icon>clear</mat-icon>
+  </button>
+</mat-form-field>
+<div *ngIf="nosearch" [formGroup]="form">
+  <mat-form-field appearance="outline" >
+    <mat-select  formControlName="Calendar" (selectionChange)="onCalendarChange($event)">
+      <mat-option *ngFor="let calendar of calendars" [value]="calendar.calanderId">
+        {{ calendar.title }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field appearance="outline" *ngIf="selectedCalendarId===2">
+    <mat-select  formControlName="Procedural" (selectionChange)="onTimelineChange($event)">
+      <mat-option value="all">All Timelines</mat-option>
+      <mat-option *ngFor="let ProceduralTimelinesevent of ProceduralTimelinesevents" [value]="ProceduralTimelinesevent.title">
+        {{ ProceduralTimelinesevent.title }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <div *ngIf="selectedCalendarId===1">
 <mwl-calendar-month-view
     [viewDate]="viewDate"
     [events]="filteredEvents.length > 0 ? filteredEvents : events"
@@ -9,7 +30,17 @@
     (eventClicked)="eventClicked($event.event)">
   </mwl-calendar-month-view>
 </div>
-<div *ngIf="!nosearch">
+</div>
+<div *ngIf="selectedCalendarId===2">
+  <mwl-calendar-month-view
+    [viewDate]="viewDate"
+    [events]="filteredEvents.length > 0 ? filteredEvents : ProceduralTimelinesevents"
+    [refresh]="refresh"
+    (dayClicked)="dayClicked()"
+    (eventClicked)="proceduralTimelineEventClicked($event.event)">
+  </mwl-calendar-month-view>
+</div>
+<div *ngIf="!nosearch && selectedCalendarId===1 ">
   <div *ngFor="let singleEvent of filteredEvents" style="display: flex; flex-direction: column;">
     <mat-accordion>
       <mat-expansion-panel>
@@ -25,7 +56,6 @@
             (dayClicked)="dayClicked()"
             (eventClicked)="eventClicked($event.event)">
           </mwl-calendar-day-view>
-
       </mat-expansion-panel>
     </mat-accordion>
   </div>

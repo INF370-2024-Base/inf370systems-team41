@@ -1,0 +1,46 @@
+<h2 mat-dialog-title>Event Details</h2>
+<mat-dialog-content>
+  <form #eventForm="ngForm">
+    <mat-form-field appearance="fill" *ngIf="isEditMode">
+      <mat-label>Title</mat-label>
+      <input matInput placeholder="Title" [(ngModel)]="selectedEvent.TitleOfEvent" name="title">
+      
+    </mat-form-field>
+    <h2 *ngIf="!isEditMode">{{ selectedEvent.TitleOfEvent }}</h2>
+    <mat-form-field appearance="fill" *ngIf="isEditMode">
+      <mat-label>Start Date</mat-label>
+      <div >
+        <input
+          matInput
+          [matDatepicker]="startPicker"
+          placeholder="Select Date"
+          [(ngModel)]="selectedEvent.DateOfEvent"
+          name="startDate"
+          (dateChange)="onDateChange($event.value)"
+        >
+        <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
+        <mat-datepicker #startPicker></mat-datepicker>
+      </div>
+      
+    </mat-form-field>
+    <h2 *ngIf="!isEditMode">{{ selectedEvent.DateOfEvent | date:'mediumDate' }}</h2>
+    <mat-form-field appearance="fill"  *ngIf="isEditMode">
+      <mat-label>Time</mat-label>
+      <input
+        matInput
+        placeholder="Time"
+        [(ngModel)]="selectedEvent.TimeOfEvent"
+        name="startTime"
+        type="time"
+      >
+      
+    </mat-form-field>
+    <h2 *ngIf="!isEditMode">{{ selectedEvent.TimeOfEvent}}</h2>
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <button mat-button (click)="toggleEditMode()">{{ isEditMode ? 'Save' : 'Edit' }}</button>
+  <button mat-button mat-dialog-close>Close</button>
+  <button *ngIf="!isEditMode" mat-button (click)="deleteEvent()">Delete</button>
+</mat-dialog-actions>

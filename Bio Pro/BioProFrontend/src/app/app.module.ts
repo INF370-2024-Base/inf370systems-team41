@@ -43,6 +43,8 @@ import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { CalendarComponent } from './calendar/calendar.component';
 import { SearchBarComponent } from './search-bar/search-bar.component';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { EventModalComponent } from './event-modal/event-modal.component';
+import { ProcededuralTimelineViewComponent } from './procededural-timeline-view/procededural-timeline-view.component';
 
 @NgModule({
   declarations: [
@@ -56,7 +58,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
     DentistProfileComponent,
     EmployeeProfileComponent,
     CaptureEmployeeHoursComponent,LoginComponent,EditOrderModalComponent, AddUserComponent, AddProceduralTimeline, DeliveriesComponent, AddDeliveryComponent, HomeComponent, TestingBackendComponent, 
-    ConfirmationDialogComponent, OrdersAwaitingDentalDesignComponent, DentalDesignApprovalComponent, EmployeeOrdersAndStepsComponent,CalendarComponent, SearchBarComponent
+    ConfirmationDialogComponent, OrdersAwaitingDentalDesignComponent, DentalDesignApprovalComponent, EmployeeOrdersAndStepsComponent,CalendarComponent, SearchBarComponent, EventModalComponent, ProcededuralTimelineViewComponent
   ],
   imports: [
     BrowserModule,

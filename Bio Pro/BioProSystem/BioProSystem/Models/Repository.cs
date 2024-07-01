@@ -122,7 +122,7 @@ namespace BioProSystem.Models
 
         public async Task<OrderWorkflowTimeline> GetOrdertimeFlowBySystemOrderId(string systemOrderId)
         {
-            IQueryable<OrderWorkflowTimeline> query = _appDbContext.OrderWorkflowTimelines.Where(o => o.SystemOrderId == systemOrderId);
+            IQueryable<OrderWorkflowTimeline> query = _appDbContext.OrderWorkflowTimelines.Where(o => o.SystemOrderId == systemOrderId).Include(o=>o.systemOrder);
             return await query.FirstOrDefaultAsync();
         }
         public async Task<OpenOrder> GetOpenOrdersAsync(int openOrderID)
@@ -211,7 +211,7 @@ namespace BioProSystem.Models
         }
         public async Task<List<SystemOrder>> GetOrdersInProgressAndNoTimeline()
         {
-            IQueryable<SystemOrder> query = _appDbContext.SystemOrders.Where(c => c.OrderStatusId == 2).Include(o => o.OrderWorkflowTimeline).Where(ow => ow.OrderWorkflowTimeline.TimelineId == null);
+            IQueryable<SystemOrder> query = _appDbContext.SystemOrders.Where(c => c.OrderStatusId == 4).Include(o => o.OrderWorkflowTimeline).Where(ow => ow.OrderWorkflowTimeline.TimelineId == null);
             return await query.ToListAsync();
         }
         public async Task<bool> CheckSystemPatient(string medicalAidNumber)
@@ -466,6 +466,19 @@ namespace BioProSystem.Models
         public async Task<List<CalanderScheduleEvent>> GetAllScheduledEvents()
         {
             return await _appDbContext.CalanderScheduleEvents.Include(c=>c.Calander).ToListAsync();
+        } 
+        public async Task<List<Calander>> GetAllCalendar()
+        {
+            return await _appDbContext.Calanders.Include(c=>c.Timeline).Include(c => c.Events).ToListAsync();
+        }
+        public async Task<List<ProceduralTimeline>> GetAllProceduralTimelinesAsync()
+        {
+            List<ProceduralTimeline> proceduralTimelines = await _appDbContext.ProceduralTimelines.Include(t=>t.OrderWorkflowTimeline).ThenInclude(ow=>ow.systemOrder).OrderByDescending(t => t.TimeStamp).ToListAsync();
+            return proceduralTimelines;
+        }
+        public async Task<CalanderScheduleEvent> GetScheduledEventById(int id)
+        {
+            return await _appDbContext.CalanderScheduleEvents.Where(c => c.CalanderScheduleEventId==id).FirstOrDefaultAsync();
         }
         public async Task<EmployeeDailyHours> GetEmployeeDailyHoursById(int employeedDailyHoursId)
         {
