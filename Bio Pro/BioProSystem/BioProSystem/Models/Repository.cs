@@ -512,66 +512,43 @@ namespace BioProSystem.Models
             return stockCategories;
         }
 
-        public async Task<List<Employee>> GetEmployeeWeeklyHours()
+        public async Task<List<Employee>> GetEmployeesWithMonthlyHours()
         {
-            try
-            {
-                // Step 1: Fetch employee daily hours with employee data included
-                var employeeDailyHours = await _appDbContext.EmployeeDailyHours
-                    .Include(edh => edh.Employees)
-                    .ToListAsync();
-
-                // Step 2: Calculate weekly hours grouped by EmployeeId and week
-                var employeeWeeklyHours = employeeDailyHours
-                    .SelectMany(edh => edh.Employees.Select(emp => new
-                    {
-                        emp.EmployeeId,
-                        Week = GetIso8601WeekOfYear(edh.WorkDate),
-                        Hours = edh.Hours
-                    }))
-                    .GroupBy(e => new { e.EmployeeId, e.Week })
-                    .Select(g => new
-                    {
-                        g.Key.EmployeeId,
-                        g.Key.Week,
-                        TotalHours = g.Sum(e => e.Hours)
-                    })
-                    .ToList();
-
-                // Step 3: Fetch employees and include their daily hours
+           
+            
                 var employees = await _appDbContext.Employees
                     .Include(e => e.EmployeeDailyHours)
                     .ToListAsync();
 
-                // Step 4: Map weekly hours to employees
                 foreach (var employee in employees)
                 {
-                    var weeklyHours = new List<(int Week, decimal TotalHours)>();
-
-                    foreach (var weekGroup in employeeWeeklyHours.Where(e => e.EmployeeId == employee.EmployeeId))
+                    if (employee.EmployeeDailyHours != null && employee.EmployeeDailyHours.Any())
                     {
-                        weeklyHours.Add((weekGroup.Week, weekGroup.TotalHours));
-                    }
+                        var monthlyHours = employee.EmployeeDailyHours
+                            .GroupBy(dh => new { Month = dh.WorkDate.Month, Year = dh.WorkDate.Year })
+                            .Select(g => new
+                            {
+                                Month = g.Key.Month,
+                                Year = g.Key.Year,
+                                TotalHours = g.Sum(dh => dh.Hours)
+                            })
+                            .ToList();
 
-                    // Assign weekly hours to Employee
-                    employee.WeeklyHours = weeklyHours;
+                        employee.MonthlyHours = monthlyHours.Select(mh => (Month: mh.Month, Year: mh.Year, TotalHours: mh.TotalHours)).ToList();
+                    }
+                    else
+                    {
+                        employee.MonthlyHours = new List<(int Month, int Year, decimal TotalHours)>();
+                    }
                 }
 
                 return employees;
-            }
-            catch (Exception ex)
-            {
-                // Log the exception (ex) here as needed
-                throw new ApplicationException("Error fetching employee weekly hours.", ex);
-            }
         }
+            
 
-        private int GetIso8601WeekOfYear(DateTime date)
-        {
-            var thursday = date.AddDays(3 - ((int)date.DayOfWeek + 6) % 7);
-            return CultureInfo.InvariantCulture.Calendar.GetWeekOfYear(thursday, CalendarWeekRule.FirstFourDayWeek, DayOfWeek.Monday);
-        }
+
     }
+    
 }
 
 

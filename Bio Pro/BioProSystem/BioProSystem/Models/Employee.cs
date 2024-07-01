@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -36,8 +37,5 @@ public partial class Employee
     public virtual ICollection<SystemOrderSteps> SystemOrderSteps { get; set; } = new List<SystemOrderSteps>();
     public virtual SystemUser SystemUser { get; set; } = null!;
 
-    //report
-
-    [NotMapped]
-    public List<(int Week, decimal TotalHours)> WeeklyHours { get; set; } = null;
+    public List<(int Month, int Year, decimal TotalHours)> MonthlyHours { get; set; } = new List<(int Month, int Year, decimal TotalHours)>();
 }

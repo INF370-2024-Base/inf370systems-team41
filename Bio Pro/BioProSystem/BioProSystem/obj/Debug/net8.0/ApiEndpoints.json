@@ -627,8 +627,8 @@
   },
   {
     "ContainingType": "BioProSystem.Controllers.ReportsController",
-    "Method": "EmployeeWeeklyHours",
-    "RelativePath": "api/Reports/EmployeeWeeklyHours",
+    "Method": "EmployeeMonthlyHours",
+    "RelativePath": "api/Reports/EmployeeMonthlyHours",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
