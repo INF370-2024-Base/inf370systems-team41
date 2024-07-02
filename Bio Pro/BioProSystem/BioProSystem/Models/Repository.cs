@@ -529,8 +529,39 @@ namespace BioProSystem.Models
         }
 
 
+        public async Task<IEnumerable<OrderTypeWithCountDto>> GetOrderTypesWithOrderCountAsync()
+        {
+            var orderTypesWithCounts = await _appDbContext.OrderTypes
+                .Include(ot => ot.systemOrders)
+                .Select(ot => new OrderTypeWithCountDto
+                {
+                    OrderTypeId = ot.OrderTypeId,
+                    Description = ot.Description,
+                    OrderCount = ot.systemOrders.Count
+                })
+                .ToListAsync();
+
+            return orderTypesWithCounts;
+        }
+
+        public async Task<IEnumerable<StockWriteOffViewModel>> GetAllStockWriteOffsAsync()
+        {
+            return await (from swo in _appDbContext.StockWriteOffs
+                          join s in _appDbContext.Stocks on swo.StockId equals s.StockId
+                          select new StockWriteOffViewModel
+                          {
+                              StockWriteOffId = swo.StockWriteOffId,
+                              StockId = swo.StockId,
+                              StockName = s.StockName,
+                              QuantityWrittenOff = swo.QuantityWrittenOff,
+                              WrittenOffDate = swo.WriteOffDate,
+                              Reason = swo.Reason
+                          }).ToListAsync();
+        }
     }
 
 }
+
+
 
 

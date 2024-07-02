@@ -82,6 +82,9 @@ namespace BioProSystem.Models
         Task<List<StockType>> GetStockTypesCountByCategory();
         Task<List<StockCategory>> GetStockItemsCountByCategory();
         Task<List<EmployeeHoursReport>> GetEmployeesWithMonthlyHours();
+        Task<IEnumerable<OrderTypeWithCountDto>> GetOrderTypesWithOrderCountAsync();
+
+        Task<IEnumerable<StockWriteOffViewModel>> GetAllStockWriteOffsAsync();
 
     }
 }

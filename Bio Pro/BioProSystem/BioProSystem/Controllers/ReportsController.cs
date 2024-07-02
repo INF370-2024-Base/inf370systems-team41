@@ -99,5 +99,40 @@ namespace BioProSystem.Controllers
 
         }
 
+
+        [HttpGet("ordertypes/with-order-count")]
+        public async Task<IActionResult> GetOrderTypesWithOrderCount()
+        {
+            try
+            {
+                var orderTypesWithCounts = await _repository.GetOrderTypesWithOrderCountAsync();
+                return Ok(orderTypesWithCounts);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal Server Error: {ex.Message}");
+            }
+        }
+
+        [HttpGet]
+        [Route("GetAllStockWriteOffs")]
+        public async Task<IActionResult> GetAllStockWriteOffs()
+        {
+            try
+            {
+                var stockWriteOffs = await _repository.GetAllStockWriteOffsAsync();
+                if (stockWriteOffs == null || !stockWriteOffs.Any())
+                {
+                    return NotFound("No stock write-offs found.");
+                }
+
+                return Ok(stockWriteOffs);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+        }
+
     }
 }

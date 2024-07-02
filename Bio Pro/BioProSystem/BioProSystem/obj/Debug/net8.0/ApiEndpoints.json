@@ -637,8 +637,28 @@
   },
   {
     "ContainingType": "BioProSystem.Controllers.ReportsController",
+    "Method": "GetAllStockWriteOffs",
+    "RelativePath": "api/Reports/GetAllStockWriteOffs",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "BioProSystem.Controllers.ReportsController",
     "Method": "GetEmployeesWithMonthlyHours",
     "RelativePath": "api/Reports/GetEmployeesWithMonthlyHours",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "BioProSystem.Controllers.ReportsController",
+    "Method": "GetOrderTypesWithOrderCount",
+    "RelativePath": "api/Reports/ordertypes/with-order-count",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
