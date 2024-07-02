@@ -43,6 +43,7 @@ import { AddStockComponent } from './add-stock/add-stock.component';
 import { StockComponent } from './stock/stock.component';
 import { WriteOffModalComponent } from './write-off-modal/write-off-modal.component';
 import { CaptureNewStockModalComponent } from './capture-new-stock-modal/capture-new-stock-modal.component';
+import { EditUserComponent } from './edit-user/edit-user.component';
 
 
 @NgModule({
@@ -58,7 +59,7 @@ import { CaptureNewStockModalComponent } from './capture-new-stock-modal/capture
     EmployeeProfileComponent,
     CaptureEmployeeHoursComponent,LoginComponent,EditOrderModalComponent, AddUserComponent, AddProceduralTimeline, DeliveriesComponent, AddDeliveryComponent, HomeComponent, TestingBackendComponent, ConfirmationDialogComponent, OrdersAwaitingDentalDesignComponent, DentalDesignApprovalComponent,
     UserProfileComponent, 
-    EditEmployeeDialogComponent, DailyHoursProfileComponent, AddStockComponent, StockComponent, WriteOffModalComponent, CaptureNewStockModalComponent,
+    EditEmployeeDialogComponent, DailyHoursProfileComponent, AddStockComponent, StockComponent, WriteOffModalComponent, CaptureNewStockModalComponent, EditUserComponent,
   ],
   imports: [
     BrowserModule,

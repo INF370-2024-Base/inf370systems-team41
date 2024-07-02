@@ -21,7 +21,7 @@ import { DentalDesignApprovalComponent } from './dental-design-approval/dental-d
 import { DailyHoursProfileComponent } from './daily-hours-profile/daily-hours-profile.component';
 import { AddStockComponent } from './add-stock/add-stock.component';
 import { StockComponent } from './stock/stock.component';
-
+import { EditUserComponent } from './edit-user/edit-user.component';
 
 const routes: Routes = [
   
@@ -49,6 +49,7 @@ const routes: Routes = [
   {path: 'dailyHoursProfile', component: DailyHoursProfileComponent},
   {path: 'addStock', component: AddStockComponent},
   {path: 'pageStock', component: StockComponent},
+  { path: 'edit-user', component: EditUserComponent },
 ];
 
 @NgModule({
