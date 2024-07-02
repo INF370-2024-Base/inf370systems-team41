@@ -10,7 +10,8 @@ import { EmployeeMonthlyHours } from '../shared/EmployeeMonthlyHours';
 import { StockTypeCountByCategory } from '../shared/StockTypeCountByCategory';
 import {StockItemCountByCategory} from '../shared/StockItemCountByCategory';
 import { ReportsComponent } from '../reports/reports.component';
-
+import { EmployeeHoursReport } from '../shared/EmployeeHoursReport';
+import { DatePipe } from '@angular/common';
 
 @Injectable({
   providedIn: 'root'
@@ -25,7 +26,7 @@ export class ReportsServices {
     })
   }
 
-  constructor(private httpClient: HttpClient) { 
+  constructor(private httpClient: HttpClient, private datePipe: DatePipe) { 
   }
   
  
@@ -62,7 +63,12 @@ export class ReportsServices {
     return this.httpClient.get<EmployeeMonthlyHours[]>(`${this.apiUrl}GetEmployeesWithMonthlyHours`, this.httpOptions)
       .pipe(map(result => result));
   }
-  
+  // Method to get employees with weekly hours
+  getEmployeesWithWeeklyHours(): Observable<EmployeeHoursReport[]> {
+    return this.httpClient.get<EmployeeHoursReport[]>(`${this.apiUrl}GetEmployeesWithWeeklyHours`, this.httpOptions)
+      .pipe(map(result => result));
+  }
+
 }
 
 

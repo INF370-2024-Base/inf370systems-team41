@@ -657,6 +657,16 @@
   },
   {
     "ContainingType": "BioProSystem.Controllers.ReportsController",
+    "Method": "GetEmployeesWithWeeklyHours",
+    "RelativePath": "api/Reports/GetEmployeesWithWeeklyHours",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "BioProSystem.Controllers.ReportsController",
     "Method": "GetOrderTypesWithOrderCount",
     "RelativePath": "api/Reports/ordertypes/with-order-count",
     "HttpMethod": "GET",

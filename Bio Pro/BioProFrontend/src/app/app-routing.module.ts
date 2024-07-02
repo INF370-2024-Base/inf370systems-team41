@@ -21,6 +21,7 @@ import { DentalDesignApprovalComponent } from './dental-design-approval/dental-d
 import { ReportsServices } from './services/reports';
 import { StockItemCountByCategory } from './shared/StockItemCountByCategory';
 import { StockTypeCountByCategory } from './shared/StockTypeCountByCategory';
+import { EmployeeHoursReport } from './shared/EmployeeHoursReport';
 
 
 const routes: Routes = [

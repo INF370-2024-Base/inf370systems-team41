@@ -36,6 +36,7 @@ import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-
 import { OrdersAwaitingDentalDesignComponent } from './orders-awaiting-dental-design/orders-awaiting-dental-design.component';
 import { DentalDesignApprovalComponent } from './dental-design-approval/dental-design-approval.component';
 import { ReportsComponent } from './reports/reports.component';
+import { EmployeeHoursReport } from './shared/EmployeeHoursReport';
 import { DatePipe } from '@angular/common';
 
 

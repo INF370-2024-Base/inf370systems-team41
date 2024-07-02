@@ -1,80 +1,95 @@
-<p>reports works!</p>
+<p>Reports Works!</p>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
 
 <div class="reports-container">
-    <div class="report-section">
-      <h2>All Orders Report</h2>
-      <table>
+  <div class="report-section">
+    <h2>All Orders Report</h2>
+    <table>
+      <thead>
         <tr>
           <th>Order ID</th>
           <th>Dentist ID</th>
-          <th>Order Date</th>
           <th>Patient Name</th>
-          <!-- <th>Order Date</th> -->
+          <th>Order Date</th>
           <!-- Add other columns as needed -->
         </tr>
+      </thead>
+      <tbody>
         <tr *ngFor="let order of orders">
-          <td>{{ order.OrderId }}</td>
-          <td>{{ order.DentistId }}</td>
-          <td>{{ order.PatientName }} {{ order.PatientSurname }}</td>
-          <!-- <td>{{ order.OrderDate | date:'yyyy-MM-dd'}}</td> -->
+          <td>{{ order.orderId }}</td>
+          <td>{{ order.dentistId }}</td>
+          <td>{{ order.patientName }} {{ order.patientSurname }}</td>
+          <td>{{ order.orderDate | date:'yyyy-MM-dd' }}</td>
           <!-- Add other columns as needed -->
         </tr>
-      </table>
-    </div>
-  
-    <div class="report-section">
-      <h2>Stock Types Count By Category Report</h2>
-      <table>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="report-section">
+    <h2>Stock Types Count By Category Report</h2>
+    <table>
+      <thead>
         <tr>
           <th>Category</th>
           <th>Stock Type Count</th>
         </tr>
+      </thead>
+      <tbody>
         <tr *ngFor="let stockType of stockTypes">
-          <td>{{ stockType.Category }}</td>
-          <td>{{ stockType.Count }}</td>
+          <td>{{ stockType.category }}</td>
+          <td>{{ stockType.count }}</td>
         </tr>
-      </table>
-    </div>
-  
-    <div class="report-section">
-      <h2>Stock Items Count By Category Report</h2>
-      <table>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="report-section">
+    <h2>Stock Items Count By Category Report</h2>
+    <table>
+      <thead>
         <tr>
           <th>Category</th>
           <th>Stock Item Count</th>
         </tr>
+      </thead>
+      <tbody>
         <tr *ngFor="let stockItem of stockItems">
-          <td>{{ stockItem.Category }}</td>
-          <td>{{ stockItem.Count }}</td>
+          <td>{{ stockItem.category }}</td>
+          <td>{{ stockItem.count }}</td>
         </tr>
-      </table>
-    </div>
-  
-    <div class="report-section">
-      <h2>Stock Write-Offs Report</h2>
-      <table>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="report-section">
+    <h2>Stock Write-Offs Report</h2>
+    <table>
+      <thead>
         <tr>
           <th>Stock Name</th>
           <th>Quantity Written Off</th>
-          <!-- <th>Write-Off Date</th> -->
+          <th>Write-Off Date</th>
           <th>Reason</th>
         </tr>
+      </thead>
+      <tbody>
         <tr *ngFor="let writeOff of stockWriteOffs">
           <td>{{ writeOff.stockName }}</td>
           <td>{{ writeOff.quantityWrittenOff }}</td>
-          <!-- <td>{{ writeOff.writtenOffDate | date: 'yyyy-MM-dd' }}</td> -->
+          <td>{{ writeOff.writtenOffDate | date:'yyyy-MM-dd' }}</td>
           <td>{{ writeOff.reason }}</td>
         </tr>
-      </table>
-      <div>
-        <strong>Total Quantity Written Off:</strong> {{ totalQuantityWrittenOff }}
-      </div>
-    </div>
-  
-    <div class="report-section">
-      <h2>Employee Monthly Hours Report</h2>
-      <canvas id="canvas"></canvas>
+      </tbody>
+    </table>
+    <div>
+      <strong>Total Quantity Written Off:</strong> {{ totalQuantityWrittenOff }}
     </div>
   </div>
-  
+
+  <div class="report-section">
+    <h2>Employee Monthly Hours Report</h2>
+    <canvas id="canvas"></canvas>
+  </div>
+</div>
+

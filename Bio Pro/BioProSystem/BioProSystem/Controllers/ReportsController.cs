@@ -99,6 +99,22 @@ namespace BioProSystem.Controllers
 
         }
 
+        [HttpGet]
+        [Route("GetEmployeesWithWeeklyHours")]
+        public async Task<IActionResult> GetEmployeesWithWeeklyHours()
+        {
+            var result = await _repository.GetEmployeesWithWeeklyHours();
+            if (result != null)
+            {
+                return Ok(result);
+            }
+            else
+            {
+                return NotFound("No Jobtitles found");
+            }
+        }
+
+
 
         [HttpGet("ordertypes/with-order-count")]
         public async Task<IActionResult> GetOrderTypesWithOrderCount()

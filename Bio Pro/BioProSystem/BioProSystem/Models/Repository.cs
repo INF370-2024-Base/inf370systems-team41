@@ -528,6 +528,40 @@ namespace BioProSystem.Models
             return employeeMonthlyHours;
         }
 
+        public async Task<List<EmployeeHoursReport>> GetEmployeesWithWeeklyHours()
+        {
+            // Fetch data from the database first
+            var employeeDailyHours = await _appDbContext.EmployeeDailyHours
+                .Include(e => e.Employees)
+                .ToListAsync();
+
+            // Process data in memory
+            var employeeWeeklyHours = employeeDailyHours
+                .GroupBy(e => new
+                {
+                    EmployeeId = e.Employees.FirstOrDefault()?.EmployeeId ?? 0,
+                    Year = e.WorkDate.Year,
+                    Week = GetWeekNumber(e.WorkDate)
+                })
+                .Select(g => new EmployeeHoursReport
+                {
+                    Employee = g.Select(e => e.Employees.FirstOrDefault()).FirstOrDefault(),
+                    Year = g.Key.Year,
+                    Month = g.Key.Week / 4,  // Roughly approximate month, you may adjust as needed
+                    Week = g.Key.Week,
+                    TotalHours = g.Sum(x => x.Hours)
+                })
+                .ToList();
+
+            return employeeWeeklyHours;
+        }
+
+        public static int GetWeekNumber(DateTime date)
+        {
+            return CultureInfo.CurrentCulture.Calendar.GetWeekOfYear(date, CalendarWeekRule.FirstDay, DayOfWeek.Monday);
+        }
+
+
 
         public async Task<IEnumerable<OrderTypeWithCountDto>> GetOrderTypesWithOrderCountAsync()
         {

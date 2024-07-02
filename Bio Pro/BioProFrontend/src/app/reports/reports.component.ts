@@ -1,17 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ReportsServices } from '../services/reports';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { map, Observable, Subject } from 'rxjs';
-import { OpenOrder } from '../shared/openorder';
 import { SystemOrderViewModel } from '../shared/SystemOrderViewModel ';
-import { addUser } from '../shared/adduser';
-import { ResetPassword, UpdateUser } from '../shared/UpdateUser';
-import {  StockWriteOffViewModel } from '../shared/Stock';
+import { StockWriteOffViewModel } from '../shared/Stock';
 import { OrderTypeWithCount } from '../shared/OrderTypeWithCount';
 import { EmployeeMonthlyHours } from '../shared/EmployeeMonthlyHours';
 import { StockTypeCountByCategory } from '../shared/StockTypeCountByCategory';
-import {StockItemCountByCategory} from '../shared/StockItemCountByCategory';
+import { StockItemCountByCategory } from '../shared/StockItemCountByCategory';
 import Chart from 'chart.js/auto'; 
 import { DatePipe } from '@angular/common';
 
@@ -29,7 +23,6 @@ export class ReportsComponent implements OnInit {
   employeeHours: EmployeeMonthlyHours[] = [];
   totalQuantityWrittenOff: number = 0;
   chart: any;
-
 
   constructor(private reportsService: ReportsServices) { }
 
@@ -78,8 +71,8 @@ export class ReportsComponent implements OnInit {
   }
 
   createChart() {
-    const labels = this.employeeHours.map(e => e.employeeName);
-    const hours = this.employeeHours.map(e => e.totalMonthlyHours);
+    const labels = this.employeeHours.map(e => e.employeeName); // Corrected property name
+    const hours = this.employeeHours.map(e => e.totalMonthlyHours); // Corrected property name
 
     this.chart = new Chart('canvas', {
       type: 'bar',

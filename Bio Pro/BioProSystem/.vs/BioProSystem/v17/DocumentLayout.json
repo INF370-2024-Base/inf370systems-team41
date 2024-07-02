@@ -15,6 +15,10 @@
       "RelativeMoniker": "D:0:0:{F4A9456E-E44A-4271-BCB7-291A4F4ADE4E}|BioProSystem\\BioProSystem.csproj|solutionrelative:bioprosystem\\models\\irepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{F4A9456E-E44A-4271-BCB7-291A4F4ADE4E}|BioProSystem\\BioProSystem.csproj|c:\\users\\leze7\\desktop\\uni 2024\\inf 370\\project\\a2\\bio pro\\bioprosystem\\bioprosystem\\viewmodels\\employeehoursreport.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F4A9456E-E44A-4271-BCB7-291A4F4ADE4E}|BioProSystem\\BioProSystem.csproj|solutionrelative:bioprosystem\\viewmodels\\employeehoursreport.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{F4A9456E-E44A-4271-BCB7-291A4F4ADE4E}|BioProSystem\\BioProSystem.csproj|c:\\users\\leze7\\desktop\\uni 2024\\inf 370\\project\\a2\\bio pro\\bioprosystem\\bioprosystem\\models\\stockwriteoff.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{F4A9456E-E44A-4271-BCB7-291A4F4ADE4E}|BioProSystem\\BioProSystem.csproj|solutionrelative:bioprosystem\\models\\stockwriteoff.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -45,10 +49,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{F4A9456E-E44A-4271-BCB7-291A4F4ADE4E}|BioProSystem\\BioProSystem.csproj|c:\\users\\leze7\\desktop\\uni 2024\\inf 370\\project\\a2\\bio pro\\bioprosystem\\bioprosystem\\controllers\\ordercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{F4A9456E-E44A-4271-BCB7-291A4F4ADE4E}|BioProSystem\\BioProSystem.csproj|solutionrelative:bioprosystem\\controllers\\ordercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F4A9456E-E44A-4271-BCB7-291A4F4ADE4E}|BioProSystem\\BioProSystem.csproj|c:\\users\\leze7\\desktop\\uni 2024\\inf 370\\project\\a2\\bio pro\\bioprosystem\\bioprosystem\\viewmodels\\employeehoursreport.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F4A9456E-E44A-4271-BCB7-291A4F4ADE4E}|BioProSystem\\BioProSystem.csproj|solutionrelative:bioprosystem\\viewmodels\\employeehoursreport.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{F4A9456E-E44A-4271-BCB7-291A4F4ADE4E}|BioProSystem\\BioProSystem.csproj|c:\\users\\leze7\\desktop\\uni 2024\\inf 370\\project\\a2\\bio pro\\bioprosystem\\bioprosystem\\viewmodels\\openorderviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -279,7 +279,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Document",
@@ -289,23 +289,10 @@
               "RelativeDocumentMoniker": "BioProSystem\\Models\\Repository.cs",
               "ToolTip": "C:\\Users\\leze7\\Desktop\\UNI 2024\\INF 370\\Project\\A2\\Bio Pro\\BioProSystem\\BioProSystem\\Models\\Repository.cs",
               "RelativeToolTip": "BioProSystem\\Models\\Repository.cs",
-              "ViewState": "AQIAABACAAAAAAAAAAAwwCUCAAAxAAAA",
+              "ViewState": "AQIAABUCAAAAAAAAAAAYwDICAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-06-26T09:29:27.108Z",
               "IsPinned": true,
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "StockWriteOffViewModel.cs",
-              "DocumentMoniker": "C:\\Users\\leze7\\Desktop\\UNI 2024\\INF 370\\Project\\A2\\Bio Pro\\BioProSystem\\BioProSystem\\ViewModels\\StockWriteOffViewModel.cs",
-              "RelativeDocumentMoniker": "BioProSystem\\ViewModels\\StockWriteOffViewModel.cs",
-              "ToolTip": "C:\\Users\\leze7\\Desktop\\UNI 2024\\INF 370\\Project\\A2\\Bio Pro\\BioProSystem\\BioProSystem\\ViewModels\\StockWriteOffViewModel.cs",
-              "RelativeToolTip": "BioProSystem\\ViewModels\\StockWriteOffViewModel.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-26T09:29:27.126Z",
               "EditorCaption": ""
             },
             {
@@ -316,14 +303,14 @@
               "RelativeDocumentMoniker": "BioProSystem\\Controllers\\ReportsController.cs",
               "ToolTip": "C:\\Users\\leze7\\Desktop\\UNI 2024\\INF 370\\Project\\A2\\Bio Pro\\BioProSystem\\BioProSystem\\Controllers\\ReportsController.cs",
               "RelativeToolTip": "BioProSystem\\Controllers\\ReportsController.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAIUAAAANAAAA",
+              "ViewState": "AQIAAFYAAAAAAAAAAADwv3MAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-06-26T09:30:04.92Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 7,
               "Title": "SystemOrderAddViewModel .cs",
               "DocumentMoniker": "C:\\Users\\leze7\\Desktop\\UNI 2024\\INF 370\\Project\\A2\\Bio Pro\\BioProSystem\\BioProSystem\\ViewModels\\SystemOrderAddViewModel .cs",
               "RelativeDocumentMoniker": "BioProSystem\\ViewModels\\SystemOrderAddViewModel .cs",
@@ -335,7 +322,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 4,
               "Title": "StockWriteOff.cs",
               "DocumentMoniker": "C:\\Users\\leze7\\Desktop\\UNI 2024\\INF 370\\Project\\A2\\Bio Pro\\BioProSystem\\BioProSystem\\Models\\StockWriteOff.cs",
               "RelativeDocumentMoniker": "BioProSystem\\Models\\StockWriteOff.cs",
@@ -354,14 +341,40 @@
               "RelativeDocumentMoniker": "BioProSystem\\Models\\IRepository.cs",
               "ToolTip": "C:\\Users\\leze7\\Desktop\\UNI 2024\\INF 370\\Project\\A2\\Bio Pro\\BioProSystem\\BioProSystem\\Models\\IRepository.cs",
               "RelativeToolTip": "BioProSystem\\Models\\IRepository.cs",
-              "ViewState": "AQIAAEQAAAAAAAAAAAAqwFYAAABOAAAA",
+              "ViewState": "AQIAAEQAAAAAAAAAAAAqwFQAAABGAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-06-26T09:29:27.106Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "EmployeeHoursReport.cs",
+              "DocumentMoniker": "C:\\Users\\leze7\\Desktop\\UNI 2024\\INF 370\\Project\\A2\\Bio Pro\\BioProSystem\\BioProSystem\\ViewModels\\EmployeeHoursReport.cs",
+              "RelativeDocumentMoniker": "BioProSystem\\ViewModels\\EmployeeHoursReport.cs",
+              "ToolTip": "C:\\Users\\leze7\\Desktop\\UNI 2024\\INF 370\\Project\\A2\\Bio Pro\\BioProSystem\\BioProSystem\\ViewModels\\EmployeeHoursReport.cs",
+              "RelativeToolTip": "BioProSystem\\ViewModels\\EmployeeHoursReport.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAkAAAAmAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-07-01T12:51:43.236Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 5,
+              "Title": "StockWriteOffViewModel.cs",
+              "DocumentMoniker": "C:\\Users\\leze7\\Desktop\\UNI 2024\\INF 370\\Project\\A2\\Bio Pro\\BioProSystem\\BioProSystem\\ViewModels\\StockWriteOffViewModel.cs",
+              "RelativeDocumentMoniker": "BioProSystem\\ViewModels\\StockWriteOffViewModel.cs",
+              "ToolTip": "C:\\Users\\leze7\\Desktop\\UNI 2024\\INF 370\\Project\\A2\\Bio Pro\\BioProSystem\\BioProSystem\\ViewModels\\StockWriteOffViewModel.cs",
+              "RelativeToolTip": "BioProSystem\\ViewModels\\StockWriteOffViewModel.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-26T09:29:27.126Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
               "Title": "Stock.cs",
               "DocumentMoniker": "C:\\Users\\leze7\\Desktop\\UNI 2024\\INF 370\\Project\\A2\\Bio Pro\\BioProSystem\\BioProSystem\\Models\\Stock.cs",
               "RelativeDocumentMoniker": "BioProSystem\\Models\\Stock.cs",
@@ -373,7 +386,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 8,
               "Title": "StockController.cs",
               "DocumentMoniker": "C:\\Users\\leze7\\Desktop\\UNI 2024\\INF 370\\Project\\A2\\Bio Pro\\BioProSystem\\BioProSystem\\Controllers\\StockController.cs",
               "RelativeDocumentMoniker": "BioProSystem\\Controllers\\StockController.cs",
@@ -385,7 +398,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 10,
               "Title": "SystemOrder.cs",
               "DocumentMoniker": "C:\\Users\\leze7\\Desktop\\UNI 2024\\INF 370\\Project\\A2\\Bio Pro\\BioProSystem\\BioProSystem\\Models\\SystemOrder.cs",
               "RelativeDocumentMoniker": "BioProSystem\\Models\\SystemOrder.cs",
@@ -397,7 +410,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 11,
               "Title": "OrderController.cs",
               "DocumentMoniker": "C:\\Users\\leze7\\Desktop\\UNI 2024\\INF 370\\Project\\A2\\Bio Pro\\BioProSystem\\BioProSystem\\Controllers\\OrderController.cs",
               "RelativeDocumentMoniker": "BioProSystem\\Controllers\\OrderController.cs",
@@ -421,7 +434,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 9,
               "Title": "OrderTypeWithCountDto.cs",
               "DocumentMoniker": "C:\\Users\\leze7\\Desktop\\UNI 2024\\INF 370\\Project\\A2\\Bio Pro\\BioProSystem\\BioProSystem\\ViewModels\\OrderTypeWithCountDto.cs",
               "RelativeDocumentMoniker": "BioProSystem\\ViewModels\\OrderTypeWithCountDto.cs",
@@ -442,18 +455,6 @@
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAQAAAAqAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-06-26T09:29:27.28Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 11,
-              "Title": "EmployeeHoursReport.cs",
-              "DocumentMoniker": "C:\\Users\\leze7\\Desktop\\UNI 2024\\INF 370\\Project\\A2\\Bio Pro\\BioProSystem\\BioProSystem\\ViewModels\\EmployeeHoursReport.cs",
-              "RelativeDocumentMoniker": "BioProSystem\\ViewModels\\EmployeeHoursReport.cs",
-              "ToolTip": "C:\\Users\\leze7\\Desktop\\UNI 2024\\INF 370\\Project\\A2\\Bio Pro\\BioProSystem\\BioProSystem\\ViewModels\\EmployeeHoursReport.cs",
-              "RelativeToolTip": "BioProSystem\\ViewModels\\EmployeeHoursReport.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAwAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-01T12:51:43.236Z"
             },
             {
               "$type": "Document",
