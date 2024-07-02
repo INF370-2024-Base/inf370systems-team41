@@ -63,7 +63,7 @@ export class ReportsServices {
     return this.httpClient.get<EmployeeMonthlyHours[]>(`${this.apiUrl}GetEmployeesWithMonthlyHours`, this.httpOptions)
       .pipe(map(result => result));
   }
-  // Method to get employees with weekly hours
+
   getEmployeesWithWeeklyHours(): Observable<EmployeeHoursReport[]> {
     return this.httpClient.get<EmployeeHoursReport[]>(`${this.apiUrl}GetEmployeesWithWeeklyHours`, this.httpOptions)
       .pipe(map(result => result));

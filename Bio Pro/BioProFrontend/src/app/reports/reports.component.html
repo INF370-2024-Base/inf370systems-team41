@@ -88,8 +88,11 @@
   </div>
 
   <div class="report-section">
-    <h2>Employee Monthly Hours Report</h2>
+    <h2>Employee Hours Report</h2>
+    <select [(ngModel)]="selectedPeriod" (change)="updateChart()">
+      <option value="monthly">Monthly Hours</option>
+      <option value="weekly">Weekly Hours</option>
+    </select>
     <canvas id="canvas"></canvas>
   </div>
-</div>
-
+  

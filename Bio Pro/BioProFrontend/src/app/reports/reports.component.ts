@@ -8,6 +8,7 @@ import { StockTypeCountByCategory } from '../shared/StockTypeCountByCategory';
 import { StockItemCountByCategory } from '../shared/StockItemCountByCategory';
 import Chart from 'chart.js/auto'; 
 import { DatePipe } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-reports',
@@ -20,9 +21,11 @@ export class ReportsComponent implements OnInit {
   stockTypes: StockTypeCountByCategory[] = [];
   stockItems: StockItemCountByCategory[] = [];
   stockWriteOffs: StockWriteOffViewModel[] = [];
-  employeeHours: EmployeeMonthlyHours[] = [];
+  //employeeHours: EmployeeMonthlyHours[] = [];
   totalQuantityWrittenOff: number = 0;
   chart: any;
+  employeeHours: any[] = [];
+  selectedPeriod: string = 'monthly';
 
   constructor(private reportsService: ReportsServices) { }
 
@@ -32,6 +35,7 @@ export class ReportsComponent implements OnInit {
     this.getStockItemsCountByCategory();
     this.getAllStockWriteOffs();
     this.getEmployeesWithMonthlyHours();
+    this.updateChart();
   }
 
   getAllOrders() {
@@ -63,16 +67,36 @@ export class ReportsComponent implements OnInit {
     this.totalQuantityWrittenOff = this.stockWriteOffs.reduce((sum, item) => sum + item.quantityWrittenOff, 0);
   }
 
+  updateChart() {
+    if (this.selectedPeriod === 'monthly') {
+      this.getEmployeesWithMonthlyHours();
+    } else if (this.selectedPeriod === 'weekly') {
+      this.getEmployeesWithWeeklyHours();
+    }
+  }
+
   getEmployeesWithMonthlyHours() {
     this.reportsService.getEmployeesWithMonthlyHours().subscribe(data => {
       this.employeeHours = data;
-      this.createChart();
+      const labels = this.employeeHours.map(e => e.employeeName);
+      const hours = this.employeeHours.map(e => e.totalMonthlyHours);
+      this.createChart(labels, hours, 'Monthly Hours');
     });
   }
 
-  createChart() {
-    const labels = this.employeeHours.map(e => e.employeeName); // Corrected property name
-    const hours = this.employeeHours.map(e => e.totalMonthlyHours); // Corrected property name
+  getEmployeesWithWeeklyHours() {
+    this.reportsService.getEmployeesWithWeeklyHours().subscribe(data => {
+      this.employeeHours = data;
+      const labels = this.employeeHours.map(e => e.employeeName);
+      const hours = this.employeeHours.map(e => e.totalWeeklyHours);
+      this.createChart(labels, hours, 'Weekly Hours');
+    });
+  }
+
+  createChart(labels: string[], data: number[], label: string) {
+    if (this.chart) {
+      this.chart.destroy();
+    }
 
     this.chart = new Chart('canvas', {
       type: 'bar',
@@ -80,8 +104,8 @@ export class ReportsComponent implements OnInit {
         labels: labels,
         datasets: [
           {
-            label: 'Monthly Hours',
-            data: hours,
+            label: label,
+            data: data,
             backgroundColor: 'rgba(54, 162, 235, 0.2)',
             borderColor: 'rgba(54, 162, 235, 1)',
             borderWidth: 1
