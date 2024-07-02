@@ -18,6 +18,9 @@ import { HomeComponent } from './home/home.component';
 import { TestingBackendComponent } from './testing-backend/testing-backend.component';
 import { OrdersAwaitingDentalDesignComponent } from './orders-awaiting-dental-design/orders-awaiting-dental-design.component';
 import { DentalDesignApprovalComponent } from './dental-design-approval/dental-design-approval.component';
+import { ReportsServices } from './services/reports';
+import { StockItemCountByCategory } from './shared/StockItemCountByCategory';
+import { StockTypeCountByCategory } from './shared/StockTypeCountByCategory';
 
 
 const routes: Routes = [
@@ -43,6 +46,7 @@ const routes: Routes = [
   {path: '', redirectTo: 'login', pathMatch: 'full'},
   {path: 'home', component: HomeComponent},
   {path: 'test', component: TestingBackendComponent},
+  {path : 'reports', component:ReportsServices},
 ];
 
 @NgModule({

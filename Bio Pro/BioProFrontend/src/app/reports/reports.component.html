@@ -1,0 +1,80 @@
+<p>reports works!</p>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+
+<div class="reports-container">
+    <div class="report-section">
+      <h2>All Orders Report</h2>
+      <table>
+        <tr>
+          <th>Order ID</th>
+          <th>Dentist ID</th>
+          <th>Order Date</th>
+          <th>Patient Name</th>
+          <!-- <th>Order Date</th> -->
+          <!-- Add other columns as needed -->
+        </tr>
+        <tr *ngFor="let order of orders">
+          <td>{{ order.OrderId }}</td>
+          <td>{{ order.DentistId }}</td>
+          <td>{{ order.PatientName }} {{ order.PatientSurname }}</td>
+          <!-- <td>{{ order.OrderDate | date:'yyyy-MM-dd'}}</td> -->
+          <!-- Add other columns as needed -->
+        </tr>
+      </table>
+    </div>
+  
+    <div class="report-section">
+      <h2>Stock Types Count By Category Report</h2>
+      <table>
+        <tr>
+          <th>Category</th>
+          <th>Stock Type Count</th>
+        </tr>
+        <tr *ngFor="let stockType of stockTypes">
+          <td>{{ stockType.Category }}</td>
+          <td>{{ stockType.Count }}</td>
+        </tr>
+      </table>
+    </div>
+  
+    <div class="report-section">
+      <h2>Stock Items Count By Category Report</h2>
+      <table>
+        <tr>
+          <th>Category</th>
+          <th>Stock Item Count</th>
+        </tr>
+        <tr *ngFor="let stockItem of stockItems">
+          <td>{{ stockItem.Category }}</td>
+          <td>{{ stockItem.Count }}</td>
+        </tr>
+      </table>
+    </div>
+  
+    <div class="report-section">
+      <h2>Stock Write-Offs Report</h2>
+      <table>
+        <tr>
+          <th>Stock Name</th>
+          <th>Quantity Written Off</th>
+          <!-- <th>Write-Off Date</th> -->
+          <th>Reason</th>
+        </tr>
+        <tr *ngFor="let writeOff of stockWriteOffs">
+          <td>{{ writeOff.stockName }}</td>
+          <td>{{ writeOff.quantityWrittenOff }}</td>
+          <!-- <td>{{ writeOff.writtenOffDate | date: 'yyyy-MM-dd' }}</td> -->
+          <td>{{ writeOff.reason }}</td>
+        </tr>
+      </table>
+      <div>
+        <strong>Total Quantity Written Off:</strong> {{ totalQuantityWrittenOff }}
+      </div>
+    </div>
+  
+    <div class="report-section">
+      <h2>Employee Monthly Hours Report</h2>
+      <canvas id="canvas"></canvas>
+    </div>
+  </div>
+  

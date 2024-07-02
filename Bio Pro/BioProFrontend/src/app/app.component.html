@@ -86,7 +86,15 @@
             New Delivery
           </a>
         </ng-container>
-      </mat-nav-list>
+      
+
+      <ng-container >
+        <a mat-list-item class="sub-nav-link" [routerLink]="['/reports']" (click)="isSidenavOpen = !isSidenavOpen">
+          <mat-icon>assessment</mat-icon> <!-- Icon for new order -->
+          Reports
+        </a>
+      </ng-container>
+    </mat-nav-list>
     </mat-sidenav>
     <mat-sidenav-content class="content-container">
       <div style="height: 88vh;">

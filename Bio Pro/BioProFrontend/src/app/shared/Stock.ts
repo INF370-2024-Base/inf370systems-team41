@@ -57,3 +57,4 @@ export class CaptureNewStockViewModel {
         this.amountAdded = amountAdded;
     }
 }
+

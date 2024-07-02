@@ -31,10 +31,13 @@ import { DeliveriesComponent } from './deliveries/deliveries.component';
 import { AddDeliveryComponent } from './add-delivery/add-delivery.component';
 import { HomeComponent } from './home/home.component';
 import { TestingBackendComponent } from './testing-backend/testing-backend.component';
-import { CommonModule, DatePipe } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-dialog.component';
 import { OrdersAwaitingDentalDesignComponent } from './orders-awaiting-dental-design/orders-awaiting-dental-design.component';
 import { DentalDesignApprovalComponent } from './dental-design-approval/dental-design-approval.component';
+import { ReportsComponent } from './reports/reports.component';
+import { DatePipe } from '@angular/common';
+
 
 
 @NgModule({
@@ -48,6 +51,7 @@ import { DentalDesignApprovalComponent } from './dental-design-approval/dental-d
     AddDentistComponent,
     DentistProfileComponent,
     EmployeeProfileComponent,
+    
     CaptureEmployeeHoursComponent,LoginComponent,EditOrderModalComponent, AddUserComponent, AddProceduralTimeline, DeliveriesComponent, AddDeliveryComponent, HomeComponent, TestingBackendComponent, ConfirmationDialogComponent, OrdersAwaitingDentalDesignComponent, DentalDesignApprovalComponent
   ],
   imports: [
@@ -56,6 +60,7 @@ import { DentalDesignApprovalComponent } from './dental-design-approval/dental-d
     ReactiveFormsModule,
     HttpClientModule,
     FormsModule,
+   
     BrowserAnimationsModule,
     MaterialModule,
     MatSnackBarModule,
@@ -64,6 +69,7 @@ import { DentalDesignApprovalComponent } from './dental-design-approval/dental-d
     MatCardModule,
     MatGridListModule,
     CommonModule,
+    
   ],
   providers: [DatePipe],
   bootstrap: [AppComponent]
