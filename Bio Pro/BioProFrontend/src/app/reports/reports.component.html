@@ -26,6 +26,27 @@
     </table>
   </div>
 
+  <div class="container">
+    <!-- Order Types Section -->
+    <div class="report-section">
+      <h2>Order Types Report</h2>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Order Type</th>
+            <th>Order Count</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let orderType of orderTypesWithCount">
+            <td>{{ orderType.orderType }}</td>
+            <td>{{ orderType.orderCount }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>  
+
   <div class="report-section">
     <h2>Stock Types Count By Category Report</h2>
     <table>
@@ -89,7 +110,7 @@
 
   <div class="report-section">
     <h2>Employee Hours Report</h2>
-    <select [(ngModel)]="selectedPeriod" (change)="updateChart()">
+    <select [(ngModel)]!="selectedPeriod" (change)="updateChart()">
       <option value="monthly">Monthly Hours</option>
       <option value="weekly">Weekly Hours</option>
     </select>

@@ -2,13 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { ReportsServices } from '../services/reports';
 import { SystemOrderViewModel } from '../shared/SystemOrderViewModel ';
 import { StockWriteOffViewModel } from '../shared/Stock';
-import { OrderTypeWithCount } from '../shared/OrderTypeWithCount';
 import { EmployeeMonthlyHours } from '../shared/EmployeeMonthlyHours';
 import { StockTypeCountByCategory } from '../shared/StockTypeCountByCategory';
 import { StockItemCountByCategory } from '../shared/StockItemCountByCategory';
 import Chart from 'chart.js/auto'; 
 import { DatePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { OrderTypeWithCount } from '../shared/OrderTypeWithCount';
 
 @Component({
   selector: 'app-reports',
@@ -18,6 +18,7 @@ import { FormsModule } from '@angular/forms';
 })
 export class ReportsComponent implements OnInit {
   orders: SystemOrderViewModel[] = [];
+  orderTypeWithCount: OrderTypeWithCount[] =[];
   stockTypes: StockTypeCountByCategory[] = [];
   stockItems: StockItemCountByCategory[] = [];
   stockWriteOffs: StockWriteOffViewModel[] = [];
@@ -33,6 +34,7 @@ export class ReportsComponent implements OnInit {
     this.getAllOrders();
     this.getStockTypesCountByCategory();
     this.getStockItemsCountByCategory();
+    this.getOrderTypesWithOrderCount();
     this.getAllStockWriteOffs();
     this.getEmployeesWithMonthlyHours();
     this.updateChart();
@@ -41,6 +43,12 @@ export class ReportsComponent implements OnInit {
   getAllOrders() {
     this.reportsService.getAllOrders().subscribe(data => {
       this.orders = data;
+    });
+  }
+
+  getOrderTypesWithOrderCount() {
+    this.reportsService.getOrderTypesWithOrderCount().subscribe(data => {
+      this.orderTypeWithCount = data;
     });
   }
 

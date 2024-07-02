@@ -22,6 +22,7 @@ import { ReportsServices } from './services/reports';
 import { StockItemCountByCategory } from './shared/StockItemCountByCategory';
 import { StockTypeCountByCategory } from './shared/StockTypeCountByCategory';
 import { EmployeeHoursReport } from './shared/EmployeeHoursReport';
+import { FormsModule } from '@angular/forms';
 
 
 const routes: Routes = [
