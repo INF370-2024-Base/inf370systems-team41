@@ -289,10 +289,11 @@
               "RelativeDocumentMoniker": "BioProSystem\\Models\\Repository.cs",
               "ToolTip": "C:\\Users\\leze7\\Desktop\\UNI 2024\\INF 370\\Project\\A2\\Bio Pro\\BioProSystem\\BioProSystem\\Models\\Repository.cs",
               "RelativeToolTip": "BioProSystem\\Models\\Repository.cs",
-              "ViewState": "AQIAABUCAAAAAAAAAAAYwDICAAAAAAAA",
+              "ViewState": "AQIAALMBAAAAAAAAAAAkwFECAAAJAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-06-26T09:29:27.108Z",
-              "IsPinned": true
+              "IsPinned": true,
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -302,7 +303,7 @@
               "RelativeDocumentMoniker": "BioProSystem\\Controllers\\ReportsController.cs",
               "ToolTip": "C:\\Users\\leze7\\Desktop\\UNI 2024\\INF 370\\Project\\A2\\Bio Pro\\BioProSystem\\BioProSystem\\Controllers\\ReportsController.cs",
               "RelativeToolTip": "BioProSystem\\Controllers\\ReportsController.cs",
-              "ViewState": "AQIAAFYAAAAAAAAAAADwv3MAAAAAAAAA",
+              "ViewState": "AQIAAIUAAAAAAAAAAAAwwJgAAAAFAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-06-26T09:30:04.92Z",
               "EditorCaption": ""
