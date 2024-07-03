@@ -16,10 +16,10 @@
       </thead>
       <tbody>
         <tr *ngFor="let order of orders">
-          <td>{{ order.orderId }}</td>
-          <td>{{ order.dentistId }}</td>
-          <td>{{ order.patientName }} {{ order.patientSurname }}</td>
-          <td>{{ order.orderDate | date:'yyyy-MM-dd' }}</td>
+          <td>{{ order.OrderId }}</td>
+          <td>{{ order.DentistId }}</td>
+          <td>{{ order.PatientName }} {{ order.PatientSurname }}</td>
+          <td>{{ order.OrderDate | date:'yyyy-MM-dd' }}</td>
           <!-- Add other columns as needed -->
         </tr>
       </tbody>
@@ -38,8 +38,8 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let orderType of orderTypesWithCount">
-            <td>{{ orderType.orderType }}</td>
+          <tr *ngFor="let orderType of orderTypeWithCount">
+            <td>{{ orderType.description }}</td>
             <td>{{ orderType.orderCount }}</td>
           </tr>
         </tbody>
@@ -52,14 +52,14 @@
     <table>
       <thead>
         <tr>
-          <th>Category</th>
-          <th>Stock Type Count</th>
+          <th>Stock Type</th>
+          <th>Type Category Count</th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let stockType of stockTypes">
-          <td>{{ stockType.category }}</td>
-          <td>{{ stockType.count }}</td>
+          <td>{{ stockType.description }}</td>
+          <td>{{ stockType.stockCategoriesCount }}</td>
         </tr>
       </tbody>
     </table>
@@ -70,14 +70,14 @@
     <table>
       <thead>
         <tr>
-          <th>Category</th>
+          <th>Stock Type Category</th>
           <th>Stock Item Count</th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let stockItem of stockItems">
-          <td>{{ stockItem.category }}</td>
-          <td>{{ stockItem.count }}</td>
+          <td>{{ stockItem.description  }}</td>
+          <td>{{ stockItem.stockItemsCount}}</td>
         </tr>
       </tbody>
     </table>
@@ -96,7 +96,7 @@
       </thead>
       <tbody>
         <tr *ngFor="let writeOff of stockWriteOffs">
-          <td>{{ writeOff.stockName }}</td>
+          <td>{{ writeOff.stockName}}</td>
           <td>{{ writeOff.quantityWrittenOff }}</td>
           <td>{{ writeOff.writtenOffDate | date:'yyyy-MM-dd' }}</td>
           <td>{{ writeOff.reason }}</td>
@@ -104,16 +104,17 @@
       </tbody>
     </table>
     <div>
-      <strong>Total Quantity Written Off:</strong> {{ totalQuantityWrittenOff }}
+      <strong>Total Quantity Written Off (Overall):</strong> {{ totalQuantityWrittenOff }}
     </div>
   </div>
 
   <div class="report-section">
     <h2>Employee Hours Report</h2>
-    <select [(ngModel)]!="selectedPeriod" (change)="updateChart()">
+    <select [(ngModel)]="selectedPeriod" (change)="updateChart()">
       <option value="monthly">Monthly Hours</option>
       <option value="weekly">Weekly Hours</option>
     </select>
     <canvas id="canvas"></canvas>
   </div>
+  
   

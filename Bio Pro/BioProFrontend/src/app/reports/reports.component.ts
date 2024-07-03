@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import { ReportsServices } from '../services/reports';
 import { SystemOrderViewModel } from '../shared/SystemOrderViewModel ';
 import { StockWriteOffViewModel } from '../shared/Stock';
@@ -9,6 +9,7 @@ import Chart from 'chart.js/auto';
 import { DatePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { OrderTypeWithCount } from '../shared/OrderTypeWithCount';
+
 
 @Component({
   selector: 'app-reports',
@@ -28,7 +29,7 @@ export class ReportsComponent implements OnInit {
   employeeHours: any[] = [];
   selectedPeriod: string = 'monthly';
 
-  constructor(private reportsService: ReportsServices) { }
+  constructor(private reportsService: ReportsServices, private datePipe: DatePipe) { }
 
   ngOnInit(): void {
     this.getAllOrders();
@@ -41,35 +42,59 @@ export class ReportsComponent implements OnInit {
   }
 
   getAllOrders() {
-    this.reportsService.getAllOrders().subscribe(data => {
-      this.orders = data;
-    });
-  }
+    this.reportsService.getAllOrders().subscribe(
+        data => {
+            this.orders = data;
+        },
+        error => {
+            console.error('Error fetching orders:', error);
+        }
+    );
+}
 
-  getOrderTypesWithOrderCount() {
-    this.reportsService.getOrderTypesWithOrderCount().subscribe(data => {
-      this.orderTypeWithCount = data;
-    });
-  }
+getOrderTypesWithOrderCount() {
+  this.reportsService.getOrderTypesWithOrderCount().subscribe(
+      data => {
+          this.orderTypeWithCount = data;
+      },
+      error => {
+          console.error('Error fetching order types with count:', error);
+      }
+  );
+}
+getStockTypesCountByCategory() {
+  this.reportsService.getStockTypesCountByCategory().subscribe(
+      data => {
+          this.stockTypes = data;
+      },
+      error => {
+          console.error('Error fetching stock types count by category:', error);
+      }
+  );
+}
 
-  getStockTypesCountByCategory() {
-    this.reportsService.getStockTypesCountByCategory().subscribe(data => {
-      this.stockTypes = data;
-    });
-  }
+getStockItemsCountByCategory() {
+  this.reportsService.getStockItemsCountByCategory().subscribe(
+      data => {
+          this.stockItems = data;
+      },
+      error => {
+          console.error('Error fetching stock items count by category:', error);
+      }
+  );
+}
 
-  getStockItemsCountByCategory() {
-    this.reportsService.getStockItemsCountByCategory().subscribe(data => {
-      this.stockItems = data;
-    });
-  }
-
-  getAllStockWriteOffs() {
-    this.reportsService.getAllStockWriteOffs().subscribe(data => {
-      this.stockWriteOffs = data;
-      this.calculateTotals();
-    });
-  }
+getAllStockWriteOffs() {
+  this.reportsService.getAllStockWriteOffs().subscribe(
+      data => {
+          this.stockWriteOffs = data;
+          this.calculateTotals();
+      },
+      error => {
+          console.error('Error fetching stock write-offs:', error);
+      }
+  );
+}
 
   calculateTotals() {
     this.totalQuantityWrittenOff = this.stockWriteOffs.reduce((sum, item) => sum + item.quantityWrittenOff, 0);
@@ -86,8 +111,8 @@ export class ReportsComponent implements OnInit {
   getEmployeesWithMonthlyHours() {
     this.reportsService.getEmployeesWithMonthlyHours().subscribe(data => {
       this.employeeHours = data;
-      const labels = this.employeeHours.map(e => e.employeeName);
-      const hours = this.employeeHours.map(e => e.totalMonthlyHours);
+      const labels = this.employeeHours.map(e => e.firstName+ e.lastName);
+      const hours = this.employeeHours.map(e => e.totalHours);
       this.createChart(labels, hours, 'Monthly Hours');
     });
   }
@@ -95,8 +120,8 @@ export class ReportsComponent implements OnInit {
   getEmployeesWithWeeklyHours() {
     this.reportsService.getEmployeesWithWeeklyHours().subscribe(data => {
       this.employeeHours = data;
-      const labels = this.employeeHours.map(e => e.employeeName);
-      const hours = this.employeeHours.map(e => e.totalWeeklyHours);
+      const labels = this.employeeHours.map(e => e.firstName+ e.lastName);
+      const hours = this.employeeHours.map(e => e.week);
       this.createChart(labels, hours, 'Weekly Hours');
     });
   }
@@ -129,4 +154,9 @@ export class ReportsComponent implements OnInit {
       }
     });
   }
+
+  formatDate(date: any) {
+    return this.datePipe.transform(date, 'yyyy-MM-dd'); 
+  }
+
 }

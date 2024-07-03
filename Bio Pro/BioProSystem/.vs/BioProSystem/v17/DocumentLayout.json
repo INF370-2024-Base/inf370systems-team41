@@ -292,8 +292,7 @@
               "ViewState": "AQIAABUCAAAAAAAAAAAYwDICAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-06-26T09:29:27.108Z",
-              "IsPinned": true,
-              "EditorCaption": ""
+              "IsPinned": true
             },
             {
               "$type": "Document",
@@ -330,8 +329,7 @@
               "RelativeToolTip": "BioProSystem\\Models\\StockWriteOff.cs",
               "ViewState": "AQIAAAMAAAAAAAAAAAAqwAUAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-26T09:29:27.133Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-06-26T09:29:27.133Z"
             },
             {
               "$type": "Document",
@@ -343,8 +341,7 @@
               "RelativeToolTip": "BioProSystem\\Models\\IRepository.cs",
               "ViewState": "AQIAAEQAAAAAAAAAAAAqwFQAAABGAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-26T09:29:27.106Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-06-26T09:29:27.106Z"
             },
             {
               "$type": "Document",
@@ -356,8 +353,7 @@
               "RelativeToolTip": "BioProSystem\\ViewModels\\EmployeeHoursReport.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAkAAAAmAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-01T12:51:43.236Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-07-01T12:51:43.236Z"
             },
             {
               "$type": "Document",
@@ -369,8 +365,7 @@
               "RelativeToolTip": "BioProSystem\\ViewModels\\StockWriteOffViewModel.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-26T09:29:27.126Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-06-26T09:29:27.126Z"
             },
             {
               "$type": "Document",

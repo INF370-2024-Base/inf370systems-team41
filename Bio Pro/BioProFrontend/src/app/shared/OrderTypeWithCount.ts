@@ -1,5 +1,5 @@
 export interface OrderTypeWithCount {
     orderTypeId: number;
-    orderTypeName: string;
+    description: string;
     orderCount: number;
   }

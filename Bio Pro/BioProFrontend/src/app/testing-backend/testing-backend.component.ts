@@ -225,7 +225,8 @@ stockAddTest:AddStock=
         stockId: 1,
         quantityWrittenOff: 10,
         writtenOffDate: new Date(),
-        reason: 'Damaged stock'
+        reason: 'Damaged stock',
+        stockName: 'Item A'
     };
 
 captureNewStockTest: CaptureNewStockViewModel = {

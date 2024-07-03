@@ -18,7 +18,7 @@ import { DatePipe } from '@angular/common';
 })
 export class ReportsServices {
 
-  apiUrl = 'https://localhost:44315/Reports/';
+  apiUrl = 'https://localhost:44315/api/Reports/';
 
   httpOptions ={
     headers: new HttpHeaders({
@@ -49,13 +49,18 @@ export class ReportsServices {
   // Method to get stock types count by category
   getStockTypesCountByCategory(): Observable<StockTypeCountByCategory[]> {
     return this.httpClient.get<StockTypeCountByCategory[]>(`${this.apiUrl}StockTypesCountByCategory`, this.httpOptions)
-      .pipe(map(result => result));
+      .pipe(
+        map(result => result),
+        
+      );
   }
 
-  // Method to get total amount of stock items within a stock category
   getStockItemsCountByCategory(): Observable<StockItemCountByCategory[]> {
     return this.httpClient.get<StockItemCountByCategory[]>(`${this.apiUrl}StockItemsCountByCategory`, this.httpOptions)
-      .pipe(map(result => result));
+      .pipe(
+        map(result => result),
+       
+      );
   }
 
   // Method to get employees with monthly hours
@@ -69,6 +74,8 @@ export class ReportsServices {
       .pipe(map(result => result));
   }
 
+
+  
 }
 
 
