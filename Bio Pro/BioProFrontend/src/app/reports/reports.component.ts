@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import { ReportsServices } from '../services/reports';
-import { SystemOrderViewModel } from '../shared/SystemOrderViewModel ';
+//import { SystemOrderViewModel } from '../shared/SystemOrderViewModel ';
 import { StockWriteOffViewModel } from '../shared/Stock';
 import { EmployeeMonthlyHours } from '../shared/EmployeeMonthlyHours';
 import { StockTypeCountByCategory } from '../shared/StockTypeCountByCategory';
@@ -9,6 +9,8 @@ import Chart from 'chart.js/auto';
 import { DatePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { OrderTypeWithCount } from '../shared/OrderTypeWithCount';
+import { OrderReportViewModel } from '../shared/OrderReportViewModel';
+
 
 
 @Component({
@@ -18,7 +20,7 @@ import { OrderTypeWithCount } from '../shared/OrderTypeWithCount';
   providers: [DatePipe],
 })
 export class ReportsComponent implements OnInit {
-  orders: SystemOrderViewModel[] = [];
+  orders: OrderReportViewModel[] = [];
   orderTypeWithCount: OrderTypeWithCount[] =[];
   stockTypes: StockTypeCountByCategory[] = [];
   stockItems: StockItemCountByCategory[] = [];
@@ -32,7 +34,7 @@ export class ReportsComponent implements OnInit {
   constructor(private reportsService: ReportsServices, private datePipe: DatePipe) { }
 
   ngOnInit(): void {
-    this.getAllOrders();
+    this.getAllOrder();
     this.getStockTypesCountByCategory();
     this.getStockItemsCountByCategory();
     this.getOrderTypesWithOrderCount();
@@ -41,7 +43,7 @@ export class ReportsComponent implements OnInit {
     this.updateChart();
   }
 
-  getAllOrders() {
+  getAllOrder() {
     this.reportsService.getAllOrders().subscribe(
         data => {
             this.orders = data;

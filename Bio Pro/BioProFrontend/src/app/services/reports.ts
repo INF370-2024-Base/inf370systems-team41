@@ -13,6 +13,8 @@ import { ReportsComponent } from '../reports/reports.component';
 import { EmployeeHoursReport } from '../shared/EmployeeHoursReport';
 import { DatePipe } from '@angular/common';
 
+import { OrderReportViewModel } from '../shared/OrderReportViewModel';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -30,6 +32,7 @@ export class ReportsServices {
   }
   
  
+
   getAllStockWriteOffs(): Observable<StockWriteOffViewModel[]> {
     return this.httpClient.get<StockWriteOffViewModel[]>(`${this.apiUrl}GetAllStockWriteOffs`, this.httpOptions)
       .pipe(map(result => result));
@@ -41,8 +44,8 @@ export class ReportsServices {
       .pipe(map(result => result));
   }
 
-  getAllOrders(): Observable<SystemOrderViewModel[]> {
-    return this.httpClient.get<SystemOrderViewModel[]>(`${this.apiUrl}GetAllOrders`, this.httpOptions)
+  getAllOrders(): Observable<OrderReportViewModel[]> {
+    return this.httpClient.get<OrderReportViewModel[]>(`${this.apiUrl}GetAllOrders`, this.httpOptions)
       .pipe(map(result => result));
   }
 
@@ -75,6 +78,8 @@ export class ReportsServices {
   }
 
 
+
+  
   
 }
 

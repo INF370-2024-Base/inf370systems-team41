@@ -16,10 +16,10 @@
       </thead>
       <tbody>
         <tr *ngFor="let order of orders">
-          <td>{{ order.OrderId }}</td>
-          <td>{{ order.DentistId }}</td>
-          <td>{{ order.PatientName }} {{ order.PatientSurname }}</td>
-          <td>{{ order.OrderDate | date:'yyyy-MM-dd' }}</td>
+          <td>{{ order.orderId }}</td>
+          <td>{{ order.dentistId }}</td>
+          <td>{{ order.patientName}} {{ order.patientSurname }}</td>
+          <td>{{ order.dueDate | date:'yyyy-MM-dd' }}</td>
           <!-- Add other columns as needed -->
         </tr>
       </tbody>
