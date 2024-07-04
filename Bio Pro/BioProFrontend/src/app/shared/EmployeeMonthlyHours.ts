@@ -5,3 +5,8 @@ export interface EmployeeMonthlyHours {
   lastName: string;
   totalHours: number;
 }
+export interface EmployeeDetails {
+  employeeId: number;
+  firstName: string;
+  lastName: string;
+}

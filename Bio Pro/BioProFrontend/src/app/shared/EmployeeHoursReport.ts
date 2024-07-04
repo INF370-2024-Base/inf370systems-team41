@@ -15,3 +15,8 @@ export interface EmployeeHoursReport {
   week: number;
   totalHours: number;
 }
+export interface EmployeeDetails {
+  employeeId: number;
+  firstName: string;
+  lastName: string;
+}

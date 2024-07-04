@@ -13,7 +13,7 @@
         <tr>
           <th>Order ID</th>
           <th>Dentist ID</th>
-          <th>Patient Name</th>
+          <th>Priority Level</th>
           <th>Order Date</th>
           <!-- Add other columns as needed -->
         </tr>
@@ -22,7 +22,7 @@
         <tr *ngFor="let order of orders">
           <td>{{ order.orderId }}</td>
           <td>{{ order.dentistId }}</td>
-          <td>{{ order.patientName}} {{ order.patientSurname }}</td>
+          <td>{{ order.priorityLevel}}</td>
           <td>{{ order.dueDate | date:'yyyy-MM-dd' }}</td>
           <!-- Add other columns as needed -->
         </tr>

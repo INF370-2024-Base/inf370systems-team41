@@ -12,7 +12,7 @@ export class  OrderReportViewModel {
     EmergencyNumber: string;
     dueDate: Date;
     SpecialRequirements: string;
-    PriorityLevel: string;
+    priorityLevel: string;
     TeethShadesIds: number[];
     SeletedAreasIds: number[];
     OrderTypeId: number;
@@ -34,7 +34,7 @@ export class  OrderReportViewModel {
       this.EmergencyNumber = '';
       this.dueDate = new Date();
       this.SpecialRequirements = '';
-      this.PriorityLevel = '';
+      this.priorityLevel = '';
       this.TeethShadesIds = [];
       this.SeletedAreasIds = [];
       this.dentistId = 0;

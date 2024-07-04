@@ -113,20 +113,21 @@ getAllStockWriteOffs() {
   getEmployeesWithMonthlyHours() {
     this.reportsService.getEmployeesWithMonthlyHours().subscribe(data => {
       this.employeeHours = data;
-      const labels = this.employeeHours.map(e => `${e.firstName} ${e.lastName}`);
+      const labels = this.employeeHours.map(e => `${e.employee.firstName} ${e.employee.lastName} (${e.employee.employeeId})`);
       const hours = this.employeeHours.map(e => e.totalHours);
       this.createChart(labels, hours, 'Monthly Hours');
     });
   }
-
- getEmployeesWithWeeklyHours() {
-  this.reportsService.getEmployeesWithWeeklyHours().subscribe(data => {
-    this.employeeHours = data;
-    const labels = this.employeeHours.map(e => `${e.firstName} ${e.lastName} `);
-    const hours = this.employeeHours.map(e => e.week);
-    this.createChart(labels, hours, 'Weekly Hours');
-  });
-}
+  
+  getEmployeesWithWeeklyHours() {
+    this.reportsService.getEmployeesWithWeeklyHours().subscribe(data => {
+      this.employeeHours = data;
+      const labels = this.employeeHours.map(e => `${e.employee.firstName} ${e.employee.lastName} (${e.employee.employeeId})`);
+      const hours = this.employeeHours.map(e => e.totalHours);
+      this.createChart(labels, hours, 'Weekly Hours');
+    });
+  }
+  
 
   createChart(labels: string[], data: number[], label: string) {
     if (this.chart) {
