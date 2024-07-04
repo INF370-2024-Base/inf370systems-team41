@@ -40,6 +40,10 @@ import { EmployeeHoursReport } from './shared/EmployeeHoursReport';
 import { DatePipe } from '@angular/common';
 import { SelectionModel } from '@angular/cdk/collections';
 import { FormsModule } from '@angular/forms';
+import { HelpComponent } from './help/help.component';
+import { HelpOrdersComponent } from './help-orders/help-orders.component';
+import { HelpTimelineOfOrdersComponent } from './help-timeline-of-orders/help-timeline-of-orders.component';
+import { HelpDeliveriesComponent } from './help-deliveries/help-deliveries.component';
 
 
 @NgModule({
@@ -54,7 +58,7 @@ import { FormsModule } from '@angular/forms';
     DentistProfileComponent,
     EmployeeProfileComponent,
     ReportsComponent,
-    CaptureEmployeeHoursComponent,LoginComponent,EditOrderModalComponent, AddUserComponent, AddProceduralTimeline, DeliveriesComponent, AddDeliveryComponent, HomeComponent, TestingBackendComponent, ConfirmationDialogComponent, OrdersAwaitingDentalDesignComponent, DentalDesignApprovalComponent
+    CaptureEmployeeHoursComponent,LoginComponent,EditOrderModalComponent, AddUserComponent, AddProceduralTimeline, DeliveriesComponent, AddDeliveryComponent, HomeComponent, TestingBackendComponent, ConfirmationDialogComponent, OrdersAwaitingDentalDesignComponent, DentalDesignApprovalComponent, HelpComponent, HelpOrdersComponent, HelpTimelineOfOrdersComponent, HelpDeliveriesComponent
   ],
   imports: [
     BrowserModule,

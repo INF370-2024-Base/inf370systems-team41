@@ -24,6 +24,10 @@ import { StockItemCountByCategory } from './shared/StockItemCountByCategory';
 import { StockTypeCountByCategory } from './shared/StockTypeCountByCategory';
 import { EmployeeHoursReport } from './shared/EmployeeHoursReport';
 import { FormsModule } from '@angular/forms';
+import { HelpComponent } from './help/help.component';
+import { HelpOrdersComponent } from './help-orders/help-orders.component';
+import { HelpTimelineOfOrdersComponent } from './help-timeline-of-orders/help-timeline-of-orders.component';
+import { HelpDeliveriesComponent } from './help-deliveries/help-deliveries.component';
 
 
 const routes: Routes = [
@@ -50,6 +54,10 @@ const routes: Routes = [
   {path: 'home', component: HomeComponent},
   {path: 'test', component: TestingBackendComponent},
   {path : 'reports', component:ReportsComponent},
+  {path: 'help', component: HelpComponent},
+  {path:'help-orders', component:HelpOrdersComponent },
+  {path: 'help-orderTimeline', component:HelpTimelineOfOrdersComponent},
+  {path: 'help-deliveries', component:HelpDeliveriesComponent},
 ];
 
 @NgModule({
