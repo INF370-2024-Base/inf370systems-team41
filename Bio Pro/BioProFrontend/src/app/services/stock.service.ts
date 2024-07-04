@@ -53,6 +53,10 @@ export class StockServices {
     return this.httpClient.get(`${this.apiUrl}GetAllSupplier`)
     .pipe(map(result => result))
   }
+  getStockById(id:number): Observable<any>{
+    return this.httpClient.get(`${this.apiUrl}GetStockById/${id}`)
+    .pipe(map(result => result))
+  }
   
 }
 

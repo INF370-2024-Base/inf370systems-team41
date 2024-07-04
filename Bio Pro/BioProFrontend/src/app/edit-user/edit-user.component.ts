@@ -28,7 +28,6 @@ export class EditUserComponent implements OnInit {
       surname: ['', Validators.required],
       emailaddress: ['', [Validators.required, Validators.email]],
       phonenumber: ['', Validators.required],
-      rolename: ['', Validators.required]
     });
   }
 
@@ -67,7 +66,6 @@ export class EditUserComponent implements OnInit {
             surname: employee.lastName,
             emailaddress: employee.email,
             phonenumber: employee.cellphoneNumber,
-            rolename: jobTitleName || '' // Display job title name
           });
         },
         error => {
@@ -79,12 +77,17 @@ export class EditUserComponent implements OnInit {
   }
 
   onSubmit(): void {
+    const user = JSON.parse(sessionStorage.getItem('User') || '{}');
     console.log('onSubmit called');
     if (this.editUserForm.valid) {
       const formValue = this.editUserForm.value;
+  console.log(formValue)
       const editedUser: EditUser = {
-        ...formValue,
-        JobTitleId: this.getJobTitleId(formValue.rolename) // Convert job title name back to ID
+        Name:formValue.name,
+        Surname:formValue.surname,
+        Phonenumber:formValue.phonenumber,
+        OldEmail:user.email,
+        UpdatedEmail:formValue.emailaddress,
       };
       console.log('Edited user details being sent:', editedUser);
       this.userServices.UpdateUser(editedUser)
@@ -93,7 +96,7 @@ export class EditUserComponent implements OnInit {
             console.log('User details updated successfully:', response);
             this.successMessage = 'User details updated successfully!';
             sessionStorage.setItem('User', JSON.stringify(editedUser));
-            this.router.navigate(['/home']);
+            this.router.navigate(['/login']);
           },
           error => {
             console.error('Error updating user details:', error);

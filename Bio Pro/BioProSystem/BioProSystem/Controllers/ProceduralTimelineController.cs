@@ -39,7 +39,7 @@ namespace BioProSystem.Controllers
                 {
                     ProceduralTimeline newTimeline = new ProceduralTimeline();
                     newTimeline.TimelineDetail = viewModel.TimelineDetail;
-                    newTimeline.CalanderId = 1;
+                    newTimeline.CalanderId = 2;
                     newTimeline.TimeStamp = DateTime.Now;
                     DateTime latestDate = DateTime.MinValue;
                     DateTime earliestDate = DateTime.MaxValue;

@@ -11,6 +11,7 @@ import { ProcededuralTimelineViewComponent } from '../procededural-timeline-view
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { addMonths, subMonths, addWeeks, subWeeks } from 'date-fns';
 import { AddEventModalComponent } from '../add-event-modal/add-event-modal.component';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-calendar',
@@ -72,8 +73,8 @@ calendars:any[]=[]
         this.nosearch = this.filteredEvents.length === 0; // Update nosearch flag
         this.refresh.next(this.filteredEvents);
       },
-      error => {
-        this.showSnackBar('Error fetching events.'+error);
+      (error:HttpErrorResponse) => {
+        this.showSnackBar('Error fetching events.'+error.error);
       }
     );
 
@@ -195,6 +196,7 @@ nosearch:boolean=true
         this.fetchCalendarScheduleEvents();
       }
     });
+    this.fetchCalendarScheduleEvents();
     console.log('Event clicked:', event);
   }
   addEventClicked(event: any): void {

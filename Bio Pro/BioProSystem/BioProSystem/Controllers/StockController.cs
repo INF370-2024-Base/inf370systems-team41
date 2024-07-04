@@ -228,6 +228,30 @@ namespace BioProSystem.Controllers
             }
 
         }
+        [HttpGet]
+        [Route("GetStockById/{stockId}")]
+        public async Task<IActionResult> GetStockById(int stockId)
+        {
+            try
+            {
+ 
+                 var allstock = await _repository.GetStockById(stockId);
+                if (allstock!=null)
+                {
+                    return Ok(allstock);
+                }
+                else
+                {
+                    return NotFound("No stock found");
+                }
+            }
+            catch (Exception ex)
+            {
+
+                return StatusCode(500, "Internal Server Error. Please contact support." + ex.Message);
+            }
+
+        }
         [HttpPost]
         [Route("WriteOffStock")]
         public async Task<IActionResult> WriteOffStock(StockWriteOffViewModel viewModel)

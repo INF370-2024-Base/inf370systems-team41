@@ -60,6 +60,10 @@
               <mat-icon>folder_open</mat-icon> <!-- Icon for open orders -->
               Open Orders
             </a>
+            <a mat-list-item class="sub-nav-link" [routerLink]="['/employeeOrders']" (click)="isSidenavOpen = !isSidenavOpen">
+              <mat-icon>folder_open</mat-icon> <!-- Icon for open orders -->
+              Your Orders
+            </a>
             <a mat-list-item class="sub-nav-link" [routerLink]="['/orderAwaitingDentalDesign']" (click)="isSidenavOpen = !isSidenavOpen">
               <mat-icon>folder_open</mat-icon> <!-- Icon for open orders -->
               Orders Awaiting Dental Design
@@ -112,6 +116,10 @@
             Add Stock
           </a>
         </ng-container>
+        <a mat-list-item class="nav-link" (click)="toggleEmployeeMenu()" [routerLink]="['/all-user']">
+          <mat-icon>perm_contact_calendar</mat-icon> <!-- Icon for profile -->
+          Edit User
+        </a>
         <a mat-list-item class="nav-link bottom-link" routerLink="/edit-user" (click)="isSidenavOpen = !isSidenavOpen">
           <mat-icon>edit</mat-icon> <!-- Icon for edit user -->
           Edit User

@@ -172,7 +172,7 @@ namespace BioProSystem.Models
         }
         public async Task<List<SystemOrder>> GetSystemOrdersWithOrderStatusID(int orderStatusId)
         {
-            IQueryable<SystemOrder> pendingOrders = _appDbContext.SystemOrders.Where(o => o.OrderStatusId == orderStatusId).Include(s=>s.OrderStatus).Include(s=>s.OrderWorkflowTimeline).ThenInclude(o=>o.orderDirection).Include(s=>s.Dentist).Include(s=>s.OrderType);
+            IQueryable<SystemOrder> pendingOrders = _appDbContext.SystemOrders.Where(o => o.OrderStatusId == orderStatusId).Include(s=>s.OrderStatus).Include(s=>s.OrderWorkflowTimeline).ThenInclude(o=>o.orderDirection).Include(s=>s.Dentist).Include(s=>s.OrderType).Include(o=>o.MediaFiles);
             return await pendingOrders.ToListAsync();
         }
 
@@ -507,6 +507,10 @@ namespace BioProSystem.Models
         public async Task<List<StockType>> GetAllStockTypes()
         {
             return await _appDbContext.StockType.Include(s => s.StockCategories).ToListAsync();
+        }
+        public async Task<Stock> GeStockById(int id)
+        {
+            return await _appDbContext.Stocks.Where(s => s.StockId==id).FirstOrDefaultAsync();
         }
         public async Task<List<StockCategory>> GetAllStockCategories()
         {

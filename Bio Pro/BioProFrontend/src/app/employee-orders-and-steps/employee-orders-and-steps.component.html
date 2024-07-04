@@ -2,7 +2,10 @@
 <div *ngFor="let order of orders">
     <h1>{{order.orderId}}</h1>
     <div *ngFor="let ordersteps of order.systemOrderSteps">
+        <h2>{{ordersteps.description}}<mat-icon *ngIf="ordersteps.completed">check</mat-icon></h2>         
+
         <div *ngIf="ordersteps.isCurrentStep">
+            
         <h3>Current:</h3>
         <button  (click)="addEventClicked(order)"> Add stock</button>
         <div class="form-group" style="margin-bottom: 15px; ">
@@ -11,14 +14,24 @@
             </label>
             <input type="file" id="MediaFiles" (change)="onFileSelected($event)" multiple style="display: inline-block; padding: 8px 12px; border: 1px solid #ccc; border-radius: 5px; background-color: #f0f0f0; color: #333; font-size: 14px; cursor: pointer;">
           </div>
-        <button *ngIf="ordersteps.employee.email==employeeEmail" (click)="CompleteStepOrOrder(ordersteps.systeorderStepId,order.orderId)">
+          <div *ngIf="stockUsed">
+            <div *ngIf="stockUsed.OrderId===order.orderId">
+            <div *ngFor="let stockvalue of stockUsed.StockUsed">
+                <div *ngFor="let stocks of stockView">
+                    <div *ngIf="stocks.stockId===stockvalue.StockId">
+                        {{stocks.stockName}} {{stockvalue.Quantity}} {{stocks.measurement}}
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- <button *ngIf="ordersteps.employee.email==employeeEmail" (click)="CompleteStepOrOrder(ordersteps.systeorderStepId,order.orderId)">
            
             complete step
-        </button> 
+        </button>  -->
         <button  (click)="CompleteStepOrOrder(ordersteps.systeorderStepId,order.orderId)">complete step</button>
     </div>
-        <h2>{{ordersteps.description}}</h2>
-        
+       
     </div>
 
 </div>

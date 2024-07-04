@@ -53,6 +53,7 @@ export class StockUsedComponent implements OnInit {
   stockDataToSend:StockData={
     StockUsed:[],
     OrderId:''
+
   }
   SubmitForm()
   {
@@ -69,6 +70,7 @@ export class StockUsedComponent implements OnInit {
 export class StockData{
   StockUsed:StockUsedDuringOrder[]=[];
   OrderId:string=''
+  
 }
 
 export class StockUsedDuringOrder {

@@ -35,6 +35,32 @@
             <p><strong>Order Type:</strong> {{ pendingOrder.orderType.description }}</p>
             <p><strong>Order Direction:</strong> {{ pendingOrder.orderWorkflowTimeline.orderDirection.description }}</p>
             <p><strong>Dentist:</strong> {{ pendingOrder.dentist.firstName }} {{ pendingOrder.dentist.lastName }}</p>
+            <div>
+              <div *ngIf="pendingOrder.mediaFiles" class="media-container">
+                <div *ngFor="let media of pendingOrder.mediaFiles">
+                  <div *ngIf="isImage(media.fileSelf) && media.fileName.includes('DentalDesign')">
+                    <img [src]="getBase64ImageSrc(media.fileSelf)" alt="Base64 Image" class="image-item" style="width: 100px;height: 100px;">
+                    <div class="button-container">
+                      <button mat-icon-button (click)="downloadFile(media.fileSelf, media.fileName)">
+                        <mat-icon>file_download</mat-icon>
+                      </button>
+                      <div *ngIf="media.fileName !== 'TeethAreas.png' && !media.fileName.includes('DentalDesign')">
+                                            <button mat-icon-button (click)="deleteMediaFile(media.mediaFileId)">
+                          <mat-icon>delete</mat-icon>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                  <div *ngIf="!isImage(media.fileSelf) && media.fileName.includes('DentalDesign')" style="position: relative;">
+                    <div class="file-item" (click)="downloadFile(media.fileSelf, media.fileName)" style="width: 100px;height: 100px;">
+                      <mat-icon class="fileIcon">insert_drive_file</mat-icon>
+                      <p class="file-name">{{ media.fileName }}</p>
+                      <button mat-icon-button (click)="deleteMediaFile(media.mediaFileId)"></button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </mat-expansion-panel>
       </mat-accordion>

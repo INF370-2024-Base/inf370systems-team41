@@ -24,11 +24,12 @@ import { HelpComponent } from './help/help.component';
 import { HelpStockComponent } from './help-stock/help-stock.component';
 import { HelpEmployeesComponent } from './help-employees/help-employees.component';
 import { HelpDentistComponent } from './help-dentist/help-dentist.component';
-
 import { DailyHoursProfileComponent } from './daily-hours-profile/daily-hours-profile.component';
 import { AddStockComponent } from './add-stock/add-stock.component';
 import { StockComponent } from './stock/stock.component';
 import { EditUserComponent } from './edit-user/edit-user.component';
+import { EditAnyUserComponent } from './edit-any-user/edit-any-user.component';
+import { AllUsersComponent } from './all-users/all-users.component';
 
 const routes: Routes = [
   
@@ -63,6 +64,7 @@ const routes: Routes = [
   {path:'help-stock', component:HelpStockComponent},
   {path:'help-employee', component:HelpEmployeesComponent },
   {path:'help-dentist', component:HelpDentistComponent},
+  {path:'all-user', component:AllUsersComponent},
   
 ];
 

@@ -1,6 +1,6 @@
 export class EditUser {
   Name: string = "";
-  Role:string="";
+  Role?:string="";
   Surname: string = '';
   OldEmail: string = '';
   UpdatedEmail: string = '';

@@ -61,6 +61,8 @@ import { EditUserComponent } from './edit-user/edit-user.component';
 import { HelpStockComponent } from './help-stock/help-stock.component';
 import { HelpEmployeesComponent } from './help-employees/help-employees.component';
 import { HelpDentistComponent } from './help-dentist/help-dentist.component';
+import { AllUsersComponent } from './all-users/all-users.component';
+import { EditAnyUserComponent } from './edit-any-user/edit-any-user.component';
 
 @NgModule({
   declarations: [
@@ -78,7 +80,7 @@ import { HelpDentistComponent } from './help-dentist/help-dentist.component';
     CaptureEmployeeHoursComponent,LoginComponent,EditOrderModalComponent, AddUserComponent, AddProceduralTimeline, DeliveriesComponent, AddDeliveryComponent, HomeComponent, TestingBackendComponent, ConfirmationDialogComponent, OrdersAwaitingDentalDesignComponent, DentalDesignApprovalComponent,
     UserProfileComponent, 
     EditEmployeeDialogComponent, DailyHoursProfileComponent, AddStockComponent, StockComponent, WriteOffModalComponent, CaptureNewStockModalComponent, EditUserComponent,
-    ConfirmationDialogComponent, OrdersAwaitingDentalDesignComponent, DentalDesignApprovalComponent, EmployeeOrdersAndStepsComponent,CalendarComponent, SearchBarComponent, EventModalComponent, ProcededuralTimelineViewComponent, AddEventModalComponent, StockUsedComponent, HelpComponent,HelpStockComponent, HelpEmployeesComponent, HelpDentistComponent
+    ConfirmationDialogComponent, OrdersAwaitingDentalDesignComponent, DentalDesignApprovalComponent, EmployeeOrdersAndStepsComponent,CalendarComponent, SearchBarComponent, EventModalComponent, ProcededuralTimelineViewComponent, AddEventModalComponent, StockUsedComponent, HelpComponent,HelpStockComponent, HelpEmployeesComponent, HelpDentistComponent, AllUsersComponent, EditAnyUserComponent
   ],
   imports: [
     BrowserModule,

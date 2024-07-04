@@ -316,33 +316,31 @@ namespace BioProSystem.Controllers
 
             try
             {
-                if(_userManager.GetRolesAsync(userToEdit).Result.FirstOrDefault().ToUpper() != user.Role.ToUpper())
+                if (user.Role != null)
                 {
-                    var test=_userManager.GetRolesAsync(userToEdit).Result;
-                    _userManager.RemoveFromRoleAsync(userToEdit, _userManager.GetRolesAsync(userToEdit).Result.FirstOrDefault());
-                    var result = await _userManager.AddToRoleAsync(userToEdit, user.Role);
-                    if (result.Succeeded)
+                    var currentRoles = await _userManager.GetRolesAsync(userToEdit);
+                    var currentRole = currentRoles.FirstOrDefault();
+                    if (currentRole != null && !currentRole.Equals(user.Role, StringComparison.OrdinalIgnoreCase))
                     {
-
-                    }
-                    else
-                    {
-                        return BadRequest(result.Errors);
+                        await _userManager.RemoveFromRoleAsync(userToEdit, currentRole);
+                        var result = await _userManager.AddToRoleAsync(userToEdit, user.Role);
+                        if (!result.Succeeded)
+                        {
+                            return BadRequest(result.Errors);
+                        }
                     }
                 }
-                
-             
+
                 userToEdit.PhoneNumber = user.Phonenumber;
                 userToEdit.Surname = user.Surname;
                 userToEdit.Name = user.Name;
 
-                if (user.UpdatedEmail != null)
+                if (user.UpdatedEmail != null && user.UpdatedEmail!=user.OldEmail)
                 {
                     var emailResult = await _userManager.SetEmailAsync(userToEdit, user.UpdatedEmail);
                     if (emailResult.Succeeded)
                     {
                         await _userManager.SetUserNameAsync(userToEdit, user.UpdatedEmail);
-                        await _repository.SaveChangesAsync();
                         await _userManager.UpdateNormalizedUserNameAsync(userToEdit);
                         await _userManager.UpdateNormalizedEmailAsync(userToEdit);
                     }
@@ -357,7 +355,7 @@ namespace BioProSystem.Controllers
                     employeeToEdit.CellphoneNumber = user.Phonenumber;
                     employeeToEdit.FirstName = user.Name;
                     employeeToEdit.LastName = user.Surname;
-                    employeeToEdit.Email = user.UpdatedEmail;
+                    employeeToEdit.Email = user.UpdatedEmail ?? user.OldEmail; // Ensure email is updated correctly
                 }
 
                 await _repository.SaveChangesAsync();
@@ -468,8 +466,23 @@ namespace BioProSystem.Controllers
             {
                 List<SystemUser> users = await _repository.GetAllSystemUserActiveAsync();
                 if (users == null) return NotFound("No users found");
+                var usersWithRoles = new List<UserWithRolesViewModel>();
 
-                return Ok(users);
+                foreach (var user in users)
+                {
+                    var roles = await _userManager.GetRolesAsync(user);
+                    var userWithRolesDto = new UserWithRolesViewModel
+                    {
+                        name = user.Name,
+                        email = user.Email,
+                        surname = user.Surname,
+                        phoneNumber = user.PhoneNumber,
+                        roles = roles.FirstOrDefault()
+                    };
+                    usersWithRoles.Add(userWithRolesDto);
+                }
+
+                return Ok(usersWithRoles);
             }
             catch
             {

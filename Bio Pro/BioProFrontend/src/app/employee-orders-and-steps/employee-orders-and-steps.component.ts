@@ -50,6 +50,15 @@ export class EmployeeOrdersAndStepsComponent implements OnInit {
     if (result) {
       
       this.stockUsed=result
+      this.stockUsed.StockUsed.forEach(element => {
+        this.stockService.getStockById(element.StockId).subscribe(
+          result=>
+          {
+            this.stockView.push(result)
+          }
+        )
+      });
+      console.log(this.stockUsed)
     }
   });
   console.log('Event clicked:', event);
@@ -159,6 +168,7 @@ mediaFileViewModels:MediaFileViewModel[]=[]
       alert("Please pick stock used")
     }
  }
+ stockView:any[]=[]
 stockUsed!:StockData
 uploadedFiles: CustomFile[]=[]
  

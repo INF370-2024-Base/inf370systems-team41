@@ -1,0 +1,55 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Management</title>
+    <!-- Include Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Include Material Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body style="overflow-y: auto;"> <!-- Enable vertical scrolling -->
+  <h1 style="font-size: 48px; color: #4d4a4a; text-align: center; text-transform: uppercase; letter-spacing: 3px; margin-bottom: 24px; text-shadow: 2px 2px 4px rgba(124, 124, 124, 0.5);">EMPLOYEES</h1>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12 d-flex justify-content-between align-items-center mb-3">
+    <div class="col-md-6 d-flex align-items-center">
+        <div style="display: flex; gap: 10px; align-items: center; text-align: center;">
+            <mat-form-field class="search-field">
+                <mat-icon matPrefix>search</mat-icon>
+                <input matInput [(ngModel)]="searchQuery" placeholder="Search Employee..." (ngModelChange)="onOrderIdChange($event)">
+            </mat-form-field>        
+        </div>
+    </div>
+    <div class="col-md-6 d-flex justify-content-end">
+        <a href="#" class="btn btn-primary rounded-btn" routerLink="/adduser">Add user</a>
+    </div>
+</div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+          <div class="card-container">
+              <div class="card mb-3 example-card" *ngFor="let user of users">
+                  <div class="card-body">
+                      <div class="card-header">
+                          <i class="material-icons example-header-image">person</i>
+                          <div>
+                              <h5 class="card-title">{{user.name}} {{user.surname}}</h5>
+                          </div>
+                      </div>
+                      <p class="card-text"><strong>Email:</strong> {{user.email}}</p>
+                      <p class="card-text"><strong>Phone Number:</strong> {{user.phoneNumber}}</p>
+                      <p class="card-text"><strong>Access Level:</strong> {{user.roles}}</p>
+                      <button (click)="editEmployee(user)" class="btn btn-secondary rounded-btn mr-2">Edit</button>
+                      <button (click)="deleteEmployee(user)" class="btn btn-outline-danger rounded-btn">Delete</button>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+  
+  </div>
+</body>
+</html>

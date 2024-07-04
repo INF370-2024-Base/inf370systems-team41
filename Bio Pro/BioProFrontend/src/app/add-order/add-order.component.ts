@@ -383,14 +383,21 @@ export class AddOrderComponent implements OnInit {
               console.log(this.uploadedFiles);
     
               try {
-                viewModel.mediaFileViewModels = [...this.uploadedFiles.map(file => {
-                  const mediaFileViewModel = new MediaFileViewModel();
-                  mediaFileViewModel.FileName = file.name;
-                  mediaFileViewModel.FileSelf = this.encodeFileContent(file.content);
-                  mediaFileViewModel.FileSizeKb = file.size;
-                  mediaFileViewModel.SystemOrderId = viewModel.OrderId;
-                  return mediaFileViewModel;
-                })];
+                const uniqueFiles = new Map<string, CustomFile>();
+                  this.uploadedFiles.forEach(file => {
+                      if (!uniqueFiles.has(file.name)) {
+                          uniqueFiles.set(file.name, file);
+                      }
+                  });
+
+                  viewModel.mediaFileViewModels = [...uniqueFiles.values()].map(file => {
+                      const mediaFileViewModel = new MediaFileViewModel();
+                      mediaFileViewModel.FileName = file.name;
+                      mediaFileViewModel.FileSelf = this.encodeFileContent(file.content);
+                      mediaFileViewModel.FileSizeKb = file.size;
+                      mediaFileViewModel.SystemOrderId = viewModel.OrderId;
+                      return mediaFileViewModel;
+                  });
               } catch (error) {
                 console.error('Error while mapping mediaFileViewModels:', error);
                 throw error;

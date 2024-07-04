@@ -8,6 +8,7 @@ import { Employee } from '../shared/employee';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { HttpErrorResponse } from '@angular/common/http';
 import { PhoneChecker } from '../validators/Validators';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-add-user',
@@ -16,7 +17,7 @@ import { PhoneChecker } from '../validators/Validators';
 })
 export class AddUserComponent implements OnInit {
 
-  constructor(private snackBar: MatSnackBar,private userServices:UserServices,private fb: FormBuilder,private employeeService:EmployeeService) {this.userForm = this.fb.group({
+  constructor(private snackBar: MatSnackBar, private router: Router,private userServices:UserServices,private fb: FormBuilder,private employeeService:EmployeeService) {this.userForm = this.fb.group({
     surname: ['', Validators.required],
     name: ['', Validators.required],
     emailAddress: ['', [Validators.required, Validators.email]],
@@ -119,6 +120,7 @@ openSnackBar(message: string) {
   
         console.log('User and employee added successfully');
         this.openSnackBar('Employee added successfully');
+        this.router.navigate(['/all-user'])
       } catch (error) {
         if (error instanceof HttpErrorResponse) {
           // Handle HTTP error response

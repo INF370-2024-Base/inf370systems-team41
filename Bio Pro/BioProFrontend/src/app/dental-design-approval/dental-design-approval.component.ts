@@ -3,6 +3,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { OrderService } from '../services/order.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { error } from 'console';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
 
 @Component({
   selector: 'app-dental-design-approval',
@@ -11,7 +13,7 @@ import { error } from 'console';
 })
 export class DentalDesignApprovalComponent implements OnInit {
 
-  constructor(private snackBar:MatSnackBar,private orderService:OrderService) { }
+  constructor(private snackBar:MatSnackBar,private orderService:OrderService,private dialog:MatDialog) { }
   pendingOrdersData:any[]=[]
   ngOnInit(): void {
       this.orderService.GetOrdersAwaitingDentalDesignApproval().subscribe(
@@ -25,6 +27,59 @@ export class DentalDesignApprovalComponent implements OnInit {
               this.showSnackBar(error.error)
             }
       )
+  }
+  isImage(base64String: string): boolean {
+    try {
+      const binary = atob(base64String);
+      const firstByte = binary.charCodeAt(0);
+      const secondByte = binary.charCodeAt(1);
+  
+      // Check for PNG (89 50), JPEG (FF D8), GIF (47 49)
+      if ((firstByte === 0x89 && secondByte === 0x50) || // PNG
+          (firstByte === 0xFF && secondByte === 0xD8) || // JPEG
+          (firstByte === 0x47 && secondByte === 0x49)) { // GIF
+        return true;
+      }
+    } catch (e) {
+      return false;
+    }
+    return false;
+  }
+  downloadFile(base64String: string, fileName: string) {
+    const link = document.createElement('a');
+    link.href = `data:application/octet-stream;base64,${base64String}`;
+    link.download = fileName;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  }
+  deleteMediaFile(mediaFileId: number): void {
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+     width: '250px',
+     data: 'Are you sure you want to delete this media file?'
+   });
+
+   dialogRef.afterClosed().subscribe(result => {
+     if (result) {
+       this.orderService.deleteMediaFile(mediaFileId).subscribe(
+         () => {
+           this.showSnackBar('Successfully deleted media file');
+           setTimeout(() => {
+             location.reload(); // Reload or update data as needed
+           }, 2000); 
+         },
+         (error: HttpErrorResponse) => {
+           console.error('Error deleting media file:', error.error);
+         }
+       );
+     }
+   });
+ }
+  getBase64ImageSrc(base64String: string): string {
+    if (this.isImage(base64String)) {
+      return `data:image/png;base64,${base64String}`;
+    }
+    return '';
   }
   showSnackBar(message:string) {
     this.snackBar.open(message, 'Dismiss', {

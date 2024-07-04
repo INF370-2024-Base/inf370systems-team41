@@ -84,6 +84,7 @@ namespace BioProSystem.Models
         //stock
         Task<List<Stock>> GetAllStocks();
         Task<List<StockType>> GetAllStockTypes();
+        Task<Stock> GeStockById(int id);
         Task<List<StockCategory>> GetAllStockCategories();
         Task<Stock> GetStockById(int stockId);
         Task<StockType> GetStockTypeById(int stockTypeId);

@@ -301,6 +301,7 @@ namespace BioProSystem.Controllers
                     {
                         completedStep.DateCompleted = DateTime.Now;
                         completedStep.IsCurrentStep = false;
+                        completedStep.Completed = true;
                         nextStep.IsCurrentStep=true;
                     }
                 }
