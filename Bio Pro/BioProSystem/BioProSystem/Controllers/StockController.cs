@@ -333,6 +333,185 @@ namespace BioProSystem.Controllers
 
             Console.WriteLine(messageResponse.Sid);
         }
+        [HttpPost]
+        [Route("CreateStockCategory")]
+        public async Task<IActionResult> CreateStockCategory(StockCategoryViewModel viewModel)
+        {
+            if (viewModel == null) { return BadRequest(ModelState); }
+            if (ModelState.IsValid)
+            {
+                try
+                {
+
+                    StockCategory newStockCategory=new StockCategory();
+                    newStockCategory.Description=viewModel.Description;
+  
+                    StockType stockType = await _repository.GetStockTypeById(viewModel.StockTypeId);
+                    _repository.Add(newStockCategory);
+                    if(stockType == null)
+                    {
+                        return BadRequest("Stocktype not found.");
+                    }
+
+                    if (await _repository.SaveChangesAsync())
+                    {
+                        return Ok(newStockCategory);
+                    }
+                    else
+                    {
+                        return BadRequest("Could not save to database");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    return BadRequest(ex.InnerException.Message);
+                }
+            }
+            else
+            {
+                return StatusCode(500, "Internal Server Error. Please contact support.");
+            }
+        }
+
+        [HttpPost]
+        [Route("CreateStockType")]
+        public async Task<IActionResult> CreateStockType(StockTypeViewModel viewModel)
+        {
+            if (viewModel == null) { return BadRequest(ModelState); }
+            if (ModelState.IsValid)
+            {
+                try
+                {
+
+                    StockType newStocktype = new StockType();
+                    newStocktype.Description = viewModel.Description;
+                    
+                    if (newStocktype == null)
+                    {
+                        return BadRequest("Stocktype not found.");
+                    }
+
+                    if (await _repository.SaveChangesAsync())
+                    {
+                        if (viewModel.StockCategoryId != null)
+                        {
+                            foreach (int id in viewModel.StockCategoryId)
+                            {
+                                StockCategory stockCategory = await _repository.GetStockCategoryById(id);
+                                stockCategory.StockTypeId = newStocktype.StockTypeId;
+                                newStocktype.StockCategories.Add(stockCategory);
+                            }
+                        }                       
+                        return Ok(newStocktype);
+                    }
+                    else
+                    {
+                        return BadRequest("Could not save to database");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    return BadRequest(ex.InnerException.Message);
+                }
+            }
+            else
+            {
+                return StatusCode(500, "Internal Server Error. Please contact support.");
+            }
+        }
+        [HttpPut]
+        [Route("EditStockType")]
+        public async Task<IActionResult> EditStockType(StockTypeViewModel viewModel)
+        {
+            if (viewModel == null) { return BadRequest(ModelState); }
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    if (viewModel.StockTypeId != null)
+                    {
+                        int stockTypeId = viewModel.StockTypeId.Value;
+                        StockType newStocktype = await _repository.GetStockTypeById(stockTypeId);
+                        newStocktype.Description = viewModel.Description;
+
+
+                        if (await _repository.SaveChangesAsync())
+                        {
+                            if (viewModel.StockCategoryId != null)
+                            {
+                                foreach (int id in viewModel.StockCategoryId)
+                                {
+                                    StockCategory stockCategory = await _repository.GetStockCategoryById(id);
+                                    stockCategory.StockTypeId = newStocktype.StockTypeId;
+                                    newStocktype.StockCategories.Add(stockCategory);
+                                }
+                            }
+                            return Ok(newStocktype);
+                        }
+                        else
+                        {
+                            return BadRequest("Could not save to database");
+                        }
+                    }
+                    else
+                    {
+                        return BadRequest("No stock type sent");
+                    }
+
+                }
+                catch (Exception ex)
+                {
+                    return BadRequest(ex.InnerException.Message);
+                }
+            }
+            else
+            {
+                return StatusCode(500, "Internal Server Error. Please contact support.");
+            }
+        }
+        [HttpPut]
+        [Route("EditStockCatehpry")]
+        public async Task<IActionResult> EditStockCatehpry(StockCategoryViewModel viewModel)
+        {
+            if (viewModel == null) { return BadRequest(ModelState); }
+            if (ModelState.IsValid)
+            {
+                try
+                {
+
+                        if(viewModel.StockCategoryId!=null)
+                        {
+                            int StockCategoryId = viewModel.StockCategoryId.Value;
+                            StockCategory stockCategory = await _repository.GetStockCategoryById(StockCategoryId);
+                            stockCategory.Description = viewModel.Description;
+                            StockType newStocktype = await _repository.GetStockTypeById(viewModel.StockTypeId);
+                            newStocktype.StockCategories.Add(stockCategory);
+
+                            if (await _repository.SaveChangesAsync())
+                            {
+                                return Ok(newStocktype);
+                            }
+                            else
+                            {
+                                return BadRequest("Could not save to database");
+                            }
+                        }
+                        else
+                        {
+                            return BadRequest("No category id sent");
+                        }                 
+
+                }
+                catch (Exception ex)
+                {
+                    return BadRequest(ex.InnerException.Message);
+                }
+            }
+            else
+            {
+                return StatusCode(500, "Internal Server Error. Please contact support.");
+            }
+        }
     }
   
 }
