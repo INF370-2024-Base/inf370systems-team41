@@ -21,6 +21,9 @@ import { DentalDesignApprovalComponent } from './dental-design-approval/dental-d
 import { EmployeeOrdersAndStepsComponent } from './employee-orders-and-steps/employee-orders-and-steps.component';
 import { CalendarComponent } from './calendar/calendar.component';
 import { HelpComponent } from './help/help.component';
+import { HelpStockComponent } from './help-stock/help-stock.component';
+import { HelpEmployeesComponent } from './help-employees/help-employees.component';
+import { HelpDentistComponent } from './help-dentist/help-dentist.component';
 
 
 const routes: Routes = [
@@ -48,7 +51,11 @@ const routes: Routes = [
   {path: 'test', component: TestingBackendComponent},
   {path: 'employeeOrders', component: EmployeeOrdersAndStepsComponent},
   {path: 'calendar', component: CalendarComponent},
-  {path:'help', component:HelpComponent}
+  {path:'help', component:HelpComponent},
+  {path:'help-stock', component:HelpStockComponent},
+  {path:'help-employee', component:HelpEmployeesComponent },
+  {path:'help-dentist', component:HelpDentistComponent},
+  
 ];
 
 @NgModule({
