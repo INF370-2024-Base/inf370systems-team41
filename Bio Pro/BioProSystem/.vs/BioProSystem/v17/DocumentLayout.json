@@ -347,7 +347,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 10,
+          "SelectedChildIndex": 6,
           "Children": [
             {
               "$type": "Document",
@@ -360,8 +360,7 @@
               "ViewState": "AQIAANYBAAAAAAAAAAAlwPUBAAAZAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-06-15T17:10:38.785Z",
-              "IsPinned": true,
-              "EditorCaption": ""
+              "IsPinned": true
             },
             {
               "$type": "Document",
@@ -430,39 +429,16 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "StockCategoryViewModel.cs",
-              "DocumentMoniker": "C:\\Users\\leze7\\Desktop\\UNI 2024\\INF 370\\Project\\A2\\Bio Pro\\BioProSystem\\BioProSystem\\ViewModels\\StockCategoryViewModel.cs",
-              "RelativeDocumentMoniker": "BioProSystem\\ViewModels\\StockCategoryViewModel.cs",
-              "ToolTip": "C:\\Users\\leze7\\Desktop\\UNI 2024\\INF 370\\Project\\A2\\Bio Pro\\BioProSystem\\BioProSystem\\ViewModels\\StockCategoryViewModel.cs",
-              "RelativeToolTip": "BioProSystem\\ViewModels\\StockCategoryViewModel.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAqwAYAAAATAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-03T08:47:21.348Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "ResetPassword.cs",
-              "DocumentMoniker": "C:\\Users\\leze7\\Desktop\\UNI 2024\\INF 370\\Project\\A2\\Bio Pro\\BioProSystem\\BioProSystem\\ViewModels\\ResetPassword.cs",
-              "RelativeDocumentMoniker": "BioProSystem\\ViewModels\\ResetPassword.cs",
-              "ToolTip": "C:\\Users\\leze7\\Desktop\\UNI 2024\\INF 370\\Project\\A2\\Bio Pro\\BioProSystem\\BioProSystem\\ViewModels\\ResetPassword.cs",
-              "RelativeToolTip": "BioProSystem\\ViewModels\\ResetPassword.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAUAAAAhAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-03T12:01:03.438Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "StockWriteOffViewModel.cs",
-              "DocumentMoniker": "C:\\Users\\leze7\\Desktop\\UNI 2024\\INF 370\\Project\\A2\\Bio Pro\\BioProSystem\\BioProSystem\\ViewModels\\StockWriteOffViewModel.cs",
-              "RelativeDocumentMoniker": "BioProSystem\\ViewModels\\StockWriteOffViewModel.cs",
-              "ToolTip": "C:\\Users\\leze7\\Desktop\\UNI 2024\\INF 370\\Project\\A2\\Bio Pro\\BioProSystem\\BioProSystem\\ViewModels\\StockWriteOffViewModel.cs",
-              "RelativeToolTip": "BioProSystem\\ViewModels\\StockWriteOffViewModel.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAqwAIAAAADAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-15T18:13:54.757Z"
+              "DocumentIndex": 0,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "C:\\Users\\leze7\\Desktop\\UNI 2024\\INF 370\\Project\\A2\\Bio Pro\\BioProSystem\\BioProSystem\\appsettings.json",
+              "RelativeDocumentMoniker": "BioProSystem\\appsettings.json",
+              "ToolTip": "C:\\Users\\leze7\\Desktop\\UNI 2024\\INF 370\\Project\\A2\\Bio Pro\\BioProSystem\\BioProSystem\\appsettings.json",
+              "RelativeToolTip": "BioProSystem\\appsettings.json",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAoAAAChAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2024-05-13T13:29:18.467Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -478,16 +454,39 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "appsettings.json",
-              "DocumentMoniker": "C:\\Users\\leze7\\Desktop\\UNI 2024\\INF 370\\Project\\A2\\Bio Pro\\BioProSystem\\BioProSystem\\appsettings.json",
-              "RelativeDocumentMoniker": "BioProSystem\\appsettings.json",
-              "ToolTip": "C:\\Users\\leze7\\Desktop\\UNI 2024\\INF 370\\Project\\A2\\Bio Pro\\BioProSystem\\BioProSystem\\appsettings.json",
-              "RelativeToolTip": "BioProSystem\\appsettings.json",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAoAAAChAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2024-05-13T13:29:18.467Z",
-              "EditorCaption": ""
+              "DocumentIndex": 7,
+              "Title": "StockWriteOffViewModel.cs",
+              "DocumentMoniker": "C:\\Users\\leze7\\Desktop\\UNI 2024\\INF 370\\Project\\A2\\Bio Pro\\BioProSystem\\BioProSystem\\ViewModels\\StockWriteOffViewModel.cs",
+              "RelativeDocumentMoniker": "BioProSystem\\ViewModels\\StockWriteOffViewModel.cs",
+              "ToolTip": "C:\\Users\\leze7\\Desktop\\UNI 2024\\INF 370\\Project\\A2\\Bio Pro\\BioProSystem\\BioProSystem\\ViewModels\\StockWriteOffViewModel.cs",
+              "RelativeToolTip": "BioProSystem\\ViewModels\\StockWriteOffViewModel.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAqwAIAAAADAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-15T18:13:54.757Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "ResetPassword.cs",
+              "DocumentMoniker": "C:\\Users\\leze7\\Desktop\\UNI 2024\\INF 370\\Project\\A2\\Bio Pro\\BioProSystem\\BioProSystem\\ViewModels\\ResetPassword.cs",
+              "RelativeDocumentMoniker": "BioProSystem\\ViewModels\\ResetPassword.cs",
+              "ToolTip": "C:\\Users\\leze7\\Desktop\\UNI 2024\\INF 370\\Project\\A2\\Bio Pro\\BioProSystem\\BioProSystem\\ViewModels\\ResetPassword.cs",
+              "RelativeToolTip": "BioProSystem\\ViewModels\\ResetPassword.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAUAAAAhAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-03T12:01:03.438Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "StockCategoryViewModel.cs",
+              "DocumentMoniker": "C:\\Users\\leze7\\Desktop\\UNI 2024\\INF 370\\Project\\A2\\Bio Pro\\BioProSystem\\BioProSystem\\ViewModels\\StockCategoryViewModel.cs",
+              "RelativeDocumentMoniker": "BioProSystem\\ViewModels\\StockCategoryViewModel.cs",
+              "ToolTip": "C:\\Users\\leze7\\Desktop\\UNI 2024\\INF 370\\Project\\A2\\Bio Pro\\BioProSystem\\BioProSystem\\ViewModels\\StockCategoryViewModel.cs",
+              "RelativeToolTip": "BioProSystem\\ViewModels\\StockCategoryViewModel.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAqwAYAAAATAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-07-03T08:47:21.348Z"
             },
             {
               "$type": "Document",
