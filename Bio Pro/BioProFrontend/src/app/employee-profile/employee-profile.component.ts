@@ -1,8 +1,9 @@
-// employee-profile.component.ts
 import { Component, OnInit } from '@angular/core';
-import { DataService } from '../services/login.service';
-import { Employee } from '../shared/employee';
+import { MatDialog } from '@angular/material/dialog';
 import { EmployeeService } from '../services/employee.service';
+import { Employee } from '../shared/employee';
+import { EditEmployeeDialogComponent } from '../edit-employee-dialog/edit-employee-dialog.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-employee-profile',
@@ -12,18 +13,22 @@ import { EmployeeService } from '../services/employee.service';
 export class EmployeeProfileComponent implements OnInit {
   employees: any[] = [];
   searchQuery = '';
+  jobTitles: any[] = [];
 
-  constructor(private employeeService: EmployeeService) { }
+  constructor(
+    private employeeService: EmployeeService,
+    public dialog: MatDialog,
+    private snackBar: MatSnackBar
+  ) { }
 
   ngOnInit(): void {
     this.fetchAllEmployees();
-    
+    this.getJobTitles();
   }
 
   fetchAllEmployees() {
     this.employeeService.getAllEmployees().subscribe(data => {
       this.employees = data;
-      console.log(this.employees);
     });
   }
 
@@ -33,23 +38,48 @@ export class EmployeeProfileComponent implements OnInit {
     });
   }
 
-  editEmployee(employee: Employee) {
-    // Implement the logic to navigate to the edit employee form
+  editEmployee(employee: any) {
+    const dialogRef = this.dialog.open(EditEmployeeDialogComponent, {
+      width: '400px',
+      data: { ...employee }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.fetchAllEmployees();
+        this.snackBar.open('Employee updated successfully', 'Close', {
+          duration: 3000,
+        });
+      }
+    });
   }
 
-  deleteEmployee(employee: Employee) {
-  //   this.employeeService.deleteEmployee(employee.id).subscribe(() => {
-  //     const index = this.employees.indexOf(employee);
-  //     if (index > -1) {
-  //       this.employees.splice(index, 1);
-  //     }
-  //   });
-   }
-   onOrderIdChange(searchCriteria: string) {
+  deleteEmployee(employee:any) {
+    console.log (employee)
+    if (!employee.employeeId) {
+      console.error('EmployeeId is undefined. Cannot delete employee.');
+      return;
+    }
+
+    if (confirm(`Are you sure you want to delete ${employee.firstName} ${employee.lastName}?`)) {
+      this.employeeService.deleteEmployee(employee.employeeId).subscribe(() => {
+        this.fetchAllEmployees(); // Refresh the list after deleting
+      }, error => {
+        console.error('Error deleting employee:', error);
+      });
+    }
+  }
+
+  getJobTitles() {
+    this.employeeService.getJobtitles().subscribe(data => {
+      this.jobTitles = data;
+    });
+  }
+
+  onOrderIdChange(searchCriteria: string) {
     if (searchCriteria.trim() === '') {
       this.fetchAllEmployees();
     } else {
-      // Filter restaurants based on query
       this.employees = this.employees.filter((d) => {
         let fullName = (d.firstName + ' ' + d.lastName).toLowerCase();
         return d.email.toLowerCase().includes(searchCriteria) ||

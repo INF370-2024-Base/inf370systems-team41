@@ -48,6 +48,16 @@ import { ProcededuralTimelineViewComponent } from './procededural-timeline-view/
 import { AddEventModalComponent } from './add-event-modal/add-event-modal.component';
 import { StockUsedComponent } from './stock-used/stock-used.component';
 import { HelpComponent } from './help/help.component';
+import { UserProfileComponent } from './user-profile/user-profile.component';
+import { EditEmployeeDialogComponent } from './edit-employee-dialog/edit-employee-dialog.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { DailyHoursProfileComponent } from './daily-hours-profile/daily-hours-profile.component';
+import { AddStockComponent } from './add-stock/add-stock.component';
+import { StockComponent } from './stock/stock.component';
+import { WriteOffModalComponent } from './write-off-modal/write-off-modal.component';
+import { CaptureNewStockModalComponent } from './capture-new-stock-modal/capture-new-stock-modal.component';
+import { EditUserComponent } from './edit-user/edit-user.component';
+
 
 @NgModule({
   declarations: [
@@ -61,7 +71,10 @@ import { HelpComponent } from './help/help.component';
     DentistProfileComponent,
     EmployeeProfileComponent,
     CaptureEmployeeHoursComponent,LoginComponent,EditOrderModalComponent, AddUserComponent, AddProceduralTimeline, DeliveriesComponent, AddDeliveryComponent, HomeComponent, TestingBackendComponent, 
-    ConfirmationDialogComponent, OrdersAwaitingDentalDesignComponent, DentalDesignApprovalComponent, EmployeeOrdersAndStepsComponent,CalendarComponent, SearchBarComponent, EventModalComponent, ProcededuralTimelineViewComponent, AddEventModalComponent, StockUsedComponent, HelpComponent
+    ConfirmationDialogComponent, OrdersAwaitingDentalDesignComponent, DentalDesignApprovalComponent, EmployeeOrdersAndStepsComponent,CalendarComponent, SearchBarComponent, EventModalComponent, ProcededuralTimelineViewComponent, AddEventModalComponent, StockUsedComponent, HelpComponent,
+    CaptureEmployeeHoursComponent,LoginComponent,EditOrderModalComponent, AddUserComponent, AddProceduralTimeline, DeliveriesComponent, AddDeliveryComponent, HomeComponent, TestingBackendComponent, ConfirmationDialogComponent, OrdersAwaitingDentalDesignComponent, DentalDesignApprovalComponent,
+    UserProfileComponent, 
+    EditEmployeeDialogComponent, DailyHoursProfileComponent, AddStockComponent, StockComponent, WriteOffModalComponent, CaptureNewStockModalComponent, EditUserComponent,
   ],
   imports: [
     BrowserModule,
@@ -79,7 +92,9 @@ import { HelpComponent } from './help/help.component';
     CommonModule,   
     MatDatepickerModule,
     MatNativeDateModule,
-    CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory }),MatExpansionModule
+    CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory }),MatExpansionModule,
+    CommonModule,
+    MatDialogModule
   ],
   providers: [DatePipe],
   bootstrap: [AppComponent],

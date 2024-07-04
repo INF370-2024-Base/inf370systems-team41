@@ -22,6 +22,10 @@ import { EmployeeOrdersAndStepsComponent } from './employee-orders-and-steps/emp
 import { CalendarComponent } from './calendar/calendar.component';
 import { HelpComponent } from './help/help.component';
 
+import { DailyHoursProfileComponent } from './daily-hours-profile/daily-hours-profile.component';
+import { AddStockComponent } from './add-stock/add-stock.component';
+import { StockComponent } from './stock/stock.component';
+import { EditUserComponent } from './edit-user/edit-user.component';
 
 const routes: Routes = [
   
@@ -48,7 +52,11 @@ const routes: Routes = [
   {path: 'test', component: TestingBackendComponent},
   {path: 'employeeOrders', component: EmployeeOrdersAndStepsComponent},
   {path: 'calendar', component: CalendarComponent},
-  {path:'help', component:HelpComponent}
+  {path:'help', component:HelpComponent},
+  {path: 'dailyHoursProfile', component: DailyHoursProfileComponent},
+  {path: 'addStock', component: AddStockComponent},
+  {path: 'pageStock', component: StockComponent},
+  { path: 'edit-user', component: EditUserComponent },
 ];
 
 @NgModule({

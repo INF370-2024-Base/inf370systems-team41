@@ -1,0 +1,43 @@
+<!-- capture-stock.component.html -->
+<div class="container">
+  <h2>Capture New Stock</h2>
+  <form [formGroup]="captureStockForm" (ngSubmit)="captureStock()">
+    <div class="form-group">
+      <label for="stockCategoryId">Stock Category:</label>
+      <select id="stockCategoryId" formControlName="stockCategoryId" class="form-control" required>
+        <option *ngFor="let category of StockCategories" [value]="category.id">{{ category.description }}</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="supplierId">Supplier:</label>
+      <select id="supplierId" formControlName="supplierId" class="form-control" required>
+        <option *ngFor="let supplier of StockSuppliers" [value]="supplier.id">{{ supplier.supplierName }}</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="stockName">Stock Name:</label>
+      <input id="stockName" formControlName="stockName" class="form-control" type="text" required />
+    </div>
+    <div class="form-group">
+      <label for="quantityAvailable">Quantity Available:</label>
+      <input id="quantityAvailable" formControlName="quantityAvailable" class="form-control" type="number" required />
+    </div>
+    <div class="form-group">
+      <label for="maximumStockLevel">Maximum Stock Level:</label>
+      <input id="maximumStockLevel" formControlName="maximumStockLevel" class="form-control" type="number" required />
+    </div>
+    <div class="form-group">
+      <label for="minimumStockLevel">Minimum Stock Level:</label>
+      <input id="minimumStockLevel" formControlName="minimumStockLevel" class="form-control" type="number" required />
+    </div>
+    <div class="form-group">
+      <label for="reorderPoint">Reorder Point:</label>
+      <input id="reorderPoint" formControlName="reorderPoint" class="form-control" type="text" />
+    </div>
+    <div class="form-group">
+      <label for="measurement">Measurement:</label>
+      <input id="measurement" formControlName="measurement" class="form-control" type="text" required />
+    </div>
+    <button type="submit" class="btn btn-primary" [disabled]="!captureStockForm.valid">Capture Stock</button>
+  </form>
+</div>

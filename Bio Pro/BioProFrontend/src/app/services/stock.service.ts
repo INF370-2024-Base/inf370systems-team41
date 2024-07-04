@@ -49,6 +49,10 @@ export class StockServices {
   addStockItem(stockitem: AddStockItemViewModel): Observable<AddStockItemViewModel> {
     return this.httpClient.post<AddStockItemViewModel>(`${this.apiUrl}AddStockItem`, stockitem, this.httpOptions);
   }
+  getAllSupplier(): Observable<any>{
+    return this.httpClient.get(`${this.apiUrl}GetAllSupplier`)
+    .pipe(map(result => result))
+  }
   
 }
 

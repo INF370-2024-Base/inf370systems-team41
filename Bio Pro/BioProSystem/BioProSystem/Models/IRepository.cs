@@ -76,6 +76,8 @@ namespace BioProSystem.Models
 
         Task<CalanderScheduleEvent> GetScheduledEventById(int id);
 
+        Task<List<EmployeeDailyHours>> GetEmployeeDailyHoursByDay(DateTime dateTime);
+        Task<List<EmployeeDailyHours>> GetEmployeeDailyByEmployee(string employeeEmail);
         Task<EmployeeDailyHours> GetEmployeeDailyHoursById(int employeedDailyHoursId);
         Task<List<EmployeeDailyHours>> GetEmployeeDailyHours();
         Task<MediaFile> GetMediaFileById(int mediaFileId);
@@ -85,6 +87,7 @@ namespace BioProSystem.Models
         Task<List<StockCategory>> GetAllStockCategories();
         Task<Stock> GetStockById(int stockId);
         Task<StockType> GetStockTypeById(int stockTypeId);
+        Task<List<Supplier>> GetAllSupplier();
 
     }
 }

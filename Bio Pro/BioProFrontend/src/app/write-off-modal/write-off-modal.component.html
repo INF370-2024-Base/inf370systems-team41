@@ -1,0 +1,21 @@
+<h1 mat-dialog-title>Write Off Stock: {{data.stockName}}</h1>
+<div mat-dialog-content>
+  <form [formGroup]="writeOffForm">
+    <mat-form-field>
+      <mat-label>Quantity Written Off</mat-label>
+      <input matInput formControlName="quantityWrittenOff" type="number">
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Written Off Date</mat-label>
+      <input matInput formControlName="writtenOffDate" [min]="currentDate" [max]="currentDate" type="date">
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Reason</mat-label>
+      <input matInput formControlName="reason">
+    </mat-form-field>
+  </form>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onCancel()">Cancel</button>
+  <button mat-button [disabled]="!writeOffForm.valid" (click)="onSubmit()">Submit</button>
+</div>
