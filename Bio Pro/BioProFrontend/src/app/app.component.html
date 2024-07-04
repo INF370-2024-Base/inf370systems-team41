@@ -31,7 +31,7 @@
           Add User
         </a>
         <a mat-list-item class="nav-link" (click)="toggleEmployeeMenu()" [routerLink]="['/employeeProfile']">
-          <mat-icon>person</mat-icon> <!-- Icon for profile -->
+          <mat-icon>perm_contact_calendar</mat-icon> <!-- Icon for profile -->
           All Employees
         </a>
         
@@ -47,7 +47,7 @@
         </a>
        
         <a mat-list-item class="nav-link" (click)="toggleOrdersMenu()" [routerLink]="['/orders']">
-          <mat-icon>folder</mat-icon> <!-- Icon for orders -->
+          <mat-icon>receipt</mat-icon> <!-- Icon for orders -->
           Orders
         </a>
         <ng-container *ngIf="isOrdersMenuOpen">
@@ -73,7 +73,7 @@
           </a>
         </ng-container>
         <a mat-list-item class="nav-link" (click)="isSidenavOpen = !isSidenavOpen" [routerLink]="['/addproceduraltimeline']">
-          <mat-icon>watch</mat-icon> 
+          <mat-icon>event</mat-icon> 
           Timeline of Orders
         </a>
         <a mat-list-item class="nav-link" (click)="toggleDeliveriesMenu()" [routerLink]="['/deliveries']">
