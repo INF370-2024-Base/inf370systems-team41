@@ -47,6 +47,7 @@ import { EventModalComponent } from './event-modal/event-modal.component';
 import { ProcededuralTimelineViewComponent } from './procededural-timeline-view/procededural-timeline-view.component';
 import { AddEventModalComponent } from './add-event-modal/add-event-modal.component';
 import { StockUsedComponent } from './stock-used/stock-used.component';
+import { HelpComponent } from './help/help.component';
 
 @NgModule({
   declarations: [
@@ -60,7 +61,7 @@ import { StockUsedComponent } from './stock-used/stock-used.component';
     DentistProfileComponent,
     EmployeeProfileComponent,
     CaptureEmployeeHoursComponent,LoginComponent,EditOrderModalComponent, AddUserComponent, AddProceduralTimeline, DeliveriesComponent, AddDeliveryComponent, HomeComponent, TestingBackendComponent, 
-    ConfirmationDialogComponent, OrdersAwaitingDentalDesignComponent, DentalDesignApprovalComponent, EmployeeOrdersAndStepsComponent,CalendarComponent, SearchBarComponent, EventModalComponent, ProcededuralTimelineViewComponent, AddEventModalComponent, StockUsedComponent
+    ConfirmationDialogComponent, OrdersAwaitingDentalDesignComponent, DentalDesignApprovalComponent, EmployeeOrdersAndStepsComponent,CalendarComponent, SearchBarComponent, EventModalComponent, ProcededuralTimelineViewComponent, AddEventModalComponent, StockUsedComponent, HelpComponent
   ],
   imports: [
     BrowserModule,

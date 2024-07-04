@@ -11,6 +11,22 @@
   },
   {
     "ContainingType": "BioProSystem.Controllers.OrderController",
+    "Method": "SendDentalDesign",
+    "RelativePath": "Api/AddMediaFile",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "mediaFileViewModels",
+        "Type": "BioProSystem.ViewModels.AddMediaFileViewModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "BioProSystem.Controllers.OrderController",
     "Method": "Add",
     "RelativePath": "Api/AddOrders",
     "HttpMethod": "POST",
@@ -332,6 +348,22 @@
   },
   {
     "ContainingType": "BioProSystem.Controllers.EmployeeController",
+    "Method": "SendTestEmail",
+    "RelativePath": "api/Employee",
+    "HttpMethod": "HEAD",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "email",
+        "Type": "BioProSystem.ViewModels.EmailViewModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "BioProSystem.Controllers.EmployeeController",
     "Method": "AddEmployee",
     "RelativePath": "api/Employee/AddEmployee",
     "HttpMethod": "POST",
@@ -362,6 +394,22 @@
       {
         "Name": "newDailyHours",
         "Type": "BioProSystem.ViewModels.EmployeeDailyHoursViewModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "BioProSystem.Controllers.EmployeeController",
+    "Method": "CompleteStepAndJob",
+    "RelativePath": "api/Employee/CompleteStepAndJob/{stepId}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "stepId",
+        "Type": "System.Int32",
         "IsRequired": true
       }
     ],
@@ -424,6 +472,32 @@
     "Order": 0,
     "Parameters": [],
     "ReturnTypes": []
+  },
+  {
+    "ContainingType": "BioProSystem.Controllers.EmployeeController",
+    "Method": "GetJobtitles",
+    "RelativePath": "api/Employee/GetCurrentOrders/{email}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "email",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[BioProSystem.Models.SystemOrder, BioProSystem, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
   },
   {
     "ContainingType": "BioProSystem.Controllers.EmployeeController",
@@ -690,6 +764,84 @@
         "Name": "roleName",
         "Type": "System.String",
         "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "BioProSystem.Controllers.CalendarController",
+    "Method": "CreateScheduledEvent",
+    "RelativePath": "calendar/CreateScheduledEvent",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "viewModel",
+        "Type": "BioProSystem.ViewModels.EditCalanderEventViewModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "BioProSystem.Controllers.CalendarController",
+    "Method": "DeleteScheduledEvent",
+    "RelativePath": "calendar/DeleteScheduledEvent/{eventID}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "eventID",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "BioProSystem.Controllers.CalendarController",
+    "Method": "GetAllCalendars",
+    "RelativePath": "calendar/GetAllCalendars",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "BioProSystem.Controllers.CalendarController",
+    "Method": "GetAllProceduralTimelines",
+    "RelativePath": "calendar/GetAllProceduralTimelines",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "BioProSystem.Controllers.CalendarController",
+    "Method": "GetAllScheduledEvents",
+    "RelativePath": "calendar/GetAllScheduledEvents",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "BioProSystem.Controllers.CalendarController",
+    "Method": "UpdateScheduledEvent",
+    "RelativePath": "calendar/UpdateScheduledEvent",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "viewModel",
+        "Type": "BioProSystem.ViewModels.EditCalanderEventViewModel",
+        "IsRequired": true
       }
     ],
     "ReturnTypes": []
@@ -975,6 +1127,22 @@
   },
   {
     "ContainingType": "BioProSystem.Controllers.StockController",
+    "Method": "AddStockItem",
+    "RelativePath": "stock/AddStockItem",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "viewModel",
+        "Type": "BioProSystem.ViewModels.AddStockItemViewModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "BioProSystem.Controllers.StockController",
     "Method": "CaptureNewStock",
     "RelativePath": "stock/CaptureNewStock",
     "HttpMethod": "PUT",
@@ -984,6 +1152,70 @@
       {
         "Name": "viewModel",
         "Type": "BioProSystem.ViewModels.CaptureNewStockViewModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "BioProSystem.Controllers.StockController",
+    "Method": "CreateStockCategory",
+    "RelativePath": "stock/CreateStockCategory",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "viewModel",
+        "Type": "BioProSystem.ViewModels.StockCategoryViewModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "BioProSystem.Controllers.StockController",
+    "Method": "CreateStockType",
+    "RelativePath": "stock/CreateStockType",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "viewModel",
+        "Type": "BioProSystem.ViewModels.StockTypeViewModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "BioProSystem.Controllers.StockController",
+    "Method": "EditStockCatehpry",
+    "RelativePath": "stock/EditStockCatehpry",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "viewModel",
+        "Type": "BioProSystem.ViewModels.StockCategoryViewModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "BioProSystem.Controllers.StockController",
+    "Method": "EditStockType",
+    "RelativePath": "stock/EditStockType",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "viewModel",
+        "Type": "BioProSystem.ViewModels.StockTypeViewModel",
         "IsRequired": true
       }
     ],
