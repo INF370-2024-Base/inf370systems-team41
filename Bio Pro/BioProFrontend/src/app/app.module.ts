@@ -58,6 +58,9 @@ import { WriteOffModalComponent } from './write-off-modal/write-off-modal.compon
 import { CaptureNewStockModalComponent } from './capture-new-stock-modal/capture-new-stock-modal.component';
 import { EditUserComponent } from './edit-user/edit-user.component';
 
+import { HelpStockComponent } from './help-stock/help-stock.component';
+import { HelpEmployeesComponent } from './help-employees/help-employees.component';
+import { HelpDentistComponent } from './help-dentist/help-dentist.component';
 
 @NgModule({
   declarations: [
@@ -75,6 +78,7 @@ import { EditUserComponent } from './edit-user/edit-user.component';
     CaptureEmployeeHoursComponent,LoginComponent,EditOrderModalComponent, AddUserComponent, AddProceduralTimeline, DeliveriesComponent, AddDeliveryComponent, HomeComponent, TestingBackendComponent, ConfirmationDialogComponent, OrdersAwaitingDentalDesignComponent, DentalDesignApprovalComponent,
     UserProfileComponent, 
     EditEmployeeDialogComponent, DailyHoursProfileComponent, AddStockComponent, StockComponent, WriteOffModalComponent, CaptureNewStockModalComponent, EditUserComponent,
+    ConfirmationDialogComponent, OrdersAwaitingDentalDesignComponent, DentalDesignApprovalComponent, EmployeeOrdersAndStepsComponent,CalendarComponent, SearchBarComponent, EventModalComponent, ProcededuralTimelineViewComponent, AddEventModalComponent, StockUsedComponent, HelpComponent,HelpStockComponent, HelpEmployeesComponent, HelpDentistComponent
   ],
   imports: [
     BrowserModule,

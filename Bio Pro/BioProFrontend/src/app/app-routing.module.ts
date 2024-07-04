@@ -21,6 +21,9 @@ import { DentalDesignApprovalComponent } from './dental-design-approval/dental-d
 import { EmployeeOrdersAndStepsComponent } from './employee-orders-and-steps/employee-orders-and-steps.component';
 import { CalendarComponent } from './calendar/calendar.component';
 import { HelpComponent } from './help/help.component';
+import { HelpStockComponent } from './help-stock/help-stock.component';
+import { HelpEmployeesComponent } from './help-employees/help-employees.component';
+import { HelpDentistComponent } from './help-dentist/help-dentist.component';
 
 import { DailyHoursProfileComponent } from './daily-hours-profile/daily-hours-profile.component';
 import { AddStockComponent } from './add-stock/add-stock.component';
@@ -57,6 +60,10 @@ const routes: Routes = [
   {path: 'addStock', component: AddStockComponent},
   {path: 'pageStock', component: StockComponent},
   { path: 'edit-user', component: EditUserComponent },
+  {path:'help-stock', component:HelpStockComponent},
+  {path:'help-employee', component:HelpEmployeesComponent },
+  {path:'help-dentist', component:HelpDentistComponent},
+  
 ];
 
 @NgModule({
