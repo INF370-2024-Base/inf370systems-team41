@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Help - Add Dentist</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.1.12/angular-material.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
+</head>
+<body>
+    <div class="help-container">
+        <h1>Help: Add Dentist</h1>
+        <p><strong>Description:</strong><br>The add functionality allows you to create a new dentist record in the system.</p>
+        <p><strong>How to Use:</strong><br>
+        Click on the "Add Dentist" button to open the add dentist form.<br>
+        Fill in the required fields (Last Name, First Name, Contact Details, Address).<br>
+        Click the "Add Dentist" button to save the new dentist.</p>
+        <p><strong>Required Inputs:</strong><br>
+        Last Name (required)<br>
+        First Name (required)<br>
+        Contact Details (required)<br>
+        Address (required)</p>
+        <p><strong>Restrictions:</strong><br>
+        All fields are mandatory.<br>
+        Ensure that the contact details are valid.</p>
+        <form>
+            <mat-form-field appearance="outline">
+                <mat-label><i class="material-icons">person</i> Surname</mat-label>
+                <input matInput placeholder="Surname" required>
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label><i class="material-icons">person</i> Name</mat-label>
+                <input matInput placeholder="Name" required>
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label><i class="material-icons">phone</i> Contact Details</mat-label>
+                <input matInput placeholder="Contact Details" required>
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label><i class="material-icons">location_on</i> Address</mat-label>
+                <input matInput placeholder="Address" required>
+            </mat-form-field>
+            <button mat-raised-button color="primary" type="submit">Add Dentist</button>
+        </form>
+        <div class="example-container">
+            <h3>Example:</h3>
+            <p>Fill in the form with the dentist's surname, name, contact details, and address, then click "Add Dentist".</p>
+        </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.1.12/angular-material.min.js"></script>
+</body>
+</html>

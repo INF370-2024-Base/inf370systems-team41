@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Help - Delete Dentist</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.1.12/angular-material.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
+</head>
+<body>
+    <div class="help-container">
+        <h1>Help: Delete Dentist</h1>
+        <p><strong>Description:</strong><br>The delete functionality allows you to remove a dentist record from the system.</p>
+        <p><strong>How to Use:</strong><br>
+        Click on the "Delete" button next to the dentist you want to remove.<br>
+        Confirm the deletion when prompted.</p>
+        <p><strong>Required Inputs:</strong><br>No inputs required, just confirmation.</p>
+        <p><strong>Restrictions:</strong><br>
+        Deletion is irreversible. Once deleted, the dentist record cannot be recovered.</p>
+        <div>
+            <p>Are you sure you want to delete this dentist?</p>
+            <button mat-raised-button color="warn">Yes, Delete</button>
+            <button mat-raised-button color="primary">No, Cancel</button>
+        </div>
+        <div class="example-container">
+            <h3>Example:</h3>
+            <p>To delete a dentist, click the "Delete" button next to their name, and confirm the action in the dialog.</p>
+        </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.1.12/angular-material.min.js"></script>
+</body>
+</html>

@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { DentistService } from '../shared/dentist.service';
 import { Dentist } from '../shared/dentist';
+import { DentistEditDialogComponent } from '../dentist-edit-dialog/dentist-edit-dialog.component';
 
 @Component({
   selector: 'app-dentist-profile',
@@ -9,11 +12,14 @@ import { Dentist } from '../shared/dentist';
 })
 export class DentistProfileComponent implements OnInit {
   dentists: Dentist[] = [];
-  filteredDentists: Dentist[] = []; // Array to hold filtered dentists
+  filteredDentists: Dentist[] = [];
   searchQuery = '';
-  displayedColumns: string[] = ['name', 'contactDetail', 'address']; // Define displayedColumns property
 
-  constructor(private dentistService: DentistService) { }
+  constructor(
+    private dentistService: DentistService,
+    public dialog: MatDialog,
+    private snackBar: MatSnackBar
+  ) { }
 
   ngOnInit(): void {
     this.fetchDentists();
@@ -22,67 +28,66 @@ export class DentistProfileComponent implements OnInit {
   fetchDentists(): void {
     this.dentistService.getAllDentists().subscribe(dentists => {
       this.dentists = dentists;
-      // Initially, set filteredDentists to all dentists
       this.filteredDentists = [...this.dentists];
-      console.log( this.filteredDentists)
     });
   }
 
   search(): void {
     if (this.searchQuery.trim() === '') {
-      // If the search query is empty, reset filteredDentists to all dentists
       this.filteredDentists = [...this.dentists];
     } else {
-      // Otherwise, filter dentists based on searchQuery
       this.filteredDentists = this.dentists.filter(dentist =>
         dentist.firstName.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
         dentist.lastName.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
-        dentist.contactDetail.toLowerCase().includes(this.searchQuery.toLowerCase()) 
+        dentist.contactDetail.toLowerCase().includes(this.searchQuery.toLowerCase())
       );
     }
   }
 
-  // In your component.ts
-editDentist(dentist: Dentist) {
-  this.dentistService.editDentist(dentist.dentistId, dentist).subscribe(
-    editedDentist => {
-      console.log('Dentist edited successfully:', editedDentist);
-      // Handle success, e.g., show a success message or refresh the list
-    },
-    error => {
-      console.error('Error editing dentist:', error);
-      // Handle error, e.g., show an error message
-    }
-  );
-}
+  openEditDialog(dentist: Dentist): void {
+    const dialogRef = this.dialog.open(DentistEditDialogComponent, {
+      width: '250px',
+      data: { dentist }
+    });
 
-deleteDentist(dentist: Dentist) {
-  this.dentistService.deleteDentist(dentist.dentistId).subscribe(
-    () => {
-      console.log('Dentist deleted successfully');
-      // Handle success, e.g., remove the dentist from the list or show a success message
-    },
-    error => {
-      console.error('Error deleting dentist:', error);
-      // Handle error, e.g., show an error message
-    }
-  );
-}
-onSearchChange(searchCriteria: string) {
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.dentistService.editDentist(result.dentistId, result).subscribe(
+          editedDentist => {
+            this.snackBar.open('Dentist edited successfully', 'Close', { duration: 3000 });
+            this.fetchDentists();
+          },
+          error => {
+            this.snackBar.open('Error editing dentist', 'Close', { duration: 3000 });
+          }
+        );
+      }
+    });
+  }
+
+  deleteDentist(dentist: Dentist): void {
+    this.dentistService.deleteDentist(dentist.dentistId).subscribe(
+      () => {
+        this.snackBar.open('Dentist deleted successfully', 'Close', { duration: 3000 });
+        this.fetchDentists();
+      },
+      error => {
+        this.snackBar.open('Error deleting dentist', 'Close', { duration: 3000 });
+      }
+    );
+  }
+
+  onSearchChange(searchCriteria: string): void {
     if (searchCriteria.trim() === '') {
       this.fetchDentists();
     } else {
-      console.log(searchCriteria)
-      // Filter restaurants based on query
-      this.filteredDentists = this.dentists.filter((d) => {
+      this.filteredDentists = this.dentists.filter(d => {
         let fullName = (d.firstName + ' ' + d.lastName).toLowerCase();
         return d.firstName.toLowerCase().includes(searchCriteria) ||
-              d.address?.toLowerCase().includes(searchCriteria) ||
-              d.lastName.toLowerCase().includes(searchCriteria) ||
-              fullName.includes(searchCriteria);
+          d.address?.toLowerCase().includes(searchCriteria) ||
+          d.lastName.toLowerCase().includes(searchCriteria) ||
+          fullName.includes(searchCriteria);
       });
     }
   }
-
 }
-

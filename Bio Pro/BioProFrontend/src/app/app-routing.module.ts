@@ -29,6 +29,10 @@ import { DailyHoursProfileComponent } from './daily-hours-profile/daily-hours-pr
 import { AddStockComponent } from './add-stock/add-stock.component';
 import { StockComponent } from './stock/stock.component';
 import { EditUserComponent } from './edit-user/edit-user.component';
+import { HelpDentistSearchComponent } from './help-dentist-search/help-dentist-search.component';
+import { HelpDentistAddComponent } from './help-dentist-add/help-dentist-add.component';
+import { HelpDentistEditComponent } from './help-dentist-edit/help-dentist-edit.component';
+import { HelpDentistDeleteComponent } from './help-dentist-delete/help-dentist-delete.component';
 
 const routes: Routes = [
   
@@ -63,6 +67,10 @@ const routes: Routes = [
   {path:'help-stock', component:HelpStockComponent},
   {path:'help-employee', component:HelpEmployeesComponent },
   {path:'help-dentist', component:HelpDentistComponent},
+  {path:'help-dentist-search', component:HelpDentistSearchComponent},
+  {path:'help-dentist-add', component:HelpDentistAddComponent},
+  {path:'help-dentist-edit', component:HelpDentistEditComponent},
+  {path:'help-dentist-delete', component:HelpDentistDeleteComponent},
   
 ];
 

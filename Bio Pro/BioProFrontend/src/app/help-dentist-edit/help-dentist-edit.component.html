@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Help - Edit Dentist</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.1.12/angular-material.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
+</head>
+<body>
+    <div class="help-container">
+        <h1>Help: Edit Dentist</h1>
+        <p><strong>Description:</strong><br>The edit functionality allows you to update the details of an existing dentist.</p>
+        <p><strong>How to Use:</strong><br>
+        Click on the "Edit" button next to the dentist you want to edit.<br>
+        Modify the required fields (Last Name, First Name, Contact Details, Address).<br>
+        Click the "Save" button to apply the changes.</p>
+        <p><strong>Required Inputs:</strong><br>
+        Last Name (required)<br>
+        First Name (required)<br>
+        Contact Details (required)<br>
+        Address (optional)</p>
+        <p><strong>Restrictions:</strong><br>
+        All fields except Address are mandatory.<br>
+        Ensure that the contact details are valid.</p>
+        <form>
+            <mat-form-field appearance="outline">
+                <mat-label>First Name</mat-label>
+                <input matInput placeholder="First Name" required>
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>Last Name</mat-label>
+                <input matInput placeholder="Last Name" required>
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>Contact Details</mat-label>
+                <input matInput placeholder="Contact Details" required>
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>Address</mat-label>
+                <input matInput placeholder="Address">
+            </mat-form-field>
+            <button mat-raised-button color="primary" type="submit">Save</button>
+            <button mat-raised-button color="warn" type="button">Cancel</button>
+        </form>
+        <div class="example-container">
+            <h3>Example:</h3>
+            <p>Modify the details in the form and click "Save" to update the dentist's information.</p>
+        </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.1.12/angular-material.min.js"></script>
+</body>
+</html>

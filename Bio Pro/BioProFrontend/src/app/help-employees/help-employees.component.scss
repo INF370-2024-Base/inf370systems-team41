@@ -1,0 +1,60 @@
+
+body {
+    background-color: #f5f5f5; /* Light gray background */
+    font-family: 'Roboto', sans-serif; /* Playful font */
+    color: #333; /* Dark text color */
+    padding: 20px; /* Add some padding */
+    overflow: hidden; /* Hide overflowing content */
+    background: linear-gradient(120deg, #aed9e0, #c2e2f3, #eaf1fa, #c2e2f3, #aed9e0);
+    background-size: 400% 400%;
+    animation: gradientAnimation 20s ease infinite;
+}
+
+@keyframes gradientAnimation {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+.help-container {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.help-container h1 {
+    font-size: 48px;
+    color: #4d4a4a;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    margin-bottom: 24px;
+    text-shadow: 2px 2px 4px rgba(124, 124, 124, 0.5);
+}
+
+.section-container {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+.section-container h2 {
+    margin-top: 0;
+}
+
+.section-container p {
+    margin: 10px 0;
+}
+
+.section-container button {
+    margin-top: 10px;
+}
+
+/* Responsive Design */
+@media only screen and (max-width: 768px) {
+    .section-container {
+        width: 100%;
+        margin-left: 0;
+        margin-bottom: 10px;
+    }
+}

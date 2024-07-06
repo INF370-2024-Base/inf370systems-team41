@@ -61,6 +61,11 @@ import { EditUserComponent } from './edit-user/edit-user.component';
 import { HelpStockComponent } from './help-stock/help-stock.component';
 import { HelpEmployeesComponent } from './help-employees/help-employees.component';
 import { HelpDentistComponent } from './help-dentist/help-dentist.component';
+import { DentistEditDialogComponent } from './dentist-edit-dialog/dentist-edit-dialog.component';
+import { HelpDentistSearchComponent } from './help-dentist-search/help-dentist-search.component';
+import { HelpDentistAddComponent } from './help-dentist-add/help-dentist-add.component';
+import { HelpDentistEditComponent } from './help-dentist-edit/help-dentist-edit.component';
+import { HelpDentistDeleteComponent } from './help-dentist-delete/help-dentist-delete.component';
 
 @NgModule({
   declarations: [
@@ -78,7 +83,7 @@ import { HelpDentistComponent } from './help-dentist/help-dentist.component';
     CaptureEmployeeHoursComponent,LoginComponent,EditOrderModalComponent, AddUserComponent, AddProceduralTimeline, DeliveriesComponent, AddDeliveryComponent, HomeComponent, TestingBackendComponent, ConfirmationDialogComponent, OrdersAwaitingDentalDesignComponent, DentalDesignApprovalComponent,
     UserProfileComponent, 
     EditEmployeeDialogComponent, DailyHoursProfileComponent, AddStockComponent, StockComponent, WriteOffModalComponent, CaptureNewStockModalComponent, EditUserComponent,
-    ConfirmationDialogComponent, OrdersAwaitingDentalDesignComponent, DentalDesignApprovalComponent, EmployeeOrdersAndStepsComponent,CalendarComponent, SearchBarComponent, EventModalComponent, ProcededuralTimelineViewComponent, AddEventModalComponent, StockUsedComponent, HelpComponent,HelpStockComponent, HelpEmployeesComponent, HelpDentistComponent
+    ConfirmationDialogComponent, OrdersAwaitingDentalDesignComponent, DentalDesignApprovalComponent, EmployeeOrdersAndStepsComponent,CalendarComponent, SearchBarComponent, EventModalComponent, ProcededuralTimelineViewComponent, AddEventModalComponent, StockUsedComponent, HelpComponent,HelpStockComponent, HelpEmployeesComponent, HelpDentistComponent, DentistEditDialogComponent, HelpDentistSearchComponent, HelpDentistAddComponent, HelpDentistEditComponent, HelpDentistDeleteComponent
   ],
   imports: [
     BrowserModule,

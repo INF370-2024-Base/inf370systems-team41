@@ -36,7 +36,10 @@ body {
   
   .orders-container,
   .timeline-container,
-  .delivery-container {
+  .delivery-container,
+  .employee-container ,
+  .dentist-container ,
+  .stock-container  {
     background-color: #f9f9f9;
     padding: 20px;
     border-radius: 5px;
@@ -46,19 +49,28 @@ body {
   
   .orders-container h2,
   .timeline-container h2,
-  .delivery-container h2 {
+  .delivery-container h2,
+  .employee-container h2,
+  .dentist-container h2,
+  .stock-container h2 {
     margin-top: 0;
   }
   
   .orders-container p,
   .timeline-container p,
-  .delivery-container p {
+  .delivery-container p,
+  .employee-container p,
+  .dentist-container p,
+  .stock-container p {
     margin: 10px 0;
   }
   
   .orders-container button,
   .timeline-container button,
-  .delivery-container button {
+  .delivery-container button,
+  .employee-container button,
+  .dentist-container button,
+  .stock-container button{
     margin-top: 10px;
   }
   

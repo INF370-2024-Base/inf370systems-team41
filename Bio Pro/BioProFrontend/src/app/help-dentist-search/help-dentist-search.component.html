@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Help - Search Dentist</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.1.12/angular-material.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
+</head>
+<body>
+    <div class="help-container">
+        <h1>Help: Search Dentist</h1>
+        <p><strong>Description:</strong><br>The search functionality allows you to find dentists in the system by their first name, last name, or contact details.</p>
+        <p><strong>How to Use:</strong><br>
+        Enter the search criteria (first name, last name, or contact details) in the search input field.<br>
+        Click the "Search" button or type in the search box to filter the list of dentists.</p>
+        <p><strong>Required Inputs:</strong><br>
+        First Name<br>
+        Last Name<br>
+        Contact Details</p>
+        <p><strong>Restrictions:</strong><br>
+        The search is case-insensitive.<br>
+        If the search query is empty, all dentists will be displayed.</p>
+        <div>
+            <mat-form-field appearance="outline">
+                <mat-label><i class="material-icons">search</i> Search Dentist</mat-label>
+                <input matInput placeholder="Search by name or contact details">
+            </mat-form-field>
+            <button mat-raised-button color="primary">Search</button>
+        </div>
+        <div class="example-container">
+            <h3>Example:</h3>
+            <p>To find a dentist named "John Doe", enter "John", "Doe", or "John Doe" in the search field and click "Search".</p>
+        </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.1.12/angular-material.min.js"></script>
+</body>
+</html>
