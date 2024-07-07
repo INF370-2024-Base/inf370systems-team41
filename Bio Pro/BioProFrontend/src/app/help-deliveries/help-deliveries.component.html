@@ -1,1 +1,167 @@
-<p>help-deliveries works!</p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add New Delivery</title>
+    <!-- Include favicon -->
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <!-- Include Angular Material CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.1.12/angular-material.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
+</head>
+<body>
+
+<div class="delivery-container">
+    <h2><mat-icon>local_shipping</mat-icon> Deliveries</h2>
+
+    <section>
+        <h3>Overview</h3>
+        <p>The Deliveries page provides a comprehensive view of all the deliveries made by employees. This page displays essential information about each delivery, including the delivery ID, date, status, associated employee, and the system order ID.</p>
+    </section>
+    
+    <section class="dropdown" (click)="toggleDropdown()">Page Elements <mat-icon>{{ dropdownOpen ? 'expand_less' : 'expand_more' }}</mat-icon>
+       
+        <ul *ngIf="dropdownOpen">
+            <li><strong>Delivery ID:</strong> A unique identifier for each delivery.</li>
+            <li><strong>Delivery Date:</strong> The date when the delivery was made.</li>
+            <li><strong>Delivery Status:</strong> The current status of the delivery (e.g., pending, delivered).</li>
+            <li><strong>Employee:</strong> The employee who made the delivery.</li>
+            <li><strong>System Order ID:</strong> The associated system order ID for the delivery.</li>
+        </ul>
+    </section>
+    
+    <section class="dropdown" (click)="toggleDropdown()">Common Questions <mat-icon>{{ dropdownOpen ? 'expand_less' : 'expand_more' }}</mat-icon>
+            <!-- <h2>Common Questions</h2> -->
+        <div class="faq"*ngIf="dropdownOpen">
+            <h3>How do I view the details of a delivery?</h3>
+            <p>The details of each delivery are displayed within individual cards on the Deliveries page. Simply scroll through the page to view all deliveries.</p>
+            
+            <h3>What information is displayed for each delivery?</h3>
+            <p>Each delivery card displays the Delivery ID, Delivery Date (if available), Delivery Status, Employee details, and System Order ID.</p>
+            
+            <h3>How can I tell which employee made a particular delivery?</h3>
+            <p>The employee's first and last name are displayed on each delivery card under the Employee section.</p>
+            
+            <h3>What do the different delivery statuses mean?</h3>
+            <p>The delivery statuses provide information on the current state of the delivery. Common statuses include pending (the delivery is yet to be made), and delivered (the delivery has been successfully completed).</p>
+            
+            <h3>Why is the delivery date not showing for some deliveries?</h3>
+            <p>The delivery date may not be available for all deliveries. If the delivery date is not set, it will not be displayed on the delivery card.</p>
+    
+            <h3>Can I search for specific deliveries?</h3>
+            <p>Currently, the Deliveries page does not support search functionality. You can manually scroll through the list to find specific deliveries.</p>
+            
+            <h3>How often is the delivery information updated?</h3>
+            <p>The delivery information is updated in real-time. Any changes made to deliveries are immediately reflected on the Deliveries page.</p>
+            
+            <h3>What should I do if the delivery details are incorrect?</h3>
+            <p>If you notice any incorrect details, please contact the support team to have the information reviewed and corrected.</p>
+            
+            <h3>Is it possible to filter deliveries by status?</h3>
+            <p>Currently, the Deliveries page does not have a filtering feature. You can manually check each delivery's status.</p>
+    
+            <h3>Can I export the delivery data?</h3>
+            <p>At the moment, exporting delivery data is not supported. If you need to export data, please contact the support team for assistance.</p>
+            
+            <h3>Why are some delivery details not visible?</h3>
+            <p>Some delivery details might not be visible due to missing or incomplete data. Ensure that all required fields are filled out when creating a delivery.</p>
+        </div>
+    </section>
+    
+    <section class="dropdown" (click)="toggleDropdown()">Technical Issues <mat-icon>{{ dropdownOpen ? 'expand_less' : 'expand_more' }}</mat-icon>
+        <!-- <h2>Technical Issues</h2> -->
+        <div class="faq" *ngIf="dropdownOpen">
+            <h3>What should I do if the deliveries are not loading?</h3>
+            <p>If the deliveries are not loading, try refreshing the page. If the issue persists, check your internet connection and ensure the backend service is running.</p>
+            
+            <h3>How do I report a problem with the Deliveries page?</h3>
+            <p>If you encounter any issues with the Deliveries page, please contact the support team with detailed information about the problem.</p>
+    
+            <h3>Why am I seeing an error message?</h3>
+            <p>Error messages may appear due to network issues or backend service problems. Note the error message details and contact support if the issue persists.</p>
+    
+            <h3>How do I clear my browser cache?</h3>
+            <p>Clearing your browser cache can help resolve loading issues. Instructions for clearing the cache vary by browser; please refer to your browser's help documentation.</p>
+        </div>
+    </section>
+
+    <button mat-raised-button color="primary" [routerLink]="['/deliveries']">Go To Page</button>
+</div>
+
+<div class="delivery-container">
+    <h2><mat-icon>add_circle_outline</mat-icon> New Deliveries</h2>
+    
+    <section>
+        <h3>Overview</h3>
+        <p>The Add New Dentist page allows you to add a new dentist to the system. This form requires information such as the dentist's surname, first name, contact details, and address.</p>
+    </section>
+    
+    <section class="dropdown" (click)="toggleDropdown()">Page Elements <mat-icon>{{ dropdownOpen ? 'expand_less' : 'expand_more' }}</mat-icon>
+        <!-- <h2>Page Elements</h2> -->
+        <ul *ngIf="dropdownOpen">
+            <li><strong>Surname:</strong> The last name of the dentist. This field is required.</li>
+            <li><strong>Name:</strong> The first name of the dentist. This field is required.</li>
+            <li><strong>Contact Details:</strong> The dentist's contact information. This field is required.</li>
+            <li><strong>Address:</strong> The dentist's address. This field is required.</li>
+            <li><strong>Add Dentist Button:</strong> Submits the form to add the dentist.</li>
+            <li><strong>Cancel Button:</strong> Cancels the action and navigates back to the list of dentists.</li>
+        </ul>
+    </section>
+    
+    <section class="dropdown" (click)="toggleDropdown()">Common Questions <mat-icon>{{ dropdownOpen ? 'expand_less' : 'expand_more' }}</mat-icon>
+        <!-- <h2>Common Questions</h2> -->
+        <div class="faq"*ngIf="dropdownOpen">
+            <h3>How do I add a new dentist?</h3>
+            <p>Fill in all the required fields (Surname, Name, Contact Details, and Address) and click the "Add Dentist" button.</p>
+            
+            <h3>What happens if I don't fill in all the required fields?</h3>
+            <p>If any required fields are left blank, the form will display error messages, and you will not be able to submit the form until all required fields are filled out.</p>
+            
+            <h3>How do I cancel adding a new dentist?</h3>
+            <p>Click the "Cancel" button to stop the action and navigate back to the list of dentists.</p>
+            
+            <h3>What should I do if I receive an error message when submitting the form?</h3>
+            <p>If you receive an error message, it could be due to a network issue or a problem with the backend service. Ensure your internet connection is stable and try again. If the issue persists, contact support.</p>
+            
+            <h3>How can I tell if the dentist was added successfully?</h3>
+            <p>If the dentist is added successfully, you will be redirected to the list of dentists, and a success message will appear. If there's an issue, an error message will be displayed.</p>
+            
+            <h3>Can I edit the information after adding a dentist?</h3>
+            <p>Currently, you cannot edit a dentist's information directly after adding them. You would need to contact support for any modifications.</p>
+            
+            <h3>Why is the contact detail format important?</h3>
+            <p>Correct formatting of contact details ensures that communication with the dentist is effective and reliable. Follow the specified format to avoid errors.</p>
+    
+            <h3>How can I ensure the address is entered correctly?</h3>
+            <p>Make sure to provide a complete and accurate address to facilitate proper record-keeping and correspondence.</p>
+    
+            <h3>Is there a limit to the number of dentists I can add?</h3>
+            <p>There is no specified limit to the number of dentists you can add. Ensure that each entry is accurate and complete.</p>
+        </div>
+    </section>
+    
+    <section class="dropdown" (click)="toggleDropdown()">Technical Issues <mat-icon>{{ dropdownOpen ? 'expand_less' : 'expand_more' }}</mat-icon>
+        <!-- <h2>Technical Issues</h2> -->
+        <div class="faq" *ngIf="dropdownOpen">
+            <h3>What should I do if the form is not submitting?</h3>
+            <p>If the form is not submitting, check for any validation errors and ensure all required fields are filled. Refresh the page and try again. If the issue persists, contact support.</p>
+            
+            <h3>How do I report a problem with the Add New Dentist page?</h3>
+            <p>If you encounter any issues with the Add New Dentist page, please contact support with detailed information about the problem.</p>
+    
+            <h3>Why am I seeing an error message?</h3>
+            <p>Error messages may appear due to network issues or backend service problems. Note the error message details and contact support if the issue persists.</p>
+    
+            <h3>How do I clear my browser cache?</h3>
+            <p>Clearing your browser cache can help resolve loading issues. Instructions for clearing the cache vary by browser; please refer to your browser's help documentation.</p>
+        </div>
+    
+    </section>
+
+    <button mat-raised-button color="primary" [routerLink]="['/new-delivery']">Go To Page</button>
+</div>
+
+</body>
+</html>

@@ -1,1 +1,34 @@
 <p>help-orders works!</p>
+<body>
+
+    <div class="new-orders">
+        <h2><mat-icon>add_circle_outline</mat-icon> New Orders</h2>
+        <p>This section provides assistance on how to manage and navigate orders within the system.</p>
+        <button mat-raised-button color="primary" [routerLink]="['/addOrder']">Go To Page</button>
+    </div>
+  
+    <div class="open-orders">
+        <h2><mat-icon>folder_open</mat-icon>Open Orders</h2>
+        <p>This section offers guidance on understanding and tracking the timeline of orders from creation to completion.</p>
+        <button mat-raised-button color="primary" [routerLink]="['/openOrder']">Go To Page</button>
+    </div>
+  
+    <div class="awaiting-dental-design">
+        <h2><mat-icon>folder_open</mat-icon>Orders awaiting dental design</h2>
+        <p>This section provides support on managing deliveries, ensuring timely and accurate delivery of orders.</p>
+        <button mat-raised-button color="primary" [routerLink]="['/orderAwaitingDentalDesign']">Go To Page</button>
+    </div>
+
+    <div class="approved-dental-design">
+        <h2><mat-icon>add_circle_outline</mat-icon>Approved dental designs</h2>
+        <p>This section offers guidance on understanding and tracking the timeline of orders from creation to completion.</p>
+        <button mat-raised-button color="primary" [routerLink]="['/dentalDesignApproval']">Go To Page</button>
+    </div>
+  
+    <div class="approved-orders">
+        <h2><mat-icon>check_circle</mat-icon>Approve Orders</h2>
+        <p>This section provides support on managing deliveries, ensuring timely and accurate delivery of orders.</p>
+        <button mat-raised-button color="primary" [routerLink]="['/approval']">Go To Page</button>
+    </div>
+
+</body>

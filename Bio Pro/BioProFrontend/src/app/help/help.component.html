@@ -1,54 +1,52 @@
 <body>
-    <div class="help-container">
+  <div class="help-container">
       <h1>How can we HELP you?</h1>
-    </div>
-  
-    <div class="popular-container">
+  </div>
+
+  <div class="popular-container">
       <h1>Popular Topics</h1>
       <div class="slide-container">
-        <div class="swiper-container">
-          <div class="swiper-wrapper">
-            <div class="swiper-slide option-container option1">
-              <h3><mat-icon>receipt</mat-icon>Orders</h3>
-              <p>How to cancel an order</p>
-              <p>How to edit an order that has been placed</p>
-              <p>How to remove media file from an order</p>
-            </div>
-            <div class="swiper-slide option-container option2">
-              <h3><mat-icon>event</mat-icon>Order Timeline</h3>
-              <p>How to cancel an order</p>
-              <p>How to edit an order that has been placed</p>
-              <p>How to remove media file from an order</p>
-            </div>
-            <div class="swiper-slide option-container option3">
-              <h3><mat-icon>local_shipping</mat-icon>Deliveries</h3>
-              <p>How to cancel an order</p>
-              <p>How to edit an order that has been placed</p>
-              <p>How to remove media file from an order</p>
-            </div>
+          <div class="swiper-container">
+              <div class="swiper-wrapper">
+                  <div class="swiper-slide option-container option1">
+                      <h3><mat-icon>receipt</mat-icon>Orders</h3>
+                      <p>How to cancel an order</p>
+                      <p>How to edit an order that has been placed</p>
+                      <p>How to remove media file from an order</p>
+                  </div>
+                  <div class="swiper-slide option-container option2">
+                      <h3><mat-icon>event</mat-icon>Order Timeline</h3>
+                      <p>How to create an order timeline</p>
+                      <p>How to edit an order timeline</p>
+                      <p>How to track the order timeline</p>
+                  </div>
+                  <div class="swiper-slide option-container option3">
+                      <h3><mat-icon>local_shipping</mat-icon>Deliveries</h3>
+                      <p>How to cancel an order delivery</p>
+                      <p>How to edit a delivery</p>
+                      <p>How to track an order delivery</p>
+                  </div>
+              </div>
+              <div class="swiper-pagination"></div>
           </div>
-          <div class="swiper-pagination"></div>
-        </div>
       </div>
-    </div>
-  
-    <div class="orders-container">
+  </div>
+
+  <div class="orders-container">
       <h2><mat-icon>receipt</mat-icon>Orders</h2>
       <p>This section provides assistance on how to manage and navigate orders within the system.</p>
       <button mat-raised-button color="primary" [routerLink]="['/help-orders']">Read More</button>
-    </div>
-  
-    <div class="timeline-container">
+  </div>
+
+  <div class="timeline-container">
       <h2><mat-icon>event</mat-icon>Order Timeline</h2>
       <p>This section offers guidance on understanding and tracking the timeline of orders from creation to completion.</p>
       <button mat-raised-button color="primary" [routerLink]="['/help-orderTimeline']">Read More</button>
-    </div>
-  
-    <div class="delivery-container">
+  </div>
+
+  <div class="delivery-container">
       <h2><mat-icon>local_shipping</mat-icon>Deliveries</h2>
       <p>This section provides support on managing deliveries, ensuring timely and accurate delivery of orders.</p>
       <button mat-raised-button color="primary" [routerLink]="['/help-deliveries']">Read More</button>
-    </div>
-  
-  </body>
-  
+  </div>
+</body>
