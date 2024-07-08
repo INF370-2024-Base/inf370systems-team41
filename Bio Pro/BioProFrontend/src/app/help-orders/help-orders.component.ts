@@ -8,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 export class HelpOrdersComponent implements OnInit {
 
   dropdownStates: { [key: string]: boolean } = {
-    pageElements: false,
+    stepsElements: false,
     commonQuestions: false,
     technicalIssues: false
   };
@@ -21,5 +21,4 @@ export class HelpOrdersComponent implements OnInit {
   toggleDropdown(section: string) {
     this.dropdownStates[section] = !this.dropdownStates[section]; // Toggle the dropdown state for the specific section
   }
-
 }
