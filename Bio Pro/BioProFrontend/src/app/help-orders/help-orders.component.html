@@ -1,32 +1,45 @@
-<p>help-orders works!</p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Orders Help</title>
+    <!-- Include favicon -->
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <!-- Include Angular Material CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.1.12/angular-material.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
+</head>
+
 <body>
 
-    <div class="new-orders">
+    <div class="help-container orders-container new-orders">
         <h2><mat-icon>add_circle_outline</mat-icon> New Orders</h2>
         <p>This section provides assistance on how to manage and navigate orders within the system.</p>
         <button mat-raised-button color="primary" [routerLink]="['/addOrder']">Go To Page</button>
     </div>
   
-    <div class="open-orders">
-        <h2><mat-icon>folder_open</mat-icon>Open Orders</h2>
+    <div class="help-container orders-container open-orders">
+        <h2><mat-icon>folder_open</mat-icon> Open Orders</h2>
         <p>This section offers guidance on understanding and tracking the timeline of orders from creation to completion.</p>
         <button mat-raised-button color="primary" [routerLink]="['/openOrder']">Go To Page</button>
     </div>
   
-    <div class="awaiting-dental-design">
-        <h2><mat-icon>folder_open</mat-icon>Orders awaiting dental design</h2>
+    <div class="help-container orders-container awaiting-dental-design">
+        <h2><mat-icon>folder_open</mat-icon> Orders Awaiting Dental Design</h2>
         <p>This section provides support on managing deliveries, ensuring timely and accurate delivery of orders.</p>
         <button mat-raised-button color="primary" [routerLink]="['/orderAwaitingDentalDesign']">Go To Page</button>
     </div>
 
-    <div class="approved-dental-design">
-        <h2><mat-icon>add_circle_outline</mat-icon>Approved dental designs</h2>
+    <div class="help-container orders-container approved-dental-design">
+        <h2><mat-icon>add_circle_outline</mat-icon> Approved Dental Designs</h2>
         <p>This section offers guidance on understanding and tracking the timeline of orders from creation to completion.</p>
         <button mat-raised-button color="primary" [routerLink]="['/dentalDesignApproval']">Go To Page</button>
     </div>
   
-    <div class="approved-orders">
-        <h2><mat-icon>check_circle</mat-icon>Approve Orders</h2>
+    <div class="help-container orders-container approved-orders">
+        <h2><mat-icon>check_circle</mat-icon> Approve Orders</h2>
         <p>This section provides support on managing deliveries, ensuring timely and accurate delivery of orders.</p>
         <button mat-raised-button color="primary" [routerLink]="['/approval']">Go To Page</button>
     </div>

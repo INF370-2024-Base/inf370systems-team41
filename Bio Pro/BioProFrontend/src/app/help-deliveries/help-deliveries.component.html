@@ -1,9 +1,10 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add New Delivery</title>
+    <title>Deliveries Help</title>
     <!-- Include favicon -->
     <link rel="icon" type="image/x-icon" href="favicon.ico">
     <!-- Include Angular Material CSS -->
@@ -13,17 +14,18 @@
 </head>
 <body>
 
-<div class="delivery-container">
-    <h2><mat-icon>local_shipping</mat-icon> Deliveries</h2>
-
-    <section>
-        <h3>Overview</h3>
-        <p>The Deliveries page provides a comprehensive view of all the deliveries made by employees. This page displays essential information about each delivery, including the delivery ID, date, status, associated employee, and the system order ID.</p>
-    </section>
+    <div class="delivery-container">
+        <h2><mat-icon>local_shipping</mat-icon> Deliveries</h2>
     
-    <section class="dropdown" (click)="toggleDropdown()">Page Elements <mat-icon>{{ dropdownOpen ? 'expand_less' : 'expand_more' }}</mat-icon>
-       
-        <ul *ngIf="dropdownOpen">
+        <section>
+            <h3>Overview</h3>
+            <p>The Deliveries page provides a comprehensive view of all the deliveries made by employees. This page displays essential information about each delivery, including the delivery ID, date, status, associated employee, and the system order ID.</p>
+        </section>
+        
+        <section class="dropdown" (click)="toggleDropdown('pageElements')">
+            Page Elements 
+            <mat-icon>{{ dropdownStates['pageElements'] ? 'expand_less' : 'expand_more' }}</mat-icon>
+            <ul *ngIf="dropdownStates['pageElements']">
             <li><strong>Delivery ID:</strong> A unique identifier for each delivery.</li>
             <li><strong>Delivery Date:</strong> The date when the delivery was made.</li>
             <li><strong>Delivery Status:</strong> The current status of the delivery (e.g., pending, delivered).</li>
@@ -32,9 +34,10 @@
         </ul>
     </section>
     
-    <section class="dropdown" (click)="toggleDropdown()">Common Questions <mat-icon>{{ dropdownOpen ? 'expand_less' : 'expand_more' }}</mat-icon>
-            <!-- <h2>Common Questions</h2> -->
-        <div class="faq"*ngIf="dropdownOpen">
+    <section class="dropdown" (click)="toggleDropdown('commonQuestions')">
+        Common Questions 
+        <mat-icon>{{ dropdownStates['commonQuestions'] ? 'expand_less' : 'expand_more' }}</mat-icon>
+        <div class="faq" *ngIf="dropdownStates['commonQuestions']">
             <h3>How do I view the details of a delivery?</h3>
             <p>The details of each delivery are displayed within individual cards on the Deliveries page. Simply scroll through the page to view all deliveries.</p>
             
@@ -70,9 +73,10 @@
         </div>
     </section>
     
-    <section class="dropdown" (click)="toggleDropdown()">Technical Issues <mat-icon>{{ dropdownOpen ? 'expand_less' : 'expand_more' }}</mat-icon>
-        <!-- <h2>Technical Issues</h2> -->
-        <div class="faq" *ngIf="dropdownOpen">
+    <section class="dropdown" (click)="toggleDropdown('technicalIssues')">
+        Technical Issues 
+        <mat-icon>{{ dropdownStates['technicalIssues'] ? 'expand_less' : 'expand_more' }}</mat-icon>
+        <div class="faq" *ngIf="dropdownStates['technicalIssues']">
             <h3>What should I do if the deliveries are not loading?</h3>
             <p>If the deliveries are not loading, try refreshing the page. If the issue persists, check your internet connection and ensure the backend service is running.</p>
             
@@ -98,9 +102,10 @@
         <p>The Add New Dentist page allows you to add a new dentist to the system. This form requires information such as the dentist's surname, first name, contact details, and address.</p>
     </section>
     
-    <section class="dropdown" (click)="toggleDropdown()">Page Elements <mat-icon>{{ dropdownOpen ? 'expand_less' : 'expand_more' }}</mat-icon>
-        <!-- <h2>Page Elements</h2> -->
-        <ul *ngIf="dropdownOpen">
+    <section class="dropdown" (click)="toggleDropdown('pageElements')">
+        Page Elements 
+        <mat-icon>{{ dropdownStates['pageElements'] ? 'expand_less' : 'expand_more' }}</mat-icon>
+        <ul *ngIf="dropdownStates['pageElements']">
             <li><strong>Surname:</strong> The last name of the dentist. This field is required.</li>
             <li><strong>Name:</strong> The first name of the dentist. This field is required.</li>
             <li><strong>Contact Details:</strong> The dentist's contact information. This field is required.</li>
@@ -110,9 +115,10 @@
         </ul>
     </section>
     
-    <section class="dropdown" (click)="toggleDropdown()">Common Questions <mat-icon>{{ dropdownOpen ? 'expand_less' : 'expand_more' }}</mat-icon>
-        <!-- <h2>Common Questions</h2> -->
-        <div class="faq"*ngIf="dropdownOpen">
+    <section class="dropdown" (click)="toggleDropdown('commonQuestions')">
+        Common Questions 
+        <mat-icon>{{ dropdownStates['commonQuestions'] ? 'expand_less' : 'expand_more' }}</mat-icon>
+        <div class="faq" *ngIf="dropdownStates['commonQuestions']">
             <h3>How do I add a new dentist?</h3>
             <p>Fill in all the required fields (Surname, Name, Contact Details, and Address) and click the "Add Dentist" button.</p>
             
@@ -142,9 +148,10 @@
         </div>
     </section>
     
-    <section class="dropdown" (click)="toggleDropdown()">Technical Issues <mat-icon>{{ dropdownOpen ? 'expand_less' : 'expand_more' }}</mat-icon>
-        <!-- <h2>Technical Issues</h2> -->
-        <div class="faq" *ngIf="dropdownOpen">
+    <section class="dropdown" (click)="toggleDropdown('technicalIssues')">
+        Technical Issues 
+        <mat-icon>{{ dropdownStates['technicalIssues'] ? 'expand_less' : 'expand_more' }}</mat-icon>
+        <div class="faq" *ngIf="dropdownStates['technicalIssues']">
             <h3>What should I do if the form is not submitting?</h3>
             <p>If the form is not submitting, check for any validation errors and ensure all required fields are filled. Refresh the page and try again. If the issue persists, contact support.</p>
             

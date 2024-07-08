@@ -6,15 +6,19 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./help-deliveries.component.scss']
 })
 export class HelpDeliveriesComponent implements OnInit {
-  dropdownOpen: boolean = false;
+  dropdownStates: { [key: string]: boolean } = {
+    pageElements: false,
+    commonQuestions: false,
+    technicalIssues: false
+  };
 
   constructor() { }
 
   ngOnInit(): void {
   }
- 
-  toggleDropdown() {
-    this.dropdownOpen = !this.dropdownOpen; // Toggle the dropdown state
+
+  toggleDropdown(section: string) {
+    this.dropdownStates[section] = !this.dropdownStates[section]; // Toggle the dropdown state for the specific section
   }
 
 }
