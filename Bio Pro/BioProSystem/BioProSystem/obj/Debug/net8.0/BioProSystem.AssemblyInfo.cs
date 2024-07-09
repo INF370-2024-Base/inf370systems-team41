@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("BioProSystem")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+04ef4f56659e94ea99b921a97c36c5cf015d2048")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+801ea7cbd97db96d6d1c0feecb76d66c131f133c")]
 [assembly: System.Reflection.AssemblyProductAttribute("BioProSystem")]
 [assembly: System.Reflection.AssemblyTitleAttribute("BioProSystem")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

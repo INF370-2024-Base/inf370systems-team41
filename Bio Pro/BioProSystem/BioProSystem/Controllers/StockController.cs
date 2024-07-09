@@ -67,7 +67,7 @@ namespace BioProSystem.Controllers
                 }
                 catch (Exception ex)
                 {
-                    return BadRequest(ex.InnerException.Message);
+                    return BadRequest("Internal server error.Please contact admin." + ex.InnerException.Message);
                 }
             }
             else
@@ -123,7 +123,7 @@ namespace BioProSystem.Controllers
                 }
                 catch (Exception ex)
                 {
-                    return BadRequest(ex.InnerException.Message);  // Use ex.Message to get the exception message
+                    return BadRequest("Internal server error.Please contact admin." + ex.InnerException.Message);  // Use ex.Message to get the exception message
                 }
             }
             else
@@ -460,7 +460,7 @@ namespace BioProSystem.Controllers
                 }
                 catch (Exception ex)
                 {
-                    return BadRequest(ex.InnerException.Message);
+                    return BadRequest("Internal server error.Please contact admin." + ex.InnerException.Message);
                 }
             }
             else
@@ -510,7 +510,7 @@ namespace BioProSystem.Controllers
                 }
                 catch (Exception ex)
                 {
-                    return BadRequest(ex.InnerException.Message);
+                    return BadRequest("Internal server error.Please contact admin." + ex.InnerException.Message);
                 }
             }
             else
@@ -519,8 +519,8 @@ namespace BioProSystem.Controllers
             }
         }
         [HttpPut]
-        [Route("EditStockCatehpry")]
-        public async Task<IActionResult> EditStockCatehpry(StockCategoryViewModel viewModel)
+        [Route("EditStockCategory")]
+        public async Task<IActionResult> EditStockCategory(StockCategoryViewModel viewModel)
         {
             if (viewModel == null) { return BadRequest(ModelState); }
             if (ModelState.IsValid)
@@ -553,7 +553,7 @@ namespace BioProSystem.Controllers
                 }
                 catch (Exception ex)
                 {
-                    return BadRequest(ex.InnerException.Message);
+                    return BadRequest("Internal server error.Please contact admin." + ex.InnerException.Message);
                 }
             }
             else
@@ -561,6 +561,71 @@ namespace BioProSystem.Controllers
                 return StatusCode(500, "Internal Server Error. Please contact support.");
             }
         }
+        [HttpDelete]
+        [Route("DeleteStockCategory/{stockCategoryId}")]
+        public async Task<IActionResult> DeleteStockCategory(int stockCategoryId)
+        {
+            if (stockCategoryId == null) { return BadRequest("No Id sent."); }
+                try
+                {
+                StockCategory category=await _repository.GetStockCategoryById(stockCategoryId);
+                if (category != null)
+                    {
+                    
+                        _repository.Delete(category);
+                        if (await _repository.SaveChangesAsync())
+                        {
+                            return Ok(category);
+                        }
+                        else
+                        {
+                            return BadRequest("Cannot delete category that is already connected to stock type or stock!");
+                        }
+                    }
+                    else
+                    {
+                        return NotFound("No category found");
+                    }
+
+                }
+                catch (Exception ex)
+                {
+                    return BadRequest("Internal server error.Please contact admin." + ex.InnerException.Message);
+                }
+        }
+        [HttpDelete]
+        [Route("DeleteStockCategory/{stockTypeId}")]
+        public async Task<IActionResult> DeleteStockType(int stockTypeId)
+        {
+            if (stockTypeId == null) { return BadRequest("No Id sent."); }
+            try
+            {
+                StockType type = await _repository.GetStockTypeById(stockTypeId);
+                if (type != null)
+                {
+
+                    _repository.Delete(type);
+                    if (await _repository.SaveChangesAsync())
+                    {
+                        return Ok(type);
+                    }
+                    else
+                    {
+                        return BadRequest("Cannot delete type that is already connected to stock category or stock!");
+                    }
+                }
+                else
+                {
+                    return NotFound("No type found");
+                }
+
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Internal server error.Please contact admin."+ex.InnerException.Message);
+            }
+        }
+
     }
   
 }
