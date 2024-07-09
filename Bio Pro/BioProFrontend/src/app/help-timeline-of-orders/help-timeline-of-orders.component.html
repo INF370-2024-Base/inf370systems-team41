@@ -14,25 +14,12 @@
 </head>
 <body>
 
-<div class="order-timeline-container">
-    <h2><mat-icon>event</mat-icon> Order Timeline</h2>
-
-    <section>
-        <h3>Overview</h3>
-        <p>The Order Timeline page allows you to create and manage procedural timelines for your orders. This page provides details on each order's procedural steps and timelines.</p>
-    </section>
-    
-    <section class="dropdown" (click)="toggleDropdown(0)">Page Elements <mat-icon>{{ dropdownOpen[0] ? 'expand_less' : 'expand_more' }}</mat-icon>
-        <ul *ngIf="dropdownOpen[0]">
-            <li><strong>Order ID:</strong> A unique identifier for each order.</li>
-            <li><strong>Order Description:</strong> A brief description of the order.</li>
-            <li><strong>Due Date:</strong> The date by which the order should be completed.</li>
-            <li><strong>Procedural Timeline:</strong> Details of the procedural steps and their status.</li>
-        </ul>
-    </section>
-    
-    <section class="dropdown" (click)="toggleDropdown(1)">Common Questions <mat-icon>{{ dropdownOpen[1] ? 'expand_less' : 'expand_more' }}</mat-icon>
-        <div class="faq" *ngIf="dropdownOpen[1]">
+    <div class="order-timeline-container">
+        <h2><mat-icon>event</mat-icon> Order Timeline</h2>
+      
+        <section class="dropdown" (click)="toggleDropdown('commonQuestions')">Common Questions <mat-icon>{{ dropdownStates['commonQuestions'] ? 'expand_less' : 'expand_more' }}</mat-icon>
+          <ul *ngIf="dropdownStates['commonQuestions']">
+            <li>
             <h3>How do I add a new procedural timeline?</h3>
             <p>To add a new procedural timeline, fill in the description and select the orders you want to include. Click the "Create New Timeline" button to save.</p>
             
@@ -65,11 +52,12 @@
     
             <h3>Why are some timeline details not visible?</h3>
             <p>Some timeline details might not be visible due to missing or incomplete data. Ensure that all required fields are filled out when creating a timeline.</p>
-        </div>
+        </ul>
     </section>
     
-    <section class="dropdown" (click)="toggleDropdown(2)">Technical Issues <mat-icon>{{ dropdownOpen[2] ? 'expand_less' : 'expand_more' }}</mat-icon>
-        <div class="faq" *ngIf="dropdownOpen[2]">
+    <section class="dropdown" (click)="toggleDropdown('technicalIssues')">Technical Issues <mat-icon>{{ dropdownStates['technicalIssues'] ? 'expand_less' : 'expand_more' }}</mat-icon>
+        <ul *ngIf="dropdownStates['technicalIssues']">
+          <li>
             <h3>What should I do if the timelines are not loading?</h3>
             <p>If the timelines are not loading, try refreshing the page. If the issue persists, check your internet connection and ensure the backend service is running.</p>
             
@@ -81,8 +69,30 @@
     
             <h3>How do I clear my browser cache?</h3>
             <p>Clearing your browser cache can help resolve loading issues. Instructions for clearing the cache vary by browser; please refer to your browser's help documentation.</p>
-        </div>
+        </ul>
     </section>
+
+    <section class="dropdown" (click)="toggleDropdown('steps')">Step-by-Step Guide <mat-icon>{{ dropdownStates['steps'] ? 'expand_less' : 'expand_more' }}</mat-icon>
+        <mat-accordion *ngIf="dropdownStates['steps']">
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                Step 1: Access the 'Add Procedural Timeline' Page
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            <p>Click on the 'Add Procedural Timeline' button on the main orders page or use the navigation menu to go to the 'Add Procedural Timeline' page. Ensure you are logged in with the appropriate permissions.</p>
+          </mat-expansion-panel>
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                Step 2: Fill Out Timeline Details
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            <p>Provide all necessary information, including timeline description and selecting orders to include. Double-check for accuracy before proceeding.</p>
+          </mat-expansion-panel>
+          <!-- Add more steps as needed -->
+        </mat-accordion>
+      </section>
 
     <button mat-raised-button color="primary" [routerLink]="['/addproceduraltimeline']">Go To Page</button>
 </div>

@@ -6,15 +6,20 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./help-timeline-of-orders.component.scss']
 })
 export class HelpTimelineOfOrdersComponent implements OnInit {
-  dropdownOpen: boolean[] = [false, false, false]; // Array to track the state of each dropdown
+  dropdownStates: { [key: string]: boolean } = {
+    commonQuestions: false,
+    technicalIssues: false,
+    steps: false
+  };
 
   constructor() { }
 
   ngOnInit(): void { }
 
-  toggleDropdown(index: number) {
-    this.dropdownOpen[index] = !this.dropdownOpen[index]; // Toggle the dropdown state
+  toggleDropdown(section: string) {
+    this.dropdownStates[section] = !this.dropdownStates[section]; // Toggle the dropdown state for the specific section
   }
-
-
 }
+
+
+
