@@ -483,23 +483,33 @@ namespace BioProSystem.Controllers
                         StockType newStocktype = await _repository.GetStockTypeById(stockTypeId);
                         newStocktype.Description = viewModel.Description;
 
-
                         if (await _repository.SaveChangesAsync())
                         {
                             if (viewModel.StockCategoryId != null)
                             {
-                                foreach (int id in viewModel.StockCategoryId)
-                                {
-                                    StockCategory stockCategory = await _repository.GetStockCategoryById(id);
-                                    stockCategory.StockTypeId = newStocktype.StockTypeId;
-                                    newStocktype.StockCategories.Add(stockCategory);
+                                if(viewModel.StockCategoryId.Length >= 1)
+                               { 
+                                    foreach (int id in viewModel.StockCategoryId)
+                                    {
+                                        StockCategory stockCategory = await _repository.GetStockCategoryById(id);
+                                        if(stockCategory != null)
+                                        {
+                                            stockCategory.StockTypeId = newStocktype.StockTypeId;
+                                            newStocktype.StockCategories.Add(stockCategory);
+                                        }                                      
+                                    }
                                 }
+                                if(await _repository.SaveChangesAsync() ) 
+                                {
+                                    return Ok(newStocktype);
+                                }
+                                else { return BadRequest(ModelState); }
                             }
                             return Ok(newStocktype);
                         }
                         else
                         {
-                            return BadRequest("Could not save to database");
+                            return BadRequest(_repository.SaveChangesAsync().Result);
                         }
                     }
                     else
