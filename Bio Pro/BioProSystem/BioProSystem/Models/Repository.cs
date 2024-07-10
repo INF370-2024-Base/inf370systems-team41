@@ -58,7 +58,7 @@ namespace BioProSystem.Models
             {
                 var employee = availableEmployees
                     .Where(e => e.JobTitleId == orderDirectionStep.JobTitleId)
-                    .OrderBy(e => e.SystemOrders.Count(so => so.OrderStatusId == 2))
+                    .OrderBy(e => e.SystemOrders.Count(so => so.OrderStatusId ==4 ))
                     .FirstOrDefault();
 
                 var newStep = new SystemOrderSteps();
