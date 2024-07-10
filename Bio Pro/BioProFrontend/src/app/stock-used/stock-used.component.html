@@ -1,23 +1,34 @@
 
-<button (click)="addStockItem()">Add stock item</button>
-<form [formGroup]="form">
-  <div formArrayName="stockItems">
-    <div *ngFor="let stockCtrl of stockItems.controls; let i = index" [formGroupName]="i">
-      <div class="form-group">
-        <mat-form-field appearance="outline">
-          <mat-label><i class="material-icons">work</i> Stock</mat-label>
-          <mat-select formControlName="StockId">
-            <mat-option *ngFor="let stockitem of allStock" [value]="stockitem.stockId">
-              {{ stockitem.stockName }}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-        <mat-form-field appearance="outline">
-          <mat-label>Quantity</mat-label>
-          <input matInput formControlName="Quantity">
-        </mat-form-field>
+
+<mat-card class="stock-form-card">
+  <form [formGroup]="form">
+    <div formArrayName="stockItems">
+      <div *ngFor="let stockCtrl of stockItems.controls; let i = index" [formGroupName]="i">
+        <mat-card-content>
+          <div class="form-group">
+            <mat-form-field appearance="outline" style="width: 100%;">
+              <mat-label><mat-icon>work</mat-icon> Stock</mat-label>
+              <mat-select formControlName="StockId">
+                <mat-option *ngFor="let stockitem of allStock" [value]="stockitem.stockId">
+                  {{ stockitem.stockName }} ({{stockitem.measurement}})
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-divider></mat-divider>
+            <mat-form-field appearance="outline" style="width: 100%;">
+              <mat-label>Quantity</mat-label>
+              <input matInput formControlName="Quantity">
+            </mat-form-field>
+          </div>
+        </mat-card-content>
       </div>
     </div>
-  </div>
-  <button (click)="SubmitForm()">Submit</button>
-</form>
+    <mat-card-actions>
+      <button mat-raised-button color="accent" (click)="SubmitForm()">Submit</button>
+      <button mat-raised-button color="primary" (click)="addStockItem()">Add stock item</button>
+    </mat-card-actions>
+   
+  </form>
+ 
+</mat-card>
+

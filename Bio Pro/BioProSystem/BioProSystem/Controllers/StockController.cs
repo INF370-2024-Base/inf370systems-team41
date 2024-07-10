@@ -604,7 +604,7 @@ namespace BioProSystem.Controllers
                 }
         }
         [HttpDelete]
-        [Route("DeleteStockCategory/{stockTypeId}")]
+        [Route("DeleteStockType/{stockTypeId}")]
         public async Task<IActionResult> DeleteStockType(int stockTypeId)
         {
             if (stockTypeId == null) { return BadRequest("No Id sent."); }

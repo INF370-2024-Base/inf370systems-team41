@@ -43,12 +43,11 @@ export class EmployeeOrdersAndStepsComponent implements OnInit {
  stockused:any[]=[]
  addEventClicked(event: any): void {
   const dialogRef = this.dialog.open(StockUsedComponent, {
-    width: '300px',
+    width: '600px',
     data:{ event }
   });
   dialogRef.afterClosed().subscribe(result => {
     if (result) {
-      
       this.stockUsed=result
       this.stockUsed.StockUsed.forEach(element => {
         this.stockService.getStockById(element.StockId).subscribe(
@@ -59,9 +58,17 @@ export class EmployeeOrdersAndStepsComponent implements OnInit {
         )
       });
       console.log(this.stockUsed)
+      console.log(result)
     }
   });
   console.log('Event clicked:', event);
+  console.log(this.stockUsed)
+}
+ClearStock(): void {
+  this.stockUsed = {
+    StockUsed: [],
+    OrderId: ''
+  };
 }
 uploadedFileUrls: { url: SafeUrl, name: string }[] = [];
 onFileSelected(event: any): void {

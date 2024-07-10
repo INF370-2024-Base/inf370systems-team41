@@ -502,7 +502,7 @@ namespace BioProSystem.Models
         //stock
         public async Task<List<Stock>> GetAllStocks()
         {
-            return await _appDbContext.Stocks.Include(s => s.StockCategory).Include(s => s.Supplier).ToListAsync();
+            return await _appDbContext.Stocks.Include(s => s.Supplier).Include(s => s.StockCategory).ToListAsync();
         }
         public async Task<List<StockType>> GetAllStockTypes()
         {
