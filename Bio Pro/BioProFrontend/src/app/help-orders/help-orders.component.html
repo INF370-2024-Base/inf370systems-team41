@@ -14,14 +14,27 @@
 
 <body>
 
-  <div class="help-container orders-container new-orders">
-    <h2><mat-icon>add_circle_outline</mat-icon> New Orders</h2>
+
+    <div class="search-filter-container">
+        <input type="text" placeholder="Search..." (input)="onSearch($event)" />
+        <select (change)="onFilter($event)">
+          <option value="all">All</option>
+          <option value="new-orders">New Orders</option>
+          <option value="open-orders">Open Orders</option>
+          <option value="awaiting-dental-design">Orders Awaiting Dental Design</option>
+          <option value="approved-dental-design">Approved Dental Design</option>
+          <option value="approved-orders">Approved Orders</option>
+        </select>
+      </div>
+      <div #searchContent>
+      <div *ngIf="shouldDisplayContainer('new-orders')" class="help-container orders-container new-orders">
+        <h2><mat-icon>add_circle_outline</mat-icon> New Orders</h2>
     <p>This section provides assistance on how to manage and navigate orders within the system.</p>
     <button mat-raised-button color="primary" [routerLink]="['/addOrder']">Go To Page</button>
     
     <div class="help-section">
         <h3 (click)="toggleDropdown('commonQuestions')">Common Questions</h3>
-        <ul *ngIf="dropdownStates['commonQuestions']">
+        <ul *ngIf="dropdownStates['commonQuestions']" class="searchable">
             <li>
                 <h4>How do I add a new order?</h4>
                 <p>To add a new order, navigate to the 'Add Order' page by clicking the 'Add Order' button in the navigation menu or on the main orders page. Fill out all the required fields with accurate information, including customer details, order items, and delivery dates. Once all mandatory fields are completed, click 'Submit' to save the order. A confirmation message will appear if the order is successfully added.</p>
@@ -62,7 +75,7 @@
     
     <div class="help-section">
         <h3 (click)="toggleDropdown('technicalIssues')">Technical Issues</h3>
-        <ul *ngIf="dropdownStates['technicalIssues']">
+        <ul *ngIf="dropdownStates['technicalIssues']" class="searchable">
             <li>
                 <h4>I'm unable to submit an order. What should I do?</h4>
                 <p>If you encounter issues submitting an order, ensure all required fields are filled out correctly. Look for any error messages indicating missing or incorrect information. If the problem persists, try refreshing the page or using a different browser. If none of these solutions work, contact technical support for further assistance.</p>
@@ -100,7 +113,7 @@
     
     <div class="help-section">
         <h3 (click)="toggleDropdown('stepsElements')">Step-by-Step Guide</h3>
-        <mat-accordion *ngIf="dropdownStates['stepsElements']">
+        <mat-accordion *ngIf="dropdownStates['stepsElements']" class="searchable">
             <mat-expansion-panel>
                 <mat-expansion-panel-header>
                     <mat-panel-title>
@@ -153,15 +166,16 @@
     </div>
 </div>
 
+
       
-<div class="help-container orders-container open-orders">
+<div *ngIf="shouldDisplayContainer('open-orders')" class="help-container orders-container open-orders">
     <h2><mat-icon>folder_open</mat-icon> Open Orders</h2>
     <p>This section offers guidance on understanding and tracking the timeline of orders from creation to completion.</p>
     <button mat-raised-button color="primary" [routerLink]="['/openOrder']">Go To Page</button>
 
     <div class="help-section">
         <h3 (click)="toggleDropdown('openOrdersCommonQuestions')">Common Questions</h3>
-        <ul *ngIf="dropdownStates['openOrdersCommonQuestions']">
+        <ul *ngIf="dropdownStates['openOrdersCommonQuestions']" class="searchable">
             <li>
                 <h4>How do I view open orders?</h4>
                 <p>Navigate to the 'Open Orders' page to see a list of all current open orders along with their details. You can access this page from the main navigation menu or the dashboard.</p>
@@ -199,7 +213,7 @@
 
     <div class="help-section">
         <h3 (click)="toggleDropdown('openOrdersTechnicalIssues')">Technical Issues</h3>
-        <ul *ngIf="dropdownStates['openOrdersTechnicalIssues']">
+        <ul *ngIf="dropdownStates['openOrdersTechnicalIssues']" class="searchable">
             <li>
                 <h4>Why can't I see any open orders?</h4>
                 <p>This could be due to a network issue or there might be no open orders at the moment. Try refreshing the page or check back later. If the problem persists, contact support for assistance.</p>
@@ -237,7 +251,7 @@
 
     <div class="help-section">
         <h3 (click)="toggleDropdown('stepsElements')">Step-by-Step Guide</h3>
-        <mat-accordion *ngIf="dropdownStates['stepsElements']">
+        <mat-accordion *ngIf="dropdownStates['stepsElements']" class="searchable">
             <mat-expansion-panel>
                 <mat-expansion-panel-header>
                     <mat-panel-title>
@@ -274,14 +288,14 @@
     </div>
 </div>
 
-    <div class="help-container orders-container awaiting-dental-design">
-      <h2><mat-icon>folder_open</mat-icon> Orders Awaiting Dental Design</h2>
+<div *ngIf="shouldDisplayContainer('awaiting-dental-design')" class="help-container orders-container awaiting-dental-design">
+    <h2><mat-icon>folder_open</mat-icon> Orders Awaiting Dental Design</h2>
       <p>This section provides support on managing deliveries, ensuring timely and accurate delivery of orders.</p>
       <button mat-raised-button color="primary" [routerLink]="['/orderAwaitingDentalDesign']">Go To Page</button>
   
       <div class="help-section">
           <h3 (click)="toggleDropdown('awaitingDentalDesignCommonQuestions')">Common Questions</h3>
-          <ul *ngIf="dropdownStates['awaitingDentalDesignCommonQuestions']">
+          <ul *ngIf="dropdownStates['awaitingDentalDesignCommonQuestions']" class="searchable">
               <li>
                   <h4>How do I view orders awaiting dental design?</h4>
                   <p>Navigate to the 'Orders Awaiting Dental Design' page to see a list of all orders that require dental design input.</p>
@@ -307,7 +321,7 @@
   
       <div class="help-section">
           <h3 (click)="toggleDropdown('awaitingDentalDesignTechnicalIssues')">Technical Issues</h3>
-          <ul *ngIf="dropdownStates['awaitingDentalDesignTechnicalIssues']">
+          <ul *ngIf="dropdownStates['awaitingDentalDesignTechnicalIssues']" class="searchable">
               <li>
                   <h4>Why can't I upload a dental design file?</h4>
                   <p>This might be due to the file size exceeding the limit or an unsupported file format. Ensure your file is less than 10MB and in a supported format.</p>
@@ -333,7 +347,7 @@
   
       <div class="help-section">
           <h3 (click)="toggleDropdown('awaitingDentalDesignSteps')">Step-by-Step Guide</h3>
-          <mat-accordion *ngIf="dropdownStates['awaitingDentalDesignSteps']">
+          <mat-accordion *ngIf="dropdownStates['awaitingDentalDesignSteps']" class="searchable">
               <mat-expansion-panel>
                   <mat-expansion-panel-header>
                       <mat-panel-title>
@@ -379,14 +393,14 @@
   </div>
   
 
-  <div class="help-container orders-container approved-dental-design">
-    <h2><mat-icon>add_circle_outline</mat-icon> Approved Dental Designs</h2>
+  <div *ngIf="shouldDisplayContainer('approved-dental-design')" class="help-container orders-container approved-dental-design">
+    <h2><mat-icon>folder_open</mat-icon> Approved Dental Design</h2>
     <p>This section offers guidance on understanding and tracking the timeline of orders from creation to completion.</p>
     <button mat-raised-button color="primary" [routerLink]="['/dentalDesignApproval']">Go To Page</button>
 
     <div class="help-section">
         <h3 (click)="toggleDropdown('approvedDentalDesignCommonQuestions')">Common Questions</h3>
-        <ul *ngIf="dropdownStates['approvedDentalDesignCommonQuestions']">
+        <ul *ngIf="dropdownStates['approvedDentalDesignCommonQuestions']" class="searchable">
             <li>
                 <h4>How do I view approved dental designs?</h4>
                 <p>Navigate to the 'Approved Dental Designs' page to see a list of all orders that have been approved.</p>
@@ -412,7 +426,7 @@
 
     <div class="help-section">
         <h3 (click)="toggleDropdown('approvedDentalDesignTechnicalIssues')">Technical Issues</h3>
-        <ul *ngIf="dropdownStates['approvedDentalDesignTechnicalIssues']">
+        <ul *ngIf="dropdownStates['approvedDentalDesignTechnicalIssues']" class="searchable">
             <li>
                 <h4>Why can't I see the list of approved dental designs?</h4>
                 <p>This could be due to a network issue or a problem with the server. Check your internet connection and try again. If the issue persists, contact technical support.</p>
@@ -438,7 +452,7 @@
 
     <div class="help-section">
         <h3 (click)="toggleDropdown('approvedDentalDesignSteps')">Step-by-Step Guide</h3>
-        <mat-accordion *ngIf="dropdownStates['approvedDentalDesignSteps']">
+        <mat-accordion *ngIf="dropdownStates['approvedDentalDesignSteps']" class="searchable">
             <mat-expansion-panel>
                 <mat-expansion-panel-header>
                     <mat-panel-title>
@@ -484,14 +498,14 @@
   </div>
 
   
-    <div class="help-container orders-container approved-orders">
+  <div *ngIf="shouldDisplayContainer('approved-orders')" class="help-container orders-container awaiting-dental-design">
       <h2><mat-icon>check_circle</mat-icon> Approve Orders</h2>
       <p>This section provides support on managing deliveries, ensuring timely and accurate delivery of orders.</p>
       <button mat-raised-button color="primary" [routerLink]="['/approval']">Go To Page</button>
   
       <div class="help-section">
           <h3 (click)="toggleDropdown('approveOrdersCommonQuestions')">Common Questions</h3>
-          <ul *ngIf="dropdownStates['approveOrdersCommonQuestions']">
+          <ul *ngIf="dropdownStates['approveOrdersCommonQuestions']" class="searchable">
               <li>
                   <h4>How do I view pending orders for approval?</h4>
                   <p>Navigate to the 'Approve Orders' page to see a list of all orders that are awaiting approval. This page provides a comprehensive view of each pending order, including important details like order ID and due date.</p>
@@ -525,7 +539,7 @@
   
       <div class="help-section">
           <h3 (click)="toggleDropdown('approveOrdersTechnicalIssues')">Technical Issues</h3>
-          <ul *ngIf="dropdownStates['approveOrdersTechnicalIssues']">
+          <ul *ngIf="dropdownStates['approveOrdersTechnicalIssues']" class="searchable">
               <li>
                   <h4>Why can't I see the list of pending orders?</h4>
                   <p>This could be due to a network issue or a problem with the server. Check your internet connection and try again. If the issue persists, contact technical support for further assistance.</p>
@@ -559,7 +573,7 @@
   
       <div class="help-section">
           <h3 (click)="toggleDropdown('approveOrdersSteps')">Step-by-Step Guide</h3>
-          <mat-accordion *ngIf="dropdownStates['approveOrdersSteps']">
+          <mat-accordion *ngIf="dropdownStates['approveOrdersSteps']" class="searchable">
               <mat-expansion-panel>
                   <mat-expansion-panel-header>
                       <mat-panel-title>
@@ -611,5 +625,5 @@
           </mat-accordion>
       </div>
   </div>
-
+</div>
 </body>
