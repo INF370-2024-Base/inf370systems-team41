@@ -7,10 +7,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HelpDeliveriesComponent implements OnInit {
   dropdownStates: { [key: string]: boolean } = {
-    pageElements: false,
+    steps: false,
     commonQuestions: false,
     technicalIssues: false
   };
+  newDropdownStates : { [key: string]: boolean } = {
+    commonQuestions: false,
+    technicalIssues: false,
+    steps: false
+};
 
   constructor() { }
 
@@ -20,5 +25,9 @@ export class HelpDeliveriesComponent implements OnInit {
   toggleDropdown(section: string) {
     this.dropdownStates[section] = !this.dropdownStates[section]; // Toggle the dropdown state for the specific section
   }
+
+  toggleNewDropdown(section: string) {
+    this.newDropdownStates[section] = !this.newDropdownStates[section];
+}
 
 }
