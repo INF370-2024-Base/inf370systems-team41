@@ -10,6 +10,7 @@ export class HelpOrdersComponent implements OnInit {
 
   searchQuery: string = '';
   selectedFilter: string = 'all';
+  noResultsFound: boolean = false; 
 
   dropdownStates: { [key: string]: boolean } = {
     commonQuestions: false,
@@ -46,6 +47,7 @@ export class HelpOrdersComponent implements OnInit {
 
   filterContent(): void {
     const contentElements = this.searchContent.nativeElement.querySelectorAll('.help-container, .searchable');
+    let resultsFound = false;
     contentElements.forEach((element: HTMLElement) => {
       const containerType = element.classList.contains('new-orders') ? 'new-orders' :
                             element.classList.contains('open-orders') ? 'open-orders' :
@@ -58,6 +60,7 @@ export class HelpOrdersComponent implements OnInit {
 
       if (matchesSearchQuery && matchesFilter) {
         element.style.display = '';
+        resultsFound = true;
         // Ensure parent containers are displayed if they contain matching elements
         let parent = element.parentElement;
         while (parent && parent !== this.searchContent.nativeElement) {
@@ -70,6 +73,7 @@ export class HelpOrdersComponent implements OnInit {
         element.style.display = 'none';
       }
     });
+    this.noResultsFound = !resultsFound;
   }
 
   shouldDisplayContainer(containerType: string): boolean {
