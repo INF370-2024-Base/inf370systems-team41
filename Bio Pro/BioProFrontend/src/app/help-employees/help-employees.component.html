@@ -3,49 +3,383 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Help - Employee and Dentist Management</title>
+    <title>Employee Management Help</title>
+    <!-- Include favicon -->
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
     <!-- Include Angular Material CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.1.12/angular-material.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
- 
 </head>
+
 <body>
-    <div class="help-container">
-        <h1>How can we HELP you?</h1>
+  <div class="help-container employee-container search-employees">
+    <h2><mat-icon>search</mat-icon> Search Employees</h2>
+    <p>This section provides assistance on how to search for employees within the system.</p>
+
+    <div class="help-section">
+        <h3 (click)="toggleDropdown('commonQuestionsSearch')">Common Questions</h3>
+        <ul *ngIf="dropdownStates['commonQuestionsSearch']">
+            <li>
+                <h4>How can I search for an employee?</h4>
+                <p>Use the search bar at the top of the employee management page. Enter the name or contact details of the employee you are looking for, and the list will filter automatically.</p>
+            </li>
+        </ul>
     </div>
     
-    <div class="section-container">
-        <h2><mat-icon>person_add</mat-icon> Add Employee</h2>
-        <p>Learn how to add a new employee to the system. You will need to provide the employee's surname, name, contact details, and address.</p>
-        <button mat-raised-button color="primary" [routerLink]="['/help-employee-add']">Help Add Employee</button>
+    <div class="help-section">
+        <h3 (click)="toggleDropdown('technicalIssuesSearch')">Technical Issues</h3>
+        <ul *ngIf="dropdownStates['technicalIssuesSearch']">
+            <li>
+                <h4>Why is my search not returning any results?</h4>
+                <p>Ensure that the search term is entered correctly. If the problem persists, it could be due to a database issue. Contact technical support for assistance.</p>
+            </li>
+        </ul>
+    </div>
+    
+    <div class="help-section">
+        <h3 (click)="toggleDropdown('stepsElementsSearch')">Step-by-Step Guide</h3>
+        <mat-accordion *ngIf="dropdownStates['stepsElementsSearch']">
+            <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        Search Employees
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+                <ol style="list-style: decimal inside;">
+                    <li>Navigate to the 'Employees' page.</li>
+                    <li>Locate the search bar at the top of the page, next to the 'Add Employee' button.</li>
+                    <li>Enter the name or contact details of the employee you are looking for.</li>
+                    <li>The list of employees will filter in real-time based on your input.</li>
+                    <li>If the desired employee appears, you can edit or delete the record using the corresponding buttons.</li>
+                </ol>
+            </mat-expansion-panel>
+        </mat-accordion>
+    </div>
+  </div>
+
+  <div class="help-container employee-container add-employees">
+    <h2><mat-icon>person_add</mat-icon> Add Employee</h2>
+    <p>This section provides assistance on how to add a new employee within the system.</p>
+    <button mat-raised-button color="primary" [routerLink]="['/addEmployee']">Go To Page</button>
+    
+    <div class="help-section">
+        <h3 (click)="toggleDropdown('commonQuestionsAdd')">Common Questions</h3>
+        <ul *ngIf="dropdownStates['commonQuestionsAdd']">
+            <li>
+                <h4>How do I add a new employee?</h4>
+                <p>To add a new employee, navigate to the 'Add Employee' page by clicking the 'Add Employee' button on the top right corner of the employee management page. Fill in the required fields and click 'Add Employee'.</p>
+            </li>
+            <li>
+                <h4>What information is required to add an employee?</h4>
+                <p>The required fields are First Name, Last Name, and Contact Details. The Address is optional but recommended.</p>
+            </li>
+        </ul>
+    </div>
+    
+    <div class="help-section">
+        <h3 (click)="toggleDropdown('technicalIssuesAdd')">Technical Issues</h3>
+        <ul *ngIf="dropdownStates['technicalIssuesAdd']">
+            <li>
+                <h4>What happens if I don't fill in all required fields?</h4>
+                <p>The form will not be submitted, and an error message will be displayed below each missing field indicating that it is required.</p>
+            </li>
+            <li>
+                <h4>What if I encounter an error while adding an employee?</h4>
+                <p>If you encounter an error, check if all required fields are filled correctly. If the problem persists, contact technical support for further assistance.</p>
+            </li>
+        </ul>
+    </div>
+    
+    <div class="help-section">
+        <h3 (click)="toggleDropdown('stepsElementsAdd')">Step-by-Step Guide</h3>
+        <mat-accordion *ngIf="dropdownStates['stepsElementsAdd']">
+            <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        Add Employee
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+                <ol style="list-style: decimal inside;">
+                    <li>Navigate to the 'Employees' page.</li>
+                    <li>Click the 'Add Employee' button located at the top right corner of the page.</li>
+                    <li>You will be redirected to the 'Add New Employee' form.</li>
+                    <li>Fill in the required fields:
+                        <ul style="list-style: disc inside;">
+                            <li><strong>First Name:</strong> Enter the employee's first name.</li>
+                            <li><strong>Last Name:</strong> Enter the employee's last name.</li>
+                            <li><strong>Contact Details:</strong> Provide the employee's contact information.</li>
+                            <li><strong>Address:</strong> Enter the employee's address (optional).</li>
+                        </ul>
+                    </li>
+                    <li>Ensure all required fields are filled correctly.</li>
+                    <li>Click the 'Add Employee' button at the bottom of the form to submit.</li>
+                    <li>If the form is valid, the employee will be added, and you will see a confirmation message.</li>
+                    <li>You can now see the new employee listed in the employee management page.</li>
+                </ol>
+            </mat-expansion-panel>
+        </mat-accordion>
+    </div>
+</div>
+
+<div class="help-container employee-container edit-employees">
+    <h2><mat-icon>edit</mat-icon> Edit Employee</h2>
+    <p>This section provides assistance on how to edit existing employee details within the system.</p>
+    <button mat-raised-button color="primary" [routerLink]="['/employeeProfile']">Go To Page</button>
+    
+    <div class="help-section">
+        <h3 (click)="toggleDropdown('commonQuestionsEdit')">Common Questions</h3>
+        <ul *ngIf="dropdownStates['commonQuestionsEdit']">
+            <li>
+                <h4>How do I edit an employee's information?</h4>
+                <p>To edit an employee's information, navigate to the 'Edit Employee' page by clicking the 'Edit Employee' button in the navigation menu or on the employee details page. Modify the relevant fields with the updated information and click 'Update' to save the changes. A confirmation message will appear if the employee's information is successfully updated.</p>
+            </li>
+            <li>
+                <h4>What details can I edit?</h4>
+                <p>You can edit fields such as name, contact details, department, and position. Ensure all changes are accurate before saving to avoid any discrepancies in the employee's records.</p>
+            </li>
+        </ul>
     </div>
 
-    <div class="section-container">
-        <h2><mat-icon>edit</mat-icon> Edit Employee</h2>
-        <p>This section guides you on how to edit the details of an existing employee. You can update the surname, name, contact details, and address.</p>
-        <button mat-raised-button color="primary" [routerLink]="['/help-employee-edit']">Help Edit Employee</button>
+    <div class="help-section">
+        <h3 (click)="toggleDropdown('technicalIssuesEdit')">Technical Issues</h3>
+        <ul *ngIf="dropdownStates['technicalIssuesEdit']">
+            <li>
+                <h4>Why am I unable to save my edits?</h4>
+                <p>Check if all required fields are filled out correctly. Error messages will highlight any missing or incorrect information. Ensure there are no network issues and try refreshing the page. If the problem persists, contact technical support for assistance.</p>
+            </li>
+            <li>
+                <h4>Why are my edits not reflecting in the employee's profile?</h4>
+                <p>There may be a delay in updating the employee's profile. Verify the changes were saved by checking for a confirmation message. If the changes still do not appear, contact technical support to investigate the issue further.</p>
+            </li>
+        </ul>
+    </div>
+    
+    <div class="help-section">
+        <h3 (click)="toggleDropdown('stepsElementsEdit')">Step-by-Step Guide</h3>
+        <mat-accordion *ngIf="dropdownStates['stepsElementsEdit']">
+            <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                    <mat-panel-title>Step 1: Access the 'Edit Employee' Page</mat-panel-title>
+                </mat-expansion-panel-header>
+                <p>Click on the 'Edit Employee' button in the navigation menu or on the employee details page.</p>
+            </mat-expansion-panel>
+            <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                    <mat-panel-title>Step 2: Modify Employee Details</mat-panel-title>
+                </mat-expansion-panel-header>
+                <p>Update the relevant fields with the new information.</p>
+            </mat-expansion-panel>
+            <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                    <mat-panel-title>Step 3: Save Changes</mat-panel-title>
+                </mat-expansion-panel-header>
+                <p>Click the 'Update' button to save the edits. Ensure all changes are accurate.</p>
+            </mat-expansion-panel>
+            <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                    <mat-panel-title>Step 4: Confirm Update</mat-panel-title>
+                </mat-expansion-panel-header>
+                <p>Check for a confirmation message indicating successful update of the employee's information.</p>
+            </mat-expansion-panel>
+        </mat-accordion>
+    </div>
+</div>
+
+<div class="help-container employee-container delete-employees">
+    <h2><mat-icon>delete</mat-icon> Delete Employee</h2>
+    <p>This section provides assistance on how to delete an existing employee from the system.</p>
+    <button mat-raised-button color="primary" [routerLink]="['/employeeProfile']">Go To Page</button>
+    
+    <div class="help-section">
+        <h3 (click)="toggleDropdown('commonQuestionsDelete')">Common Questions</h3>
+        <ul *ngIf="dropdownStates['commonQuestionsDelete']">
+            <li>
+                <h4>How do I delete an employee?</h4>
+                <p>To delete an employee, navigate to the 'Delete Employee' page by clicking the 'Delete Employee' button in the navigation menu or on the employee details page. Confirm the deletion by clicking 'Delete' in the confirmation dialog. A confirmation message will appear if the employee is successfully deleted.</p>
+            </li>
+            <li>
+                <h4>Can deleted employees be recovered?</h4>
+                <p>No, deleted employees cannot be recovered once deleted from the system. Ensure you have selected the correct employee for deletion before confirming.</p>
+            </li>
+        </ul>
     </div>
 
-    <div class="section-container">
-        <h2><mat-icon>delete</mat-icon> Delete Employee</h2>
-        <p>Find out how to delete an employee from the system. This action will remove all records of the employee from the database.</p>
-        <button mat-raised-button color="primary" [routerLink]="['/help-employee-delete']">Help Delete Employee</button>
+    <div class="help-section">
+        <h3 (click)="toggleDropdown('technicalIssuesDelete')">Technical Issues</h3>
+        <ul *ngIf="dropdownStates['technicalIssuesDelete']">
+            <li>
+                <h4>Why am I unable to delete an employee?</h4>
+                <p>Check if you have the necessary permissions to delete employees. Some user roles may not have the authorization to perform deletions. Contact your administrator if you believe this is an error.</p>
+            </li>
+            <li>
+                <h4>Why is the delete confirmation dialog not appearing?</h4>
+                <p>This could be due to a browser issue or script blocker. Ensure pop-ups are enabled for the site and try refreshing the page. If the problem persists, contact technical support for assistance.</p>
+            </li>
+        </ul>
+    </div>
+    
+    <div class="help-section">
+        <h3 (click)="toggleDropdown('stepsElementsDelete')">Step-by-Step Guide</h3>
+        <mat-accordion *ngIf="dropdownStates['stepsElementsDelete']">
+            <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                    <mat-panel-title>Step 1: Access the 'Delete Employee' Page</mat-panel-title>
+                </mat-expansion-panel-header>
+                <p>Click on the 'Delete Employee' button in the navigation menu or on the employee details page.</p>
+            </mat-expansion-panel>
+            <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                    <mat-panel-title>Step 2: Confirm Deletion</mat-panel-title>
+                </mat-expansion-panel-header>
+                <p>Review the employee's details to ensure the correct employee is selected for deletion.</p>
+            </mat-expansion-panel>
+            <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                    <mat-panel-title>Step 3: Click 'Delete'</mat-panel-title>
+                </mat-expansion-panel-header>
+                <p>Click the 'Delete' button in the confirmation dialog to proceed with deletion.</p>
+            </mat-expansion-panel>
+            <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                    <mat-panel-title>Step 4: Confirm Deletion</mat-panel-title>
+                </mat-expansion-panel-header>
+                <p>Check for a confirmation message indicating successful deletion of the employee from the system.</p>
+            </mat-expansion-panel>
+        </mat-accordion>
+    </div>
+</div>
+
+<div class="help-container employee-container add-daily-hours">
+    <h2><mat-icon>schedule</mat-icon> Add Employee Daily Hours</h2>
+    <p>This section provides assistance on how to add daily work hours for an employee within the system.</p>
+    <button mat-raised-button color="primary" [routerLink]="['/captureEmployeeDailyHours']">Go To Page</button>
+    
+    <div class="help-section">
+        <h3 (click)="toggleDropdown('commonQuestionsAddHours')">Common Questions</h3>
+        <ul *ngIf="dropdownStates['commonQuestionsAddHours']">
+            <li>
+                <h4>How do I add daily hours for an employee?</h4>
+                <p>To add daily hours for an employee, navigate to the 'Add Employee Daily Hours' page by clicking the 'Add Employee Daily Hours' button on the employee management page. Fill in the required fields and click 'Add Hours'.</p>
+            </li>
+            <li>
+                <h4>What information is required to add daily hours?</h4>
+                <p>The required fields are Employee Name, Date, Start Time, End Time, and Description. The Date and Time fields are mandatory to track the employee's work hours effectively.</p>
+            </li>
+        </ul>
+    </div>
+    
+    <div class="help-section">
+        <h3 (click)="toggleDropdown('technicalIssuesAddHours')">Technical Issues</h3>
+        <ul *ngIf="dropdownStates['technicalIssuesAddHours']">
+            <li>
+                <h4>What happens if I don't fill in all required fields?</h4>
+                <p>The form will not be submitted, and an error message will be displayed below each missing field indicating that it is required.</p>
+            </li>
+            <li>
+                <h4>What if I encounter an error while adding daily hours?</h4>
+                <p>If you encounter an error, check if all required fields are filled correctly. If the problem persists, contact technical support for further assistance.</p>
+            </li>
+        </ul>
+    </div>
+    
+    <div class="help-section">
+        <h3 (click)="toggleDropdown('stepsElementsAddHours')">Step-by-Step Guide</h3>
+        <mat-accordion *ngIf="dropdownStates['stepsElementsAddHours']">
+            <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        Add Employee Daily Hours
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+                <ol style="list-style: decimal inside;">
+                    <li>Navigate to the 'Employee Daily Hours' page.</li>
+                    <li>Click the 'Add Hours' button located at the top right corner of the page.</li>
+                    <li>You will be redirected to the 'Add New Daily Hours' form.</li>
+                    <li>Fill in the required fields:
+                        <ul style="list-style: disc inside;">
+                            <li><strong>Employee Name:</strong> Select the employee from the dropdown list.</li>
+                            <li><strong>Date:</strong> Enter the date for which you want to add hours.</li>
+                            <li><strong>Start Time:</strong> Enter the start time of the work period.</li>
+                            <li><strong>End Time:</strong> Enter the end time of the work period.</li>
+                            <li><strong>Description:</strong> Provide a brief description of the work performed (optional).</li>
+                        </ul>
+                    </li>
+                    <li>Ensure all required fields are filled correctly.</li>
+                    <li>Click the 'Add Hours' button at the bottom of the form to submit.</li>
+                    <li>If the form is valid, the daily hours will be added, and you will see a confirmation message.</li>
+                    <li>You can now see the added daily hours listed in the employee management page.</li>
+                </ol>
+            </mat-expansion-panel>
+        </mat-accordion>
+    </div>
+</div>
+
+<div class="help-container employee-container delete-daily-hours">
+    <h2><mat-icon>delete</mat-icon> Delete Employee Daily Hours</h2>
+    <p>This section provides assistance on how to delete daily work hours for an employee within the system.</p>
+    <button mat-raised-button color="primary" [routerLink]="['/dailyHoursProfile']">Go To Page</button>
+    
+    <div class="help-section">
+        <h3 (click)="toggleDropdown('commonQuestionsDeleteHours')">Common Questions</h3>
+        <ul *ngIf="dropdownStates['commonQuestionsDeleteHours']">
+            <li>
+                <h4>How do I delete daily hours for an employee?</h4>
+                <p>To delete daily hours for an employee, navigate to the 'Delete Employee Daily Hours' page by clicking the 'Delete Employee Daily Hours' button on the employee management page. Confirm the deletion by clicking 'Delete' in the confirmation dialog. A confirmation message will appear if the daily hours are successfully deleted.</p>
+            </li>
+            <li>
+                <h4>Can deleted daily hours be recovered?</h4>
+                <p>No, deleted daily hours cannot be recovered once deleted from the system. Ensure you have selected the correct daily hours for deletion before confirming.</p>
+            </li>
+        </ul>
     </div>
 
-    <div class="section-container">
-        <h2><mat-icon>access_time</mat-icon> Add Employee Daily Hours</h2>
-        <p>Learn how to add daily working hours for an employee. You need to provide the date, start time, and end time for each entry.</p>
-        <button mat-raised-button color="primary" [routerLink]="['/help-employee-hour']">Help Add Employee Hours</button>
+    <div class="help-section">
+        <h3 (click)="toggleDropdown('technicalIssuesDeleteHours')">Technical Issues</h3>
+        <ul *ngIf="dropdownStates['technicalIssuesDeleteHours']">
+            <li>
+                <h4>Why am I unable to delete daily hours for an employee?</h4>
+                <p>Check if you have the necessary permissions to delete daily hours. Some user roles may not have the authorization to perform deletions. Contact your administrator if you believe this is an error.</p>
+            </li>
+            <li>
+                <h4>Why is the delete confirmation dialog not appearing?</h4>
+                <p>This could be due to a browser issue or script blocker. Ensure pop-ups are enabled for the site and try refreshing the page. If the problem persists, contact technical support for assistance.</p>
+            </li>
+        </ul>
     </div>
-
-    <div class="section-container">
-        <h2><mat-icon>delete_forever</mat-icon> Delete Employee Daily Hours</h2>
-        <p>This section guides you on how to delete an entry of daily working hours for an employee.</p>
-        <button mat-raised-button color="primary" [routerLink]="['/help-employee-hour-delete']">Help Delete Employee Hours</button>
+    
+    <div class="help-section">
+        <h3 (click)="toggleDropdown('stepsElementsDeleteHours')">Step-by-Step Guide</h3>
+        <mat-accordion *ngIf="dropdownStates['stepsElementsDeleteHours']">
+            <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                    <mat-panel-title>Step 1: Access the 'Delete Employee Daily Hours' Page</mat-panel-title>
+                </mat-expansion-panel-header>
+                <p>Click on the 'Delete Employee Daily Hours' button in the navigation menu or on the employee details page.</p>
+            </mat-expansion-panel>
+            <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                    <mat-panel-title>Step 2: Confirm Deletion</mat-panel-title>
+                </mat-expansion-panel-header>
+                <p>Review the daily hours details to ensure the correct hours are selected for deletion.</p>
+            </mat-expansion-panel>
+            <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                    <mat-panel-title>Step 3: Click 'Delete'</mat-panel-title>
+                </mat-expansion-panel-header>
+                <p>Click the 'Delete' button in the confirmation dialog to proceed with deletion.</p>
+            </mat-expansion-panel>
+            <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                    <mat-panel-title>Step 4: Confirm Deletion</mat-panel-title>
+                </mat-expansion-panel-header>
+                <p>Check for a confirmation message indicating successful deletion of the daily hours from the system.</p>
+            </mat-expansion-panel>
+        </mat-accordion>
     </div>
-
-    <!-- Include Angular Material JS -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.1.12/angular-material.min.js"></script>
+</div>
+  
+  <!-- Include Angular Material JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.1.12/angular-material.min.js"></script>
 </body>
 </html>

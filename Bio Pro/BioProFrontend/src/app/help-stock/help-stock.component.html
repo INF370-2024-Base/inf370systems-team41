@@ -10,34 +10,257 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
 </head>
 <body>
-    <div class="help-container">
-        <h1>Stock Management Help</h1>
-    </div>
 
-    <div class="stock-section">
+    <div class="help-container help-stock-add">
+        <h2><mat-icon>add</mat-icon> Add Stock</h2>
+        <p>This section provides assistance on how to add new stock items to the system.</p>
+        <button mat-raised-button color="primary" [routerLink]="['/addStock']">Go To Page</button>
+    
+        <div class="help-section">
+            <h3 (click)="toggleDropdown('commonQuestionsAdd')">Common Questions</h3>
+            <ul *ngIf="dropdownStates['commonQuestionsAdd']">
+                <li>
+                    <h4>How do I add new stock?</h4>
+                    <p>Navigate to the 'Add Stock' page, fill in the required information such as stock category, supplier, stock name, and quantity. Ensure all fields are completed accurately and then click 'Capture Stock' to add the new item.</p>
+                </li>
+                <li>
+                    <h4>What information is required to add new stock?</h4>
+                    <p>You will need to provide the stock category, supplier, stock name, quantity available, maximum stock level, minimum stock level, reorder point, and measurement.</p>
+                </li>
+            </ul>
+        </div>
+    
+        <div class="help-section">
+            <h3 (click)="toggleDropdown('technicalIssuesAdd')">Technical Issues</h3>
+            <ul *ngIf="dropdownStates['technicalIssuesAdd']">
+                <li>
+                    <h4>Why can't I submit the form?</h4>
+                    <p>Ensure all required fields are filled out correctly and the form is valid. If the problem persists, try refreshing the page or using a different browser. Contact technical support if the issue continues.</p>
+                </li>
+                <li>
+                    <h4>Why are the stock categories or suppliers not loading?</h4>
+                    <p>Check your internet connection and try refreshing the page. If the issue persists, it might be due to a server problem. Contact technical support for further assistance.</p>
+                </li>
+            </ul>
+        </div>
+    
+        <div class="help-section">
+            <h3 (click)="toggleDropdown('stepsElementsAdd')">Step-by-Step Guide</h3>
+            <mat-accordion *ngIf="dropdownStates['stepsElementsAdd']">
+                <mat-expansion-panel>
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>Step 1: Access the 'Add Stock' Page</mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <p>Click on the 'Add Stock' button in the navigation menu to go to the 'Add Stock' page.</p>
+                </mat-expansion-panel>
+                <mat-expansion-panel>
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>Step 2: Fill in Stock Details</mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <p>Provide the necessary stock details including stock category, supplier, stock name, and quantity available.</p>
+                </mat-expansion-panel>
+                <mat-expansion-panel>
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>Step 3: Complete Additional Information</mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <p>Fill in additional information such as maximum stock level, minimum stock level, reorder point, and measurement.</p>
+                </mat-expansion-panel>
+                <mat-expansion-panel>
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>Step 4: Submit the Form</mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <p>Click the 'Capture Stock' button to add the new stock item. A confirmation message will appear if the stock is successfully added.</p>
+                </mat-expansion-panel>
+            </mat-accordion>
+        </div>
+    </div>
+    
+    <div class="help-container help-stock-capture">
+        <h2><mat-icon>add_box</mat-icon> Capture Stock</h2>
+        <p>This section provides assistance on how to capture stock details in the system.</p>
+        <button mat-raised-button color="primary" [routerLink]="['/pageStock']">Go To Page</button>
+    
+        <div class="help-section">
+            <h3 (click)="toggleDropdown('commonQuestionsCapture')">Common Questions</h3>
+            <ul *ngIf="dropdownStates['commonQuestionsCapture']">
+                <li>
+                    <h4>How do I capture new stock?</h4>
+                    <p>Navigate to the 'Capture Stock' page, select the stock item, and provide the quantity added. Ensure all fields are completed accurately and then click 'Submit' to capture the stock.</p>
+                </li>
+                <li>
+                    <h4>What information is required to capture stock?</h4>
+                    <p>You will need to provide the stock name and the amount added.</p>
+                </li>
+            </ul>
+        </div>
+    
+        <div class="help-section">
+            <h3 (click)="toggleDropdown('technicalIssuesCapture')">Technical Issues</h3>
+            <ul *ngIf="dropdownStates['technicalIssuesCapture']">
+                <li>
+                    <h4>Why can't I submit the form?</h4>
+                    <p>Ensure all required fields are filled out correctly and the form is valid. If the problem persists, try refreshing the page or using a different browser. Contact technical support if the issue continues.</p>
+                </li>
+                <li>
+                    <h4>Why is the stock not updating?</h4>
+                    <p>Check your internet connection and try again. If the issue persists, it might be due to a server problem. Contact technical support for further assistance.</p>
+                </li>
+            </ul>
+        </div>
+    
+        <div class="help-section">
+            <h3 (click)="toggleDropdown('stepsElementsCapture')">Step-by-Step Guide</h3>
+            <mat-accordion *ngIf="dropdownStates['stepsElementsCapture']">
+                <mat-expansion-panel>
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>Step 1: Access the 'Capture Stock' Page</mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <p>Click on the 'Capture Stock' button in the navigation menu to go to the 'Capture Stock' page.</p>
+                </mat-expansion-panel>
+                <mat-expansion-panel>
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>Step 2: Select the Stock Item</mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <p>Select the stock item from the list of available stock items.</p>
+                </mat-expansion-panel>
+                <mat-expansion-panel>
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>Step 3: Provide Quantity Added</mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <p>Enter the quantity of stock added in the appropriate field.</p>
+                </mat-expansion-panel>
+                <mat-expansion-panel>
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>Step 4: Submit the Form</mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <p>Click the 'Submit' button to capture the stock. A confirmation message will appear if the stock is successfully captured.</p>
+                </mat-expansion-panel>
+            </mat-accordion>
+        </div>
+    </div>
+    
+    <div class="help-container help-stock-writeoff">
+        <h2><mat-icon>remove_circle_outline</mat-icon> Write Off Stock</h2>
+        <p>This section provides assistance on how to write off stock items in the system.</p>
+        <button mat-raised-button color="primary" [routerLink]="['/pageStock']">Go To Page</button>
+    
+        <div class="help-section">
+            <h3 (click)="toggleDropdown('commonQuestionsWriteOff')">Common Questions</h3>
+            <ul *ngIf="dropdownStates['commonQuestionsWriteOff']">
+                <li>
+                    <h4>How do I write off stock?</h4>
+                    <p>Navigate to the 'Write Off Stock' page, select the stock item, provide the quantity written off and the reason for write-off. Ensure all fields are completed accurately and then click 'Submit' to write off the stock.</p>
+                </li>
+                <li>
+                    <h4>What information is required to write off stock?</h4>
+                    <p>You will need to provide the stock name, quantity written off, written off date, and the reason for write-off.</p>
+                </li>
+            </ul>
+        </div>
+    
+        <div class="help-section">
+            <h3 (click)="toggleDropdown('technicalIssuesWriteOff')">Technical Issues</h3>
+            <ul *ngIf="dropdownStates['technicalIssuesWriteOff']">
+                <li>
+                    <h4>Why can't I submit the form?</h4>
+                    <p>Ensure all required fields are filled out correctly and the form is valid. If the problem persists, try refreshing the page or using a different browser. Contact technical support if the issue continues.</p>
+                </li>
+                <li>
+                    <h4>Why is the stock not updating?</h4>
+                    <p>Check your internet connection and try again. If the issue persists, it might be due to a server problem. Contact technical support for further assistance.</p>
+                </li>
+            </ul>
+        </div>
+    
+        <div class="help-section">
+            <h3 (click)="toggleDropdown('stepsElementsWriteOff')">Step-by-Step Guide</h3>
+            <mat-accordion *ngIf="dropdownStates['stepsElementsWriteOff']">
+                <mat-expansion-panel>
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>Step 1: Access the 'Write Off Stock' Page</mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <p>Click on the 'Write Off Stock' button in the navigation menu to go to the 'Write Off Stock' page.</p>
+                </mat-expansion-panel>
+                <mat-expansion-panel>
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>Step 2: Select the Stock Item</mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <p>Select the stock item from the list of available stock items.</p>
+                </mat-expansion-panel>
+                <mat-expansion-panel>
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>Step 3: Provide Write-Off Details</mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <p>Enter the quantity of stock written off, the date of write-off, and the reason for the write-off.</p>
+                </mat-expansion-panel>
+                <mat-expansion-panel>
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>Step 4: Submit the Form</mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <p>Click the 'Submit' button to write off the stock. A confirmation message will appear if the stock is successfully written off.</p>
+                </mat-expansion-panel>
+            </mat-accordion>
+        </div>
+    </div>
+    
+    <div class="help-container help-stock-search">
         <h2><mat-icon>search</mat-icon> Search Stock</h2>
-        <p>This section provides guidance on how to search for stock in the system. You can search by stock name, category, or ID.</p>
-        <button mat-raised-button color="primary" [routerLink]="['/help-stock-search']">Help Search Stock</button>
+        <p>This section provides assistance on how to search for stock items in the system.</p>
+        <button mat-raised-button color="primary" [routerLink]="['/pageStock']">Go To Page</button>
+    
+        <div class="help-section">
+            <h3 (click)="toggleDropdown('commonQuestionsSearch')">Common Questions</h3>
+            <ul *ngIf="dropdownStates['commonQuestionsSearch']">
+                <li>
+                    <h4>How do I search for stock?</h4>
+                    <p>Navigate to the 'Search Stock' page, enter the stock name or other identifying information in the search bar, and click the search button. The results will display the matching stock items.</p>
+                </li>
+                <li>
+                    <h4>What information can I use to search for stock?</h4>
+                    <p>You can search for stock items using the stock name, category, or supplier.</p>
+                </li>
+            </ul>
+        </div>
+    
+        <div class="help-section">
+            <h3 (click)="toggleDropdown('technicalIssuesSearch')">Technical Issues</h3>
+            <ul *ngIf="dropdownStates['technicalIssuesSearch']">
+                <li>
+                    <h4>Why are my search results not displaying?</h4>
+                    <p>Ensure you have entered valid search criteria and try again. If the issue persists, it might be due to a server problem or an issue with the search functionality. Contact technical support for further assistance.</p>
+                </li>
+                <li>
+                    <h4>Why is the search function not working?</h4>
+                    <p>Check your internet connection and try refreshing the page. If the problem continues, there might be a technical issue with the search function. Contact technical support for help.</p>
+                </li>
+            </ul>
+        </div>
+    
+        <div class="help-section">
+            <h3 (click)="toggleDropdown('stepsElementsSearch')">Step-by-Step Guide</h3>
+            <mat-accordion *ngIf="dropdownStates['stepsElementsSearch']">
+                <mat-expansion-panel>
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>Step 1: Access the 'Search Stock' Page</mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <p>Click on the 'Search Stock' button in the navigation menu to go to the 'Search Stock' page.</p>
+                </mat-expansion-panel>
+                <mat-expansion-panel>
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>Step 2: Enter Search Criteria</mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <p>Enter the stock name, category, or supplier in the search bar.</p>
+                </mat-expansion-panel>
+                <mat-expansion-panel>
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>Step 3: Click the Search Button</mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <p>Click the search button to view the results. Matching stock items will be displayed below the search bar.</p>
+                </mat-expansion-panel>
+            </mat-accordion>
+        </div>
     </div>
-
-    <div class="stock-section">
-        <h2><mat-icon>add_box</mat-icon> Add Stock</h2>
-        <p>Learn how to add new stock to the system. You will need to provide the stock name, category, quantity, and supplier details.</p>
-        <button mat-raised-button color="primary" [routerLink]="['/help-stock-add']">Help Add Stock</button>
-    </div>
-
-    <div class="stock-section">
-        <h2><mat-icon>assignment</mat-icon> Capture Stock</h2>
-        <p>This section guides you on how to capture details of new stock arrivals. You can enter the stock ID, quantity, and arrival date.</p>
-        <button mat-raised-button color="primary" [routerLink]="['/help-stock-capture']">Help Capture Stock</button>
-    </div>
-
-    <div class="stock-section">
-        <h2><mat-icon>delete</mat-icon> Write Off Stock</h2>
-        <p>Find out how to write off stock from the system. This action will mark the stock as unusable and remove it from the available inventory.</p>
-        <button mat-raised-button color="primary" [routerLink]="['/help-stock-writeoff']">Help Write Off Stock</button>
-    </div>
-
+    
     <!-- Include Angular Material JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.1.12/angular-material.min.js"></script>
 </body>
