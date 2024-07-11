@@ -12,6 +12,13 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
 </head>
 <body>
+ 
+    <div *ngIf="isAnySectionOpen()" class="search-filter-container">
+        <input type="text" placeholder="Search..." (input)="onSearch($event)" />
+        
+    </div>
+    
+  <div #searchContent>
 
     <div class="delivery-container">
         <h2><mat-icon>local_shipping</mat-icon> Deliveries</h2>
@@ -21,80 +28,85 @@
             <p>The Deliveries section allows users to manage and view details of all deliveries associated with completed orders. Each delivery is presented in a structured format, providing essential information for tracking and management purposes.</p>
         </section>
 
+        <div class="help-section">
         <section class="dropdown" (click)="toggleDropdown('commonQuestions')">
             <h3>Common Questions <mat-icon>{{ dropdownStates['commonQuestions'] ? 'expand_less' : 'expand_more' }}</mat-icon></h3>
             <ul *ngIf="dropdownStates['commonQuestions']">
-                <li>
-                    <h4>How do I view the details of a delivery?</h4>
+                <li class="searchable">
+                    <h4 class="searchable">How do I view the details of a delivery?</h4>
                     <p>The details of each delivery are displayed within individual cards on the Deliveries page. Simply scroll through the page to view all deliveries.</p>
                 </li>
-                <li>
-                    <h4>What information is displayed for each delivery?</h4>
+                <li class="searchable">
+                    <h4 class="searchable">What information is displayed for each delivery?</h4>
                     <p>Each delivery card displays the Delivery ID, Delivery Date (if available), Delivery Status, Employee details, and System Order ID.</p>
                 </li>
-                <li>
-                    <h4>How can I tell which employee made a particular delivery?</h4>
+                <li class="searchable">
+                    <h4 class="searchable">How can I tell which employee made a particular delivery?</h4>
                     <p>The employee's first and last name are displayed on each delivery card under the Employee section.</p>
                 </li>
-                <li>
-                    <h4>What do the different delivery statuses mean?</h4>
+                <li class="searchable">
+                    <h4 class="searchable">What do the different delivery statuses mean?</h4>
                     <p>The delivery statuses provide information on the current state of the delivery. Common statuses include pending (the delivery is yet to be made), and delivered (the delivery has been successfully completed).</p>
                 </li>
-                <li>
-                    <h4>Why is the delivery date not showing for some deliveries?</h4>
+                <li class="searchable">
+                    <h4 class="searchable">Why is the delivery date not showing for some deliveries?</h4>
                     <p>The delivery date may not be available for all deliveries. If the delivery date is not set, it will not be displayed on the delivery card.</p>
                 </li>
-                <li>
-                    <h4>Can I search for specific deliveries?</h4>
+                <li class="searchable">
+                    <h4 class="searchable">Can I search for specific deliveries?</h4>
                     <p>Currently, the Deliveries page does not support search functionality. You can manually scroll through the list to find specific deliveries.</p>
                 </li>
-                <li>
-                    <h4>How often is the delivery information updated?</h4>
+                <li class="searchable">
+                    <h4 class="searchable">How often is the delivery information updated?</h4>
                     <p>The delivery information is updated when the Deliveries page is refreshed. Any changes made to deliveries are reflected after refreshing the page.</p>
                 </li>
-                <li>
-                    <h4>What should I do if the delivery details are incorrect?</h4>
+                <li class="searchable">
+                    <h4 class="searchable">What should I do if the delivery details are incorrect?</h4>
                     <p>If you notice any incorrect details, please contact the support team to have the information reviewed and corrected.</p>
                 </li>
-                <li>
-                    <h4>Is it possible to filter deliveries by status?</h4>
+                <li class="searchable">
+                    <h4 class="searchable">Is it possible to filter deliveries by status?</h4>
                     <p>Currently, the Deliveries page does not have a filtering feature. You can manually check each delivery's status.</p>
                 </li>
-                <li>
-                    <h4>Can I export the delivery data?</h4>
+                <li class="searchable">
+                    <h4 class="searchable">Can I export the delivery data?</h4>
                     <p>At the moment, exporting delivery data is not supported. If you need to export data, please contact the support team for assistance.</p>
                 </li>
             </ul>
         </section>
+    </div>
     
+    <div class="help-section">
         <section class="dropdown" (click)="toggleDropdown('technicalIssues')">
             <h3>Technical Issues <mat-icon>{{ dropdownStates['technicalIssues'] ? 'expand_less' : 'expand_more' }}</mat-icon></h3>
             <ul *ngIf="dropdownStates['technicalIssues']">
-                <li>
-                    <h4>What should I do if the deliveries are not loading?</h4>
+                <li class="searchable">
+                    <h4 class="searchable">What should I do if the deliveries are not loading?</h4>
                     <p>If the deliveries are not loading, try refreshing the page. If the issue persists, check your internet connection and ensure the backend service is running.</p>
                 </li>
-                <li>
-                    <h4>How do I report a problem with the Deliveries page?</h4>
+                <li class="searchable">
+                    <h4 class="searchable">How do I report a problem with the Deliveries page?</h4>
                     <p>If you encounter any issues with the Deliveries page, please contact the support team with detailed information about the problem.</p>
                 </li>
-                <li>
-                    <h4>Why am I seeing an error message?</h4>
+                <li class="searchable">
+                    <h4 class="searchable">Why am I seeing an error message?</h4>
                     <p>Error messages may appear due to network issues or backend service problems. Note the error message details and contact support if the issue persists.</p>
                 </li>
-                <li>
-                    <h4>How do I clear my browser cache?</h4>
+                <li class="searchable">
+                    <h4 class="searchable">How do I clear my browser cache?</h4>
                     <p>Clearing your browser cache can help resolve loading issues. Instructions for clearing the cache vary by browser; please refer to your browser's help documentation.</p>
                 </li>
             </ul>
         </section>
+    </div>
     
+    <div class="help-section">
         <section class="dropdown" (click)="toggleDropdown('steps')">
             <h3>Step-by-Step Guide <mat-icon>{{ dropdownStates['steps'] ? 'expand_less' : 'expand_more' }}</mat-icon></h3>
             <mat-accordion *ngIf="dropdownStates['steps']">
                 <mat-expansion-panel>
                     <mat-expansion-panel-header>
-                        <mat-panel-title>
+                        <mat-panel-title class="searchable">
                             Step 1: Access the Deliveries Page
                         </mat-panel-title>
                     </mat-expansion-panel-header>
@@ -102,7 +114,7 @@
                 </mat-expansion-panel>
                 <mat-expansion-panel>
                     <mat-expansion-panel-header>
-                        <mat-panel-title>
+                        <mat-panel-title class="searchable">
                             Step 2: View Delivery Details
                         </mat-panel-title>
                     </mat-expansion-panel-header>
@@ -110,7 +122,7 @@
                 </mat-expansion-panel>
             </mat-accordion>
         </section>
-    
+    </div>
         <button mat-raised-button color="primary" [routerLink]="['/deliveries']">Go To Page</button>
     </div>
 
@@ -124,53 +136,57 @@
             <p>Once an order is completed, it becomes eligible for delivery creation. The page displays a list of all finished orders, each with detailed information about the order and associated patient. You can review this information to ensure accuracy before proceeding with delivery creation.</p>
         </section>
         
-      
+        <div class="help-section">
         <section class="dropdown" (click)="toggleNewDropdown('commonQuestions')">
             <h3>Common Questions <mat-icon>{{ newDropdownStates['commonQuestions'] ? 'expand_less' : 'expand_more' }}</mat-icon></h3>
-            <div class="faq" *ngIf="newDropdownStates['commonQuestions']">
-                <h4>How do I create a new delivery?</h4>
+            <div class="faq" *ngIf="newDropdownStates['commonQuestions']" class="searchable">
+                <h4 class="searchable">How do I create a new delivery?</h4>
                 <p>Click the "Create Delivery" button next to the finished order you want to create a delivery for.</p>
                 
-                <h4>What happens if I don't see any orders?</h4>
+                <h4 class="searchable">What happens if I don't see any orders?</h4>
                 <p>If no orders are displayed, it means there are no completed orders available for delivery. Ensure there are completed orders before attempting to create a delivery.</p>
                 
-                <h4>How can I confirm if the delivery was created successfully?</h4>
+                <h4 class="searchable">How can I confirm if the delivery was created successfully?</h4>
                 <p>If the delivery is created successfully, a success message will be displayed, and the page will reload to show the updated list of deliveries.</p>
                 
-                <h4>What should I do if I receive an error message when creating a delivery?</h4>
+                <h4 class="searchable" >What should I do if I receive an error message when creating a delivery?</h4>
                 <p>If you receive an error message, it could be due to a network issue or a problem with the backend service. Ensure your internet connection is stable and try again. If the issue persists, contact support.</p>
                 
-                <h4>Can I view the details of a delivery after it has been created?</h4>
+                <h4 class="searchable">Can I view the details of a delivery after it has been created?</h4>
                 <p>Yes, the details of each delivery can be viewed on the Deliveries page, where all deliveries are listed with their respective details.</p>
                 
-                <h4>Is there a limit to the number of deliveries I can create?</h4>
+                <h4 class="searchable">Is there a limit to the number of deliveries I can create?</h4>
                 <p>There is no specified limit to the number of deliveries you can create. Ensure that each delivery is accurately created based on the completed orders.</p>
             </div>
         </section>
+        </div>
         
+        <div class="help-section">
         <section class="dropdown" (click)="toggleNewDropdown('technicalIssues')">
             <h3>Technical Issues <mat-icon>{{ newDropdownStates['technicalIssues'] ? 'expand_less' : 'expand_more' }}</mat-icon></h3>
-            <div class="faq" *ngIf="newDropdownStates['technicalIssues']">
-                <h4>What should I do if the deliveries are not being created?</h4>
+            <div class="faq" *ngIf="newDropdownStates['technicalIssues']" class="searchable">
+                <h4 class="searchable">What should I do if the deliveries are not being created?</h4>
                 <p>If deliveries are not being created, check for any error messages and ensure all required fields are filled. Refresh the page and try again. If the issue persists, contact support.</p>
                 
-                <h4>How do I report a problem with the New Deliveries page?</h4>
+                <h4 class="searchable">How do I report a problem with the New Deliveries page?</h4>
                 <p>If you encounter any issues with the New Deliveries page, please contact support with detailed information about the problem.</p>
     
-                <h4>Why am I seeing an error message?</h4>
+                <h4 class="searchable">Why am I seeing an error message?</h4>
                 <p>Error messages may appear due to network issues or backend service problems. Note the error message details and contact support if the issue persists.</p>
     
-                <h4>How do I clear my browser cache?</h4>
+                <h4 class="searchable">How do I clear my browser cache?</h4>
                 <p>Clearing your browser cache can help resolve loading issues. Instructions for clearing the cache vary by browser; please refer to your browser's help documentation.</p>
             </div>
         </section>
+        </div>
 
+        <div class="help-section">
         <section class="dropdown" (click)="toggleNewDropdown('steps')">
             <h3>Step-by-Step Guide <mat-icon>{{ newDropdownStates['steps'] ? 'expand_less' : 'expand_more' }}</mat-icon></h3>
             <mat-accordion *ngIf="newDropdownStates['steps']">
                 <mat-expansion-panel>
                     <mat-expansion-panel-header>
-                        <mat-panel-title>
+                        <mat-panel-title class="searchable">
                             Step 1: Access the New Deliveries Page
                         </mat-panel-title>
                     </mat-expansion-panel-header>
@@ -178,7 +194,7 @@
                 </mat-expansion-panel>
                 <mat-expansion-panel>
                     <mat-expansion-panel-header>
-                        <mat-panel-title>
+                        <mat-panel-title class="searchable">
                             Step 2: Fetch Finished Orders
                         </mat-panel-title>
                     </mat-expansion-panel-header>
@@ -186,7 +202,7 @@
                 </mat-expansion-panel>
                 <mat-expansion-panel>
                     <mat-expansion-panel-header>
-                        <mat-panel-title>
+                        <mat-panel-title class="searchable">
                             Step 3: View Order Details
                         </mat-panel-title>
                     </mat-expansion-panel-header>
@@ -194,7 +210,7 @@
                 </mat-expansion-panel>
                 <mat-expansion-panel>
                     <mat-expansion-panel-header>
-                        <mat-panel-title>
+                        <mat-panel-title class="searchable">
                             Step 4: Create a New Delivery
                         </mat-panel-title>
                     </mat-expansion-panel-header>
@@ -202,7 +218,7 @@
                 </mat-expansion-panel>
                 <mat-expansion-panel>
                     <mat-expansion-panel-header>
-                        <mat-panel-title>
+                        <mat-panel-title class="searchable">
                             Step 5: Confirm Delivery Creation
                         </mat-panel-title>
                     </mat-expansion-panel-header>
@@ -212,6 +228,11 @@
         </section>
         <button mat-raised-button color="primary" [routerLink]="['/new-delivery']">Go To Page</button>
     </div>
-   
+    </div>
+    </div>
+      
+      <div *ngIf="noResultsFound" class="no-results-message">
+        No results found for your search query.
+      </div>
 </body>
 </html>
