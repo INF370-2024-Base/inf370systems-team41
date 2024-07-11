@@ -1,1 +1,44 @@
-<p>help-stock works!</p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Help - Stock Management</title>
+    <!-- Include Angular Material CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.1.12/angular-material.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
+</head>
+<body>
+    <div class="help-container">
+        <h1>Stock Management Help</h1>
+    </div>
+
+    <div class="stock-section">
+        <h2><mat-icon>search</mat-icon> Search Stock</h2>
+        <p>This section provides guidance on how to search for stock in the system. You can search by stock name, category, or ID.</p>
+        <button mat-raised-button color="primary" [routerLink]="['/help-stock-search']">Help Search Stock</button>
+    </div>
+
+    <div class="stock-section">
+        <h2><mat-icon>add_box</mat-icon> Add Stock</h2>
+        <p>Learn how to add new stock to the system. You will need to provide the stock name, category, quantity, and supplier details.</p>
+        <button mat-raised-button color="primary" [routerLink]="['/help-stock-add']">Help Add Stock</button>
+    </div>
+
+    <div class="stock-section">
+        <h2><mat-icon>assignment</mat-icon> Capture Stock</h2>
+        <p>This section guides you on how to capture details of new stock arrivals. You can enter the stock ID, quantity, and arrival date.</p>
+        <button mat-raised-button color="primary" [routerLink]="['/help-stock-capture']">Help Capture Stock</button>
+    </div>
+
+    <div class="stock-section">
+        <h2><mat-icon>delete</mat-icon> Write Off Stock</h2>
+        <p>Find out how to write off stock from the system. This action will mark the stock as unusable and remove it from the available inventory.</p>
+        <button mat-raised-button color="primary" [routerLink]="['/help-stock-writeoff']">Help Write Off Stock</button>
+    </div>
+
+    <!-- Include Angular Material JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.1.12/angular-material.min.js"></script>
+</body>
+</html>

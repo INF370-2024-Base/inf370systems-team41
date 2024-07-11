@@ -1,1 +1,51 @@
-<p>help-employees works!</p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Help - Employee and Dentist Management</title>
+    <!-- Include Angular Material CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.1.12/angular-material.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
+ 
+</head>
+<body>
+    <div class="help-container">
+        <h1>How can we HELP you?</h1>
+    </div>
+    
+    <div class="section-container">
+        <h2><mat-icon>person_add</mat-icon> Add Employee</h2>
+        <p>Learn how to add a new employee to the system. You will need to provide the employee's surname, name, contact details, and address.</p>
+        <button mat-raised-button color="primary" [routerLink]="['/help-employee-add']">Help Add Employee</button>
+    </div>
+
+    <div class="section-container">
+        <h2><mat-icon>edit</mat-icon> Edit Employee</h2>
+        <p>This section guides you on how to edit the details of an existing employee. You can update the surname, name, contact details, and address.</p>
+        <button mat-raised-button color="primary" [routerLink]="['/help-employee-edit']">Help Edit Employee</button>
+    </div>
+
+    <div class="section-container">
+        <h2><mat-icon>delete</mat-icon> Delete Employee</h2>
+        <p>Find out how to delete an employee from the system. This action will remove all records of the employee from the database.</p>
+        <button mat-raised-button color="primary" [routerLink]="['/help-employee-delete']">Help Delete Employee</button>
+    </div>
+
+    <div class="section-container">
+        <h2><mat-icon>access_time</mat-icon> Add Employee Daily Hours</h2>
+        <p>Learn how to add daily working hours for an employee. You need to provide the date, start time, and end time for each entry.</p>
+        <button mat-raised-button color="primary" [routerLink]="['/help-employee-hour']">Help Add Employee Hours</button>
+    </div>
+
+    <div class="section-container">
+        <h2><mat-icon>delete_forever</mat-icon> Delete Employee Daily Hours</h2>
+        <p>This section guides you on how to delete an entry of daily working hours for an employee.</p>
+        <button mat-raised-button color="primary" [routerLink]="['/help-employee-hour-delete']">Help Delete Employee Hours</button>
+    </div>
+
+    <!-- Include Angular Material JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.1.12/angular-material.min.js"></script>
+</body>
+</html>

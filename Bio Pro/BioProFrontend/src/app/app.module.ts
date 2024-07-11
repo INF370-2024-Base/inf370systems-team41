@@ -63,6 +63,21 @@ import { HelpEmployeesComponent } from './help-employees/help-employees.componen
 import { HelpDentistComponent } from './help-dentist/help-dentist.component';
 import { AllUsersComponent } from './all-users/all-users.component';
 import { EditAnyUserComponent } from './edit-any-user/edit-any-user.component';
+import { DentistEditDialogComponent } from './dentist-edit-dialog/dentist-edit-dialog.component';
+import { HelpDentistSearchComponent } from './help-dentist-search/help-dentist-search.component';
+import { HelpDentistAddComponent } from './help-dentist-add/help-dentist-add.component';
+import { HelpDentistEditComponent } from './help-dentist-edit/help-dentist-edit.component';
+import { HelpDentistDeleteComponent } from './help-dentist-delete/help-dentist-delete.component';
+import { HelpEmployeeAddComponent } from './help-employee-add/help-employee-add.component';
+import { HelpEmployeeEditComponent } from './help-employee-edit/help-employee-edit.component';
+import { HelpEmployeeDeleteComponent } from './help-employee-delete/help-employee-delete.component';
+import { HelpEmployeeSearchComponent } from './help-employee-search/help-employee-search.component';
+import { HelpEmployeeHourComponent } from './help-employee-hour/help-employee-hour.component';
+import { HelpEmploueeHourDeleteComponent } from './help-emplouee-hour-delete/help-emplouee-hour-delete.component';
+import { HelpStockAddComponent } from './help-stock-add/help-stock-add.component';
+import { HelpStockCaptureComponent } from './help-stock-capture/help-stock-capture.component';
+import { HelpStockWriteoffComponent } from './help-stock-writeoff/help-stock-writeoff.component';
+import { HelpStockSearchComponent } from './help-stock-search/help-stock-search.component';
 
 @NgModule({
   declarations: [
@@ -81,6 +96,7 @@ import { EditAnyUserComponent } from './edit-any-user/edit-any-user.component';
     UserProfileComponent, 
     EditEmployeeDialogComponent, DailyHoursProfileComponent, AddStockComponent, StockComponent, WriteOffModalComponent, CaptureNewStockModalComponent, EditUserComponent,
     ConfirmationDialogComponent, OrdersAwaitingDentalDesignComponent, DentalDesignApprovalComponent, EmployeeOrdersAndStepsComponent,CalendarComponent, SearchBarComponent, EventModalComponent, ProcededuralTimelineViewComponent, AddEventModalComponent, StockUsedComponent, HelpComponent,HelpStockComponent, HelpEmployeesComponent, HelpDentistComponent, AllUsersComponent, EditAnyUserComponent
+    , OrdersAwaitingDentalDesignComponent, DentalDesignApprovalComponent, EmployeeOrdersAndStepsComponent,CalendarComponent, SearchBarComponent, EventModalComponent, ProcededuralTimelineViewComponent, AddEventModalComponent, StockUsedComponent, HelpComponent,HelpStockComponent, HelpEmployeesComponent, HelpDentistComponent, DentistEditDialogComponent, HelpDentistSearchComponent, HelpDentistAddComponent, HelpDentistEditComponent, HelpDentistDeleteComponent, HelpEmployeeAddComponent, HelpEmployeeEditComponent, HelpEmployeeDeleteComponent, HelpEmployeeSearchComponent, HelpEmployeeHourComponent, HelpEmploueeHourDeleteComponent, HelpStockAddComponent, HelpStockCaptureComponent, HelpStockWriteoffComponent, HelpStockSearchComponent
   ],
   imports: [
     BrowserModule,
