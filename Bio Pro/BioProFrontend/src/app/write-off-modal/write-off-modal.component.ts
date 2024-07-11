@@ -30,6 +30,7 @@ export class WriteOffModalComponent {
   }
 
   onSubmit(): void {
+    console.log(this.writeOffForm.value)
     if (this.writeOffForm.valid) {
       const writeOffData: StockWriteOffViewModel = {
         stockId: this.data.stockId,

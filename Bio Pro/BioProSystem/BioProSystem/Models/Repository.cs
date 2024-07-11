@@ -133,20 +133,19 @@ namespace BioProSystem.Models
         }
         public async Task<List<Employee>> GetEmployeesWithJobTitleId(int jobTitileId,string jobTitleName="")
         {
-            if(jobTitleName == "")
+            List<Employee> query=new List<Employee>();
+            if (jobTitleName == "")
             {
-                List<Employee> query = await _appDbContext.Employees.Where(c => c.JobTitleId == jobTitileId).ToListAsync();
+               query = await _appDbContext.Employees.Where(c => c.JobTitleId == jobTitileId).ToListAsync();
                 return query;
             }
             else
             {
                 JobTitle jobtitle = await _appDbContext.JobTitles.Where(j => j.TitleName == jobTitleName).FirstOrDefaultAsync();
-                List<Employee> query = await _appDbContext.Employees.Where(c => c.JobTitleId== jobtitle.JobTitleId).ToListAsync();
+                 query = await _appDbContext.Employees.Where(c => c.JobTitleId== jobtitle.JobTitleId).ToListAsync();
                 return query;
             }
-           
-            
-            List<Employee> query = await _appDbContext.Employees.Where(c => c.JobTitleId == jobTitileId).ToListAsync();
+
             return query;
         }
         public async Task<TeethShade> GetTeethShadeAsync(int teethshadeIds)

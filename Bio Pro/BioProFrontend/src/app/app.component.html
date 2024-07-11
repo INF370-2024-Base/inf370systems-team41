@@ -80,7 +80,7 @@
           <mat-icon>event</mat-icon> 
           Timeline of Orders
         </a>
-        <a mat-list-item class="nav-link" (click)="toggleDeliveriesMenu()" [routerLink]="['/deliveries']">
+        <a mat-list-item class="nav-link" (click)="toggleDeliveriesMenu()" [routerLink]="['/pageStock']">
           <mat-icon>local_shipping</mat-icon> 
           Stock
         </a>
@@ -104,7 +104,18 @@
             Help Page
           </a>
         </ng-container>
-        
+        <ng-container>
+          <a mat-list-item class="sub-nav-link" [routerLink]="['/all-user']" (click)="isSidenavOpen = !isSidenavOpen">
+            <mat-icon>help</mat-icon> <!-- Icon for new order -->
+            All-users
+          </a>
+        </ng-container>
+        <ng-container>
+          <a mat-list-item class="sub-nav-link" [routerLink]="['/calendar']" (click)="isSidenavOpen = !isSidenavOpen">
+            <mat-icon>calendar</mat-icon> <!-- Icon for new order -->
+            Calendar
+          </a>
+        </ng-container>
     </mat-nav-list>
     </mat-sidenav>
     <mat-sidenav-content class="content-container">

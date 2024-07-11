@@ -31,7 +31,7 @@
           <td>{{ stock.stockName }}</td>
           <td>{{ stock.quantityAvailable }}</td>
           <td>{{ stock.stockCategory.description }}</td>
-          <td>{{ stock.supplierId }}</td>
+          <td>{{ stock.supplier.supplierName }}</td>
           <td>
             <button mat-button (click)="openWriteOffModal(stock)">Write Off</button>
             <button mat-button (click)="openCaptureStockModal(stock)">Capture New Stock</button>
