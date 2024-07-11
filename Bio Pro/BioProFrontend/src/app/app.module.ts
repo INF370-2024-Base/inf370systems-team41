@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {  ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { OpenOrdersComponent } from './open-orders/open-orders.component';
@@ -31,7 +31,7 @@ import { DeliveriesComponent } from './deliveries/deliveries.component';
 import { AddDeliveryComponent } from './add-delivery/add-delivery.component';
 import { HomeComponent } from './home/home.component';
 import { TestingBackendComponent } from './testing-backend/testing-backend.component';
-import { CommonModule, DatePipe } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-dialog.component';
 import { OrdersAwaitingDentalDesignComponent } from './orders-awaiting-dental-design/orders-awaiting-dental-design.component';
 import { DentalDesignApprovalComponent } from './dental-design-approval/dental-design-approval.component';
@@ -57,7 +57,14 @@ import { StockComponent } from './stock/stock.component';
 import { WriteOffModalComponent } from './write-off-modal/write-off-modal.component';
 import { CaptureNewStockModalComponent } from './capture-new-stock-modal/capture-new-stock-modal.component';
 import { EditUserComponent } from './edit-user/edit-user.component';
-
+import { ReportsComponent } from './reports/reports.component';
+import { EmployeeHoursReport } from './shared/EmployeeHoursReport';
+import { DatePipe } from '@angular/common';
+import { SelectionModel } from '@angular/cdk/collections';
+import { FormsModule } from '@angular/forms';
+import { HelpOrdersComponent } from './help-orders/help-orders.component';
+import { HelpTimelineOfOrdersComponent } from './help-timeline-of-orders/help-timeline-of-orders.component';
+import { HelpDeliveriesComponent } from './help-deliveries/help-deliveries.component';
 import { HelpStockComponent } from './help-stock/help-stock.component';
 import { HelpEmployeesComponent } from './help-employees/help-employees.component';
 import { HelpDentistComponent } from './help-dentist/help-dentist.component';
@@ -96,7 +103,9 @@ import { HelpStockSearchComponent } from './help-stock-search/help-stock-search.
     UserProfileComponent, 
     EditEmployeeDialogComponent, DailyHoursProfileComponent, AddStockComponent, StockComponent, WriteOffModalComponent, CaptureNewStockModalComponent, EditUserComponent,
     ConfirmationDialogComponent, OrdersAwaitingDentalDesignComponent, DentalDesignApprovalComponent, EmployeeOrdersAndStepsComponent,CalendarComponent, SearchBarComponent, EventModalComponent, ProcededuralTimelineViewComponent, AddEventModalComponent, StockUsedComponent, HelpComponent,HelpStockComponent, HelpEmployeesComponent, HelpDentistComponent, AllUsersComponent, EditAnyUserComponent
-    , OrdersAwaitingDentalDesignComponent, DentalDesignApprovalComponent, EmployeeOrdersAndStepsComponent,CalendarComponent, SearchBarComponent, EventModalComponent, ProcededuralTimelineViewComponent, AddEventModalComponent, StockUsedComponent, HelpComponent,HelpStockComponent, HelpEmployeesComponent, HelpDentistComponent, DentistEditDialogComponent, HelpDentistSearchComponent, HelpDentistAddComponent, HelpDentistEditComponent, HelpDentistDeleteComponent, HelpEmployeeAddComponent, HelpEmployeeEditComponent, HelpEmployeeDeleteComponent, HelpEmployeeSearchComponent, HelpEmployeeHourComponent, HelpEmploueeHourDeleteComponent, HelpStockAddComponent, HelpStockCaptureComponent, HelpStockWriteoffComponent, HelpStockSearchComponent
+    , OrdersAwaitingDentalDesignComponent, DentalDesignApprovalComponent, EmployeeOrdersAndStepsComponent,CalendarComponent, SearchBarComponent, EventModalComponent, ProcededuralTimelineViewComponent, AddEventModalComponent, StockUsedComponent, HelpComponent,HelpStockComponent, HelpEmployeesComponent, HelpDentistComponent, DentistEditDialogComponent, HelpDentistSearchComponent, HelpDentistAddComponent, HelpDentistEditComponent, HelpDentistDeleteComponent, HelpEmployeeAddComponent, HelpEmployeeEditComponent, HelpEmployeeDeleteComponent, HelpEmployeeSearchComponent, HelpEmployeeHourComponent, HelpEmploueeHourDeleteComponent, HelpStockAddComponent, HelpStockCaptureComponent, HelpStockWriteoffComponent, HelpStockSearchComponent,
+    ReportsComponent,
+    CaptureEmployeeHoursComponent,LoginComponent,EditOrderModalComponent, AddUserComponent, AddProceduralTimeline, DeliveriesComponent, AddDeliveryComponent, HomeComponent, TestingBackendComponent, ConfirmationDialogComponent, OrdersAwaitingDentalDesignComponent, DentalDesignApprovalComponent, HelpComponent, HelpOrdersComponent, HelpTimelineOfOrdersComponent, HelpDeliveriesComponent
   ],
   imports: [
     BrowserModule,
@@ -104,6 +113,7 @@ import { HelpStockSearchComponent } from './help-stock-search/help-stock-search.
     ReactiveFormsModule,
     HttpClientModule,
     FormsModule,
+   
     BrowserAnimationsModule,
     MaterialModule,
     MatSnackBarModule,
@@ -117,6 +127,7 @@ import { HelpStockSearchComponent } from './help-stock-search/help-stock-search.
     CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory }),MatExpansionModule,
     CommonModule,
     MatDialogModule
+    
   ],
   providers: [DatePipe],
   bootstrap: [AppComponent],

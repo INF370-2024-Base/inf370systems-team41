@@ -44,6 +44,16 @@ import { HelpStockAddComponent } from './help-stock-add/help-stock-add.component
 import { HelpStockCaptureComponent } from './help-stock-capture/help-stock-capture.component';
 import { HelpStockWriteoffComponent } from './help-stock-writeoff/help-stock-writeoff.component';
 import { HelpStockSearchComponent } from './help-stock-search/help-stock-search.component';
+import { ReportsComponent } from './reports/reports.component';
+import { ReportsServices } from './services/reports';
+import { StockItemCountByCategory } from './shared/StockItemCountByCategory';
+import { StockTypeCountByCategory } from './shared/StockTypeCountByCategory';
+import { EmployeeHoursReport } from './shared/EmployeeHoursReport';
+import { FormsModule } from '@angular/forms';
+import { HelpOrdersComponent } from './help-orders/help-orders.component';
+import { HelpTimelineOfOrdersComponent } from './help-timeline-of-orders/help-timeline-of-orders.component';
+import { HelpDeliveriesComponent } from './help-deliveries/help-deliveries.component';
+
 
 const routes: Routes = [
   
@@ -79,7 +89,6 @@ const routes: Routes = [
   {path:'help-employee', component:HelpEmployeesComponent },
   {path:'help-dentist', component:HelpDentistComponent},
   {path:'all-user', component:AllUsersComponent},
-  
   {path:'help-dentist-search', component:HelpDentistSearchComponent},
   {path:'help-dentist-add', component:HelpDentistAddComponent},
   {path:'help-dentist-edit', component:HelpDentistEditComponent},
@@ -94,6 +103,11 @@ const routes: Routes = [
   {path:'help-stock-writeoff', component:HelpStockWriteoffComponent},
   {path:'help-employee-hour', component:HelpEmployeeHourComponent},
   {path:'help-employee-hour-delete', component: HelpEmploueeHourDeleteComponent},
+  {path : 'reports', component:ReportsComponent},
+  {path: 'help', component: HelpComponent},
+  {path:'help-orders', component:HelpOrdersComponent },
+  {path: 'help-orderTimeline', component:HelpTimelineOfOrdersComponent},
+  {path: 'help-deliveries', component:HelpDeliveriesComponent},
 ];
 
 @NgModule({

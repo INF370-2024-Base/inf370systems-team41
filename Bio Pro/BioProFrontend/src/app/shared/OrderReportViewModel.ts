@@ -1,18 +1,18 @@
-export class SystemOrderViewModel {
-    OrderId: string;
-    DentistId: number;
-    OrderDate: Date;
-    PatientName: string;
-    PatientSurname: string;
+export class  OrderReportViewModel {
+    orderId: string;
+    dentistId: number;
+    orderDate: Date;
+    patientName: string;
+    patientSurname: string;
     MedicalAidId: number;
     MedicalAidNumber: string;
     OrderDirectionId: number;
     MouthArea: string;
     EstimatedDurationInDays: number;
     EmergencyNumber: string;
-    DueDate: Date;
+    dueDate: Date;
     SpecialRequirements: string;
-    PriorityLevel: string;
+    priorityLevel: string;
     TeethShadesIds: number[];
     SeletedAreasIds: number[];
     OrderTypeId: number;
@@ -21,23 +21,23 @@ export class SystemOrderViewModel {
     OrderWorkflowTimelineId: number;
     mediaFileViewModels:MediaFileViewModel[]=[]
     constructor() {
-      this.OrderId = '';
-      this.DentistId = 0;
-      this.OrderDate = new Date();
-      this.PatientName = '';
-      this.PatientSurname = '';
+      this.orderId = '';
+      this.dentistId = 0;
+      this.orderDate = new Date();
+      this.patientName = '';
+      this.patientSurname = '';
       this.MedicalAidId = 0;
       this.MedicalAidNumber = '';
       this.OrderDirectionId = 0;
       this.MouthArea = '';
       this.EstimatedDurationInDays = 0;
       this.EmergencyNumber = '';
-      this.DueDate = new Date();
+      this.dueDate = new Date();
       this.SpecialRequirements = '';
-      this.PriorityLevel = '';
+      this.priorityLevel = '';
       this.TeethShadesIds = [];
       this.SeletedAreasIds = [];
-      this.DentistId = 0;
+      this.dentistId = 0;
       this.OrderTypeId = 0;
       this.OpenOrderId = 0;
       this.OrderStatusId = 0;

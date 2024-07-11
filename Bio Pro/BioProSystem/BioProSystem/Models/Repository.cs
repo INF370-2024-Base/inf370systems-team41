@@ -2,6 +2,7 @@
 using BioProSystem.ViewModels;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
@@ -145,6 +146,8 @@ namespace BioProSystem.Models
             }
            
             
+            List<Employee> query = await _appDbContext.Employees.Where(c => c.JobTitleId == jobTitileId).ToListAsync();
+            return query;
         }
         public async Task<TeethShade> GetTeethShadeAsync(int teethshadeIds)
         {
@@ -201,7 +204,7 @@ namespace BioProSystem.Models
         }
         public async Task<List<SystemOrder>> GetOrdersAwaitingDentalDesign()
         {
-            IQueryable<SystemOrder> query = _appDbContext.SystemOrders.Where(o => o.OrderStatusId == 2).Include(s=>s.MediaFiles).Include(s=>s.Dentist);
+            IQueryable<SystemOrder> query = _appDbContext.SystemOrders.Where(o => o.OrderStatusId == 2).Include(s => s.MediaFiles).Include(s => s.Dentist);
             return await query.ToListAsync();
         }
         public async Task<List<SystemOrder>> GetFinishedSystemWithoutDeliveriesOrders()
@@ -549,5 +552,120 @@ namespace BioProSystem.Models
                 .ToListAsync();
         }
 
+
+        //Reprt
+        public async Task<List<StockType>> GetStockTypesCountByCategory()
+        {
+            var stockTypes = await _appDbContext.StockType
+                                           .Include(st => st.StockCategories)
+                                           .ToListAsync();
+
+            foreach (var stockType in stockTypes)
+            {
+                stockType.StockCategoriesCount = stockType.StockCategories.Count;
+            }
+
+            return stockTypes;
+        }
+
+        public async Task<List<StockCategory>> GetStockItemsCountByCategory()
+        {
+            var stockCategories = await _appDbContext.StockCategories
+                                                .Include(sc => sc.Stocks)
+                                                .ToListAsync();
+
+            foreach (var stockCategory in stockCategories)
+            {
+                stockCategory.StockItemsCount = stockCategory.Stocks.Count;
+            }
+
+            return stockCategories;
+        }
+
+        public async Task<List<EmployeeHoursReport>> GetEmployeesWithMonthlyHours()
+        {
+            var employeeMonthlyHours = await _appDbContext.EmployeeDailyHours
+                .GroupBy(e => new { EmployeeId = e.Employees.FirstOrDefault().EmployeeId, Month = e.WorkDate.Month, Year = e.WorkDate.Year })
+                .Select(g => new EmployeeHoursReport
+                {
+                    Employee = g.Select(e => e.Employees.FirstOrDefault()).FirstOrDefault(),
+                    Year = g.Key.Year,
+                    Month = g.Key.Month,
+                    TotalHours = g.Sum(x => x.Hours)
+                })
+                .ToListAsync();
+
+            return employeeMonthlyHours;
+        }
+
+        public async Task<List<EmployeeHoursReport>> GetEmployeesWithWeeklyHours()
+        {
+            // Fetch data from the database first
+            var employeeDailyHours = await _appDbContext.EmployeeDailyHours
+                .Include(e => e.Employees)
+                .ToListAsync();
+
+            // Process data in memory
+            var employeeWeeklyHours = employeeDailyHours
+                .GroupBy(e => new
+                {
+                    EmployeeId = e.Employees.FirstOrDefault()?.EmployeeId ?? 0,
+                    Year = e.WorkDate.Year,
+                    Week = GetWeekNumber(e.WorkDate)
+                })
+                .Select(g => new EmployeeHoursReport
+                {
+                    Employee = g.Select(e => e.Employees.FirstOrDefault()).FirstOrDefault(),
+                    Year = g.Key.Year,
+                    Month = g.Key.Week / 4,  // Roughly approximate month, you may adjust as needed
+                    Week = g.Key.Week,
+                    TotalHours = g.Sum(x => x.Hours)
+                })
+                .ToList();
+
+            return employeeWeeklyHours;
+        }
+
+        public static int GetWeekNumber(DateTime date)
+        {
+            return CultureInfo.CurrentCulture.Calendar.GetWeekOfYear(date, CalendarWeekRule.FirstDay, DayOfWeek.Monday);
+        }
+
+
+
+        public async Task<IEnumerable<OrderTypeWithCountDto>> GetOrderTypesWithOrderCountAsync()
+        {
+            var orderTypesWithCounts = await _appDbContext.OrderTypes
+                .Include(ot => ot.systemOrders)
+                .Select(ot => new OrderTypeWithCountDto
+                {
+                    OrderTypeId = ot.OrderTypeId,
+                    Description = ot.Description,
+                    OrderCount = ot.systemOrders.Count
+                })
+                .ToListAsync();
+
+            return orderTypesWithCounts;
+        }
+
+        public async Task<IEnumerable<StockWriteOffViewModel>> GetAllStockWriteOffsAsync()
+        {
+            return await (from swo in _appDbContext.StockWriteOffs
+                          join s in _appDbContext.Stocks on swo.StockId equals s.StockId
+                          select new StockWriteOffViewModel
+                          {
+                              StockWriteOffId = swo.StockWriteOffId,
+                              StockId = swo.StockId,
+                              StockName = s.StockName,
+                              QuantityWrittenOff = swo.QuantityWrittenOff,
+                              WrittenOffDate = swo.WriteOffDate,
+                              Reason = swo.Reason
+                          }).ToListAsync();
+        }
     }
+
 }
+
+
+
+

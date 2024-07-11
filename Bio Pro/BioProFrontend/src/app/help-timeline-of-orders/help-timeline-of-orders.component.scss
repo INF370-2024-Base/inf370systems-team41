@@ -1,0 +1,136 @@
+body {
+    background-color: #f5f5f5; /* Light gray background */
+    font-family: 'Roboto', sans-serif; /* Playful font */
+    color: #333; /* Dark text color */
+    padding: 20px; /* Add some padding */
+    overflow: auto; /* Allow scrolling */
+  }
+  
+  @keyframes gradientAnimation {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+  
+  body {
+    background: linear-gradient(120deg, #aed9e0, #c2e2f3, #eaf1fa, #c2e2f3, #aed9e0);
+    background-size: 400% 400%;
+    animation: gradientAnimation 20s ease infinite;
+  }
+  
+  .help-container {
+    text-align: center;
+    margin-bottom: 40px;
+  }
+  
+  .order-timeline-container{
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+  }
+  
+  .order-timeline-container h2 {
+    margin-top: 0;
+  }
+  
+  .order-timeline-container p {
+    margin: 10px 0;
+  }
+  
+  .order-timeline-container button {
+    margin-top: 10px;
+  }
+  
+  /* Responsive Design */
+  @media only screen and (max-width: 768px) {
+    .order-timeline-container {
+        width: 100%;
+        margin-left: 0;
+        margin-bottom: 10px;
+    }
+  }
+  
+
+  .help-container {
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  
+    h2 {
+      display: flex;
+      align-items: center;
+      font-size: 24px;
+      margin-bottom: 20px;
+      mat-icon {
+        margin-right: 10px;
+      }
+    }
+  
+    p {
+      font-size: 16px;
+      margin-bottom: 20px;
+      color: #555;
+    }
+  
+    button {
+      margin-bottom: 20px;
+    }
+  
+    .help-section {
+      margin-bottom: 30px;
+  
+      h3 {
+        font-size: 20px;
+        margin-bottom: 10px;
+        cursor: pointer;
+        color: #007bff;
+  
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+  
+      ul {
+        list-style-type: none;
+        padding-left: 0;
+  
+        li {
+          margin-bottom: 15px;
+  
+          h4 {
+            font-size: 18px;
+            margin-bottom: 5px;
+            color: #333;
+          }
+  
+          p {
+            font-size: 16px;
+            color: #666;
+          }
+        }
+      }
+    }
+  
+    mat-accordion {
+      mat-expansion-panel {
+        mat-expansion-panel-header {
+          background-color: #e9ecef;
+          border-radius: 4px;
+          margin-bottom: 10px;
+  
+          mat-panel-title {
+            font-size: 18px;
+          }
+        }
+  
+        p {
+          font-size: 16px;
+          padding: 10px;
+          margin: 0;
+        }
+      }
+    }
+  }

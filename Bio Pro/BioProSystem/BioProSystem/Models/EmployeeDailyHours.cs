@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BioProSystem.Models
 {
@@ -13,6 +14,9 @@ namespace BioProSystem.Models
         [Required]
 
         public decimal Hours { get; set; }
+
+        [NotMapped]
+        public decimal WeeklyHours { get; set; }
 
         public virtual ICollection<Employee>? Employees { get; set; } = new List<Employee>();
     }

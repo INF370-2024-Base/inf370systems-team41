@@ -35,19 +35,23 @@ export class StockWriteOffViewModel {
     public quantityWrittenOff: number;
     public writtenOffDate: Date;
     public reason: string;
+    public stockName: string;
 
     constructor(
         stockId: number,
         quantityWrittenOff: number,
         writtenOffDate: Date = new Date(),
-        reason: string
+        reason: string,
+        stockName: string,
     ) {
         this.stockId = stockId;
         this.quantityWrittenOff = quantityWrittenOff;
         this.writtenOffDate = writtenOffDate;
         this.reason = reason;
+        this.stockName = stockName; 
     }
 }
+
 export class CaptureNewStockViewModel {
     public stockId: number;
     public amountAdded: number;

@@ -1,6 +1,8 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BioProSystem.Models;
 
@@ -34,4 +36,7 @@ public partial class Employee
     public virtual ICollection<EmployeeDailyHours> EmployeeDailyHours { get; set; } = new List<EmployeeDailyHours>();
     public virtual ICollection<SystemOrderSteps> SystemOrderSteps { get; set; } = new List<SystemOrderSteps>();
     public virtual SystemUser SystemUser { get; set; } = null!;
+
+    //[NotMapped]
+   // public List<(int Month, int Year, decimal TotalHours)> MonthlyHours { get; set; } = new List<(int Month, int Year, decimal TotalHours)>();
 }

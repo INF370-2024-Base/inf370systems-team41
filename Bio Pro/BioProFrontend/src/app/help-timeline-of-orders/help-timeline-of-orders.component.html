@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Timeline Help</title>
+    <!-- Include favicon -->
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <!-- Include Angular Material CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.1.12/angular-material.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
+</head>
+<body>
+
+    <div class="order-timeline-container">
+        <h2><mat-icon>event</mat-icon> Order Timeline</h2>
+      
+        <section class="dropdown" (click)="toggleDropdown('commonQuestions')">
+            <h3>Common Questions <mat-icon>{{ dropdownStates['commonQuestions'] ? 'expand_less' : 'expand_more' }}</mat-icon></h3>
+            <ul *ngIf="dropdownStates['commonQuestions']">
+                <li>
+                    <h4>How do I add a new procedural timeline?</h4>
+                    <p>To add a new procedural timeline, fill in the description and select the orders you want to include. Click the "Create New Timeline" button to save.</p>
+                </li>
+                <li>
+                    <h4>What information is required for creating a procedural timeline?</h4>
+                    <p>You need to provide a description for the timeline and select one or more orders to associate with the timeline.</p>
+                </li>
+                <li>
+                    <h4>How do I view the details of an existing procedural timeline?</h4>
+                    <p>Details of each procedural timeline are displayed within individual cards on the Order Timeline page. Scroll through the page to view all timelines.</p>
+                </li>
+                <li>
+                    <h4>Why can't I see any orders to select?</h4>
+                    <p>Only orders that are in progress and have no existing procedural timeline will be displayed. Ensure there are such orders available.</p>
+                </li>
+                <li>
+                    <h4>Can I edit an existing procedural timeline?</h4>
+                    <p>Currently, editing an existing procedural timeline is not supported. You can create a new timeline if changes are needed.</p>
+                </li>
+                <li>
+                    <h4>Why is the procedural timeline description important?</h4>
+                    <p>The description provides context for the procedural steps and helps in identifying the purpose and details of the timeline.</p>
+                </li>
+                <li>
+                    <h4>How often is the procedural timeline information updated?</h4>
+                    <p>The information is updated in real-time. Any changes made are immediately reflected on the Order Timeline page.</p>
+                </li>
+                <li>
+                    <h4>What should I do if the timeline details are incorrect?</h4>
+                    <p>If you notice any incorrect details, please contact the support team to have the information reviewed and corrected.</p>
+                </li>
+                <li>
+                    <h4>Is it possible to filter timelines by status?</h4>
+                    <p>Currently, the Order Timeline page does not have a filtering feature. You can manually check each timeline's status.</p>
+                </li>
+                <li>
+                    <h4>Can I export the timeline data?</h4>
+                    <p>At the moment, exporting timeline data is not supported. If you need to export data, please contact the support team for assistance.</p>
+                </li>
+                <li>
+                    <h4>Why are some timeline details not visible?</h4>
+                    <p>Some timeline details might not be visible due to missing or incomplete data. Ensure that all required fields are filled out when creating a timeline.</p>
+                </li>
+            </ul>
+        </section>
+    
+        <section class="dropdown" (click)="toggleDropdown('technicalIssues')">
+            <h3>Technical Issues <mat-icon>{{ dropdownStates['technicalIssues'] ? 'expand_less' : 'expand_more' }}</mat-icon></h3>
+            <ul *ngIf="dropdownStates['technicalIssues']">
+                <li>
+                    <h4>What should I do if the timelines are not loading?</h4>
+                    <p>If the timelines are not loading, try refreshing the page. If the issue persists, check your internet connection and ensure the backend service is running.</p>
+                </li>
+                <li>
+                    <h4>How do I report a problem with the Order Timeline page?</h4>
+                    <p>If you encounter any issues with the Order Timeline page, please contact the support team with detailed information about the problem.</p>
+                </li>
+                <li>
+                    <h4>Why am I seeing an error message?</h4>
+                    <p>Error messages may appear due to network issues or backend service problems. Note the error message details and contact support if the issue persists.</p>
+                </li>
+                <li>
+                    <h4>How do I clear my browser cache?</h4>
+                    <p>Clearing your browser cache can help resolve loading issues. Instructions for clearing the cache vary by browser; please refer to your browser's help documentation.</p>
+                </li>
+            </ul>
+        </section>
+
+        <section class="dropdown">
+          <h3 (click)="toggleDropdown('steps')">Step-by-Step Guide <mat-icon>{{ dropdownStates['steps'] ? 'expand_less' : 'expand_more' }}</mat-icon></h3>
+          <mat-accordion *ngIf="dropdownStates['steps']">
+              <mat-expansion-panel>
+                  <mat-expansion-panel-header>
+                      <mat-panel-title>
+                          Step 1: Access the 'Add Procedural Timeline' Page
+                      </mat-panel-title>
+                  </mat-expansion-panel-header>
+                  <p>Click on the 'Add Procedural Timeline' button on the main orders page or use the navigation menu to go to the 'Add Procedural Timeline' page. Ensure you are logged in with the appropriate permissions.</p>
+              </mat-expansion-panel>
+              <mat-expansion-panel>
+                  <mat-expansion-panel-header>
+                      <mat-panel-title>
+                          Step 2: Fill Out Timeline Details
+                      </mat-panel-title>
+                  </mat-expansion-panel-header>
+                  <p>Provide all necessary information, including timeline description and selecting orders to include. Double-check for accuracy before proceeding.</p>
+              </mat-expansion-panel>
+              <mat-expansion-panel>
+                  <mat-expansion-panel-header>
+                      <mat-panel-title>
+                          Step 3: Review and Submit
+                      </mat-panel-title>
+                  </mat-expansion-panel-header>
+                  <p>Review the details you have entered to ensure they are correct. Once satisfied, click the "Create New Timeline" button to save the timeline.</p>
+              </mat-expansion-panel>
+              <mat-expansion-panel>
+                  <mat-expansion-panel-header>
+                      <mat-panel-title>
+                          Step 4: Verify Timeline Creation
+                      </mat-panel-title>
+                  </mat-expansion-panel-header>
+                  <p>After submission, verify that the new timeline appears on the Order Timeline page. Check the details to ensure everything was saved correctly.</p>
+              </mat-expansion-panel>
+          </mat-accordion>
+      </section>
+
+        <button mat-raised-button color="primary" [routerLink]="['/addproceduraltimeline']">Go To Page</button>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.2/angular.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.1.12/angular-material.min.js"></script>
+</body>
+</html>
+

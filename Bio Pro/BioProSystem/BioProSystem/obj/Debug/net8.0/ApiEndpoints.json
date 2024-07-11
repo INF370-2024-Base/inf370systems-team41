@@ -475,6 +475,52 @@
   },
   {
     "ContainingType": "BioProSystem.Controllers.EmployeeController",
+    "Method": "GetEmployeeDailyHours",
+    "RelativePath": "api/Employee/GetEmployeeDailyHours",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[BioProSystem.Models.EmployeeDailyHours, BioProSystem, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "BioProSystem.Controllers.EmployeeController",
+    "Method": "GetEmployeeInfoByEmail",
+    "RelativePath": "api/Employee/GetEmployeeInfoByEmail/{employeeEmail}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "employeeEmail",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "BioProSystem.Models.Employee",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "BioProSystem.Controllers.EmployeeController",
     "Method": "GetJobtitles",
     "RelativePath": "api/Employee/GetCurrentOrders/{email}",
     "HttpMethod": "GET",
@@ -750,6 +796,92 @@
         "StatusCode": 200
       }
     ]
+  },
+  {
+    "ContainingType": "BioProSystem.Controllers.ReportsController",
+    "Method": "GetAllOrdersAsync",
+    "RelativePath": "api/Reports/GetAllOrders",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "BioProSystem.Controllers.ReportsController",
+    "Method": "GetAllStockWriteOffs",
+    "RelativePath": "api/Reports/GetAllStockWriteOffs",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "BioProSystem.Controllers.ReportsController",
+    "Method": "GetEmployeesWithMonthlyHours",
+    "RelativePath": "api/Reports/GetEmployeesWithMonthlyHours",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "BioProSystem.Controllers.ReportsController",
+    "Method": "GetEmployeesWithWeeklyHours",
+    "RelativePath": "api/Reports/GetEmployeesWithWeeklyHours",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "BioProSystem.Controllers.ReportsController",
+    "Method": "GetOrderTypesWithOrderCount",
+    "RelativePath": "api/Reports/ordertypes/with-order-count",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "BioProSystem.Controllers.ReportsController",
+    "Method": "StockItemsCountByCategory",
+    "RelativePath": "api/Reports/StockItemsCountByCategory",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "BioProSystem.Controllers.ReportsController",
+    "Method": "StockTypesCountByCategory",
+    "RelativePath": "api/Reports/StockTypesCountByCategory",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "BioProSystem.Controllers.OrderController",
+    "Method": "SendDentalDesign",
+    "RelativePath": "Api/SendDentalDesign",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dentalDesign",
+        "Type": "BioProSystem.ViewModels.AddDentalDesignViewModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
   },
   {
     "ContainingType": "BioProSystem.Controllers.OrderController",

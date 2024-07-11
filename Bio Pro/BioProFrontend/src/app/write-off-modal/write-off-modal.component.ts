@@ -35,7 +35,8 @@ export class WriteOffModalComponent {
         stockId: this.data.stockId,
         quantityWrittenOff: this.writeOffForm.value.quantityWrittenOff,
         writtenOffDate: this.writeOffForm.value.writtenOffDate,
-        reason: this.writeOffForm.value.reason
+        reason: this.writeOffForm.value.reason,
+        stockName:this.writeOffForm.value.name
       };
       console.log('stockId'+writeOffData.stockId)
       this.dialogRef.close(writeOffData);
