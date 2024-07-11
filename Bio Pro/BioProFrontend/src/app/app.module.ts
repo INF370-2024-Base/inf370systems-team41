@@ -77,6 +77,8 @@ import { HelpStockCaptureComponent } from './help-stock-capture/help-stock-captu
 import { HelpStockWriteoffComponent } from './help-stock-writeoff/help-stock-writeoff.component';
 import { HelpStockSearchComponent } from './help-stock-search/help-stock-search.component';
 
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -113,7 +115,8 @@ import { HelpStockSearchComponent } from './help-stock-search/help-stock-search.
     MatNativeDateModule,
     CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory }),MatExpansionModule,
     CommonModule,
-    MatDialogModule
+    MatDialogModule,
+    MatExpansionModule
   ],
   providers: [DatePipe],
   bootstrap: [AppComponent],
