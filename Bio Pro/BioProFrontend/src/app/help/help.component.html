@@ -33,20 +33,38 @@
   </div>
 
   <div class="orders-container">
-      <h2><mat-icon>receipt</mat-icon>Orders</h2>
-      <p>This section provides assistance on how to manage and navigate orders within the system.</p>
-      <button mat-raised-button color="primary" [routerLink]="['/help-orders']">Read More</button>
-  </div>
+    <h2><mat-icon>receipt</mat-icon>Orders</h2>
+  <p>This section provides assistance on how to manage and navigate orders within the system.</p>
+  <button mat-raised-button color="primary" [routerLink]="['/help-orders']">Help Orders</button>
+</div>
 
-  <div class="timeline-container">
-      <h2><mat-icon>event</mat-icon>Order Timeline</h2>
-      <p>This section offers guidance on understanding and tracking the timeline of orders from creation to completion.</p>
-      <button mat-raised-button color="primary" [routerLink]="['/help-orderTimeline']">Read More</button>
-  </div>
+<div class="timeline-container">
+    <h2> <mat-icon>event</mat-icon>Order Timeline</h2>
+  <p>This section offers guidance on understanding and tracking the timeline of orders from creation to completion.</p>
+  <button mat-raised-button color="primary" [routerLink]="['/help-orderTimeline']">Help Order Timeline</button>
+</div>
 
-  <div class="delivery-container">
-      <h2><mat-icon>local_shipping</mat-icon>Deliveries</h2>
-      <p>This section provides support on managing deliveries, ensuring timely and accurate delivery of orders.</p>
-      <button mat-raised-button color="primary" [routerLink]="['/help-deliveries']">Read More</button>
-  </div>
+<div class="delivery-container">
+    <h2><mat-icon>local_shipping</mat-icon>Deliveries</h2>
+  <p>This section provides support on managing deliveries, ensuring timely and accurate delivery of orders.</p>
+  <button mat-raised-button color="primary" [routerLink]="['/help-deliveries']">Help Deliveries</button>
+</div>
+
+<div class="employee-container">
+    <h2><mat-icon>local_shipping</mat-icon>Employees</h2>
+  <p>This section will give a guide to access employees.</p>
+  <button mat-raised-button color="primary" [routerLink]="['/help-employee']">Help Employees</button>
+    </div>
+
+<div class="dentist-container">
+    <h2><mat-icon>medical_services</mat-icon>Dentist</h2>
+  <p>This section provides support on managing the dentists in the system</p>
+  <button mat-raised-button color="primary" [routerLink]="['/help-dentist']">Help Dentist</button>
+    </div>
+
+<div class="stock-container">
+    <h2><mat-icon>local_shipping</mat-icon>Stock</h2>
+  <p>This section provides support with managing stock.</p>
+  <button mat-raised-button color="primary" [routerLink]="['/help-stock']">Help Stock</button>
+    </div>
 </body>

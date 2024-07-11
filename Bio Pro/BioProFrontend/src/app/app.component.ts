@@ -11,6 +11,8 @@ export class AppComponent {
   isEmployeeMenuOpen = false;
   isOrdersMenuOpen = false;
   isDeliveriesMenuOpen = false;
+  isStockMenuOpen = false;
+  
   title = 'BioProSystem';
   toggleOrdersMenu(): void {
     this.isOrdersMenuOpen = !this.isOrdersMenuOpen;
@@ -21,6 +23,10 @@ export class AppComponent {
   toggleDeliveriesMenu()
   {
     this.isDeliveriesMenuOpen = !this.isDeliveriesMenuOpen;
+  }
+  toggleStockMenu()
+  {
+    this.isStockMenuOpen = !this.isStockMenuOpen;
   }
   isLoggedIn = false;
   user:any;

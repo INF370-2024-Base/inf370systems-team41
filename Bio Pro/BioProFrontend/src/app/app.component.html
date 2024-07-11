@@ -27,28 +27,17 @@
           <span class="nav-text">Home</span> <!-- Text for home -->
         </a>
 
-        <a mat-list-item class="nav-link" routerLink="/adduser" (click)="isSidenavOpen = !isSidenavOpen">
-          <mat-icon>add_circle_outline</mat-icon> <!-- Icon for dentist profile -->
-          Add User
-        </a>
         <a mat-list-item class="nav-link" (click)="toggleEmployeeMenu()" [routerLink]="['/employeeProfile']">
           <mat-icon>perm_contact_calendar</mat-icon> <!-- Icon for profile -->
           All Employees
         </a>
-        
-          <ng-container>
-            <a mat-list-item class="sub-nav-link" [routerLink]="['/reports']" (click)="isSidenavOpen = !isSidenavOpen">
-              <mat-icon>assessment</mat-icon> <!-- Icon for new order -->
-              Reports
-            </a>
-          </ng-container>
-  
-          <ng-container>
-            <a mat-list-item class="sub-nav-link" [routerLink]="['/help']" (click)="isSidenavOpen = !isSidenavOpen">
-              <mat-icon>help</mat-icon> <!-- Icon for new order -->
-              Help Page
-            </a>
-          </ng-container>  
+        <ng-container *ngIf="isEmployeeMenuOpen">
+          <a mat-list-item class="sub-nav-link" [routerLink]="['/dailyHoursProfile']" (click)="isSidenavOpen = !isSidenavOpen">
+            <mat-icon>add_circle_outline</mat-icon> <!-- Icon for new order -->
+            Employee Hours
+          </a>
+        </ng-container>
+
        
         <a mat-list-item class="nav-link" (click)="toggleOrdersMenu()" [routerLink]="['/orders']">
           <mat-icon>receipt</mat-icon> <!-- Icon for orders -->
@@ -80,11 +69,11 @@
           <mat-icon>event</mat-icon> 
           Timeline of Orders
         </a>
-        <a mat-list-item class="nav-link" (click)="toggleDeliveriesMenu()" [routerLink]="['/pageStock']">
+        <a mat-list-item class="nav-link" (click)="toggleStockMenu()" [routerLink]="['/pageStock']">
           <mat-icon>local_shipping</mat-icon> 
           Stock
         </a>
-        <ng-container *ngIf="isDeliveriesMenuOpen">
+        <ng-container *ngIf="isStockMenuOpen">
           <a mat-list-item class="sub-nav-link" [routerLink]="['/addStock']" (click)="isSidenavOpen = !isSidenavOpen">
             <mat-icon>add_circle_outline</mat-icon> <!-- Icon for new order -->
             Add Stock
@@ -106,7 +95,7 @@
         </ng-container>
         <ng-container>
           <a mat-list-item class="sub-nav-link" [routerLink]="['/all-user']" (click)="isSidenavOpen = !isSidenavOpen">
-            <mat-icon>help</mat-icon> <!-- Icon for new order -->
+            <mat-icon>add_circle_outline</mat-icon> <!-- Icon for new order -->
             All-users
           </a>
         </ng-container>
