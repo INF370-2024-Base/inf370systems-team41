@@ -475,52 +475,6 @@
   },
   {
     "ContainingType": "BioProSystem.Controllers.EmployeeController",
-    "Method": "GetEmployeeDailyHours",
-    "RelativePath": "api/Employee/GetEmployeeDailyHours",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [],
-    "ReturnTypes": [
-      {
-        "Type": "System.Collections.Generic.List\u00601[[BioProSystem.Models.EmployeeDailyHours, BioProSystem, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 200
-      }
-    ]
-  },
-  {
-    "ContainingType": "BioProSystem.Controllers.EmployeeController",
-    "Method": "GetEmployeeInfoByEmail",
-    "RelativePath": "api/Employee/GetEmployeeInfoByEmail/{employeeEmail}",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "employeeEmail",
-        "Type": "System.String",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": [
-      {
-        "Type": "BioProSystem.Models.Employee",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 200
-      }
-    ]
-  },
-  {
-    "ContainingType": "BioProSystem.Controllers.EmployeeController",
     "Method": "GetJobtitles",
     "RelativePath": "api/Employee/GetCurrentOrders/{email}",
     "HttpMethod": "GET",
@@ -865,22 +819,6 @@
     "IsController": true,
     "Order": 0,
     "Parameters": [],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "BioProSystem.Controllers.OrderController",
-    "Method": "SendDentalDesign",
-    "RelativePath": "Api/SendDentalDesign",
-    "HttpMethod": "POST",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "dentalDesign",
-        "Type": "BioProSystem.ViewModels.AddDentalDesignViewModel",
-        "IsRequired": true
-      }
-    ],
     "ReturnTypes": []
   },
   {
@@ -1375,8 +1313,40 @@
   },
   {
     "ContainingType": "BioProSystem.Controllers.StockController",
-    "Method": "EditStockCatehpry",
-    "RelativePath": "stock/EditStockCatehpry",
+    "Method": "DeleteStockCategory",
+    "RelativePath": "stock/DeleteStockCategory/{stockCategoryId}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "stockCategoryId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "BioProSystem.Controllers.StockController",
+    "Method": "DeleteStockType",
+    "RelativePath": "stock/DeleteStockType/{stockTypeId}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "stockTypeId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "BioProSystem.Controllers.StockController",
+    "Method": "EditStockCategory",
+    "RelativePath": "stock/EditStockCategory",
     "HttpMethod": "PUT",
     "IsController": true,
     "Order": 0,
@@ -1443,6 +1413,22 @@
     "IsController": true,
     "Order": 0,
     "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "BioProSystem.Controllers.StockController",
+    "Method": "GetStockById",
+    "RelativePath": "stock/GetStockById/{stockId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "stockId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
     "ReturnTypes": []
   },
   {

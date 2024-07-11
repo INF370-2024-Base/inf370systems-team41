@@ -9,7 +9,7 @@ import { AddDentistComponent } from './add-dentist/add-dentist.component';
 import { DentistProfileComponent } from './dentist-profile/dentist-profile.component'; // Import DentistProfileComponent
 import { CaptureEmployeeHoursComponent } from './capture-employee-hours/capture-employee-hours.component';
 import { EmployeeProfileComponent } from './employee-profile/employee-profile.component';
-import { LoginComponent } from './login/login.component';
+import { LoginComponent } from './login/login.component'; 
 import { AddUserComponent } from './add-user/add-user.component';
 import { AddProceduralTimeline } from './add-order-proceduraltimeline/add-order-proceduraltimeline.component';
 import { DeliveriesComponent } from './deliveries/deliveries.component';

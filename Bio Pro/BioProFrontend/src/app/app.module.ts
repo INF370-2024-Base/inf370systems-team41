@@ -94,6 +94,7 @@ import { HelpStockSearchComponent } from './help-stock-search/help-stock-search.
     OpenOrdersComponent,
     AddOrderComponent,
     OrdersComponent,
+    LoginComponent,
     ApproveOrderComponent,
     AddEmployeeComponent,
     AddDentistComponent,

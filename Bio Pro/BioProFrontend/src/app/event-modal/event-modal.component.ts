@@ -28,7 +28,7 @@ selectedEvent:EditEvent=
   DateOfEvent:this.data.event.start,
   TimeOfEvent:this.data.event.start.getHours()+":"+this.data.event.start.getMinutes(),
   TitleOfEvent:this.data.event.title,
-  EventInformation:this.data.event.object.information
+  EventInformation:this.data.event.Object.information
 
 }
   ngOnInit(): void {
@@ -41,7 +41,7 @@ selectedEvent:EditEvent=
   DateOfEvent:this.data.event.start,
   TimeOfEvent:this.data.event.start.getHours()+":"+this.data.event.start.getMinutes(),
   TitleOfEvent:this.data.event.title,
-  EventInformation:this.data.event.object.information
+  EventInformation:this.data.event.Object.information
 }
 if(this.data.event.start.getHours()<10)
   {
@@ -62,7 +62,7 @@ console.log(this.selectedEvent)
               DateOfEvent:this.data.event.start,
               TimeOfEvent:this.data.event.start.getHours()+":"+this.data.event.start.getMinutes(),
               TitleOfEvent:this.data.event.title,
-              EventInformation:this.data.event.object.information
+              EventInformation:this.data.event.Object.information
             }
             this.showSnackBar("Please fill in all input fields")
 
@@ -73,7 +73,7 @@ console.log(this.selectedEvent)
           this.selectedEvent.DateOfEvent = this.combineDateAndTime(this.selectedEvent.DateOfEvent, this.selectedEvent.TimeOfEvent);
           const adjustedDateOfEvent = new Date(this.selectedEvent.DateOfEvent.setHours(this.selectedEvent.DateOfEvent.getHours() + 2))
           const eventToEdit:EditCalanderEventViewModel={
-            Id:this.data.event.object.calanderScheduleEventId,
+            Id:this.data.event.Object.calanderScheduleEventId,
             Description:this.selectedEvent.TitleOfEvent,
             CalanderScheduleEventDateTime:new Date(adjustedDateOfEvent),
             EventInformation:this.selectedEvent.EventInformation
@@ -123,7 +123,7 @@ console.log(this.selectedEvent)
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         // If the user confirms, delete the event
-        this.calendarService.deleteCalendarEvent(this.data.event.object.calanderScheduleEventId).subscribe(() => {
+        this.calendarService.deleteCalendarEvent(this.data.event.Object.calanderScheduleEventId).subscribe(() => {
           console.log('Event deleted:', this.selectedEvent);
           this.dialogRef.close(true);
         }, error => {
