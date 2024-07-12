@@ -4,91 +4,122 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add Stock</title>
+    <!-- Include favicon -->
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <!-- Include Angular Material CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.1.12/angular-material.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.1.12/angular-material.min.css">
 </head>
 <body>
     <div class="container">
         <h1 style="font-size: 48px; color: #4d4a4a; text-align: center; text-transform: uppercase; letter-spacing: 3px; margin-bottom: 24px; text-shadow: 2px 2px 4px rgba(124, 124, 124, 0.5);">Capture New Stock</h1>
         <form [formGroup]="captureStockForm" (ngSubmit)="captureStock()">
-            <mat-form-field appearance="outline">
-                <mat-label>Stock Category</mat-label>
-                <mat-select formControlName="stockCategoryId" required>
-                    <mat-option *ngFor="let category of StockCategories" [value]="category.stockCategoryId">
-                        {{ category.description }}
-                    </mat-option>
-                </mat-select>
-                <mat-error *ngIf="captureStockForm.get('stockCategoryId')?.invalid && captureStockForm.get('stockCategoryId')?.touched">
-                    Stock Category is required.
-                </mat-error>
-            </mat-form-field>
+            <!-- Stock Category -->
+            <div class="form-group">
+                <mat-form-field appearance="outline">
+                    <mat-label><i class="material-icons">category</i> Stock Category</mat-label>
+                    <mat-select formControlName="stockCategoryId" required>
+                        <mat-option *ngFor="let category of StockCategories" [value]="category.stockCategoryId">
+                            {{ category.description }}
+                        </mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="captureStockForm.get('stockCategoryId')?.invalid && captureStockForm.get('stockCategoryId')?.touched">
+                        Stock Category is required.
+                    </mat-error>
+                </mat-form-field>
+            </div>
 
-            <mat-form-field appearance="outline">
-                <mat-label>Supplier</mat-label>
-                <mat-select formControlName="supplierId" required>
-                    <mat-option *ngFor="let supplier of StockSuppliers" [value]="supplier.supplierId">
-                        {{ supplier.supplierName }}
-                    </mat-option>
-                </mat-select>
-                <mat-error *ngIf="captureStockForm.get('supplierId')?.invalid && captureStockForm.get('supplierId')?.touched">
-                    Supplier is required.
-                </mat-error>
-            </mat-form-field>
+            <!-- Supplier -->
+            <div class="form-group">
+                <mat-form-field appearance="outline">
+                    <mat-label><i class="material-icons">local_shipping</i> Supplier</mat-label>
+                    <mat-select formControlName="supplierId" required>
+                        <mat-option *ngFor="let supplier of StockSuppliers" [value]="supplier.supplierId">
+                            {{ supplier.supplierName }}
+                        </mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="captureStockForm.get('supplierId')?.invalid && captureStockForm.get('supplierId')?.touched">
+                        Supplier is required.
+                    </mat-error>
+                </mat-form-field>
+            </div>
 
-            <mat-form-field appearance="outline">
-                <mat-label>Stock Name:</mat-label>
-                <input matInput id="stockName" formControlName="stockName" type="text" required>
-                <mat-error *ngIf="captureStockForm.get('stockName')?.invalid && captureStockForm.get('stockName')?.touched">
-                    Stock Name is required.
-                </mat-error>
-            </mat-form-field>
+            <!-- Stock Name -->
+            <div class="form-group">
+                <mat-form-field appearance="outline">
+                    <mat-label><i class="material-icons">inventory_2</i> Stock Name</mat-label>
+                    <input matInput id="stockName" formControlName="stockName" type="text" required placeholder="Stock Name">
+                    <mat-error *ngIf="captureStockForm.get('stockName')?.invalid && captureStockForm.get('stockName')?.touched">
+                        Stock Name is required.
+                    </mat-error>
+                </mat-form-field>
+            </div>
 
-            <mat-form-field appearance="outline">
-                <mat-label>Quantity Available:</mat-label>
-                <input matInput id="quantityAvailable" formControlName="quantityAvailable" type="number" required>
-                <mat-error *ngIf="captureStockForm.get('quantityAvailable')?.invalid && captureStockForm.get('quantityAvailable')?.touched">
-                    Quantity Available is required.
-                </mat-error>
-            </mat-form-field>
+            <!-- Quantity Available -->
+            <div class="form-group">
+                <mat-form-field appearance="outline">
+                    <mat-label><i class="material-icons">stacked_line_chart</i> Quantity Available</mat-label>
+                    <input matInput id="quantityAvailable" formControlName="quantityAvailable" type="number" required placeholder="Quantity Available">
+                    <mat-error *ngIf="captureStockForm.get('quantityAvailable')?.invalid && captureStockForm.get('quantityAvailable')?.touched">
+                        Quantity Available is required.
+                    </mat-error>
+                </mat-form-field>
+            </div>
 
-            <mat-form-field appearance="outline">
-                <mat-label>Maximum Stock Level:</mat-label>
-                <input matInput id="maximumStockLevel" formControlName="maximumStockLevel" type="number" required>
-                <mat-error *ngIf="captureStockForm.get('maximumStockLevel')?.invalid && captureStockForm.get('maximumStockLevel')?.touched">
-                    Maximum Stock Level is required.
-                </mat-error>
-            </mat-form-field>
+            <!-- Maximum Stock Level -->
+            <div class="form-group">
+                <mat-form-field appearance="outline">
+                    <mat-label><i class="material-icons">trending_up</i> Maximum Stock Level</mat-label>
+                    <input matInput id="maximumStockLevel" formControlName="maximumStockLevel" type="number" required placeholder="Maximum Stock Level">
+                    <mat-error *ngIf="captureStockForm.get('maximumStockLevel')?.invalid && captureStockForm.get('maximumStockLevel')?.touched">
+                        Maximum Stock Level is required.
+                    </mat-error>
+                </mat-form-field>
+            </div>
 
-            <mat-form-field appearance="outline">
-                <mat-label>Minimum Stock Level:</mat-label>
-                <input matInput id="minimumStockLevel" formControlName="minimumStockLevel" type="number" required>
-                <mat-error *ngIf="captureStockForm.get('minimumStockLevel')?.invalid && captureStockForm.get('minimumStockLevel')?.touched">
-                    Minimum Stock Level is required.
-                </mat-error>
-            </mat-form-field>
+            <!-- Minimum Stock Level -->
+            <div class="form-group">
+                <mat-form-field appearance="outline">
+                    <mat-label><i class="material-icons">trending_down</i> Minimum Stock Level</mat-label>
+                    <input matInput id="minimumStockLevel" formControlName="minimumStockLevel" type="number" required placeholder="Minimum Stock Level">
+                    <mat-error *ngIf="captureStockForm.get('minimumStockLevel')?.invalid && captureStockForm.get('minimumStockLevel')?.touched">
+                        Minimum Stock Level is required.
+                    </mat-error>
+                </mat-form-field>
+            </div>
 
-            <mat-form-field appearance="outline">
-                <mat-label>Reorder Point:</mat-label>
-                <input matInput id="reorderPoint" formControlName="reorderPoint" type="text" required>
-                <mat-error *ngIf="captureStockForm.get('reorderPoint')?.invalid && captureStockForm.get('reorderPoint')?.touched">
-                    Reorder Point is required.
-                </mat-error>
-            </mat-form-field>
+            <!-- Reorder Point -->
+            <div class="form-group">
+                <mat-form-field appearance="outline">
+                    <mat-label><i class="material-icons">repeat</i> Reorder Point</mat-label>
+                    <input matInput id="reorderPoint" formControlName="reorderPoint" type="text" required placeholder="Reorder Point">
+                    <mat-error *ngIf="captureStockForm.get('reorderPoint')?.invalid && captureStockForm.get('reorderPoint')?.touched">
+                        Reorder Point is required.
+                    </mat-error>
+                </mat-form-field>
+            </div>
 
-            <mat-form-field appearance="outline">
-                <mat-label>Measurement:</mat-label>
-                <input matInput id="measurement" formControlName="measurement" type="text" required>
-                <mat-error *ngIf="captureStockForm.get('measurement')?.invalid && captureStockForm.get('measurement')?.touched">
-                    Measurement is required.
-                </mat-error>
-            </mat-form-field>
+            <!-- Measurement -->
+            <div class="form-group">
+                <mat-form-field appearance="outline">
+                    <mat-label><i class="material-icons">straighten</i> Measurement</mat-label>
+                    <input matInput id="measurement" formControlName="measurement" type="text" required placeholder="Measurement">
+                    <mat-error *ngIf="captureStockForm.get('measurement')?.invalid && captureStockForm.get('measurement')?.touched">
+                        Measurement is required.
+                    </mat-error>
+                </mat-form-field>
+            </div>
 
-            <button mat-raised-button color="primary" type="submit" [disabled]="captureStockForm.invalid">Capture Stock</button>
+            <!-- Submit and Cancel Buttons -->
+            <div class="form-group">
+                <button mat-raised-button color="primary" type="submit">Capture Stock</button>
+              
+            </div>
         </form>
     </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.2/angular.min.js"></script>
+    <!-- Include Angular Material JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.1.12/angular-material.min.js"></script>
 </body>
 </html>

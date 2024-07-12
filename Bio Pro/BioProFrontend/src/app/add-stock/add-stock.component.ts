@@ -72,5 +72,6 @@ export class AddStockComponent implements OnInit {
       });
     }
   }
+
 }
 

@@ -1,75 +1,79 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Stock Management </title>
-  <link rel="icon" type="image/x-icon" href="favicon.ico">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.1.12/angular-material.min.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock Management</title>
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.1.12/angular-material.min.css">
+    <!-- Include Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
 </head>
+
 <body>
+    <div class="container">
+        <h1 style="font-size: 48px; color: #4d4a4a; text-align: center; text-transform: uppercase; letter-spacing: 3px; margin-bottom: 24px; text-shadow: 2px 2px 4px rgba(124, 124, 124, 0.5);">STOCK MANAGEMENT</h1>
+        <div *ngIf="isLoading" class="text-center">
+            <div class="spinner-border" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+        </div>
 
- <div class="container">
-  <h1 style="font-size: 48px; color: #4d4a4a; text-align: center; text-transform: uppercase; letter-spacing: 3px; margin-bottom: 24px; text-shadow: 2px 2px 4px rgba(124, 124, 124, 0.5);">STOCK MANAGEMENT</h1><div *ngIf="isLoading" class="text-center">
-  <div class="spinner-border" role="status">
-    <span class="sr-only">Loading...</span>
-  </div>
-</div>
+        <div *ngIf="!isLoading">
+            <div class="container">
+                <div class="row mb-3">
+                    <div class="col-md-4">
+                        <input type="text" placeholder="Search stock" (input)="onSearch($event)" class="form-control mb-3">
+                    </div>
+                    <div class="col-md-4">
+                        <select (change)="onStockTypeChange($event)" class="form-control mb-3">
+                            <option value="">All Stock Types</option>
+                            <option *ngFor="let type of stockTypes" [value]="type.stockTypeId">{{ type.description }}</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <select (change)="onCategoryChange($event)" class="form-control mb-3" [disabled]="selectedStockType === ''">
+                            <option value="">All Categories</option>
+                            <option *ngFor="let category of categories" [value]="category.stockCategoryId">{{ category.description }}</option>
+                        </select>
+                    </div>
+                </div>
 
-<div *ngIf="!isLoading">
-
-
-  <div class="container">
-    <div class="row mb-3">
-      <div class="col-md-4">
-        <input type="text" placeholder="Search stock" (input)="onSearch($event)" class="form-control mb-3">
-      </div>
-      <div class="col-md-4">
-        <select (change)="onStockTypeChange($event)" class="form-control mb-3">
-          <option value="">All Stock Types</option>
-          <option *ngFor="let type of stockTypes" [value]="type.stockTypeId">{{ type.description }}</option>
-        </select>
-      </div>
-      <div class="col-md-4">
-        <select (change)="onCategoryChange($event)" class="form-control mb-3" [disabled]="selectedStockType === ''">
-          <option value="">All Categories</option>
-          <option *ngFor="let category of categories" [value]="category.stockCategoryId">{{ category.description }}</option>
-        </select>
-      </div>
+                <table class="table table-bordered table-striped rounded-table">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>Stock Name</th>
+                            <th>Quantity Available</th>
+                            <th>Category</th>
+                            <th>Supplier</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngIf="filteredStock.length === 0">
+                            <td colspan="5" class="text-center">No matching stocks found.</td>
+                        </tr>
+                        <tr *ngFor="let stock of filteredStock">
+                            <td>{{ stock.stockName }}</td>
+                            <td>{{ stock.quantityAvailable }}</td>
+                            <td>{{ getCategoryDescription(stock.stockCategoryId) }}</td>
+                            <td>{{ stock.supplier.supplierName }}</td>
+                            <td>
+                                <button mat-button class="btn btn-danger" (click)="openWriteOffModal(stock)">Write Off</button>
+                                <button mat-button class="btn btn-primary" (click)="openCaptureStockModal(stock)">Capture New Stock</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.2/angular.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.1.12/angular-material.min.js"></script>
+</body>
 
-    <table class="table table-bordered table-striped rounded-table">
-      <thead class="thead-dark">
-        <tr>
-          <th>Stock Name</th>
-          <th>Quantity Available</th>
-          <th>Category</th>
-          <th>Supplier</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngIf="filteredStock.length === 0">
-          <td colspan="5" class="text-center">No matching stocks found.</td>
-        </tr>
-        <tr *ngFor="let stock of filteredStock">
-          <td>{{ stock.stockName }}</td>
-          <td>{{ stock.quantityAvailable }}</td>
-          <td>{{ getCategoryDescription(stock.stockCategoryId) }}</td>
-          <td>{{ stock.supplier.supplierName }}</td>
-          <td>
-            <button mat-button class="btn btn-danger" (click)="openWriteOffModal(stock)">Write Off</button>
-            <button mat-button class="btn btn-primary" (click)="openCaptureStockModal(stock)">Capture New Stock</button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-    
-  </div>
-</div>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.2/angular.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.1.12/angular-material.min.js"></script>
-
-
+</html>
