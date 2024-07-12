@@ -8,18 +8,19 @@ import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 export class HelpDeliveriesComponent implements OnInit {
   searchQuery: string = '';
   selectedFilter: string = 'all';
-  noResultsFound: boolean = false; 
+  noResultsFound: boolean = false;
 
   dropdownStates: { [key: string]: boolean } = {
     steps: false,
     commonQuestions: false,
     technicalIssues: false
   };
-  newDropdownStates : { [key: string]: boolean } = {
+
+  newDropdownStates: { [key: string]: boolean } = {
     commonQuestions: false,
     technicalIssues: false,
     steps: false
-};
+  };
 
   constructor() { }
 
@@ -35,49 +36,53 @@ export class HelpDeliveriesComponent implements OnInit {
 
   toggleNewDropdown(section: string) {
     this.newDropdownStates[section] = !this.newDropdownStates[section];
- }
+  }
 
- isAnySectionOpen(): boolean {
-  return Object.values(this.dropdownStates).some(state => state);
-}
+  isAnySectionOpen(): boolean {
+    return Object.values(this.dropdownStates).some(state => state) || Object.values(this.newDropdownStates).some(state => state);
+  }
 
-onSearch(event: Event): void {
-  const input = event.target as HTMLInputElement;
-  this.searchQuery = input.value.toLowerCase();
-  this.filterContent();
-}
+  onFilter(event: Event): void {
+    const select = event.target as HTMLSelectElement;
+    this.selectedFilter = select.value;
+    this.filterContent();
+  }
 
-filterContent(): void {
-  const contentElements = this.searchContent.nativeElement.querySelectorAll('.help-container, .searchable');
-  let resultsFound = false;
-  contentElements.forEach((element: HTMLElement) => {
-    const containerType = element.classList.contains('delivery-container') ? ' delivery-container' :
-                          element.classList.contains('new delivery-container') ? 'new delivery-container' : '';
+  onSearch(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    this.searchQuery = input.value.toLowerCase();
+    this.filterContent();
+  }
 
-    const matchesSearchQuery = element.textContent?.toLowerCase().includes(this.searchQuery);
-    const matchesFilter = this.selectedFilter === 'all' || this.selectedFilter === containerType;
+  filterContent(): void {
+    const contentElements = this.searchContent.nativeElement.querySelectorAll('.help-container, .searchable');
+    let resultsFound = false;
+    contentElements.forEach((element: HTMLElement) => {
+      const containerType = element.classList.contains('delivery-container') ? 'delivery-container' :
+                            element.classList.contains('new-delivery-container') ? 'new-delivery-container' : '';
 
-    if (matchesSearchQuery && matchesFilter) {
-      element.style.display = '';
-      resultsFound = true;
-      // Ensure parent containers are displayed if they contain matching elements
-      let parent = element.parentElement;
-      while (parent && parent !== this.searchContent.nativeElement) {
-        if (parent.classList.contains('help-container')) {
-          parent.style.display = '';
+      const matchesSearchQuery = element.textContent?.toLowerCase().includes(this.searchQuery);
+      const matchesFilter = this.selectedFilter === 'all' || this.selectedFilter === containerType;
+
+      if (matchesSearchQuery && matchesFilter) {
+        element.style.display = '';
+        resultsFound = true;
+        // Ensure parent containers are displayed if they contain matching elements
+        let parent = element.parentElement;
+        while (parent && parent !== this.searchContent.nativeElement) {
+          if (parent.classList.contains('help-container')) {
+            parent.style.display = '';
+          }
+          parent = parent.parentElement;
         }
-        parent = parent.parentElement;
+      } else {
+        element.style.display = 'none';
       }
-    } else {
-      element.style.display = 'none';
-    }
-  });
-  this.noResultsFound = !resultsFound;
-}
+    });
+    this.noResultsFound = !resultsFound;
+  }
 
-shouldDisplayContainer(containerType: string): boolean {
-  return this.selectedFilter === 'all' || this.selectedFilter === containerType;
-}
-
-
+  shouldDisplayContainer(containerType: string): boolean {
+    return this.selectedFilter === 'all' || this.selectedFilter === containerType;
+  }
 }

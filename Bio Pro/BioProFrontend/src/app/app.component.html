@@ -104,7 +104,15 @@
             <mat-icon>calendar</mat-icon> <!-- Icon for new order -->
             Calendar
           </a>
+        </ng-container> 
+
+        <ng-container>
+          <a mat-list-item class="sub-nav-link" [routerLink]="['/employeeOrders']" (click)="isSidenavOpen = !isSidenavOpen">
+            <mat-icon>calendar</mat-icon> <!-- Icon for new order -->
+            Employee Order steps
+          </a>
         </ng-container>
+
     </mat-nav-list>
     </mat-sidenav>
     <mat-sidenav-content class="content-container">
