@@ -14,17 +14,24 @@
 </head>
 
 <body>
+   
 
-    <div>
-        <select (change)="onFilter($event)">
-            <option value="all">All</option>
-            <option value="new-orders">New Orders</option>
-            <option value="open-orders">Open Orders</option>
-            <option value="awaiting-dental-design">Orders Awaiting Dental Design</option>
-            <option value="approved-dental-design">Approved Dental Design</option>
-            <option value="approved-orders">Approved Orders</option>
-          </select>
-    </div>
+    <div class="filter-container">
+        <div class="filter-field">
+          <mat-form-field appearance="fill">
+            <mat-label>FILTER BY:</mat-label>
+            <mat-select (selectionChange)="onFilter($event)">
+              <mat-option value="all">All</mat-option>
+              <mat-option value="new-orders">New Orders</mat-option>
+              <mat-option value="open-orders">Open Orders</mat-option>
+              <mat-option value="awaiting-dental-design">Orders Awaiting Dental Design</mat-option>
+              <mat-option value="approved-dental-design">Approved Dental Design</mat-option>
+              <mat-option value="approved-orders">Approved Orders</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+      
 
     <div *ngIf="isAnySectionOpen()" class="search-filter-container">
         <input type="text" placeholder="Search..." (input)="onSearch($event)" />
@@ -169,7 +176,7 @@
         </mat-accordion>
     </div>
 </div>
-
+      
 
       
 <div *ngIf="shouldDisplayContainer('open-orders')" class="help-container orders-container open-orders">

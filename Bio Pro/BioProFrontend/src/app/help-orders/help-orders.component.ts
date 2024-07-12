@@ -39,11 +39,11 @@ export class HelpOrdersComponent implements OnInit {
     this.filterContent();
   }
 
-  onFilter(event: Event): void {
-    const select = event.target as HTMLSelectElement;
-    this.selectedFilter = select.value;
+  onFilter(event: any): void {
+    this.selectedFilter = event.value;
     this.filterContent();
   }
+  
 
   filterContent(): void {
     const contentElements = this.searchContent.nativeElement.querySelectorAll('.help-container, .searchable');
