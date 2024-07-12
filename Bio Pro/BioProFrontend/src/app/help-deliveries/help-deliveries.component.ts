@@ -31,58 +31,53 @@ export class HelpDeliveriesComponent implements OnInit {
   @ViewChild('searchContent') searchContent!: ElementRef;
 
   toggleDropdown(section: string) {
-    this.dropdownStates[section] = !this.dropdownStates[section]; // Toggle the dropdown state for the specific section
+    this.dropdownStates[section] = !this.dropdownStates[section];
   }
 
   toggleNewDropdown(section: string) {
     this.newDropdownStates[section] = !this.newDropdownStates[section];
   }
 
+  handleExpansionClick(event: Event) {
+    event.stopPropagation();
+  }
+
   isAnySectionOpen(): boolean {
     return Object.values(this.dropdownStates).some(state => state) || Object.values(this.newDropdownStates).some(state => state);
   }
-
-  onFilter(event: Event): void {
-    const select = event.target as HTMLSelectElement;
-    this.selectedFilter = select.value;
-    this.filterContent();
-  }
-
+  
   onSearch(event: Event): void {
     const input = event.target as HTMLInputElement;
     this.searchQuery = input.value.toLowerCase();
     this.filterContent();
   }
 
-  filterContent(): void {
-    const contentElements = this.searchContent.nativeElement.querySelectorAll('.help-container, .searchable');
-    let resultsFound = false;
-    contentElements.forEach((element: HTMLElement) => {
-      const containerType = element.classList.contains('delivery-container') ? 'delivery-container' :
-                            element.classList.contains('new-delivery-container') ? 'new-delivery-container' : '';
+  onFilter(event: any) {
+    this.selectedFilter = event.value;
+    this.filterContent();
+  }
 
-      const matchesSearchQuery = element.textContent?.toLowerCase().includes(this.searchQuery);
-      const matchesFilter = this.selectedFilter === 'all' || this.selectedFilter === containerType;
+  shouldDisplayContainer(containerClass: string): boolean {
+    return this.selectedFilter === 'all' || this.selectedFilter === containerClass;
+  }
 
-      if (matchesSearchQuery && matchesFilter) {
+  filterContent() {
+    const searchContentElement = this.searchContent.nativeElement;
+    const searchableElements = searchContentElement.querySelectorAll('.searchable');
+    let found = false;
+
+    searchableElements.forEach((element: any) => {
+      const textContent = element.textContent.toLowerCase();
+      if (this.searchQuery && textContent.includes(this.searchQuery)) {
         element.style.display = '';
-        resultsFound = true;
-        // Ensure parent containers are displayed if they contain matching elements
-        let parent = element.parentElement;
-        while (parent && parent !== this.searchContent.nativeElement) {
-          if (parent.classList.contains('help-container')) {
-            parent.style.display = '';
-          }
-          parent = parent.parentElement;
-        }
+        found = true;
       } else {
         element.style.display = 'none';
       }
     });
-    this.noResultsFound = !resultsFound;
-  }
 
-  shouldDisplayContainer(containerType: string): boolean {
-    return this.selectedFilter === 'all' || this.selectedFilter === containerType;
+    this.noResultsFound = this.searchQuery !== '' && !found;
   }
 }
+
+

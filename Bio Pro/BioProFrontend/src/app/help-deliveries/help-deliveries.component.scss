@@ -17,6 +17,18 @@ body {
   background-size: 400% 400%;
   animation: gradientAnimation 20s ease infinite;
 }
+.filter-container {
+  display: flex;
+  // align-items: center;
+  // justify-content: center;
+  margin-bottom: 20px;
+  font-style: bold;
+}
+
+.filter-field {
+  width: 300px;
+  margin-right: 20px; /* Adjust the margin as needed */
+}
 
 .help-container {
   text-align: center;
@@ -82,30 +94,31 @@ body {
   .dropdown {
     margin-bottom: 30px;
 
+
     h3 {
       font-size: 20px;
       margin-bottom: 10px;
       cursor: pointer;
       color: #007bff;
-
+  
       &:hover {
         text-decoration: underline;
       }
     }
-
+  
     ul {
       list-style-type: none;
       padding-left: 0;
-
+  
       li {
         margin-bottom: 15px;
-
+  
         h4 {
           font-size: 18px;
           margin-bottom: 5px;
           color: #333;
         }
-
+  
         p {
           font-size: 16px;
           color: #666;
@@ -113,19 +126,19 @@ body {
       }
     }
   }
-
+  
   mat-accordion {
     mat-expansion-panel {
       mat-expansion-panel-header {
         background-color: #e9ecef;
         border-radius: 4px;
         margin-bottom: 10px;
-
+  
         mat-panel-title {
           font-size: 18px;
         }
       }
-
+  
       p {
         font-size: 16px;
         padding: 10px;
@@ -133,7 +146,6 @@ body {
       }
     }
   }
-}
 .search-filter-container {
   display: flex;
   justify-content: space-between;
@@ -185,4 +197,5 @@ margin-top: 20px; /* Margin at the top */
 margin-right: 10px; /* Space between the icon and the text */
 font-size: 24px; /* Slightly larger icon */
 color: #b0bec5; /* Lighter grey color for the icon */
+}
 }

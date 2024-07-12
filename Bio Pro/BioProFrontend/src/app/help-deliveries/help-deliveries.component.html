@@ -12,23 +12,25 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
 </head>
 <body>
-
-    <div>
-        <select (change)="onFilter($event)">
-            <option value="all">All</option>
-            <option value="help-container delivery-container">Deliveries</option>
-            <option value="open-orders">New Deliveries</option>
-         
-          </select>
+    <div class="filter-container">
+        <div class="filter-field">
+            <mat-form-field appearance="fill">
+                <mat-label>FILTER BY:</mat-label>
+                <mat-select (selectionChange)="onFilter($event)">
+                    <mat-option value="all">All</mat-option>
+                    <mat-option value="delivery-container">Deliveries</mat-option>
+                    <mat-option value="new-delivery-container">New Deliveries</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
     </div>
 
     <div *ngIf="isAnySectionOpen()" class="search-filter-container">
         <input type="text" placeholder="Search..." (input)="onSearch($event)" />
     </div>
-    
-    <div #searchContent>
 
-        <div class="help-container delivery-container">
+    <div #searchContent>
+        <div class="help-container delivery-container" *ngIf="shouldDisplayContainer('delivery-container')">
             <h2><mat-icon>local_shipping</mat-icon> Deliveries</h2>
 
             <section>
@@ -110,31 +112,31 @@
             
             <div class="help-section">
                 <section class="dropdown" (click)="toggleDropdown('steps')">
-                    <h3>Step-by-Step Guide </h3>
-                    <mat-accordion *ngIf="dropdownStates['steps']">
-                        <mat-expansion-panel>
-                            <mat-expansion-panel-header>
-                                <mat-panel-title>
-                                    Step 1: Access the Deliveries Page
-                                </mat-panel-title>
-                            </mat-expansion-panel-header>
-                            <p>Navigate to the Deliveries page using the navigation menu.</p>
-                        </mat-expansion-panel>
-                        <mat-expansion-panel>
-                            <mat-expansion-panel-header>
-                                <mat-panel-title>
-                                    Step 2: View Delivery Details
-                                </mat-panel-title>
-                            </mat-expansion-panel-header>
-                            <p>Scroll through the list of deliveries. Each delivery is displayed in a card with its details.</p>
-                        </mat-expansion-panel>
-                    </mat-accordion>
+                  <h3>Step-by-Step Guide</h3>
+                  <mat-accordion *ngIf="dropdownStates['steps']">
+                    <mat-expansion-panel>
+                      <mat-expansion-panel-header (click)="handleExpansionClick($event)">
+                        <mat-panel-title>
+                          Step 1: Access the Deliveries Page
+                        </mat-panel-title>
+                      </mat-expansion-panel-header>
+                      <p>Navigate to the Deliveries page using the navigation menu.</p>
+                    </mat-expansion-panel>
+                    <mat-expansion-panel>
+                      <mat-expansion-panel-header (click)="handleExpansionClick($event)">
+                        <mat-panel-title>
+                          Step 2: View Delivery Details
+                        </mat-panel-title>
+                      </mat-expansion-panel-header>
+                      <p>Scroll through the list of deliveries. Each delivery is displayed in a card with its details.</p>
+                    </mat-expansion-panel>
+                  </mat-accordion>
                 </section>
-            </div>
+              </div>
             <button mat-raised-button color="primary" [routerLink]="['/deliveries']">Go To Page</button>
         </div>
         
-        <div class="help-container new-delivery-container">
+        <div class="help-container new-delivery-container" *ngIf="shouldDisplayContainer('new-delivery-container')">
             <h2><mat-icon>add_circle_outline</mat-icon> New Deliveries</h2>
             
             <section>
@@ -189,19 +191,35 @@
             
             <div class="help-section">
                 <section class="dropdown" (click)="toggleNewDropdown('steps')">
-                    <h3>Step-by-Step Guide </h3>
-                    <div *ngIf="newDropdownStates['steps']">
-                        <h4>Step 1: Navigate to the Add New Delivery Page</h4>
-                        <p>Use the navigation menu to go to the Add New Delivery page.</p>
-                        
-                        <h4>Step 2: Select an Order</h4>
-                        <p>Review the list of completed orders and click the "Create Delivery" button next to the order you want to create a delivery for.</p>
-                        
-                        <h4>Step 3: Confirm the Delivery</h4>
-                        <p>Ensure all details are correct and click the "Confirm Delivery" button to create the delivery. A success message will be displayed if the creation is successful.</p>
-                    </div>
+                  <h3>Step-by-Step Guide</h3>
+                  <mat-accordion *ngIf="newDropdownStates['steps']">
+                    <mat-expansion-panel>
+                      <mat-expansion-panel-header (click)="handleExpansionClick($event)">
+                        <mat-panel-title>
+                          Step 1: Navigate to the Add New Delivery Page
+                        </mat-panel-title>
+                      </mat-expansion-panel-header>
+                      <p>Use the navigation menu to go to the Add New Delivery page.</p>
+                    </mat-expansion-panel>
+                    <mat-expansion-panel>
+                      <mat-expansion-panel-header (click)="handleExpansionClick($event)">
+                        <mat-panel-title>
+                          Step 2: Select an Order
+                        </mat-panel-title>
+                      </mat-expansion-panel-header>
+                      <p>Review the list of completed orders and click the "Create Delivery" button next to the order you want to create a delivery for.</p>
+                    </mat-expansion-panel>
+                    <mat-expansion-panel>
+                      <mat-expansion-panel-header (click)="handleExpansionClick($event)">
+                        <mat-panel-title>
+                          Step 3: Confirm the Delivery
+                        </mat-panel-title>
+                      </mat-expansion-panel-header>
+                      <p>Ensure all details are correct and click the "Confirm Delivery" button to create the delivery. A success message will be displayed if the creation is successful.</p>
+                    </mat-expansion-panel>
+                  </mat-accordion>
                 </section>
-            </div>
+              </div>
             <button mat-raised-button color="primary" [routerLink]="['/new-deliveries']">Go To Page</button>
         </div>
     </div>
