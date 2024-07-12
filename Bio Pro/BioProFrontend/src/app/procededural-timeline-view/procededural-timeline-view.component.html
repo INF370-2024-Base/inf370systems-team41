@@ -6,15 +6,15 @@
       <div class="date-item">
         
         <span class="date-label">Earliest Date:</span>
-        <span class="date-value">{{data.event.Object.earliestDateTime | date: 'shortDate'}}</span>
+        <span class="date-value">{{data.event.object.earliestDateTime | date: 'shortDate'}}</span>
       </div>
       <div class="date-item">
         <span class="date-label">Latest Date:</span>
-        <span class="date-value">{{data.event.Object.latestDateTime | date: 'shortDate'}}</span>
+        <span class="date-value">{{data.event.object.latestDateTime | date: 'shortDate'}}</span>
       </div>
     </div>
     <div class="timeline-info">
-      <div *ngFor="let ow of data.event.Object.orderWorkflowTimeline" class="timeline-item">
+      <div *ngFor="let ow of data.event.object.orderWorkflowTimeline" class="timeline-item">
         <div class="timeline-info-item">
           <span class="timeline-label">System Order ID:</span>
           <span class="timeline-value">{{ow.systemOrderId}}</span>

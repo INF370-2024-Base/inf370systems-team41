@@ -15,7 +15,7 @@
             <mat-form-field appearance="outline">
                 <mat-label>Stock Category</mat-label>
                 <mat-select formControlName="stockCategoryId" required>
-                    <mat-option *ngFor="let category of StockCategories" [value]="category.id">
+                    <mat-option *ngFor="let category of StockCategories" [value]="category.stockCategoryId">
                         {{ category.description }}
                     </mat-option>
                 </mat-select>
@@ -27,7 +27,7 @@
             <mat-form-field appearance="outline">
                 <mat-label>Supplier</mat-label>
                 <mat-select formControlName="supplierId" required>
-                    <mat-option *ngFor="let supplier of StockSuppliers" [value]="supplier.id">
+                    <mat-option *ngFor="let supplier of StockSuppliers" [value]="supplier.supplierId">
                         {{ supplier.supplierName }}
                     </mat-option>
                 </mat-select>

@@ -3,6 +3,7 @@ import { StockServices } from '../services/stock.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AddStock } from '../shared/Stock';
 import { HttpErrorResponse } from '@angular/common/http';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-add-stock',
@@ -14,7 +15,7 @@ export class AddStockComponent implements OnInit {
   StockCategories: any[] = [];
   StockSuppliers: any[] = [];
 
-  constructor(private stockService: StockServices, private fb: FormBuilder) {
+  constructor(private stockService: StockServices, private fb: FormBuilder,private snackBar:MatSnackBar) {
     this.captureStockForm = this.fb.group({
       stockCategoryId: ['', Validators.required],
       supplierId: ['', Validators.required],
@@ -57,7 +58,7 @@ export class AddStockComponent implements OnInit {
       this.stockService.addStock(captureStockData).subscribe(
         response => {
           console.log('Stock captured successfully', response);
-          // Optionally, reset form after successful submission
+          this.snackBar.open('Successufully added stock item.')
           this.captureStockForm.reset();
         },
         error => {
