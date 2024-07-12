@@ -47,9 +47,11 @@ export class EditEmployeeDialogComponent implements OnInit {
 
     const updatedEmployee: EditEmployee = {
       EmployeeId: this.data.employeeId,
-      JobTitleId: this.editEmployeeForm.get('jobTitleId')?.value || -1,
+      JobTitleId: this.editEmployeeForm.value.jobTitleId || -1,
       Address: this.editEmployeeForm.get('address')?.value || ''
     };
+    console.log(updatedEmployee)
+    console.log(this.editEmployeeForm.value)
 
     this.employeeService.editEmployee(updatedEmployee).subscribe(response => {
       this.dialogRef.close(response);
