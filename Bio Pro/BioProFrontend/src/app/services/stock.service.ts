@@ -57,7 +57,7 @@ export class StockServices {
     return this.httpClient.get(`${this.apiUrl}GetStockById/${id}`)
     .pipe(map(result => result))
   }
-  
+
 }
 
 

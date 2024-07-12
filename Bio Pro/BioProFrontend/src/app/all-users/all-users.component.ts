@@ -55,12 +55,12 @@ export class AllUsersComponent implements OnInit {
       });
     }
   }
-searchQuery:string=''
+
+  searchQuery:string=''
   searchEmployees() {
-    // this.userService.searchEmployees(this.users).subscribe(data => {
-    //   this.users = data;
-    // });
+    // Add your search logic here
   }
+
   onOrderIdChange(searchCriteria: string) {
     if (searchCriteria.trim() === '') {
       this.fetchAllusers();

@@ -1,0 +1,37 @@
+.rounded-table {
+    border-radius: 10px; /* Adjust the border-radius to your preference */
+    overflow: hidden; /* Ensure contents don't overflow rounded corners */
+  }
+  
+  .rounded-table thead th {
+    background-color: #343a40; /* Dark background for header */
+    color: white; /* Text color for header */
+  }
+  
+  .rounded-table tbody td, .rounded-table tbody th {
+    background-color: white; /* Background color for table rows */
+    color: #495057; /* Text color for table rows */
+  }
+  
+  .rounded-table tbody tr:nth-child(even) {
+    background-color: #f8f9fa; /* Alternate row background color */
+  }
+  
+  .rounded-table tbody tr:hover {
+    background-color: #e9ecef; /* Hover row background color */
+  }
+  
+  .rounded-table .btn {
+    border-radius: 5px; /* Rounded button corners */
+  }
+  
+  .rounded-table .btn-danger {
+    background-color: #dc3545; /* Button danger background color */
+    border-color: #dc3545; /* Button danger border color */
+  }
+  
+  .rounded-table .btn-danger:hover {
+    background-color: #c82333; /* Button danger hover background color */
+    border-color: #bd2130; /* Button danger hover border color */
+  }
+

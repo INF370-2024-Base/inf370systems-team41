@@ -1,3 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Management</title>
+    <!-- Include Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Include Material Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+
+<body style="background: linear-gradient(120deg, #aed9e0, #c2e2f3, #eaf1fa, #c2e2f3, #aed9e0); background-size: 400% 400%; animation: gradientAnimation 20s ease infinite; font-family: 'Roboto', sans-serif; color: #333; padding: 20px; overflow-x: hidden; overflow-y: auto;">
+    <h1 style="font-size: 48px; color: #4d4a4a; text-align: center; text-transform: uppercase; letter-spacing: 3px; margin-bottom: 24px; text-shadow: 2px 2px 4px rgba(124, 124, 124, 0.5);">DAILY HOURS</h1>
 <div *ngIf="isLoading" class="text-center">
   <div class="spinner-border" role="status">
     <span class="sr-only">Loading...</span>
@@ -5,9 +20,7 @@
 </div>
 
 <div *ngIf="!isLoading">
-  <h1 class="text-center text-uppercase" style="font-size: 48px; color: #4d4a4a; letter-spacing: 3px; margin-bottom: 24px; text-shadow: 2px 2px 4px rgba(124, 124, 124, 0.5);">
-    Employee Daily Hours 
-  </h1>
+ 
 
   <div class="container">
     <div class="row mb-3">
@@ -31,7 +44,7 @@
       <a href="#" class="btn btn-primary" routerLink="/captureEmployeeDailyHours">Capture Hours</a>
     </div>
 
-    <table class="table table-bordered table-striped">
+    <table class="table table-bordered table-striped rounded-table">
       <thead class="thead-dark">
         <tr>
           <th>Date</th>
@@ -53,5 +66,11 @@
         </tr>
       </tbody>
     </table>
+    
+    
   </div>
 </div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.2/angular.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.1.12/angular-material.min.js"></script>
+</body>
+</html>

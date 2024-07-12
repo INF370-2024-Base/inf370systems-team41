@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { StockServices } from '../services/stock.service';
-import { CaptureNewStockViewModel } from '../shared/Stock';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AddStock } from '../shared/Stock'; 
+import { AddStock } from '../shared/Stock';
 import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
@@ -23,13 +22,33 @@ export class AddStockComponent implements OnInit {
       quantityAvailable: ['', Validators.required],
       maximumStockLevel: ['', Validators.required],
       minimumStockLevel: ['', Validators.required],
-      reorderPoint: [''],
+      reorderPoint: ['', Validators.required],
       measurement: ['', Validators.required]
     });
   }
 
   ngOnInit(): void {
-    this.getAllStockCategoriesandType();
+    this.fetchStockCategoriesAndSuppliers();
+  }
+
+  fetchStockCategoriesAndSuppliers(): void {
+    this.stockService.getAllStockCategories().subscribe(
+      categories => {
+        this.StockCategories = categories;
+      },
+      (error: HttpErrorResponse) => {
+        console.error('Error fetching stock categories:', error);
+      }
+    );
+
+    this.stockService.getAllSupplier().subscribe(
+      suppliers => {
+        this.StockSuppliers = suppliers;
+      },
+      (error: HttpErrorResponse) => {
+        console.error('Error fetching stock suppliers:', error);
+      }
+    );
   }
 
   captureStock(): void {
@@ -38,30 +57,19 @@ export class AddStockComponent implements OnInit {
       this.stockService.addStock(captureStockData).subscribe(
         response => {
           console.log('Stock captured successfully', response);
+          // Optionally, reset form after successful submission
+          this.captureStockForm.reset();
         },
         error => {
           console.error('Error capturing stock', error);
         }
       );
+    } else {
+      // Mark all form fields as touched to display validation errors
+      Object.values(this.captureStockForm.controls).forEach(control => {
+        control.markAsTouched();
+      });
     }
   }
-
-  getAllStockCategoriesandType(): void {
-    this.stockService.getAllStockCategories().subscribe(
-      result => {
-        this.StockCategories = result;
-      },
-      (error: HttpErrorResponse) => {
-        console.log(error.error);
-      }
-    );
-    this.stockService.getAllSupplier().subscribe(
-      result => {
-        this.StockSuppliers = result;
-      },
-      (error: HttpErrorResponse) => {
-        console.log(error.error);
-      }
-    );  
-  }
 }
+

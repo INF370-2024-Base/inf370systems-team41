@@ -1,0 +1,67 @@
+.rounded-table {
+    border-radius: 10px; /* Adjust the border-radius to your preference */
+    overflow: hidden; /* Ensure contents don't overflow rounded corners */
+  }
+  
+  .rounded-table thead th {
+    background-color: #343a40; /* Dark background for header */
+    color: white; /* Text color for header */
+  }
+  
+  .rounded-table tbody td {
+    background-color: white; /* Background color for table rows */
+    color: #495057; /* Text color for table rows */
+  }
+  
+  .rounded-table tbody tr:nth-child(even) {
+    background-color: #f8f9fa; /* Alternate row background color */
+  }
+  
+  .rounded-table tbody tr:hover {
+    background-color: #e9ecef; /* Hover row background color */
+  }
+  
+  .rounded-table .text-center {
+    text-align: center; /* Center align text in cells */
+  }
+  
+  .rounded-table button.mat-button {
+    padding: 5px 10px; /* Adjust button padding */
+    margin-right: 5px; /* Add margin between buttons */
+  }
+  
+  .rounded-table button.mat-button:hover {
+    background-color: #007bff; /* Button hover background color */
+    color: white; /* Button hover text color */
+  }
+  
+  /* Button styles */
+.btn-danger {
+    background-color: #dc3545;
+    color: white;
+    border-color: #dc3545;
+    padding: 8px 16px;
+    font-size: 14px;
+    border-radius: 4px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.btn-danger:hover {
+    background-color: #c82333;
+    border-color: #bd2130;
+}
+
+.btn-primary {
+    background-color: #007bff;
+    color: white;
+    border-color: #007bff;
+    padding: 8px 16px;
+    font-size: 14px;
+    border-radius: 4px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.btn-primary:hover {
+    background-color: #0069d9;
+    border-color: #0062cc;
+}
