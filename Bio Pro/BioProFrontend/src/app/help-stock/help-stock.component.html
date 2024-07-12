@@ -17,32 +17,58 @@
         <button mat-raised-button color="primary" [routerLink]="['/addStock']">Go To Page</button>
     
         <div class="help-section">
-            <h3 (click)="toggleDropdown('commonQuestionsAdd')">Common Questions</h3>
-            <ul *ngIf="dropdownStates['commonQuestionsAdd']">
+            <h3 (click)="toggleDropdown('commonQuestionsAddStock')">Common Questions</h3>
+            <ul *ngIf="dropdownStates['commonQuestionsAddStock']">
                 <li>
-                    <h4>How do I add new stock?</h4>
-                    <p>Navigate to the 'Add Stock' page, fill in the required information such as stock category, supplier, stock name, and quantity. Ensure all fields are completed accurately and then click 'Capture Stock' to add the new item.</p>
+                    <h4>How do I add a new stock item?</h4>
+                    <p>Navigate to the 'Add Stock' page, fill out the required fields including stock category, supplier, stock name, and quantity. Click 'Capture Stock' to save the new item.</p>
                 </li>
                 <li>
-                    <h4>What information is required to add new stock?</h4>
-                    <p>You will need to provide the stock category, supplier, stock name, quantity available, maximum stock level, minimum stock level, reorder point, and measurement.</p>
+                    <h4>Can I add stock items that are not listed in the dropdown?</h4>
+                    <p>If the stock item is not listed, you may need to add it to the system first or contact your system administrator for assistance.</p>
+                </li>
+                <li>
+                    <h4>What should I do if the 'Capture Stock' button is disabled?</h4>
+                    <p>Ensure all required fields are filled out correctly and meet the specified criteria. Check for any validation errors highlighted in the form.</p>
+                </li>
+                <li>
+                    <h4>Can I add stock without specifying a supplier?</h4>
+                    <p>Yes, but it is recommended to include a supplier for better inventory management and tracking.</p>
+                </li>
+                <li>
+                    <h4>What happens if I accidentally enter incorrect stock details?</h4>
+                    <p>You can edit the stock details after adding them by navigating to the 'Manage Stock' page. Correct the information and save the changes.</p>
                 </li>
             </ul>
         </div>
+        
     
         <div class="help-section">
-            <h3 (click)="toggleDropdown('technicalIssuesAdd')">Technical Issues</h3>
-            <ul *ngIf="dropdownStates['technicalIssuesAdd']">
+            <h3 (click)="toggleDropdown('technicalIssuesAddStock')">Technical Issues</h3>
+            <ul *ngIf="dropdownStates['technicalIssuesAddStock']">
                 <li>
-                    <h4>Why can't I submit the form?</h4>
-                    <p>Ensure all required fields are filled out correctly and the form is valid. If the problem persists, try refreshing the page or using a different browser. Contact technical support if the issue continues.</p>
+                    <h4>Why am I unable to save the new stock item?</h4>
+                    <p>Check if all required fields are filled and if the information entered meets the validation criteria. If the issue persists, try refreshing the page or contact technical support.</p>
                 </li>
                 <li>
-                    <h4>Why are the stock categories or suppliers not loading?</h4>
-                    <p>Check your internet connection and try refreshing the page. If the issue persists, it might be due to a server problem. Contact technical support for further assistance.</p>
+                    <h4>Why is the stock category dropdown not populating?</h4>
+                    <p>Ensure your internet connection is stable and try refreshing the page. If the problem continues, it might be due to a server issue. Contact technical support for assistance.</p>
+                </li>
+                <li>
+                    <h4>Why does the form keep showing validation errors?</h4>
+                    <p>Double-check all the fields for correct data entry. Ensure that all required fields are completed according to the specified formats.</p>
+                </li>
+                <li>
+                    <h4>What should I do if the 'Add Stock' page is not loading?</h4>
+                    <p>Check your internet connection and try reloading the page. If the problem persists, there might be a server issue. Contact technical support for further assistance.</p>
+                </li>
+                <li>
+                    <h4>Why is the 'Capture Stock' button not active?</h4>
+                    <p>The button might be inactive if required fields are missing or incorrectly filled. Make sure all fields meet the form's requirements before trying again.</p>
                 </li>
             </ul>
         </div>
+        
     
         <div class="help-section">
             <h3 (click)="toggleDropdown('stepsElementsAdd')">Step-by-Step Guide</h3>
@@ -81,33 +107,58 @@
         <button mat-raised-button color="primary" [routerLink]="['/pageStock']">Go To Page</button>
     
         <div class="help-section">
-            <h3 (click)="toggleDropdown('commonQuestionsCapture')">Common Questions</h3>
-            <ul *ngIf="dropdownStates['commonQuestionsCapture']">
+            <h3 (click)="toggleDropdown('commonQuestionsCaptureStock')">Common Questions</h3>
+            <ul *ngIf="dropdownStates['commonQuestionsCaptureStock']">
                 <li>
-                    <h4>How do I capture new stock?</h4>
-                    <p>Navigate to the 'Capture Stock' page, select the stock item, and provide the quantity added. Ensure all fields are completed accurately and then click 'Submit' to capture the stock.</p>
+                    <h4>How do I capture additional stock for an existing item?</h4>
+                    <p>Go to the 'Capture Stock' page, select the stock item, and enter the quantity added. Click 'Submit' to record the additional stock.</p>
                 </li>
                 <li>
-                    <h4>What information is required to capture stock?</h4>
-                    <p>You will need to provide the stock name and the amount added.</p>
+                    <h4>What details are required to capture stock?</h4>
+                    <p>You need to provide the stock name, quantity added, and any additional notes if applicable.</p>
+                </li>
+                <li>
+                    <h4>Can I capture stock if I don't know the exact quantity?</h4>
+                    <p>It's essential to provide the exact quantity for accurate inventory management. If unsure, estimate as closely as possible.</p>
+                </li>
+                <li>
+                    <h4>How can I check if the stock capture was successful?</h4>
+                    <p>After submitting, a confirmation message will appear if the stock capture is successful. You can also check the updated stock levels in the 'Manage Stock' page.</p>
+                </li>
+                <li>
+                    <h4>What should I do if the stock item is not available in the dropdown?</h4>
+                    <p>Ensure the item is added to the system. If it's missing, contact your system administrator to add the item to the stock list.</p>
                 </li>
             </ul>
         </div>
+        
     
         <div class="help-section">
-            <h3 (click)="toggleDropdown('technicalIssuesCapture')">Technical Issues</h3>
-            <ul *ngIf="dropdownStates['technicalIssuesCapture']">
+            <h3 (click)="toggleDropdown('technicalIssuesCaptureStock')">Technical Issues</h3>
+            <ul *ngIf="dropdownStates['technicalIssuesCaptureStock']">
                 <li>
-                    <h4>Why can't I submit the form?</h4>
-                    <p>Ensure all required fields are filled out correctly and the form is valid. If the problem persists, try refreshing the page or using a different browser. Contact technical support if the issue continues.</p>
+                    <h4>Why is the 'Submit' button not working?</h4>
+                    <p>Ensure all required fields are filled correctly and that there are no validation errors. Check your internet connection and try again.</p>
                 </li>
                 <li>
-                    <h4>Why is the stock not updating?</h4>
-                    <p>Check your internet connection and try again. If the issue persists, it might be due to a server problem. Contact technical support for further assistance.</p>
+                    <h4>Why are my stock quantities not updating?</h4>
+                    <p>Check your internet connection and try reloading the page. If the issue persists, it might be a server-side problem. Contact technical support for further help.</p>
+                </li>
+                <li>
+                    <h4>Why can't I find the captured stock in the inventory list?</h4>
+                    <p>Refresh the inventory list page to see the most recent updates. If the issue persists, there might be a synchronization issue. Contact technical support for assistance.</p>
+                </li>
+                <li>
+                    <h4>What should I do if the 'Capture Stock' page is not loading?</h4>
+                    <p>Ensure you have a stable internet connection and try refreshing the page. If the problem continues, it may be a server issue. Reach out to technical support for further assistance.</p>
+                </li>
+                <li>
+                    <h4>Why am I receiving an error when entering stock quantities?</h4>
+                    <p>Ensure that the quantities are entered in the correct format and that all required fields are filled. If errors persist, check for server-side issues or contact technical support.</p>
                 </li>
             </ul>
         </div>
-    
+        
         <div class="help-section">
             <h3 (click)="toggleDropdown('stepsElementsCapture')">Step-by-Step Guide</h3>
             <mat-accordion *ngIf="dropdownStates['stepsElementsCapture']">
@@ -143,34 +194,59 @@
         <h2><mat-icon>remove_circle_outline</mat-icon> Write Off Stock</h2>
         <p>This section provides assistance on how to write off stock items in the system.</p>
         <button mat-raised-button color="primary" [routerLink]="['/pageStock']">Go To Page</button>
-    
         <div class="help-section">
-            <h3 (click)="toggleDropdown('commonQuestionsWriteOff')">Common Questions</h3>
-            <ul *ngIf="dropdownStates['commonQuestionsWriteOff']">
+            <h3 (click)="toggleDropdown('commonQuestionsWriteOffStock')">Common Questions</h3>
+            <ul *ngIf="dropdownStates['commonQuestionsWriteOffStock']">
                 <li>
-                    <h4>How do I write off stock?</h4>
-                    <p>Navigate to the 'Write Off Stock' page, select the stock item, provide the quantity written off and the reason for write-off. Ensure all fields are completed accurately and then click 'Submit' to write off the stock.</p>
+                    <h4>How do I write off stock that is no longer usable?</h4>
+                    <p>Navigate to the 'Write Off Stock' page, select the stock item, enter the quantity to be written off, and provide a reason for the write-off. Click 'Submit' to complete the process.</p>
                 </li>
                 <li>
-                    <h4>What information is required to write off stock?</h4>
-                    <p>You will need to provide the stock name, quantity written off, written off date, and the reason for write-off.</p>
+                    <h4>What information do I need to provide for a stock write-off?</h4>
+                    <p>You need to provide the stock name, quantity written off, the date of write-off, and the reason for the write-off.</p>
+                </li>
+                <li>
+                    <h4>Can I reverse a stock write-off?</h4>
+                    <p>Once a stock write-off is processed, it cannot be reversed. Ensure all details are correct before submitting. If you need to correct an error, contact technical support.</p>
+                </li>
+                <li>
+                    <h4>What should I do if the stock write-off form is not saving?</h4>
+                    <p>Check for any validation errors in the form and ensure all required fields are filled out. Refresh the page or try again. If issues persist, contact technical support.</p>
+                </li>
+                <li>
+                    <h4>How can I verify if a stock write-off was successful?</h4>
+                    <p>After submitting, you should receive a confirmation message. You can also check the updated stock levels in the 'Manage Stock' page to ensure the write-off was recorded.</p>
                 </li>
             </ul>
         </div>
+        
     
         <div class="help-section">
-            <h3 (click)="toggleDropdown('technicalIssuesWriteOff')">Technical Issues</h3>
-            <ul *ngIf="dropdownStates['technicalIssuesWriteOff']">
+            <h3 (click)="toggleDropdown('technicalIssuesWriteOffStock')">Technical Issues</h3>
+            <ul *ngIf="dropdownStates['technicalIssuesWriteOffStock']">
                 <li>
-                    <h4>Why can't I submit the form?</h4>
-                    <p>Ensure all required fields are filled out correctly and the form is valid. If the problem persists, try refreshing the page or using a different browser. Contact technical support if the issue continues.</p>
+                    <h4>Why is the 'Submit' button not working?</h4>
+                    <p>Ensure that all required fields are correctly filled out and that there are no validation errors. Check your internet connection and try again.</p>
                 </li>
                 <li>
-                    <h4>Why is the stock not updating?</h4>
-                    <p>Check your internet connection and try again. If the issue persists, it might be due to a server problem. Contact technical support for further assistance.</p>
+                    <h4>Why is the write-off information not updating in the system?</h4>
+                    <p>Verify your internet connection and try refreshing the page. If the issue persists, it could be a server problem. Contact technical support for assistance.</p>
+                </li>
+                <li>
+                    <h4>What should I do if the stock write-off page is not loading?</h4>
+                    <p>Check your internet connection and reload the page. If the issue continues, there might be a server issue. Reach out to technical support for further help.</p>
+                </li>
+                <li>
+                    <h4>Why am I receiving an error when submitting the stock write-off?</h4>
+                    <p>Ensure all fields are filled out correctly and that the data meets validation criteria. If errors persist, there might be a technical issue; contact support for help.</p>
+                </li>
+                <li>
+                    <h4>Why can’t I find the write-off entry in the stock records?</h4>
+                    <p>Refresh the stock records page to view recent updates. If the issue continues, there might be a synchronization problem. Contact technical support for further assistance.</p>
                 </li>
             </ul>
         </div>
+        
     
         <div class="help-section">
             <h3 (click)="toggleDropdown('stepsElementsWriteOff')">Step-by-Step Guide</h3>
@@ -209,32 +285,58 @@
         <button mat-raised-button color="primary" [routerLink]="['/pageStock']">Go To Page</button>
     
         <div class="help-section">
-            <h3 (click)="toggleDropdown('commonQuestionsSearch')">Common Questions</h3>
-            <ul *ngIf="dropdownStates['commonQuestionsSearch']">
+            <h3 (click)="toggleDropdown('commonQuestionsSearchStock')">Common Questions</h3>
+            <ul *ngIf="dropdownStates['commonQuestionsSearchStock']">
                 <li>
-                    <h4>How do I search for stock?</h4>
-                    <p>Navigate to the 'Search Stock' page, enter the stock name or other identifying information in the search bar, and click the search button. The results will display the matching stock items.</p>
+                    <h4>How do I search for a specific stock item?</h4>
+                    <p>Go to the 'Search Stock' page, enter the stock name or other details into the search field, and click 'Search' to find the item.</p>
                 </li>
                 <li>
-                    <h4>What information can I use to search for stock?</h4>
-                    <p>You can search for stock items using the stock name, category, or supplier.</p>
+                    <h4>Can I filter stock search results by category or supplier?</h4>
+                    <p>Yes, you can use the filter options to narrow down your search results by category, supplier, or other criteria.</p>
+                </li>
+                <li>
+                    <h4>What should I do if I can't find a stock item using the search?</h4>
+                    <p>Ensure you are using the correct search criteria and try different keywords. If the item is still not found, it may not be added to the system. Contact your system administrator for assistance.</p>
+                </li>
+                <li>
+                    <h4>How can I save frequently used search criteria?</h4>
+                    <p>Currently, there is no feature to save search criteria. You will need to enter the search details each time you perform a search.</p>
+                </li>
+                <li>
+                    <h4>What if the search results are not accurate?</h4>
+                    <p>Check your search criteria for accuracy and try refining your search. If issues persist, there may be a problem with the data indexing. Contact technical support for help.</p>
                 </li>
             </ul>
         </div>
+        
     
         <div class="help-section">
-            <h3 (click)="toggleDropdown('technicalIssuesSearch')">Technical Issues</h3>
-            <ul *ngIf="dropdownStates['technicalIssuesSearch']">
+            <h3 (click)="toggleDropdown('technicalIssuesSearchStock')">Technical Issues</h3>
+            <ul *ngIf="dropdownStates['technicalIssuesSearchStock']">
                 <li>
-                    <h4>Why are my search results not displaying?</h4>
-                    <p>Ensure you have entered valid search criteria and try again. If the issue persists, it might be due to a server problem or an issue with the search functionality. Contact technical support for further assistance.</p>
+                    <h4>Why is the search function not returning any results?</h4>
+                    <p>Verify that you have entered the correct search criteria and that there are matching items in the system. If the problem persists, there might be a technical issue with the search functionality.</p>
                 </li>
                 <li>
-                    <h4>Why is the search function not working?</h4>
-                    <p>Check your internet connection and try refreshing the page. If the problem continues, there might be a technical issue with the search function. Contact technical support for help.</p>
+                    <h4>Why is the search page taking too long to load?</h4>
+                    <p>Check your internet connection and try refreshing the page. If the issue continues, it might be related to server performance. Contact technical support for further assistance.</p>
+                </li>
+                <li>
+                    <h4>What should I do if the search results are not displaying correctly?</h4>
+                    <p>Ensure your search criteria are correct and try reloading the page. If the issue persists, it could be a data or server-side problem. Contact technical support for help.</p>
+                </li>
+                <li>
+                    <h4>Why am I receiving an error when performing a search?</h4>
+                    <p>Double-check your search criteria for accuracy and ensure all fields are filled out correctly. If errors persist, there may be a technical issue. Reach out to support for further assistance.</p>
+                </li>
+                <li>
+                    <h4>How can I troubleshoot issues with the search functionality?</h4>
+                    <p>Start by checking your internet connection and ensuring your search criteria are correct. If problems persist, clear your browser's cache and cookies or contact technical support for help.</p>
                 </li>
             </ul>
         </div>
+        
     
         <div class="help-section">
             <h3 (click)="toggleDropdown('stepsElementsSearch')">Step-by-Step Guide</h3>

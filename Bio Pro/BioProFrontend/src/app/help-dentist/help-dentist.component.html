@@ -20,9 +20,21 @@
     <div class="help-section">
         <h3 (click)="toggleDropdown('commonQuestionsSearch')">Common Questions</h3>
         <ul *ngIf="dropdownStates['commonQuestionsSearch']">
-            <li>
-                <h4>How can I search for a dentist?</h4>
-                <p>Use the search bar at the top of the dentist management page. Enter the name or contact details of the dentist you are looking for, and the list will filter automatically.</p>
+            <li class="searchable">
+                <h4 class="searchable">How can I sort the search results?</h4>
+                <p>Currently, the search results are not sortable directly. You may need to refine your search criteria to achieve desired ordering.</p>
+            </li>
+            <li class="searchable">
+                <h4 class="searchable">Is there a limit to the number of dentists displayed in the search results?</h4>
+                <p>The search results display all dentists that match your criteria. If there are many results, they will all be shown, but consider refining your search to narrow down results.</p>
+            </li>
+            <li class="searchable">
+                <h4 class="searchable">How can I view additional details about a specific dentist?</h4>
+                <p>Click on the dentist's name or details in the search results to view their full profile, including additional information.</p>
+            </li>
+            <li class="searchable">
+                <h4 class="searchable">Can I search for dentists using special characters or symbols?</h4>
+                <p>The search function supports basic alphanumeric characters. Special characters may not yield expected results and should be avoided.</p>
             </li>
         </ul>
     </div>
@@ -31,8 +43,24 @@
         <h3 (click)="toggleDropdown('technicalIssuesSearch')">Technical Issues</h3>
         <ul *ngIf="dropdownStates['technicalIssuesSearch']">
             <li>
-                <h4>Why is my search not returning any results?</h4>
-                <p>Ensure that the search term is entered correctly. If the problem persists, it could be due to a database issue. Contact technical support for assistance.</p>
+                <h4 class="searchable">Why is the search function not responding?</h4>
+                <p>If the search function is unresponsive, check your network connection and ensure the application is running smoothly. Refresh the page or try again later.</p>
+            </li>
+            <li class="searchable">
+                <h4 class="searchable">How do I report a bug or issue with the search feature?</h4>
+                <p>If you encounter a bug or issue, please provide details such as the search criteria used and any error messages received. Contact support for assistance in resolving the issue.</p>
+            </li>
+            <li class="searchable">
+                <h4 class="searchable">What should I do if the search results are incorrect?</h4>
+                <p>If the search results do not match your expectations, verify the search criteria for accuracy. If correct, there may be a data inconsistency issue that needs investigation by support.</p>
+            </li>
+            <li class="searchable">
+                <h4 class="searchable">How can I optimize search performance?</h4>
+                <p>To improve search performance, ensure your search criteria are specific and avoid using vague terms that may return excessive results. Clearing browser cache and cookies can also help.</p>
+            </li>
+            <li class="searchable">
+                <h4 class="searchable">Why am I seeing outdated information in the search results?</h4>
+                <p>Outdated information may appear if the data has not been refreshed. Try refreshing the page to fetch the latest data. If the issue persists, contact support for further assistance.</p>
             </li>
         </ul>
     </div>
@@ -42,17 +70,33 @@
         <mat-accordion *ngIf="dropdownStates['stepsElementsSearch']">
             <mat-expansion-panel>
                 <mat-expansion-panel-header>
-                    <mat-panel-title>
-                        Search Dentist
-                    </mat-panel-title>
+                    <mat-panel-title>Step 1: Navigate to the 'Dentists' page</mat-panel-title>
                 </mat-expansion-panel-header>
-                <ol style="list-style: decimal inside;">
-                    <li>Navigate to the 'Dentists' page.</li>
-                    <li>Locate the search bar at the top of the page, next to the 'Add Dentist' button.</li>
-                    <li>Enter the name or contact details of the dentist you are looking for.</li>
-                    <li>The list of dentists will filter in real-time based on your input.</li>
-                    <li>If the desired dentist appears, you can edit or delete the record using the corresponding buttons.</li>
-                </ol>
+                <p>Locate the 'Dentists' section in the navigation menu and click to access the page.</p>
+            </mat-expansion-panel>
+            <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                    <mat-panel-title>Step 2: Locate the search bar</mat-panel-title>
+                </mat-expansion-panel-header>
+                <p>Find the search bar at the top of the page, next to the 'Add Dentist' button.</p>
+            </mat-expansion-panel>
+            <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                    <mat-panel-title>Step 3: Enter search details</mat-panel-title>
+                </mat-expansion-panel-header>
+                <p>Type the name or contact details of the dentist you are looking for.</p>
+            </mat-expansion-panel>
+            <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                    <mat-panel-title>Step 4: View filtered results</mat-panel-title>
+                </mat-expansion-panel-header>
+                <p>The list of dentists will filter in real-time based on your input.</p>
+            </mat-expansion-panel>
+            <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                    <mat-panel-title>Step 5: Edit or delete records</mat-panel-title>
+                </mat-expansion-panel-header>
+                <p>If the desired dentist appears, you can edit or delete the record using the corresponding buttons.</p>
             </mat-expansion-panel>
         </mat-accordion>
     </div>
@@ -74,6 +118,18 @@
                 <h4>What information is required to add a dentist?</h4>
                 <p>The required fields are First Name, Last Name, and Contact Details. The Address is optional but recommended.</p>
             </li>
+            <li>
+                <h4>Can I add a dentist without an email address?</h4>
+                <p>Yes, email is not a required field but it is recommended to have for communication purposes.</p>
+            </li>
+            <li>
+                <h4>How can I add a dentist's specialization?</h4>
+                <p>There is a field for specialization in the 'Add Dentist' form. Make sure to fill it with the dentist's area of expertise.</p>
+            </li>
+            <li>
+                <h4>Can I edit the dentist details after adding them?</h4>
+                <p>Yes, you can edit the dentist details by navigating to the 'Edit Dentist' section.</p>
+            </li>
         </ul>
     </div>
     
@@ -88,6 +144,18 @@
                 <h4>What if I encounter an error while adding a dentist?</h4>
                 <p>If you encounter an error, check if all required fields are filled correctly. If the problem persists, contact technical support for further assistance.</p>
             </li>
+            <li>
+                <h4>Why is the 'Add Dentist' button unresponsive?</h4>
+                <p>This could be due to a script error or browser issue. Try refreshing the page or using a different browser. If the issue persists, contact technical support.</p>
+            </li>
+            <li>
+                <h4>What should I do if the page does not load?</h4>
+                <p>Check your internet connection and try reloading the page. If the problem continues, contact technical support.</p>
+            </li>
+            <li>
+                <h4>Why am I getting a server error when trying to add a dentist?</h4>
+                <p>This could be due to server issues or database connectivity problems. Contact technical support for assistance.</p>
+            </li>
         </ul>
     </div>
     
@@ -96,63 +164,110 @@
         <mat-accordion *ngIf="dropdownStates['stepsElementsAdd']">
             <mat-expansion-panel>
                 <mat-expansion-panel-header>
-                    <mat-panel-title>
-                        Add Dentist
-                    </mat-panel-title>
+                    <mat-panel-title>Step 1: Navigate to the 'Dentists' page</mat-panel-title>
                 </mat-expansion-panel-header>
-                <ol style="list-style: decimal inside;">
-                    <li>Navigate to the 'Dentists' page.</li>
-                    <li>Click the 'Add Dentist' button located at the top right corner of the page.</li>
-                    <li>You will be redirected to the 'Add New Dentist' form.</li>
-                    <li>Fill in the required fields:
-                        <ul style="list-style: disc inside;">
-                            <li><strong>Surname:</strong> Enter the dentist's surname.</li>
-                            <li><strong>Name:</strong> Enter the dentist's first name.</li>
-                            <li><strong>Contact Details:</strong> Provide the dentist's contact information.</li>
-                            <li><strong>Address:</strong> Enter the dentist's address (optional).</li>
-                        </ul>
-                    </li>
-                    <li>Ensure all required fields are filled correctly.</li>
-                    <li>Click the 'Add Dentist' button at the bottom of the form to submit.</li>
-                    <li>If the form is valid, the dentist will be added, and you will see a confirmation message.</li>
-                    <li>You can now see the new dentist listed in the dentist management page.</li>
-                </ol>
+                <p>Click the 'Dentists' tab in the main navigation menu.</p>
+            </mat-expansion-panel>
+            <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                    <mat-panel-title>Step 2: Click the 'Add Dentist' button</mat-panel-title>
+                </mat-expansion-panel-header>
+                <p>Locate the 'Add Dentist' button at the top right corner of the page and click it.</p>
+            </mat-expansion-panel>
+            <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                    <mat-panel-title>Step 3: Fill in required fields</mat-panel-title>
+                </mat-expansion-panel-header>
+                <p>Complete the required fields: Surname, First Name, and Contact Details.</p>
+            </mat-expansion-panel>
+            <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                    <mat-panel-title>Step 4: Add optional information</mat-panel-title>
+                </mat-expansion-panel-header>
+                <p>Optionally, fill in the Address field for more complete records.</p>
+            </mat-expansion-panel>
+            <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                    <mat-panel-title>Step 5: Submit the form</mat-panel-title>
+                </mat-expansion-panel-header>
+                <p>Click the 'Add Dentist' button at the bottom of the form to submit.</p>
+            </mat-expansion-panel>
+            <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                    <mat-panel-title>Step 6: Confirm addition</mat-panel-title>
+                </mat-expansion-panel-header>
+                <p>Look for a confirmation message indicating successful addition of the dentist.</p>
+            </mat-expansion-panel>
+            <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                    <mat-panel-title>Step 7: Verify the new dentist</mat-panel-title>
+                </mat-expansion-panel-header>
+                <p>Check the dentist management page to see the newly added dentist in the list.</p>
             </mat-expansion-panel>
         </mat-accordion>
     </div>
-</div>
+  </div>
+
 <div class="help-container edit-dentist">
     <h2><mat-icon>edit</mat-icon> Edit Dentist</h2>
     <p>This section provides assistance on how to edit existing dentist details within the system.</p>
     <button mat-raised-button color="primary" [routerLink]="['/Dentist']">Go To Page</button>
     
     <div class="help-section">
-        <h3 (click)="toggleDropdown('commonQuestionsEdit')">Common Questions</h3>
-        <ul *ngIf="dropdownStates['commonQuestionsEdit']">
+        <h3 (click)="toggleDropdown('commonQuestionsEditDentist')">Common Questions</h3>
+        <ul *ngIf="dropdownStates['commonQuestionsEditDentist']">
             <li>
                 <h4>How do I edit a dentist's information?</h4>
-                <p>To edit a dentist's information, navigate to the 'Edit Dentist' page by clicking the 'Edit Dentist' button in the navigation menu or on the dentist details page. Modify the relevant fields with the updated information and click 'Update' to save the changes. A confirmation message will appear if the dentist's information is successfully updated.</p>
+                <p>Navigate to the 'Dentist Management' section, select the dentist you want to edit, and click 'Edit'. Update the necessary fields and save the changes.</p>
             </li>
             <li>
-                <h4>What details can I edit?</h4>
-                <p>You can edit fields such as name, contact details, specialization, and availability. Ensure all changes are accurate before saving to avoid any discrepancies in the dentist's records.</p>
+                <h4>Can I update multiple fields at once?</h4>
+                <p>Yes, you can update multiple fields such as name, contact information, and specialization in a single edit session. Make sure to save the changes.</p>
+            </li>
+            <li>
+                <h4>What if I make a mistake while editing?</h4>
+                <p>You can edit the information again by accessing the same dentist record. Ensure to save any updates to avoid data loss.</p>
+            </li>
+            <li>
+                <h4>Is there a limit to what I can edit?</h4>
+                <p>You can edit most details related to the dentist's profile, but some fields may be restricted based on your user role and permissions.</p>
+            </li>
+            <li>
+                <h4>How can I verify that the changes have been saved correctly?</h4>
+                <p>After saving the changes, you can review the updated dentist profile to ensure the information is correct.</p>
             </li>
         </ul>
     </div>
+    
+    
 
     <div class="help-section">
-        <h3 (click)="toggleDropdown('technicalIssuesEdit')">Technical Issues</h3>
-        <ul *ngIf="dropdownStates['technicalIssuesEdit']">
+        <h3 (click)="toggleDropdown('technicalIssuesEditDentist')">Technical Issues</h3>
+        <ul *ngIf="dropdownStates['technicalIssuesEditDentist']">
             <li>
-                <h4>Why am I unable to save my edits?</h4>
-                <p>Check if all required fields are filled out correctly. Error messages will highlight any missing or incorrect information. Ensure there are no network issues and try refreshing the page. If the problem persists, contact technical support for assistance.</p>
+                <h4>Why can't I see the 'Edit' button?</h4>
+                <p>Ensure you have the necessary permissions to edit dentist information. Some user roles may not have this authorization.</p>
             </li>
             <li>
-                <h4>Why are my edits not reflecting in the dentist's profile?</h4>
-                <p>There may be a delay in updating the dentist's profile. Verify the changes were saved by checking for a confirmation message. If the changes still do not appear, contact technical support to investigate the issue further.</p>
+                <h4>What should I do if the 'Save' button is not working?</h4>
+                <p>Try refreshing the page or using a different browser. If the issue persists, contact technical support.</p>
+            </li>
+            <li>
+                <h4>Why are the changes not saving?</h4>
+                <p>Check your internet connection and ensure all required fields are filled. If the problem continues, there might be a server issue.</p>
+            </li>
+            <li>
+                <h4>Why do I get an error message when trying to save changes?</h4>
+                <p>This could be due to a data validation issue or a server error. Check the entered data and try again. Contact support if the error persists.</p>
+            </li>
+            <li>
+                <h4>What if the changes do not appear after saving?</h4>
+                <p>There might be a delay in updating the dentist profile. Try refreshing the page or checking back later.</p>
             </li>
         </ul>
     </div>
+    
+    
     
     <div class="help-section">
         <h3 (click)="toggleDropdown('stepsElementsEdit')">Step-by-Step Guide</h3>
@@ -191,32 +306,60 @@
     <button mat-raised-button color="primary" [routerLink]="['/Dentist']">Go To Page</button>
     
     <div class="help-section">
-        <h3 (click)="toggleDropdown('commonQuestionsDelete')">Common Questions</h3>
-        <ul *ngIf="dropdownStates['commonQuestionsDelete']">
+        <h3 (click)="toggleDropdown('commonQuestionsDeleteDentist')">Common Questions</h3>
+        <ul *ngIf="dropdownStates['commonQuestionsDeleteDentist']">
             <li>
-                <h4>How do I delete a dentist?</h4>
-                <p>To delete a dentist, navigate to the 'Delete Dentist' page by clicking the 'Delete Dentist' button in the navigation menu or on the dentist details page. Confirm the deletion by clicking 'Delete' in the confirmation dialog. A confirmation message will appear if the dentist is successfully deleted.</p>
+                <h4>How do I delete a dentist's record?</h4>
+                <p>Navigate to the 'Dentist Management' section, select the dentist you want to delete, and click 'Delete'. Confirm the action to remove the record.</p>
             </li>
             <li>
-                <h4>Can deleted dentists be recovered?</h4>
-                <p>No, deleted dentists cannot be recovered once deleted from the system. Ensure you have selected the correct dentist for deletion before confirming.</p>
+                <h4>Can I delete multiple dentist records at once?</h4>
+                <p>Currently, records need to be deleted individually. Ensure to confirm the deletion for each record.</p>
+            </li>
+            <li>
+                <h4>What if I delete the wrong dentist record?</h4>
+                <p>Unfortunately, deletion is permanent. Double-check the details before confirming. If you need to restore the data, contact technical support to see if a recent backup can be used.</p>
+            </li>
+            <li>
+                <h4>Is there a way to recover a deleted dentist record?</h4>
+                <p>Once deleted, records cannot be recovered. Ensure you double-check before confirming the deletion.</p>
+            </li>
+            <li>
+                <h4>Why can’t I find the dentist record I want to delete?</h4>
+                <p>Check if you are looking at the correct list or using the search/filter options to locate the specific dentist record.</p>
             </li>
         </ul>
     </div>
+    
+    
 
     <div class="help-section">
-        <h3 (click)="toggleDropdown('technicalIssuesDelete')">Technical Issues</h3>
-        <ul *ngIf="dropdownStates['technicalIssuesDelete']">
+        <h3 (click)="toggleDropdown('technicalIssuesDeleteDentist')">Technical Issues</h3>
+        <ul *ngIf="dropdownStates['technicalIssuesDeleteDentist']">
             <li>
-                <h4>Why am I unable to delete a dentist?</h4>
-                <p>Check if you have the necessary permissions to delete dentists. Some user roles may not have the authorization to perform deletions. Contact your administrator if you believe this is an error.</p>
+                <h4>Why can't I see the 'Delete' button?</h4>
+                <p>Ensure you have the necessary permissions to delete dentist records. Some user roles may not have this authorization.</p>
             </li>
             <li>
-                <h4>Why is the delete confirmation dialog not appearing?</h4>
-                <p>This could be due to a browser issue or script blocker. Ensure pop-ups are enabled for the site and try refreshing the page. If the problem persists, contact technical support for assistance.</p>
+                <h4>What should I do if the deletion confirmation dialog does not appear?</h4>
+                <p>Ensure pop-ups are enabled for the site. Try refreshing the page or using a different browser.</p>
+            </li>
+            <li>
+                <h4>Why am I receiving an error when trying to delete a dentist record?</h4>
+                <p>This could be due to a server or database issue. Contact technical support with the error details.</p>
+            </li>
+            <li>
+                <h4>Why is the dentist record still visible after deletion?</h4>
+                <p>There might be a delay in updating the dentist list. Refresh the page to see if the deletion has been processed.</p>
+            </li>
+            <li>
+                <h4>What if I accidentally delete the wrong dentist record?</h4>
+                <p>Unfortunately, deletion is permanent. To avoid this, double-check the details before confirming the deletion. If you need to restore the data, contact technical support to see if a recent backup can be used.</p>
             </li>
         </ul>
     </div>
+    
+    
     
     <div class="help-section">
         <h3 (click)="toggleDropdown('stepsElementsDelete')">Step-by-Step Guide</h3>
