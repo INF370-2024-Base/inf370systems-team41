@@ -1,12 +1,11 @@
-
-import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ElementRef, ViewChild } from '@angular/core';
 
 @Component({
   selector: 'app-help-orders',
   templateUrl: './help-orders.component.html',
   styleUrls: ['./help-orders.component.scss']
 })
-export class HelpOrdersComponent implements OnInit {
+export class HelpOrdersComponent implements OnInit, AfterViewInit {
 
   searchQuery: string = '';
   selectedFilter: string = 'all';
@@ -21,12 +20,22 @@ export class HelpOrdersComponent implements OnInit {
     awaitingDentalDesignCommonQuestions: false,
     approvedDentalDesign: false,
     approvedOrders: false,
+    newOrdersCommonQuestions: false,
+    newOrdersTechnicalIssues: false,
+    newOrdersSteps: false,
+    
+    openOrdersSteps: false,
   };
 
   @ViewChild('searchContent') searchContent!: ElementRef;
 
+  isSearchActive: boolean = false;
+
   toggleDropdown(section: string): void {
-    this.dropdownStates[section] = !this.dropdownStates[section];
+    // Only toggle if search is not active
+    if (!this.isSearchActive) {
+      this.dropdownStates[section] = !this.dropdownStates[section];
+    }
   }
 
   isAnySectionOpen(): boolean {
@@ -39,13 +48,25 @@ export class HelpOrdersComponent implements OnInit {
     this.filterContent();
   }
 
+  onSearchFocus(): void {
+    this.isSearchActive = true;
+  }
+
+  onSearchBlur(): void {
+    setTimeout(() => {
+      this.isSearchActive = false;
+    }, 200); // Slight delay to ensure the click event is not missed
+  }
+
   onFilter(event: any): void {
     this.selectedFilter = event.value;
     this.filterContent();
   }
-  
 
   filterContent(): void {
+    if (!this.searchContent) {
+      return;
+    }
     const contentElements = this.searchContent.nativeElement.querySelectorAll('.help-container, .searchable');
     let resultsFound = false;
     contentElements.forEach((element: HTMLElement) => {
@@ -81,6 +102,10 @@ export class HelpOrdersComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.filterContent();
+    // No need to call filterContent here
   }
+
+  ngAfterViewInit(): void {
+    this.filterContent();
+  } 
 }

@@ -15,37 +15,35 @@
 
 <body>
    
-
     <div class="filter-container">
         <div class="filter-field">
-          <mat-form-field appearance="fill">
-            <mat-label>FILTER BY:</mat-label>
-            <mat-select (selectionChange)="onFilter($event)">
-              <mat-option value="all">All</mat-option>
-              <mat-option value="new-orders">New Orders</mat-option>
-              <mat-option value="open-orders">Open Orders</mat-option>
-              <mat-option value="awaiting-dental-design">Orders Awaiting Dental Design</mat-option>
-              <mat-option value="approved-dental-design">Approved Dental Design</mat-option>
-              <mat-option value="approved-orders">Approved Orders</mat-option>
-            </mat-select>
-          </mat-form-field>
+            <mat-form-field appearance="fill">
+                <mat-label>FILTER BY:</mat-label>
+                <mat-select (selectionChange)="onFilter($event)">
+                    <mat-option value="all">All</mat-option>
+                    <mat-option value="new-orders">New Orders</mat-option>
+                    <mat-option value="open-orders">Open Orders</mat-option>
+                    <mat-option value="awaiting-dental-design">Orders Awaiting Dental Design</mat-option>
+                    <mat-option value="approved-dental-design">Approved Dental Design</mat-option>
+                    <mat-option value="approved-orders">Approved Orders</mat-option>
+                </mat-select>
+            </mat-form-field>
         </div>
-      </div>
-      
-
-    <div *ngIf="isAnySectionOpen()" class="search-filter-container">
-        <input type="text" placeholder="Search..." (input)="onSearch($event)" />
-        
-      </div>
-      <div #searchContent>
-        <div *ngIf="shouldDisplayContainer('new-orders')" class="help-container orders-container new-orders">
-        <h2><mat-icon>add_circle_outline</mat-icon> New Orders</h2>
-    <p>This section provides assistance on how to manage and navigate orders within the system.</p>
-    <button mat-raised-button color="primary" [routerLink]="['/addOrder']">Go To Page</button>
+    </div>
     
-    <div class="help-section">
-        <h3 (click)="toggleDropdown('commonQuestions')">Common Questions</h3>
-        <ul *ngIf="dropdownStates['commonQuestions']" class="searchable">
+    <div *ngIf="isAnySectionOpen()" class="search-filter-container">
+        <input type="text" placeholder="Search..." (input)="onSearch($event)" (focus)="onSearchFocus()" (blur)="onSearchBlur()" />
+    </div>
+    
+    <div #searchContent>
+        <div *ngIf="shouldDisplayContainer('new-orders')" class="help-container orders-container new-orders">
+            <h2><mat-icon>add_circle_outline</mat-icon> New Orders</h2>
+            <p>This section provides assistance on how to manage and navigate orders within the system.</p>
+            <button mat-raised-button color="primary" [routerLink]="['/addOrder']">Go To Page</button>
+            
+            <div class="help-section">
+                <h3 (click)="toggleDropdown('commonQuestions')">Common Questions</h3>
+                <ul *ngIf="dropdownStates['commonQuestions']" class="searchable">
             <li>
                 <h4 class="searchable">How do I add a new order?</h4>
                 <p>To add a new order, navigate to the 'Add Order' page by clicking the 'Add Order' button in the navigation menu or on the main orders page. Fill out all the required fields with accurate information, including customer details, order items, and delivery dates. Once all mandatory fields are completed, click 'Submit' to save the order. A confirmation message will appear if the order is successfully added.</p>
@@ -84,7 +82,7 @@
         </ul>
     </div>
     
-    <div class="help-section"  >
+    <div class="help-section">
         <h3 (click)="toggleDropdown('technicalIssues')">Technical Issues</h3>
         <ul *ngIf="dropdownStates['technicalIssues']" class="searchable">
             <li class="searchable">
@@ -122,7 +120,7 @@
         </ul>
     </div>
     
-    <div class="help-section"  >
+    <div class="help-section">
         <h3 (click)="toggleDropdown('stepsElements')">Step-by-Step Guide</h3>
         <mat-accordion *ngIf="dropdownStates['stepsElements']" class="searchable">
             <mat-expansion-panel>
@@ -185,8 +183,8 @@
     <button mat-raised-button color="primary" [routerLink]="['/openOrder']">Go To Page</button>
 
     <div class="help-section">
-        <h3 (click)="toggleDropdown('openOrdersCommonQuestions')">Common Questions</h3>
-        <ul *ngIf="dropdownStates['openOrdersCommonQuestions']" class="searchable">
+      <h3 (click)="toggleDropdown('openOrdersCommonQuestions')">Common Questions</h3>
+      <ul *ngIf="dropdownStates['openOrdersCommonQuestions']" class="searchable">
             <li class="searchable">
                 <h4 class="searchable">How do I view open orders?</h4>
                 <p >Navigate to the 'Open Orders' page to see a list of all current open orders along with their details. You can access this page from the main navigation menu or the dashboard.</p>
@@ -222,7 +220,7 @@
         </ul>
     </div>
 
-    <div class="help-section">
+     <div class="help-section">
         <h3 (click)="toggleDropdown('openOrdersTechnicalIssues')">Technical Issues</h3>
         <ul *ngIf="dropdownStates['openOrdersTechnicalIssues']" class="searchable">
             <li class="searchable">
@@ -261,8 +259,8 @@
     </div>
 
     <div class="help-section">
-        <h3 (click)="toggleDropdown('stepsElements')">Step-by-Step Guide</h3>
-        <mat-accordion *ngIf="dropdownStates['stepsElements']" class="searchable">
+        <h3 (click)="toggleDropdown('openOrdersSteps')">Step-by-Step Guide</h3>
+        <mat-accordion *ngIf="dropdownStates['openOrdersSteps']" class="searchable">
             <mat-expansion-panel>
                 <mat-expansion-panel-header>
                     <mat-panel-title class="searchable">
