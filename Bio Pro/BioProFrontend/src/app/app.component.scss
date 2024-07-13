@@ -66,42 +66,81 @@ body {
 .nav-title {
   font-size: 1.5em;
   font-weight: bold;
-  color: #fff; /* White color for better contrast */
+  color: #f3f3f3; /* White color for better contrast */
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); /* Text shadow for depth */
 }
-
-/* Sidenav styling */
-.side-container {
-  width: 250px; /* Adjust the width of the sidenav */
-  background-color: #eef6fe; /* Light blue background for sidenav */
-  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+.example-container {
+  height: 100%;
+  background-color: #f4f6f8;
 }
 
-.mat-nav-list a.nav-link,
-.mat-nav-list a.sub-nav-link {
-  display: block;
-  font-size: 16px; /* Adjust font size */
-  color: #333; /* Text color */
-  text-decoration: none; /* Remove underline */
-  padding: 12px 20px; /* Padding for better spacing */
-  transition: background-color 0.3s ease; /* Smooth transition */
+.example-sidenav {
+  width: 280px;
+  background-color: #ffffff;
+  color: #000000;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  padding: 10px;
 }
 
-.mat-nav-list a.nav-link:hover,
-.mat-nav-list a.sub-nav-link:hover {
-  background-color: #c1e7f0; /* Background color on hover */
+.nav-list {
+  display: flex;
+  flex-direction: column;
 }
 
-.sub-nav-container {
-  margin-left: 20px; /* Indentation for sub-navigation items */
+.nav-item {
+  display: flex;
+  align-items: center;
+  padding: 10px 15px;
+  margin: 5px 0;
+  color: #333333;
+  transition: background-color 0.3s, color 0.3s;
+  text-decoration: none;
+  border-radius: 4px;
 }
 
-/* Additional styling for icons */
-mat-icon {
-  margin-right: 12px; /* Margin for icons */
+.main-nav {
+  background-color: #f0f4f8;
+  font-weight: bold;
 }
 
-/* Content container */
-.content-container {
-  padding: 20px; /* Add padding */
+.sub-nav {
+  background-color: #ffffff;
+  padding-left: 30px;
+}
+
+.nav-item:hover {
+  background-color: #e3f2fd;
+  color: #007bff;
+}
+
+.nav-header {
+  display: flex;
+  align-items: center;
+  padding: 10px 15px;
+  margin: 10px 0 5px;
+  background-color: #f9fafc;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  color: #333333;
+  cursor: pointer;
+}
+
+.nav-section {
+  display: flex;
+  flex-direction: column;
+}
+
+.mat-icon {
+  margin-right: 10px;
+  color: #3b3b3b;
+}
+
+.nav-text {
+  font-weight: 500;
+  color: #333333;
+}
+
+.mat-sidenav-content {
+  background-color: #f4f6f8;
+  padding: 20px;
 }

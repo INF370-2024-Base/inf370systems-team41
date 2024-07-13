@@ -18,117 +18,113 @@
       </mat-toolbar-row>
     </mat-toolbar>
   </div>
-
-  <mat-sidenav-container>
-    <mat-sidenav #sidenav mode="side" [(opened)]="isSidenavOpen" class="side-container" *ngIf="isLoggedIn">
+  <mat-sidenav-container class="example-container">
+    <mat-sidenav #sidenav mode="side" [(opened)]="isSidenavOpen" class="example-sidenav" *ngIf="isLoggedIn">
       <mat-nav-list>
-        <a mat-list-item class="nav-link" routerLink="/home" (click)="isSidenavOpen = !isSidenavOpen">
-          <mat-icon>home</mat-icon> <!-- Icon for home -->
-          <span class="nav-text">Home</span> <!-- Text for home -->
+  
+        <a mat-list-item routerLink="/home" (click)="isSidenavOpen = !isSidenavOpen">
+          <mat-icon>home</mat-icon>
+          <span class="nav-text">Home</span>
         </a>
   
-        <a mat-list-item class="nav-link" (click)="toggleSubNav('user')" [routerLink]="['/all-user']">
-          <mat-icon> contacts</mat-icon> <!-- Icon for all users -->
-          All-users
+        <!-- User Section -->
+        <mat-expansion-panel class="nav-expansion-panel" (opened)="toggleSubNav('user')" (closed)="toggleSubNav('user')">
+          <mat-expansion-panel-header>
+            <mat-icon>contacts</mat-icon>
+            <span>All Users</span>
+          </mat-expansion-panel-header>
+          <a mat-list-item [routerLink]="['/adduser']" (click)="isSidenavOpen = !isSidenavOpen">
+            <mat-icon>folder_shared</mat-icon>
+            <span>Add User</span>
+          </a>
+        </mat-expansion-panel>
+  
+        <!-- Employee Section -->
+        <mat-expansion-panel class="nav-expansion-panel" (opened)="toggleEmployeeMenu()" (closed)="toggleEmployeeMenu()">
+          <mat-expansion-panel-header>
+            <mat-icon>perm_contact_calendar</mat-icon>
+            <span>All Employees</span>
+          </mat-expansion-panel-header>
+          <a mat-list-item routerLink="/captureEmployeeDailyHours" (click)="isSidenavOpen = !isSidenavOpen">
+            <mat-icon>schedule</mat-icon>
+            <span>Capture Employee Daily Hours</span>
+          </a>
+        </mat-expansion-panel>
+  
+        <!-- Dentist Profile -->
+        <a mat-list-item routerLink="/dentistProfile" (click)="isSidenavOpen = !isSidenavOpen">
+          <mat-icon>medical_services</mat-icon>
+          <span>Dentist Profiles</span>
         </a>
-        <div class="sub-nav-container" *ngIf="isUserSubNavOpen">
-          <a mat-list-item class="sub-nav-link" [routerLink]="['/adduser']" (click)="isSidenavOpen = !isSidenavOpen">
-            <mat-icon>folder_shared</mat-icon> <!-- Icon for add user -->
-            Add User
-          </a>
-        </div>
   
-          
-
-          <a mat-list-item class="nav-link" (click)="toggleEmployeeMenu()" [routerLink]="['/employeeProfile']">
-            <mat-icon>perm_contact_calendar</mat-icon> <!-- Icon for profile -->
-            All Employees
+        <!-- Orders Section -->
+        <mat-expansion-panel class="nav-expansion-panel" (opened)="toggleOrdersMenu()" (closed)="toggleOrdersMenu()">
+          <mat-expansion-panel-header>
+            <mat-icon>receipt</mat-icon>
+            <span>Orders</span>
+          </mat-expansion-panel-header>
+          <a mat-list-item [routerLink]="['/addOrder']" (click)="isSidenavOpen = !isSidenavOpen">
+            <mat-icon>add_circle_outline</mat-icon>
+            <span>New Order</span>
           </a>
-          
-          <ng-container *ngIf="isEmployeeMenuOpen">
-            <a mat-list-item class="sub-nav-link" routerLink="/captureEmployeeDailyHours" (click)="isSidenavOpen = !isSidenavOpen">
-              <mat-icon>schedule</mat-icon> <!-- Icon for schedule/hours -->
-              Capture Employee Daily Hours
-            </a>
-          </ng-container>
-          <a mat-list-item class="nav-link" routerLink="/dentistProfile" (click)="isSidenavOpen = !isSidenavOpen">
-            <mat-icon>medical_services</mat-icon> <!-- Icon for dentist profile -->
-            Dentist Profiles
+          <a mat-list-item [routerLink]="['/openOrder']" (click)="isSidenavOpen = !isSidenavOpen">
+            <mat-icon>folder_open</mat-icon>
+            <span>Open Orders</span>
           </a>
-         
-          <a mat-list-item class="nav-link" (click)="toggleOrdersMenu()" [routerLink]="['/orders']">
-            <mat-icon>receipt</mat-icon> <!-- Icon for orders -->
-            Orders
+          <a mat-list-item [routerLink]="['/orderAwaitingDentalDesign']" (click)="isSidenavOpen = !isSidenavOpen">
+            <mat-icon>folder_open</mat-icon>
+            <span>Orders Awaiting Dental Design</span>
           </a>
-          <ng-container *ngIf="isOrdersMenuOpen">
-            <a mat-list-item class="sub-nav-link" [routerLink]="['/addOrder']" (click)="isSidenavOpen = !isSidenavOpen">
-              <mat-icon>add_circle_outline</mat-icon> <!-- Icon for new order -->
-              New Order
-            </a>
-            <a mat-list-item class="sub-nav-link" [routerLink]="['/openOrder']" (click)="isSidenavOpen = !isSidenavOpen">
-              <mat-icon>folder_open</mat-icon> <!-- Icon for open orders -->
-              Open Orders
-            </a>
-            <a mat-list-item class="sub-nav-link" [routerLink]="['/orderAwaitingDentalDesign']" (click)="isSidenavOpen = !isSidenavOpen">
-              <mat-icon>folder_open</mat-icon> <!-- Icon for open orders -->
-              Orders Awaiting Dental Design
-            </a>
-            <a mat-list-item class="sub-nav-link" [routerLink]="['/dentalDesignApproval']" (click)="isSidenavOpen = !isSidenavOpen">
-              <mat-icon>add_circle_outline</mat-icon> <!-- Icon for open orders -->
-              Approve dental designs
-            </a>
-            <a mat-list-item class="sub-nav-link" [routerLink]="['/approval']" (click)="isSidenavOpen = !isSidenavOpen">
-              <mat-icon>check_circle</mat-icon> <!-- Icon for approve orders -->
-              Approve Orders
-            </a>
-          </ng-container>
-
-          <ng-container>
-            <a mat-list-item class="sub-nav-link" [routerLink]="['/employeeOrders']" (click)="isSidenavOpen = !isSidenavOpen">
-              <mat-icon>description</mat-icon> <!-- Icon for new order -->
-              Employee Order steps
-            </a>
-          </ng-container>
-
-          <a mat-list-item class="nav-link" (click)="isSidenavOpen = !isSidenavOpen" [routerLink]="['/addproceduraltimeline']">
-            <mat-icon>event</mat-icon> 
-            Timeline of Orders
+          <a mat-list-item [routerLink]="['/dentalDesignApproval']" (click)="isSidenavOpen = !isSidenavOpen">
+            <mat-icon>add_circle_outline</mat-icon>
+            <span>Approve Dental Designs</span>
           </a>
-
-          <ng-container>
-            <a mat-list-item class="sub-nav-link" [routerLink]="['/calendar']" (click)="isSidenavOpen = !isSidenavOpen">
-              <mat-icon>date_range</mat-icon> <!-- Icon for new order -->
-              Calendar
-            </a>
-          </ng-container> 
-          
-
-          <a mat-list-item class="nav-link" (click)="toggleDeliveriesMenu()" [routerLink]="['/deliveries']">
-            <mat-icon>local_shipping</mat-icon> 
-            Deliveries
+          <a mat-list-item [routerLink]="['/approval']" (click)="isSidenavOpen = !isSidenavOpen">
+            <mat-icon>check_circle</mat-icon>
+            <span>Approve Orders</span>
           </a>
-          <ng-container *ngIf="isDeliveriesMenuOpen">
-            <a mat-list-item class="sub-nav-link" [routerLink]="['/addDelivery']" (click)="isSidenavOpen = !isSidenavOpen">
-              <mat-icon>add_circle_outline</mat-icon> <!-- Icon for new order -->
-              New Delivery
-            </a>
-          </ng-container>
-        
-          <ng-container>
-            <a mat-list-item class="sub-nav-link" [routerLink]="['/reports']" (click)="isSidenavOpen = !isSidenavOpen">
-              <mat-icon>assessment</mat-icon> <!-- Icon for new order -->
-              Reports
-            </a>
-          </ng-container>
+          <a mat-list-item [routerLink]="['/employeeOrders']" (click)="isSidenavOpen = !isSidenavOpen">
+            <mat-icon>description</mat-icon>
+            <span>Employee Order Steps</span>
+          </a>
+        </mat-expansion-panel>
   
-          <ng-container>
-            <a mat-list-item class="sub-nav-link" [routerLink]="['/help']" (click)="isSidenavOpen = !isSidenavOpen">
-              <mat-icon>help</mat-icon> <!-- Icon for new order -->
-              Help Page
-            </a>
-          </ng-container>   
-
-    </mat-nav-list>
+        <!-- Timeline of Orders -->
+        <a mat-list-item routerLink="/addproceduraltimeline" (click)="isSidenavOpen = !isSidenavOpen">
+          <mat-icon>event</mat-icon>
+          <span>Timeline of Orders</span>
+        </a>
+  
+        <!-- Calendar -->
+        <a mat-list-item routerLink="/calendar" (click)="isSidenavOpen = !isSidenavOpen">
+          <mat-icon>date_range</mat-icon>
+          <span>Calendar</span>
+        </a>
+  
+        <!-- Deliveries Section -->
+        <mat-expansion-panel class="nav-expansion-panel" (opened)="toggleDeliveriesMenu()" (closed)="toggleDeliveriesMenu()">
+          <mat-expansion-panel-header>
+            <mat-icon>local_shipping</mat-icon>
+            <span>Deliveries</span>
+          </mat-expansion-panel-header>
+          <a mat-list-item [routerLink]="['/addDelivery']" (click)="isSidenavOpen = !isSidenavOpen">
+            <mat-icon>add_circle_outline</mat-icon>
+            <span>New Delivery</span>
+          </a>
+        </mat-expansion-panel>
+  
+        <!-- Reports -->
+        <a mat-list-item routerLink="/reports" (click)="isSidenavOpen = !isSidenavOpen">
+          <mat-icon>assessment</mat-icon>
+          <span>Reports</span>
+        </a>
+  
+        <!-- Help Page -->
+        <a mat-list-item routerLink="/help" (click)="isSidenavOpen = !isSidenavOpen">
+          <mat-icon>help</mat-icon>
+          <span>Help Page</span>
+        </a>
+      </mat-nav-list>
     </mat-sidenav>
     <mat-sidenav-content class="content-container">
       <div style="height: 88vh;">
@@ -136,6 +132,9 @@
       </div>
     </mat-sidenav-content>
   </mat-sidenav-container>
-</body>
+  
+  
+</body>  
+  
 </html>
 
