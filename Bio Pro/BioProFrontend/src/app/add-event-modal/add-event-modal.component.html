@@ -2,16 +2,16 @@
 <mat-dialog-content>
   <form #eventForm="ngForm">
     <mat-form-field appearance="fill">
-      <mat-label>Title</mat-label>
+      <mat-label><i class="material-icons">event_note</i> Title</mat-label>
       <input matInput placeholder="Title" [(ngModel)]="addEvent.Description" name="title">
     </mat-form-field>
     <mat-form-field appearance="fill" >
-      <mat-label>Information</mat-label>
+       <mat-label><i class="material-icons">info</i> Information</mat-label>
       <input matInput placeholder="Additional information" [(ngModel)]="addEvent.EventInformation" name="title">
       
     </mat-form-field>
     <mat-form-field appearance="fill" >
-      <mat-label>Start Date</mat-label>
+      <mat-label><i class="material-icons">date_range</i> Start Date</mat-label>
       <div >
         <input
           matInput
@@ -26,7 +26,7 @@
       
     </mat-form-field>
     <mat-form-field appearance="fill"  >
-      <mat-label>Time</mat-label>
+      <mat-label><i class="material-icons">access_time</i> Time</mat-label>
       <input
         matInput
         placeholder="Time"

@@ -23,19 +23,20 @@ export class HelpOrdersComponent implements OnInit, AfterViewInit {
     newOrdersCommonQuestions: false,
     newOrdersTechnicalIssues: false,
     newOrdersSteps: false,
-    
     openOrdersSteps: false,
   };
 
   @ViewChild('searchContent') searchContent!: ElementRef;
 
   isSearchActive: boolean = false;
+  activeDropdown: string | null = null;
 
   toggleDropdown(section: string): void {
-    // Only toggle if search is not active
-    if (!this.isSearchActive) {
-      this.dropdownStates[section] = !this.dropdownStates[section];
+    if (this.isSearchActive) {
+      return;
     }
+    this.dropdownStates[section] = !this.dropdownStates[section];
+    this.activeDropdown = this.dropdownStates[section] ? section : null;
   }
 
   isAnySectionOpen(): boolean {
@@ -50,6 +51,10 @@ export class HelpOrdersComponent implements OnInit, AfterViewInit {
 
   onSearchFocus(): void {
     this.isSearchActive = true;
+    // Reopen the active dropdown during search
+    if (this.activeDropdown) {
+      this.dropdownStates[this.activeDropdown] = true;
+    }
   }
 
   onSearchBlur(): void {
@@ -61,6 +66,10 @@ export class HelpOrdersComponent implements OnInit, AfterViewInit {
   onFilter(event: any): void {
     this.selectedFilter = event.value;
     this.filterContent();
+    // Ensure the active dropdown stays open after filtering
+    if (this.activeDropdown) {
+      this.dropdownStates[this.activeDropdown] = true;
+    }
   }
 
   filterContent(): void {
@@ -82,7 +91,6 @@ export class HelpOrdersComponent implements OnInit, AfterViewInit {
       if (matchesSearchQuery && matchesFilter) {
         element.style.display = '';
         resultsFound = true;
-        // Ensure parent containers are displayed if they contain matching elements
         let parent = element.parentElement;
         while (parent && parent !== this.searchContent.nativeElement) {
           if (parent.classList.contains('help-container')) {
@@ -101,9 +109,7 @@ export class HelpOrdersComponent implements OnInit, AfterViewInit {
     return this.selectedFilter === 'all' || this.selectedFilter === containerType;
   }
 
-  ngOnInit(): void {
-    // No need to call filterContent here
-  }
+  ngOnInit(): void {}
 
   ngAfterViewInit(): void {
     this.filterContent();

@@ -14,7 +14,6 @@
 </head>
 
 <body>
-   
     <div class="filter-container">
         <div class="filter-field">
             <mat-form-field appearance="fill">
@@ -36,11 +35,13 @@
     </div>
     
     <div #searchContent>
+        <!-- Help Containers -->
+        <!-- Example for New Orders -->
         <div *ngIf="shouldDisplayContainer('new-orders')" class="help-container orders-container new-orders">
             <h2><mat-icon>add_circle_outline</mat-icon> New Orders</h2>
             <p>This section provides assistance on how to manage and navigate orders within the system.</p>
             <button mat-raised-button color="primary" [routerLink]="['/addOrder']">Go To Page</button>
-            
+    
             <div class="help-section">
                 <h3 (click)="toggleDropdown('commonQuestions')">Common Questions</h3>
                 <ul *ngIf="dropdownStates['commonQuestions']" class="searchable">
