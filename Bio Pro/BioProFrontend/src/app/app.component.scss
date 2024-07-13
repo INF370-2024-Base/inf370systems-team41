@@ -73,17 +73,17 @@ body {
 /* Sidenav styling */
 .side-container {
   width: 250px; /* Adjust the width of the sidenav */
-  background-color: #eef6fe6b; /* White background for sidenav */
+  background-color: #eef6fe; /* Light blue background for sidenav */
   box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
 }
 
 .mat-nav-list a.nav-link,
 .mat-nav-list a.sub-nav-link {
+  display: block;
   font-size: 16px; /* Adjust font size */
   color: #333; /* Text color */
   text-decoration: none; /* Remove underline */
-  padding: 10px 20px; /* Add padding for better spacing */
-  border-radius: 4px; /* Rounded corners */
+  padding: 12px 20px; /* Padding for better spacing */
   transition: background-color 0.3s ease; /* Smooth transition */
 }
 
@@ -92,18 +92,16 @@ body {
   background-color: #c1e7f0; /* Background color on hover */
 }
 
+.sub-nav-container {
+  margin-left: 20px; /* Indentation for sub-navigation items */
+}
+
+/* Additional styling for icons */
+mat-icon {
+  margin-right: 12px; /* Margin for icons */
+}
+
 /* Content container */
 .content-container {
   padding: 20px; /* Add padding */
-}
-
-/* Additional styling for sub-navigation links */
-.sub-nav-link {
-  padding-left: 40px; /* Add more padding to the left */
-}
-
-.bottom-link {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
 }

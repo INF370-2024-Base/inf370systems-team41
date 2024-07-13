@@ -12,11 +12,17 @@ export class AppComponent {
   isOrdersMenuOpen = false;
   isDeliveriesMenuOpen = false;
   isStockMenuOpen = false;
+  isUserSubNavOpen = false;
   
   title = 'BioProSystem';
   toggleOrdersMenu(): void {
     this.isOrdersMenuOpen = !this.isOrdersMenuOpen;
   }
+  toggleSubNav(nav: string): void {
+    
+      this.isUserSubNavOpen = !this.isUserSubNavOpen;
+    }
+    
   toggleEmployeeMenu() {
     this.isEmployeeMenuOpen = !this.isEmployeeMenuOpen;
   }

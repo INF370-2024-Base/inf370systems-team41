@@ -20,98 +20,113 @@
   </div>
 
   <mat-sidenav-container>
-      <mat-sidenav #sidenav mode="side" [(opened)]="isSidenavOpen" class="side-container" *ngIf="isLoggedIn">
+    <mat-sidenav #sidenav mode="side" [(opened)]="isSidenavOpen" class="side-container" *ngIf="isLoggedIn">
       <mat-nav-list>
         <a mat-list-item class="nav-link" routerLink="/home" (click)="isSidenavOpen = !isSidenavOpen">
           <mat-icon>home</mat-icon> <!-- Icon for home -->
           <span class="nav-text">Home</span> <!-- Text for home -->
         </a>
-
-        <a mat-list-item class="nav-link" (click)="toggleEmployeeMenu()" [routerLink]="['/employeeProfile']">
-          <mat-icon>perm_contact_calendar</mat-icon> <!-- Icon for profile -->
-          All Employees
+  
+        <a mat-list-item class="nav-link" (click)="toggleSubNav('user')" [routerLink]="['/all-user']">
+          <mat-icon> contacts</mat-icon> <!-- Icon for all users -->
+          All-users
         </a>
-        <ng-container *ngIf="isEmployeeMenuOpen">
-          <a mat-list-item class="sub-nav-link" [routerLink]="['/dailyHoursProfile']" (click)="isSidenavOpen = !isSidenavOpen">
-            <mat-icon>add_circle_outline</mat-icon> <!-- Icon for new order -->
-            Employee Hours
+        <div class="sub-nav-container" *ngIf="isUserSubNavOpen">
+          <a mat-list-item class="sub-nav-link" [routerLink]="['/adduser']" (click)="isSidenavOpen = !isSidenavOpen">
+            <mat-icon>folder_shared</mat-icon> <!-- Icon for add user -->
+            Add User
           </a>
-        </ng-container>
+        </div>
+  
+          
 
-       
-        <a mat-list-item class="nav-link" (click)="toggleOrdersMenu()" [routerLink]="['/orders']">
-          <mat-icon>receipt</mat-icon> <!-- Icon for orders -->
-          Orders
-        </a>
-        <ng-container *ngIf="isOrdersMenuOpen">
-          <a mat-list-item class="sub-nav-link" [routerLink]="['/addOrder']" (click)="isSidenavOpen = !isSidenavOpen">
-            <mat-icon>add_circle_outline</mat-icon> <!-- Icon for new order -->
-            New Order
+          <a mat-list-item class="nav-link" (click)="toggleEmployeeMenu()" [routerLink]="['/employeeProfile']">
+            <mat-icon>perm_contact_calendar</mat-icon> <!-- Icon for profile -->
+            All Employees
           </a>
-          <a mat-list-item class="sub-nav-link" [routerLink]="['/openOrder']" (click)="isSidenavOpen = !isSidenavOpen">
-            <mat-icon>folder_open</mat-icon> <!-- Icon for open orders -->
-            Open Orders
+          
+          <ng-container *ngIf="isEmployeeMenuOpen">
+            <a mat-list-item class="sub-nav-link" routerLink="/captureEmployeeDailyHours" (click)="isSidenavOpen = !isSidenavOpen">
+              <mat-icon>schedule</mat-icon> <!-- Icon for schedule/hours -->
+              Capture Employee Daily Hours
+            </a>
+          </ng-container>
+          <a mat-list-item class="nav-link" routerLink="/dentistProfile" (click)="isSidenavOpen = !isSidenavOpen">
+            <mat-icon>medical_services</mat-icon> <!-- Icon for dentist profile -->
+            Dentist Profiles
           </a>
-          <a mat-list-item class="sub-nav-link" [routerLink]="['/orderAwaitingDentalDesign']" (click)="isSidenavOpen = !isSidenavOpen">
-            <mat-icon>folder_open</mat-icon> <!-- Icon for open orders -->
-            Orders Awaiting Dental Design
+         
+          <a mat-list-item class="nav-link" (click)="toggleOrdersMenu()" [routerLink]="['/orders']">
+            <mat-icon>receipt</mat-icon> <!-- Icon for orders -->
+            Orders
           </a>
-          <a mat-list-item class="sub-nav-link" [routerLink]="['/dentalDesignApproval']" (click)="isSidenavOpen = !isSidenavOpen">
-            <mat-icon>add_circle_outline</mat-icon> <!-- Icon for open orders -->
-            Approve dental designs
-          </a>
-          <a mat-list-item class="sub-nav-link" [routerLink]="['/approval']" (click)="isSidenavOpen = !isSidenavOpen">
-            <mat-icon>check_circle</mat-icon> <!-- Icon for approve orders -->
-            Approve Orders
-          </a>
-        </ng-container>
-        <a mat-list-item class="nav-link" (click)="isSidenavOpen = !isSidenavOpen" [routerLink]="['/addproceduraltimeline']">
-          <mat-icon>event</mat-icon> 
-          Timeline of Orders
-        </a>
-        <a mat-list-item class="nav-link" (click)="toggleStockMenu()" [routerLink]="['/pageStock']">
-          <mat-icon>local_shipping</mat-icon> 
-          Stock
-        </a>
-        <ng-container *ngIf="isStockMenuOpen">
-          <a mat-list-item class="sub-nav-link" [routerLink]="['/addStock']" (click)="isSidenavOpen = !isSidenavOpen">
-            <mat-icon>add_circle_outline</mat-icon> <!-- Icon for new order -->
-            Add Stock
-          </a>
-        </ng-container>
-      
-        <ng-container>
-          <a mat-list-item class="sub-nav-link" [routerLink]="['/reports']" (click)="isSidenavOpen = !isSidenavOpen">
-            <mat-icon>assessment</mat-icon> <!-- Icon for new order -->
-            Reports
-          </a>
-        </ng-container>
+          <ng-container *ngIf="isOrdersMenuOpen">
+            <a mat-list-item class="sub-nav-link" [routerLink]="['/addOrder']" (click)="isSidenavOpen = !isSidenavOpen">
+              <mat-icon>add_circle_outline</mat-icon> <!-- Icon for new order -->
+              New Order
+            </a>
+            <a mat-list-item class="sub-nav-link" [routerLink]="['/openOrder']" (click)="isSidenavOpen = !isSidenavOpen">
+              <mat-icon>folder_open</mat-icon> <!-- Icon for open orders -->
+              Open Orders
+            </a>
+            <a mat-list-item class="sub-nav-link" [routerLink]="['/orderAwaitingDentalDesign']" (click)="isSidenavOpen = !isSidenavOpen">
+              <mat-icon>folder_open</mat-icon> <!-- Icon for open orders -->
+              Orders Awaiting Dental Design
+            </a>
+            <a mat-list-item class="sub-nav-link" [routerLink]="['/dentalDesignApproval']" (click)="isSidenavOpen = !isSidenavOpen">
+              <mat-icon>add_circle_outline</mat-icon> <!-- Icon for open orders -->
+              Approve dental designs
+            </a>
+            <a mat-list-item class="sub-nav-link" [routerLink]="['/approval']" (click)="isSidenavOpen = !isSidenavOpen">
+              <mat-icon>check_circle</mat-icon> <!-- Icon for approve orders -->
+              Approve Orders
+            </a>
+          </ng-container>
 
-        <ng-container>
-          <a mat-list-item class="sub-nav-link" [routerLink]="['/help']" (click)="isSidenavOpen = !isSidenavOpen">
-            <mat-icon>help</mat-icon> <!-- Icon for new order -->
-            Help Page
-          </a>
-        </ng-container>
-        <ng-container>
-          <a mat-list-item class="sub-nav-link" [routerLink]="['/all-user']" (click)="isSidenavOpen = !isSidenavOpen">
-            <mat-icon>add_circle_outline</mat-icon> <!-- Icon for new order -->
-            All-users
-          </a>
-        </ng-container>
-        <ng-container>
-          <a mat-list-item class="sub-nav-link" [routerLink]="['/calendar']" (click)="isSidenavOpen = !isSidenavOpen">
-            <mat-icon>calendar</mat-icon> <!-- Icon for new order -->
-            Calendar
-          </a>
-        </ng-container> 
+          <ng-container>
+            <a mat-list-item class="sub-nav-link" [routerLink]="['/employeeOrders']" (click)="isSidenavOpen = !isSidenavOpen">
+              <mat-icon>description</mat-icon> <!-- Icon for new order -->
+              Employee Order steps
+            </a>
+          </ng-container>
 
-        <ng-container>
-          <a mat-list-item class="sub-nav-link" [routerLink]="['/employeeOrders']" (click)="isSidenavOpen = !isSidenavOpen">
-            <mat-icon>calendar</mat-icon> <!-- Icon for new order -->
-            Employee Order steps
+          <a mat-list-item class="nav-link" (click)="isSidenavOpen = !isSidenavOpen" [routerLink]="['/addproceduraltimeline']">
+            <mat-icon>event</mat-icon> 
+            Timeline of Orders
           </a>
-        </ng-container>
+
+          <ng-container>
+            <a mat-list-item class="sub-nav-link" [routerLink]="['/calendar']" (click)="isSidenavOpen = !isSidenavOpen">
+              <mat-icon>date_range</mat-icon> <!-- Icon for new order -->
+              Calendar
+            </a>
+          </ng-container> 
+          
+
+          <a mat-list-item class="nav-link" (click)="toggleDeliveriesMenu()" [routerLink]="['/deliveries']">
+            <mat-icon>local_shipping</mat-icon> 
+            Deliveries
+          </a>
+          <ng-container *ngIf="isDeliveriesMenuOpen">
+            <a mat-list-item class="sub-nav-link" [routerLink]="['/addDelivery']" (click)="isSidenavOpen = !isSidenavOpen">
+              <mat-icon>add_circle_outline</mat-icon> <!-- Icon for new order -->
+              New Delivery
+            </a>
+          </ng-container>
+        
+          <ng-container>
+            <a mat-list-item class="sub-nav-link" [routerLink]="['/reports']" (click)="isSidenavOpen = !isSidenavOpen">
+              <mat-icon>assessment</mat-icon> <!-- Icon for new order -->
+              Reports
+            </a>
+          </ng-container>
+  
+          <ng-container>
+            <a mat-list-item class="sub-nav-link" [routerLink]="['/help']" (click)="isSidenavOpen = !isSidenavOpen">
+              <mat-icon>help</mat-icon> <!-- Icon for new order -->
+              Help Page
+            </a>
+          </ng-container>   
 
     </mat-nav-list>
     </mat-sidenav>
