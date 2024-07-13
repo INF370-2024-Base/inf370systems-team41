@@ -74,9 +74,6 @@ body {
     align-items: center;
 }
 
-.current-step h4 {
-    color: #007bff;
-}
 
 .completed-step {
     display: flex;
@@ -84,28 +81,88 @@ body {
     color: #28a745;
 }
 
-.actions {
-    margin-top: 10px;
-    display: flex;
-    gap: 10px;
+.current-step {
+    color: #007bff;
+    h4 {
+        margin: 0;
+    }
 }
 
-.media-label {
+.completed-step h4 {
+    color: #999999;
+    text-decoration: line-through;
+}
+
+.completed-info {
     display: flex;
     align-items: center;
-    margin-bottom: 5px;
-    color: #333;
+    color: #28a745;
+    mat-icon {
+        margin-right: 4px;
+    }
 }
 
-.media-input {
-    display: inline-block;
-    padding: 8px 12px;
-    border: 1px solid #ccc;
+.current-step-actions {
+    padding: 10px;
+    border: 1px solid #007bff;
     border-radius: 5px;
-    background-color: #f0f0f0;
-    color: #333;
-    font-size: 14px;
-    cursor: pointer;
+    background-color: #f9f9f9;
+    margin-top: 10px;
+}
+
+.due-date {
+    margin-bottom: 10px;
+}
+
+.actions {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+
+    .add-stock-btn {
+        background-color: #007bff;
+    }
+
+    .submit-btn {
+        background-color: #ccc;
+        color: #333;
+    }
+}
+
+.stock-item {
+    padding: 5px;
+    background-color: #e0f7fa;
+    border-radius: 3px;
+}
+
+.form-group {
+    margin-top: 15px;
+
+    .media-label {
+        display: flex;
+        align-items: center;
+        margin-bottom: 5px;
+        color: #333;
+
+        mat-icon {
+            margin-right: 8px;
+        }
+    }
+
+    .media-input {
+        display: inline-block;
+        padding: 8px 12px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        background-color: #f0f0f0;
+        color: #333;
+        font-size: 14px;
+        cursor: pointer;
+    }
+}
+
+.complete-step {
+    margin-top: 10px;
 }
 
 .no-orders-found {

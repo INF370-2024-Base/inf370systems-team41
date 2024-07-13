@@ -11,11 +11,13 @@
                 <div *ngFor="let orderstep of order.systemOrderSteps" class="order-step-container">
                     <mat-list>
                         <mat-list-item>
-                            <div *ngIf="orderstep.isCurrentStep" style="color: #007bff;">
-                                <h4 matLine>Current Step: {{ orderstep.description }}</h4>
+                            <div *ngIf="orderstep.isCurrentStep" style="color: #007bff; background-color: #e6f7ff; padding: 10px; border-radius: 5px;">
+                                <h4 matLine style="margin: 0;">
+                                    <span style="font-weight: bold;">Current Step:</span> {{ orderstep.description }}
+                                </h4>
                             </div>
-                            <div *ngIf="!orderstep.isCurrentStep" [ngStyle]="orderstep.completed ? {'color': '#999999', 'text-decoration': 'line-through'} : {}">
-                                <h4 matLine>{{ orderstep.description }}</h4>
+                            <div *ngIf="!orderstep.isCurrentStep" [ngStyle]="orderstep.completed ? {'color': '#999999', 'text-decoration': 'line-through'} : {'color': '#333', 'font-weight': 'normal'}">
+                                <h4 matLine style="margin: 0;">{{ orderstep.description }}</h4>
                             </div>
                             <div *ngIf="orderstep.completed" style="display: flex; align-items: center; color: #28a745;">
                                 <mat-icon>check</mat-icon> Date completed: {{orderstep.dateCompleted | date: 'shortDate'}}
@@ -56,7 +58,7 @@
                                     <input type="file" id="MediaFiles" (change)="onFileSelected($event)" multiple class="media-input" style="display: inline-block; padding: 8px 12px; border: 1px solid #ccc; border-radius: 5px; background-color: #f0f0f0; color: #333; font-size: 14px; cursor: pointer;">
                                 </div>
                                 <div *ngIf="stockUsed" style="margin-top: 10px;">
-                                    <button *ngIf="stockUsed.StockUsed.length > 0" mat-raised-button color="accent" (click)="CompleteStepOrOrder(orderstep.systeorderStepId, order.orderId)">
+                                    <button *ngIf="stockUsed.StockUsed.length > 0" mat-raised-button color="primary" (click)="CompleteStepOrOrder(orderstep.systeorderStepId, order.orderId)">
                                         Complete step
                                     </button>
                                 </div>
