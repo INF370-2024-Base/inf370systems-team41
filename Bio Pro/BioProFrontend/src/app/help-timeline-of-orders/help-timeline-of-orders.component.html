@@ -20,9 +20,15 @@
 
     <div class="help-container">
         <h2><mat-icon>event</mat-icon> Order Timeline</h2>
+        <section>
+            <h3>Overview</h3>
+            <p>This section offers guidance on understanding and tracking the timeline of orders from creation to completion.</p>
+        </section>
       
         <section class="dropdown" (click)="toggleDropdown('commonQuestions')">
             <h3>Common Questions </h3>
+
+
             <ul *ngIf="dropdownStates['commonQuestions']">
                 <li class="searchable">
                     <h4 class="searchable">How do I add a new procedural timeline?</h4>
