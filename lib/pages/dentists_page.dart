@@ -1,49 +1,21 @@
 import 'package:biopromobileflutter/pages/components/dentist_card.dart';
+import 'package:biopromobileflutter/services/dentist_service.dart';
 import 'package:flutter/material.dart';
 
-class DentistsPage extends StatelessWidget {
-  final List<Map<String, String>> dentists = [
-    {
-      'name': 'John Smith',
-      'contactDetail': '123-456-7890',
-      'address': '123 Main St, City, State, ZIP',
-    },
-    {
-      'name': 'Lisa Johnson',
-      'contactDetail': '987-654-3210',
-      'address': '456 Elm St, Town, State, ZIP',
-    },
-    {
-      'name': 'Michael Williams',
-      'contactDetail': '555-123-4567',
-      'address': '789 Oak St, Village, State, ZIP',
-    },
-    {
-      'name': 'Emily Johnson',
-      'contactDetail': '555-456-7890',
-      'address': '101 Oak St, Springfield, IL 62701',
-    },
-    {
-      'name': 'Charlie Brown',
-      'contactDetail': 'charlie.brown@example.com, (555) 345 6789',
-      'address': '789 Maple St, Springfield, IL 62701',
-    },
-    {
-      'name': 'Jane Doe',
-      'contactDetail': 'jane.doe@example.com, (555) 234 5678',
-      'address': '456 Elm St, Springfield, IL 62701',
-    },
-    {
-      'name': 'James Williams',
-      'contactDetail': 'james.williams@example.com, (555) 567 8901',
-      'address': '303 Cedar St, Springfield, IL 62701',
-    },
-    {
-      'name': 'Sarah Miller',
-      'contactDetail': 'sarah.miller@example.com, (555) 678 9012',
-      'address': '202 Pine St, Springfield, IL 62701',
-    },
-  ];
+class DentistsPage extends StatefulWidget {
+  @override
+  _DentistsPageState createState() => _DentistsPageState();
+}
+
+class _DentistsPageState extends State<DentistsPage> {
+  late Future<List<dynamic>> futureDentists;
+  final DentistService dentistService = DentistService(baseUrl: 'https://localhost:44315/api/Dentist');
+
+  @override
+  void initState() {
+    super.initState();
+    futureDentists = dentistService.fetchDentists();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -51,22 +23,36 @@ class DentistsPage extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Dentists'),
       ),
-      body: GridView.builder(
-        padding: const EdgeInsets.all(10.0),
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
-          crossAxisSpacing: 10.0,
-          mainAxisSpacing: 10.0,
-          childAspectRatio: 2 / 2.5, // Adjust aspect ratio to fit content
-        ),
-        itemCount: dentists.length,
-        itemBuilder: (context, index) {
-          final dentist = dentists[index];
-          return DentistCard(
-            name: dentist['name']!,
-            contactDetail: dentist['contactDetail']!,
-            address: dentist['address']!,
-          );
+      body: FutureBuilder<List<dynamic>>(
+        future: futureDentists,
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(child: CircularProgressIndicator());
+          } else if (snapshot.hasError) {
+            return Center(child: Text('Error: ${snapshot.error}'));
+          } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+            return const Center(child: Text('No dentists found'));
+          } else {
+            final dentists = snapshot.data!;
+            return GridView.builder(
+              padding: const EdgeInsets.all(10.0),
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                crossAxisSpacing: 10.0,
+                mainAxisSpacing: 10.0,
+                childAspectRatio: 2 / 2.5, 
+              ),
+              itemCount: dentists.length,
+              itemBuilder: (context, index) {
+                final dentist = dentists[index];
+                return DentistCard(
+                  name: '${dentist['firstName']} ${dentist['lastName']}',
+                  contactDetail: dentist['contactDetail'] ?? '',
+                  address: dentist['address'] ?? '',
+                );
+              },
+            );
+          }
         },
       ),
     );
