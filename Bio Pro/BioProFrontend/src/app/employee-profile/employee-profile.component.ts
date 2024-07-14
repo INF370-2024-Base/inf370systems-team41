@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { EmployeeService } from '../services/employee.service';
-import { Employee } from '../shared/employee';
 import { EditEmployeeDialogComponent } from '../edit-employee-dialog/edit-employee-dialog.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
@@ -14,6 +13,7 @@ export class EmployeeProfileComponent implements OnInit {
   employees: any[] = [];
   searchQuery = '';
   jobTitles: any[] = [];
+  noResultsFound = false;
 
   constructor(
     private employeeService: EmployeeService,
@@ -29,12 +29,14 @@ export class EmployeeProfileComponent implements OnInit {
   fetchAllEmployees() {
     this.employeeService.getAllEmployees().subscribe(data => {
       this.employees = data;
+      this.noResultsFound = this.employees.length === 0;
     });
   }
 
   searchEmployees() {
     this.employeeService.searchEmployees(this.searchQuery).subscribe(data => {
       this.employees = data;
+      this.noResultsFound = this.employees.length === 0;
     });
   }
 
@@ -54,8 +56,8 @@ export class EmployeeProfileComponent implements OnInit {
     });
   }
 
-  deleteEmployee(employee:any) {
-    console.log (employee)
+  deleteEmployee(employee: any) {
+    console.log(employee);
     if (!employee.employeeId) {
       console.error('EmployeeId is undefined. Cannot delete employee.');
       return;
@@ -87,6 +89,7 @@ export class EmployeeProfileComponent implements OnInit {
                d.lastName.toLowerCase().includes(searchCriteria) ||
                fullName.includes(searchCriteria);
       });
+      this.noResultsFound = this.employees.length === 0;
     }
   }
 }

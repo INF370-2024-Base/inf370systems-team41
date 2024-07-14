@@ -24,7 +24,7 @@ export class AddDentistComponent implements OnInit {
   {this.addDentistForm = this.fb.group({
     LastName: ['', Validators.required],
     FirstName: ['', Validators.required],
-    ContactDetail:['',Validators.required],
+    ContactDetail:['', [Validators.required,PhoneChecker.SouthAfricanPhoneNumberValidator()]],
     Address:['',Validators.required]
   }); }
 

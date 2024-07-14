@@ -105,6 +105,12 @@
             Calendar
           </a>
         </ng-container>
+        <ng-container>
+          <a mat-list-item class="sub-nav-link" [routerLink]="['/dentistProfile']" (click)="isSidenavOpen = !isSidenavOpen">
+            <mat-icon>calendar</mat-icon> <!-- Icon for new order -->
+            Calendar
+          </a>
+        </ng-container>
     </mat-nav-list>
     </mat-sidenav>
     <mat-sidenav-content class="content-container">

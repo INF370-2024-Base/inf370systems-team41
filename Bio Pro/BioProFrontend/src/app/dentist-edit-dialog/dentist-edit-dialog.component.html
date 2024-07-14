@@ -1,25 +1,25 @@
 <h2 mat-dialog-title>Edit Dentist</h2>
 <mat-dialog-content>
-  <form #editForm="ngForm">
-    <mat-form-field>
-      <mat-label>First Name</mat-label>
-      <input matInput [(ngModel)]="data.dentist.firstName" name="firstName" required>
-    </mat-form-field>
-    <mat-form-field>
-      <mat-label>Last Name</mat-label>
-      <input matInput [(ngModel)]="data.dentist.lastName" name="lastName" required>
-    </mat-form-field>
-    <mat-form-field>
-      <mat-label>Contact Detail</mat-label>
-      <input matInput [(ngModel)]="data.dentist.contactDetail" name="contactDetail" required>
-    </mat-form-field>
-    <mat-form-field>
-      <mat-label>Address</mat-label>
-      <input matInput [(ngModel)]="data.dentist.address" name="address">
-    </mat-form-field>
+  <form #editForm="ngForm" class="container">
+    <div class="form-group">
+      <label for="firstName">First Name</label>
+      <input id="firstName" matInput [(ngModel)]="data.dentist.firstName" name="firstName" class="form-control" required>
+    </div>
+    <div class="form-group">
+      <label for="lastName">Last Name</label>
+      <input id="lastName" matInput [(ngModel)]="data.dentist.lastName" name="lastName" class="form-control" required>
+    </div>
+    <div class="form-group">
+      <label for="contactDetail">Contact Detail</label>
+      <input id="contactDetail" matInput [(ngModel)]="data.dentist.contactDetail" name="contactDetail" class="form-control" required>
+    </div>
+    <div class="form-group">
+      <label for="address">Address</label>
+      <input id="address" matInput [(ngModel)]="data.dentist.address" name="address" class="form-control">
+    </div>
   </form>
 </mat-dialog-content>
 <mat-dialog-actions>
-  <button mat-button (click)="onCancel()">Cancel</button>
-  <button mat-button [mat-dialog-close]="data.dentist" [disabled]="!editForm.valid">Save</button>
+  <button mat-button (click)="onCancel()" class="btn btn-secondary">Cancel</button>
+  <button mat-button [mat-dialog-close]="data.dentist" [disabled]="!editForm.valid" class="btn btn-primary">Save</button>
 </mat-dialog-actions>

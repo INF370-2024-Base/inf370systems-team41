@@ -17,3 +17,4 @@ export class DentistEditDialogComponent {
     this.dialogRef.close();
   }
 }
+

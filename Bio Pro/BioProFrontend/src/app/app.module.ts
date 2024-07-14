@@ -85,7 +85,7 @@ import { HelpStockAddComponent } from './help-stock-add/help-stock-add.component
 import { HelpStockCaptureComponent } from './help-stock-capture/help-stock-capture.component';
 import { HelpStockWriteoffComponent } from './help-stock-writeoff/help-stock-writeoff.component';
 import { HelpStockSearchComponent } from './help-stock-search/help-stock-search.component';
-
+import { MatSelectModule } from '@angular/material/select';
 
 
 @NgModule({
@@ -130,7 +130,8 @@ import { HelpStockSearchComponent } from './help-stock-search/help-stock-search.
     CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory }),MatExpansionModule,
     CommonModule,
     MatDialogModule,
-    MatExpansionModule
+    MatExpansionModule,
+    MatSelectModule
   ],
   providers: [DatePipe],
   bootstrap: [AppComponent],

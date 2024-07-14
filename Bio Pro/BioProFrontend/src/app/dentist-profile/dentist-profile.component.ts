@@ -14,6 +14,7 @@ export class DentistProfileComponent implements OnInit {
   dentists: Dentist[] = [];
   filteredDentists: Dentist[] = [];
   searchQuery = '';
+  noResultsFound = false;
 
   constructor(
     private dentistService: DentistService,
@@ -35,12 +36,14 @@ export class DentistProfileComponent implements OnInit {
   search(): void {
     if (this.searchQuery.trim() === '') {
       this.filteredDentists = [...this.dentists];
+      this.noResultsFound = false;
     } else {
       this.filteredDentists = this.dentists.filter(dentist =>
         dentist.firstName.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
         dentist.lastName.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
         dentist.contactDetail.toLowerCase().includes(this.searchQuery.toLowerCase())
       );
+      this.noResultsFound = this.filteredDentists.length === 0;
     }
   }
 
@@ -66,28 +69,32 @@ export class DentistProfileComponent implements OnInit {
   }
 
   deleteDentist(dentist: Dentist): void {
-    this.dentistService.deleteDentist(dentist.dentistId).subscribe(
-      () => {
-        this.snackBar.open('Dentist deleted successfully', 'Close', { duration: 3000 });
-        this.fetchDentists();
-      },
-      error => {
-        this.snackBar.open('Error deleting dentist', 'Close', { duration: 3000 });
-      }
-    );
+    if (confirm(`Are you sure you want to delete Dr. ${dentist.firstName} ${dentist.lastName}?`)) {
+      this.dentistService.deleteDentist(dentist.dentistId).subscribe(
+        () => {
+          this.snackBar.open('Dentist deleted successfully', 'Close', { duration: 3000 });
+          this.fetchDentists();
+        },
+        error => {
+          this.snackBar.open('Error deleting dentist', 'Close', { duration: 3000 });
+        }
+      );
+    }
   }
 
   onSearchChange(searchCriteria: string): void {
     if (searchCriteria.trim() === '') {
-      this.fetchDentists();
+      this.filteredDentists = [...this.dentists];
+      this.noResultsFound = false;
     } else {
       this.filteredDentists = this.dentists.filter(d => {
         let fullName = (d.firstName + ' ' + d.lastName).toLowerCase();
-        return d.firstName.toLowerCase().includes(searchCriteria) ||
-          d.address?.toLowerCase().includes(searchCriteria) ||
-          d.lastName.toLowerCase().includes(searchCriteria) ||
-          fullName.includes(searchCriteria);
+        return d.firstName.toLowerCase().includes(searchCriteria.toLowerCase()) ||
+          d.address?.toLowerCase().includes(searchCriteria.toLowerCase()) ||
+          d.lastName.toLowerCase().includes(searchCriteria.toLowerCase()) ||
+          fullName.includes(searchCriteria.toLowerCase());
       });
+      this.noResultsFound = this.filteredDentists.length === 0;
     }
   }
 }
