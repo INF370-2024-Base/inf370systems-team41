@@ -28,28 +28,37 @@
         </a>
   
         <!-- User Section -->
-        <mat-expansion-panel class="nav-expansion-panel" (opened)="toggleSubNav('user')" (closed)="toggleSubNav('user')">
-          <mat-expansion-panel-header>
-            <mat-icon>contacts</mat-icon>
-            <span>All Users</span>
-          </mat-expansion-panel-header>
-          <a mat-list-item [routerLink]="['/adduser']" (click)="isSidenavOpen = !isSidenavOpen">
-            <mat-icon>folder_shared</mat-icon>
-            <span>Add User</span>
-          </a>
-        </mat-expansion-panel>
+      <!-- User Section -->
+<mat-expansion-panel class="nav-expansion-panel" (opened)="toggleSubNav('user')" (closed)="toggleSubNav('user')">
+  <mat-expansion-panel-header>
+    <a [routerLink]="['/all-user']" class="nav-link" (click)="$event.stopPropagation()">
+      <mat-icon>contacts</mat-icon>
+      <span>All Users</span>
+    </a>
+  </mat-expansion-panel-header>
+  <a mat-list-item [routerLink]="['/adduser']" (click)="isSidenavOpen = !isSidenavOpen">
+    <mat-icon>folder_shared</mat-icon>
+    <span>Add User</span>
+  </a>
+</mat-expansion-panel>
+
   
-        <!-- Employee Section -->
-        <mat-expansion-panel class="nav-expansion-panel" (opened)="toggleEmployeeMenu()" (closed)="toggleEmployeeMenu()">
-          <mat-expansion-panel-header>
-            <mat-icon>perm_contact_calendar</mat-icon>
-            <span>All Employees</span>
-          </mat-expansion-panel-header>
-          <a mat-list-item routerLink="/captureEmployeeDailyHours" (click)="isSidenavOpen = !isSidenavOpen">
-            <mat-icon>schedule</mat-icon>
-            <span>Capture Employee Daily Hours</span>
-          </a>
-        </mat-expansion-panel>
+      <!-- Employee Section -->
+<mat-expansion-panel class="nav-expansion-panel" (opened)="toggleEmployeeMenu()" (closed)="toggleEmployeeMenu()">
+  <mat-expansion-panel-header>
+    <a [routerLink]="['/employeeProfile']" class="nav-link" (click)="$event.stopPropagation()">
+      <mat-icon>perm_contact_calendar</mat-icon>
+      <span>All Employees</span>
+    </a>
+  </mat-expansion-panel-header>
+  <div>
+    <a mat-list-item [routerLink]="['/captureEmployeeDailyHours']" class="nav-link" (click)="isSidenavOpen = !isSidenavOpen">
+      <mat-icon>schedule</mat-icon>
+      <span>Capture Employee Daily Hours</span>
+    </a>
+  </div>
+</mat-expansion-panel>
+
   
         <!-- Dentist Profile -->
         <a mat-list-item routerLink="/dentistProfile" (click)="isSidenavOpen = !isSidenavOpen">
@@ -60,8 +69,10 @@
         <!-- Orders Section -->
         <mat-expansion-panel class="nav-expansion-panel" (opened)="toggleOrdersMenu()" (closed)="toggleOrdersMenu()">
           <mat-expansion-panel-header>
-            <mat-icon>receipt</mat-icon>
-            <span>Orders</span>
+            <a [routerLink]="['/orders']" class="nav-link" (click)="$event.stopPropagation()">
+              <mat-icon>receipt</mat-icon>
+              <span>Orders</span>
+            </a>
           </mat-expansion-panel-header>
           <a mat-list-item [routerLink]="['/addOrder']" (click)="isSidenavOpen = !isSidenavOpen">
             <mat-icon>add_circle_outline</mat-icon>
@@ -102,17 +113,19 @@
         </a>
   
         <!-- Deliveries Section -->
-        <mat-expansion-panel class="nav-expansion-panel" (opened)="toggleDeliveriesMenu()" (closed)="toggleDeliveriesMenu()">
-          <mat-expansion-panel-header>
-            <mat-icon>local_shipping</mat-icon>
-            <span>Deliveries</span>
-          </mat-expansion-panel-header>
-          <a mat-list-item [routerLink]="['/addDelivery']" (click)="isSidenavOpen = !isSidenavOpen">
-            <mat-icon>add_circle_outline</mat-icon>
-            <span>New Delivery</span>
-          </a>
-        </mat-expansion-panel>
-  
+<mat-expansion-panel class="nav-expansion-panel" (opened)="toggleDeliveriesMenu()" (closed)="toggleDeliveriesMenu()">
+  <mat-expansion-panel-header>
+    <a [routerLink]="['/deliveries']" class="nav-link" (click)="$event.stopPropagation()">
+      <mat-icon>local_shipping</mat-icon>
+      <span>Deliveries</span>
+    </a>
+  </mat-expansion-panel-header>
+  <a mat-list-item [routerLink]="['/addDelivery']" (click)="isSidenavOpen = !isSidenavOpen">
+    <mat-icon>add_circle_outline</mat-icon>
+    <span>New Delivery</span>
+  </a>
+</mat-expansion-panel>
+
         <!-- Reports -->
         <a mat-list-item routerLink="/reports" (click)="isSidenavOpen = !isSidenavOpen">
           <mat-icon>assessment</mat-icon>
