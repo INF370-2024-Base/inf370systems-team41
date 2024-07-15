@@ -4,6 +4,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { DentistService } from '../shared/dentist.service';
 import { Dentist } from '../shared/dentist';
 import { DentistEditDialogComponent } from '../dentist-edit-dialog/dentist-edit-dialog.component';
+import { ConfirmDeleteDentistComponent } from '../confirm-delete-dentist/confirm-delete-dentist.component';
 
 @Component({
   selector: 'app-dentist-profile',
@@ -67,21 +68,26 @@ export class DentistProfileComponent implements OnInit {
       }
     });
   }
-
   deleteDentist(dentist: Dentist): void {
-    if (confirm(`Are you sure you want to delete Dr. ${dentist.firstName} ${dentist.lastName}?`)) {
-      this.dentistService.deleteDentist(dentist.dentistId).subscribe(
-        () => {
-          this.snackBar.open('Dentist deleted successfully', 'Close', { duration: 3000 });
-          this.fetchDentists();
-        },
-        error => {
-          this.snackBar.open('Error deleting dentist', 'Close', { duration: 3000 });
-        }
-      );
-    }
-  }
+    const dialogRef = this.dialog.open(ConfirmDeleteDentistComponent, {
+      width: '400px',
+      data: { dentist }
+    });
 
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.dentistService.deleteDentist(dentist.dentistId).subscribe(
+          () => {
+            this.snackBar.open('Dentist deleted successfully', 'Close', { duration: 3000 });
+            this.fetchDentists();
+          },
+          error => {
+            this.snackBar.open('Error deleting dentist', 'Close', { duration: 3000 });
+          }
+        );
+      }
+    });
+  }
   onSearchChange(searchCriteria: string): void {
     if (searchCriteria.trim() === '') {
       this.filteredDentists = [...this.dentists];

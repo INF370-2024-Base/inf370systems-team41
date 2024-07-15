@@ -37,7 +37,12 @@
             Employee Hours
           </a>
         </ng-container>
-
+        <ng-container>
+          <a mat-list-item class="sub-nav-link" [routerLink]="['/dentistProfile']" (click)="isSidenavOpen = !isSidenavOpen">
+            <mat-icon>health_and_safety</mat-icon> <!-- Icon for dentist -->
+            Dentist
+          </a>
+        </ng-container>
        
         <a mat-list-item class="nav-link" (click)="toggleOrdersMenu()" [routerLink]="['/orders']">
           <mat-icon>receipt</mat-icon> <!-- Icon for orders -->
@@ -70,12 +75,12 @@
           Timeline of Orders
         </a>
         <a mat-list-item class="nav-link" (click)="toggleStockMenu()" [routerLink]="['/pageStock']">
-          <mat-icon>local_shipping</mat-icon> 
+          <mat-icon>inventory</mat-icon> <!-- Icon for stock -->
           Stock
         </a>
         <ng-container *ngIf="isStockMenuOpen">
           <a mat-list-item class="sub-nav-link" [routerLink]="['/addStock']" (click)="isSidenavOpen = !isSidenavOpen">
-            <mat-icon>add_circle_outline</mat-icon> <!-- Icon for new order -->
+            <mat-icon>add_box</mat-icon> <!-- Icon for adding stock -->
             Add Stock
           </a>
         </ng-container>
@@ -105,12 +110,7 @@
             Calendar
           </a>
         </ng-container>
-        <ng-container>
-          <a mat-list-item class="sub-nav-link" [routerLink]="['/dentistProfile']" (click)="isSidenavOpen = !isSidenavOpen">
-            <mat-icon>calendar</mat-icon> <!-- Icon for new order -->
-            Calendar
-          </a>
-        </ng-container>
+       
     </mat-nav-list>
     </mat-sidenav>
     <mat-sidenav-content class="content-container">

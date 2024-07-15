@@ -57,12 +57,17 @@ export class EditEmployeeDialogComponent implements OnInit {
       console.log('Form is invalid');
       return;
     }
+    const jobTitleIdValue = parseInt(this.editEmployeeForm.get('jobTitleId')?.value, 10);
+    console.log('JobTitleId:', jobTitleIdValue);
+  
     const updatedEmployee: EditEmployee = {
       EmployeeId: this.data.employeeId,
-      JobTitleId: Number(this.editEmployeeForm.get('jobTitleId')?.value) || -1,
+      JobTitleId: jobTitleIdValue,
       Address: this.editEmployeeForm.get('address')?.value || ''
-  };
-
+    };
+  
+    console.log('Updated Employee:', updatedEmployee);
+  
     this.isLoading = true;
     this.employeeService.editEmployee(updatedEmployee).subscribe(response => {
       console.log('Employee details updated successfully:', response);
@@ -87,4 +92,3 @@ export class EditEmployeeDialogComponent implements OnInit {
     this.dialogRef.close();
   }
 }
-

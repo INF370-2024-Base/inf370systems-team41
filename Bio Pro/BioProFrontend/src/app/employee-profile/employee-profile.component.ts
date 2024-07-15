@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { EmployeeService } from '../services/employee.service';
 import { EditEmployeeDialogComponent } from '../edit-employee-dialog/edit-employee-dialog.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { ConfirmDeleteEmployeeComponent } from '../confirm-delete-employee/confirm-delete-employee.component';
 
 @Component({
   selector: 'app-employee-profile',
@@ -57,19 +58,25 @@ export class EmployeeProfileComponent implements OnInit {
   }
 
   deleteEmployee(employee: any) {
-    console.log(employee);
     if (!employee.employeeId) {
       console.error('EmployeeId is undefined. Cannot delete employee.');
       return;
     }
-
-    if (confirm(`Are you sure you want to delete ${employee.firstName} ${employee.lastName}?`)) {
-      this.employeeService.deleteEmployee(employee.employeeId).subscribe(() => {
-        this.fetchAllEmployees(); // Refresh the list after deleting
-      }, error => {
-        console.error('Error deleting employee:', error);
-      });
-    }
+  
+    const dialogRef = this.dialog.open(ConfirmDeleteEmployeeComponent, {
+      width: '400px',
+      data: { employee }
+    });
+  
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.employeeService.deleteEmployee(employee.employeeId).subscribe(() => {
+          this.fetchAllEmployees(); // Refresh the list after deleting
+        }, error => {
+          console.error('Error deleting employee:', error);
+        });
+      }
+    });
   }
 
   getJobTitles() {

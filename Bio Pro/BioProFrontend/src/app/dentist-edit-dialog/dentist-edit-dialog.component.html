@@ -1,21 +1,42 @@
 <h2 mat-dialog-title>Edit Dentist</h2>
 <mat-dialog-content>
   <form #editForm="ngForm" class="container">
+    <h1>Edit Dentist Details</h1>
     <div class="form-group">
-      <label for="firstName">First Name</label>
-      <input id="firstName" matInput [(ngModel)]="data.dentist.firstName" name="firstName" class="form-control" required>
+      <mat-form-field appearance="outline">
+        <mat-label><i class="material-icons">person</i> First Name</mat-label>
+        <input id="firstName" matInput [(ngModel)]="data.dentist.firstName" name="firstName" placeholder="First Name" required>
+        <mat-error *ngIf="editForm.form.get('firstName')?.invalid && editForm.form.get('firstName')?.touched">
+          First Name is required.
+        </mat-error>
+      </mat-form-field>
     </div>
+
     <div class="form-group">
-      <label for="lastName">Last Name</label>
-      <input id="lastName" matInput [(ngModel)]="data.dentist.lastName" name="lastName" class="form-control" required>
+      <mat-form-field appearance="outline">
+        <mat-label><i class="material-icons">person</i> Last Name</mat-label>
+        <input id="lastName" matInput [(ngModel)]="data.dentist.lastName" name="lastName" placeholder="Last Name" required>
+        <mat-error *ngIf="editForm.form.get('lastName')?.invalid && editForm.form.get('lastName')?.touched">
+          Last Name is required.
+        </mat-error>
+      </mat-form-field>
     </div>
+
     <div class="form-group">
-      <label for="contactDetail">Contact Detail</label>
-      <input id="contactDetail" matInput [(ngModel)]="data.dentist.contactDetail" name="contactDetail" class="form-control" required>
+      <mat-form-field appearance="outline">
+        <mat-label><i class="material-icons">phone</i> Contact Detail</mat-label>
+        <input id="contactDetail" matInput [(ngModel)]="data.dentist.contactDetail" name="contactDetail" placeholder="Contact Detail" required>
+        <mat-error *ngIf="editForm.form.get('contactDetail')?.invalid && editForm.form.get('contactDetail')?.touched">
+          Contact Detail is required.
+        </mat-error>
+      </mat-form-field>
     </div>
+
     <div class="form-group">
-      <label for="address">Address</label>
-      <input id="address" matInput [(ngModel)]="data.dentist.address" name="address" class="form-control">
+      <mat-form-field appearance="outline">
+        <mat-label><i class="material-icons">home</i> Address</mat-label>
+        <input id="address" matInput [(ngModel)]="data.dentist.address" name="address" placeholder="Address">
+      </mat-form-field>
     </div>
   </form>
 </mat-dialog-content>
