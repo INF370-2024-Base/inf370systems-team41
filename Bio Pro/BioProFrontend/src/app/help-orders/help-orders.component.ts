@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, ElementRef, ViewChild } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ElementRef, ViewChild, ChangeDetectorRef } from '@angular/core';
 
 @Component({
   selector: 'app-help-orders',
@@ -6,7 +6,7 @@ import { Component, OnInit, AfterViewInit, ElementRef, ViewChild } from '@angula
   styleUrls: ['./help-orders.component.scss']
 })
 export class HelpOrdersComponent implements OnInit, AfterViewInit {
-
+  constructor(private cd: ChangeDetectorRef) { }
   searchQuery: string = '';
   selectedFilter: string = 'all';
   noResultsFound: boolean = false; 
@@ -26,12 +26,21 @@ export class HelpOrdersComponent implements OnInit, AfterViewInit {
     openOrdersSteps: false,
   };
 
+
+
+
   @ViewChild('searchContent') searchContent!: ElementRef;
 
   isSearchActive: boolean = false;
   activeDropdown: string | null = null;
 
-  toggleDropdown(section: string): void {
+  toggleDropdown(section: string, event: Event): void {
+    // Check if the click event is coming from the search bar
+    const target = event.target as HTMLElement;
+    if (target.classList.contains('search-filter-container')) {
+      return;
+    }
+  
     if (this.isSearchActive) {
       return;
     }
@@ -39,23 +48,34 @@ export class HelpOrdersComponent implements OnInit, AfterViewInit {
     this.activeDropdown = this.dropdownStates[section] ? section : null;
   }
 
+
+  stopPropagation(event: Event): void {
+    event.stopPropagation();
+  }  
+  
+
   isAnySectionOpen(): boolean {
     return Object.values(this.dropdownStates).some(state => state);
   }
-
   onSearch(event: Event): void {
     const input = event.target as HTMLInputElement;
     this.searchQuery = input.value.toLowerCase();
+    this.isSearchActive = !!this.searchQuery; // Update the flag based on the search query
     this.filterContent();
+    event.stopPropagation();
+    this.cd.detectChanges(); // Manually trigger change detection
   }
-
-  onSearchFocus(): void {
-    this.isSearchActive = true;
-    // Reopen the active dropdown during search
-    if (this.activeDropdown) {
-      this.dropdownStates[this.activeDropdown] = true;
+  
+  
+  onSearchFocusOut(event: FocusEvent): void {
+    const relatedTarget = event.relatedTarget as Node;
+    const inputElement = event.target as Node;
+    if (!inputElement.contains(relatedTarget)) {
+      // The focus truly left the input field
+      this.isSearchActive = false;
     }
   }
+  
 
   onSearchBlur(): void {
     setTimeout(() => {

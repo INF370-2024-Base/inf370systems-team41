@@ -50,6 +50,7 @@ export class HelpDeliveriesComponent implements OnInit {
     const input = event.target as HTMLInputElement;
     this.searchQuery = input.value.toLowerCase();
     this.filterContent();
+    event.stopPropagation();
   }
 
   onFilter(event: any) {

@@ -26,7 +26,7 @@
     </div>
 
     <div *ngIf="isAnySectionOpen()" class="search-filter-container">
-        <input type="text" placeholder="Search..." (input)="onSearch($event)" />
+        <input type="text" placeholder="Search..." (input)="onSearch($event)" (click)="$event.stopPropagation()" />
     </div>
 
     <div #searchContent>

@@ -31,7 +31,7 @@
     </div>
     
     <div *ngIf="isAnySectionOpen()" class="search-filter-container">
-        <input type="text" placeholder="Search..." (input)="onSearch($event)" (focus)="onSearchFocus()" (blur)="onSearchBlur()" />
+        <input type="text" placeholder="Search..." (input)="onSearch($event)" (click)="stopPropagation($event)" />
     </div>
     
     <div #searchContent>
@@ -43,7 +43,8 @@
             <button mat-raised-button color="primary" [routerLink]="['/addOrder']">Go To Page</button>
     
             <div class="help-section">
-                <h3 (click)="toggleDropdown('commonQuestions')">Common Questions</h3>
+                <h3 (click)="toggleDropdown('commonQuestions', $event)">Common Questions</h3>
+
                 <ul *ngIf="dropdownStates['commonQuestions']" class="searchable">
             <li>
                 <h4 class="searchable">How do I add a new order?</h4>
@@ -84,7 +85,7 @@
     </div>
     
     <div class="help-section">
-        <h3 (click)="toggleDropdown('technicalIssues')">Technical Issues</h3>
+        <h3 (click)="toggleDropdown('technicalIssues', $event)">Technical Issues</h3>
         <ul *ngIf="dropdownStates['technicalIssues']" class="searchable">
             <li class="searchable">
                 <h4 class="searchable">I'm unable to submit an order. What should I do?</h4>
@@ -122,7 +123,7 @@
     </div>
     
     <div class="help-section">
-        <h3 (click)="toggleDropdown('stepsElements')">Step-by-Step Guide</h3>
+        <h3 (click)="toggleDropdown('stepsElements', $event)">Step-by-Step Guide</h3>
         <mat-accordion *ngIf="dropdownStates['stepsElements']" class="searchable">
             <mat-expansion-panel>
                 <mat-expansion-panel-header>
@@ -184,7 +185,7 @@
     <button mat-raised-button color="primary" [routerLink]="['/openOrder']">Go To Page</button>
 
     <div class="help-section">
-      <h3 (click)="toggleDropdown('openOrdersCommonQuestions')">Common Questions</h3>
+      <h3 (click)="toggleDropdown('openOrdersCommonQuestions', $event)">Common Questions</h3>
       <ul *ngIf="dropdownStates['openOrdersCommonQuestions']" class="searchable">
             <li class="searchable">
                 <h4 class="searchable">How do I view open orders?</h4>
@@ -222,7 +223,7 @@
     </div>
 
      <div class="help-section">
-        <h3 (click)="toggleDropdown('openOrdersTechnicalIssues')">Technical Issues</h3>
+        <h3 (click)="toggleDropdown('openOrdersTechnicalIssues', $event)">Technical Issues</h3>
         <ul *ngIf="dropdownStates['openOrdersTechnicalIssues']" class="searchable">
             <li class="searchable">
                 <h4 class="searchable">Why can't I see any open orders?</h4>
@@ -260,7 +261,7 @@
     </div>
 
     <div class="help-section">
-        <h3 (click)="toggleDropdown('openOrdersSteps')">Step-by-Step Guide</h3>
+        <h3 (click)="toggleDropdown('openOrdersSteps' , $event)">Step-by-Step Guide</h3>
         <mat-accordion *ngIf="dropdownStates['openOrdersSteps']" class="searchable">
             <mat-expansion-panel>
                 <mat-expansion-panel-header>
@@ -304,7 +305,7 @@
       <button mat-raised-button color="primary" [routerLink]="['/orderAwaitingDentalDesign']">Go To Page</button>
   
       <div class="help-section">
-          <h3 (click)="toggleDropdown('awaitingDentalDesignCommonQuestions')">Common Questions</h3>
+          <h3 (click)="toggleDropdown('awaitingDentalDesignCommonQuestions' , $event)">Common Questions</h3>
           <ul *ngIf="dropdownStates['awaitingDentalDesignCommonQuestions']" class="searchable">
               <li class="searchable">
                   <h4 class="searchable">How do I view orders awaiting dental design?</h4>
@@ -330,7 +331,7 @@
       </div>
   
       <div class="help-section">
-          <h3 (click)="toggleDropdown('awaitingDentalDesignTechnicalIssues')">Technical Issues</h3>
+          <h3 (click)="toggleDropdown('awaitingDentalDesignTechnicalIssues' , $event)">Technical Issues</h3>
           <ul *ngIf="dropdownStates['awaitingDentalDesignTechnicalIssues']" class="searchable">
               <li class="searchable">
                   <h4 class="searchable">Why can't I upload a dental design file?</h4>
@@ -356,7 +357,7 @@
       </div>
   
       <div class="help-section">
-          <h3 (click)="toggleDropdown('awaitingDentalDesignSteps')">Step-by-Step Guide</h3>
+          <h3 (click)="toggleDropdown('awaitingDentalDesignSteps' , $event)">Step-by-Step Guide</h3>
           <mat-accordion *ngIf="dropdownStates['awaitingDentalDesignSteps']" class="searchable">
               <mat-expansion-panel>
                   <mat-expansion-panel-header>
@@ -409,7 +410,7 @@
     <button mat-raised-button color="primary" [routerLink]="['/dentalDesignApproval']">Go To Page</button>
 
     <div class="help-section">
-        <h3 (click)="toggleDropdown('approvedDentalDesignCommonQuestions')">Common Questions</h3>
+        <h3 (click)="toggleDropdown('approvedDentalDesignCommonQuestions' , $event)">Common Questions</h3>
         <ul *ngIf="dropdownStates['approvedDentalDesignCommonQuestions']" class="searchable">
             <li class="searchable">
                 <h4 class="searchable">How do I view approved dental designs?</h4>
@@ -435,7 +436,7 @@
     </div>
 
     <div class="help-section">
-        <h3 (click)="toggleDropdown('approvedDentalDesignTechnicalIssues')">Technical Issues</h3>
+        <h3 (click)="toggleDropdown('approvedDentalDesignTechnicalIssues' , $event)">Technical Issues</h3>
         <ul *ngIf="dropdownStates['approvedDentalDesignTechnicalIssues']" class="searchable">
             <li class="searchable">
                 <h4 class="searchable">Why can't I see the list of approved dental designs?</h4>
@@ -461,7 +462,7 @@
     </div>
 
     <div class="help-section">
-        <h3 (click)="toggleDropdown('approvedDentalDesignSteps')">Step-by-Step Guide</h3>
+        <h3 (click)="toggleDropdown('approvedDentalDesignSteps' , $event)">Step-by-Step Guide</h3>
         <mat-accordion *ngIf="dropdownStates['approvedDentalDesignSteps']" class="searchable">
             <mat-expansion-panel>
                 <mat-expansion-panel-header>
@@ -514,7 +515,7 @@
       <button mat-raised-button color="primary" [routerLink]="['/approval']">Go To Page</button>
   
       <div class="help-section">
-          <h3 (click)="toggleDropdown('approveOrdersCommonQuestions')">Common Questions</h3>
+          <h3 (click)="toggleDropdown('approveOrdersCommonQuestions' , $event)">Common Questions</h3>
           <ul *ngIf="dropdownStates['approveOrdersCommonQuestions']" class="searchable">
               <li class="searchable">
                   <h4 class="searchable">How do I view pending orders for approval?</h4>
@@ -548,7 +549,7 @@
       </div>
   
       <div class="help-section">
-          <h3 (click)="toggleDropdown('approveOrdersTechnicalIssues')">Technical Issues</h3>
+          <h3 (click)="toggleDropdown('approveOrdersTechnicalIssues', $event)">Technical Issues</h3>
           <ul *ngIf="dropdownStates['approveOrdersTechnicalIssues']" class="searchable">
               <li class="searchable">
                   <h4 class="searchable">Why can't I see the list of pending orders?</h4>
@@ -582,7 +583,7 @@
       </div>
   
       <div class="help-section">
-          <h3 (click)="toggleDropdown('approveOrdersSteps')">Step-by-Step Guide</h3>
+          <h3 (click)="toggleDropdown('approveOrdersSteps' , $event)">Step-by-Step Guide</h3>
           <mat-accordion *ngIf="dropdownStates['approveOrdersSteps']" class="searchable">
               <mat-expansion-panel>
                   <mat-expansion-panel-header>
