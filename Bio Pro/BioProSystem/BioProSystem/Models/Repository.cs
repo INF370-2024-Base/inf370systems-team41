@@ -516,7 +516,7 @@ namespace BioProSystem.Models
         }
         public async Task<List<StockCategory>> GetAllStockCategories()
         {
-            return await _appDbContext.StockCategories.Include(s => s.StockType).ToListAsync();
+            return await _appDbContext.StockCategories.Include(s => s.StockType).Include(s=>s.Stocks).ToListAsync();
         }
         public async Task<List<Supplier>> GetAllSupplier()
         {

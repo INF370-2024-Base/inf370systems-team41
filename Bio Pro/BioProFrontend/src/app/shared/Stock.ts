@@ -73,3 +73,26 @@ export class AddStockItemViewModel {
         this.Quantity = quantity;
     }
 }
+
+export class StockCategoryViewModel {
+    public StockTypeId: number;
+    public Description: string;
+    public StockCategoryId!:Number;
+
+    constructor(stockTypeId: number, description: string,stockCategoryId:number) {
+        this.StockTypeId = stockTypeId;
+        this.Description = description;
+        this.StockCategoryId = stockCategoryId;
+    }
+}
+export class StockTypeViewModel {
+    public StockCategoryId!: number[];
+    public Description: string;
+    public StockTypeId!:Number;
+
+    constructor(stockTypeId: number, description: string,stockCategoryId:number[]) {
+        this.StockTypeId = stockTypeId;
+        this.Description = description;
+        this.StockCategoryId = stockCategoryId;
+    }
+}

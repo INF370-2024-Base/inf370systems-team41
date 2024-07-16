@@ -165,6 +165,10 @@ GetOrdersAwaitingDentalDesignApproval():Observable<any[]>
 {
   return this.httpClient.get<any[]>(`${this.apiUrl}Api/GetOrdersAwaitingDentalDesignApproval`);
 }
+CancelOrder(orderId:string):Observable<any[]>
+{
+  return this.httpClient.put<any[]>(`${this.apiUrl}Api/CancelOrder/${orderId}`,orderId);
+}
 }
 
 

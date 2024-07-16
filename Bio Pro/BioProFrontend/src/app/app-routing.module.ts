@@ -53,6 +53,11 @@ import { FormsModule } from '@angular/forms';
 import { HelpOrdersComponent } from './help-orders/help-orders.component';
 import { HelpTimelineOfOrdersComponent } from './help-timeline-of-orders/help-timeline-of-orders.component';
 import { HelpDeliveriesComponent } from './help-deliveries/help-deliveries.component';
+import { StockCategoryComponent } from './stock-category/stock-category.component';
+import { StockTypeComponent } from './stock-type/stock-type.component';
+import { ResetUserPasswordComponent } from './reset-user-password/reset-user-password.component';
+import { UpdateModeEnum } from 'chart.js';
+import { UpdatePasswordComponent } from './update-password/update-password.component';
 
 
 
@@ -109,6 +114,10 @@ const routes: Routes = [
   {path:'help-orders', component:HelpOrdersComponent },
   {path: 'help-orderTimeline', component:HelpTimelineOfOrdersComponent},
   {path: 'help-deliveries', component:HelpDeliveriesComponent},
+  {path: 'stock-categories', component:StockCategoryComponent},
+  {path: 'stock-type', component:StockTypeComponent},
+  {path: 'rp/:email', component:ResetUserPasswordComponent},
+  {path: 'UpdatePassword', component:UpdatePasswordComponent},
 ];
 
 @NgModule({

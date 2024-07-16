@@ -623,7 +623,7 @@ namespace BioProSystem.Controllers
                 }
                 if(pendingOrders.OrderStatusId!=1)
                 {
-                    return NotFound("Order is already in progres. Please cancel order instead");
+                    return NotFound("Order is already in progress. Please cancel order instead");
                 }
                 else
                 {
@@ -632,6 +632,40 @@ namespace BioProSystem.Controllers
                 if (await _repository.SaveChangesAsync())
                 {
                     return Ok(pendingOrders);
+                }
+                else
+                {
+                    ModelState.AddModelError(string.Empty, "Failed to save changes.");
+                    return BadRequest(ModelState);
+                }
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal Server Error: {ex.Message}");
+            }
+        }
+        [HttpPut]
+        [Route("CancelOrder/{orderId}")]
+        public async Task<ActionResult<IEnumerable<SystemOrder>>> CancelOrder(string orderId)
+        {
+            try
+            {
+                var order = await _repository.GetSystemOrderByIdAsync(orderId);
+                if (order == null)
+                {
+                    return NotFound("No order found");
+                }
+                if (order.OrderStatusId == 9)
+                {
+                    return NotFound("Order is already canceled.");
+                }
+                else
+                {
+                    order.OrderStatusId = 9;
+                }
+                if (await _repository.SaveChangesAsync())
+                {
+                    return Ok(order);
                 }
                 else
                 {

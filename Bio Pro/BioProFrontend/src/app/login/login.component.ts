@@ -8,6 +8,9 @@ import { UserServices } from '../services/user.service';
 import { EditUser } from '../shared/EditUser';
 import { error } from 'console';
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
+import { MatDialog } from '@angular/material/dialog';
+import { ResetPasswordComponent } from '../reset-password/reset-password.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -17,7 +20,7 @@ export class LoginComponent implements OnInit {
 
   errorMessage: string = ''; 
 
-  constructor(private router: Router, private dataService: DataService,private appComponent:AppComponent) { }
+  constructor(private snackBar:MatSnackBar, private router: Router, private dataService: DataService,private appComponent:AppComponent,private userService:UserServices,private dialog: MatDialog) { }
 
   user:SystemUser={
     EmailAddress:"",
@@ -58,5 +61,18 @@ export class LoginComponent implements OnInit {
     this.appComponent.getSignInUser()
   }
   
+resetpassword(){
+  console.log("now")
+  const dialogRef = this.dialog.open(ResetPasswordComponent, {
+    width: '400px',
+  });
 
+  dialogRef.afterClosed().subscribe(result => {
+    if (result) {
+      this.snackBar.open('Reset password sent', 'Close', {
+        duration: 3000,
+      });
+    }
+  });
+}
 }

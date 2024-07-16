@@ -1,0 +1,29 @@
+<h2 mat-dialog-title>Edit Stock Category</h2>
+<form [formGroup]="editForm" (ngSubmit)="onSave()">
+  <mat-dialog-content>
+    <mat-form-field appearance="fill">
+        <mat-label>Stock Type ID</mat-label>
+        <input matInput formControlName="StockTypeId" class="readonly-input" readonly/>
+      </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Description</mat-label>
+      <input matInput formControlName="Description" />
+      <mat-error *ngIf="editForm.get('Description')?.hasError('required')">
+        Description is required
+      </mat-error>
+    </mat-form-field>
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end">
+    <button mat-button type="button" (click)="onCancel()">Cancel</button>
+    <button mat-raised-button color="primary" type="submit">Save</button>
+  </mat-dialog-actions>
+</form>
+<style>
+    .readonly-input {
+  background-color: #f5f5f5; /* Light gray background */
+  color: #9e9e9e; /* Gray text color */
+  cursor: not-allowed; /* Not-allowed cursor */
+}
+</style>

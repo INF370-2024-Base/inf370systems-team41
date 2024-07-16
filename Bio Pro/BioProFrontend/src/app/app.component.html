@@ -137,7 +137,19 @@
           <mat-icon>help</mat-icon>
           <span>Help Page</span>
         </a>
-      </mat-nav-list>
+        <ng-container>
+          <a mat-list-item class="sub-nav-link" [routerLink]="['/stock-type']" (click)="isSidenavOpen = !isSidenavOpen">
+            <mat-icon>file</mat-icon> <!-- Icon for new order -->
+            Stock types
+          </a>
+        </ng-container>
+        <ng-container>
+          <a mat-list-item class="sub-nav-link" [routerLink]="['/UpdatePassword']" (click)="isSidenavOpen = !isSidenavOpen">
+            <mat-icon>file</mat-icon> <!-- Icon for new order -->
+            Update Password
+          </a>
+        </ng-container>
+    </mat-nav-list>
     </mat-sidenav>
     <mat-sidenav-content class="content-container">
       <div style="height: 88vh;">
