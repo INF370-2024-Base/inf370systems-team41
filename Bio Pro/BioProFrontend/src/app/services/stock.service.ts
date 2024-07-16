@@ -5,7 +5,8 @@ import { OpenOrder } from '../shared/openorder';
 import { SystemOrderViewModel } from '../shared/SystemOrderViewModel ';
 import { addUser } from '../shared/adduser';
 import { ResetPassword, UpdateUser } from '../shared/UpdateUser';
-import { AddStock, AddStockItemViewModel, CaptureNewStockViewModel, StockWriteOffViewModel } from '../shared/Stock';
+import { AddStock, AddStockItemViewModel, CaptureNewStockViewModel, StockCategoryViewModel, StockTypeViewModel, StockWriteOffViewModel } from '../shared/Stock';
+import { StockTypeComponent } from '../stock-type/stock-type.component';
 
 @Injectable({
   providedIn: 'root'
@@ -57,7 +58,30 @@ export class StockServices {
     return this.httpClient.get(`${this.apiUrl}GetStockById/${id}`)
     .pipe(map(result => result))
   }
-  
+  CreateStockCategory(stock:StockCategoryViewModel): Observable<CaptureNewStockViewModel>{
+    return this.httpClient.post<CaptureNewStockViewModel>(`${this.apiUrl}CreateStockCategory`,stock)
+    .pipe(map(result => result))
+  }
+  CreateStockType(stock:StockCategoryViewModel): Observable<CaptureNewStockViewModel>{
+    return this.httpClient.post<CaptureNewStockViewModel>(`${this.apiUrl}CreateStockType`,stock)
+    .pipe(map(result => result))
+  }
+  EditStockCategory(stock:StockCategoryViewModel): Observable<CaptureNewStockViewModel>{
+    return this.httpClient.put<CaptureNewStockViewModel>(`${this.apiUrl}EditStockCategory`,stock)
+    .pipe(map(result => result))
+  }
+  EditStockType(stock:StockTypeViewModel): Observable<CaptureNewStockViewModel>{
+    return this.httpClient.put<CaptureNewStockViewModel>(`${this.apiUrl}EditStockType`,stock)
+    .pipe(map(result => result))
+  }
+  DeleteStockType(stockTypeId:number):Observable<any[]>
+{
+  return this.httpClient.delete<any[]>(`${this.apiUrl}DeleteStockType/${stockTypeId}`);
+}
+DeleteStockCategory(stockCategoryId:number):Observable<any[]>
+{
+  return this.httpClient.delete<any[]>(`${this.apiUrl}DeleteStockCategory/${stockCategoryId}`);
+}
 }
 
 

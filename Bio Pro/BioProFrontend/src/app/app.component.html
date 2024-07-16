@@ -105,6 +105,18 @@
             Calendar
           </a>
         </ng-container>
+        <ng-container>
+          <a mat-list-item class="sub-nav-link" [routerLink]="['/stock-categories']" (click)="isSidenavOpen = !isSidenavOpen">
+            <mat-icon>file</mat-icon> <!-- Icon for new order -->
+            Stock Categories
+          </a>
+        </ng-container>
+        <ng-container>
+          <a mat-list-item class="sub-nav-link" [routerLink]="['/stock-type']" (click)="isSidenavOpen = !isSidenavOpen">
+            <mat-icon>file</mat-icon> <!-- Icon for new order -->
+            Stock types
+          </a>
+        </ng-container>
     </mat-nav-list>
     </mat-sidenav>
     <mat-sidenav-content class="content-container">

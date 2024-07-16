@@ -53,6 +53,8 @@ import { FormsModule } from '@angular/forms';
 import { HelpOrdersComponent } from './help-orders/help-orders.component';
 import { HelpTimelineOfOrdersComponent } from './help-timeline-of-orders/help-timeline-of-orders.component';
 import { HelpDeliveriesComponent } from './help-deliveries/help-deliveries.component';
+import { StockCategoryComponent } from './stock-category/stock-category.component';
+import { StockTypeComponent } from './stock-type/stock-type.component';
 
 
 const routes: Routes = [
@@ -108,6 +110,8 @@ const routes: Routes = [
   {path:'help-orders', component:HelpOrdersComponent },
   {path: 'help-orderTimeline', component:HelpTimelineOfOrdersComponent},
   {path: 'help-deliveries', component:HelpDeliveriesComponent},
+  {path: 'stock-categories', component:StockCategoryComponent},
+  {path: 'stock-type', component:StockTypeComponent},
 ];
 
 @NgModule({

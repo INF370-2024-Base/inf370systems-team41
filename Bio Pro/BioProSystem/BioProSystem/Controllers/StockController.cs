@@ -391,11 +391,11 @@ namespace BioProSystem.Controllers
             {
                 try
                 {
-
                     StockCategory newStockCategory=new StockCategory();
                     newStockCategory.Description=viewModel.Description;
+                    newStockCategory.StockTypeId=viewModel.StockTypeId.Value;
   
-                    StockType stockType = await _repository.GetStockTypeById(viewModel.StockTypeId);
+                    StockType stockType = await _repository.GetStockTypeById(viewModel.StockTypeId.Value);
                     _repository.Add(newStockCategory);
                     if(stockType == null)
                     {
@@ -439,6 +439,7 @@ namespace BioProSystem.Controllers
                     {
                         return BadRequest("Stocktype not found.");
                     }
+                    _repository.Add(newStocktype);
 
                     if (await _repository.SaveChangesAsync())
                     {
@@ -543,7 +544,7 @@ namespace BioProSystem.Controllers
                             int StockCategoryId = viewModel.StockCategoryId.Value;
                             StockCategory stockCategory = await _repository.GetStockCategoryById(StockCategoryId);
                             stockCategory.Description = viewModel.Description;
-                            StockType newStocktype = await _repository.GetStockTypeById(viewModel.StockTypeId);
+                            StockType newStocktype = await _repository.GetStockTypeById(viewModel.StockTypeId.Value);
                             newStocktype.StockCategories.Add(stockCategory);
 
                             if (await _repository.SaveChangesAsync())
