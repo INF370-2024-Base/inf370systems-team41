@@ -20,6 +20,7 @@ export class StockComponent implements OnInit {
   isLoading: boolean = true;
   selectedCategory: string = '';
   selectedStockType: string = '';
+  searchTerm: string = ''; // Declare searchTerm here
 
   constructor(private stockService: StockServices, public dialog: MatDialog, private snackBar: MatSnackBar) { }
 
@@ -67,27 +68,27 @@ export class StockComponent implements OnInit {
     );
   }
 
-  onSearch(event: Event): void {
-    const searchTerm = (event.target as HTMLInputElement).value.toLowerCase();
-    this.applyFilters(searchTerm);
+  onSearch(event: any): void {
+    this.searchTerm = event;
+    this.applyFilters();
   }
 
-  onStockTypeChange(event: Event): void {
-    this.selectedStockType = (event.target as HTMLSelectElement).value;
+  onStockTypeChange(event: any): void {
+    this.selectedStockType = event.value;
     this.categories = this.allCategories.filter(category => category.stockTypeId === +this.selectedStockType || this.selectedStockType === '');
     this.selectedCategory = '';
-    this.applyFilters();  // Apply filters based on the selected type
+    this.applyFilters();
   }
 
-  onCategoryChange(event: Event): void {
-    this.selectedCategory = (event.target as HTMLSelectElement).value;
-    this.applyFilters();  // Apply filters based on the selected category
+  onCategoryChange(event: any): void {
+    this.selectedCategory = event.value;
+    this.applyFilters();
   }
 
-  applyFilters(searchTerm: string = ''): void {
+  applyFilters(): void {
     this.filteredStock = this.stockList.filter(stock => {
-      const matchesSearchTerm = stock.stockName.toLowerCase().includes(searchTerm) || 
-                                (this.getCategoryDescription(stock.stockCategoryId) && this.getCategoryDescription(stock.stockCategoryId).toLowerCase().includes(searchTerm));
+      const matchesSearchTerm = stock.stockName.toLowerCase().includes(this.searchTerm.toLowerCase()) || 
+                                (this.getCategoryDescription(stock.stockCategoryId) && this.getCategoryDescription(stock.stockCategoryId).toLowerCase().includes(this.searchTerm.toLowerCase()));
       const matchesStockType = this.selectedStockType === '' || this.getStockTypeFromCategory(stock.stockCategoryId) === +this.selectedStockType;
       const matchesCategory = this.selectedCategory === '' || stock.stockCategoryId === +this.selectedCategory;
 
@@ -109,7 +110,6 @@ export class StockComponent implements OnInit {
     const supplier = this.suppliers.find(sup => sup.supplierId === supplierId);
     return supplier ? supplier.supplierName : 'Unknown';
   }
-
   openWriteOffModal(stock: any): void {
     const dialogRef = this.dialog.open(WriteOffModalComponent, {
       width: '300px',

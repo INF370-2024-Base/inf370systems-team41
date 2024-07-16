@@ -4,73 +4,151 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User Management</title>
+    <title>Daily Hours</title>
     <!-- Include Bootstrap CSS -->
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <!-- Include Material Icons -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(120deg, #aed9e0, #c2e2f3, #eaf1fa, #c2e2f3, #aed9e0);
+            background-size: 400% 400%;
+            animation: gradientAnimation 20s ease infinite;
+            font-family: 'Roboto', sans-serif;
+            color: #333;
+            padding: 20px;
+            overflow-x: hidden;
+            overflow-y: auto;
+        }
+
+        h1 {
+            font-size: 48px;
+            color: #4d4a4a;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 24px;
+            text-shadow: 2px 2px 4px rgba(124, 124, 124, 0.5);
+        }
+
+        @keyframes gradientAnimation {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        .rounded-table {
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .rounded-table thead th {
+            background-color: #343a40;
+            color: white;
+        }
+
+        .rounded-table tbody td,
+        .rounded-table tbody th {
+            background-color: white;
+            color: #495057;
+        }
+
+        .rounded-table tbody tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+
+        .rounded-table tbody tr:hover {
+            background-color: #e9ecef;
+        }
+
+        .rounded-table .btn {
+            border-radius: 5px;
+        }
+
+        .rounded-table .btn-danger {
+            background-color: #dc3545;
+            border-color: #dc3545;
+        }
+
+        .rounded-table .btn-danger:hover {
+            background-color: #c82333;
+            border-color: #bd2130;
+        }
+    </style>
 </head>
 
-<body style="background: linear-gradient(120deg, #aed9e0, #c2e2f3, #eaf1fa, #c2e2f3, #aed9e0); background-size: 400% 400%; animation: gradientAnimation 20s ease infinite; font-family: 'Roboto', sans-serif; color: #333; padding: 20px; overflow-x: hidden; overflow-y: auto;">
-    <h1 style="font-size: 48px; color: #4d4a4a; text-align: center; text-transform: uppercase; letter-spacing: 3px; margin-bottom: 24px; text-shadow: 2px 2px 4px rgba(124, 124, 124, 0.5);">DAILY HOURS</h1>
-<div *ngIf="isLoading" class="text-center">
-  <div class="spinner-border" role="status">
-    <span class="sr-only">Loading...</span>
-  </div>
-</div>
+<body>
+    <h1>DAILY HOURS</h1>
 
-<div *ngIf="!isLoading">
- 
-
-  <div class="container">
-    <div class="row mb-3">
-      <div class="col-md-6">
-        <label for="filterDate">Filter by Date:</label>
-        <input type="date" id="filterDate" class="form-control" (change)="onDateChange($event)" [(ngModel)]="selectedDate" />
-      </div>
-      <div class="col-md-6">
-        <label for="filterEmployeeName">Filter by Employee Name:</label>
-        <select id="filterEmployeeName" class="form-control" (change)="onNameChange($event)" [(ngModel)]="selectedEmployeeEmail">
-          <option disabled selected value="">Select an employee</option>
-          <option *ngFor="let employee of employees" [value]="employee.email">
-            {{ employee.firstName }} {{ employee.lastName }}
-          </option>
-        </select>
-      </div>
+    <div *ngIf="isLoading" class="text-center">
+        <div class="spinner-border" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
     </div>
 
-    <div class="d-flex justify-content-between mb-3">
-      <button (click)="clearData()" class="btn btn-outline-secondary">Clear filter</button>
-      <a href="#" class="btn btn-primary" routerLink="/captureEmployeeDailyHours">Capture Hours</a>
+    <div *ngIf="!isLoading">
+        <div class="container">
+            <div class="row mb-3">
+                <div class="col-md-6 col-sm-12 mb-2">
+                    <label for="filterDate">Filter by Date:</label>
+                    <input type="date" id="filterDate" class="form-control" (change)="onDateChange($event)" [(ngModel)]="selectedDate" />
+                </div>
+                <div class="col-md-6 col-sm-12 mb-2">
+                    <label for="filterEmployeeName">Filter by Employee Name:</label>
+                    <select id="filterEmployeeName" class="form-control" (change)="onNameChange($event)" [(ngModel)]="selectedEmployeeEmail">
+                        <option disabled selected value="">Select an employee</option>
+                        <option *ngFor="let employee of employees" [value]="employee.email">
+                            {{ employee.firstName }} {{ employee.lastName }}
+                        </option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="d-flex justify-content-between mb-3">
+                <button (click)="clearData()" class="btn btn-outline-secondary">Clear filter</button>
+                <a href="#" class="btn btn-primary" routerLink="/captureEmployeeDailyHours">Capture Hours</a>
+            </div>
+
+            <div class="table-responsive">
+                <table class="table table-bordered table-striped rounded-table">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>Date</th>
+                            <th>Hours</th>
+                            <th>Employee Name</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let dailyHour of dailyHoursData">
+                            <td>{{ dailyHour.workDate | date }}</td>
+                            <td>{{ dailyHour.hours }}</td>
+                            <td *ngFor="let employee of dailyHour.employees">{{ employee.firstName }} {{ employee.lastName }}</td>
+                            <td>
+                                <button (click)="onDeleteDailyHour(dailyHour.employeeDailyHoursId)" class="btn btn-danger">
+                                    <i class="material-icons">delete</i> Delete
+                                </button>
+                            </td>
+                        </tr>
+                        <tr *ngIf="dailyHoursData.length === 0">
+                            <td colspan="4" class="text-center">No matching data found.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
 
-    <table class="table table-bordered table-striped rounded-table">
-      <thead class="thead-dark">
-        <tr>
-          <th>Date</th>
-          <th>Hours</th>
-          <th>Employee Name</th>
-          <th>Action</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let dailyHour of dailyHoursData">
-          <td>{{ dailyHour.workDate | date }}</td>
-          <td>{{ dailyHour.hours }}</td>
-          <td *ngFor="let employee of dailyHour.employees">{{ employee.firstName }} {{ employee.lastName }}</td>
-          <td>
-            <button (click)="onDeleteDailyHour(dailyHour.employeeDailyHoursId)" class="btn btn-danger">
-              <i class="material-icons">delete</i> Delete
-            </button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-    
-    
-  </div>
-</div>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.2/angular.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.1.12/angular-material.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.2/angular.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.1.12/angular-material.min.js"></script>
 </body>
+
 </html>

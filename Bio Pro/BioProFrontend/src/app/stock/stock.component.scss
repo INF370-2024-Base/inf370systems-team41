@@ -87,3 +87,40 @@ body {
   background-color: #0069d9;
   border-color: #0062cc;
 }
+
+.search-filter {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 24px;
+}
+
+.search-field,
+.filter-field {
+  flex: 1;
+  margin-right: 10px;
+}
+
+.search-field input,
+.filter-field mat-select {
+  width: 100%;
+}
+
+.mat-icon {
+  margin-right: 10px;
+}
+
+button.mat-raised-button {
+  margin-right: 10px;
+}
+
+@media (max-width: 768px) {
+  .search-filter {
+      flex-direction: column;
+  }
+
+  .search-field,
+  .filter-field {
+      margin-right: 0;
+      margin-bottom: 10px;
+  }
+}
