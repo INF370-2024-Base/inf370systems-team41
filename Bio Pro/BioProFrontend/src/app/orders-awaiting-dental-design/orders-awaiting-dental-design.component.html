@@ -5,6 +5,10 @@
   </div>
   
   <div class="container">
+
+    <div *ngIf="ordersAwaitingDentalDesign.length === 0" class="error-message">
+      No orders are currently waiting for a dental design.
+    </div>
    
     <div *ngFor="let order of ordersAwaitingDentalDesign" class="order-details">
         <h1 class="order-id">{{order.orderId}}</h1>

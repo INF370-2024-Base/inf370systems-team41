@@ -1,0 +1,74 @@
+.stock-form-card {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background-color: #ffffff;
+    padding: 16px;
+  
+    form {
+      .form-group {
+        margin-bottom: 16px;
+  
+        mat-form-field {
+          width: 100%;
+  
+          // Adjusting the appearance to outline and default mat-form-field properties
+          &.mat-form-field-outline {
+            .mat-form-field-flex {
+              align-items: center;
+              .mat-form-field-infix {
+                border-color: #cfd8dc;
+              }
+            }
+            .mat-form-field-outline-start,
+            .mat-form-field-outline-gap {
+              border-color: #cfd8dc;
+            }
+          }
+  
+          // Ensuring the label color matches the design
+          mat-label {
+            color: #333333;
+          }
+        }
+      }
+  
+      .mat-divider {
+        margin: 12px 0;
+      }
+  
+      // Styling the last card content to remove extra margin
+      .mat-card-content:last-child {
+        margin-bottom: 0;
+      }
+    }
+  
+    // Ensuring the card actions aligns right with padding
+    .mat-card-actions {
+      display: flex;
+      justify-content: flex-end;
+      padding: 8px;
+      border-top: 1px solid #eeeeee;
+      background-color: #f9f9f9;
+  
+      button {
+        min-width: 120px; // Adjust width as needed
+        margin-left: 8px;
+  
+        // Styling the submit button with background color and text color
+        &.submit-button {
+          background-color: #ccc;
+          color: #333;
+        }
+  
+        // Styling the add button with background color and text color
+        &.add-button {
+          background-color: #007bff;
+          color: #ffffff;
+        }
+      }
+    }
+  }
+  

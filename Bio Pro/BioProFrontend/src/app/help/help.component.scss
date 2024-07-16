@@ -32,110 +32,77 @@ body {
   text-shadow: 2px 2px 4px rgba(124, 124, 124, 0.5);
 }
 
-.popular-container {
-  text-align: center;
-  margin-bottom: 40px;
-}
-
-.popular-container h1 {
-  font-size: 48px;
-  color: #4d4a4a;
-  text-transform: uppercase;
-  letter-spacing: 3px;
-  margin-bottom: 24px;
-  text-shadow: 2px 2px 4px rgba(124, 124, 124, 0.5);
-}
-
-.slide-container {
-  width: 100%;
-  overflow: hidden; /* Hide overflow to prevent content spill */
-}
-
-.swiper-container {
-  width: 100%;
-  padding: 20px 0;
-}
-
-.swiper-wrapper {
+.help-grid {
   display: flex;
-  transition: transform 0.3s ease;
+  flex-wrap: wrap;
+  justify-content: space-around;
 }
 
-.swiper-slide {
-  flex: 1;
-  margin: 0 10px;
-  max-width: 30%;
-  background-color: #f9f9f9;
-  padding: 20px;
-  border-radius: 5px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+.help-card {
+  flex: 1 1 30%; /* Grow and shrink as needed, base 30% width */
+  max-width: 300px;
+  min-width: 280px;
+  margin: 10px;
+  height: 100%; /* Ensures all cards have the same height */
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.3s;
 }
 
-.option-container h3 {
+.help-card:hover {
+  transform: translateY(-5px);
+}
+
+mat-card {
+  background-color: #fff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+mat-card-header {
+  background-color: #ebebeb; /* Light blue background */
+  border-radius: 8px 8px 0 0;
+  padding: 16px;
+}
+
+mat-card-title {
   display: flex;
   align-items: center;
-  gap: 5px;
+  font-size: 20px;
 }
 
-.option-container p {
+mat-card-header mat-icon {
+  margin-right: 8px;
+}
+
+mat-card-content {
+  flex-grow: 1;
+  padding: 16px;
+}
+
+mat-card-content p {
   margin: 10px 0;
+  font-size: 14px;
+  color: #666;
 }
 
-.swiper-pagination {
-  margin-top: 10px;
-  text-align: center;
+mat-card-actions {
+  display: flex;
+  justify-content: flex-end;
+  padding: 16px;
 }
 
-.orders-container,
-.timeline-container,
-.delivery-container,
-.employee-container,
-.dentist-container,
-.stock-container {
-  background-color: #f9f9f9;
-  padding: 20px;
-  border-radius: 5px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  margin-bottom: 20px;
-}
-
-.orders-container h2,
-.timeline-container h2,
-.delivery-container h2,
-.employee-container h2,
-.dentist-container h2,
-.stock-container h2{
-  margin-top: 0;
-}
-
-.orders-container p,
-.timeline-container p,
-.delivery-container p,
-.employee-container p,
-.dentist-container p,
-.stock-container p {
-  margin: 10px 0;
-}
-
-.orders-container button,
-.timeline-container button,
-.delivery-container button,
-.employee-container button,
-.dentist-container button,
-.stock-container button{
-  margin-top: 10px;
-}
-
-/* Responsive Design */
 @media only screen and (max-width: 768px) {
-  .orders-container,
-  .timeline-container,
-  .delivery-container,
-  .employee-container,
-.dentist-container,
-.stock-container {
-      width: 100%;
-      margin-left: 0;
-      margin-bottom: 10px;
+  .help-grid {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .help-card {
+    width: 100%;
+    max-width: 400px;
   }
 }

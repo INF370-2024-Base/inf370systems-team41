@@ -57,4 +57,5 @@ export class AddEventModalComponent implements OnInit {
       duration: 3000, 
     });
   }
+  
 }

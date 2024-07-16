@@ -167,3 +167,22 @@ body {
   }
 }
   
+
+.no-results-message {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #757575; /* Grey color for the text */
+  font-size: 18px; /* Slightly larger font size */
+  padding: 20px; /* Padding around the message */
+  background-color: #f5f5f5; /* Light grey background */
+  border-radius: 5px; /* Rounded corners */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Light shadow for depth */
+  margin-top: 20px; /* Margin at the top */
+}
+
+.no-results-icon {
+  margin-right: 10px; /* Space between the icon and the text */
+  font-size: 24px; /* Slightly larger icon */
+  color: #b0bec5; /* Lighter grey color for the icon */
+}
