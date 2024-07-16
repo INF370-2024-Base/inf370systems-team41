@@ -1,13 +1,15 @@
 <h2 mat-dialog-title>Event Details</h2>
 <mat-dialog-content class="mat-dialog-content-expanded">
-  <form #eventForm="ngForm" class="form-container">
+  <form #eventForm="ngForm" class="form-container" [formGroup]="addForm">
     <mat-form-field appearance="fill" class="form-field">
       <mat-label><i class="material-icons">event_note</i> Title</mat-label>
-      <input matInput placeholder="Title" [(ngModel)]="addEvent.Description" name="title">
+      <input matInput placeholder="Title" [(ngModel)]="addEvent.Description" name="title" formControlName="Description">
+      <mat-error *ngIf="addEvent.Description===' ' ">Description is required</mat-error>
     </mat-form-field>
     <mat-form-field appearance="fill" class="form-field">
       <mat-label><i class="material-icons">info</i> Information</mat-label>
-      <input matInput placeholder="Additional information" [(ngModel)]="addEvent.EventInformation" name="information">
+      <input matInput placeholder="Additional information" [(ngModel)]="addEvent.EventInformation" formControlName="EventInformation">
+      <mat-error *ngIf="addEvent.EventInformation===' ' ">Event Information is required</mat-error>
     </mat-form-field>
     <mat-form-field appearance="fill" class="form-field">
       <mat-label><i class="material-icons">date_range</i> Start Date</mat-label>
@@ -18,6 +20,7 @@
           placeholder="Select Date"
           [(ngModel)]="addEvent.CalanderScheduleEventDateTime"
           name="startDate"
+          formControlName="DateOfEvent"
         >
         <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
         <mat-datepicker #startPicker></mat-datepicker>
@@ -31,6 +34,7 @@
         [(ngModel)]="time"
         name="startTime"
         type="time"
+        formControlName="Time"
       >
     </mat-form-field>
   </form>

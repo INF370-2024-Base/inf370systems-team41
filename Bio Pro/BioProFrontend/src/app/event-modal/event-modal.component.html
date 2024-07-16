@@ -1,14 +1,15 @@
 <h2 mat-dialog-title>Event Details</h2>
 <mat-dialog-content>
-  <form #eventForm="ngForm">
+  <form #eventForm="ngForm" [formGroup]="addForm">
     <mat-form-field appearance="fill" *ngIf="isEditMode">
       <mat-label>Title</mat-label>
-      <input matInput placeholder="Title" [(ngModel)]="selectedEvent.TitleOfEvent" name="title">
+      <input matInput placeholder="Title" [(ngModel)]="selectedEvent.TitleOfEvent"  formControlName="Description">
+      <mat-error *ngIf="addForm.get('Description')?.hasError('required')"></mat-error>
     </mat-form-field>
     <mat-form-field appearance="fill" *ngIf="isEditMode">
       <mat-label>Information</mat-label>
-      <input matInput placeholder="Additional information" [(ngModel)]="selectedEvent.EventInformation" name="title">
-      
+      <input matInput placeholder="Additional information" [(ngModel)]="selectedEvent.EventInformation" formControlName="EventInformation">
+      <mat-error *ngIf="addForm.get('EventInformation')?.hasError('required')"></mat-error>
     </mat-form-field>
     <h2 *ngIf="!isEditMode">{{ selectedEvent.TitleOfEvent }}</h2>
     <p *ngIf="!isEditMode">{{ selectedEvent.EventInformation }}</p>
@@ -22,6 +23,7 @@
           [(ngModel)]="selectedEvent.DateOfEvent"
           name="startDate"
           (dateChange)="onDateChange($event.value)"
+          formControlName="DateOfEvent"
         >
         <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
         <mat-datepicker #startPicker></mat-datepicker>
@@ -37,6 +39,7 @@
         [(ngModel)]="selectedEvent.TimeOfEvent"
         name="startTime"
         type="time"
+        formControlName="Time"
       >
       
     </mat-form-field>

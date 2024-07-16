@@ -5,6 +5,7 @@ import { CalendarEvent } from 'angular-calendar';
 import { CalendarService } from '../services/calendar.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { EditCalanderEventViewModel } from '../shared/EditCalanderEvent';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-add-event-modal',
@@ -13,11 +14,16 @@ import { EditCalanderEventViewModel } from '../shared/EditCalanderEvent';
 })
 export class AddEventModalComponent implements OnInit {
   isEditMode = false;
-
+  addForm:FormGroup
   constructor(
     public dialogRef: MatDialogRef<EventModalComponent>,
-    private calendarService: CalendarService,private snackBar:MatSnackBar,private dialog: MatDialog
-  ) {}
+    private calendarService: CalendarService,private snackBar:MatSnackBar,private dialog: MatDialog,private fb:FormBuilder
+  ) {this.addForm = this.fb.group({
+    Description: ['', Validators.required],
+    EventInformation: ['', Validators.required],
+    DateOfEvent:['', Validators.required],
+    Time:['', Validators.required]
+  });}
   addEvent:EditCalanderEventViewModel={
     Id:0,
     EventInformation:'',
