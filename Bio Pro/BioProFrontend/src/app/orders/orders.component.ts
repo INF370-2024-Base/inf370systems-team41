@@ -269,7 +269,28 @@ downloadFile(base64String: string, fileName: string) {
       }
     });
   }
- 
+ cancelOrder(id:string)
+ {
+  const dialogRefCancel = this.dialog.open(ConfirmationDialogComponent, {
+    width: '250px',
+    data: 'Are you sure you want to cancel this order?'
+  });
+
+  dialogRefCancel.afterClosed().subscribe(result => {
+    if (result) {
+      // If the user confirms, delete the event
+      this.dataservices.CancelOrder(id).subscribe(() => {
+        console.log('Order canceled:');
+        dialogRefCancel.close(true);
+        this.showSnackBar('Canceled order:'+id)
+        this.getOrdersAndInfo()
+      }, error => {
+        console.error('Error deleting order', error);
+        this.showSnackBar('Error canceling order:'+error.error)
+      });
+    }
+  });
+ }
 }
 
 

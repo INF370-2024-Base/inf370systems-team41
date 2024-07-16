@@ -91,6 +91,9 @@ import { StockTypeComponent } from './stock-type/stock-type.component';
 import { EditStockTypeComponent } from './edit-stock-type/edit-stock-type.component';
 import { AddStockTypeComponent } from './add-stock-type/add-stock-type.component';
 import { AddStockCategoryComponent } from './add-stock-category/add-stock-category.component';
+import { UpdatePasswordComponent } from './update-password/update-password.component';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { ResetUserPasswordComponent } from './reset-user-password/reset-user-password.component';
 
 
 
@@ -114,7 +117,7 @@ import { AddStockCategoryComponent } from './add-stock-category/add-stock-catego
     ConfirmationDialogComponent, OrdersAwaitingDentalDesignComponent, DentalDesignApprovalComponent, EmployeeOrdersAndStepsComponent,CalendarComponent, SearchBarComponent, EventModalComponent, ProcededuralTimelineViewComponent, AddEventModalComponent, StockUsedComponent, HelpComponent,HelpStockComponent, HelpEmployeesComponent, HelpDentistComponent, AllUsersComponent, EditAnyUserComponent
     , OrdersAwaitingDentalDesignComponent, DentalDesignApprovalComponent, EmployeeOrdersAndStepsComponent,CalendarComponent, SearchBarComponent, EventModalComponent, ProcededuralTimelineViewComponent, AddEventModalComponent, StockUsedComponent, HelpComponent,HelpStockComponent, HelpEmployeesComponent, HelpDentistComponent, DentistEditDialogComponent, HelpDentistSearchComponent, HelpDentistAddComponent, HelpDentistEditComponent, HelpDentistDeleteComponent, HelpEmployeeAddComponent, HelpEmployeeEditComponent, HelpEmployeeDeleteComponent, HelpEmployeeSearchComponent, HelpEmployeeHourComponent, HelpEmploueeHourDeleteComponent, HelpStockAddComponent, HelpStockCaptureComponent, HelpStockWriteoffComponent, HelpStockSearchComponent,
     ReportsComponent,
-    CaptureEmployeeHoursComponent,LoginComponent,EditOrderModalComponent, AddUserComponent, AddProceduralTimeline, DeliveriesComponent, AddDeliveryComponent, HomeComponent, TestingBackendComponent, ConfirmationDialogComponent, OrdersAwaitingDentalDesignComponent, DentalDesignApprovalComponent, HelpComponent, HelpOrdersComponent, HelpTimelineOfOrdersComponent, HelpDeliveriesComponent, StockCategoryComponent, EditStockCategoryComponent, StockTypeComponent, EditStockTypeComponent, AddStockTypeComponent, AddStockCategoryComponent
+    CaptureEmployeeHoursComponent,LoginComponent,EditOrderModalComponent, AddUserComponent, AddProceduralTimeline, DeliveriesComponent, AddDeliveryComponent, HomeComponent, TestingBackendComponent, ConfirmationDialogComponent, OrdersAwaitingDentalDesignComponent, DentalDesignApprovalComponent, HelpComponent, HelpOrdersComponent, HelpTimelineOfOrdersComponent, HelpDeliveriesComponent, StockCategoryComponent, EditStockCategoryComponent, StockTypeComponent, EditStockTypeComponent, AddStockTypeComponent, AddStockCategoryComponent, UpdatePasswordComponent, ResetPasswordComponent, ResetUserPasswordComponent
   ],
   imports: [
     BrowserModule,

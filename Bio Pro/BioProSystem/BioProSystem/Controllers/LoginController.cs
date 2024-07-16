@@ -195,10 +195,12 @@ namespace BioProSystem.Controllers
             if (user.UserEmail != null)
             {
                 SystemUser userToUpdate = await _repository.GetsystemUserAsync(user.UserEmail);
+                if(!userToUpdate.EmailConfirmed) return BadRequest("User does did not try to reset email.");
                 if (userToUpdate != null)
                 {
                     var token = await _userManager.GeneratePasswordResetTokenAsync(userToUpdate);
                     var result = await _userManager.ResetPasswordAsync(userToUpdate, token, user.NewPassword);
+                    userToUpdate.EmailConfirmed = false;
                     if (result.Succeeded)
                     {
                         try
@@ -249,10 +251,12 @@ namespace BioProSystem.Controllers
                 SystemUser userToUpdate = _repository.GetsystemUserAsync(emailAddress).Result;
                 if (userToUpdate != null)
                 {
+                    userToUpdate.EmailConfirmed= true;
+                    await _repository.SaveChangesAsync();
                     EmailViewModel newemail = new EmailViewModel();
                     newemail.Email = emailAddress;
                     newemail.Emailheader = "Reset Password";
-                    newemail.EmailContent = "http://localhost:4200/employeeProfile";
+                    newemail.EmailContent = "http://localhost:4200/rp/"+emailAddress;
                     SendTestEmail(newemail);
                     return Ok(newemail);
                 }
@@ -453,7 +457,8 @@ namespace BioProSystem.Controllers
             var client = new SmtpClient(_emailSettings.SmtpServer, _emailSettings.SmtpPort)
             {
                 Credentials = new NetworkCredential(_emailSettings.Username, _emailSettings.Password),
-                EnableSsl = true
+                EnableSsl = true,
+                DeliveryMethod = SmtpDeliveryMethod.Network
             };
             await _emailSender.SendEmailAsync(email.Email, email.Emailheader, email.EmailContent);
             return Ok("Email sent successfully");

@@ -28,8 +28,10 @@
       <mat-expansion-panel *ngFor="let order of ordersInfo">
         <mat-expansion-panel-header>
           <mat-panel-title>
+            <mat-error *ngIf="order.orderStatus.orderStatusId==9" align="end">Canceled:</mat-error>
             <mat-icon>assignment</mat-icon>
-            Order ID: {{ order.systemOrder.orderId }} - Patient: {{ order.patient.firstName }} {{ order.patient.lastname }}
+            Order ID: {{ order.systemOrder.orderId }} - Patient: {{ order.patient.firstName }} {{ order.patient.lastname }}  
+            
           </mat-panel-title>          
         </mat-expansion-panel-header>
         
@@ -93,9 +95,9 @@
           <button mat-raised-button color="primary" class="edit-button" (click)="editOrder(order.systemOrder.orderId)">
             <mat-icon>edit</mat-icon>Edit
           </button>
-          <!-- <button mat-raised-button color="warn" class="trash-button" (click)="deleteOrder(order.systemOrder.orderId)">
+          <button mat-raised-button color="warn" class="trash-button" (click)="cancelOrder(order.systemOrder.orderId)">
             <mat-icon>cancel</mat-icon>Cancel
-          </button> -->
+          </button>
         </div>
       </mat-expansion-panel>
     </mat-accordion>

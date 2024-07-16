@@ -55,6 +55,9 @@ import { HelpTimelineOfOrdersComponent } from './help-timeline-of-orders/help-ti
 import { HelpDeliveriesComponent } from './help-deliveries/help-deliveries.component';
 import { StockCategoryComponent } from './stock-category/stock-category.component';
 import { StockTypeComponent } from './stock-type/stock-type.component';
+import { ResetUserPasswordComponent } from './reset-user-password/reset-user-password.component';
+import { UpdateModeEnum } from 'chart.js';
+import { UpdatePasswordComponent } from './update-password/update-password.component';
 
 
 const routes: Routes = [
@@ -112,6 +115,8 @@ const routes: Routes = [
   {path: 'help-deliveries', component:HelpDeliveriesComponent},
   {path: 'stock-categories', component:StockCategoryComponent},
   {path: 'stock-type', component:StockTypeComponent},
+  {path: 'rp/:email', component:ResetUserPasswordComponent},
+  {path: 'UpdatePassword', component:UpdatePasswordComponent},
 ];
 
 @NgModule({
