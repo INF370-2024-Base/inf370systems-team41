@@ -9,80 +9,7 @@
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <!-- Include Material Icons -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <style>
-        body {
-            background: linear-gradient(120deg, #aed9e0, #c2e2f3, #eaf1fa, #c2e2f3, #aed9e0);
-            background-size: 400% 400%;
-            animation: gradientAnimation 20s ease infinite;
-            font-family: 'Roboto', sans-serif;
-            color: #333;
-            padding: 20px;
-            overflow-x: hidden;
-            overflow-y: auto;
-        }
 
-        h1 {
-            font-size: 48px;
-            color: #4d4a4a;
-            text-align: center;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            margin-bottom: 24px;
-            text-shadow: 2px 2px 4px rgba(124, 124, 124, 0.5);
-        }
-
-        @keyframes gradientAnimation {
-            0% {
-                background-position: 0% 50%;
-            }
-
-            50% {
-                background-position: 100% 50%;
-            }
-
-            100% {
-                background-position: 0% 50%;
-            }
-        }
-
-        .rounded-table {
-            border-radius: 10px;
-            overflow: hidden;
-        }
-
-        .rounded-table thead th {
-            background-color: #343a40;
-            color: white;
-        }
-
-        .rounded-table tbody td,
-        .rounded-table tbody th {
-            background-color: white;
-            color: #495057;
-        }
-
-        .rounded-table tbody tr:nth-child(even) {
-            background-color: #f8f9fa;
-        }
-
-        .rounded-table tbody tr:hover {
-            background-color: #e9ecef;
-        }
-
-        .rounded-table .btn {
-            border-radius: 5px;
-        }
-
-        .rounded-table .btn-danger {
-            background-color: #dc3545;
-            border-color: #dc3545;
-        }
-
-        .rounded-table .btn-danger:hover {
-            background-color: #c82333;
-            border-color: #bd2130;
-        }
-    </style>
 </head>
 
 <body>
@@ -114,12 +41,12 @@
 
             <div class="d-flex justify-content-between mb-3">
                 <button (click)="clearData()" class="btn btn-outline-secondary">Clear filter</button>
-                <a href="#" class="btn btn-primary" routerLink="/captureEmployeeDailyHours">Capture Hours</a>
+                <a href="#" class="btn btn-primary rounded-btn" routerLink="/captureEmployeeDailyHours">Capture Hour</a>
             </div>
 
             <div class="table-responsive">
-                <table class="table table-bordered table-striped rounded-table">
-                    <thead class="thead-dark">
+                <table class="table table-bordered  rounded-table">
+                    <thead>
                         <tr>
                             <th>Date</th>
                             <th>Hours</th>
@@ -133,7 +60,7 @@
                             <td>{{ dailyHour.hours }}</td>
                             <td *ngFor="let employee of dailyHour.employees">{{ employee.firstName }} {{ employee.lastName }}</td>
                             <td>
-                                <button (click)="onDeleteDailyHour(dailyHour.employeeDailyHoursId)" class="btn btn-danger">
+                                <button (click)="onDeleteDailyHour(dailyHour.employeeDailyHoursId)" class="btn btn-outline-danger rounded-btn mr-2">
                                     <i class="material-icons">delete</i> Delete
                                 </button>
                             </td>

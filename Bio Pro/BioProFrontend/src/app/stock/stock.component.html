@@ -42,33 +42,35 @@
                     </mat-select>
                 </mat-form-field>
             </div>
-
-            <table class="table table-bordered table-striped rounded-table">
-                <thead class="thead-dark">
-                    <tr>
-                        <th>Stock Name</th>
-                        <th>Quantity Available</th>
-                        <th>Category</th>
-                        <th>Supplier</th>
-                        <th>Actions</th>
-                    </tr>
+            <table class="table table-bordered  rounded-table">
+                <thead >
+                  <tr>
+                    <th>Stock Name</th>
+                    <th>Quantity Available</th>
+                    <th>Category</th>
+                    <th>Supplier</th>
+                    <th class="text-center">Actions</th>
+                  </tr>
                 </thead>
                 <tbody>
-                    <tr *ngIf="filteredStock.length === 0">
-                        <td colspan="5" class="text-center">No matching stocks found.</td>
-                    </tr>
-                    <tr *ngFor="let stock of filteredStock">
-                        <td>{{ stock.stockName }}</td>
-                        <td>{{ stock.quantityAvailable }}</td>
-                        <td>{{ getCategoryDescription(stock.stockCategoryId) }}</td>
-                        <td>{{ stock.supplier.supplierName }}</td>
-                        <td>
-                            <button mat-button class="btn btn-danger" (click)="openWriteOffModal(stock)">Write Off</button>
-                            <button mat-button class="btn btn-primary" (click)="openCaptureStockModal(stock)">Capture New Stock</button>
-                        </td>
-                    </tr>
+                  <tr *ngFor="let stock of filteredStock">
+                    <td>{{ stock.stockName }}</td>
+                    <td>{{ stock.quantityAvailable }}</td>
+                    <td>{{ stock.stockCategory.description }}</td>
+                    <td>{{ stock.supplier.supplierName }}</td>
+                    <td class="text-center">
+                      <button (click)="openWriteOffModal(stock)" class="btn btn-outline-danger rounded-btn mr-2">
+                        <i class="material-icons">delete</i> Write Off
+                      </button>
+                      <button (click)="openCaptureStockModal(stock)" class="btn btn-secondary rounded-btn mr-2">
+                        <i class="material-icons">add_circle</i> Capture New Stock
+                      </button>
+                    </td>
+                  </tr>
                 </tbody>
-            </table>
+              </table>
+              
+              
         </div>
     </div>
 </body>
