@@ -108,7 +108,9 @@ class _QRCodeScannerPageState extends State<QRCodeScannerPage> {
     if (startTime != null) {
       final endTime = DateTime.now();
       workedHours = endTime.difference(startTime!);
-      _captureDailyHours(result!.code!, workedHours.inHours + workedHours.inMinutes / 60);
+      double totalHours = workedHours.inHours + (workedHours.inMinutes % 60) / 60 + (workedHours.inSeconds % 60) / 3600;
+      int employeeId = int.parse(result!.code!);
+      _captureDailyHours(employeeId, totalHours);
       setState(() {
         isScanning = true;
         startTime = null;
@@ -118,7 +120,7 @@ class _QRCodeScannerPageState extends State<QRCodeScannerPage> {
     }
   }
 
-  Future<void> _captureDailyHours(String employeeId, double hours) async {
+  Future<void> _captureDailyHours(int employeeId, double hours) async {
     final now = DateTime.now();
     final dailyHours = {
       'workDate': now.toIso8601String(),
