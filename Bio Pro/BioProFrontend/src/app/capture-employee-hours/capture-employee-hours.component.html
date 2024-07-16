@@ -10,9 +10,9 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.1.12/angular-material.min.css">
 </head>
 <body>
+
+<div class="container">
   <h1 style="font-size: 48px; color: #4d4a4a; text-align: center; text-transform: uppercase; letter-spacing: 3px; margin-bottom: 24px; text-shadow: 2px 2px 4px rgba(124, 124, 124, 0.5);">EMPLOYEE HOURS</h1>
-  <div class="container">
-    <h2 style="text-align: center;">Capture Employee Hours</h2>
     <form [formGroup]="captureHoursForm" (ngSubmit)="submitForm()">
       <div class="form-group">
         <mat-form-field appearance="outline">

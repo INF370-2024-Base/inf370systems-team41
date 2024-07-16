@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,19 +12,21 @@
     <!-- Include Angular Material CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.1.12/angular-material.min.css">
 </head>
-<body>
+
+<body style="background: linear-gradient(120deg, #aed9e0, #c2e2f3, #eaf1fa, #c2e2f3, #aed9e0); background-size: 400% 400%; animation: gradientAnimation 20s ease infinite; font-family: 'Roboto', sans-serif; color: #333; padding: 20px; overflow-x: hidden; overflow-y: auto;">
     <h1 style="font-size: 48px; color: #4d4a4a; text-align: center; text-transform: uppercase; letter-spacing: 3px; margin-bottom: 24px; text-shadow: 2px 2px 4px rgba(124, 124, 124, 0.5);">USERS</h1>
     <div class="container">
         <div class="row">
             <div class="col-md-12 d-flex justify-content-between align-items-center mb-3">
                 <div class="col-md-6 d-flex align-items-center">
-                    <mat-form-field class="search-field">
-                        <mat-icon matPrefix>search</mat-icon>
-                        <input matInput [(ngModel)]="searchQuery" placeholder="Search User..." (ngModelChange)="onOrderIdChange($event)">
+                    <i class="material-icons mr-2">search</i>
+                    <mat-form-field class="search-field" style="flex-grow: 1;">
+                        <input matInput [(ngModel)]="searchQuery" (ngModelChange)="onOrderIdChange($event)" placeholder="Search User..." class="w-100 mr-2" />
                     </mat-form-field>
+                    <button (click)="searchEmployees()" class="btn btn-outline-primary rounded-btn">Search</button>
                 </div>
                 <div class="col-md-6 d-flex justify-content-end">
-                    <a href="#" class="btn btn-primary rounded-btn" routerLink="/adduser">Add user</a>
+                    <a href="#" class="btn btn-primary rounded-btn" routerLink="/adduser">Add User</a>
                 </div>
             </div>
         </div>
@@ -49,5 +52,9 @@
             </div>
         </div>
     </div>
-</body>
-</html>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.2/angular.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.1.12/angular-material.min.js"></script>
+  </body>
+  </html>
+  

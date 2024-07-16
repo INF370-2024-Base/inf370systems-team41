@@ -1,0 +1,173 @@
+body {
+  background: linear-gradient(120deg, #aed9e0, #c2e2f3, #eaf1fa, #c2e2f3, #aed9e0);
+  background-size: 400% 400%;
+  animation: gradientAnimation 20s ease infinite;
+  font-family: 'Roboto', sans-serif;
+  color: #333;
+  padding: 20px;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+@keyframes gradientAnimation {
+  0% {
+      background-position: 0% 50%;
+  }
+  50% {
+      background-position: 100% 50%;
+  }
+  100% {
+      background-position: 0% 50%;
+  }
+}
+
+.rounded-table {
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.rounded-table thead th {
+  background-color: #8b9aad; /* Updated color */
+  color: white; /* Text color for table header */
+}
+
+.rounded-table tbody td {
+  background-color: white;
+  color: #495057;
+}
+
+.rounded-table tbody tr:nth-child(even) {
+  background-color: #f8f9fa;
+}
+
+.rounded-table tbody tr:hover {
+  background-color: #e9ecef;
+}
+
+.rounded-table .text-center {
+  text-align: center;
+}
+
+.rounded-table button.mat-button {
+  padding: 5px 10px;
+  margin-right: 5px;
+}
+
+.btn {
+  border-radius: 20px;
+  padding: 10px 20px;
+  font-size: 14px;
+}
+
+.btn-secondary {
+  background-color: #558dbd;
+  color: #fff;
+  border: none;
+}
+
+.btn-outline-danger {
+  border-color: #dc3545;
+  color: #dc3545;
+  transition: color 0.3s;
+}
+
+.btn-outline-danger:hover {
+  background-color: #dc3545;
+  color: white;
+}
+
+/* Primary button styles */
+a.btn.btn-primary.rounded-btn {
+  background-color: #007bff;
+  color: #fff;
+  border-radius: 20px;
+  padding: 10px 30px;
+  text-decoration: none;
+  margin-right: auto;
+}
+
+a.btn.btn-primary.rounded-btn:hover {
+  background-color: #0056b3;
+}
+
+.search-filter {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 24px;
+}
+
+.search-field,
+.filter-field {
+  flex: 1;
+  margin-right: 10px;
+}
+
+.search-field input,
+.filter-field mat-select {
+  width: 100%;
+}
+
+.mat-icon {
+  margin-right: 10px;
+}
+
+button.mat-raised-button {
+  margin-right: 10px;
+}
+
+@media (max-width: 768px) {
+  .search-filter {
+    flex-direction: column;
+  }
+
+  .search-field,
+  .filter-field {
+    margin-right: 0;
+    margin-bottom: 10px;
+  }
+}
+
+@media (max-width: 992px) {
+  .btn,
+  a.btn {
+    padding: 8px 15px;
+    font-size: 12px;
+  }
+
+  .btn-outline-primary,
+  .btn-secondary,
+  .btn-outline-danger {
+    margin-left: 5px;
+  }
+
+  a.btn.btn-primary.rounded-btn {
+    padding: 8px 20px;
+  }
+}
+
+@media (max-width: 576px) {
+  .container {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  .btn {
+    width: 100%; /* Set buttons to full width */
+    margin-top: 10px; /* Add margin between buttons */
+  }
+
+  a.btn.btn-primary.rounded-btn,
+  .btn-secondary {
+    margin-left: 0; /* Remove left margin for primary and secondary buttons */
+  }
+}
+
+@media (max-width: 400px) {
+  h1 {
+    font-size: 36px;
+  }
+
+  .search-field {
+    padding: 10px 15px;
+  }
+}

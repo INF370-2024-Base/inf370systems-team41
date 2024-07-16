@@ -1,0 +1,254 @@
+body {
+  background: linear-gradient(120deg, #aed9e0, #c2e2f3, #eaf1fa, #c2e2f3, #aed9e0);
+  background-size: 400% 400%;
+  animation: gradientAnimation 20s ease infinite;
+  font-family: 'Roboto', sans-serif;
+  color: #333;
+  padding: 20px;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+h1 {
+  font-size: 48px;
+  color: #4d4a4a;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  margin-bottom: 24px;
+  text-shadow: 2px 2px 4px rgba(124, 124, 124, 0.5);
+}
+
+@keyframes gradientAnimation {
+  0% {
+      background-position: 0% 50%;
+  }
+  50% {
+      background-position: 100% 50%;
+  }
+  100% {
+      background-position: 0% 50%;
+  }
+}
+
+.rounded-table {
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.rounded-table thead th {
+  background-color: #8b9aad; /* Set the background color for table header */
+  color: white; /* Text color for table header */
+}
+
+.rounded-table tbody td,
+.rounded-table tbody th {
+  background-color: white;
+  color: #495057;
+}
+
+.rounded-table tbody tr:nth-child(even) {
+  background-color: #f8f9fa;
+}
+
+.rounded-table tbody tr:hover {
+  background-color: #e9ecef;
+}
+
+.rounded-table .btn {
+  border-radius: 5px;
+}
+
+.rounded-table .btn-danger {
+  background-color: #dc3545;
+  border-color: #dc3545;
+}
+
+.rounded-table .btn-danger:hover {
+  background-color: #c82333;
+  border-color: #bd2130;
+}
+
+/* Media Queries for responsiveness */
+@media (max-width: 767.98px) {
+  h1 {
+      font-size: 32px;
+      letter-spacing: 2px;
+      margin-bottom: 16px;
+  }
+
+  .table-responsive {
+      border: 0;
+  }
+
+  .btn {
+      width: 100%;
+      margin-bottom: 10px;
+  }
+}
+
+@media (max-width: 575.98px) {
+  .table-responsive {
+      overflow-x: auto;
+  }
+
+  .d-flex {
+      flex-direction: column;
+      align-items: stretch;
+  }
+
+  .d-flex .btn {
+      margin-bottom: 10px;
+  }
+}
+
+.btn {
+  border-radius: 20px;
+  padding: 10px 20px;
+  font-size: 14px;
+}
+
+.btn-secondary {
+  background-color: #558dbd;
+  color: #fff;
+  border: none;
+}
+
+.btn-outline-danger {
+  border-color: #dc3545;
+  color: #dc3545;
+  transition: color 0.3s;
+}
+
+.btn-outline-danger:hover {
+  background-color: #dc3545;
+  color: white;
+}
+
+/* Primary button styles */
+a.btn.btn-primary.rounded-btn {
+  background-color: 
+  #3c54b4;
+  color: #fff;
+  border-radius: 20px;
+  padding: 10px 30px;
+  text-decoration: none;
+  margin-right: auto;
+}
+
+a.btn.btn-primary.rounded-btn:hover {
+  background-color:  #0056b3;
+}
+
+@media (max-width: 992px) {
+  .btn, a.btn {
+      padding: 8px 15px;
+      font-size: 12px;
+  }
+
+  .btn-outline-primary, .btn-secondary, .btn-outline-danger {
+      margin-left: 5px;
+  }
+
+  a.btn.btn-primary.rounded-btn {
+      padding: 8px 20px;
+  }
+}
+
+@media (max-width: 768px) {
+  .btn, a.btn {
+      padding: 8px 15px;
+      font-size: 12px;
+  }
+
+  .btn-outline-primary, .btn-secondary, .btn-outline-danger {
+      margin-left: 5px;
+  }
+
+  a.btn.btn-primary.rounded-btn {
+      padding: 8px 20px;
+  }
+}
+
+@media (max-width: 576px) {
+  .container {
+      padding-left: 10px;
+      padding-right: 10px;
+  }
+
+  .btn {
+      width: 100%; /* Set buttons to full width */
+      margin-top: 10px; /* Add margin between buttons */
+  }
+
+  a.btn.btn-primary.rounded-btn,
+  .btn-secondary {
+      margin-left: 0; /* Remove left margin for primary and secondary buttons */
+  }
+}
+
+@media (max-width: 400px) {
+  h1 {
+      font-size: 36px;
+  }
+
+  .search-field {
+      padding: 10px 15px;
+  }
+}
+
+.d-flex {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+@media (max-width: 576px) {
+  .d-flex {
+      flex-direction: column;
+  }
+
+  .d-flex .btn {
+      width: 100%;
+      margin-top: 10px;
+  }
+}
+
+.mat-icon-button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 10px;
+  margin: 2px;
+  width: 28px; /* Adjust width to make buttons smaller */
+  height: 28px;
+  display: flex;
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Adjust height to make buttons smaller */
+}
+
+.mat-icon-button:hover {
+  background-color: #0056b3;
+}
+
+/* Styles for Capture Hour button */
+.action-button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  padding: 10px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+}
+
+.action-button:hover {
+  background-color: #0056b3;
+}

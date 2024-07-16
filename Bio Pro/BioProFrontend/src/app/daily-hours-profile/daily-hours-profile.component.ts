@@ -28,15 +28,13 @@ export class DailyHoursProfileComponent implements OnInit {
     this.isLoading = true;
 
     this.employeeService.getEmployeeDailyHours().subscribe(
-      
       (results) => {
         this.dailyHoursData = results;
         console.log('Fetched daily hours:', this.dailyHoursData);
         this.employeeService.getAllEmployees().subscribe(
-      
           (results) => {
             this.employees = results;
-            this.isLoading=false
+            this.isLoading = false;
           },
           (error) => {
             console.error('Error fetching daily hours:', error);
@@ -69,6 +67,7 @@ export class DailyHoursProfileComponent implements OnInit {
   clearData(): void {
     this.selectedDate = null;
     this.selectedEmployeeEmail = '';
+    this.fetchData();
   }
 
   onNameChange(event: any): void {
@@ -85,18 +84,16 @@ export class DailyHoursProfileComponent implements OnInit {
       }
     );
   }
+
   onDeleteDailyHour(dailyHourId: number): void {
     this.employeeService.deleteEmployeeDailyHours(dailyHourId).subscribe(
       () => {
         console.log(`Successfully deleted daily hour with ID: ${dailyHourId}`);
-        // Optionally, refresh the list of daily hours after deletion
-        this.fetchData(); // Assuming fetchData() reloads the data from the backend
+        this.fetchData();
       },
       (error) => {
         console.error('Error deleting daily hour:', error);
-        // Handle the error appropriately, e.g., showing an error message to the user
       }
     );
   }
-
 }
