@@ -23,11 +23,9 @@ h1 {
   0% {
       background-position: 0% 50%;
   }
-
   50% {
       background-position: 100% 50%;
   }
-
   100% {
       background-position: 0% 50%;
   }
@@ -39,8 +37,8 @@ h1 {
 }
 
 .rounded-table thead th {
-  background-color: #343a40;
-  color: white;
+  background-color: #8b9aad; /* Set the background color for table header */
+  color: white; /* Text color for table header */
 }
 
 .rounded-table tbody td,
@@ -103,6 +101,7 @@ h1 {
       margin-bottom: 10px;
   }
 }
+
 .btn {
   border-radius: 20px;
   padding: 10px 20px;
@@ -128,7 +127,8 @@ h1 {
 
 /* Primary button styles */
 a.btn.btn-primary.rounded-btn {
-  background-color: #007bff;
+  background-color: 
+  #3c54b4;
   color: #fff;
   border-radius: 20px;
   padding: 10px 30px;
@@ -137,10 +137,8 @@ a.btn.btn-primary.rounded-btn {
 }
 
 a.btn.btn-primary.rounded-btn:hover {
-  background-color: #0056b3;
+  background-color:  #0056b3;
 }
-
-
 
 @media (max-width: 992px) {
   .btn, a.btn {
@@ -171,6 +169,7 @@ a.btn.btn-primary.rounded-btn:hover {
       padding: 8px 20px;
   }
 }
+
 @media (max-width: 576px) {
   .container {
       padding-left: 10px;
@@ -196,4 +195,60 @@ a.btn.btn-primary.rounded-btn:hover {
   .search-field {
       padding: 10px 15px;
   }
+}
+
+.d-flex {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+@media (max-width: 576px) {
+  .d-flex {
+      flex-direction: column;
+  }
+
+  .d-flex .btn {
+      width: 100%;
+      margin-top: 10px;
+  }
+}
+
+.mat-icon-button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 10px;
+  margin: 2px;
+  width: 28px; /* Adjust width to make buttons smaller */
+  height: 28px;
+  display: flex;
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Adjust height to make buttons smaller */
+}
+
+.mat-icon-button:hover {
+  background-color: #0056b3;
+}
+
+/* Styles for Capture Hour button */
+.action-button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  padding: 10px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+}
+
+.action-button:hover {
+  background-color: #0056b3;
 }
