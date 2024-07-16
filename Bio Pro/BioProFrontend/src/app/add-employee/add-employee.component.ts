@@ -5,6 +5,7 @@ import { Employee } from '../shared/employee';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router'; // Import Router
+import { PhoneChecker } from '../validators/Validators';
 
 @Component({
   selector: 'app-add-employee',
@@ -26,7 +27,7 @@ export class AddEmployeeComponent implements OnInit {
       LastName: ['', Validators.required],
       JobTitleId: ['', Validators.required],
       EmailAddress: ['', [Validators.required, Validators.email]],
-      PhoneNumber: ['', Validators.required],
+      PhoneNumber: ['', [Validators.required,PhoneChecker.SouthAfricanPhoneNumberValidator()]],
       Address: ['', Validators.required]
     });
   }

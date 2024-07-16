@@ -86,14 +86,22 @@ export class DailyHoursProfileComponent implements OnInit {
   }
 
   onDeleteDailyHour(dailyHourId: number): void {
-    this.employeeService.deleteEmployeeDailyHours(dailyHourId).subscribe(
-      () => {
-        console.log(`Successfully deleted daily hour with ID: ${dailyHourId}`);
-        this.fetchData();
-      },
-      (error) => {
-        console.error('Error deleting daily hour:', error);
-      }
-    );
+    // Prompt the user for confirmation before deleting
+    if (confirm(`Are you sure you want to delete the daily hour entry with ID: ${dailyHourId}?`)) {
+      this.employeeService.deleteEmployeeDailyHours(dailyHourId).subscribe(
+        () => {
+          console.log(`Successfully deleted daily hour with ID: ${dailyHourId}`);
+          // Optionally, refresh the list of daily hours after deletion
+          this.fetchData(); // Assuming fetchData() reloads the data from the backend
+        },
+        (error) => {
+          console.error('Error deleting daily hour:', error);
+          // Handle the error appropriately, e.g., showing an error message to the user
+          return;
+        }
+      );
+    }
   }
+  
+
 }

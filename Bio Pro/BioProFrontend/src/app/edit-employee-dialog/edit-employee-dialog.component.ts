@@ -1,9 +1,9 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { EmployeeService } from '../services/employee.service';
-import { Employee } from '../shared/employee';
 import { EditEmployee } from '../shared/EditEmployee';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-edit-employee-dialog',
@@ -13,6 +13,8 @@ import { EditEmployee } from '../shared/EditEmployee';
 export class EditEmployeeDialogComponent implements OnInit {
   editEmployeeForm: FormGroup;
   jobTitles: any[] = [];
+  isLoading = false;
+  errorMessage: string = '';
 
   constructor(
     public dialogRef: MatDialogRef<EditEmployeeDialogComponent>,
@@ -21,41 +23,69 @@ export class EditEmployeeDialogComponent implements OnInit {
     private employeeService: EmployeeService
   ) {
     this.editEmployeeForm = this.fb.group({
-      jobTitleId: [data.JobTitleId, Validators.required],
-      address: [data.Address || '', Validators.required]
+      jobTitleId: ['', Validators.required],
+      address: ['', Validators.required]
     });
   }
 
   ngOnInit(): void {
-    this.getJobTitles();
+    this.loadJobTitles();
   }
 
-  getJobTitles() {
+  loadJobTitles(): void {
+    this.isLoading = true;
     this.employeeService.getJobtitles().subscribe(results => {
       this.jobTitles = results;
+      this.setInitialFormValues();
+      this.isLoading = false;
     },
     error => {
-      console.log(error);
+      console.error('Error fetching job titles:', error);
+      this.isLoading = false;
+    });
+  }
+
+  setInitialFormValues(): void {
+    this.editEmployeeForm.patchValue({
+      jobTitleId: this.data.jobTitleId || '',
+      address: this.data.address || ''
     });
   }
 
   onSave(): void {
-    if (this.data.employeeId === undefined) {
-      console.error('EmployeeId is undefined');
+    if (this.editEmployeeForm.invalid) {
+      console.log('Form is invalid');
       return;
     }
-
+    const jobTitleIdValue = parseInt(this.editEmployeeForm.get('jobTitleId')?.value, 10);
+    console.log('JobTitleId:', jobTitleIdValue);
+  
     const updatedEmployee: EditEmployee = {
       EmployeeId: this.data.employeeId,
-      JobTitleId: this.editEmployeeForm.value.jobTitleId || -1,
+      JobTitleId: jobTitleIdValue,
       Address: this.editEmployeeForm.get('address')?.value || ''
     };
-    console.log(updatedEmployee)
-    console.log(this.editEmployeeForm.value)
-
+  
+    console.log('Updated Employee:', updatedEmployee);
+  
+    this.isLoading = true;
     this.employeeService.editEmployee(updatedEmployee).subscribe(response => {
+      console.log('Employee details updated successfully:', response);
       this.dialogRef.close(response);
+    }, (error: HttpErrorResponse) => {
+      console.error('Error saving employee:', error);
+      this.errorMessage = this.getErrorMessage(error);
+    }).add(() => {
+      this.isLoading = false;
     });
+  }
+
+  getErrorMessage(error: HttpErrorResponse): string {
+    if (error.status === 400 && error.error.errors) {
+      const validationErrors = error.error.errors as { [key: string]: string[] };
+      return Object.values(validationErrors).map(err => err.join(' ')).join(' ');
+    }
+    return 'An unexpected error occurred.';
   }
 
   onCancel(): void {

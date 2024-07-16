@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { EmployeeService } from '../services/employee.service';
-import { Employee } from '../shared/employee';
 import { EditEmployeeDialogComponent } from '../edit-employee-dialog/edit-employee-dialog.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { ConfirmDeleteEmployeeComponent } from '../confirm-delete-employee/confirm-delete-employee.component';
 
 @Component({
   selector: 'app-employee-profile',
@@ -14,6 +14,7 @@ export class EmployeeProfileComponent implements OnInit {
   employees: any[] = [];
   searchQuery = '';
   jobTitles: any[] = [];
+  noResultsFound = false;
 
   constructor(
     private employeeService: EmployeeService,
@@ -29,12 +30,14 @@ export class EmployeeProfileComponent implements OnInit {
   fetchAllEmployees() {
     this.employeeService.getAllEmployees().subscribe(data => {
       this.employees = data;
+      this.noResultsFound = this.employees.length === 0;
     });
   }
 
   searchEmployees() {
     this.employeeService.searchEmployees(this.searchQuery).subscribe(data => {
       this.employees = data;
+      this.noResultsFound = this.employees.length === 0;
     });
   }
 
@@ -54,20 +57,26 @@ export class EmployeeProfileComponent implements OnInit {
     });
   }
 
-  deleteEmployee(employee:any) {
-    console.log (employee)
+  deleteEmployee(employee: any) {
     if (!employee.employeeId) {
       console.error('EmployeeId is undefined. Cannot delete employee.');
       return;
     }
-
-    if (confirm(`Are you sure you want to delete ${employee.firstName} ${employee.lastName}?`)) {
-      this.employeeService.deleteEmployee(employee.employeeId).subscribe(() => {
-        this.fetchAllEmployees(); // Refresh the list after deleting
-      }, error => {
-        console.error('Error deleting employee:', error);
-      });
-    }
+  
+    const dialogRef = this.dialog.open(ConfirmDeleteEmployeeComponent, {
+      width: '400px',
+      data: { employee }
+    });
+  
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.employeeService.deleteEmployee(employee.employeeId).subscribe(() => {
+          this.fetchAllEmployees(); // Refresh the list after deleting
+        }, error => {
+          console.error('Error deleting employee:', error);
+        });
+      }
+    });
   }
 
   getJobTitles() {
@@ -87,6 +96,7 @@ export class EmployeeProfileComponent implements OnInit {
                d.lastName.toLowerCase().includes(searchCriteria) ||
                fullName.includes(searchCriteria);
       });
+      this.noResultsFound = this.employees.length === 0;
     }
   }
 }

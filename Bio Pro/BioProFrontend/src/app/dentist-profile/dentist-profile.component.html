@@ -25,7 +25,14 @@
                 </div>
             </div>
         </div>
-        <div class="row">
+        <div class="row" *ngIf="noResultsFound">
+            <div class="col-md-12">
+                <div >
+                    No dentists found for the given search criteria.
+                </div>
+            </div>
+        </div>
+        <div class="row" *ngIf="!noResultsFound">
             <div class="col-md-12">
                 <div class="card-container">
                     <div class="card mb-3 example-card" *ngFor="let dentist of filteredDentists">
