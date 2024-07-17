@@ -144,6 +144,12 @@
           </a>
         </ng-container>
         <ng-container>
+          <a mat-list-item class="sub-nav-link" [routerLink]="['/stock-categories']" (click)="isSidenavOpen = !isSidenavOpen">
+            <mat-icon>file</mat-icon> <!-- Icon for new order -->
+            Stock categories
+          </a>
+        </ng-container>
+        <ng-container>
           <a mat-list-item class="sub-nav-link" [routerLink]="['/UpdatePassword']" (click)="isSidenavOpen = !isSidenavOpen">
             <mat-icon>file</mat-icon> <!-- Icon for new order -->
             Update Password
@@ -151,7 +157,7 @@
         </ng-container>
     </mat-nav-list>
     </mat-sidenav>
-    <mat-sidenav-content class="content-container">
+    <mat-sidenav-content class="content-container">  
       <div style="height: 88vh;">
         <router-outlet></router-outlet>
       </div>
