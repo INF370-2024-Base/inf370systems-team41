@@ -4,31 +4,46 @@
   <mat-label>Search by Description</mat-label>
   <input matInput [(ngModel)]="searchTerm" placeholder="Type to search..." (ngModelChange)="filteredStockTypes()">
 </mat-form-field>
+
 <button mat-button color="primary" (click)="addType()">
-    Add
-  </button>
+  Add
+</button>
+
+<div *ngIf="searchTerm != '' && displayedStockTypes.length == 0">
+  No types found
+</div>
+
 <div *ngFor="let StockType of displayedStockTypes" class="stock-type-container">
-    <mat-card class="stock-type-card">
-      <mat-card-title>{{ StockType.description }}</mat-card-title>
-      <mat-card-actions>
-        <button mat-button color="primary" (click)="eventClicked(StockType)">
-          Edit
-        </button>
-        <button *ngIf="StockType.stockCategories.length==0" mat-button color="primary" (click)="deleteType(StockType.stockTypeId)">
-            Delete
-          </button>
-      </mat-card-actions>
-    </mat-card>
-  </div>
-  <style>.stock-type-container {
+  <mat-card class="stock-type-card">
+    <mat-card-title>{{ StockType.description }}</mat-card-title>
+    <mat-card-actions>
+      <button mat-button color="primary" (click)="eventClicked(StockType)">
+        Edit
+      </button>
+      <!-- Temporarily remove the condition -->
+      <button mat-button color="warn" (click)="deleteType(StockType.stockTypeId)">
+        Delete
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</div>
+
+<style>
+  .stock-type-container {
     display: flex;
     flex-wrap: wrap;
     gap: 16px;
     justify-content: center;
     margin: 16px;
   }
-  
+
   .stock-type-card {
     width: 300px;
   }
-  </style>
+
+  .search-bar {
+    margin: 16px;
+    width: 100%;
+    max-width: 400px;
+  }
+</style>

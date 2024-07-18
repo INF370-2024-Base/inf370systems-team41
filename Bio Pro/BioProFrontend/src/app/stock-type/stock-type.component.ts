@@ -58,23 +58,22 @@ export class StockTypeComponent implements OnInit {
         }
       });
     }
-    deleteType(id:number): void {
+    deleteType(id: number): void {
       const confirmdialog = this.dialog.open(ConfirmationDialogComponent, {
         width: '250px',
-        data: 'Are you sure you want to delete this event?'
+        data: 'Are you sure you want to delete this type?'
       });
-  
+    
       confirmdialog.afterClosed().subscribe(result => {
         if (result) {
-          // If the user confirms, delete the event
           this.stockService.DeleteStockType(id).subscribe(() => {
             this.GetAllStockTypes();
-            console.log('Deleted event');
-            this.snackBar.open('Deleted type successfully','Dismiss',{
-              duration: 3000, 
-            })
+            console.log('Deleted type');
+            this.snackBar.open('Deleted type successfully', 'Dismiss', {
+              duration: 3000,
+            });
           }, error => {
-            console.error('Error deleting event', error);
+            console.error('Error deleting type', error);
           });
         }
       });
