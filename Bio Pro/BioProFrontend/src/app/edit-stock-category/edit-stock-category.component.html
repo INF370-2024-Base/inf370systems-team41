@@ -1,43 +1,109 @@
-<h2 mat-dialog-title>Edit Stock Category</h2>
-<form [formGroup]="editForm" (ngSubmit)="onSave()">
-  <mat-dialog-content>
-    <mat-form-field appearance="fill">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Stock Category</title>
+    <!-- Include Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Include Material Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- Include Angular Material CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.1.12/angular-material.min.css">
+    <style>
+      /* Body styles */
+      body {
+        background: linear-gradient(120deg, #aed9e0, #c2e2f3, #eaf1fa, #c2e2f3, #aed9e0);
+        background-size: 400% 400%;
+        animation: gradientAnimation 20s ease infinite;
+        font-family: 'Roboto', sans-serif;
+        color: #333;
+        padding: 20px;
+        overflow-x: hidden;
+        overflow-y: auto;
+      }
+
+      /* Animated background gradients */
+      @keyframes gradientAnimation {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+      }
+
+      h2 {
+        font-size: 36px;
+        color: #4d4a4a;
+        text-align: center;
+        text-transform: uppercase;
+        letter-spacing: 3px;
+        margin-bottom: 24px;
+        text-shadow: 2px 2px 4px rgba(124, 124, 124, 0.5);
+      }
+
+      .mat-form-field {
+        width: 100%;
+        margin-bottom: 16px;
+      }
+
+      .mat-dialog-actions {
+        justify-content: flex-end;
+      }
+
+      .mat-dialog-actions button {
+        border-radius: 20px;
+        padding: 10px 20px;
+        font-size: 14px;
+      }
+
+      .mat-dialog-actions button[type="submit"] {
+        background-color: #007bff;
+        color: #fff;
+      }
+
+      .mat-dialog-actions button[type="submit"]:hover {
+        background-color: #0056b3;
+      }
+
+      .readonly-input {
+        background-color: #f0f0f0;
+        border-radius: 4px;
+      }
+    </style>
+</head>
+<body>
+  <h2 mat-dialog-title>Edit Stock Category</h2>
+  <form [formGroup]="editForm" (ngSubmit)="onSave()">
+    <mat-dialog-content>
+      <mat-form-field appearance="fill">
         <mat-label>Stock Category ID</mat-label>
         <input matInput formControlName="StockCategoryId" class="readonly-input" readonly/>
       </mat-form-field>
-    <mat-form-field appearance="fill">
-      <mat-label>Stock Type</mat-label>
-      
-      <mat-select formControlName="StockTypeId">
-        <mat-option *ngFor="let type of allStockTypes" [value]="type.stockTypeId">
-          {{ type.description }}
-        </mat-option>
-      </mat-select>
-      <mat-error *ngIf="editForm.get('StockTypeId')?.hasError('required')">
-        Stock Type is required
-      </mat-error>
-    </mat-form-field>
 
-    <mat-form-field appearance="fill">
-      <mat-label>Description</mat-label>
-      <input matInput formControlName="Description" />
-      <mat-error *ngIf="editForm.get('Description')?.hasError('required')">
-        Description is required
-      </mat-error>
-    </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Stock Type</mat-label>
+        <mat-select formControlName="StockTypeId">
+          <mat-option *ngFor="let type of allStockTypes" [value]="type.stockTypeId">
+            {{ type.description }}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="editForm.get('StockTypeId')?.hasError('required')">
+          Stock Type is required
+        </mat-error>
+      </mat-form-field>
 
-    
-  </mat-dialog-content>
+      <mat-form-field appearance="fill">
+        <mat-label>Description</mat-label>
+        <input matInput formControlName="Description" />
+        <mat-error *ngIf="editForm.get('Description')?.hasError('required')">
+          Description is required
+        </mat-error>
+      </mat-form-field>
+    </mat-dialog-content>
 
-  <mat-dialog-actions align="end">
-    <button mat-button type="button" (click)="onCancel()">Cancel</button>
-    <button mat-raised-button color="primary" type="submit">Save</button>
-  </mat-dialog-actions>
-</form>
-<style>
-    .readonly-input {
-  background-color: #f5f5f5; /* Light gray background */
-  color: #9e9e9e; /* Gray text color */
-  cursor: not-allowed; /* Not-allowed cursor */
-}
-</style>
+    <mat-dialog-actions align="end">
+      <button mat-button type="button" (click)="onCancel()">Cancel</button>
+      <button mat-raised-button color="primary" type="submit">Save</button>
+    </mat-dialog-actions>
+  </form>
+</body>
+</html>
