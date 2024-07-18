@@ -1,5 +1,5 @@
-
-  <div class="container">
+<div class="container" [@fadeIn]>
+  <div class="content" [@slideIn]>
     <h1 class="home-text">
       <span class="home-text1">WARM WELCOME TO</span>
       <br />
@@ -9,6 +9,35 @@
     </h1>
     <img alt="Company Logo" src="/assets/images/Company logo.jpg" class="home-logo" />
   </div>
-
+</div>
 <img alt="Background Image" src="/assets/images/back g 2.jpg" class="background" />
 
+<div class="info-cards">
+  <mat-card class="weather-card" *ngIf="weather">
+    <mat-card-header class="weather-header">
+      <mat-card-title class="weather-title">Current Weather</mat-card-title>
+    </mat-card-header>
+    <mat-card-content class="weather-content">
+      <div class="weather-icon">
+        <img [src]="'https:' + weather.current.condition.icon" alt="Weather Icon">
+      </div>
+      <div class="weather-details">
+        <p class="weather-location">{{ weather.location.name }}</p>
+        <p class="weather-description">{{ weather.current.condition.text }}</p>
+        <p class="weather-temperature">{{ weather.current.temp_c }}°C</p>
+        <p class="weather-humidity">Humidity: {{ weather.current.humidity }}%</p>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card class="dental-tips-card">
+    <mat-card-header class="dental-header">
+      <mat-card-title class="dental-title">Dental Tips</mat-card-title>
+    </mat-card-header>
+    <mat-card-content class="dental-content">
+      <mat-list>
+        <mat-list-item *ngFor="let tip of dentalTips">{{ tip }}</mat-list-item>
+      </mat-list>
+    </mat-card-content>
+  </mat-card>
+</div>
