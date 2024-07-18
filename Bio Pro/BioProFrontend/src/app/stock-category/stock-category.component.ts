@@ -58,23 +58,23 @@ this.GetAllStockCategories();
       }
     });
   }
-  deleteCategory(id:number): void {
+  
+  deleteCategory(id: number): void {
     const confirmdialog = this.dialog.open(ConfirmationDialogComponent, {
       width: '250px',
-      data: 'Are you sure you want to delete this event?'
+      data: 'Are you sure you want to delete this category?'
     });
-
+  
     confirmdialog.afterClosed().subscribe(result => {
       if (result) {
-        // If the user confirms, delete the event
         this.stockService.DeleteStockCategory(id).subscribe(() => {
           this.GetAllStockCategories();
-          console.log('Deleted event');
-          this.snackBar.open('Deleted category successfully','Dismiss',{
-            duration: 3000, 
-          })
+          console.log('Deleted category');
+          this.snackBar.open('Deleted category successfully', 'Dismiss', {
+            duration: 3000,
+          });
         }, error => {
-          console.error('Error deleting event', error);
+          console.error('Error deleting category', error);
         });
       }
     });

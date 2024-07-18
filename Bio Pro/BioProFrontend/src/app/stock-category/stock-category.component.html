@@ -8,39 +8,43 @@
 <button mat-button color="primary" (click)="addCategory()">
   Add
 </button>
-<mat-error *ngIf="searchTerm!=''&& displayedStockCategories.length==0">
-    No categories found
+
+<mat-error *ngIf="searchTerm != '' && displayedStockCategories.length == 0">
+  No categories found
 </mat-error>
+
 <div *ngFor="let StockCategory of displayedStockCategories" class="stock-category-container">
-    <mat-card class="stock-category-card">
-      <mat-card-title>{{ StockCategory.description }}</mat-card-title>
-      <mat-card-subtitle>Stock Type: {{ StockCategory.stockType.description }}</mat-card-subtitle>
-      <mat-card-actions>
-        <button mat-button color="primary" (click)="eventClicked(StockCategory)">
-          Edit
-        </button>
-        <button *ngIf="StockCategory.stocks.length==0" mat-button color="primary" (click)="deleteCategory(StockCategory.stockCategoryId)">
-            Delete
-          </button>
-      </mat-card-actions>
-    </mat-card>
-  </div>
-  <style>.stock-category-container {
+  <mat-card class="stock-category-card">
+    <mat-card-title>{{ StockCategory.description }}</mat-card-title>
+    <mat-card-subtitle>Stock Type: {{ StockCategory.stockType.description }}</mat-card-subtitle>
+    <mat-card-actions>
+      <button mat-button color="primary" (click)="eventClicked(StockCategory)">
+        Edit
+      </button>
+      <!-- Temporarily remove the condition -->
+      <button mat-button color="warn" (click)="deleteCategory(StockCategory.stockCategoryId)">
+        Delete
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</div>
+
+<style>
+  .stock-category-container {
     display: flex;
     flex-wrap: wrap;
     gap: 16px;
     justify-content: center;
     margin: 16px;
   }
-  
+
   .stock-category-card {
     width: 300px;
   }
-  
+
   .search-bar {
     margin: 16px;
     width: 100%;
     max-width: 400px;
   }
-  
-  </style>
+</style>
