@@ -30,7 +30,7 @@
     </div>
 
     <div #searchContent>
-        <div class="help-container delivery-container" *ngIf="shouldDisplayContainer('delivery-container')">
+        <div class="help-container delivery-container" *ngIf="shouldDisplayContainer('delivery-container')" id="deliveries">
             <h2><mat-icon>local_shipping</mat-icon> Deliveries</h2>
 
             <section>
@@ -136,7 +136,7 @@
             <button mat-raised-button color="primary" [routerLink]="['/deliveries']">Go To Page</button>
         </div>
         
-        <div class="help-container new-delivery-container" *ngIf="shouldDisplayContainer('new-delivery-container')">
+        <div class="help-container new-delivery-container" *ngIf="shouldDisplayContainer('new-delivery-container')" id="new-deliveries">
             <h2><mat-icon>add_circle_outline</mat-icon> New Deliveries</h2>
             
             <section>

@@ -109,6 +109,13 @@
   <app-edit-order-modal *ngIf="selectedOrder" (close)="closeModal()"></app-edit-order-modal>
   </div>
 </body>
+<div class="help-button-container">
+  <button mat-button [routerLink]="['/help-orders']" >
+    <mat-icon>live_help</mat-icon>
+    <span>Help</span>
+  </button>
+</div>
+
 <style>
 .media-container {
   display: flex;

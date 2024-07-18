@@ -1,4 +1,6 @@
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { ViewportScroller } from '@angular/common';
 
 @Component({
   selector: 'app-help-deliveries',
@@ -22,10 +24,15 @@ export class HelpDeliveriesComponent implements OnInit {
     steps: false
   };
 
-  constructor() { }
+  constructor(private route: ActivatedRoute, private viewportScroller: ViewportScroller) {}
 
   ngOnInit(): void {
     this.filterContent();
+    this.route.fragment.subscribe(fragment => {
+      if (fragment) {
+        this.viewportScroller.scrollToAnchor(fragment);
+      }
+    });
   }
 
   @ViewChild('searchContent') searchContent!: ElementRef;

@@ -98,3 +98,22 @@ body {
     line-height: 1.5; /* Increase line height for better spacing */
 }
 
+.help-button-container {
+    display: flex;
+    align-items: center;
+  }
+  
+  .help-button-container button {
+    display: flex;
+    align-items: center;
+  }
+  
+  .help-button-container mat-icon {
+    margin-right: 8px;
+  }
+  
+  .help-button-container span {
+    font-size: 16px;
+    font-weight: bold;
+  }
+  

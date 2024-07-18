@@ -121,3 +121,23 @@ mat-label {
         font-size: 1em;
     }
 }
+
+.help-button-container {
+    display: flex;
+    align-items: center;
+  }
+  
+  .help-button-container button {
+    display: flex;
+    align-items: center;
+  }
+  
+  .help-button-container mat-icon {
+    margin-right: 8px;
+  }
+  
+  .help-button-container span {
+    font-size: 16px;
+    font-weight: bold;
+  }
+  
