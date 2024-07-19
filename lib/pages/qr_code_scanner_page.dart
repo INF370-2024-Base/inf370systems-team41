@@ -30,45 +30,48 @@ class _QRCodeScannerPageState extends State<QRCodeScannerPage> {
       appBar: AppBar(
         title: const Text('QR Code Scanner'),
       ),
-      body: Column(
-        children: <Widget>[
-          if (isScanning)
-            Expanded(
-              flex: 5,
-              child: QRView(
-                key: qrKey,
-                onQRViewCreated: _onQRViewCreated,
-              ),
-            )
-          else
-            Expanded(
-              flex: 5,
-              child: Center(
-                child: StreamBuilder(
-                  stream: Stream.periodic(Duration(seconds: 1)),
-                  builder: (context, snapshot) {
-                    return Text(
-                      'Work time: ${workedHours.inHours}:${workedHours.inMinutes.remainder(60)}:${workedHours.inSeconds.remainder(60)}',
-                      style: TextStyle(fontSize: 24),
-                    );
-                  },
+      body: Container(
+        color: const Color(0xFF8B9AAD),
+        child: Column(
+          children: <Widget>[
+            if (isScanning)
+              Expanded(
+                flex: 5,
+                child: QRView(
+                  key: qrKey,
+                  onQRViewCreated: _onQRViewCreated,
+                ),
+              )
+            else
+              Expanded(
+                flex: 5,
+                child: Center(
+                  child: StreamBuilder(
+                    stream: Stream.periodic(const Duration(seconds: 1)),
+                    builder: (context, snapshot) {
+                      return Text(
+                        'Work time: ${workedHours.inHours}:${workedHours.inMinutes.remainder(60)}:${workedHours.inSeconds.remainder(60)}',
+                        style: const TextStyle(fontSize: 24),
+                      );
+                    },
+                  ),
                 ),
               ),
+            Expanded(
+              flex: 1,
+              child: Center(
+                child: (result != null)
+                    ? Text('Data/Employee ID: ${result!.code}')
+                    : const Text('Scan a code'),
+              ),
             ),
-          Expanded(
-            flex: 1,
-            child: Center(
-              child: (result != null)
-                  ? Text('Data/Employee ID: ${result!.code}')
-                  : const Text('Scan a code'),
-            ),
-          ),
-          if (!isScanning && startTime != null)
-            ElevatedButton(
-              onPressed: _stopTimerAndCaptureHours,
-              child: Text('Stop Timer and Capture Hours'),
-            ),
-        ],
+            if (!isScanning && startTime != null)
+              ElevatedButton(
+                onPressed: _stopTimerAndCaptureHours,
+                child: const Text('Stop Timer and Capture Hours'),
+              ),
+          ],
+        ),
       ),
     );
   }
@@ -95,9 +98,9 @@ class _QRCodeScannerPageState extends State<QRCodeScannerPage> {
       controller?.dispose();
     });
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('Timer started')),
+      const SnackBar(content: Text('Timer started')),
     );
-    _timer = Timer.periodic(Duration(seconds: 1), (Timer t) {
+    _timer = Timer.periodic(const Duration(seconds: 1), (Timer t) {
       setState(() {
         workedHours = DateTime.now().difference(startTime!);
       });
@@ -136,18 +139,18 @@ class _QRCodeScannerPageState extends State<QRCodeScannerPage> {
 
       if (response.statusCode == 200) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Daily hours captured successfully')),
+          const SnackBar(content: Text('Daily hours captured successfully')),
         );
       } else {
         print('Error: ${response.statusCode} - ${response.body}');
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Failed to capture daily hours')),
+          const SnackBar(content: Text('Failed to capture daily hours')),
         );
       }
     } catch (e) {
       print('Error: $e');
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('An error occurred while capturing daily hours')),
+        const SnackBar(content: Text('An error occurred while capturing daily hours')),
       );
     }
   }

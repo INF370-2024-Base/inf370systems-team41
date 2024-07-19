@@ -23,37 +23,42 @@ class _DentistsPageState extends State<DentistsPage> {
       appBar: AppBar(
         title: const Text('Dentists'),
       ),
-      body: FutureBuilder<List<dynamic>>(
-        future: futureDentists,
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator());
-          } else if (snapshot.hasError) {
-            return Center(child: Text('Error: ${snapshot.error}'));
-          } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-            return const Center(child: Text('No dentists found'));
-          } else {
-            final dentists = snapshot.data!;
-            return GridView.builder(
-              padding: const EdgeInsets.all(10.0),
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                crossAxisSpacing: 10.0,
-                mainAxisSpacing: 10.0,
-                childAspectRatio: 2 / 2.5, 
-              ),
-              itemCount: dentists.length,
-              itemBuilder: (context, index) {
-                final dentist = dentists[index];
-                return DentistCard(
-                  name: '${dentist['firstName']} ${dentist['lastName']}',
-                  contactDetail: dentist['contactDetail'] ?? '',
-                  address: dentist['address'] ?? '',
-                );
-              },
-            );
-          }
-        },
+      body: Container(
+        color: const Color(0xFF8B9AAD),
+        child: FutureBuilder<List<dynamic>>(
+          future: futureDentists,
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(child: CircularProgressIndicator());
+            } else if (snapshot.hasError) {
+              return Center(child: Text('Error: ${snapshot.error}'));
+            } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+              return const Center(child: Text('No dentists found'));
+            } else {
+              final dentists = snapshot.data!;
+              return Scrollbar(
+                child: GridView.builder(
+                  padding: const EdgeInsets.all(10.0),
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    crossAxisSpacing: 10.0,
+                    mainAxisSpacing: 10.0,
+                    childAspectRatio: 2 / 2.5,
+                  ),
+                  itemCount: dentists.length,
+                  itemBuilder: (context, index) {
+                    final dentist = dentists[index];
+                    return DentistCard(
+                      name: '${dentist['firstName']} ${dentist['lastName']}',
+                      contactDetail: dentist['contactDetail'] ?? '',
+                      address: dentist['address'] ?? '',
+                    );
+                  },
+                ),
+              );
+            }
+          },
+        ),
       ),
     );
   }

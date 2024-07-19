@@ -14,7 +14,7 @@ class DentistCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      margin: EdgeInsets.all(10.0),
+      margin: const EdgeInsets.all(10.0),
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
@@ -22,57 +22,57 @@ class DentistCard extends StatelessWidget {
           children: <Widget>[
             Row(
               children: <Widget>[
-                Icon(Icons.medical_services, size: 40),
-                SizedBox(width: 10),
+                const Icon(Icons.medical_services, size: 40),
+                const SizedBox(width: 10),
                 Expanded(
                   child: Text(
                     name,
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                    style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                   ),
                 ),
               ],
             ),
-            SizedBox(height: 5),
+            const SizedBox(height: 5),
             Text(
               'Contact Detail: $contactDetail',
-              style: TextStyle(fontSize: 12),
+              style: const TextStyle(fontSize: 12),
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
             ),
-            SizedBox(height: 5),
+            const SizedBox(height: 5),
             Text(
               'Address: $address',
-              style: TextStyle(fontSize: 12),
+              style: const TextStyle(fontSize: 12),
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
             ),
-            SizedBox(height: 5),
-            Spacer(),
-            Row(
+            const SizedBox(height: 5),
+            const Spacer(),
+            const Row(
               mainAxisAlignment: MainAxisAlignment.end,
-              children: <Widget>[
-                ElevatedButton(
-                  onPressed: () {},
-                  child: Text(
-                    'Edit',
-                    style: TextStyle(fontSize: 12),
-                  ),
-                  style: ElevatedButton.styleFrom(
-                    padding: EdgeInsets.symmetric(vertical: 8.0),
-                  ),
-                ),
-                SizedBox(width: 5),
-                OutlinedButton(
-                  onPressed: () {},
-                  child: Text(
-                    'Delete',
-                    style: TextStyle(fontSize: 12),
-                  ),
-                  style: OutlinedButton.styleFrom(
-                    padding: EdgeInsets.symmetric(vertical: 8.0),
-                  ),
-                ),
-              ],
+              // children: <Widget>[
+              //   ElevatedButton(
+              //     onPressed: () {},
+              //     child: Text(
+              //       'Edit',
+              //       style: TextStyle(fontSize: 12),
+              //     ),
+              //     style: ElevatedButton.styleFrom(
+              //       padding: EdgeInsets.symmetric(vertical: 8.0),
+              //     ),
+              //   ),
+              //   SizedBox(width: 5),
+              //   OutlinedButton(
+              //     onPressed: () {},
+              //     child: Text(
+              //       'Delete',
+              //       style: TextStyle(fontSize: 12),
+              //     ),
+              //     style: OutlinedButton.styleFrom(
+              //       padding: EdgeInsets.symmetric(vertical: 8.0),
+              //     ),
+              //   ),
+              // ],
             ),
           ],
         ),

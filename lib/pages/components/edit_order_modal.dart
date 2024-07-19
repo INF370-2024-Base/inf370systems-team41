@@ -80,7 +80,7 @@ class _OrderEditModalState extends State<OrderEditModal> {
         Navigator.pop(context, 'Order updated successfully');
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Failed to update order')),
+          const SnackBar(content: Text('Failed to update order')),
         );
       }
     }
@@ -89,7 +89,7 @@ class _OrderEditModalState extends State<OrderEditModal> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.all(16.0),
+      padding: const EdgeInsets.all(16.0),
       child: SingleChildScrollView(
         child: Form(
           key: _formKey,
@@ -98,70 +98,70 @@ class _OrderEditModalState extends State<OrderEditModal> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Text('Order ID: ${widget.order['orderId']}'),
-              SizedBox(height: 8.0),
+              const SizedBox(height: 8.0),
               TextFormField(
                 controller: _dentistController,
-                decoration: InputDecoration(labelText: 'Dentist'),
+                decoration: const InputDecoration(labelText: 'Dentist'),
               ),
-              SizedBox(height: 8.0),
+              const SizedBox(height: 8.0),
               TextFormField(
                 controller: _medicalAidController,
-                decoration: InputDecoration(labelText: 'Medical Aid'),
+                decoration: const InputDecoration(labelText: 'Medical Aid'),
               ),
-              SizedBox(height: 8.0),
+              const SizedBox(height: 8.0),
               TextFormField(
                 controller: _patientNameController,
-                decoration: InputDecoration(labelText: 'Patient Name'),
+                decoration: const InputDecoration(labelText: 'Patient Name'),
               ),
-              SizedBox(height: 8.0),
+              const SizedBox(height: 8.0),
               TextFormField(
                 controller: _patientSurnameController,
-                decoration: InputDecoration(labelText: 'Patient Surname'),
+                decoration: const InputDecoration(labelText: 'Patient Surname'),
               ),
-              SizedBox(height: 8.0),
+              const SizedBox(height: 8.0),
               TextFormField(
                 controller: _medicalAidNumberController,
-                decoration: InputDecoration(labelText: 'Medical Aid Number'),
+                decoration: const InputDecoration(labelText: 'Medical Aid Number'),
               ),
-              SizedBox(height: 8.0),
+              const SizedBox(height: 8.0),
               TextFormField(
                 controller: _orderStatusController,
-                decoration: InputDecoration(labelText: 'Order Status'),
+                decoration: const InputDecoration(labelText: 'Order Status'),
               ),
-              SizedBox(height: 8.0),
+              const SizedBox(height: 8.0),
               TextFormField(
                 controller: _priorityLevelController,
-                decoration: InputDecoration(labelText: 'Priority Level'),
+                decoration: const InputDecoration(labelText: 'Priority Level'),
               ),
-              SizedBox(height: 8.0),
+              const SizedBox(height: 8.0),
               TextFormField(
                 controller: _emergencyNumberController,
-                decoration: InputDecoration(labelText: 'Emergency Number'),
+                decoration: const InputDecoration(labelText: 'Emergency Number'),
               ),
-              SizedBox(height: 8.0),
+              const SizedBox(height: 8.0),
               TextFormField(
                 controller: _specialRequirementsController,
-                decoration: InputDecoration(labelText: 'Special Requirements'),
+                decoration: const InputDecoration(labelText: 'Special Requirements'),
               ),
-              SizedBox(height: 8.0),
+              const SizedBox(height: 8.0),
               TextFormField(
                 controller: _dueDateController,
-                decoration: InputDecoration(labelText: 'Due Date'),
+                decoration: const InputDecoration(labelText: 'Due Date'),
               ),
-              SizedBox(height: 16.0),
+              const SizedBox(height: 16.0),
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: <Widget>[
                   ElevatedButton(
                     onPressed: _updateOrder,
-                    child: Text('Save'),
+                    child: const Text('Save'),
                   ),
-                  SizedBox(width: 8.0),
+                  const SizedBox(width: 8.0),
                   ElevatedButton(
                     onPressed: () {
                       Navigator.pop(context);
                     },
-                    child: Text('Close'),
+                    child: const Text('Close'),
                   ),
                 ],
               ),

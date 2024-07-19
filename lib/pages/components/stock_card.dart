@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 
 class StockCard extends StatelessWidget {
-  final Map<String, String> stockItem;
+  final Map<String, dynamic> stockItem;
 
   StockCard({required this.stockItem});
 
   @override
   Widget build(BuildContext context) {
     return Card(
-      margin: EdgeInsets.all(10.0),
+      margin: const EdgeInsets.all(10.0),
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -16,33 +16,33 @@ class StockCard extends StatelessWidget {
           children: <Widget>[
             Row(
               children: <Widget>[
-                Icon(Icons.inventory),
-                SizedBox(width: 10),
-                Text('Item: ${stockItem['itemName']}'),
+                const Icon(Icons.inventory),
+                const SizedBox(width: 10),
+                Text('Item: ${stockItem['stockName']}'),
               ],
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             Row(
               children: <Widget>[
-                Icon(Icons.confirmation_number),
-                SizedBox(width: 10),
+                const Icon(Icons.confirmation_number),
+                const SizedBox(width: 10),
                 Text('Stock ID: ${stockItem['stockId']}'),
               ],
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             Row(
               children: <Widget>[
-                Icon(Icons.category),
-                SizedBox(width: 10),
-                Text('Category: ${stockItem['category']}'),
+                const Icon(Icons.category),
+                const SizedBox(width: 10),
+                Text('Category: ${stockItem['stockCategory']['description']}'),
               ],
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             Row(
               children: <Widget>[
-                Icon(Icons.stacked_bar_chart),
-                SizedBox(width: 10),
-                Text('Quantity: ${stockItem['quantity']}'),
+                const Icon(Icons.stacked_bar_chart),
+                const SizedBox(width: 10),
+                Text('Quantity: ${stockItem['quantityAvailable']}'),
               ],
             ),
           ],
