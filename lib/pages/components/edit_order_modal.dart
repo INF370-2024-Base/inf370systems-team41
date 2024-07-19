@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
 
 class OrderEditModal extends StatefulWidget {
   final Map<String, dynamic> order;
@@ -54,38 +52,6 @@ class _OrderEditModalState extends State<OrderEditModal> {
     super.dispose();
   }
 
-  Future<void> _updateOrder() async {
-    if (_formKey.currentState!.validate()) {
-      final updatedOrder = {
-        'orderId': widget.order['orderId'],
-        'dentist': _dentistController.text,
-        'medicalAid': _medicalAidController.text,
-        'patientName': _patientNameController.text,
-        'patientSurname': _patientSurnameController.text,
-        'medicalAidNumber': _medicalAidNumberController.text,
-        'orderStatus': _orderStatusController.text,
-        'priorityLevel': _priorityLevelController.text,
-        'emergencyNumber': _emergencyNumberController.text,
-        'specialRequirements': _specialRequirementsController.text,
-        'dueDate': _dueDateController.text,
-      };
-
-      final response = await http.put(
-        Uri.parse('https://localhost:44315/Api/UpdateOrder'),
-        headers: {'Content-Type': 'application/json'},
-        body: jsonEncode(updatedOrder),
-      );
-
-      if (response.statusCode == 200) {
-        Navigator.pop(context, 'Order updated successfully');
-      } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Failed to update order')),
-        );
-      }
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -102,60 +68,70 @@ class _OrderEditModalState extends State<OrderEditModal> {
               TextFormField(
                 controller: _dentistController,
                 decoration: const InputDecoration(labelText: 'Dentist'),
+                readOnly: true,
               ),
               const SizedBox(height: 8.0),
               TextFormField(
                 controller: _medicalAidController,
                 decoration: const InputDecoration(labelText: 'Medical Aid'),
+                readOnly: true,
               ),
               const SizedBox(height: 8.0),
               TextFormField(
                 controller: _patientNameController,
                 decoration: const InputDecoration(labelText: 'Patient Name'),
+                readOnly: true,
               ),
               const SizedBox(height: 8.0),
               TextFormField(
                 controller: _patientSurnameController,
                 decoration: const InputDecoration(labelText: 'Patient Surname'),
+                readOnly: true,
               ),
               const SizedBox(height: 8.0),
               TextFormField(
                 controller: _medicalAidNumberController,
                 decoration: const InputDecoration(labelText: 'Medical Aid Number'),
+                readOnly: true,
               ),
               const SizedBox(height: 8.0),
               TextFormField(
                 controller: _orderStatusController,
                 decoration: const InputDecoration(labelText: 'Order Status'),
+                readOnly: true,
               ),
               const SizedBox(height: 8.0),
               TextFormField(
                 controller: _priorityLevelController,
                 decoration: const InputDecoration(labelText: 'Priority Level'),
+                readOnly: true,
               ),
               const SizedBox(height: 8.0),
               TextFormField(
                 controller: _emergencyNumberController,
                 decoration: const InputDecoration(labelText: 'Emergency Number'),
+                readOnly: true,
               ),
               const SizedBox(height: 8.0),
               TextFormField(
                 controller: _specialRequirementsController,
                 decoration: const InputDecoration(labelText: 'Special Requirements'),
+                readOnly: true,
               ),
               const SizedBox(height: 8.0),
               TextFormField(
                 controller: _dueDateController,
                 decoration: const InputDecoration(labelText: 'Due Date'),
+                readOnly: true,
               ),
               const SizedBox(height: 16.0),
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: <Widget>[
-                  ElevatedButton(
-                    onPressed: _updateOrder,
-                    child: const Text('Save'),
-                  ),
+                  // ElevatedButton(
+                  //   onPressed: _updateOrder,
+                  //   child: const Text('Save'),
+                  // ),
                   const SizedBox(width: 8.0),
                   ElevatedButton(
                     onPressed: () {
