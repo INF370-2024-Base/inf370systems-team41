@@ -24,11 +24,11 @@ import { HttpClient } from '@angular/common/http';
 export class HomeComponent implements OnInit {
   weather: any;
   dentalTips: string[] = [
-    'Brush your teeth twice a day',
-    'Floss daily to remove plaque',
-    'Limit sugary drinks and snacks',
-    'Visit your dentist regularly',
-    'Use fluoride toothpaste',
+    'BRUSH YOUR TEETH TWICE A DAY',
+'FLOSS DAILY TO REMOVE PLAQUE',
+'LIMIT SUGARY DRINKS AND SNACKS',
+'VISIT YOUR DENTIST REGULARLY',
+'USE FLUORIDE TOOTHPASTE'
   ];
 
   constructor(private http: HttpClient) {}
