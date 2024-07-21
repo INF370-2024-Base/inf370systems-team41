@@ -1,0 +1,390 @@
+<div *ngIf="isAnySectionOpen()" class="search-filter-container">
+    <input type="text" placeholder="Search..." (input)="onSearch($event)" />
+</div>
+<div #searchContent>
+    <div *ngIf="shouldDisplayContainer('add-user')" class="help-container user-container add-user">
+        <h2><mat-icon>add</mat-icon> Add User</h2>
+        <p>This section provides assistance on how to add a new user to the system.</p>
+
+        <div class="help-section">
+            <h3 (click)="toggleDropdown('commonQuestionsAddUser')">Common Questions</h3>
+            <ul *ngIf="dropdownStates['commonQuestionsAddUser']">
+                <li>
+                    <h4 class="searchable">What fields are required to add a new user?</h4>
+                    <p>The required fields are Name, Email Address, and Role. Ensure these fields are filled out before submitting.</p>
+                </li>
+                <li>
+                    <h4 class="searchable">Can I add a user without assigning a role?</h4>
+                    <p>No, assigning a role is mandatory. The system requires a role to manage user permissions and access.</p>
+                </li>
+                <li>
+                    <h4 class="searchable">How do I handle validation errors while adding a user?</h4>
+                    <p>Validation errors will be shown next to the respective fields. Ensure all required fields are filled correctly before submitting.</p>
+                </li>
+                <li>
+                    <h4 class="searchable">Can I add multiple users at once?</h4>
+                    <p>Currently, the system supports adding one user at a time. For bulk user uploads, consider contacting support.</p>
+                </li>
+                <li>
+                    <h4 class="searchable">How can I cancel adding a user?</h4>
+                    <p>You can cancel by navigating away from the page or clicking the 'Cancel' button if available. No changes will be saved.</p>
+                </li>
+            </ul>
+        </div>
+        
+        <div class="help-section">
+            <h3 (click)="toggleDropdown('technicalIssuesAddUser')">Technical Issues</h3>
+            <ul *ngIf="dropdownStates['technicalIssuesAddUser']">
+                <li>
+                    <h4 class="searchable">What should I do if the 'Add User' button is unresponsive?</h4>
+                    <p>Ensure your network connection is stable. Try refreshing the page or clearing the browser cache if the issue persists.</p>
+                </li>
+                <li>
+                    <h4 class="searchable">How do I report a problem with the 'Add User' form?</h4>
+                    <p>Provide details of the issue encountered, including any error messages. Contact support with this information for assistance.</p>
+                </li>
+                <li>
+                    <h4 class="searchable">Why might the 'Add User' form not submit?</h4>
+                    <p>Common issues include missing required fields or validation errors. Check all fields for errors and ensure all required information is provided.</p>
+                </li>
+                <li>
+                    <h4 class="searchable">How can I troubleshoot a slow loading 'Add User' page?</h4>
+                    <p>Check your internet connection and consider refreshing the page. If slow performance continues, contact support.</p>
+                </li>
+                <li>
+                    <h4 class="searchable">What should I do if the form does not display correctly?</h4>
+                    <p>Try refreshing the page or clearing your browser's cache. If the problem persists, report the issue to support.</p>
+                </li>
+            </ul>
+        </div>
+        
+        <div class="help-section">
+            <h3 (click)="toggleDropdown('stepsElementsAddUser')">Step-by-Step Guide</h3>
+            <mat-accordion *ngIf="dropdownStates['stepsElementsAddUser']">
+                <mat-expansion-panel>
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>Step 1: Navigate to the 'Add User' page</mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <p>Locate the 'Add User' option in the navigation menu and click to open the form.</p>
+                </mat-expansion-panel>
+                <mat-expansion-panel>
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>Step 2: Fill in user details</mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <p>Enter the user's Name, Email Address, and select their Role from the dropdown menu. Ensure all required fields are completed.</p>
+                </mat-expansion-panel>
+                <mat-expansion-panel>
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>Step 3: Validate the input</mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <p>Check for any validation errors or missing fields. Correct any issues before proceeding.</p>
+                </mat-expansion-panel>
+                <mat-expansion-panel>
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>Step 4: Submit the form</mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <p>Click the 'Submit' button to add the user. If validation errors are present, resolve them before submission.</p>
+                </mat-expansion-panel>
+                <mat-expansion-panel>
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>Step 5: Confirm user addition</mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <p>Verify that the user has been added by checking the user list or confirmation message displayed.</p>
+                </mat-expansion-panel>
+            </mat-accordion>
+        </div>
+    </div>
+    <div *ngIf="isAnySectionOpen()" class="search-filter-container">
+        <input type="text" placeholder="Search..." (input)="onSearch($event)" />
+    </div>
+    <div #searchContent>
+        <div *ngIf="shouldDisplayContainer('edit-user')" class="help-container user-container edit-user">
+            <h2><mat-icon>edit</mat-icon> Edit User</h2>
+            <p>This section provides assistance on how to edit an existing user in the system.</p>
+    
+            <div class="help-section">
+                <h3 (click)="toggleDropdown('commonQuestionsEditUser')">Common Questions</h3>
+                <ul *ngIf="dropdownStates['commonQuestionsEditUser']">
+                    <li>
+                        <h4 class="searchable">What fields can I edit for a user?</h4>
+                        <p>You can edit the user's Name, Email Address, and Role. Make sure to save changes after editing.</p>
+                    </li>
+                    <li>
+                        <h4 class="searchable">Can I edit a user's role?</h4>
+                        <p>Yes, you can edit the user's role. Ensure you assign the correct role based on their new responsibilities.</p>
+                    </li>
+                    <li>
+                        <h4 class="searchable">How do I save changes after editing a user?</h4>
+                        <p>Click the 'Save Changes' button to apply your modifications. Ensure all required fields are filled out before saving.</p>
+                    </li>
+                    <li>
+                        <h4 class="searchable">Can I revert changes made to a user?</h4>
+                        <p>Changes can only be reverted if you have not yet saved them. Once saved, changes are permanent unless edited again.</p>
+                    </li>
+                    <li>
+                        <h4 class="searchable">What should I do if I encounter errors while editing a user?</h4>
+                        <p>Check for validation errors or missing fields. Ensure all data is correct before saving. If issues persist, contact support.</p>
+                    </li>
+                </ul>
+            </div>
+            
+            <div class="help-section">
+                <h3 (click)="toggleDropdown('technicalIssuesEditUser')">Technical Issues</h3>
+                <ul *ngIf="dropdownStates['technicalIssuesEditUser']">
+                    <li>
+                        <h4 class="searchable">Why is the 'Edit User' button not working?</h4>
+                        <p>Ensure your network connection is stable. Refresh the page or clear your browser cache if the issue persists.</p>
+                    </li>
+                    <li>
+                        <h4 class="searchable">How do I report an issue with the 'Edit User' form?</h4>
+                        <p>Provide details of the issue, including any error messages. Contact support with this information for assistance.</p>
+                    </li>
+                    <li>
+                        <h4 class="searchable">Why might changes not be saving?</h4>
+                        <p>Check for validation errors or missing fields. Make sure all required information is correctly filled out before saving.</p>
+                    </li>
+                    <li>
+                        <h4 class="searchable">What should I do if the form loads slowly?</h4>
+                        <p>Check your internet connection and refresh the page. For persistent issues, contact support.</p>
+                    </li>
+                    <li>
+                        <h4 class="searchable">What if the form does not display correctly?</h4>
+                        <p>Try refreshing the page or clearing your browser's cache. Report any ongoing display issues to support.</p>
+                    </li>
+                </ul>
+            </div>
+            
+            <div class="help-section">
+                <h3 (click)="toggleDropdown('stepsElementsEditUser')">Step-by-Step Guide</h3>
+                <mat-accordion *ngIf="dropdownStates['stepsElementsEditUser']">
+                    <mat-expansion-panel>
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>Step 1: Navigate to the 'User Management' page</mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <p>Find the 'User Management' section in the navigation menu and click to access the list of users.</p>
+                    </mat-expansion-panel>
+                    <mat-expansion-panel>
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>Step 2: Select a user to edit</mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <p>Click on the user you wish to edit from the list. This will open their details for editing.</p>
+                    </mat-expansion-panel>
+                    <mat-expansion-panel>
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>Step 3: Edit user details</mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <p>Modify the user's Name, Email Address, or Role as needed. Ensure all changes are correctly entered.</p>
+                    </mat-expansion-panel>
+                    <mat-expansion-panel>
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>Step 4: Save changes</mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <p>Click the 'Save Changes' button to apply your edits. Review the changes before saving.</p>
+                    </mat-expansion-panel>
+                    <mat-expansion-panel>
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>Step 5: Confirm changes</mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <p>Verify that the user's details have been updated correctly in the user list or confirmation message displayed.</p>
+                    </mat-expansion-panel>
+                </mat-accordion>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="isAnySectionOpen()" class="search-filter-container">
+        <input type="text" placeholder="Search..." (input)="onSearch($event)" />
+    </div>
+    <div #searchContent>
+        <div *ngIf="shouldDisplayContainer('search-user')" class="help-container user-container search-user">
+            <h2><mat-icon>search</mat-icon> Search User</h2>
+            <p>This section provides assistance on how to search for users within the system.</p>
+    
+            <div class="help-section">
+                <h3 (click)="toggleDropdown('commonQuestionsSearchUser')">Common Questions</h3>
+                <ul *ngIf="dropdownStates['commonQuestionsSearchUser']">
+                    <li>
+                        <h4 class="searchable">How can I refine my search results?</h4>
+                        <p>Use specific keywords or filters such as name or email to narrow down the search results.</p>
+                    </li>
+                    <li>
+                        <h4 class="searchable">Is there a way to sort the search results?</h4>
+                        <p>Currently, the search results are not sortable directly. You may need to adjust your search criteria to prioritize certain results.</p>
+                    </li>
+                    <li>
+                        <h4 class="searchable">What should I do if I can't find a user?</h4>
+                        <p>Check your search criteria for accuracy. If the user is still not found, ensure they are in the system and not restricted by permissions.</p>
+                    </li>
+                    <li>
+                        <h4 class="searchable">Can I search using partial names or email addresses?</h4>
+                        <p>Yes, partial names or email addresses can be used to find users. Ensure the input is correct to match the user details.</p>
+                    </li>
+                    <li>
+                        <h4 class="searchable">How do I clear the search results?</h4>
+                        <p>Clear the search input field to reset the results. This will display all users without any search filters applied.</p>
+                    </li>
+                </ul>
+            </div>
+            
+            <div class="help-section">
+                <h3 (click)="toggleDropdown('technicalIssuesSearchUser')">Technical Issues</h3>
+                <ul *ngIf="dropdownStates['technicalIssuesSearchUser']">
+                    <li>
+                        <h4 class="searchable">What should I do if the search function is not working?</h4>
+                        <p>Ensure you have a stable internet connection. Refresh the page or clear your browser cache if the issue persists.</p>
+                    </li>
+                    <li>
+                        <h4 class="searchable">How can I report issues with the search feature?</h4>
+                        <p>Provide details of the issue and any error messages received. Contact support with this information for assistance.</p>
+                    </li>
+                    <li>
+                        <h4 class="searchable">Why might search results be inaccurate?</h4>
+                        <p>Verify the search criteria and ensure they are correct. Inaccurate results may be due to data inconsistencies or system issues.</p>
+                    </li>
+                    <li>
+                        <h4 class="searchable">How do I improve search performance?</h4>
+                        <p>Ensure search criteria are specific and avoid vague terms. Clear browser cache and cookies if performance is slow.</p>
+                    </li>
+                    <li>
+                        <h4 class="searchable">What if the search results are outdated?</h4>
+                        <p>Refresh the page to fetch the latest data. If outdated results persist, contact support for further assistance.</p>
+                    </li>
+                </ul>
+            </div>
+            
+            <div class="help-section">
+                <h3 (click)="toggleDropdown('stepsElementsSearchUser')">Step-by-Step Guide</h3>
+                <mat-accordion *ngIf="dropdownStates['stepsElementsSearchUser']">
+                    <mat-expansion-panel>
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>Step 1: Navigate to the 'Users' page</mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <p>Locate the 'Users' section in the navigation menu and click to access the list of users.</p>
+                    </mat-expansion-panel>
+                    <mat-expansion-panel>
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>Step 2: Find the search bar</mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <p>Locate the search bar at the top of the 'Users' page.</p>
+                    </mat-expansion-panel>
+                    <mat-expansion-panel>
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>Step 3: Enter search criteria</mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <p>Type in the user's name or email address to search. Adjust filters if necessary.</p>
+                    </mat-expansion-panel>
+                    <mat-expansion-panel>
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>Step 4: View search results</mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <p>Review the filtered list of users based on your search criteria.</p>
+                    </mat-expansion-panel>
+                    <mat-expansion-panel>
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>Step 5: Clear search if needed</mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <p>Clear the search input to return to the full list of users without filters.</p>
+                    </mat-expansion-panel>
+                </mat-accordion>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="isAnySectionOpen()" class="search-filter-container">
+        <input type="text" placeholder="Search..." (input)="onSearch($event)" />
+    </div>
+    <div #searchContent>
+        <div *ngIf="shouldDisplayContainer('revoke-user')" class="help-container user-container revoke-user">
+            <h2><mat-icon>delete</mat-icon> Revoke/Delete/Deactivate User</h2>
+            <p>This section provides assistance on how to revoke, delete, or deactivate a user account in the system.</p>
+    
+            <div class="help-section">
+                <h3 (click)="toggleDropdown('commonQuestionsRevokeUser')">Common Questions</h3>
+                <ul *ngIf="dropdownStates['commonQuestionsRevokeUser']">
+                    <li>
+                        <h4 class="searchable">What happens when I delete a user?</h4>
+                        <p>Deleting a user will remove their account and all associated data from the system permanently. Ensure that this action is necessary.</p>
+                    </li>
+                    <li>
+                        <h4 class="searchable">Can I recover a user after deletion?</h4>
+                        <p>No, once a user is deleted, their data cannot be recovered. Consider deactivating the user if you may need to reactivate them later.</p>
+                    </li>
+                    <li>
+                        <h4 class="searchable">How do I deactivate a user?</h4>
+                        <p>To deactivate a user, change their status to inactive. This will prevent them from accessing the system without deleting their data.</p>
+                    </li>
+                    <li>
+                        <h4 class="searchable">Can I delete multiple users at once?</h4>
+                        <p>Currently, user deletion must be done individually. Contact support for bulk operations if needed.</p>
+                    </li>
+                    <li>
+                        <h4 class="searchable">How can I ensure a user is properly deactivated?</h4>
+                        <p>Verify the user's status is set to inactive and ensure they cannot access the system before proceeding with other actions.</p>
+                    </li>
+                </ul>
+            </div>
+            
+            <div class="help-section">
+                <h3 (click)="toggleDropdown('technicalIssuesRevokeUser')">Technical Issues</h3>
+                <ul *ngIf="dropdownStates['technicalIssuesRevokeUser']">
+                    <li>
+                        <h4 class="searchable">What should I do if the delete function is not working?</h4>
+                        <p>Ensure you have a stable connection and refresh the page. Report any persistent issues to support.</p>
+                    </li>
+                    <li>
+                        <h4 class="searchable">How do I report a bug with the revoke/delete feature?</h4>
+                        <p>Provide details of the issue and error messages received. Contact support for resolution.</p>
+                    </li>
+                    <li>
+                        <h4 class="searchable">Why might the delete action be unsuccessful?</h4>
+                        <p>Ensure the user is selected correctly and you have the necessary permissions. Contact support if the problem persists.</p>
+                    </li>
+                    <li>
+                        <h4 class="searchable">How can I verify that a user has been deleted?</h4>
+                        <p>Check the user list to confirm that the user is no longer listed. A confirmation message should be displayed upon successful deletion.</p>
+                    </li>
+                    <li>
+                        <h4 class="searchable">What if I accidentally delete a user?</h4>
+                        <p>Unfortunately, deleted users cannot be recovered. Ensure careful review before proceeding with deletions.</p>
+                    </li>
+                </ul>
+            </div>
+            
+            <div class="help-section">
+                <h3 (click)="toggleDropdown('stepsElementsRevokeUser')">Step-by-Step Guide</h3>
+                <mat-accordion *ngIf="dropdownStates['stepsElementsRevokeUser']">
+                    <mat-expansion-panel>
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>Step 1: Navigate to the 'User Management' page</mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <p>Find the 'User Management' section in the navigation menu and click to access the user list.</p>
+                    </mat-expansion-panel>
+                    <mat-expansion-panel>
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>Step 2: Search for the user</mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <p>Use the search bar to find the user you wish to revoke, delete, or deactivate.</p>
+                    </mat-expansion-panel>
+                    <mat-expansion-panel>
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>Step 3: Select the user</mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <p>Click on the user from the search results to view their details.</p>
+                    </mat-expansion-panel>
+                    <mat-expansion-panel>
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>Step 4: Choose the action</mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <p>Select 'Revoke', 'Delete', or 'Deactivate' from the available options.</p>
+                    </mat-expansion-panel>
+                    <mat-expansion-panel>
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>Step 5: Confirm the action</mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <p>Review the action and confirm to proceed. A confirmation message will appear upon successful completion.</p>
+                    </mat-expansion-panel>
+                </mat-accordion>
+            </div>
+        </div>
+    </div>
+            
+</div>
+

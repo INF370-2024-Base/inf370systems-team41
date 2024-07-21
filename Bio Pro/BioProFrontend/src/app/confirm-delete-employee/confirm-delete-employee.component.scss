@@ -1,26 +1,36 @@
-/* Styles for the buttons in the confirmation dialog */
-
-.btn-cancel,
-.btn-confirm {
+/* Common styles for buttons */
+.btn {
   border-radius: 20px;
   padding: 10px 20px;
   font-size: 14px;
   margin-left: 10px;
 }
 
-.btn-cancel {
+/* Cancel button specific styles */
+.btn-secondary {
   background-color: #558dbd;
-  color: #fff;
+  color: white;
   border: none;
 }
 
-.btn-confirm {
-  border: 1px solid #dc3545;
-  color: #dc3545;
-  transition: color 0.3s;
+.btn-secondary:hover {
+  background-color: #558dbd;
 }
 
-.btn-confirm:hover {
+/* Confirm button specific styles */
+.btn-outline-danger {
+  border: 1px solid #dc3545;
+  color: #dc3545;
+  background-color: transparent;
+  transition: color 0.3s, background-color 0.3s;
+}
+
+.btn-outline-danger:hover {
   background-color: #dc3545;
   color: white;
+}
+
+/* Rounded button style */
+.rounded-btn {
+  border-radius: 20px;
 }

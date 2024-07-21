@@ -3,6 +3,6 @@
   <p>Are you sure you want to delete Dr. {{ data.dentist.firstName }} {{ data.dentist.lastName }}?</p>
 </div>
 <div mat-dialog-actions>
-  <button mat-button (click)="onNoClick()" class="btn-cancel">Cancel</button>
-  <button mat-button (click)="onConfirmClick()" class="btn-confirm">Delete</button>
+  <button mat-button (click)="onNoClick()" class="btn btn-secondary rounded-btn">Cancel</button>
+  <button mat-button (click)="onConfirmClick()" class="btn btn-outline-danger rounded-btn">Delete</button>
 </div>

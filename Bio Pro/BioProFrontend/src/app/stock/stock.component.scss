@@ -171,3 +171,22 @@ button.mat-raised-button {
     padding: 10px 15px;
   }
 }
+/* Help Button Container Styles */
+.help-button-container {
+  display: flex;
+  align-items: center;
+}
+
+.help-button-container button {
+  display: flex;
+  align-items: center;
+}
+
+.help-button-container mat-icon {
+  margin-right: 8px;
+}
+
+.help-button-container span {
+  font-size: 16px;
+  font-weight: bold;
+}
