@@ -58,7 +58,7 @@ import { StockTypeComponent } from './stock-type/stock-type.component';
 import { ResetUserPasswordComponent } from './reset-user-password/reset-user-password.component';
 import { UpdateModeEnum } from 'chart.js';
 import { UpdatePasswordComponent } from './update-password/update-password.component';
-
+import { HelpUserComponent } from './help-user/help-user.component';
 
 
 const routes: Routes = [
@@ -118,6 +118,7 @@ const routes: Routes = [
   {path: 'stock-type', component:StockTypeComponent},
   {path: 'rp/:email', component:ResetUserPasswordComponent},
   {path: 'UpdatePassword', component:UpdatePasswordComponent},
+  {path:'help-user', component:HelpUserComponent},
 ];
 
 @NgModule({
