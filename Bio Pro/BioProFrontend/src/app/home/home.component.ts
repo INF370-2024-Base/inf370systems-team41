@@ -39,7 +39,7 @@ export class HomeComponent implements OnInit {
 
   getWeather(): void {
     const apiKey = ' 5bca8bbec1f34810b19221045241807'; // Trail ends  1 Aug 
-    const city = 'Busan';
+    const city = 'Pretoria';
     this.http
       .get(`http://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${city}`)
       .subscribe((data) => (this.weather = data));
