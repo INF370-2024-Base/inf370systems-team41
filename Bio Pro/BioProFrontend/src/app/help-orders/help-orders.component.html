@@ -14,7 +14,7 @@
 </head>
 
 <body>
-    <div class="filter-container">
+    <!-- <div class="filter-container">
         <div class="filter-field">
             <mat-form-field appearance="fill">
                 <mat-label>FILTER BY:</mat-label>
@@ -28,7 +28,7 @@
                 </mat-select>
             </mat-form-field>
         </div>
-    </div>
+    </div> -->
     
     <div *ngIf="isAnySectionOpen()" class="search-filter-container">
         <input type="text" placeholder="Search..." (input)="onSearch($event)" (click)="stopPropagation($event)" />

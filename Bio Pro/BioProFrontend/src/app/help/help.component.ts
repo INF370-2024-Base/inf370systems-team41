@@ -7,6 +7,7 @@ import Swiper from 'swiper';
   styleUrls: ['./help.component.scss']
 })
 export class HelpComponent implements OnInit {
+  isPdfEnlarged = false;
 
   constructor() { }
 
@@ -22,5 +23,15 @@ export class HelpComponent implements OnInit {
         clickable: true,
       },
     });
-}
+  }
+
+
+  togglePdfSize(event: MouseEvent) {
+    event.stopPropagation(); // Prevent the event from bubbling up to the overlay
+    this.isPdfEnlarged = !this.isPdfEnlarged;
+  }
+
+  closePdfSize() {
+    this.isPdfEnlarged = false;
+  }
 }

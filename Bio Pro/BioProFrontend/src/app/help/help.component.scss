@@ -95,6 +95,63 @@ mat-card-actions {
   padding: 16px;
 }
 
+/* Additional styling for the PDF card */
+.pdf-card {
+  background-color: #f5f5f5; /* Slightly different background color */
+  border: 2px solid #ddd; /* Add border for distinction */
+}
+
+.pdf-card mat-card-header {
+  background-color: #dfe3e6; /* Slightly different background for the header */
+}
+
+/* Styling for the PDF iframe */
+.pdf-frame-container {
+  position: relative;
+  padding-top: 56.25%; /* 16:9 aspect ratio */
+  overflow: hidden;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.pdf-frame-container.enlarged {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: 80%;
+  height: 80%;
+  transform: translate(-50%, -50%);
+  z-index: 1000;
+  background: #fff;
+  border: 2px solid #666;
+  padding: 10px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+  cursor: default;
+}
+
+.pdf-frame {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+  border-radius: 8px;
+}
+
+/* Optional overlay for better UX when iframe is enlarged */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+}
 @media only screen and (max-width: 768px) {
   .help-grid {
     flex-direction: column;
@@ -105,4 +162,19 @@ mat-card-actions {
     width: 100%;
     max-width: 400px;
   }
+}
+
+.download-button {
+  display: inline-block;
+  margin-top: 10px;
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+  text-align: center;
+}
+
+.download-button:hover {
+  background-color: #0056b3;
 }

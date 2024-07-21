@@ -78,7 +78,6 @@ body {
   width: 280px;
   background-color: #ffffff;
   color: #000000;
-  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
   padding: 10px;
 }
 
@@ -120,7 +119,6 @@ body {
   margin: 10px 0 5px;
   background-color: #f9fafc;
   border-radius: 4px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   color: #333333;
   cursor: pointer;
 }
@@ -143,4 +141,14 @@ body {
 .mat-sidenav-content {
   background-color: #f4f6f8;
   padding: 20px;
+}
+
+.nav-expansion-panel {
+  background: none;
+  box-shadow: none;
+}
+
+.mat-expansion-panel-header {
+  background: none;
+  box-shadow: none;
 }
