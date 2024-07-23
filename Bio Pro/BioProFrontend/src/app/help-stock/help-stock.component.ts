@@ -78,6 +78,5 @@ export class HelpStockComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.filterContent();
   }
 }

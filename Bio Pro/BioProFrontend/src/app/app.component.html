@@ -15,9 +15,20 @@
         </button>
         <img src="assets/images/Company logo.jpg" alt="Company Logo" class="company-logo">
         <h1 class="nav-title">BIO-PRO DENTAL STUDIO</h1>
+        <span class="spacer"></span> <!-- This spacer will push the buttons to the end -->
+        <!-- <button mat-button [routerLink]="['/edit-user']" *ngIf="isLoggedIn">
+          <mat-icon>edit</mat-icon>
+          <span>Edit Profile</span>
+        </button> -->
+        <button mat-button (click)="signOut()" *ngIf="isLoggedIn">
+          <mat-icon>logout</mat-icon>
+          <span>Sign Out</span>
+        </button>
       </mat-toolbar-row>
     </mat-toolbar>
   </div>
+  
+  
   <mat-sidenav-container class="example-container">
     <mat-sidenav #sidenav mode="side" [(opened)]="isSidenavOpen" class="example-sidenav" *ngIf="isLoggedIn">
       <mat-nav-list>

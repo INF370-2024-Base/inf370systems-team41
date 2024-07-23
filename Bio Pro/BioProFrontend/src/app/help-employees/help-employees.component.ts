@@ -81,6 +81,5 @@ export class HelpEmployeesComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.filterContent();
   }
 }

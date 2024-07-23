@@ -27,7 +27,7 @@ export class HelpDeliveriesComponent implements OnInit {
   constructor(private route: ActivatedRoute, private viewportScroller: ViewportScroller) {}
 
   ngOnInit(): void {
-    this.filterContent();
+    
     this.route.fragment.subscribe(fragment => {
       if (fragment) {
         this.viewportScroller.scrollToAnchor(fragment);

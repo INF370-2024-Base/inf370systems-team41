@@ -63,7 +63,10 @@ dentist:Dentist={
       });
     }
     else
-    this.snackBar.open("Not all fields are valid")
+    this.snackBar.open("Not all fields are valid",'Close', {
+            duration: 3000,
+            panelClass: ['snackbar-error'] // Optional: custom CSS class for styling
+          });
   }
 
   cancel() {

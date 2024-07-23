@@ -81,7 +81,7 @@ const routes: Routes = [
   {path: 'addproceduraltimeline', component: AddProceduralTimeline}, 
   {path: 'deliveries', component: DeliveriesComponent}, 
   {path: 'addDelivery', component: AddDeliveryComponent}, 
-  {path: '', redirectTo: 'calendar', pathMatch: 'full'},
+  {path: '', redirectTo: 'login', pathMatch: 'full'},
   {path: 'home', component: HomeComponent},
   {path: 'test', component: TestingBackendComponent},
   {path: 'employeeOrders', component: EmployeeOrdersAndStepsComponent},

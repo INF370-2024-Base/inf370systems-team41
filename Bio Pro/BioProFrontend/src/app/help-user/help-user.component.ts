@@ -82,6 +82,5 @@ export class HelpUserComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.filterContent();
   }
 }

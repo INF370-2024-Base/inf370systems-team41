@@ -80,6 +80,5 @@ export class HelpDentistComponent  implements OnInit {
   }
 
   ngOnInit(): void {
-    this.filterContent();
   }
 }

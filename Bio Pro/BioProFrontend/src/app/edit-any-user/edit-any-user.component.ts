@@ -45,6 +45,7 @@ getRoles()
 {  this.userService.getRoles().subscribe(result=>
   {
     this.roles=result
+    console.log(this.roles)
   }
   )
 
@@ -52,6 +53,7 @@ getRoles()
 onSubmit(): void {
   const user = JSON.parse(sessionStorage.getItem('User') || '{}');
   console.log('onSubmit called');
+  console.log(this.editUserForm.value);
   if (this.editUserForm.valid) {
     const formValue = this.editUserForm.value;
 console.log(formValue)
@@ -94,7 +96,7 @@ console.log(formValue)
   loadUserDetails(): void {
     console.log('loadUserDetails called');
     const user = JSON.parse(sessionStorage.getItem('User') || '{}');
-    console.log('User details from sessionStorage:', user);
+    console.log('User details from sessionStorage:', this.data);
 
     if (user && user.email) {
 
@@ -103,8 +105,10 @@ console.log(formValue)
             surname: this.data.surname,
             emailaddress: this.data.email,
             phonenumber: this.data.phoneNumber,
+            role: this.data.roles,
           });
     }
+
   }
 
 
