@@ -17,6 +17,7 @@ class _DeliveriesPageState extends State<DeliveriesPage> {
   void initState() {
     super.initState();
     futureDeliveries = deliveryService.fetchDeliveries();
+    print('Future Deliveries Assigned: $futureDeliveries');
   }
 
   @override
@@ -38,6 +39,7 @@ class _DeliveriesPageState extends State<DeliveriesPage> {
               return const Center(child: Text('No deliveries found'));
             } else {
               final deliveries = snapshot.data!;
+              print('Deliveries Data: $deliveries'); // Log the fetched deliveries data
               return Scrollbar(
                 child: ListView.builder(
                   padding: const EdgeInsets.all(10.0),
@@ -46,10 +48,10 @@ class _DeliveriesPageState extends State<DeliveriesPage> {
                     final delivery = deliveries[index];
                     return DeliveryCard(
                       delivery: {
-                        'deliveryId': delivery['deliveryId'].toString(),
-                        'status': delivery['deliveryStatus']['statusName'],
-                        'employee': '${delivery['employee']['firstName']} ${delivery['employee']['lastName']}',
-                        'orderId': delivery['systemOrderId'].toString(),
+                        'deliveryId': delivery['deliveryId']?.toString() ?? 'N/A',
+                        'status': delivery['deliveryStatus']?['status'] ?? 'N/A',
+                        'employee': '${delivery['employee']?['firstName'] ?? 'Unknown'} ${delivery['employee']?['lastName'] ?? 'Unknown'}',
+                        'orderId': delivery['systemOrderId']?.toString() ?? 'N/A',
                       },
                     );
                   },
