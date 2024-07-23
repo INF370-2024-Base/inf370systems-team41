@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Chart, ChartConfiguration, ChartItem, registerables } from 'chart.js';
 import { StockServices } from '../services/stock.service';
 import { WriteOffModalComponent } from '../write-off-modal/write-off-modal.component';
 import { CaptureNewStockModalComponent } from '../capture-new-stock-modal/capture-new-stock-modal.component';
@@ -10,7 +11,7 @@ import { CaptureNewStockModalComponent } from '../capture-new-stock-modal/captur
   templateUrl: './stock.component.html',
   styleUrls: ['./stock.component.scss']
 })
-export class StockComponent implements OnInit {
+export class StockComponent implements OnInit, AfterViewInit {
   stockList: any[] = [];
   filteredStock: any[] = [];
   categories: any[] = [];
@@ -21,11 +22,28 @@ export class StockComponent implements OnInit {
   selectedCategory: string = '';
   selectedStockType: string = '';
   searchTerm: string = ''; // Declare searchTerm here
+  stockChart?: Chart;
+  displayedColumns: string[] = ['stockName', 'quantityAvailable', 'minimumStockLevel'];
+  belowMinStock: any[] = [];
+
 
   constructor(private stockService: StockServices, public dialog: MatDialog, private snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
     this.fetchData();
+  }
+
+  ngAfterViewInit(): void {
+    setTimeout(() => {
+      this.createStockLevelChart();
+    }, 0);
+  }
+
+  ngOnDestroy(): void {
+    // Destroy the chart when the component is destroyed to avoid memory leaks
+    if (this.stockChart) {
+      this.stockChart.destroy();
+    }
   }
 
   fetchData(): void {
@@ -36,6 +54,12 @@ export class StockComponent implements OnInit {
       (stockData: any[]) => {
         this.stockList = stockData;
         this.filteredStock = [...this.stockList];
+        this.isLoading = false;
+
+        console.log('Fetched stock data:', this.stockList);
+
+        // Ensure the chart is created after the data is fetched
+        this.updateChart();
 
         // Fetch all stock categories
         this.stockService.getAllStockCategories().subscribe(
@@ -47,17 +71,14 @@ export class StockComponent implements OnInit {
             this.stockService.getAllStockTypes().subscribe(
               (typeData: any[]) => {
                 this.stockTypes = typeData;
-                this.isLoading = false;
               },
               (error) => {
                 console.error('Error fetching stock types:', error);
-                this.isLoading = false;
               }
             );
           },
           (error) => {
             console.error('Error fetching categories:', error);
-            this.isLoading = false;
           }
         );
       },
@@ -94,6 +115,9 @@ export class StockComponent implements OnInit {
 
       return matchesSearchTerm && matchesStockType && matchesCategory;
     });
+
+    // Re-create the chart after applying filters
+    this.updateChart();
   }
 
   getCategoryDescription(categoryId: number): string {
@@ -110,6 +134,7 @@ export class StockComponent implements OnInit {
     const supplier = this.suppliers.find(sup => sup.supplierId === supplierId);
     return supplier ? supplier.supplierName : 'Unknown';
   }
+
   openWriteOffModal(stock: any): void {
     const dialogRef = this.dialog.open(WriteOffModalComponent, {
       width: '300px',
@@ -160,5 +185,74 @@ export class StockComponent implements OnInit {
         );
       }
     });
+  }
+  createStockLevelChart(): void {
+    const ctx = document.getElementById('stockLevelChart') as ChartItem;
+
+    if (this.stockChart) {
+      this.stockChart.destroy();
+    }
+
+    const config: ChartConfiguration = {
+      type: 'bar',
+      data: {
+        labels: [],
+        datasets: [
+          {
+            label: 'Quantity Available',
+            data: [],
+            backgroundColor: 'rgba(255, 99, 132, 0.2)',
+            borderColor: 'rgba(255, 99, 132, 1)',
+            borderWidth: 1,
+            yAxisID: 'y'
+          },
+          {
+            label: 'Minimum Stock Level',
+            data: [],
+            type: 'line',
+            fill: false,
+            borderColor: 'rgba(54, 162, 235, 1)',
+            borderWidth: 2,
+            yAxisID: 'y1'
+          }
+        ]
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true,
+            position: 'left',
+          },
+          y1: {
+            beginAtZero: true,
+            position: 'right',
+            grid: {
+              drawOnChartArea: false // only want the grid lines for one axis to show up
+            }
+          }
+        }
+      }
+    };
+
+    this.stockChart = new Chart(ctx, config);
+  }
+
+  updateChart(): void {
+    const belowMinStock = this.filteredStock.filter(stock => stock.quantityAvailable < stock.minimumStockLevel);
+
+    const labels = belowMinStock.map(stock => stock.stockName);
+    const quantityData = belowMinStock.map(stock => stock.quantityAvailable);
+    const minStockData = belowMinStock.map(stock => stock.minimumStockLevel);
+
+    console.log('Chart labels:', labels);
+    console.log('Chart quantity data:', quantityData);
+    console.log('Chart minimum stock data:', minStockData);
+
+    if (this.stockChart) {
+      this.stockChart.data.labels = labels;
+      this.stockChart.data.datasets[0].data = quantityData;
+      this.stockChart.data.datasets[1].data = minStockData;
+      this.stockChart.update();
+    }
   }
 }

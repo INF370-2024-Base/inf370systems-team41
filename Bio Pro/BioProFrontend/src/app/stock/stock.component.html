@@ -5,11 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Stock Management</title>
-    <!-- Include Bootstrap CSS -->
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Include Material Icons -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-
 </head>
 
 <body>
@@ -47,43 +44,72 @@
                     </mat-select>
                 </mat-form-field>
             </div>
-            <table class="table table-bordered  rounded-table">
-                <thead >
-                  <tr>
-                    <th>Stock Name</th>
-                    <th>Quantity Available</th>
-                    <th>Category</th>
-                    <th>Supplier</th>
-                    <th class="text-center">Actions</th>
-                  </tr>
+            <table class="table table-bordered rounded-table">
+                <thead>
+                    <tr>
+                        <th>Stock Name</th>
+                        <th>Quantity Available</th>
+                        <th>Category</th>
+                        <th>Supplier</th>
+                        <th class="text-center">Actions</th>
+                    </tr>
                 </thead>
                 <tbody>
-                  <tr *ngFor="let stock of filteredStock">
-                    <td>{{ stock.stockName }}</td>
-                    <td>{{ stock.quantityAvailable }}</td>
-                    <td>{{ stock.stockCategory.description }}</td>
-                    <td>{{ stock.supplier.supplierName }}</td>
-                    <td class="text-center">
-                      <button (click)="openWriteOffModal(stock)" class="btn btn-outline-danger rounded-btn mr-2">
-                        <i ></i> Write Off
-                      </button>
-                      <button (click)="openCaptureStockModal(stock)" class="btn btn-secondary rounded-btn mr-2">
-                        <i></i> Add
-                      </button>
-                    </td>
-                  </tr>
+                    <tr *ngFor="let stock of filteredStock">
+                        <td>{{ stock.stockName }}</td>
+                        <td>{{ stock.quantityAvailable }}</td>
+                        <td>{{ getCategoryDescription(stock.stockCategoryId) }}</td>
+                        <td>{{ getSupplierName(stock.supplierId) }}</td>
+                        <td class="text-center">
+                            <button (click)="openWriteOffModal(stock)" class="btn btn-outline-danger rounded-btn mr-2">
+                                <i></i> Write Off
+                            </button>
+                            <button (click)="openCaptureStockModal(stock)" class="btn btn-secondary rounded-btn mr-2">
+                                <i></i> Add
+                            </button>
+                        </td>
+                    </tr>
                 </tbody>
-              </table>
-              
-              
+            </table>
         </div>
+        <!-- <table mat-table [dataSource]="belowMinStock" class="mat-elevation-z8 mat-table">
+          
+          <ng-container matColumnDef="stockName">
+            <th mat-header-cell *matHeaderCellDef> Stock Name </th>
+            <td mat-cell *matCellDef="let stock"> {{stock.stockName}} </td>
+          </ng-container>
+    
+          
+          <ng-container matColumnDef="quantityAvailable">
+            <th mat-header-cell *matHeaderCellDef> Quantity Available </th>
+            <td mat-cell *matCellDef="let stock"> {{stock.quantityAvailable}} </td>
+          </ng-container>
+    
+         
+          <ng-container matColumnDef="minimumStockLevel">
+            <th mat-header-cell *matHeaderCellDef> Minimum Stock Level </th>
+            <td mat-cell *matCellDef="let stock"> {{stock.minimumStockLevel}} </td>
+          </ng-container>
+    
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+       
+      </div> -->
+      <div class="chart-container">
+        <h2 class="chart-heading">Stock Levels vs Minimum Stock Levels</h2>
+        <canvas id="stockLevelChart"></canvas>
+      </div>
     </div>
-    <div class="help-button-container">
-      <button mat-button [routerLink]="['/help-stock']" >
-        <mat-icon>live_help</mat-icon>
-        <span>Help</span>
-      </button>
-    </div>
+
+    
 </body>
 
+<div class="help-button-container">
+    <button mat-button [routerLink]="['/help-stock']">
+        <mat-icon>live_help</mat-icon>
+        <span>Help</span>
+    </button>
+</div>
 </html>
+
