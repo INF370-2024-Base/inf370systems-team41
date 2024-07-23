@@ -1,19 +1,19 @@
 body {
-  background-color: #f5f5f5; // Light gray background
-  font-family: 'Roboto', sans-serif; // Playful font
-  color: #333; // Dark text color
-  padding: 20px; // Add some padding
-  overflow-x: hidden; // Hide horizontal overflow
+  background-color: #f5f5f5; /* Light gray background */
+  font-family: 'Roboto', sans-serif; /* Playful font */
+  color: #333; /* Dark text color */
+  padding: 20px; /* Add some padding */
+  overflow-x: hidden; /* Hide horizontal overflow */
 }
 
-// Animated background gradients
+/* Animated background gradients */
 @keyframes gradientAnimation {
   0% { background-position: 0% 50%; }
   50% { background-position: 100% 50%; }
   100% { background-position: 0% 50%; }
 }
 
-// Enhanced blue gradient animation
+/* Enhanced blue gradient animation */
 body {
   background: linear-gradient(120deg, #aed9e0, #c2e2f3, #eaf1fa, #c2e2f3, #aed9e0);
   background-size: 400% 400%;
@@ -28,14 +28,14 @@ body {
 }
 
 .report-section {
-  width: calc(50% - 10px); // Adjust width as needed
+  flex: 1 1 calc(50% - 20px); /* Adjust width to fit two in a row with a gap */
   border: 1px solid #ccc;
   padding: 20px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   background-color: #fff;
   margin-bottom: 20px;
   border-radius: 5px;
-  overflow: auto; // Enable scrolling for sections
+  overflow: auto; /* Enable scrolling for sections */
 }
 
 table {
