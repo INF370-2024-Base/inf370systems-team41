@@ -1,5 +1,3 @@
-// ignore_for_file: use_build_context_synchronously
-
 import 'package:biopromobileflutter/pages/components/edit_order_modal.dart';
 import 'package:biopromobileflutter/services/order_service.dart';
 import 'package:flutter/material.dart';
@@ -23,6 +21,14 @@ class _OrdersPageState extends State<OrdersPage> {
     setState(() {
       futureOrders = orderService.fetchOrders();
     });
+  }
+
+  String formatDate(String dateStr) {
+    final DateTime dateTime = DateTime.parse(dateStr);
+    final String day = dateTime.day.toString().padLeft(2, '0');
+    final String month = dateTime.month.toString().padLeft(2, '0');
+    final String year = dateTime.year.toString();
+    return '$day-$month-$year';
   }
 
   @override
@@ -50,10 +56,18 @@ class _OrdersPageState extends State<OrdersPage> {
                   itemCount: orders.length,
                   itemBuilder: (context, index) {
                     final order = orders[index];
+                    final String formattedDate = formatDate(order['orderDate']);
                     return Card(
                       child: ListTile(
                         leading: const Icon(Icons.description),
-                        title: Text('Order ID: ${order['orderId']} - Patient: ${order['patientName']} ${order['patientSurname']}'),
+                        title: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text('Order ID: ${order['orderId']}'),
+                            Text('Priority: ${order['priorityLevel']}'),
+                            Text('Date: $formattedDate')
+                          ],
+                        ),
                         trailing: const Icon(Icons.expand_more),
                         onTap: () async {
                           final result = await showModalBottomSheet<String>(

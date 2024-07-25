@@ -77,17 +77,17 @@ class _OrderEditModalState extends State<OrderEditModal> {
                 readOnly: true,
               ),
               const SizedBox(height: 8.0),
-              TextFormField(
-                controller: _patientNameController,
-                decoration: const InputDecoration(labelText: 'Patient Name'),
-                readOnly: true,
-              ),
-              const SizedBox(height: 8.0),
-              TextFormField(
-                controller: _patientSurnameController,
-                decoration: const InputDecoration(labelText: 'Patient Surname'),
-                readOnly: true,
-              ),
+              // TextFormField(
+              //   controller: _patientNameController,
+              //   decoration: const InputDecoration(labelText: 'Patient Name'),
+              //   readOnly: true,
+              // ),
+              // const SizedBox(height: 8.0),
+              // TextFormField(
+              //   controller: _patientSurnameController,
+              //   decoration: const InputDecoration(labelText: 'Patient Surname'),
+              //   readOnly: true,
+              // ),
               const SizedBox(height: 8.0),
               TextFormField(
                 controller: _medicalAidNumberController,
