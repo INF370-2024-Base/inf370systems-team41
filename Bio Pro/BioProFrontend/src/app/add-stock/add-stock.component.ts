@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
 import { StockServices } from '../services/stock.service';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AddStock } from '../shared/Stock';
 import { HttpErrorResponse } from '@angular/common/http';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -15,22 +15,46 @@ export class AddStockComponent implements OnInit {
   captureStockForm: FormGroup;
   StockCategories: any[] = [];
   StockSuppliers: any[] = [];
+  formErrors = {
+    maxGreaterThanMin: false,
+    nonNegative: false
+  };
 
-  constructor(private stockService: StockServices, private fb: FormBuilder,private snackBar:MatSnackBar,private router:Router) {
+  constructor(private stockService: StockServices, private fb: FormBuilder, private snackBar: MatSnackBar, private router: Router) {
     this.captureStockForm = this.fb.group({
       stockCategoryId: ['', Validators.required],
       supplierId: ['', Validators.required],
       stockName: ['', Validators.required],
-      quantityAvailable: ['', Validators.required],
-      maximumStockLevel: ['', Validators.required],
-      minimumStockLevel: ['', Validators.required],
-      reorderPoint: ['', Validators.required],
+      quantityAvailable: ['', [Validators.required, Validators.min(0)]],
+      maximumStockLevel: ['', [Validators.required, Validators.min(0)]],
+      minimumStockLevel: ['', [Validators.required, Validators.min(0)]],
+      reorderPoint: ['', [Validators.required, Validators.min(0)]],
       measurement: ['', Validators.required]
     });
   }
 
   ngOnInit(): void {
     this.fetchStockCategoriesAndSuppliers();
+    this.setupValueChangeHandlers();
+  }
+
+  setupValueChangeHandlers(): void {
+    this.captureStockForm.valueChanges.subscribe(() => {
+      this.checkValidations();
+    });
+  }
+
+  checkValidations(): void {
+    const form = this.captureStockForm.value;
+
+    this.formErrors.maxGreaterThanMin = form.minimumStockLevel >= form.maximumStockLevel;
+    this.formErrors.nonNegative = form.quantityAvailable < 0 || form.maximumStockLevel < 0 || form.minimumStockLevel < 0 || form.reorderPoint < 0;
+
+    if (this.formErrors.maxGreaterThanMin) {
+      this.captureStockForm.get('maximumStockLevel')?.setErrors({ maxGreaterThanMin: true });
+    } else {
+      this.captureStockForm.get('maximumStockLevel')?.setErrors(null);
+    }
   }
 
   fetchStockCategoriesAndSuppliers(): void {
@@ -54,14 +78,14 @@ export class AddStockComponent implements OnInit {
   }
 
   captureStock(): void {
-    if (this.captureStockForm.valid) {
+    if (this.captureStockForm.valid && !this.formErrors.maxGreaterThanMin && !this.formErrors.nonNegative) {
       const captureStockData: AddStock = this.captureStockForm.value;
       this.stockService.addStock(captureStockData).subscribe(
         response => {
           console.log('Stock captured successfully', response);
-          this.snackBar.open('Successufully added stock item.','Close', {
+          this.snackBar.open('Successfully added stock item.', 'Close', {
             duration: 3000,
-            panelClass: ['snackbar-success'] // Optional: custom CSS class for styling
+            panelClass: ['snackbar-success']
           });
           this.captureStockForm.reset();
           this.router.navigate(['pageStock']);
@@ -77,6 +101,4 @@ export class AddStockComponent implements OnInit {
       });
     }
   }
-
 }
-
