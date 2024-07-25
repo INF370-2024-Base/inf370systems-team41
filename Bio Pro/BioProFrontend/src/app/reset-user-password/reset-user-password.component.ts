@@ -33,7 +33,7 @@ export class ResetUserPasswordComponent implements OnInit {
       }
       console.log(this.resetPasswordForm.value.Email)
       this.userService.ResetUserPassword(userToUpdate).subscribe(result=>{
-        this.snackBar.open('Reset link sent', 'Close', {
+        this.snackBar.open('Password was reset', 'Close', {
           duration: 2000,
         });
         this.router.navigate(['login'])

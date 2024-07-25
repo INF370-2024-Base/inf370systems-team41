@@ -31,6 +31,7 @@ export class DentistProfileComponent implements OnInit {
     this.dentistService.getAllDentists().subscribe(dentists => {
       this.dentists = dentists;
       this.filteredDentists = [...this.dentists];
+      console.log(this.dentists)
     });
   }
 
@@ -50,13 +51,22 @@ export class DentistProfileComponent implements OnInit {
 
   openEditDialog(dentist: Dentist): void {
     const dialogRef = this.dialog.open(DentistEditDialogComponent, {
-      width: '250px',
+      width: '400px',
       data: { dentist }
     });
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.dentistService.editDentist(result.dentistId, result).subscribe(
+        const editDentist:Dentist=
+        {
+          address:result.address,
+          dentistId:result.dentistId,
+          contactDetail:result.contactDetail,
+          firstName:result.firstName,
+          lastName:result.lastName
+        }
+        console.log(result)
+        this.dentistService.editDentist(editDentist.dentistId, editDentist).subscribe(
           editedDentist => {
             this.snackBar.open('Dentist edited successfully', 'Close', { duration: 3000 });
             this.fetchDentists();
@@ -82,7 +92,7 @@ export class DentistProfileComponent implements OnInit {
             this.fetchDentists();
           },
           error => {
-            this.snackBar.open('Error deleting dentist', 'Close', { duration: 3000 });
+            this.snackBar.open('Error deleting dentist. Denist is connected to a past/present order.', 'Close', { duration: 3000 });
           }
         );
       }

@@ -21,7 +21,8 @@ export class DentistEditDialogComponent {
       firstName: [data.dentist.firstName, Validators.required],
       lastName: [data.dentist.lastName, Validators.required],
       contactDetail: [data.dentist.contactDetail, [Validators.required, PhoneChecker.SouthAfricanPhoneNumberValidator()]],
-      address: [data.dentist.address]
+      address: [data.dentist.address],
+      dentistId: [data.dentist.dentistId]
     });
   }
 
