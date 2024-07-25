@@ -12,7 +12,7 @@ import { MatDialogRef } from '@angular/material/dialog';
 export class ResetPasswordComponent implements OnInit {
 resetPasswordForm:FormGroup;
   constructor(public dialogRef: MatDialogRef<ResetPasswordComponent>,private fb: FormBuilder,private userService:UserServices,private snackBar:MatSnackBar) {this.resetPasswordForm = this.fb.group({
-    Email: ['', Validators.required]
+    Email: ['', [Validators.required, Validators.email]]
   });  }
 
   ngOnInit(): void {
