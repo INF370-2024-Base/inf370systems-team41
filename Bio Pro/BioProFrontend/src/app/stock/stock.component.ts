@@ -209,11 +209,11 @@ export class StockComponent implements OnInit, AfterViewInit {
           {
             label: 'Minimum Stock Level',
             data: [],
-            type: 'line',
-            fill: false,
+            type: 'bar',
+            
             borderColor: 'rgba(54, 162, 235, 1)',
             borderWidth: 2,
-            yAxisID: 'y1'
+            yAxisID: 'y'
           }
         ]
       },
@@ -223,13 +223,13 @@ export class StockComponent implements OnInit, AfterViewInit {
             beginAtZero: true,
             position: 'left',
           },
-          y1: {
-            beginAtZero: true,
-            position: 'right',
-            grid: {
-              drawOnChartArea: false // only want the grid lines for one axis to show up
-            }
-          }
+          // y1: {
+          //   beginAtZero: true,
+          //   position: 'right',
+          //   grid: {
+          //     drawOnChartArea: false // only want the grid lines for one axis to show up
+          //   }
+          // }
         }
       }
     };
