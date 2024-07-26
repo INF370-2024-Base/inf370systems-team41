@@ -1,3 +1,4 @@
+import 'package:biopromobileflutter/pages/help_page.dart';
 import 'package:flutter/material.dart';
 import 'pages/stocks_page.dart';
 import 'pages/deliveries_page.dart';
@@ -58,6 +59,11 @@ class MyHomePage extends StatelessWidget {
                 text: 'Orders',
                 page: OrdersPage(),
               ),
+                 NavigationButton(
+                text: 'Help',
+                page: HelpPage(),
+              ),
+              
             ],
           ),
         ],
