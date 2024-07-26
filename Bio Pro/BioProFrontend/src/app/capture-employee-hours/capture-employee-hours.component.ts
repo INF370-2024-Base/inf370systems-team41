@@ -3,6 +3,7 @@ import { EmployeeService } from '../services/employee.service';
 import { FormGroup, FormBuilder, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
 import { DailyHours } from '../shared/dailyhours';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router'; // Import Router
 
 @Component({
   selector: 'app-capture-employee-hours',
@@ -17,7 +18,8 @@ export class CaptureEmployeeHoursComponent implements OnInit {
   constructor(
     private employeeService: EmployeeService,
     private fb: FormBuilder,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private router: Router // Inject Router
   ) {
     this.captureHoursForm = this.fb.group({
       employee: [null, Validators.required],
@@ -67,6 +69,7 @@ export class CaptureEmployeeHoursComponent implements OnInit {
       response => {
         console.log(response);
         this.openSnackBar('Employee hours captured successfully');
+        this.router.navigate(['/dailyHoursProfile']); // Redirect to dailyHoursProfile
       },
       error => {
         console.error(error);

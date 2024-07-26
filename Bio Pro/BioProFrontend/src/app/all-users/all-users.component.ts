@@ -4,6 +4,7 @@ import { UserServices } from '../services/user.service';
 import { MatDialog } from '@angular/material/dialog';
 import { EditAnyUserComponent } from '../edit-any-user/edit-any-user.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { ConfirmDeleteUserComponent } from '../confirm-delete-user/confirm-delete-user.component';
 
 @Component({
   selector: 'app-all-users',
@@ -40,20 +41,26 @@ export class AllUsersComponent implements OnInit {
     });
   }
 
-  deleteEmployee(user:any) {
-    console.log (user)
-    if (!user.email) {
-      console.error('EmployeeId is undefined. Cannot delete employee.');
-      return;
-    }
+  deleteEmployee(user: any) {
+    const dialogRef = this.dialog.open(ConfirmDeleteUserComponent, {
+      width: '400px',
+      data: { user }
+    });
 
-    if (confirm(`Are you sure you want to delete ${user.name} ${user.surname}?`)) {
-      this.userService.RemoveAccess(user.email).subscribe(() => {
-        this.fetchAllusers(); // Refresh the list after deleting
-      }, error => {
-        console.error('Error deleting employee:', error);
-      });
-    }
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.userService.RemoveAccess(user.email).subscribe(() => {
+          this.fetchAllusers();
+          this.snackBar.open('User deleted successfully', 'Close', {
+            duration: 3000,
+          });
+        }, error => {
+          this.snackBar.open('Error deleting user', 'Close', {
+            duration: 3000,
+          });
+        });
+      }
+    });
   }
 
   searchQuery:string=''

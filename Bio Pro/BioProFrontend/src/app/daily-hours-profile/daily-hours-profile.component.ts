@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { EmployeeService } from '../services/employee.service';
 import { DailyHours } from '../shared/dailyhours';
 import { HttpErrorResponse } from '@angular/common/http';
+import { ConfirmDeleteDailyHourComponent } from '../confirm-delete-daily-hour/confirm-delete-daily-hour.component';
 
 @Component({
   selector: 'app-daily-hours-profile',
@@ -18,7 +20,7 @@ export class DailyHoursProfileComponent implements OnInit {
   filterEmployeeName: string = '';
   selectedEmployeeEmail: string = '';
 
-  constructor(private employeeService: EmployeeService) { }
+  constructor(private employeeService: EmployeeService, private dialog: MatDialog) {}
 
   ngOnInit(): void {
     this.fetchData();
@@ -84,24 +86,25 @@ export class DailyHoursProfileComponent implements OnInit {
       }
     );
   }
-
-  onDeleteDailyHour(dailyHourId: number): void {
-    // Prompt the user for confirmation before deleting
-    if (confirm(`Are you sure you want to delete the daily hour entry with ID: ${dailyHourId}?`)) {
-      this.employeeService.deleteEmployeeDailyHours(dailyHourId).subscribe(
-        () => {
-          console.log(`Successfully deleted daily hour with ID: ${dailyHourId}`);
-          // Optionally, refresh the list of daily hours after deletion
-          this.fetchData(); // Assuming fetchData() reloads the data from the backend
-        },
-        (error) => {
-          console.error('Error deleting daily hour:', error);
-          // Handle the error appropriately, e.g., showing an error message to the user
-          return;
-        }
-      );
-    }
-  }
   
+  onDeleteDailyHour(dailyHourId: number): void {
+    const dialogRef = this.dialog.open(ConfirmDeleteDailyHourComponent, {
+      width: '400px',
+      data: { dailyHourId }
+    });
 
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.employeeService.deleteEmployeeDailyHours(dailyHourId).subscribe(
+          () => {
+            console.log(`Successfully deleted daily hour with ID: ${dailyHourId}`);
+            this.fetchData(); // Refresh the list of daily hours after deletion
+          },
+          (error) => {
+            console.error('Error deleting daily hour:', error);
+          }
+        );
+      }
+    });
+  }
 }
