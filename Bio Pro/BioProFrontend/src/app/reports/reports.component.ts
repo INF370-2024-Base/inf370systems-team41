@@ -30,7 +30,7 @@ export class ReportsComponent implements OnInit {
   chart: any;
   employeeHours: any[] = [];
   selectedPeriod: string = 'monthly';
-
+  currentDate: Date = new Date();
   constructor(private reportsService: ReportsServices, private datePipe: DatePipe) { }
 
   ngOnInit(): void {

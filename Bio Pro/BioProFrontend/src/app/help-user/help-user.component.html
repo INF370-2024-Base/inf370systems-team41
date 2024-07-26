@@ -109,9 +109,7 @@
             </mat-accordion>
         </div>
     </div>
-    <div *ngIf="isAnySectionOpen()" class="search-filter-container">
-        <input type="text" placeholder="Search..." (input)="onSearch($event)" />
-    </div>
+    
     <div #searchContent>
         <div *ngIf="shouldDisplayContainer('edit-user')" class="help-container user-container edit-user">
             <h2><mat-icon>edit</mat-icon> Edit User</h2>
@@ -206,9 +204,7 @@
             </div>
         </div>
     </div>
-    <div *ngIf="isAnySectionOpen()" class="search-filter-container">
-        <input type="text" placeholder="Search..." (input)="onSearch($event)" />
-    </div>
+   
     <div #searchContent>
         <div *ngIf="shouldDisplayContainer('search-user')" class="help-container user-container search-user">
             <h2><mat-icon>search</mat-icon> Search User</h2>
@@ -303,9 +299,7 @@
             </div>
         </div>
     </div>
-    <div *ngIf="isAnySectionOpen()" class="search-filter-container">
-        <input type="text" placeholder="Search..." (input)="onSearch($event)" />
-    </div>
+    
     <div #searchContent>
         <div *ngIf="shouldDisplayContainer('revoke-user')" class="help-container user-container revoke-user">
             <h2><mat-icon>delete</mat-icon> Revoke/Delete/Deactivate User</h2>
