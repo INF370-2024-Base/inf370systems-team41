@@ -35,7 +35,10 @@
     <div class="form-group">
       <mat-form-field appearance="outline">
         <mat-label><i class="material-icons">home</i> Address</mat-label>
-        <input id="address" matInput formControlName="address" placeholder="Address">
+        <input id="address" matInput formControlName="address" placeholder="Address" required>
+        <mat-error *ngIf="editForm.get('address')?.invalid && editForm.get('address')?.touched">
+          Must enter valid address details.
+        </mat-error>
       </mat-form-field>
     </div>
   </form>
