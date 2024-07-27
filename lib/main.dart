@@ -42,14 +42,14 @@ class MyHomePage extends StatelessWidget {
                 width: 150,
                 height: 150,
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               NavigationButton(
                 text: 'Stocks',
                 page: StocksPage(),
               ),
               NavigationButton(
                 text: 'Deliveries',
-                page: DeliveriesPage(),
+                page: const DeliveriesPage(),
               ),
               NavigationButton(
                 text: 'Dentists',
