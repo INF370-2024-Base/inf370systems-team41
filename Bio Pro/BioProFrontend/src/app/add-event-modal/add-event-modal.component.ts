@@ -6,6 +6,7 @@ import { CalendarService } from '../services/calendar.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { EditCalanderEventViewModel } from '../shared/EditCalanderEvent';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-add-event-modal',
@@ -15,9 +16,11 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 export class AddEventModalComponent implements OnInit {
   isEditMode = false;
   addForm:FormGroup
+  today = new Date();
+  todayDate = this.datePipe.transform(new Date(this.today.setDate(this.today.getDate())), 'yyyy-MM-dd');
   constructor(
     public dialogRef: MatDialogRef<EventModalComponent>,
-    private calendarService: CalendarService,private snackBar:MatSnackBar,private dialog: MatDialog,private fb:FormBuilder
+    private calendarService: CalendarService,private snackBar:MatSnackBar,private dialog: MatDialog,private datePipe: DatePipe,private fb:FormBuilder
   ) {this.addForm = this.fb.group({
     Description: ['', Validators.required],
     EventInformation: ['', Validators.required],
