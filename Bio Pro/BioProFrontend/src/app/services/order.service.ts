@@ -3,6 +3,9 @@ import { Injectable } from '@angular/core';
 import { map, Observable, Subject } from 'rxjs';
 import { OpenOrder } from '../shared/openorder';
 import { SystemOrderViewModel } from '../shared/SystemOrderViewModel ';
+import { AddDentalDesignViewModel } from '../orders-awaiting-dental-design/orders-awaiting-dental-design.component';
+import { AddMediaFileViewModel } from '../employee-orders-and-steps/employee-orders-and-steps.component';
+import { AddStockItemViewModel } from '../shared/Stock';
 
 @Injectable({
   providedIn: 'root'
@@ -30,14 +33,16 @@ export class OrderService {
   updateOrder(order: any): Observable<any> {
     return this.httpClient.put(`${this.apiUrl}Api/UpdateOrder`, order, this.httpOptions);
   }
+  addOrder(order: any): Observable<any> {
+    return this.httpClient.post(`${this.apiUrl}Api/AddOrders`, order, this.httpOptions);
+  }
+  addMediaFile(mediaFile: AddMediaFileViewModel): Observable<AddMediaFileViewModel> {
+    return this.httpClient.post<AddMediaFileViewModel>(`${this.apiUrl}Api/AddMediaFile`, mediaFile, this.httpOptions);
+  }
+  
 
   getOpenOrderId(openOrderID: string): Observable<OpenOrder>{
     return this.httpClient.get<OpenOrder>(`${this.apiUrl}GetOpenOrder/` + openOrderID)
-  }
-
-  addOrder(orderData: SystemOrderViewModel): Observable<any> {
-    console.log(orderData)
-    return this.httpClient.post<SystemOrderViewModel>(`${this.apiUrl}api/AddOrders`, orderData);
   }
 
 
@@ -135,6 +140,34 @@ getOrdersWithNoTimelineAndInProgress():Observable<any[]>
 getFinishedOrders():Observable<any[]>
 {
   return this.httpClient.get<any[]>(`${this.apiUrl}Api/GetFinishedOrders`);
+}
+deleteMediaFile(mediaFileId:number):Observable<any[]>
+{
+  return this.httpClient.delete<any[]>(`${this.apiUrl}Api/DeleteMediaFile/${mediaFileId}`);
+}
+getOrdersAwaitingDentalDesign():Observable<any[]>
+{
+  return this.httpClient.get<any[]>(`${this.apiUrl}Api/GetOrdersAwaitingDentalDesign`);
+}
+sendDentalDesign(dentalDesign:AddDentalDesignViewModel):Observable<any[]>
+{
+  return this.httpClient.post<any[]>(`${this.apiUrl}Api/SendDentalDesign`,dentalDesign);
+}
+apporveDentalDesign(orderId:number):Observable<number> {
+  const endpoint = `Api/ApproveDentalDesign/${orderId}`; 
+  return this.httpClient.put<number>(`${this.apiUrl}${endpoint}`,orderId);
+}
+rejectDentalDesign(orderId:number):Observable<number> {
+  const endpoint = `Api/DisapproveDentalDesign/${orderId}`;
+  return this.httpClient.put<number>(`${this.apiUrl}${endpoint}`,orderId);
+}
+GetOrdersAwaitingDentalDesignApproval():Observable<any[]>
+{
+  return this.httpClient.get<any[]>(`${this.apiUrl}Api/GetOrdersAwaitingDentalDesignApproval`);
+}
+CancelOrder(orderId:string):Observable<any[]>
+{
+  return this.httpClient.put<any[]>(`${this.apiUrl}Api/CancelOrder/${orderId}`,orderId);
 }
 }
 

@@ -74,12 +74,24 @@ namespace BioProSystem.Controllers
             {
                 // Convert ViewModel to Model, ignoring Patients and SystemOrders
                 var dentist = ConvertToDentistModel(model);
-                dentist.DentistId = dentistId;
-                _repository.UpdateDentist(dentist);
-                await _repository.SaveChangesAsync();
-                return Ok(dentist);
+                Dentist dentisttoEdit=_repository.GetDentistdByIdAsync(dentistId).Result;
+                if (dentisttoEdit == null)
+                    return NotFound("Dentist not found");
+                dentisttoEdit.ContactDetail=model.ContactDetail;
+                dentisttoEdit.FirstName=model.FirstName;
+                dentisttoEdit.Address=model.Address;
+                dentisttoEdit.LastName=model.LastName;
+                if(await _repository.SaveChangesAsync())
+                {
+                    return Ok(dentist);
+                }
+                else
+                {
+                    return BadRequest("Could not save changes. Make sure an attribute was changed.");
+                }
+                
             }
-            catch (Exception)
+            catch (Exception )
             {
                 return StatusCode(500, "Internal Server Error. Please contact support.");
             }
@@ -93,14 +105,21 @@ namespace BioProSystem.Controllers
             {
                 var dentist = await _repository.GetDentistAsync(dentistId);
                 if (dentist == null) return NotFound("Dentist not found.");
-
-                _repository.DeleteDentist(dentist);
+                if(dentist.SystemOrders.Any())
+                {
+                    return BadRequest("Cannot delete dentist that has been used in a system order");
+                }
+                if(dentist.Patients.Any())
+                {
+                    return BadRequest("Cannot delete dentist that has been assigned patients");
+                }
+                _repository.Delete(dentist);
                 await _repository.SaveChangesAsync();
                 return Ok(new { message = "Dentist deleted successfully." });
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return StatusCode(500, "Internal Server Error. Please contact support.");
+                return StatusCode(500, "Internal Server Error. Please contact support."+ex.InnerException.Message);
             }
         }
 
@@ -109,7 +128,6 @@ namespace BioProSystem.Controllers
         {
             return new Dentist
             {
-                DentistId = viewModel.DentistId,
                 LastName = viewModel.LastName,
                 FirstName = viewModel.FirstName,
                 ContactDetail = viewModel.ContactDetail,

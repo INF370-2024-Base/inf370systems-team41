@@ -7,6 +7,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { EditOrderModalComponent } from '../edit-order-modal/edit-order-modal.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { trigger, state, style, transition, animate } from '@angular/animations';
+import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
 
 @Component({
   selector: 'app-orders',
@@ -39,16 +40,8 @@ export class OrdersComponent implements OnInit {
   originalOrders:any[]=[]
   baseUrl: string ='https://localhost:44315/Api/';
   constructor(private dialog: MatDialog,private http: HttpClient,private dataservices:OrderService,private snackBar:MatSnackBar) { }
-  private isDrawing: boolean = false;
+
   ngAfterViewChecked(): void {
-    if (this.ordersInfo.length > 0 && !this.isDrawing) {
-      this.isDrawing = true;
-      this.drawShapes();
-      console.log("drawing");
-      // setTimeout(() => {
-      //   
-      // }, 2000); 
-    }
 
   }
   ngOnInit(): void {
@@ -80,7 +73,6 @@ export class OrdersComponent implements OnInit {
     ).subscribe(
       (orderInfos: any[]) => {
         this.ordersInfo = orderInfos;
-        this.isDrawing= false;
         console.log('It works');
         console.log('Orders and order info retrieved:', this.orders, this.ordersInfo);
       },
@@ -97,7 +89,6 @@ export class OrdersComponent implements OnInit {
       this.dataservices.getAllOrderInfo(order.orderId).subscribe(
         (result: any) => {
             this.ordersInfo.push(result);
-            this.isDrawing = false;
                    },
         (error) => {
           console.error('Error fetching order info:', error);
@@ -105,46 +96,38 @@ export class OrdersComponent implements OnInit {
       );
     });
   }
-  drawShapes() {
-    this.ordersInfo.forEach(order => {
-        // Get the canvas corresponding to the current order
-        let canvas = document.getElementById('myCanvas' + order.systemOrder.orderId) as HTMLCanvasElement;
-        const img = new Image();
-    img.src = 'assets/images/mouth area.png';
-    img.onload = () => {
-      if (canvas) {
-        
-        let ctx = canvas.getContext('2d')!;
-        const scaleFactor = 0.3; 
-          const desiredWidth = img.width * scaleFactor;
-          const desiredHeight = img.height * scaleFactor;
-          canvas.width = img.width* scaleFactor;
-        canvas.height = img.height* scaleFactor;
-          const offsetX = (canvas.width - desiredWidth) / 2; 
-          const offsetY = (canvas.height - desiredHeight) / 2; 
+  
+isImage(base64String: string): boolean {
+  try {
+    const binary = atob(base64String);
+    const firstByte = binary.charCodeAt(0);
+    const secondByte = binary.charCodeAt(1);
 
-          ctx.clearRect(0, 0, canvas.width, canvas.height);
-          ctx.drawImage(img, offsetX, offsetY, desiredWidth, desiredHeight);
-        
-        for (const area of order.selectedAreas) {
-            const { x, y, width, height } = area;
-            const scaledX = x * scaleFactor + offsetX;
-            const scaledY = y * scaleFactor + offsetY;
-            const scaledWidth = width * scaleFactor;
-            const scaledHeight = height * scaleFactor;
-            ctx.strokeRect(scaledX, scaledY, scaledWidth, scaledHeight);
-  ctx.fillStyle = 'lightblue';
-  ctx.fillRect(scaledX, scaledY, scaledWidth, scaledHeight);
-        }
-    } else {
-        console.error(`Canvas with id 'myCanvas${order.systemOrder.orderId}' not found`);
+    // Check for PNG (89 50), JPEG (FF D8), GIF (47 49)
+    if ((firstByte === 0x89 && secondByte === 0x50) || // PNG
+        (firstByte === 0xFF && secondByte === 0xD8) || // JPEG
+        (firstByte === 0x47 && secondByte === 0x49)) { // GIF
+      return true;
     }
-    }
-        // Ensure the canvas exists
-       
-    });
+  } catch (e) {
+    return false;
+  }
+  return false;
 }
-
+getBase64ImageSrc(base64String: string): string {
+  if (this.isImage(base64String)) {
+    return `data:image/png;base64,${base64String}`;
+  }
+  return '';
+}
+downloadFile(base64String: string, fileName: string) {
+  const link = document.createElement('a');
+  link.href = `data:application/octet-stream;base64,${base64String}`;
+  link.download = fileName;
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+}
   searchOrders() {
     if (this.orderId.trim() !== '') {
       const url = `${this.baseUrl}GetOrdersById/${this.orderId}`;
@@ -156,13 +139,11 @@ export class OrdersComponent implements OnInit {
               this.ordersInfo=[]
               this.orders = [data]; 
               this.getOrderInfo()
-              this.isDrawing = false;
 
             } else {
               this.ordersInfo=[]
               this.orders = [data]; 
               this.getOrderInfo() // Reset orders array if no data found
-              this.isDrawing = false;
   
             }
           },
@@ -266,7 +247,50 @@ export class OrdersComponent implements OnInit {
 
     }
   }
- 
+  deleteMediaFile(mediaFileId: number): void {
+     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      width: '250px',
+      data: 'Are you sure you want to delete this media file?'
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.dataservices.deleteMediaFile(mediaFileId).subscribe(
+          () => {
+            this.showSnackBar('Successfully deleted media file');
+            setTimeout(() => {
+              location.reload(); // Reload or update data as needed
+            }, 2000); 
+          },
+          (error: HttpErrorResponse) => {
+            console.error('Error deleting media file:', error.error);
+          }
+        );
+      }
+    });
+  }
+ cancelOrder(id:string)
+ {
+  const dialogRefCancel = this.dialog.open(ConfirmationDialogComponent, {
+    width: '250px',
+    data: 'Are you sure you want to cancel this order?'
+  });
+
+  dialogRefCancel.afterClosed().subscribe(result => {
+    if (result) {
+      // If the user confirms, delete the event
+      this.dataservices.CancelOrder(id).subscribe(() => {
+        console.log('Order canceled:');
+        dialogRefCancel.close(true);
+        this.showSnackBar('Canceled order:'+id)
+        this.getOrdersAndInfo()
+      }, error => {
+        console.error('Error deleting order', error);
+        this.showSnackBar('Error canceling order:'+error.error)
+      });
+    }
+  });
+ }
 }
 
 

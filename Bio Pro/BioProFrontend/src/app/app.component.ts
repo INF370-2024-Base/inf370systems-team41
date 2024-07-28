@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
 import { OrderService } from './services/order.service';
+import { Router } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-dialog.component';
 
 @Component({
   selector: 'app-root',
@@ -11,10 +14,18 @@ export class AppComponent {
   isEmployeeMenuOpen = false;
   isOrdersMenuOpen = false;
   isDeliveriesMenuOpen = false;
+  isStockMenuOpen = false;
+  isUserSubNavOpen = false;
+  
   title = 'BioProSystem';
   toggleOrdersMenu(): void {
     this.isOrdersMenuOpen = !this.isOrdersMenuOpen;
   }
+  toggleSubNav(nav: string): void {
+    
+      this.isUserSubNavOpen = !this.isUserSubNavOpen;
+    }
+    
   toggleEmployeeMenu() {
     this.isEmployeeMenuOpen = !this.isEmployeeMenuOpen;
   }
@@ -22,9 +33,13 @@ export class AppComponent {
   {
     this.isDeliveriesMenuOpen = !this.isDeliveriesMenuOpen;
   }
+  toggleStockMenu()
+  {
+    this.isStockMenuOpen = !this.isStockMenuOpen;
+  }
   isLoggedIn = false;
   user:any;
-  constructor(public dataService:OrderService) {}
+  constructor(public dataService:OrderService,private router:Router,private dialog:MatDialog) {}
   isSignedIn:boolean=false
   ngOnInit() {
     this.user=JSON.parse(sessionStorage.getItem('User')!)
@@ -35,5 +50,16 @@ export class AppComponent {
       this.user=JSON.parse(sessionStorage.getItem('User')!)
       this.isLoggedIn=sessionStorage.getItem('User')!=undefined ||sessionStorage.getItem('User')!=null
     }
-
+    signOut(){
+      const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+        width: '250px',
+        data: 'Are you sure you want to sign out?'
+      });
+   
+      dialogRef.afterClosed().subscribe(result => {
+        if (result) {
+          this.router.navigate(['login'])
+        }
+      });
+    }
 }

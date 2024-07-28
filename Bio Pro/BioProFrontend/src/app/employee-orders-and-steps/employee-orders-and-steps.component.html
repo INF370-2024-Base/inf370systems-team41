@@ -1,0 +1,88 @@
+
+<body>
+  <h1 style="font-size: 48px; color: #4d4a4a; text-align: center; text-transform: uppercase; letter-spacing: 3px; margin-bottom: 24px; text-shadow: 2px 2px 4px rgba(124, 124, 124, 0.5);">ORDER STEPS WITH ASSIGNED EMPLOYEES</h1>
+  <div class="container">
+    <div *ngFor="let order of orders" class="order-card-container">
+        <mat-card class="order-card">
+            <mat-card-header>
+                <mat-card-title>Order ID: {{ order.orderId }}</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+                <div *ngFor="let orderstep of order.systemOrderSteps" class="order-step-container">
+                    <mat-list>
+                        <mat-list-item>
+                            <div *ngIf="orderstep.isCurrentStep" style="color: #007bff; background-color: #e6f7ff; padding: 10px; border-radius: 5px;">
+                                <h4 matLine style="margin: 0;">
+                                    <span style="font-weight: bold;">Current Step:</span> {{ orderstep.description }}
+                                </h4>
+                            </div>
+                            <div *ngIf="!orderstep.isCurrentStep" [ngStyle]="orderstep.completed ? {'color': '#999999', 'text-decoration': 'line-through'} : {'color': '#333', 'font-weight': 'normal'}">
+                                <h4 matLine style="margin: 0;">{{ orderstep.description }}</h4>
+                            </div>
+                            <div *ngIf="orderstep.completed" style="display: flex; align-items: center; color: #28a745;">
+                                <mat-icon>check</mat-icon> Date completed: {{orderstep.dateCompleted | date: 'shortDate'}}
+                            </div>
+                        </mat-list-item>
+                        <mat-list-item *ngIf="orderstep.employee.email != employeeEmail">
+                            <p>Assigned employee: {{ orderstep.employee.firstName }} {{ orderstep.employee.lastName }}</p>
+                        </mat-list-item>
+                        <div *ngIf="orderstep.isCurrentStep" class="current-step-actions" style="padding: 10px; border: 1px solid #007bff; border-radius: 5px; background-color: #f9f9f9; margin-top: 10px;">
+                            <div *ngIf="orderstep.employee.email == employeeEmail">
+                                <div *ngIf="!orderstep.completed" style="margin-bottom: 10px;">
+                                    <strong>Due Date: {{orderstep.dueDateForStep | date: 'shortDate'}}</strong>
+                                </div>
+                                <div class="actions" style="display: flex; gap: 10px; margin-bottom: 10px;">
+                                    <div *ngIf="stockUsed">
+                                        <div *ngIf="stockUsed.OrderId === order.orderId">
+                                            <div *ngFor="let stockvalue of stockUsed.StockUsed">
+                                                <div *ngFor="let stocks of stockView">
+                                                    <div *ngIf="stocks.stockId === stockvalue.StockId" style="padding: 5px; background-color: #e0f7fa; border-radius: 3px;">
+                                                        {{ stocks.stockName }}: {{ stockvalue.Quantity }} {{ stocks.measurement }}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button mat-raised-button color="primary" (click)="addEventClicked(order)" style="background-color: #007bff;">
+                                        Add stock
+                                    </button>
+                                    <button mat-raised-button color="default" (click)="ClearStock()" style="background-color: #ccc; color: #333;">
+                                        Clear Stock
+                                    </button>
+                                </div>
+                                <mat-divider></mat-divider>
+                                <div class="form-group" style="margin-top: 15px;">
+                                    <label for="MediaFiles" class="media-label" style="display: flex; align-items: center; margin-bottom: 5px; color: #333;">
+                                        <mat-icon style="margin-right: 8px;">attach_file</mat-icon> Upload Media Files:
+                                    </label>
+                                    <input type="file" id="MediaFiles" (change)="onFileSelected($event)" multiple class="media-input" style="display: inline-block; padding: 8px 12px; border: 1px solid #ccc; border-radius: 5px; background-color: #f0f0f0; color: #333; font-size: 14px; cursor: pointer;">
+                                </div>
+                                <div *ngIf="stockUsed" style="margin-top: 10px;">
+                                    <button *ngIf="stockUsed.StockUsed.length > 0" mat-raised-button color="primary" (click)="CompleteStepOrOrder(orderstep.systeorderStepId, order.orderId)">
+                                        Complete step
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </mat-list>
+                    <mat-divider></mat-divider>
+                </div>
+            </mat-card-content>
+        </mat-card>
+    </div>
+    <h1 *ngIf="orders.length == 0" class="main-title">
+        No orders found
+    </h1>
+</div>
+
+
+
+</body>
+
+
+<div class="help-button-container">
+    <button mat-button [routerLink]="['/help-orders']" >
+      <mat-icon>live_help</mat-icon>
+      <span>Help</span>
+    </button>
+  </div>

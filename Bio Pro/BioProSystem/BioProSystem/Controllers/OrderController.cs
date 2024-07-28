@@ -17,6 +17,8 @@ using System.Net;
 using System.Net.Mail;
 using System.Threading.Tasks;
 using Org.BouncyCastle.Crypto.Macs;
+using Microsoft.Extensions.Logging;
+using static System.Net.WebRequestMethods;
 
 namespace BioProSystem.Controllers
 {
@@ -24,6 +26,7 @@ namespace BioProSystem.Controllers
     [Route("Api/")]
     public class OrderController : Controller
     {
+        private readonly ILogger<OrderController> _logger;
         private readonly UserManager<SystemUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly IRepository _repository;
@@ -32,7 +35,7 @@ namespace BioProSystem.Controllers
         private readonly IEmailSender _emailSender;
         private readonly EmailSettings _emailSettings;
 
-        public OrderController(IOptions<EmailSettings> emailSettings, IEmailSender emailSender,UserManager<SystemUser> userManager, RoleManager<IdentityRole> roleManager, IUserClaimsPrincipalFactory<SystemUser> claimsPrincipalFactory, IConfiguration configuration, IRepository repository)
+        public OrderController(ILogger<OrderController> logger,IOptions<EmailSettings> emailSettings, IEmailSender emailSender,UserManager<SystemUser> userManager, RoleManager<IdentityRole> roleManager, IUserClaimsPrincipalFactory<SystemUser> claimsPrincipalFactory, IConfiguration configuration, IRepository repository)
         {
             _userManager = userManager;
             _roleManager = roleManager;
@@ -41,6 +44,7 @@ namespace BioProSystem.Controllers
             _repository = repository;
             _emailSender = emailSender;
             _emailSettings = emailSettings.Value;
+            _logger = logger;
         }
         [HttpPost]
         [Route("DownloadMediaFile")]
@@ -98,7 +102,7 @@ namespace BioProSystem.Controllers
 
                     var newOrder = new SystemOrder
                     {
-                        OrderId = viewModel.OrderId,//dropdown
+                        OrderId = viewModel.OrderId,
                         DentistId = viewModel.DentistId,//dropdown or small search pop-up
                         OrderDate = viewModel.OrderDate,//calendar select
                         EmergencyNumber = viewModel.EmergencyNumber,
@@ -117,15 +121,18 @@ namespace BioProSystem.Controllers
                         systemOrder = newOrder,
                         OrderDirectionId = viewModel.OrderDirectionId,
                         TimelineDetails="Start Date:"+viewModel.OrderDate.ToShortDateString()+"\n"+"Due Date:"+viewModel.DueDate.ToShortDateString(),
-                        
-
-
+                       
                     };
+                    
                     _repository.Add(newOrderWorkflowTimelines);
+                    await _repository.SaveChangesAsync();
+                    
                     var orderdirection = await _repository.GetOrderDirectionById(viewModel.OrderDirectionId);
                     var teethShades = await _repository.GetTeethShadesAsync(viewModel.TeethShadesIds);
                     var selectedAreas = await _repository.GetSelectedAreasAsync(viewModel.SeletedAreasIds);
                     orderdirection.OrderDetails.Add(newOrderWorkflowTimelines);
+                    newOrder.OrderWorkflowTimelineId = newOrderWorkflowTimelines.WorkflowStructureId;
+                    newOrder.OrderWorkflowTimeline = newOrderWorkflowTimelines;
 
                     if (teethShades == null || !teethShades.Any())
                     {
@@ -148,12 +155,27 @@ namespace BioProSystem.Controllers
                         newOrder.SelectedAreas.Add(selectedarea);
                         selectedarea.SystemOrders.Add(newOrder); // Assuming bidirectional association
                     }
+                    if (viewModel.mediaFileViewModels.Length > 0)
+                    {
+                        foreach (MediaFileViewModel mediaFile in viewModel.mediaFileViewModels)
+                        { if(mediaFile.FileName != "example.txt") {
+                                MediaFile mediaFileToCreate = new MediaFile();
+                                mediaFileToCreate.FileName = mediaFile.FileName;
+                                mediaFileToCreate.FileSelf = Convert.FromBase64String(mediaFile.FileSelf);
+                                mediaFileToCreate.FileSizeKb = mediaFile.FileSizeKb;
+                                newOrder.MediaFiles.Add(mediaFileToCreate);
+                                mediaFileToCreate.SystemOrderId = newOrder.OrderId;
+                                _repository.Add(mediaFileToCreate);
+                                await _repository.SaveChangesAsync();
+                            }
+                            
+                        }
 
+                    }
 
                     OpenOrder newOpenOrder = new OpenOrder();
                     if (viewModel.OrderTypeId==1)
                     {
-
                         newOpenOrder.Description = orderdirection.Description;
                         newOpenOrder.systemOrder = newOrder;
                         _repository.Add(newOpenOrder);
@@ -162,7 +184,7 @@ namespace BioProSystem.Controllers
                     Console.WriteLine("is true" + await _repository.CheckSystemPatient(viewModel.MedicalAidNumber));
                     if (await _repository.CheckSystemPatient(viewModel.MedicalAidNumber))
                     {
-                        newPatient.FirsName = _repository.GetPatientByMedicalAidNumber(viewModel.MedicalAidNumber).Result.FirsName;
+                        newPatient.FirstName = _repository.GetPatientByMedicalAidNumber(viewModel.MedicalAidNumber).Result.FirstName;
                         newPatient.Lastname = _repository.GetPatientByMedicalAidNumber(viewModel.MedicalAidNumber).Result.Lastname;
                         newPatient.DentistId = _repository.GetPatientByMedicalAidNumber(viewModel.MedicalAidNumber).Result.DentistId;
                         newPatient.MedicalAidId = _repository.GetPatientByMedicalAidNumber(viewModel.MedicalAidNumber).Result.MedicalAidId;
@@ -170,35 +192,60 @@ namespace BioProSystem.Controllers
                     }
                     else
                     {
-                        newPatient.FirsName = viewModel.PatientName;
+                        newPatient.FirstName = viewModel.PatientName;
                         newPatient.Lastname = viewModel.PatientSurname;
                         newPatient.DentistId = viewModel.DentistId;
                         newPatient.MedicalAidId = viewModel.MedicalAidId;
+                        newPatient.MedicalAid = await _repository.GetMedicalAidByMedicalAidId(viewModel.MedicalAidId);
                         newPatient.MedicalAidNumber = viewModel.MedicalAidNumber;
+                        newPatient.Dentist=_repository.GetDentistdByIdAsync(viewModel.DentistId).Result;
                         _repository.Add(newPatient);
+                        try
+                        {
+   
+
+                            if (await _repository.SaveChangesAsync())
+                            {
+                               
+                            }
+                            else
+                            {
+                                // Failed to save changes
+                                return BadRequest("Failed to save new patient.");
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            // Log the exception
+                            _logger.LogError(ex, "Error adding new patient.");
+                            return StatusCode(500, "Internal server error: " + ex.InnerException.Message);
+                        }
                     }   
                     Dentist dentist=_repository.GetDentistdByIdAsync(viewModel.DentistId).Result;
                     dentist.SystemOrders.Add(newOrder);
+                    dentist.Patients.Add(newPatient);
                     _repository.Add(newOrder);
+                    List<SystemUser> labManagers = _userManager.GetUsersInRoleAsync("Lab Manager").Result.ToList();
 
-                    if (await _repository.SaveChangesAsync())
-                    { EmailViewModel email=new EmailViewModel();
-                        email.Email = "bioprosystem717@gmail.com";
-                        email.Emailheader = "New " + orderdirection.Description + " ID:" + newOrder.OrderId;
-                        email.EmailContent = " Good Day Sir.\n Hope all is well.\n A new order is pending approval on the system.\n Please approve or reject at your earliest convenience";
-                        SendTestEmail(email);
-                        return Ok(newOrder);
-                    }
-                    else
+                    foreach (SystemUser labManager in labManagers)
                     {
-                        ModelState.AddModelError(string.Empty, "Failed to save changes.");
-                        return BadRequest(ModelState);
+                        if(labManager!=null)
+                        { 
+                            EmailViewModel email = new EmailViewModel();
+                            email.Email = labManager.Email;
+                            email.Emailheader = "New " + orderdirection.Description + " ID:" + newOrder.OrderId;
+                            email.EmailContent = " Good Day.\n Hope all is well.\n A new order is pending approval on the system.\n Please approve or reject at your earliest convenience";
+                            SendTestEmail(email);
+                        }
                     }
+                   
+                        return Ok(newOrder);
+                  
                 }
                 catch (Exception ex)
                 {
                     ModelState.AddModelError(string.Empty, $"An error occurred: {ex.Message}");
-                    return BadRequest(ModelState);
+                    return StatusCode(500, "Internal server error: " + ex.Message);
                 }
             }
             else
@@ -247,7 +294,7 @@ namespace BioProSystem.Controllers
 
                             if (await _repository.CheckSystemPatient(viewModel.MedicalAidNumber))
                             {
-                                newPatient.FirsName = _repository.GetPatientByMedicalAidNumber(viewModel.MedicalAidNumber).Result.FirsName;
+                                newPatient.FirstName = _repository.GetPatientByMedicalAidNumber(viewModel.MedicalAidNumber).Result.FirstName;
                                 newPatient.Lastname = _repository.GetPatientByMedicalAidNumber(viewModel.MedicalAidNumber).Result.Lastname;
                                 newPatient.DentistId = _repository.GetPatientByMedicalAidNumber(viewModel.MedicalAidNumber).Result.DentistId;
                                 newPatient.MedicalAidId = _repository.GetPatientByMedicalAidNumber(viewModel.MedicalAidNumber).Result.MedicalAidId;
@@ -257,7 +304,7 @@ namespace BioProSystem.Controllers
                             }
                             else
                             {
-                                newPatient.FirsName = viewModel.PatientName;
+                                newPatient.FirstName = viewModel.PatientName;
                                 newPatient.Lastname = viewModel.PatientSurname;
                                 newPatient.DentistId = viewModel.DentistId;
                                 newPatient.MedicalAidId = viewModel.MedicalAidId;
@@ -506,7 +553,7 @@ namespace BioProSystem.Controllers
         {
             try
             {
-                var pendingOrders = await _repository.GetPendingSystemOrders();
+                var pendingOrders = await _repository.GetSystemOrdersWithOrderStatusID(1);
                 if(pendingOrders == null || !pendingOrders.Any())
                 {
                     return NotFound("No pending orders found");
@@ -533,18 +580,276 @@ namespace BioProSystem.Controllers
                 {
                     return NotFound("No pending orders found");
                 }
-                if (pendingOrders.OrderStatusId != 1)
+                else
+                {
+                    pendingOrders.OrderStatusId = 2;
+                    List<Employee> DentalDesigners = await _repository.GetEmployeesWithJobTitleId(4);
+
+                    foreach (Employee emp in DentalDesigners)   
+                    {
+                        EmailViewModel email = new EmailViewModel();
+                        email.EmailContent = "There is a new dental design that needs your approval." + "http://localhost:4200/orderAwaitingDentalDesign";
+                        email.Emailheader = "New dental design";
+                        email.Email = emp.Email;
+                        SendTestEmail(email);
+
+                    }
+                }
+                if (await _repository.SaveChangesAsync())
+                {
+                    return Ok(pendingOrders);
+                }
+                else
+                {
+                    ModelState.AddModelError(string.Empty, "Failed to save changes.");
+                    return BadRequest(ModelState);
+                }
+            }
+            catch(Exception ex)
+            {
+                return StatusCode(500, $"Internal Server Error: {ex.InnerException.Message}");
+            }
+        }
+        [HttpPut]
+        [Route("DissaprovePendingOrder/{orderId}")]
+        public async Task<ActionResult<IEnumerable<SystemOrder>>> DissaprovePendingOrders(string orderId)
+        {
+            try
+            {
+                var pendingOrders = await _repository.GetSystemOrderByIdAsync(orderId);
+                if (pendingOrders == null )
+                {
+                    return NotFound("No pending orders found");
+                }
+                if(pendingOrders.OrderStatusId!=1)
+                {
+                    return NotFound("Order is already in progress. Please cancel order instead");
+                }
+                else
+                {
+                    pendingOrders.OrderStatusId = 10;
+                }
+                if (await _repository.SaveChangesAsync())
+                {
+                    return Ok(pendingOrders);
+                }
+                else
+                {
+                    ModelState.AddModelError(string.Empty, "Failed to save changes.");
+                    return BadRequest(ModelState);
+                }
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal Server Error: {ex.Message}");
+            }
+        }
+        [HttpPut]
+        [Route("CancelOrder/{orderId}")]
+        public async Task<ActionResult<IEnumerable<SystemOrder>>> CancelOrder(string orderId)
+        {
+            try
+            {
+                var order = await _repository.GetSystemOrderByIdAsync(orderId);
+                if (order == null)
+                {
+                    return NotFound("No order found");
+                }
+                if (order.OrderStatusId == 9)
+                {
+                    return NotFound("Order is already canceled.");
+                }
+                else
+                {
+                    order.OrderStatusId = 9;
+                }
+                if (await _repository.SaveChangesAsync())
+                {
+                    return Ok(order);
+                }
+                else
+                {
+                    ModelState.AddModelError(string.Empty, "Failed to save changes.");
+                    return BadRequest(ModelState);
+                }
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal Server Error: {ex.Message}");
+            }
+        }
+        [HttpDelete]
+        [Route("DeleteMediaFile/{mediaFileId}")]
+        public async Task<IActionResult> DeleteMediaFile(int mediaFileId)
+        {
+            try
+            {
+                MediaFile mediaFile = await _repository.GetMediaFileById(mediaFileId);
+                if (mediaFile == null) return NotFound("Id not found");
+                _repository.Delete(mediaFile);
+                if (await _repository.SaveChangesAsync())
+                {
+                    return Ok(mediaFile);
+                }
+                else
+                {
+                    return BadRequest("Could not save changes");
+                }
+
+            }
+            catch (Exception ex)
+            {
+                // Log the exception or return a meaningful error message
+                return StatusCode(500, "An error occurred while deleting daily hours." + ex.InnerException.Message);
+            }
+        }
+        [HttpGet]
+        [Route("GetOrdersAwaitingDentalDesign")]
+        public async Task<IActionResult> GetOrdersAwaitingDentalDesign()
+        {
+            try
+            {
+                var ordersAwaitingDentalDesign = await _repository.GetOrdersAwaitingDentalDesign();
+                if (ordersAwaitingDentalDesign == null)
+                { return NotFound("Id not found"); }
+                else
+                {
+                    return Ok(ordersAwaitingDentalDesign);
+                }
+                
+            }
+            catch (Exception ex)
+            {
+                // Log the exception or return a meaningful error message
+                return StatusCode(500, "An error occurred while deleting daily hours." + ex.InnerException.Message);
+            }
+        }
+        [HttpPost]
+        [Route("SendDentalDesign")]
+        public async Task<IActionResult> SendDentalDesign(AddDentalDesignViewModel dentalDesign)
+        {
+            try
+            {
+                MediaFile mediaFile1 = new MediaFile();
+                mediaFile1.FileName = dentalDesign.DentalDesign.FileName;
+                mediaFile1.FileSelf = Convert.FromBase64String(dentalDesign.DentalDesign.FileSelf);
+                mediaFile1.FileSizeKb = dentalDesign.DentalDesign.FileSizeKb;
+
+                SystemOrder order = await _repository.GetSystemOrderByIdAsync(dentalDesign.OrderId);
+                if (order == null)
+                { 
+                    return NotFound("Order not found"); 
+                }
+                mediaFile1.SystemOrderId = order.OrderId;
+                _repository.Add(mediaFile1);
+                order.MediaFiles.Add(mediaFile1);
+                order.OrderStatusId = 3;
+                
+                if(await _repository.SaveChangesAsync())
+                {
+                    List<Employee> labmanagers = await _repository.GetEmployeesWithJobTitleId(3);
+                    if(labmanagers.Count>0)
+                    {
+                        foreach (Employee employee in labmanagers)
+                        {
+                            EmailViewModel email = new EmailViewModel();
+                            email.EmailContent = "There is a new dental design that needs your approval." + "http://localhost:4200/dentalDesignApproval";
+                            email.Emailheader = "New dental design";
+                            email.Email = employee.Email;
+                            SendTestEmail(email);
+                        }
+                    }
+                    
+                    return Ok(mediaFile1);
+                }
+                else
+                {
+                    return BadRequest("Could not save changes to database");
+                }
+
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "An error occurred while deleting daily hours." + ex.InnerException.Message);
+            }
+        }
+        [HttpPost]
+        [Route("AddMediaFile")]
+        public async Task<IActionResult> SendDentalDesign(AddMediaFileViewModel mediaFileViewModels)
+        {
+            try
+            {
+                foreach(MediaFileViewModel mediaFile in mediaFileViewModels.mediaFileViewModels)
+                {
+                    MediaFile mediaFileNew = new MediaFile();
+                    mediaFileNew.FileName = mediaFile.FileName;
+                    mediaFileNew.FileSelf = Convert.FromBase64String(mediaFile.FileSelf);
+                    mediaFileNew.FileSizeKb = mediaFile.FileSizeKb;
+
+                    SystemOrder order = await _repository.GetSystemOrderByIdAsync(mediaFileViewModels.orderId);
+                    if (order == null)
+                    {
+                        return NotFound("Order not found");
+                    }
+                    mediaFileNew.SystemOrderId = order.OrderId;
+                    _repository.Add(mediaFileNew);
+                    order.MediaFiles.Add(mediaFileNew);
+                }
+              
+
+                if (await _repository.SaveChangesAsync())
+                {
+                    return Ok(mediaFileViewModels);
+                }
+                else
+                {
+                    return BadRequest("Could not save changes to database");
+                }
+
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "An error occurred while deleting daily hours." + ex.InnerException.Message);
+            }
+        }
+        [HttpPut]
+        [Route("ApproveDentalDesign/{orderId}")]
+        public async Task<ActionResult<IEnumerable<SystemOrder>>> ApproveDentalDesign(string orderId)
+        {
+            try
+            {
+                var pendingOrders = await _repository.GetSystemOrderByIdAsync(orderId);
+                if (pendingOrders == null)
+                {
+                    return NotFound("No pending orders found");
+                }
+                if (pendingOrders.OrderStatusId != 3)
                 {
                     return NotFound("Order is not a pending orders found");
                 }
                 else
                 {
-                    pendingOrders.OrderStatusId = 2;
+                    pendingOrders.OrderStatusId = 4;
                     OrderWorkflowTimeline timeline = _repository.GetOrdertimeFlowBySystemOrderId(orderId).Result;
                     List<Employee> employees = new List<Employee>();
                     try
                     {
-                        employees = _repository.AssignAvailableTechnicians(timeline.OrderDirectionId, pendingOrders.OrderId);
+                        employees = await _repository.AssignAvailableTechnicians(timeline.OrderDirectionId, pendingOrders.OrderId);
+                        if (employees != null)
+                        {
+                            foreach (Employee employee in employees)
+                            {
+                                EmailViewModel emailViewModel = new EmailViewModel();
+                                emailViewModel.Emailheader = "New Order:" + orderId;
+                                emailViewModel.EmailContent = "You have been assigned to order:" + orderId + ". For more information view the Order info on system";
+                                emailViewModel.Email = employee.Email;
+                                SendTestEmail(emailViewModel);
+                            }
+                        }
+                        else
+                        {
+                            return BadRequest("Employees not found for order");
+                        }
                     }
                     catch (Exception ex)
                     {
@@ -567,29 +872,38 @@ namespace BioProSystem.Controllers
                     return BadRequest(ModelState);
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return StatusCode(500, $"Internal Server Error: {ex.Message}");
             }
         }
         [HttpPut]
-        [Route("DissaprovePendingOrder/{orderId}")]
-        public async Task<ActionResult<IEnumerable<SystemOrder>>> DissaprovePendingOrders(string orderId)
+        [Route("DisapproveDentalDesign/{orderId}")]
+        public async Task<ActionResult<IEnumerable<SystemOrder>>> DisapproveDentalDesign(string orderId)
         {
             try
             {
-                var pendingOrders = await _repository.GetSystemOrderByIdAsync(orderId);
-                if (pendingOrders == null )
+                SystemOrder pendingOrders = await _repository.GetSystemOrderByIdAsync(orderId);
+                if (pendingOrders == null)
                 {
                     return NotFound("No pending orders found");
                 }
-                if(pendingOrders.OrderStatusId!=1)
+                if (pendingOrders.OrderStatusId != 3)
                 {
-                    return NotFound("Order is already in progres. Please cancel order instead");
+                    return NotFound("Order is not a pending orders found");
                 }
                 else
                 {
-                    pendingOrders.OrderStatusId = 4;
+                    pendingOrders.OrderStatusId = 2;
+                    MediaFile filetodelete = pendingOrders.MediaFiles.FirstOrDefault(mediaFile => mediaFile.FileName.Contains("DentalDesign")); 
+                    if (filetodelete != null)
+                    {
+                        _repository.Delete(filetodelete);
+                    }
+                    else
+                    {
+                        return NotFound(filetodelete.FileName + " was not found. It might already be deleted");
+                    }
                 }
                 if (await _repository.SaveChangesAsync())
                 {
@@ -606,34 +920,26 @@ namespace BioProSystem.Controllers
                 return StatusCode(500, $"Internal Server Error: {ex.Message}");
             }
         }
+        [HttpGet]
+        [Route("GetOrdersAwaitingDentalDesignApproval")]
+        public async Task<IActionResult> GetOrdersAwaitingDentalDesignApproval()
+        {
+            try
+            {
+                var ordersAwaitingDentalDesign = await _repository.GetSystemOrdersWithOrderStatusID(3);
+                if (ordersAwaitingDentalDesign == null)
+                { return NotFound("Id not found"); }
+                else
+                {
+                    return Ok(ordersAwaitingDentalDesign);
+                }
 
-        //[HttpGet("Create")]
-        //public async Task<IActionResult> Create()
-        //{
-        //    var viewModel = new SystemOrderViewModel();
-
-        //    try
-        //    {
-        //        // Populate dropdown lists asynchronously
-        //        viewModel.Dentists = new SelectList(await _repository.GetDentistsAsync(), "DentistId", "FullName");
-        //        viewModel.MedicalAids = new SelectList(await _repository.GetMedicalAidsAsync(), "MedicalAidId", "Name");
-        //        viewModel.OrderDirections = new SelectList(await _repository.GetOrderDirectionsAsync(), "OrderDirectionId", "Name");
-        //        viewModel.OrderType = new SelectList(await _repository.GetOrderTypesAsync(), "OrderTypeId", "Name");
-        //        viewModel.OrderStatus = new SelectList(await _repository.GetOrderStatusesAsync(), "OrderStatusId", "Name");
-        //        var allTeethShades = await _repository.GetAllTeethShadesAsync();
-
-        //        // Create a SelectList for TeethShades with appropriate display and value fields
-        //        viewModel.TeethShades = new SelectList(allTeethShades, "TeethShadeId", "Colour", "ColourCode");
-
-
-
-        //        return View(viewModel);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return StatusCode(500, $"Internal Server Error: {ex.Message}");
-        //    }
-        //}
-
+            }
+            catch (Exception ex)
+            {
+                // Log the exception or return a meaningful error message
+                return StatusCode(500, "An error occurred while deleting daily hours." + ex.InnerException.Message);
+            }
+        }
     }
 }

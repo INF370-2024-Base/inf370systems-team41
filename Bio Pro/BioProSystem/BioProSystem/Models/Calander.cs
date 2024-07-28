@@ -9,8 +9,6 @@ public partial class Calander
     [Key]
     public int CalanderId { get; set; }
 
-    public int? TimelineId { get; set; }
-
     [Required]
 
     public string Title { get; set; } = null!;

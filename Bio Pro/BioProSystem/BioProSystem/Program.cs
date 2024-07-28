@@ -7,7 +7,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
+using Twilio;
 using System.Text.Json.Serialization;
+using Twilio.Rest.Api.V2010.Account;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -91,6 +93,9 @@ try
     builder.Services.Configure<EmailSettings>(builder.Configuration.GetSection("EmailSettings"));
     // Register the email sender service
     builder.Services.AddTransient<IEmailSender, EmailSender>();
+
+    TwilioClient.Init("AC61be70d65a7bd65169a56cf4be5cd574", "ecb1193339c64649ec450f8fda1bef99");
+
 }
 catch (Exception ex)
 {

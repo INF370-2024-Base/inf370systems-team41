@@ -1,0 +1,42 @@
+<h1 mat-dialog-title>Edit Employee</h1>
+<mat-dialog-content>
+  <form [formGroup]="editEmployeeForm" class="container">
+    <h1>Edit Employee Details</h1>
+
+    <div class="form-group">
+      <mat-form-field appearance="outline">
+        <mat-label><i class="material-icons">work</i> Job Title</mat-label>
+        <select id="jobTitle" formControlName="jobTitleId" matNativeControl>
+          <option *ngFor="let job of jobTitles" [value]="job.jobTitleId">
+            {{ job.titleName }}
+          </option>
+        </select>
+        <mat-error *ngIf="editEmployeeForm.get('jobTitleId')?.invalid && editEmployeeForm.get('jobTitleId')?.touched">
+          Job Title is required.
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="form-group">
+      <mat-form-field appearance="outline">
+        <mat-label><i class="material-icons">home</i> Address</mat-label>
+        <input id="address" matInput formControlName="address" placeholder="Address">
+        <mat-error *ngIf="editEmployeeForm.get('address')?.invalid && editEmployeeForm.get('address')?.touched">
+          Address is required.
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div *ngIf="isLoading" class="text-center">
+      <mat-spinner></mat-spinner>
+    </div>
+
+    <div *ngIf="errorMessage" class="alert alert-danger mt-2">
+      {{ errorMessage }}
+    </div>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button (click)="onCancel()" class="btn btn-secondary">Cancel</button>
+  <button mat-button (click)="onSave()" [disabled]="editEmployeeForm.invalid || isLoading" class="btn btn-primary">Save</button>
+</mat-dialog-actions>

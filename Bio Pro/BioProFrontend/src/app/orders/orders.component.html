@@ -28,17 +28,28 @@
       <mat-expansion-panel *ngFor="let order of ordersInfo">
         <mat-expansion-panel-header>
           <mat-panel-title>
+            <mat-error *ngIf="order.orderStatus.orderStatusId==9" align="end">Canceled:</mat-error>
             <mat-icon>assignment</mat-icon>
-            Order ID: {{ order.systemOrder.orderId }} - Patient: {{ order.patient.firsName }} {{ order.patient.lastname }}
+            Order ID: {{ order.systemOrder.orderId }} - Patient: {{ order.patient.firstName }} {{ order.patient.lastname }}  
+            
           </mat-panel-title>          
         </mat-expansion-panel-header>
         
         <div class="order-details">
+          <div *ngIf="order.systemOrderSteps!=null">
+            <p><strong>Ordersteps</strong><p>
+            <div *ngFor="let steps of order.systemOrderSteps">
+          
+          <p>{{steps.description}}: {{steps.employee.firstName}} {{steps.employee.lastName}}</p>
+        </div>
+        </div>
           <p><strong>Order Status:</strong> {{ order.orderStatus.description }}</p>
           <p><strong>Order Type:</strong> {{ order.orderType.description }}</p>
           <p><strong>Order Direction:</strong> {{ order.orderDirection.description }}</p>
           <p><strong>Timeline Details:</strong> {{ order.timeline.timelineDetails }}</p>
-    
+          <div *ngFor="let stock of order.systemOrder.stockItems">
+          <p><strong>Stock amount used</strong> {{ stock.stock.stockName}}: {{stock.quantity}} {{stock.stock.measurement}}</p>
+        </div>
           <strong>Teethshades:</strong>
           <div class="teethshades">
             <div *ngFor="let teethshade of order.teethshades" class="teethshade-item">
@@ -47,16 +58,46 @@
             </div>
           </div>
 
-          <canvas id="myCanvas{{order.systemOrder.orderId}}" width="500" height="500"></canvas>
+          <div>
+            <div *ngIf="order.systemOrder.mediaFiles" class="media-container">
+              <div *ngFor="let media of order.systemOrder.mediaFiles">
+                <div *ngIf="isImage(media.fileSelf)">
+                  <img [src]="getBase64ImageSrc(media.fileSelf)" alt="Base64 Image" class="image-item">
+                  <div class="button-container">
+                    <button mat-icon-button (click)="downloadFile(media.fileSelf, media.fileName)">
+                      <mat-icon>file_download</mat-icon>
+                    </button>
+                    <div *ngIf="media.fileName !== 'TeethAreas.png' && !media.fileName.includes('DentalDesign')">
+                                          <button mat-icon-button (click)="deleteMediaFile(media.mediaFileId)">
+                        <mat-icon>delete</mat-icon>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                <div *ngIf="!isImage(media.fileSelf)" style="position: relative;">
+                  <button mat-icon-button (click)="deleteMediaFile(media.mediaFileId)"><mat-icon>delete</mat-icon></button>
+                  <div class="file-item" (click)="downloadFile(media.fileSelf, media.fileName)" style="width: 100px;height: 100px;">
+                    
+                    <mat-icon class="fileIcon">insert_drive_file</mat-icon>
+                    <p class="file-name">{{ media.fileName }}</p>
+                  </div>
+                  <div style="padding-top: 10px;">
+                  
+                </div>
+              </div>
+              </div>
+            </div>
+          </div>
+          
         </div>
         
         <div class="action-icons">
           <button mat-raised-button color="primary" class="edit-button" (click)="editOrder(order.systemOrder.orderId)">
             <mat-icon>edit</mat-icon>Edit
           </button>
-          <!-- <button mat-raised-button color="warn" class="trash-button" (click)="deleteOrder(order.systemOrder.orderId)">
+          <button mat-raised-button color="warn" class="trash-button" (click)="cancelOrder(order.systemOrder.orderId)">
             <mat-icon>cancel</mat-icon>Cancel
-          </button> -->
+          </button>
         </div>
       </mat-expansion-panel>
     </mat-accordion>
@@ -68,3 +109,83 @@
   <app-edit-order-modal *ngIf="selectedOrder" (close)="closeModal()"></app-edit-order-modal>
   </div>
 </body>
+<div class="help-button-container">
+  <button mat-button [routerLink]="['/help-orders']" >
+    <mat-icon>live_help</mat-icon>
+    <span>Help</span>
+  </button>
+</div>
+
+<style>
+.media-container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.image-item {
+  width: 100px;
+  height: 100px;
+  margin: 5px; /* Adjust as needed */
+}
+
+.button-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-top: 5px;
+  height: 20px;
+  width: 20px;
+}
+
+.mat-icon-button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 10px;
+  margin: 2px;
+  width: 28px; /* Adjust width to make buttons smaller */
+  height: 28px;
+  display: flex;
+  justify-content: center; /* Center horizontally */
+  align-items: center;  /* Adjust height to make buttons smaller */
+}
+
+.mat-icon-button:hover {
+  background-color: #0056b3;
+}
+
+.file-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  width: 100px;
+  height: 100px;
+}
+
+.fileIcon {
+  font-size: 50px;
+  margin-bottom: 5px;
+}
+
+.file-name {
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  max-width: 100px;
+  font-size: 10px;
+  justify-content: center;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.file-item:hover .file-name {
+  max-width: none;
+  overflow: visible;
+}
+
+</style>

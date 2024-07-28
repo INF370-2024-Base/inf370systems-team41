@@ -18,6 +18,7 @@ body {
     100% { background-position: 0% 50%; }
 }
 
+
 /* Container styles */
 .container {
     max-width: 1200px;
@@ -50,7 +51,8 @@ body {
 }
 
 .search-field:focus-within {
-    border-color: #00509a;
+    border-color: 
+    #3c54b4;
 }
 
 /* Search button styles */
@@ -97,7 +99,8 @@ a.btn {
 
 /* Primary button styles */
 a.btn.btn-primary.rounded-btn {
-    background-color: #007bff;
+    background-color: 
+    #3c54b4;
     color: #fff;
     border-radius: 20px;
     padding: 10px 30px;
@@ -172,6 +175,7 @@ a.btn.btn-primary.rounded-btn:hover {
     z-index: -1;
     border-radius: 10px;
 }
+
 
 /* Responsive styles */
 @media (max-width: 1200px) {
@@ -272,3 +276,24 @@ a.btn.btn-primary.rounded-btn:hover {
         margin-bottom: 10px;
     }
 }
+/* Help Button Container Styles */
+.help-button-container {
+    display: flex;
+    align-items: center;
+  }
+  
+  .help-button-container button {
+    display: flex;
+    align-items: center;
+  }
+  
+  .help-button-container mat-icon {
+    margin-right: 8px;
+  }
+  
+  .help-button-container span {
+    font-size: 16px;
+    font-weight: bold;
+  }
+  
+  

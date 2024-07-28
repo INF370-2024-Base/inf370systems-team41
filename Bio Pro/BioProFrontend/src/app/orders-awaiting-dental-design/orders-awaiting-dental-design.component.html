@@ -1,0 +1,38 @@
+<!-- <p>orders-awaiting-dental-design works!</p> -->
+<body>
+  <div>
+    <h1 style="font-size: 48px; color: #4d4a4a; text-align: center; text-transform: uppercase; letter-spacing: 3px; margin-bottom: 24px; text-shadow: 2px 2px 4px rgba(124, 124, 124, 0.5);">ORDERS AWAITING DENTAL DESIGN</h1>
+  </div>
+  
+  <div class="container">
+
+    <div *ngIf="ordersAwaitingDentalDesign.length === 0" class="error-message">
+      No orders are currently waiting for a dental design.
+    </div>
+   
+    <div *ngFor="let order of ordersAwaitingDentalDesign" class="order-details">
+        <h1 class="order-id">{{order.orderId}}</h1>
+        <h2 class="due-date">Due date: {{order.dueDate | date}}</h2>
+        <h3 class="dentist-name">Dentist: {{order.dentist.firstName}} {{order.dentist.lastName}}</h3>
+        <form [formGroup]="addDentalDesign" (ngSubmit)="onSubmit(order.orderId)" class="dental-design-form">
+            <input type="file" id="MediaFiles" (change)="onFileSelected($event)" multiple class="file-input">
+            <div *ngIf="uploadedFileUrls != null" class="uploaded-file-list">
+                <h3>Uploaded Files:</h3>
+                <div class="uploaded-image-container">
+                    <a [href]="uploadedFileUrls.url" [download]="uploadedFileUrls.name">
+                        <img [src]="uploadedFileUrls.url" class="uploaded-image">
+                    </a>
+                </div>
+            </div>
+            <button type="submit" class="submit-button">Save</button>
+        </form>
+    </div>
+  </div>
+</body>
+
+<div class="help-button-container">
+  <button mat-button [routerLink]="['/help-orders']" >
+    <mat-icon>live_help</mat-icon>
+    <span>Help</span>
+  </button>
+</div>

@@ -11,11 +11,10 @@ public partial class CalanderScheduleEvent
 
     public DateTime CalanderScheduleEventDateTime { get; set; }
 
-    [Required]
-
+    public string? Information { get; set; }
     public string Description { get; set; } = null!;
 
-    public string CalanderId { get; set; }
+    public int CalanderId { get; set; }
 
     public virtual Calander Calander { get; set; }
 }

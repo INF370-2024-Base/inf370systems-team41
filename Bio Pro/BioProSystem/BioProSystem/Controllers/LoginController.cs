@@ -1,16 +1,22 @@
-﻿using BioProSystem.Models;
+﻿using BioProSystem.EmailService;
+using BioProSystem.Models;
 using BioProSystem.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System.Diagnostics;
 using System.IdentityModel.Tokens.Jwt;
+using System.Net;
 using System.Net.Mail;
 using System.Security.Claims;
 using System.Text;
+using Twilio.Types;
+using Twilio.Rest.Api.V2010.Account;
 
 namespace BioProSystem.Controllers
 {
@@ -22,14 +28,18 @@ namespace BioProSystem.Controllers
         private readonly IRepository _repository;
         private readonly IUserClaimsPrincipalFactory<SystemUser> _claimsPrincipalFactory;
         private readonly IConfiguration _configuration;
+        private readonly IEmailSender _emailSender;
+        private readonly EmailSettings _emailSettings;
 
-        public LoginController(UserManager<SystemUser> userManager, RoleManager<IdentityRole> roleManager, IUserClaimsPrincipalFactory<SystemUser> claimsPrincipalFactory, IConfiguration configuration, IRepository repository)
+        public LoginController(IEmailSender emailSender, IOptions<EmailSettings> emailSettings, UserManager<SystemUser> userManager, RoleManager<IdentityRole> roleManager, IUserClaimsPrincipalFactory<SystemUser> claimsPrincipalFactory, IConfiguration configuration, IRepository repository)
         {
             _userManager = userManager;
             _roleManager = roleManager;
             _claimsPrincipalFactory = claimsPrincipalFactory;
             _configuration = configuration;
             _repository = repository;
+            _emailSender = emailSender;
+            _emailSettings = emailSettings.Value;
         }
         [HttpPost]
         [Route("Register")]
@@ -91,13 +101,18 @@ namespace BioProSystem.Controllers
 
             if (isPasswordValid)
             {
+                var islockedou = user.LockoutEnd > DateTime.UtcNow;
+                if (user.LockoutEnd>DateTime.UtcNow)
+                {
+                    return BadRequest("User does not have access");
+                }
                 try
                 {
                     return await GenerateJWTToken(user);
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
-                    return StatusCode(StatusCodes.Status500InternalServerError, "Internal Server Error. Please contact support.");
+                    return StatusCode(StatusCodes.Status500InternalServerError, "Contact support");
                 }
             }
             else
@@ -143,8 +158,121 @@ namespace BioProSystem.Controllers
                 user = user.UserName
             });
         }
+        [HttpPut]
+        [Route("UpdatePassword")]
+        public async Task<IActionResult> UpdatePassword(UpdateUser user)
+        {
+            if(user.UserEmail != null)
+            {
+                SystemUser userToUpdate = _repository.GetsystemUserAsync(user.UserEmail).Result;
+                if (userToUpdate != null)
+                {
+                    var result=await _userManager.ChangePasswordAsync(userToUpdate, user.OldPassword, user.NewPassword);
+                    if (result.Succeeded)
+                    {
+                        return Ok(result);
+                    }
+                    else
+                    {
+                        return BadRequest(result.Errors.Select(o=>o.Description));
+                    }
+                }
+                else
+                {
+                   return BadRequest("User with email not found");
+                }
+            }
+            else
+            {
+                return BadRequest("No user Id sent");
+            }
 
+        }
+        [HttpPut]
+        [Route("ResetPassword")]
+        public async Task<IActionResult> ResetPassword(ResetPassword user)
+        {
+            if (user.UserEmail != null)
+            {
+                SystemUser userToUpdate = await _repository.GetsystemUserAsync(user.UserEmail);
+                if(!userToUpdate.EmailConfirmed) return BadRequest("User does did not try to reset email.");
+                if (userToUpdate != null)
+                {
+                    var token = await _userManager.GeneratePasswordResetTokenAsync(userToUpdate);
+                    var result = await _userManager.ResetPasswordAsync(userToUpdate, token, user.NewPassword);
+                    userToUpdate.EmailConfirmed = false;
+                    if (result.Succeeded)
+                    {
+                        try
+                        {
+                            await _repository.SaveChangesAsync();
+                            return Ok(result);
+                        }
+                        catch (DbUpdateConcurrencyException ex)
+                        {
+                            return Conflict("Concurrency conflict: the user has been modified by another process.");
+                        }
+                    }
+                    else
+                    {
+                        return BadRequest(result.Errors.Select(o => o.Description));
+                    }
+                }
+                else
+                {
+                    return BadRequest("User with email not found");
+                }
+            }
+            else
+            {
+                return BadRequest("No user Id sent");
+            }
+        }
         [HttpPost]
+        [Route("SendSMS")]
+        public void SendSms(string toPhoneNumber, string message)
+        {
+            var messageOptions = new CreateMessageOptions(new PhoneNumber(toPhoneNumber))
+            {
+                Body = message,
+                From = new PhoneNumber("+15702843516")               
+            };
+
+            var messageResponse = MessageResource.Create(messageOptions);
+
+            Console.WriteLine(messageResponse.Sid);
+        }
+        [HttpPost]
+        [Route("SendResetEmail/{emailAddress}")]
+        public async Task<IActionResult> SendResetEmail(string emailAddress)
+        {
+            if (emailAddress != null)
+            {
+                SystemUser userToUpdate = _repository.GetsystemUserAsync(emailAddress).Result;
+                if (userToUpdate != null)
+                {
+                    userToUpdate.EmailConfirmed= true;
+                    await _repository.SaveChangesAsync();
+                    EmailViewModel newemail = new EmailViewModel();
+                    newemail.Email = emailAddress;
+                    newemail.Emailheader = "Reset Password";
+                    newemail.EmailContent = "http://localhost:4200/rp/"+emailAddress;
+                    SendTestEmail(newemail);
+                    return Ok(newemail);
+                }
+                else
+                {
+                    return BadRequest("User with email not found");
+                }
+            }
+            else
+            {
+                return BadRequest("No user Id sent");
+            }
+        }
+
+
+            [HttpPost]
         [Route("CreateRole")]
         public async Task<IActionResult> CreateRole(string roleName)
         {
@@ -171,7 +299,7 @@ namespace BioProSystem.Controllers
 
         [HttpPost]
         [Route("AssignRole")]
-        //change
+        
         public async Task<IActionResult> AssignRole(string emailAddress, string roleName)
         {
             var user = await _userManager.FindByEmailAsync(emailAddress);
@@ -182,9 +310,110 @@ namespace BioProSystem.Controllers
 
             return BadRequest(result.Errors);
         }
+        [HttpPut]
+        [Route("EditUser")]
+        public async Task<IActionResult> EditUser(EditUser user)
+        {
+            var userToEdit = await _userManager.FindByEmailAsync(user.OldEmail);
+            var employeeToEdit = await _repository.GetEmployeeByEmailAsync(user.OldEmail);
+            if (userToEdit == null) return NotFound("Email not found in system.");
+
+            try
+            {
+                if (user.Role != null)
+                {
+                    var currentRoles = await _userManager.GetRolesAsync(userToEdit);
+                    var currentRole = currentRoles.FirstOrDefault();
+                    if (currentRole != null && !currentRole.Equals(user.Role, StringComparison.OrdinalIgnoreCase))
+                    {
+                        await _userManager.RemoveFromRoleAsync(userToEdit, currentRole);
+                        var result = await _userManager.AddToRoleAsync(userToEdit, user.Role);
+                        if (!result.Succeeded)
+                        {
+                            return BadRequest(result.Errors);
+                        }
+                    }
+                }
+
+                userToEdit.PhoneNumber = user.Phonenumber;
+                userToEdit.Surname = user.Surname;
+                userToEdit.Name = user.Name;
+
+                if (user.UpdatedEmail != null && user.UpdatedEmail!=user.OldEmail)
+                {
+                    var emailResult = await _userManager.SetEmailAsync(userToEdit, user.UpdatedEmail);
+                    if (emailResult.Succeeded)
+                    {
+                        await _userManager.SetUserNameAsync(userToEdit, user.UpdatedEmail);
+                        await _userManager.UpdateNormalizedUserNameAsync(userToEdit);
+                        await _userManager.UpdateNormalizedEmailAsync(userToEdit);
+                    }
+                    else
+                    {
+                        return BadRequest(emailResult.Errors);
+                    }
+                }
+
+                if (employeeToEdit != null)
+                {
+                    employeeToEdit.CellphoneNumber = user.Phonenumber;
+                    employeeToEdit.FirstName = user.Name;
+                    employeeToEdit.LastName = user.Surname;
+                    employeeToEdit.Email = user.UpdatedEmail ?? user.OldEmail; // Ensure email is updated correctly
+                }
+
+                await _repository.SaveChangesAsync();
+                return Ok(userToEdit);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPut]
+        [Route("RemoveAccess/{userEmail}")]
+
+        public async Task<IActionResult> RemoveAccess(string userEmail)
+        {
+            SystemUser user= await _userManager.FindByEmailAsync(userEmail);
+            Employee employee=await _repository.GetEmployeeByEmailAsync(userEmail);
+            if (user != null) 
+            { 
+                user.isActiveUser = false;
+                var result= await _userManager.SetLockoutEnabledAsync(user,true);
+                if(result.Succeeded)
+                {
+                    var lockoutresult = await _userManager.SetLockoutEndDateAsync(user, DateTimeOffset.MaxValue);
+                    if (!lockoutresult.Succeeded)
+                    {
+                        return BadRequest(lockoutresult.Errors);
+                    }
+
+                }
+                else
+                {
+                    return BadRequest(result.Errors);   
+                }
+                var updateResult = await _userManager.UpdateAsync(user);
+                if (!updateResult.Succeeded)
+                {
+                    return BadRequest(updateResult.Errors);
+                }
+                if(employee!=null)
+                {
+                    employee.isActiveEmployee = false;
+                }
+                return Ok(user);
+            }
+            else
+            {
+                return BadRequest("User not found");
+            }
+        }
         [HttpGet]
         [Route("GetRoles")]
-        //change
+       
         public async Task<IActionResult> GetRoles()
         {
            
@@ -208,12 +437,11 @@ namespace BioProSystem.Controllers
         [Route("GetSignInProfile/{emailAddress}")]
         public async Task<IActionResult> GetUser(string emailAddress)
         {
-            Console.WriteLine("email add:" + emailAddress);
             try
             {
                 var result = await _repository.GetsystemUserAsync(emailAddress);
 
-                if (result == null) return NotFound("Course does not exist");
+                if (result == null) return NotFound("user does not exist");
 
                 return Ok(result);
             }
@@ -221,6 +449,51 @@ namespace BioProSystem.Controllers
             {
                 return StatusCode(500, "Internal Server Error. Please contact support");
             }
+        }
+        [HttpPost]
+        [Route("SendEmail")]
+        public async Task<IActionResult> SendTestEmail(EmailViewModel email)
+        {
+            var client = new SmtpClient(_emailSettings.SmtpServer, _emailSettings.SmtpPort)
+            {
+                Credentials = new NetworkCredential(_emailSettings.Username, _emailSettings.Password),
+                EnableSsl = true,
+                DeliveryMethod = SmtpDeliveryMethod.Network
+            };
+            await _emailSender.SendEmailAsync(email.Email, email.Emailheader, email.EmailContent);
+            return Ok("Email sent successfully");
+        }
+        [HttpGet]
+        [Route("GetAllCurrentUsers")]
+        public async Task<IActionResult> GetAllCurrentUsers()
+        {
+            try
+            {
+                List<SystemUser> users = await _repository.GetAllSystemUserActiveAsync();
+                if (users == null) return NotFound("No users found");
+                var usersWithRoles = new List<UserWithRolesViewModel>();
+
+                foreach (var user in users)
+                {
+                    var roles = await _userManager.GetRolesAsync(user);
+                    var userWithRolesDto = new UserWithRolesViewModel
+                    {
+                        name = user.Name,
+                        email = user.Email,
+                        surname = user.Surname,
+                        phoneNumber = user.PhoneNumber,
+                        roles = roles.FirstOrDefault()
+                    };
+                    usersWithRoles.Add(userWithRolesDto);
+                }
+
+                return Ok(usersWithRoles);
+            }
+            catch
+            {
+                return StatusCode(500, "Internal Server Error. Please contact support");
+            }
+
         }
     }
 }

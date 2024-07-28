@@ -47,9 +47,6 @@ namespace BioProSystem.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CalanderId"));
 
-                    b.Property<int?>("TimelineId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -67,11 +64,7 @@ namespace BioProSystem.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CalanderScheduleEventId"));
 
-                    b.Property<string>("CalanderId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("CalanderId1")
+                    b.Property<int>("CalanderId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("CalanderScheduleEventDateTime")
@@ -81,9 +74,12 @@ namespace BioProSystem.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Information")
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("CalanderScheduleEventId");
 
-                    b.HasIndex("CalanderId1");
+                    b.HasIndex("CalanderId");
 
                     b.ToTable("CalanderScheduleEvents");
                 });
@@ -253,6 +249,9 @@ namespace BioProSystem.Migrations
                     b.Property<string>("SystemUserId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
+
+                    b.Property<bool>("isActiveEmployee")
+                        .HasColumnType("bit");
 
                     b.HasKey("EmployeeId");
 
@@ -548,7 +547,7 @@ namespace BioProSystem.Migrations
                     b.Property<int>("DentistId")
                         .HasColumnType("int");
 
-                    b.Property<string>("FirsName")
+                    b.Property<string>("FirstName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -612,6 +611,12 @@ namespace BioProSystem.Migrations
 
                     b.Property<int>("CalanderId")
                         .HasColumnType("int");
+
+                    b.Property<DateTime>("EarliestDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("LatestDateTime")
+                        .HasColumnType("datetime2");
 
                     b.Property<DateTime>("TimeStamp")
                         .HasColumnType("datetime2");
@@ -685,30 +690,6 @@ namespace BioProSystem.Migrations
                     b.ToTable("SelectedAreas");
                 });
 
-            modelBuilder.Entity("BioProSystem.Models.StakeWriteOff", b =>
-                {
-                    b.Property<int>("StakeWriteOffId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("StakeWriteOffId"));
-
-                    b.Property<int>("QuantityWrittenOff")
-                        .HasColumnType("int");
-
-                    b.Property<int>("StockId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("WriteOffDate")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("StakeWriteOffId");
-
-                    b.HasIndex("StockId");
-
-                    b.ToTable("StakeWriteOffs");
-                });
-
             modelBuilder.Entity("BioProSystem.Models.Stock", b =>
                 {
                     b.Property<int>("StockId")
@@ -717,14 +698,21 @@ namespace BioProSystem.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("StockId"));
 
+                    b.Property<bool>("CurrentlyInUse")
+                        .HasColumnType("bit");
+
                     b.Property<int>("MaximumStockLevel")
                         .HasColumnType("int");
+
+                    b.Property<string>("Measurement")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("MinimumStockLevel")
                         .HasColumnType("int");
 
-                    b.Property<int>("QuantityAvailable")
-                        .HasColumnType("int");
+                    b.Property<decimal>("QuantityAvailable")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("ReorderPoint")
                         .HasColumnType("nvarchar(max)");
@@ -760,7 +748,12 @@ namespace BioProSystem.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("StockTypeId")
+                        .HasColumnType("int");
+
                     b.HasKey("StockCategoryId");
+
+                    b.HasIndex("StockTypeId");
 
                     b.ToTable("StockCategories");
                 });
@@ -768,31 +761,68 @@ namespace BioProSystem.Migrations
             modelBuilder.Entity("BioProSystem.Models.StockItem", b =>
                 {
                     b.Property<int>("StockId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("OrderId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<decimal>("Quantity")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("StockItemId").ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("StockItemId"));
+
+                    b.HasKey("StockId", "OrderId");
+
+                    b.HasIndex("OrderId");
+
+                    b.ToTable("StockItems");
+                });
+
+            modelBuilder.Entity("BioProSystem.Models.StockType", b =>
+                {
+                    b.Property<int>("StockTypeId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("StockId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("StockTypeId"));
 
-                    b.Property<int>("OrderId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("OrderId1")
+                    b.Property<string>("Description")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Quantity")
+                    b.HasKey("StockTypeId");
+
+                    b.ToTable("StockType");
+                });
+
+            modelBuilder.Entity("BioProSystem.Models.StockWriteOff", b =>
+                {
+                    b.Property<int>("StockWriteOffId")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int>("StockId1")
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("StockWriteOffId"));
+
+                    b.Property<decimal>("QuantityWrittenOff")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("Reason")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("StockId")
                         .HasColumnType("int");
 
-                    b.HasKey("StockId");
+                    b.Property<DateTime>("WriteOffDate")
+                        .HasColumnType("datetime2");
 
-                    b.HasIndex("OrderId1");
+                    b.HasKey("StockWriteOffId");
 
-                    b.HasIndex("StockId1");
+                    b.HasIndex("StockId");
 
-                    b.ToTable("StockItems");
+                    b.ToTable("StockWriteOffs");
                 });
 
             modelBuilder.Entity("BioProSystem.Models.Supplier", b =>
@@ -897,6 +927,9 @@ namespace BioProSystem.Migrations
                     b.Property<bool>("Completed")
                         .HasColumnType("bit");
 
+                    b.Property<DateTime?>("DateCompleted")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -908,6 +941,9 @@ namespace BioProSystem.Migrations
                         .HasColumnType("int");
 
                     b.Property<bool>("IsCurrentStep")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsFinalStep")
                         .HasColumnType("bit");
 
                     b.Property<DateTime?>("StartDateForStep")
@@ -985,6 +1021,9 @@ namespace BioProSystem.Migrations
                     b.Property<string>("UserName")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
+
+                    b.Property<bool>("isActiveUser")
+                        .HasColumnType("bit");
 
                     b.HasKey("Id");
 
@@ -1259,8 +1298,8 @@ namespace BioProSystem.Migrations
                 {
                     b.HasOne("BioProSystem.Models.Calander", "Calander")
                         .WithMany("Events")
-                        .HasForeignKey("CalanderId1")
-                        .OnDelete(DeleteBehavior.SetNull)
+                        .HasForeignKey("CalanderId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Calander");
@@ -1339,7 +1378,7 @@ namespace BioProSystem.Migrations
                     b.HasOne("BioProSystem.Models.SystemOrder", "SystemOrder")
                         .WithMany("MediaFiles")
                         .HasForeignKey("SystemOrderId")
-                        .OnDelete(DeleteBehavior.SetNull)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("SystemOrder");
@@ -1416,13 +1455,13 @@ namespace BioProSystem.Migrations
                     b.HasOne("BioProSystem.Models.Dentist", "Dentist")
                         .WithMany("Patients")
                         .HasForeignKey("DentistId")
-                        .OnDelete(DeleteBehavior.SetNull)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("BioProSystem.Models.MedicalAid", "MedicalAid")
                         .WithMany("Patients")
                         .HasForeignKey("MedicalAidId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Dentist");
@@ -1452,29 +1491,18 @@ namespace BioProSystem.Migrations
                     b.Navigation("Payment");
                 });
 
-            modelBuilder.Entity("BioProSystem.Models.StakeWriteOff", b =>
-                {
-                    b.HasOne("BioProSystem.Models.Stock", "Stock")
-                        .WithMany("StakeWriteOffs")
-                        .HasForeignKey("StockId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Stock");
-                });
-
             modelBuilder.Entity("BioProSystem.Models.Stock", b =>
                 {
                     b.HasOne("BioProSystem.Models.StockCategory", "StockCategory")
                         .WithMany("Stocks")
                         .HasForeignKey("StockCategoryId")
-                        .OnDelete(DeleteBehavior.SetNull)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("BioProSystem.Models.Supplier", "Supplier")
                         .WithMany("Stocks")
                         .HasForeignKey("SupplierId")
-                        .OnDelete(DeleteBehavior.SetNull)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("StockCategory");
@@ -1482,21 +1510,43 @@ namespace BioProSystem.Migrations
                     b.Navigation("Supplier");
                 });
 
+            modelBuilder.Entity("BioProSystem.Models.StockCategory", b =>
+                {
+                    b.HasOne("BioProSystem.Models.StockType", "StockType")
+                        .WithMany("StockCategories")
+                        .HasForeignKey("StockTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("StockType");
+                });
+
             modelBuilder.Entity("BioProSystem.Models.StockItem", b =>
                 {
                     b.HasOne("BioProSystem.Models.SystemOrder", "Order")
                         .WithMany("StockItems")
-                        .HasForeignKey("OrderId1")
+                        .HasForeignKey("OrderId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("BioProSystem.Models.Stock", "Stock")
                         .WithMany("StockItem")
-                        .HasForeignKey("StockId1")
+                        .HasForeignKey("StockId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Order");
+
+                    b.Navigation("Stock");
+                });
+
+            modelBuilder.Entity("BioProSystem.Models.StockWriteOff", b =>
+                {
+                    b.HasOne("BioProSystem.Models.Stock", "Stock")
+                        .WithMany("StockWriteOffs")
+                        .HasForeignKey("StockId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Stock");
                 });
@@ -1522,13 +1572,13 @@ namespace BioProSystem.Migrations
                     b.HasOne("BioProSystem.Models.OrderType", "OrderType")
                         .WithMany("systemOrders")
                         .HasForeignKey("OrderTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("BioProSystem.Models.OrderWorkflowTimeline", "OrderWorkflowTimeline")
                         .WithOne("systemOrder")
                         .HasForeignKey("BioProSystem.Models.SystemOrder", "OrderWorkflowTimelineId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Dentist");
@@ -1547,13 +1597,13 @@ namespace BioProSystem.Migrations
                     b.HasOne("BioProSystem.Models.Employee", "Employee")
                         .WithMany("SystemOrderSteps")
                         .HasForeignKey("EmployeeId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("BioProSystem.Models.SystemOrder", "SystemOrders")
                         .WithMany("SystemOrderSteps")
                         .HasForeignKey("SystemOrderId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Employee");
@@ -1566,7 +1616,7 @@ namespace BioProSystem.Migrations
                     b.HasOne("BioProSystem.Models.SystemUser", "User")
                         .WithMany("UserActions")
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.SetNull)
                         .IsRequired();
 
                     b.Navigation("User");
@@ -1785,14 +1835,19 @@ namespace BioProSystem.Migrations
 
             modelBuilder.Entity("BioProSystem.Models.Stock", b =>
                 {
-                    b.Navigation("StakeWriteOffs");
-
                     b.Navigation("StockItem");
+
+                    b.Navigation("StockWriteOffs");
                 });
 
             modelBuilder.Entity("BioProSystem.Models.StockCategory", b =>
                 {
                     b.Navigation("Stocks");
+                });
+
+            modelBuilder.Entity("BioProSystem.Models.StockType", b =>
+                {
+                    b.Navigation("StockCategories");
                 });
 
             modelBuilder.Entity("BioProSystem.Models.Supplier", b =>

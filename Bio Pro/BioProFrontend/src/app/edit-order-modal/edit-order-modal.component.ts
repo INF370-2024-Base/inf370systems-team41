@@ -7,6 +7,7 @@ import { MAT_DIALOG_DATA,MatDialogRef  } from '@angular/material/dialog';
 import { SystemOrderViewModel } from '../shared/SystemOrderViewModel ';
 import { MediaFileViewModel } from '../shared/SystemOrderViewModel ';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatFormFieldControl } from '@angular/material/form-field';
 @Component({
   selector: 'app-edit-order-modal',
   templateUrl: './edit-order-modal.component.html',
@@ -79,7 +80,7 @@ export class EditOrderModalComponent implements OnInit {
         OrderId: this.order.systemOrder.orderId,
         DentistId: this.order.systemOrder.dentistId,
         OrderDate: orderDate,
-        PatientName: this.order.patient.firsName,  
+        PatientName: this.order.patient.firstName,  
         PatientSurname: this.order.patient.lastname,
         MedicalAidId: this.order.patient.medicalAidId,
         MedicalAidNumber: this.order.patient.medicalAidNumber,
@@ -309,7 +310,7 @@ return btoa(binary);
     this.dialogRef.close('Order update canceled');
   }
 }
-interface CustomFile {
+export interface CustomFile {
   name: string;
   size: number;
   content: Uint8Array;

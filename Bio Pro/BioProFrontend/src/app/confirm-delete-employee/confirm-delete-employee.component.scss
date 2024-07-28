@@ -1,0 +1,36 @@
+/* Common styles for buttons */
+.btn {
+  border-radius: 20px;
+  padding: 10px 20px;
+  font-size: 14px;
+  margin-left: 10px;
+}
+
+/* Cancel button specific styles */
+.btn-secondary {
+  background-color: #558dbd;
+  color: white;
+  border: none;
+}
+
+.btn-secondary:hover {
+  background-color: #558dbd;
+}
+
+/* Confirm button specific styles */
+.btn-outline-danger {
+  border: 1px solid #dc3545;
+  color: #dc3545;
+  background-color: transparent;
+  transition: color 0.3s, background-color 0.3s;
+}
+
+.btn-outline-danger:hover {
+  background-color: #dc3545;
+  color: white;
+}
+
+/* Rounded button style */
+.rounded-btn {
+  border-radius: 20px;
+}

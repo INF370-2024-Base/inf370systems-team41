@@ -1,9 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { DataService } from '../services/data.service';
+import { DataService } from '../services/login.service';
 import { SystemUser } from '../shared/systemuser';
 import { AppComponent } from '../app.component';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UserServices } from '../services/user.service';
+import { EditUser } from '../shared/EditUser';
+import { error } from 'console';
+import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
+import { MatDialog } from '@angular/material/dialog';
+import { ResetPasswordComponent } from '../reset-password/reset-password.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -13,7 +20,7 @@ export class LoginComponent implements OnInit {
 
   errorMessage: string = ''; 
 
-  constructor(private router: Router, private dataService: DataService,private appComponent:AppComponent) { }
+  constructor(private snackBar:MatSnackBar, private router: Router, private dataService: DataService,private appComponent:AppComponent,private userService:UserServices,private dialog: MatDialog) { }
 
   user:SystemUser={
     EmailAddress:"",
@@ -30,7 +37,7 @@ export class LoginComponent implements OnInit {
           sessionStorage.setItem('Token', JSON.stringify(result));
           this.checkSignInStatusAndNavigate(); 
         },
-        (error) => {
+        (error:HttpErrorResponse) => {
           console.log(error)
           alert(error)
         }
@@ -47,11 +54,25 @@ export class LoginComponent implements OnInit {
   }
 
 
+
   ngOnInit(): void {
     sessionStorage.removeItem('Token')
     sessionStorage.removeItem('User')
     this.appComponent.getSignInUser()
   }
   
+resetpassword(){
+  console.log("now")
+  const dialogRef = this.dialog.open(ResetPasswordComponent, {
+    width: '400px',
+  });
 
+  dialogRef.afterClosed().subscribe(result => {
+    if (result) {
+      this.snackBar.open('Reset password sent', 'Close', {
+        duration: 3000,
+      });
+    }
+  });
+}
 }

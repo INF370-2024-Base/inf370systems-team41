@@ -1,0 +1,180 @@
+body {
+  background-color: #f5f5f5; /* Light gray background */
+  font-family: 'Roboto', sans-serif; /* Playful font */
+  color: #333; /* Dark text color */
+  padding: 20px; /* Add some padding */
+  overflow: auto; /* Allow scrolling */
+}
+
+@keyframes gradientAnimation {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+body {
+  background: linear-gradient(120deg, #aed9e0, #c2e2f3, #eaf1fa, #c2e2f3, #aed9e0);
+  background-size: 400% 400%;
+  animation: gradientAnimation 20s ease infinite;
+}
+
+.help-container {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.help-container h1 {
+  font-size: 48px;
+  color: #4d4a4a;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  margin-bottom: 24px;
+  text-shadow: 2px 2px 4px rgba(124, 124, 124, 0.5);
+}
+
+.help-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+.help-card {
+  flex: 1 1 30%; /* Grow and shrink as needed, base 30% width */
+  max-width: 300px;
+  min-width: 280px;
+  margin: 10px;
+  height: 100%; /* Ensures all cards have the same height */
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.3s;
+}
+
+.help-card:hover {
+  transform: translateY(-5px);
+}
+
+mat-card {
+  background-color: #fff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+mat-card-header {
+  background-color: #ebebeb; /* Light blue background */
+  border-radius: 8px 8px 0 0;
+  padding: 16px;
+}
+
+mat-card-title {
+  display: flex;
+  align-items: center;
+  font-size: 20px;
+}
+
+mat-card-header mat-icon {
+  margin-right: 8px;
+}
+
+mat-card-content {
+  flex-grow: 1;
+  padding: 16px;
+}
+
+mat-card-content p {
+  margin: 10px 0;
+  font-size: 14px;
+  color: #666;
+}
+
+mat-card-actions {
+  display: flex;
+  justify-content: flex-end;
+  padding: 16px;
+}
+
+/* Additional styling for the PDF card */
+.pdf-card {
+  background-color: #f5f5f5; /* Slightly different background color */
+  border: 2px solid #ddd; /* Add border for distinction */
+}
+
+.pdf-card mat-card-header {
+  background-color: #dfe3e6; /* Slightly different background for the header */
+}
+
+/* Styling for the PDF iframe */
+.pdf-frame-container {
+  position: relative;
+  padding-top: 56.25%; /* 16:9 aspect ratio */
+  overflow: hidden;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.pdf-frame-container.enlarged {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: 80%;
+  height: 80%;
+  transform: translate(-50%, -50%);
+  z-index: 1000;
+  background: #fff;
+  border: 2px solid #666;
+  padding: 10px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+  cursor: default;
+}
+
+.pdf-frame {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+  border-radius: 8px;
+}
+
+/* Optional overlay for better UX when iframe is enlarged */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+}
+@media only screen and (max-width: 768px) {
+  .help-grid {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .help-card {
+    width: 100%;
+    max-width: 400px;
+  }
+}
+
+.download-button {
+  display: inline-block;
+  margin-top: 10px;
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+  text-align: center;
+}
+
+.download-button:hover {
+  background-color: #0056b3;
+}

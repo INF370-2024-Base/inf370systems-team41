@@ -7,13 +7,14 @@ namespace BioProSystem.Models;
 public partial class StockItem
 {
     [Key]
+    public int StockItemId { get; set; }
     public int StockId { get; set; }
+
+    public string OrderId { get; set; }
     [Required]
-    public int OrderId { get; set; }
-    [Required]
-    public int Quantity { get; set; }
+    public decimal Quantity { get; set; }
 
     public virtual SystemOrder Order { get; set; } = null!;
-
+    
     public virtual Stock Stock { get; set; } = null!;
 }

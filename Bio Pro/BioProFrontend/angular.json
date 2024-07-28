@@ -35,11 +35,12 @@
             ],
             "styles": [
               "node_modules/ngf-bootstrap/dist/bootstrap.min.css",
-              "src/styles.scss"
+              "src/styles.scss","./node_modules/angular-calendar/css/angular-calendar.css"
             ],
             "scripts": [
               "node_modules/jquery/dist/jquery.min.js",
               "node_modules/bootstrap/dist/js/bootstrap.js"
+              
             ]
           },
           "configurations": {

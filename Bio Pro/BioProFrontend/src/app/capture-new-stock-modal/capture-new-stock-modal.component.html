@@ -1,0 +1,17 @@
+<h1 mat-dialog-title>Capture New Stock</h1>
+<div mat-dialog-content>
+  <form [formGroup]="captureStockForm">
+    <mat-form-field>
+      <mat-label>Stock Name</mat-label>
+      <input matInput [value]="data.stockName" disabled>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Amount Added</mat-label>
+      <input matInput formControlName="amountAdded" type="number">
+    </mat-form-field>
+  </form>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onCancel()">Cancel</button>
+  <button mat-button [disabled]="!captureStockForm.valid" (click)="onSubmit()">Submit</button>
+</div>

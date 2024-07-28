@@ -60,7 +60,7 @@ namespace BioProSystem.Models
 
     public virtual DbSet<RefundPayment> RefundPayments { get; set; }
 
-    public virtual DbSet<StakeWriteOff> StakeWriteOffs { get; set; }
+    public virtual DbSet<StockWriteOff> StockWriteOffs { get; set; }
 
     public virtual DbSet<Stock> Stocks { get; set; }
 
@@ -76,6 +76,10 @@ namespace BioProSystem.Models
 
     public virtual DbSet<SystemUser> SystemUsers { get; set; }
 
+        public virtual DbSet<SystemOrderSteps> SystemOrderSteps { get; set; }
+
+        public virtual DbSet<StockType> StockType { get; set; }
+
     public virtual DbSet<TeethShade> TeethShades { get; set; }
 
     public virtual DbSet<UserAction> UserActions { get; set; }
@@ -88,7 +92,8 @@ namespace BioProSystem.Models
             modelBuilder.Entity<OrderWorkflowTimeline>()
                 .HasOne(owt => owt.systemOrder) 
                 .WithOne(so => so.OrderWorkflowTimeline)
-                .HasForeignKey<SystemOrder>(so => so.OrderWorkflowTimelineId);
+                .HasForeignKey<SystemOrder>(so => so.OrderWorkflowTimelineId)
+                .OnDelete(DeleteBehavior.NoAction);
             modelBuilder.Entity<Payment>()
                 .HasOne(owt => owt.RefundPayments)
                 .WithOne(so => so.Payment)
@@ -96,8 +101,55 @@ namespace BioProSystem.Models
             modelBuilder.Entity<OrderWorkflowTimeline>()
                 .HasOne(owt => owt.systemOrder)
                 .WithOne(so => so.OrderWorkflowTimeline)
-                .HasForeignKey<SystemOrder>(so => so.OrderWorkflowTimelineId);
-        }
+                .HasForeignKey<SystemOrder>(so => so.OrderWorkflowTimelineId)
+                .OnDelete(DeleteBehavior.Restrict); ;
 
+            modelBuilder.Entity<SystemOrderSteps>()
+                .HasOne(sos => sos.SystemOrders)
+                .WithMany(so => so.SystemOrderSteps)
+                .HasForeignKey(sos => sos.SystemOrderId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<SystemOrder>()
+             .HasOne(so => so.OrderType)
+             .WithMany(ot => ot.systemOrders)
+             .HasForeignKey(so => so.OrderTypeId)
+             .OnDelete(DeleteBehavior.Restrict);
+
+            // SystemOrderSteps -> Employees
+            modelBuilder.Entity<SystemOrderSteps>()
+                .HasOne(sos => sos.Employee)
+                .WithMany(e => e.SystemOrderSteps)
+                .HasForeignKey(sos => sos.EmployeeId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            // SystemOrderSteps -> SystemOrders
+            modelBuilder.Entity<SystemOrderSteps>()
+                .HasOne(sos => sos.SystemOrders)
+                .WithMany(so => so.SystemOrderSteps)
+                .HasForeignKey(sos => sos.SystemOrderId)
+                .OnDelete(DeleteBehavior.Restrict);
+  
+            modelBuilder.Entity<UserAction>()
+                .HasOne(ua => ua.User)
+                .WithMany(u => u.UserActions)
+                .HasForeignKey(ua => ua.UserId)
+                .OnDelete(DeleteBehavior.SetNull);
+            modelBuilder.Entity<StockItem>()
+           .HasKey(si => si.StockItemId);
+
+            modelBuilder.Entity<StockItem>()
+                .HasOne(si => si.Order)
+                .WithMany(o => o.StockItems)
+                .HasForeignKey(si => si.OrderId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<StockItem>()
+                .HasOne(si => si.Stock)
+                .WithMany(s => s.StockItem)
+                .HasForeignKey(si => si.StockId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+        }
     }
 }

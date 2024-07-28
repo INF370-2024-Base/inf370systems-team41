@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deliveries Help</title>
+    <!-- Include favicon -->
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <!-- Include Angular Material CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.1.12/angular-material.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
+</head>
+<body>
+    <!-- <div class="filter-container">
+        <div class="filter-field">
+            <mat-form-field appearance="fill">
+                <mat-label>FILTER BY:</mat-label>
+                <mat-select (selectionChange)="onFilter($event)">
+                    <mat-option value="all">All</mat-option>
+                    <mat-option value="search-employees">Search Employee</mat-option>
+                    <mat-option value="add-employees">Add Employee</mat-option>
+                    <mat-option value="edit-employees">Edit Employee</mat-option>
+                    <mat-option value="delete-employees">Delete Employee</mat-option>
+                    <mat-option value="add-hour-employees">Capture Employee Hour</mat-option>
+                    <mat-option value="delete-hour-employees">DeleteEmployee Hour</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+    </div> -->
+
+    <div *ngIf="isAnySectionOpen()" class="search-filter-container">
+        <input type="text" placeholder="Search..." (input)="onSearch($event)" />
+        
+      </div>
+      <div #searchContent>
+        <div *ngIf="shouldDisplayContainer('search-employees')" class="help-container employee-container search-employees">
+
+            <h2><mat-icon>search</mat-icon> Search Employees</h2>
+            <p>This section provides assistance on how to search for employees within the system.</p>
+          
+            <div class="help-section">
+              <h3 (click)="toggleDropdown('commonQuestionsSearch')">Common Questions</h3>
+              <ul *ngIf="dropdownStates['commonQuestionsSearch']">
+                <li class="searchable">
+                  <h4 class="searchable">How can I search for an employee?</h4>
+                  <p>Use the search bar at the top of the employee management page to enter the employee's name or ID.</p>
+                </li>
+                <li class="searchable">
+                  <h4 class="searchable">Can I search for employees using partial names?</h4>
+                  <p>Yes, the search functionality supports partial name matching.</p>
+                </li>
+                <li class="searchable">
+                  <h4 class="searchable">Is there a way to search for employees by department?</h4>
+                  <p>Yes, use the filter options available in the search bar to narrow down by department.</p>
+                </li>
+                <li class="searchable">
+                  <h4 class="searchable">How can I reset my search results?</h4>
+                  <p>Click the 'Reset' button next to the search bar to clear the current search results.</p>
+                </li>
+                <li class="searchable">
+                  <h4 class="searchable">Can I search for employees using their contact number?</h4>
+                  <p>Yes, you can use the contact number field in the search criteria.</p>
+                </li>
+              </ul>
+            </div>
+          
+            <div class="help-section">
+              <h3 (click)="toggleDropdown('technicalIssuesSearch')">Technical Issues</h3>
+              <ul *ngIf="dropdownStates['technicalIssuesSearch']">
+                <li class="searchable">
+                  <h4 class="searchable">Why is my search not returning any results?</h4>
+                  <p>Ensure that the search criteria are correct and that the employee exists in the system.</p>
+                </li>
+                <li class="searchable">
+                  <h4 class="searchable">Why is the search bar not visible on the employee management page?</h4>
+                  <p>This could be a display issue. Try refreshing the page or clearing your browser cache.</p>
+                </li>
+                <li class="searchable">
+                  <h4 class="searchable">What should I do if the search results are taking too long to load?</h4>
+                  <p>Check your internet connection and try again. If the issue persists, contact technical support.</p>
+                </li>
+                <li class="searchable">
+                  <h4 class="searchable">Why am I seeing duplicate entries in the search results?</h4>
+                  <p>This could be due to a data synchronization issue. Contact technical support for assistance.</p>
+                </li>
+                <li class="searchable">
+                  <h4 class="searchable">What do I do if the search function stops working suddenly?</h4>
+                  <p>Try refreshing the page. If the issue persists, report the problem to technical support.</p>
+                </li>
+              </ul>
+            </div>
+          
+            <div class="help-section">
+              <h3 (click)="toggleDropdown('stepsElementsSearch')">Step-by-Step Guide</h3>
+              <mat-accordion *ngIf="dropdownStates['stepsElementsSearch']">
+                <mat-expansion-panel class="searchable">
+                  <mat-expansion-panel-header>
+                    <mat-panel-title>Step 1: Navigate to the 'Employees' Page</mat-panel-title>
+                  </mat-expansion-panel-header>
+                  <p>Go to the 'Employees' section from the main navigation menu.</p>
+                </mat-expansion-panel>
+                <mat-expansion-panel class="searchable">
+                  <mat-expansion-panel-header>
+                    <mat-panel-title>Step 2: Locate the Search Bar</mat-panel-title>
+                  </mat-expansion-panel-header>
+                  <p>Find the search bar at the top of the page, positioned next to the 'Add Employee' button.</p>
+                </mat-expansion-panel>
+                <mat-expansion-panel class="searchable">
+                  <mat-expansion-panel-header>
+                    <mat-panel-title>Step 3: Enter Search Criteria</mat-panel-title>
+                  </mat-expansion-panel-header>
+                  <p>Type the name or contact details of the employee you want to find into the search bar.</p>
+                </mat-expansion-panel>
+                <mat-expansion-panel class="searchable">
+                  <mat-expansion-panel-header>
+                    <mat-panel-title>Step 4: View Filtered Results</mat-panel-title>
+                  </mat-expansion-panel-header>
+                  <p>The employee list will automatically filter based on your search input. Review the results to locate the desired employee.</p>
+                </mat-expansion-panel>
+                <mat-expansion-panel class="searchable">
+                  <mat-expansion-panel-header>
+                    <mat-panel-title>Step 5: Edit or Delete Employee Record</mat-panel-title>
+                  </mat-expansion-panel-header>
+                  <p>If the employee you were searching for appears, you can select the appropriate action to edit or delete the record using the available buttons.</p>
+                </mat-expansion-panel>
+              </mat-accordion>
+            </div>
+          </div>
+          
+
+          <div *ngIf="shouldDisplayContainer('add-employees')" class="help-container employee-container add-employees">
+            <h2><mat-icon>person_add</mat-icon> Add Employee</h2>
+            <p>This section provides assistance on how to add a new employee within the system.</p>
+            <button mat-raised-button color="primary" [routerLink]="['/addEmployee']">Go To Page</button>
+            
+            <div class="help-section">
+                <h3 (click)="toggleDropdown('commonQuestionsAdd')">Common Questions</h3>
+                <ul *ngIf="dropdownStates['commonQuestionsAdd']">
+                    <li class="searchable">
+                        <h4 class="searchable">How do I add a new employee?</h4>
+                        <p>Navigate to the 'Add Employee' section, fill in the required details, and click 'Save'.</p>
+                    </li>
+                    <li class="searchable">
+                        <h4 class="searchable">What information is required to add an employee?</h4>
+                        <p>Mandatory fields include name, ID, department, and contact information.</p>
+                    </li>
+                    <li class="searchable">
+                        <h4 class="searchable">Can I add multiple employees at once?</h4>
+                        <p>Currently, employees must be added individually. Bulk upload features may be available in future updates.</p>
+                    </li>
+                    <li class="searchable">
+                        <h4 class="searchable">Is it possible to add an employee without their contact details?</h4>
+                        <p>Contact details are required for record-keeping and communication purposes.</p>
+                    </li>
+                    <li class="searchable">
+                        <h4 class="searchable">How do I know if an employee has been successfully added?</h4>
+                        <p>You will receive a confirmation message, and the new employee will appear in the employee list.</p>
+                    </li>
+                </ul>
+            </div>
+            
+            <div class="help-section">
+                <h3 (click)="toggleDropdown('technicalIssuesAdd')">Technical Issues</h3>
+                <ul *ngIf="dropdownStates['technicalIssuesAdd']">
+                    <li class="searchable">
+                        <h4 class="searchable">What happens if I don't fill in all required fields?</h4>
+                        <p>You will receive a prompt to fill in the missing information before proceeding.</p>
+                    </li>
+                    <li class="searchable">
+                        <h4 class="searchable">What if I encounter an error while adding an employee?</h4>
+                        <p>Check the error message for details and try again. If the issue persists, contact technical support.</p>
+                    </li>
+                    <li class="searchable">
+                        <h4 class="searchable">Why is the 'Add Employee' button not working?</h4>
+                        <p>This could be due to a form validation issue. Ensure all fields are correctly filled in.</p>
+                    </li>
+                    <li class="searchable">
+                        <h4 class="searchable">What should I do if the system crashes while adding an employee?</h4>
+                        <p>Report the issue to technical support and try adding the employee again after the system is restored.</p>
+                    </li>
+                    <li class="searchable">
+                        <h4 class="searchable">Why is the employee form not loading correctly?</h4>
+                        <p>This could be a browser compatibility issue. Try using a different browser or clearing your cache.</p>
+                    </li>
+                </ul>
+            </div>
+            
+            <div class="help-section">
+                <h3 (click)="toggleDropdown('stepsElementsAdd')">Step-by-Step Guide</h3>
+                <mat-accordion *ngIf="dropdownStates['stepsElementsAdd']">
+                    <mat-expansion-panel class="searchable">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>Step 1: Navigate to the 'Employees' Page</mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <p>Go to the 'Employees' section from the main navigation menu.</p>
+                    </mat-expansion-panel>
+                    <mat-expansion-panel class="searchable">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>Step 2: Click 'Add Employee'</mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <p>Click the 'Add Employee' button located at the top right corner of the page.</p>
+                    </mat-expansion-panel>
+                    <mat-expansion-panel class="searchable">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>Step 3: Fill in Employee Details</mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <p>You will be redirected to the 'Add New Employee' form. Fill in the required fields:</p>
+                        <ul style="list-style: disc inside;">
+                            <li><strong>First Name:</strong> Enter the employee's first name.</li>
+                            <li><strong>Last Name:</strong> Enter the employee's last name.</li>
+                            <li><strong>Contact Details:</strong> Provide the employee's contact information.</li>
+                            <li><strong>Address:</strong> Enter the employee's address (optional).</li>
+                        </ul>
+                    </mat-expansion-panel>
+                    <mat-expansion-panel class="searchable">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>Step 4: Submit the Form</mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <p>Ensure all required fields are filled correctly. Click the 'Add Employee' button at the bottom of the form to submit.</p>
+                    </mat-expansion-panel>
+                    <mat-expansion-panel class="searchable">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>Step 5: Confirm Addition</mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <p>If the form is valid, the employee will be added, and you will see a confirmation message. The new employee will now be listed in the employee management page.</p>
+                    </mat-expansion-panel>
+                </mat-accordion>
+            </div>
+        </div>
+        
+
+        <div *ngIf="shouldDisplayContainer('edit-employees')" class="help-container employee-container edit-employees">
+            <h2><mat-icon>edit</mat-icon> Edit Employee</h2>
+            <p>This section provides assistance on how to edit existing employee details within the system.</p>
+            <button mat-raised-button color="primary" [routerLink]="['/employeeProfile']">Go To Page</button>
+            
+            <div class="help-section">
+                <h3 (click)="toggleDropdown('commonQuestionsEdit')">Common Questions</h3>
+                <ul *ngIf="dropdownStates['commonQuestionsEdit']">
+                    <li class="searchable">
+                        <h4 class="searchable">How do I find the employee I want to edit?</h4>
+                        <p>Use the search functionality on the employee management page to locate the employee by name or ID.</p>
+                    </li>
+                    <li class="searchable">
+                        <h4 class="searchable">Can I edit multiple fields at once?</h4>
+                        <p>Yes, you can edit multiple fields in the employee's profile before clicking 'Update' to save all changes.</p>
+                    </li>
+                    <li class="searchable">
+                        <h4 class="searchable">What happens if I make a mistake while editing?</h4>
+                        <p>If you realize a mistake before saving, you can correct it in the form. If you have already saved, simply re-edit the correct information and save again.</p>
+                    </li>
+                    <li class="searchable">
+                        <h4 class="searchable">Can I edit an employee's role?</h4>
+                        <p>Yes, you can change an employee's role by updating the 'Role' field in their profile.</p>
+                    </li>
+                    <li class="searchable">
+                        <h4 class="searchable">How can I confirm that my changes have been saved?</h4>
+                        <p>A confirmation message will appear indicating the successful update of the employee's information.</p>
+                    </li>
+                </ul>
+            </div>
+            
+            <div class="help-section">
+                <h3 (click)="toggleDropdown('technicalIssuesEdit')">Technical Issues</h3>
+                <ul *ngIf="dropdownStates['technicalIssuesEdit']">
+                    <li class="searchable">
+                        <h4 class="searchable">Why can't I find the employee I want to edit?</h4>
+                        <p>Ensure the employee exists in the system. Check spelling and try different search terms. If the issue persists, there may be a database problem.</p>
+                    </li>
+                    <li class="searchable">
+                        <h4 class="searchable">Why is the form not saving my changes?</h4>
+                        <p>Ensure all required fields are filled out correctly. Look for any error messages indicating missing or incorrect information.</p>
+                    </li>
+                    <li class="searchable">
+                        <h4 class="searchable">Why are the changes not visible immediately?</h4>
+                        <p>There might be a delay in updating the database. Refresh the page to see if the changes appear.</p>
+                    </li>
+                    <li class="searchable">
+                        <h4 class="searchable">What should I do if I encounter a server error while editing?</h4>
+                        <p>Try saving again after some time. If the error persists, contact technical support with the error details.</p>
+                    </li>
+                    <li class="searchable">
+                        <h4 class="searchable">Why is the 'Update' button disabled?</h4>
+                        <p>The button might be disabled due to incomplete or incorrect information in the form. Ensure all fields are filled out correctly.</p>
+                    </li>
+                </ul>
+            </div>
+            
+            <div class="help-section">
+                <h3 (click)="toggleDropdown('stepsElementsEdit')">Step-by-Step Guide</h3>
+                <mat-accordion *ngIf="dropdownStates['stepsElementsEdit']">
+                    <mat-expansion-panel class="searchable">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>Step 1: Access the 'Edit Employee' Page</mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <p>Click on the 'Edit Employee' button in the navigation menu or on the employee details page.</p>
+                    </mat-expansion-panel>
+                    <mat-expansion-panel class="searchable">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>Step 2: Search for the Employee</mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <p>Use the search bar to find the employee you want to edit by entering their name or ID.</p>
+                    </mat-expansion-panel>
+                    <mat-expansion-panel class="searchable">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>Step 3: Edit Employee Information</mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <p>Select the employee from the search results. Update the necessary fields in the employee profile form.</p>
+                    </mat-expansion-panel>
+                    <mat-expansion-panel class="searchable">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>Step 4: Save Changes</mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <p>Once all necessary edits are made, click the 'Update' button at the bottom of the form to save the changes.</p>
+                    </mat-expansion-panel>
+                    <mat-expansion-panel class="searchable">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>Step 5: Verify Changes</mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <p>Check the employee's profile to confirm that all updates have been successfully applied. Look for the confirmation message to ensure the process is complete.</p>
+                    </mat-expansion-panel>
+                </mat-accordion>
+            </div>
+        </div>
+        
+
+        <div *ngIf="shouldDisplayContainer('delete-employees')" class="help-container employee-container delete-employees">
+            <h2><mat-icon>delete</mat-icon> Delete Employee</h2>
+            <p>This section provides assistance on how to delete an existing employee from the system.</p>
+            <button mat-raised-button color="primary" [routerLink]="['/employeeProfile']">Go To Page</button>
+            
+            <div class="help-section">
+                <h3 (click)="toggleDropdown('commonQuestionsDelete')">Common Questions</h3>
+                <ul *ngIf="dropdownStates['commonQuestionsDelete']">
+                    <li class="searchable">
+                        <h4 class="searchable">How do I delete an employee?</h4>
+                        <p>Navigate to the employee management page, find the employee you want to delete, and click the 'Delete' button next to their name.</p>
+                    </li>
+                    <li class="searchable">
+                        <h4 class="searchable">Can I recover a deleted employee?</h4>
+                        <p>No, once an employee is deleted, the action cannot be undone. Ensure you want to permanently delete the employee before confirming.</p>
+                    </li>
+                    <li class="searchable">
+                        <h4 class="searchable">What happens to the employee's data after deletion?</h4>
+                        <p>The employee's data is permanently removed from the system.</p>
+                    </li>
+                    <li class="searchable">
+                        <h4 class="searchable">Can I delete multiple employees at once?</h4>
+                        <p>Bulk deletion functionality depends on the system's implementation. Check if the system allows selecting and deleting multiple employees.</p>
+                    </li>
+                    <li class="searchable">
+                        <h4 class="searchable">Why do I need to confirm the deletion?</h4>
+                        <p>The confirmation step ensures you do not accidentally delete an employee. It helps prevent data loss from accidental clicks.</p>
+                    </li>
+                </ul>
+            </div>
+        
+            <div class="help-section">
+                <h3 (click)="toggleDropdown('technicalIssuesDelete')">Technical Issues</h3>
+                <ul *ngIf="dropdownStates['technicalIssuesDelete']">
+                    <li class="searchable">
+                        <h4 class="searchable">Why can't I see the 'Delete' button?</h4>
+                        <p>Ensure you have the necessary permissions to delete employees. Some user roles may not have this authorization.</p>
+                    </li>
+                    <li class="searchable">
+                        <h4 class="searchable">What should I do if the deletion confirmation dialog does not appear?</h4>
+                        <p>Ensure pop-ups are enabled for the site. Try refreshing the page or using a different browser.</p>
+                    </li>
+                    <li class="searchable">
+                        <h4 class="searchable">Why am I receiving an error when trying to delete an employee?</h4>
+                        <p>This could be due to a server or database issue. Contact technical support with the error details.</p>
+                    </li>
+                    <li class="searchable">
+                        <h4 class="searchable">Why is the employee still visible after deletion?</h4>
+                        <p>There might be a delay in updating the employee list. Refresh the page to see if the deletion has been processed.</p>
+                    </li>
+                    <li class="searchable">
+                        <h4 class="searchable">What if I accidentally delete the wrong employee?</h4>
+                        <p>Unfortunately, deletion is permanent. To avoid this, double-check the details before confirming the deletion. If you need to restore the data, contact technical support to see if a recent backup can be used.</p>
+                    </li>
+                </ul>
+            </div>
+            
+            <div class="help-section">
+                <h3 (click)="toggleDropdown('stepsElementsDelete')">Step-by-Step Guide</h3>
+                <mat-accordion *ngIf="dropdownStates['stepsElementsDelete']">
+                    <mat-expansion-panel class="searchable">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>Step 1: Access the 'Delete Employee' Page</mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <p>Click on the 'Delete Employee' button in the navigation menu or on the employee details page.</p>
+                    </mat-expansion-panel>
+                    <mat-expansion-panel class="searchable">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>Step 2: Confirm Deletion</mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <p>Review the employee's details to ensure the correct employee is selected for deletion.</p>
+                    </mat-expansion-panel>
+                    <mat-expansion-panel class="searchable">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>Step 3: Click 'Delete'</mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <p>Click the 'Delete' button in the confirmation dialog to proceed with deletion.</p>
+                    </mat-expansion-panel>
+                    <mat-expansion-panel class="searchable">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>Step 4: Confirm Deletion</mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <p>Check for a confirmation message indicating successful deletion of the employee from the system.</p>
+                    </mat-expansion-panel>
+                </mat-accordion>
+            </div>
+        </div>
+        
+
+        <div *ngIf="shouldDisplayContainer('add-hour-employees')" class="help-container employee-container add-hour-employees">
+            <h2><mat-icon>schedule</mat-icon> Add Employee Daily Hours</h2>
+            <p>This section provides assistance on how to add daily work hours for an employee within the system.</p>
+            <button mat-raised-button color="primary" [routerLink]="['/captureEmployeeDailyHours']">Go To Page</button>
+            
+            <div class="help-section">
+                <h3 (click)="toggleDropdown('commonQuestionsAddDailyHours')">Common Questions</h3>
+                <ul *ngIf="dropdownStates['commonQuestionsAddDailyHours']">
+                    <li class="searchable">
+                        <h4 class="searchable">How do I add daily hours for an employee?</h4>
+                        <p>Navigate to the 'Daily Hours' section, select the employee, and enter the hours worked. Click 'Save' to record the hours.</p>
+                    </li>
+                    <li class="searchable">
+                        <h4 class="searchable">Can I add hours for multiple days at once?</h4>
+                        <p>Currently, hours need to be added for each day individually. Ensure you save the hours for each day before moving to the next.</p>
+                    </li>
+                    <li class="searchable">
+                        <h4 class="searchable">What if I need to change the hours I’ve already added?</h4>
+                        <p>You can edit the hours by navigating to the 'Daily Hours' section, selecting the date, and updating the hours. Remember to save the changes.</p>
+                    </li>
+                    <li class="searchable">
+                        <h4 class="searchable">Is there a limit to the number of hours I can add per day?</h4>
+                        <p>There is no limit, but it is recommended to enter realistic working hours for accurate records.</p>
+                    </li>
+                    <li class="searchable">
+                        <h4 class="searchable">How can I verify the hours added are correct?</h4>
+                        <p>After adding hours, you can review the daily hours log to confirm the entries are correct.</p>
+                    </li>
+                </ul>
+            </div>
+            
+            
+            <div class="help-section">
+                <h3 (click)="toggleDropdown('technicalIssuesAddDailyHours')">Technical Issues</h3>
+                <ul *ngIf="dropdownStates['technicalIssuesAddDailyHours']">
+                    <li class="searchable">
+                        <h4 class="searchable">Why can't I see the 'Add Hours' button?</h4>
+                        <p>Ensure you have the necessary permissions to add daily hours. Some user roles may not have this authorization.</p>
+                    </li>
+                    <li class="searchable">
+                        <h4 class="searchable">What should I do if the 'Save' button is not working?</h4>
+                        <p>Try refreshing the page or using a different browser. If the issue persists, contact technical support.</p>
+                    </li>
+                    <li class="searchable">
+                        <h4 class="searchable">Why are the hours not saving?</h4>
+                        <p>Check your internet connection and ensure all required fields are filled. If the problem continues, there might be a server issue.</p>
+                    </li>
+                    <li class="searchable">
+                        <h4 class="searchable">Why do I get an error message when adding hours?</h4>
+                        <p>This could be due to a data validation issue or a server error. Check the entered data and try again. Contact support if the error persists.</p>
+                    </li>
+                    <li class="searchable">
+                        <h4 class="searchable">What if the hours added are not displaying correctly?</h4>
+                        <p>There might be a delay in updating the hours log. Try refreshing the page or checking back later.</p>
+                    </li>
+                </ul>
+            </div>
+            
+            
+            <div class="help-section">
+                <h3 (click)="toggleDropdown('stepsElementsAddHours')">Step-by-Step Guide</h3>
+            <mat-accordion *ngIf="dropdownStates['stepsElementsAddHours']">
+                <mat-expansion-panel class="searchable">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>Step 1: Navigate to the 'Employee Daily Hours' Page</mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <p>Go to the 'Employee Daily Hours' section from the main navigation menu.</p>
+                </mat-expansion-panel>
+                <mat-expansion-panel class="searchable">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>Step 2: Click 'Add Hours'</mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <p>Click the 'Add Hours' button located at the top right corner of the page.</p>
+                </mat-expansion-panel>
+                <mat-expansion-panel class="searchable">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>Step 3: Fill in Daily Hours Details</mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <p>You will be redirected to the 'Add New Daily Hours' form. Fill in the required fields:</p>
+                    <ul style="list-style: disc inside;">
+                        <li class="searchable"><strong>Employee Name:</strong> Select the employee from the dropdown list.</li>
+                        <li class="searchable"><strong>Date:</strong> Enter the date for which you want to add hours.</li>
+                        <li class="searchable"><strong>Start Time:</strong> Enter the start time of the work period.</li>
+                        <li class="searchable"><strong>End Time:</strong> Enter the end time of the work period.</li>
+                    </ul>
+                </mat-expansion-panel>
+                <mat-expansion-panel class="searchable">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>Step 4: Submit the Form</mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <p>Ensure all required fields are filled correctly. Click the 'Add Hours' button at the bottom of the form to submit.</p>
+                </mat-expansion-panel>
+                <mat-expansion-panel class="searchable">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>Step 5: Confirm Addition</mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <p>If the form is valid, the daily hours will be added, and you will see a confirmation message. The added daily hours will now be listed in the employee management page.</p>
+                </mat-expansion-panel>
+            </mat-accordion>
+            </div>
+        </div>
+        
+
+        <div *ngIf="shouldDisplayContainer('delete-hour-employees')" class="help-container employee-container delete-hour-employees">
+            <h2><mat-icon>delete</mat-icon> Delete Employee Daily Hours</h2>
+            <p>This section provides assistance on how to delete daily work hours for an employee within the system.</p>
+            <button mat-raised-button color="primary" [routerLink]="['/dailyHoursProfile']">Go To Page</button>
+            
+            <div class="help-section">
+                <h3 (click)="toggleDropdown('commonQuestionsDeleteDailyHours')">Common Questions</h3>
+                <ul *ngIf="dropdownStates['commonQuestionsDeleteDailyHours']">
+                    <li class="searchable">
+                        <h4 class="searchable">How do I delete daily hours for an employee?</h4>
+                        <p>Navigate to the 'Daily Hours' section, select the employee and the date, then click 'Delete' to remove the hours.</p>
+                    </li>
+                    <li class="searchable">
+                        <h4 class="searchable">Can I delete hours for multiple days at once?</h4>
+                        <p>Currently, hours need to be deleted for each day individually.</p>
+                    </li>
+                    <li class="searchable">
+                        <h4 class="searchable">What if I delete hours by mistake?</h4>
+                        <p>Ensure you confirm before deleting. If a mistake happens, re-add the correct hours as needed.</p>
+                    </li>
+                    <li class="searchable">
+                        <h4 class="searchable">Is there a way to recover deleted hours?</h4>
+                        <p>Once deleted, hours cannot be recovered. Ensure you double-check before confirming the deletion.</p>
+                    </li>
+                    <li class="searchable">
+                        <h4 class="searchable">Why can’t I find the hours I want to delete?</h4>
+                        <p>Check if you are looking at the correct date and employee. Use the search or filter options to locate the specific hours.</p>
+                    </li>
+                </ul>
+            </div>
+            
+        
+            <div class="help-section">
+                <h3 (click)="toggleDropdown('technicalIssuesDeleteDailyHours')">Technical Issues</h3>
+                <ul *ngIf="dropdownStates['technicalIssuesDeleteDailyHours']">
+                    <li class="searchable">
+                        <h4 class="searchable">Why can't I see the 'Delete' button?</h4>
+                        <p>Ensure you have the necessary permissions to delete daily hours. Some user roles may not have this authorization.</p>
+                    </li>
+                    <li class="searchable">
+                        <h4 class="searchable">What should I do if the deletion confirmation dialog does not appear?</h4>
+                        <p>Ensure pop-ups are enabled for the site. Try refreshing the page or using a different browser.</p>
+                    </li>
+                    <li class="searchable">
+                        <h4 class="searchable">Why am I receiving an error when trying to delete daily hours?</h4>
+                        <p>This could be due to a server or database issue. Contact technical support with the error details.</p>
+                    </li>
+                    <li class="searchable">
+                        <h4 class="searchable">Why are the hours still visible after deletion?</h4>
+                        <p>There might be a delay in updating the daily hours log. Refresh the page to see if the deletion has been processed.</p>
+                    </li>
+                    <li class="searchable">
+                        <h4 class="searchable">What if I accidentally delete the wrong hours?</h4>
+                        <p>Unfortunately, deletion is permanent. To avoid this, double-check the details before confirming the deletion. If you need to restore the data, contact technical support to see if a recent backup can be used.</p>
+                    </li>
+                </ul>
+            </div>
+            
+            
+            <div class="help-section">
+                <h3 (click)="toggleDropdown('stepsElementsDeleteHours')">Step-by-Step Guide</h3>
+                <mat-accordion *ngIf="dropdownStates['stepsElementsDeleteHours']">
+                    <mat-expansion-panel class="searchable">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>Step 1: Access the 'Delete Employee Daily Hours' Page</mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <p>Click on the 'Delete Employee Daily Hours' button in the navigation menu or on the employee details page.</p>
+                    </mat-expansion-panel>
+                    <mat-expansion-panel class="searchable">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>Step 2: Confirm Deletion</mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <p>Review the daily hours details to ensure the correct hours are selected for deletion.</p>
+                    </mat-expansion-panel>
+                    <mat-expansion-panel class="searchable">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>Step 3: Click 'Delete'</mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <p>Click the 'Delete' button in the confirmation dialog to proceed with deletion.</p>
+                    </mat-expansion-panel>
+                    <mat-expansion-panel class="searchable">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>Step 4: Confirm Deletion</mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <p>Check for a confirmation message indicating successful deletion of the daily hours from the system.</p>
+                    </mat-expansion-panel>
+                </mat-accordion>
+            </div>
+        </div>    
+  
+</div>
+<div *ngIf="noResultsFound" class="no-results-message">
+    <mat-icon class="no-results-icon">search_off</mat-icon>
+    No results found for your search query.
+  </div>
+  
+</body>

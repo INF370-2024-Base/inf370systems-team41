@@ -1,0 +1,142 @@
+<body>
+  <div class="help-container">
+    <h1>How can we HELP you?</h1>
+  </div>
+
+  <div class="help-grid">
+    <div class="help-card orders-container">
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title>
+            <mat-icon>receipt</mat-icon> Orders
+          </mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <p>This section provides assistance on how to manage and navigate orders within the system.</p>
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-raised-button color="primary" [routerLink]="['/help-orders']">Read More</button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+
+    <div class="help-card timeline-container">
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title>
+            <mat-icon>event</mat-icon> Order Timeline
+          </mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <p>This section offers guidance on understanding and tracking the timeline of orders from creation to completion.</p>
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-raised-button color="primary" [routerLink]="['/help-orderTimeline']">Read More</button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+
+    <div class="help-card delivery-container">
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title>
+            <mat-icon>local_shipping</mat-icon> Deliveries
+          </mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <p>This section provides support on managing deliveries, ensuring timely and accurate delivery of orders.</p>
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-raised-button color="primary" [routerLink]="['/help-deliveries']">Read More</button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+
+    <div class="help-card stock-container">
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title>
+            <mat-icon>inventory</mat-icon> Stock
+          </mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <p>This section provides support with managing stock.</p>
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-raised-button color="primary" [routerLink]="['/help-stock']">Read More</button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+
+    <div class="help-card employee-container">
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title>
+            <mat-icon>person</mat-icon> Employees
+          </mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <p>This section will give a guide to access employees.</p>
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-raised-button color="primary" [routerLink]="['/help-employee']">Read More</button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+
+    <div class="help-card dentist-container">
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title>
+            <mat-icon>medical_services</mat-icon> Dentist
+          </mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <p>This section provides support on managing the dentists in the system.</p>
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-raised-button color="primary" [routerLink]="['/help-dentist']">Read More</button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+
+    <div class="help-card dentist-container">
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title>
+            <mat-icon>person</mat-icon> User
+          </mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <p>This section provides support on managing the user in the system.</p>
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-raised-button color="primary" [routerLink]="['/help-user']">Read More</button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+
+    <div class="help-card pdf-container">
+      <mat-card class="pdf-card">
+        <mat-card-header>
+          <mat-card-title>
+            <mat-icon>description</mat-icon> Help Document
+          </mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="pdf-frame-container">
+            <iframe src="assets/files/help doc.pdf" class="pdf-frame">
+              This browser does not support PDFs. Please download the PDF to view it: <a href="assets/files/help doc.pdf">Download PDF</a>
+            </iframe>
+            
+          </div>
+          <div>
+            <a href="assets/files/help doc.pdf" download="help doc.pdf" class="download-button">Download PDF</a>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+  
+
+</body>

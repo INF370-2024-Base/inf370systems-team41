@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock Types Management</title>
+    <!-- Include Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Include Material Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- Include Angular Material CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.1.12/angular-material.min.css">
+</head>
+<body>
+  <h1 style="font-size: 48px; color: #4d4a4a; text-align: center; text-transform: uppercase; letter-spacing: 3px; margin-bottom: 24px; text-shadow: 2px 2px 4px rgba(124, 124, 124, 0.5);">STOCK TYPES</h1>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12 d-flex justify-content-between align-items-center mb-3">
+        <div class="col-md-6 d-flex align-items-center">
+          <mat-form-field class="search-field">
+            <mat-icon matPrefix>search</mat-icon>
+            <input matInput [(ngModel)]="searchTerm" placeholder="Search by Description" (ngModelChange)="filteredStockTypes()">
+          </mat-form-field>
+        </div>
+        <div class="col-md-6 d-flex justify-content-end">
+          <button mat-button class="btn btn-primary rounded-btn" (click)="addType()">Add</button>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card-container">
+          <div class="card mb-3 example-card" *ngFor="let StockType of displayedStockTypes">
+            <div class="card-body">
+              <div class="card-header">
+                <i class="material-icons example-header-image">inventory_2</i>
+                <div>
+                  <h5 class="card-title">{{ StockType.description }}</h5>
+                </div>
+              </div>
+              <div class="card-text">
+                <button mat-button class="btn btn-secondary rounded-btn mr-2" (click)="eventClicked(StockType)">Edit</button>
+                <button mat-button style="border-color: #dc3545; color: #dc3545; border-radius: 20px; padding: 2px 20px; font-size: 14px; transition: color 0.3s;" 
+        onmouseover="this.style.backgroundColor='#dc3545'; this.style.color='white';" 
+        onmouseout="this.style.backgroundColor=''; this.style.color='#dc3545';" 
+        (click)="deleteType(StockType.stockTypeId)"> Delete </button>
+
+              </div>
+            </div>
+          </div>
+          <div *ngIf="searchTerm != '' && displayedStockTypes.length == 0" class="no-types-found">
+            No types found
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+</body>
+</html>

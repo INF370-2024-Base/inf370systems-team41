@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reports</title>
+ 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+</head>
+<body>
+  <h1 style="font-size: 48px; color: #333; text-align: center; text-transform: uppercase; letter-spacing: 3px; margin-bottom: 20px;">
+    <i class="fas fa-user-plus" style="vertical-align: middle; margin-right: 8px;"></i> REPORTS
+  </h1> 
+  <div class="report-date" style="color: grey; font-size: small; text-align: right;">Reports generated on: {{ formatDate(currentDate) }}</div>
+
+  <div class="reports-container">
+    <div class="report-section">
+      <h2>All Orders Report</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Order ID</th>
+            <th>Dentist ID</th>
+            <th>Priority Level</th>
+            <th>Order Date</th>
+            <!-- Add other columns as needed -->
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let order of orders">
+            <td>{{ order.orderId }}</td>
+            <td>{{ order.dentistId }}</td>
+            <td>{{ order.priorityLevel }}</td>
+            <td>{{ order.dueDate | date:'yyyy-MM-dd' }}</td>
+            <!-- Add other columns as needed -->
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="report-section">
+      <h2>Order Types Report</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Order Type</th>
+            <th>Order Count</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let orderType of orderTypeWithCount">
+            <td>{{ orderType.description }}</td>
+            <td>{{ orderType.orderCount }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="report-section">
+      <h2>Stock Types Count By Category Report</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Stock Type</th>
+            <th>Type Category Count</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let stockType of stockTypes">
+            <td>{{ stockType.description }}</td>
+            <td>{{ stockType.stockCategoriesCount }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="report-section">
+      <h2>Stock Items Count By Category Report</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Stock Category</th>
+            <th>Stock Item Count</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let stockItem of stockItems">
+            <td>{{ stockItem.description }}</td>
+            <td>{{ stockItem.stockItemsCount }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="report-section">
+      <h2>Stock Write-Offs Report</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Stock Name</th>
+            <th>Quantity Written Off</th>
+            <th>Write-Off Date</th>
+            <th>Reason</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let writeOff of stockWriteOffs">
+            <td>{{ writeOff.stockName }}</td>
+            <td>{{ writeOff.quantityWrittenOff }}</td>
+            <td>{{ writeOff.writtenOffDate | date:'yyyy-MM-dd' }}</td>
+            <td>{{ writeOff.reason }}</td>
+          </tr>
+        </tbody>
+      </table>
+      <div>
+        <strong>Total Quantity Written Off (Overall):</strong> {{ totalQuantityWrittenOff }}
+      </div>
+    </div>
+
+    <div class="report-section">
+      <h2>Employee Hours Report</h2>
+      <select [(ngModel)]="selectedPeriod" (change)="updateChart()">
+        <option value="monthly">Monthly Hours</option>
+        <option value="weekly">Weekly Hours</option>
+      </select>
+      <canvas id="canvas"></canvas>
+    </div>
+  </div>
+</body>
+</html>

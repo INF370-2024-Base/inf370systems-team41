@@ -1,4 +1,5 @@
 ﻿using System;
+using BioProSystem.Models;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
@@ -679,7 +680,7 @@ namespace BioProSystem.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "StakeWriteOffs",
+                name: "StockWriteOffs",
                 columns: table => new
                 {
                     StakeWriteOffId = table.Column<int>(type: "int", nullable: false)
@@ -690,9 +691,9 @@ namespace BioProSystem.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_StakeWriteOffs", x => x.StakeWriteOffId);
+                    table.PrimaryKey("PK_StockWriteOffs", x => x.StakeWriteOffId);
                     table.ForeignKey(
-                        name: "FK_StakeWriteOffs_Stocks_StockId",
+                        name: "FK_StockWriteOffs_Stocks_StockId",
                         column: x => x.StockId,
                         principalTable: "Stocks",
                         principalColumn: "StockId",
@@ -881,10 +882,9 @@ namespace BioProSystem.Migrations
                 name: "OrderPayments",
                 columns: table => new
                 {
-                    OrderId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     PaymentId = table.Column<int>(type: "int", nullable: false),
                     OrderPaymentStatus = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    OrderId1 = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    OrderId = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -896,8 +896,8 @@ namespace BioProSystem.Migrations
                         principalColumn: "PaymentId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_OrderPayments_SystemOrders_OrderId1",
-                        column: x => x.OrderId1,
+                        name: "FK_OrderPayments_SystemOrders_OrderId",
+                        column: x => x.OrderId,
                         principalTable: "SystemOrders",
                         principalColumn: "OrderId",
                         onDelete: ReferentialAction.Cascade);
@@ -931,25 +931,25 @@ namespace BioProSystem.Migrations
                 name: "StockItems",
                 columns: table => new
                 {
-                    StockId = table.Column<int>(type: "int", nullable: false)
+                    StockItemId= table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    OrderId = table.Column<int>(type: "int", nullable: false),
+                    StockId = table.Column<int>(type: "int", nullable: false),
+                    OrderId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Quantity = table.Column<int>(type: "int", nullable: false),
-                    OrderId1 = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    StockId1 = table.Column<int>(type: "int", nullable: false)
+
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_StockItems", x => x.StockId);
+                    table.PrimaryKey("PK_StockItems", x => x.StockItemId);
                     table.ForeignKey(
-                        name: "FK_StockItems_Stocks_StockId1",
-                        column: x => x.StockId1,
+                        name: "FK_StockItems_Stocks_StockId",
+                        column: x => x.StockId,
                         principalTable: "Stocks",
                         principalColumn: "StockId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_StockItems_SystemOrders_OrderId1",
-                        column: x => x.OrderId1,
+                        name: "FK_StockItems_SystemOrders_OrderId",
+                        column: x => x.OrderId,
                         principalTable: "SystemOrders",
                         principalColumn: "OrderId",
                         onDelete: ReferentialAction.Cascade);
@@ -1079,9 +1079,9 @@ namespace BioProSystem.Migrations
                 column: "OrderDirectionsOrderDirectionId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_OrderPayments_OrderId1",
+                name: "IX_OrderPayments_OrderId",
                 table: "OrderPayments",
-                column: "OrderId1");
+                column: "OrderId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_OrderPayments_PaymentId",
@@ -1135,19 +1135,19 @@ namespace BioProSystem.Migrations
                 column: "SystemOrdersOrderId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_StakeWriteOffs_StockId",
-                table: "StakeWriteOffs",
+                name: "IX_StockWriteOffs_StockId",
+                table: "StockWriteOffs",
                 column: "StockId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_StockItems_OrderId1",
+                name: "IX_StockItems_OrderId",
                 table: "StockItems",
-                column: "OrderId1");
+                column: "OrderId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_StockItems_StockId1",
+                name: "IX_StockItems_StockId",
                 table: "StockItems",
-                column: "StockId1");
+                column: "StockId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Stocks_StockCategoryId",
@@ -1257,7 +1257,7 @@ namespace BioProSystem.Migrations
                 name: "SelectedAreaSystemOrder");
 
             migrationBuilder.DropTable(
-                name: "StakeWriteOffs");
+                name: "StockWriteOffs");
 
             migrationBuilder.DropTable(
                 name: "StockItems");

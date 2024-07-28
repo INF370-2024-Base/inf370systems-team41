@@ -1,0 +1,44 @@
+.event-details {
+    .date-info {
+      margin-bottom: 20px;
+    }
+  
+    .date-item {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+  
+    .date-label {
+      font-weight: bold;
+    }
+  
+    .date-value {
+      font-style: italic;
+    }
+  
+    .timeline-info {
+      max-height: 300px;  // Adjust based on your preference
+      overflow-y: auto;
+    }
+  
+    .timeline-item {
+      border-bottom: 1px solid #ddd;
+      padding: 10px 0;
+    }
+  
+    .timeline-info-item {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 5px;
+    }
+  
+    .timeline-label {
+      font-weight: bold;
+    }
+  
+    .timeline-value {
+      font-style: italic;
+    }
+  }
+  

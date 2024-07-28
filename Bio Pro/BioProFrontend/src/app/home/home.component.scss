@@ -1,174 +1,182 @@
-.home-text {
-  margin-top: 0;
-  position: absolute;
-  top: 50%;
-  left: 0; 
-  transform: translateY(-50%);
-  z-index: 1;
-  text-align: center; 
+body, html {
+  height: 100%;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: linear-gradient(135deg, #72EDF2 10%, #5151E5 100%);
+  font-family: 'Arial', sans-serif;
+  color: #333; /* Ensures dark text color */
+  overflow: auto; /* Allow scrolling */
 }
 
-.home-text3 {
-  font-size: 58px; 
-  color: #333; 
-  text-transform: uppercase; 
-  letter-spacing: 3px; 
-  margin-bottom: 20px; 
-  font-weight: bold; 
-  text-shadow: 2px 2px 4px rgba(154, 136, 136, 0.825); 
+@keyframes gradientAnimation {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
 
-.home-text4, .home-text1 {
-  opacity: 1; 
-  color: #8a8989; 
-  font-size: 22px; 
-  position: relative; 
-}
-
-.home-text4::before, .home-text1::before {
-  content: attr(data-content); 
-  position: absolute; 
-  top: 0;
-  left: 0;
-  color: transparent; 
-  text-shadow: 1px 1px 2px rgba(145, 148, 148, 0.705); 
-  z-index: -1; 
-}
-
-.home-text4::before {
-  color: #ccc; 
-  text-shadow: 0 0 5px rgba(200, 200, 200, 0.5); 
-}
-
-.home-text1::before {
-  color: #ccc; 
-  text-shadow: 0 0 5px rgba(200, 200, 200, 0.5); 
-}
-
-.home-text4::before {
-  left: 0;
-}
-
-.home-text1::before {
-  left: 2px; 
-}
-
-.home-logo {
-  position: absolute;
-  height: auto;
-  width: auto;
-  max-height: 450px; /* Increased max-height for the logo */
-  max-width: 495px; /* Increased max-width for the logo */
-  top: 30%;
-  right: 20px; /* Adjusted to move the logo more to the right */
-  transform: translateY(-50%); /* Centering the logo vertically */
-  z-index: 2; /* Ensuring the logo is above the text */
-  animation: pulse 5s infinite alternate; 
-}
-@keyframes pulse {
-  from {
-    transform: scale(1); /* Initial scale */
-    opacity: 1; /* Initial opacity */
-  }
-  to {
-    transform: scale(1.1); /* Slightly larger scale */
-    opacity: 0.8; /* Lower opacity */
-  }
-}
 .background {
-  position: absolute; /* Using fixed positioning to cover the viewport */
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
-  z-index: 0; /* Setting the z-index to be below the text */
-  opacity: 0.7; /* Making the background slightly transparent */
+  z-index: -1;
+  opacity: 0.5;
+  filter: blur(8px);
 }
 
-/* Responsive styles */
-@media (max-width: 1200px) {
-  .home-text3 {
-    font-size: 48px;
+.container {
+  position: relative;
+  padding: 40px;
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  background: rgba(255, 255, 255, 0.082);
+  margin: 20px;
+  z-index: 1;
+  overflow: hidden;
+  animation: slideIn 1.5s ease-out;
+}
+
+.content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+}
+
+.home-logo {
+  max-height: 150px;
+  max-width: 150px;
+  margin-bottom: 30px;
+  animation: fadeIn 2s ease-in-out;
+}
+
+.home-text {
+  margin: 0;
+  animation: fadeIn 2s ease-in-out;
+}
+
+.home-text1, .home-text4 {
+  font-size: 24px;
+  color: #555;
+  margin-bottom: 20px;
+  font-weight: 500;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.home-text3 {
+  font-size: 56px;
+  color: #333;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 30px;
+  font-weight: 700;
+  text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3);
+}
+
+.info-cards {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  margin-top: 20px;
+}
+
+.weather-card, .dental-tips-card {
+  flex: 1;
+  min-width: 300px;
+  max-width: 45%;
+  margin: 10px;
+  text-align: left;
+  background: linear-gradient(to right, #6dd5fa, #2980b9);
+  color: #eeeeee;
+  border-radius: 15px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.weather-card:hover, .dental-tips-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.4);
+}
+
+.weather-header, .dental-header {
+  background: rgba(0, 0, 0, 0.2);
+  padding: 15px;
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+}
+
+.weather-title, .dental-title {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.weather-content {
+  display: flex;
+  align-items: center;
+  padding: 15px;
+}
+
+.weather-icon img {
+  width: 80px;
+  height: 80px;
+  margin-right: 20px;
+}
+
+.weather-details {
+  margin-left: 20px;
+}
+
+.weather-location {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.weather-description {
+  font-size: 16px;
+}
+
+.weather-temperature {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.weather-humidity {
+  font-size: 16px;
+}
+
+.dental-tips-card {
+  background: linear-gradient(to right, #ffecd2, #fcb69f);
+}
+
+.dental-content {
+  padding: 15px;
+}
+
+.dental-content mat-list-item {
+  font-size: 16px;
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
   }
-  
-  .home-logo {
-    max-height: 400px;
-    max-width: 400px;
+  to {
+    opacity: 1;
   }
 }
 
-@media (max-width: 992px) {
-  .home-text3 {
-    font-size: 40px;
+@keyframes slideIn {
+  from {
+    transform: translateY(-50px);
+    opacity: 0;
   }
-  
-  .home-text4, .home-text1 {
-    font-size: 20px;
-  }
-  
-  .home-logo {
-    max-height: 350px;
-    max-width: 350px;
-  }
-}
-
-@media (max-width: 768px) {
-  .home-text {
-    top: 45%;
-  }
-
-  .home-text3 {
-    font-size: 36px;
-  }
-  
-  .home-text4, .home-text1 {
-    font-size: 18px;
-  }
-  
-  .home-logo {
-    max-height: 300px;
-    max-width: 300px;
-    right: 10px;
-  }
-}
-
-@media (max-width: 576px) {
-  .home-text {
-    top: 40%;
-  }
-
-  .home-text3 {
-    font-size: 30px;
-  }
-  
-  .home-text4, .home-text1 {
-    font-size: 16px;
-  }
-  
-  .home-logo {
-    max-height: 250px;
-    max-width: 250px;
-    right: 5px;
-  }
-}
-
-@media (max-width: 400px) {
-  .home-text {
-    top: 35%;
-  }
-
-  .home-text3 {
-    font-size: 24px;
-  }
-  
-  .home-text4, .home-text1 {
-    font-size: 14px;
-  }
-  
-  .home-logo {
-    max-height: 200px;
-    max-width: 200px;
-    right: 0;
+  to {
+    transform: translateY(0);
+    opacity: 1;
   }
 }

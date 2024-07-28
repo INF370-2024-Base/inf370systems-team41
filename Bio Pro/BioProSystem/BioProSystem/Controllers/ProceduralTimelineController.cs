@@ -39,8 +39,10 @@ namespace BioProSystem.Controllers
                 {
                     ProceduralTimeline newTimeline = new ProceduralTimeline();
                     newTimeline.TimelineDetail = viewModel.TimelineDetail;
-                    newTimeline.CalanderId = 1;
+                    newTimeline.CalanderId = 2;
                     newTimeline.TimeStamp = DateTime.Now;
+                    DateTime latestDate = DateTime.MinValue;
+                    DateTime earliestDate = DateTime.MaxValue;
                     foreach (string systemorderId in viewModel.OrderIds)
                     {
                         OrderWorkflowTimeline orders = _repository.GetOrdertimeFlowBySystemOrderId(systemorderId).Result;
@@ -48,7 +50,21 @@ namespace BioProSystem.Controllers
                         {
                             orders.TimelineId = newTimeline.ProceduralTimelineId;
                             newTimeline.OrderWorkflowTimeline.Add(orders);
+                            if(latestDate<orders.systemOrder.DueDate)
+                            {
+                                latestDate=orders.systemOrder.DueDate;
+                            }
+                            if(earliestDate > orders.systemOrder.OrderDate)
+                            {
+                                earliestDate=orders.systemOrder.OrderDate;
+                            }
                         }
+                        if(systemorderId == viewModel.OrderIds.Last())
+                        {
+                            newTimeline.LatestDateTime = latestDate;
+                            newTimeline.EarliestDateTime = earliestDate;
+                        }
+                        
                     }
                     _repository.Add(newTimeline);
                     if (await _repository.SaveChangesAsync())

@@ -1,0 +1,75 @@
+body {
+  background: linear-gradient(120deg, #e0f7fa, #e1f5fe, #e3f2fd, #e1f5fe, #e0f7fa);
+  background-size: 400% 400%;
+  animation: gradientAnimation 20s ease infinite;
+  font-family: 'Roboto', sans-serif;
+  color: #333;
+  padding: 20px;
+  overflow-y: auto;
+}
+
+@keyframes gradientAnimation {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.container {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  max-width: 800px;
+  margin: 20px auto;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.search-form-field{
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  padding: 12px 20px;
+  border-radius: 25px;
+  width: 100%;
+  max-width: 800px;
+  transition: border-color 0.3s;
+}
+
+.search-field input {
+  flex-grow: 1;
+}
+
+.search-form-field mat-icon {
+  margin-right: 10px;
+}
+
+.search-field:focus-within {
+  border-color: #00509a;
+}
+.nav-button {
+  margin: 10px;
+  font-size: 16px;
+  background-color: #1976d2;
+  color: #fff;
+}
+
+.view-form-field {
+  width: 200px;
+  margin-right: 10px;
+}
+
+mat-form-field {
+  margin-bottom: 20px;
+}
+
+.event-container {
+  display: flex;
+  flex-direction: column;
+}
+
+mat-accordion {
+  width: 100%;
+}

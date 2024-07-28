@@ -4,11 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Manage Dentists</title>
-    <!-- Include Bootstrap CSS -->
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Include Material Icons -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <!-- Include favicon -->
     <link rel="icon" type="image/png" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAArklEQVQ4T6WTwQ6CMBAE30BcIwSwhghQqIFQRCLZj0Ogml2t32VcmUpMEp7C6SYNkLxeyPEh6lUufD/On1CBphCnLzwSzQECzAOBm8v0IhrEom0ZaLpv7IXq9ehyQLuO/AHfJZw/YQygaYRZDm+Q8wAG04YwP/wCFeAz2NbwY3C9SAAAAAElFTkSuQmCC">
 </head>
 <body style="background: linear-gradient(120deg, #aed9e0, #c2e2f3, #eaf1fa, #c2e2f3, #aed9e0); background-size: 400% 400%; animation: gradientAnimation 20s ease infinite; font-family: 'Roboto', sans-serif; color: #333; padding: 20px; overflow-x: hidden; overflow-y: auto;">
@@ -28,7 +25,14 @@
                 </div>
             </div>
         </div>
-        <div class="row">
+        <div class="row" *ngIf="noResultsFound">
+            <div class="col-md-12">
+                <div >
+                    No dentists found for the given search criteria.
+                </div>
+            </div>
+        </div>
+        <div class="row" *ngIf="!noResultsFound">
             <div class="col-md-12">
                 <div class="card-container">
                     <div class="card mb-3 example-card" *ngFor="let dentist of filteredDentists">
@@ -41,7 +45,7 @@
                             </div>
                             <p class="card-text"><strong>Contact Detail:</strong> {{dentist.contactDetail}}</p>
                             <p class="card-text"><strong>Address:</strong> {{dentist.address}}</p>
-                            <button (click)="editDentist(dentist)" class="btn btn-secondary rounded-btn mr-2">Edit</button>
+                            <button (click)="openEditDialog(dentist)" class="btn btn-secondary rounded-btn mr-2">Edit</button>
                             <button (click)="deleteDentist(dentist)" class="btn btn-outline-danger rounded-btn">Delete</button>
                         </div>
                     </div>
@@ -49,5 +53,12 @@
             </div>
         </div>
     </div>
+  
 </body>
+<div class="help-button-container">
+    <button mat-button [routerLink]="['/help-dentist']" >
+      <mat-icon>live_help</mat-icon>
+      <span>Help</span>
+    </button>
+  </div>
 </html>

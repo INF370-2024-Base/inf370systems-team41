@@ -1,0 +1,243 @@
+body {
+  background: linear-gradient(120deg, #aed9e0, #c2e2f3, #eaf1fa, #c2e2f3, #aed9e0);
+  background-size: 400% 400%;
+  animation: gradientAnimation 20s ease infinite;
+  font-family: 'Roboto', sans-serif;
+  color: #333;
+  padding: 20px;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+@keyframes gradientAnimation {
+  0% {
+      background-position: 0% 50%;
+  }
+  50% {
+      background-position: 100% 50%;
+  }
+  100% {
+      background-position: 0% 50%;
+  }
+}
+
+.rounded-table {
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.rounded-table thead th {
+  background-color: #8b9aad; /* Updated color */
+  color: white; /* Text color for table header */
+}
+
+.rounded-table tbody td {
+  background-color: white;
+  color: #495057;
+}
+
+.rounded-table tbody tr:nth-child(even) {
+  background-color: #f8f9fa;
+}
+
+.rounded-table tbody tr:hover {
+  background-color: #e9ecef;
+}
+
+.rounded-table .text-center {
+  text-align: center;
+}
+
+.rounded-table button.mat-button {
+  padding: 5px 10px;
+  margin-right: 5px;
+}
+
+.btn {
+  border-radius: 20px;
+  padding: 10px 20px;
+  font-size: 14px;
+}
+
+.btn-secondary {
+  background-color: #558dbd;
+  color: #fff;
+  border: none;
+}
+
+.btn-outline-danger {
+  border-color: #dc3545;
+  color: #dc3545;
+  transition: color 0.3s;
+}
+
+.btn-outline-danger:hover {
+  background-color: #dc3545;
+  color: white;
+}
+
+/* Primary button styles */
+a.btn.btn-primary.rounded-btn {
+  background-color: #007bff;
+  color: #fff;
+  border-radius: 20px;
+  padding: 10px 30px;
+  text-decoration: none;
+  margin-right: auto;
+}
+
+a.btn.btn-primary.rounded-btn:hover {
+  background-color: #0056b3;
+}
+
+.search-filter {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 24px;
+}
+
+.search-field,
+.filter-field {
+  flex: 1;
+  margin-right: 10px;
+}
+
+.search-field input,
+.filter-field mat-select {
+  width: 100%;
+}
+
+.mat-icon {
+  margin-right: 10px;
+}
+
+button.mat-raised-button {
+  margin-right: 10px;
+}
+
+@media (max-width: 768px) {
+  .search-filter {
+    flex-direction: column;
+  }
+
+  .search-field,
+  .filter-field {
+    margin-right: 0;
+    margin-bottom: 10px;
+  }
+}
+
+@media (max-width: 992px) {
+  .btn,
+  a.btn {
+    padding: 8px 15px;
+    font-size: 12px;
+  }
+
+  .btn-outline-primary,
+  .btn-secondary,
+  .btn-outline-danger {
+    margin-left: 5px;
+  }
+
+  a.btn.btn-primary.rounded-btn {
+    padding: 8px 20px;
+  }
+}
+
+@media (max-width: 576px) {
+  .container {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  .btn {
+    width: 100%; /* Set buttons to full width */
+    margin-top: 10px; /* Add margin between buttons */
+  }
+
+  a.btn.btn-primary.rounded-btn,
+  .btn-secondary {
+    margin-left: 0; /* Remove left margin for primary and secondary buttons */
+  }
+}
+
+@media (max-width: 400px) {
+  h1 {
+    font-size: 36px;
+  }
+
+  .search-field {
+    padding: 10px 15px;
+  }
+}
+/* Help Button Container Styles */
+.help-button-container {
+  display: flex;
+  align-items: center;
+}
+
+.help-button-container button {
+  display: flex;
+  align-items: center;
+}
+
+.help-button-container mat-icon {
+  margin-right: 8px;
+}
+
+.help-button-container span {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.mat-elevation-z8 {
+  box-shadow: 0px 5px 5px -3px rgba(0, 0, 0, 0.2), 0px 8px 10px 1px rgba(0, 0, 0, 0.14), 0px 3px 14px 2px rgba(0, 0, 0, 0.12);
+}
+
+table.mat-table {
+  width: 100%;
+  margin-top: 20px;
+  border-collapse: collapse;
+}
+
+th.mat-header-cell {
+  background-color: #3f51b5;
+  color: white;
+  font-weight: bold;
+  text-align: left;
+  padding: 8px;
+}
+
+td.mat-cell {
+  padding: 8px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+tr.mat-header-row {
+  height: 56px;
+}
+
+tr.mat-row {
+  height: 48px;
+  &:hover {
+    background-color: #f5f5f5;
+  }
+}
+
+.mat-column-stockName, .mat-column-quantityAvailable, .mat-column-minimumStockLevel {
+  width: 33%;
+}
+
+.chart-container {
+  margin-top: 30px;
+  text-align: center;
+}
+
+.chart-heading {
+  font-size: 24px;
+  color: #4d4a4a;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}

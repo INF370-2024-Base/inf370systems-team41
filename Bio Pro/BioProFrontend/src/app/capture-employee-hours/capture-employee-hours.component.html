@@ -10,9 +10,9 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.1.12/angular-material.min.css">
 </head>
 <body>
+
+<div class="container">
   <h1 style="font-size: 48px; color: #4d4a4a; text-align: center; text-transform: uppercase; letter-spacing: 3px; margin-bottom: 24px; text-shadow: 2px 2px 4px rgba(124, 124, 124, 0.5);">EMPLOYEE HOURS</h1>
-  <div class="container">
-    <h2 style="text-align: center;">Capture Employee Hours</h2>
     <form [formGroup]="captureHoursForm" (ngSubmit)="submitForm()">
       <div class="form-group">
         <mat-form-field appearance="outline">
@@ -46,11 +46,14 @@
       <div class="form-group">
         <mat-form-field appearance="outline">
           <mat-label><i class="material-icons">access_time</i> Clock Out Time</mat-label>
-          <input matInput id="clockOutTime" formControlName="clockOutTime" type="time" required>
+          <input matInput id="clockOutTime" formControlName="clockOutTime" type="time" required [min]="minClockOutTime">
           <mat-error *ngIf="captureHoursForm.get('clockOutTime')!.invalid && captureHoursForm.get('clockOutTime')!.touched">
-            Clock out time is required.
+            Clock out time is required and should be after clock in time.
           </mat-error>
         </mat-form-field>
+        <div *ngIf="captureHoursForm.errors?.['clockOutTimeInvalid']" style="color: red;">
+          Clock out time cannot be earlier than clock in time.
+        </div>
       </div>
       <button mat-raised-button color="primary" type="submit" [disabled]="captureHoursForm.invalid">Submit</button>
     </form>
@@ -59,4 +62,13 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.2/angular.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.1.12/angular-material.min.js"></script>
 </body>
+
+<div class="help-button-container">
+  <button mat-button [routerLink]="['/help-employee']" >
+    <mat-icon>live_help</mat-icon>
+    <span>Help</span>
+  </button>
+</div>
+
+
 </html>

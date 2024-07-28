@@ -13,7 +13,8 @@ public partial class ProceduralTimeline
     public string TimelineDetail { get; set; } = null!;
     [Required]
     public DateTime TimeStamp { get; set; }
-
+    public DateTime LatestDateTime { get; set; }
+    public DateTime EarliestDateTime { get; set; }
     public virtual ICollection<OrderWorkflowTimeline> OrderWorkflowTimeline { get; set; } = new List<OrderWorkflowTimeline>();
     public virtual Calander Calander { get; set; } = null!;
 }
