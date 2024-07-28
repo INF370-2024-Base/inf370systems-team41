@@ -21,7 +21,7 @@ public partial class Stock
     [Required]
     public int MinimumStockLevel { get; set; }
 
-    public string? ReorderPoint { get; set; }
+    public int? ReorderPoint { get; set; }
     
     public bool CurrentlyInUse { get; set; } = true;
 

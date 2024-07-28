@@ -79,7 +79,7 @@ namespace BioProSystem.Controllers
                 }
                 catch (Exception ex)
                 {
-                    ModelState.AddModelError(string.Empty, $"An error occurred: {ex.Message}");
+                    ModelState.AddModelError(string.Empty, $"An error occurred: {ex.InnerException}");
                     return BadRequest(ModelState);
                 }
             

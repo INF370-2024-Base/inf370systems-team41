@@ -59,7 +59,7 @@
                         <td>{{ stock.stockName }}</td>
                         <td>{{ stock.quantityAvailable }}</td>
                         <td>{{ getCategoryDescription(stock.stockCategoryId) }}</td>
-                        <td>{{ getSupplierName(stock.supplierId) }}</td>
+                        <td>{{ stock.supplier.supplierName }}</td>
                         <td class="text-center">
                             <button (click)="openWriteOffModal(stock)" class="btn btn-outline-danger rounded-btn mr-2">
                                 <i></i> Write Off

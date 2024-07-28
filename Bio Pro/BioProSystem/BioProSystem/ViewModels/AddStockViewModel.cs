@@ -15,7 +15,7 @@ namespace BioProSystem.ViewModels
         public int MaximumStockLevel { get; set; }
         public int MinimumStockLevel { get; set; }
 
-        public string? ReorderPoint { get; set; }
+        public int? ReorderPoint { get; set; }
 
         public bool CurrentlyInUse { get; set; } = true;
     }
