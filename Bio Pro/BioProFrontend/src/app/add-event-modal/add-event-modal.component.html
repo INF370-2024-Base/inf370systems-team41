@@ -21,6 +21,7 @@
           [(ngModel)]="addEvent.CalanderScheduleEventDateTime"
           name="startDate"
           formControlName="DateOfEvent"
+          [min]="todayDate"
         >
         <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
         <mat-datepicker #startPicker></mat-datepicker>
