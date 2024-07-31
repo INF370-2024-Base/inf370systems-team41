@@ -12,17 +12,27 @@
     <i class="fas fa-user-plus" style="vertical-align: middle; margin-right: 8px;"></i> REPORTS
   </h1> 
   <div class="report-date" style="color: grey; font-size: small; text-align: right;">Reports generated on: {{ formatDate(currentDate) }}</div>
-
+  <p>Logged-in User: {{ loggedInUserName }}</p>
   <div class="reports-container">
-    <div class="report-section">
+    <div class="report-section" id="allOrdersReport">
       <h2>All Orders Report</h2>
       <table>
         <thead>
           <tr>
-            <th>Order ID</th>
-            <th>Dentist ID</th>
-            <th>Priority Level</th>
-            <th>Order Date</th>
+            <th (click)="onSortChange('orderId')">Order ID</th>
+            <th (click)="onSortChange('dentistId')">Dentist ID</th>
+            <th (click)="onSortChange('priorityLevel')">
+              Priority Level
+              <span>
+                {{ sortColumn === 'priorityLevel' ? (sortDirection === 'asc' ? '▲' : '▼') : '▲▼' }}
+              </span>
+            </th>
+            <th (click)="onSortChange('dueDate')">
+              Order Date
+              <span>
+                {{ sortColumn === 'dueDate' ? (sortDirection === 'asc' ? '▲' : '▼') : '▲▼' }}
+              </span>
+            </th>
             <!-- Add other columns as needed -->
           </tr>
         </thead>
@@ -36,9 +46,10 @@
           </tr>
         </tbody>
       </table>
+      <button class="download-button" (click)="downloadPDF('All Orders Report', 'allOrdersReport')">Download PDF</button>
     </div>
 
-    <div class="report-section">
+    <div class="report-section"  id="orderTypesReport">
       <h2>Order Types Report</h2>
       <table>
         <thead>
@@ -54,9 +65,10 @@
           </tr>
         </tbody>
       </table>
+      <button class="download-button" (click)="downloadPDF('Order Types Report', 'orderTypesReport')">Download PDF</button>
     </div>
 
-    <div class="report-section">
+    <div class="report-section" id="stockTypesReport">
       <h2>Stock Types Count By Category Report</h2>
       <table>
         <thead>
@@ -72,9 +84,10 @@
           </tr>
         </tbody>
       </table>
+      <button  class="download-button" (click)="downloadPDF('Stock Types Report', 'stockTypesReport')">Download PDF</button>
     </div>
 
-    <div class="report-section">
+    <div  class="report-section" id="stockItemsReport">
       <h2>Stock Items Count By Category Report</h2>
       <table>
         <thead>
@@ -90,9 +103,10 @@
           </tr>
         </tbody>
       </table>
+      <button class="download-button" (click)="downloadPDF('Stock Items Report', 'stockItemsReport')">Download PDF</button>
     </div>
 
-    <div class="report-section">
+    <div class="report-section" id="stockWriteOffsReport">
       <h2>Stock Write-Offs Report</h2>
       <table>
         <thead>
@@ -115,16 +129,19 @@
       <div>
         <strong>Total Quantity Written Off (Overall):</strong> {{ totalQuantityWrittenOff }}
       </div>
+      <button class="download-button" (click)="downloadPDF('Stock Write-Offs Report', 'stockWriteOffsReport')">Download PDF</button>
     </div>
 
-    <div class="report-section">
+    <div class="report-section" id="employeeHoursReport">
       <h2>Employee Hours Report</h2>
       <select [(ngModel)]="selectedPeriod" (change)="updateChart()">
         <option value="monthly">Monthly Hours</option>
         <option value="weekly">Weekly Hours</option>
       </select>
       <canvas id="canvas"></canvas>
+      <button class="download-button" (click)="downloadPDF('Employee Hours Report', 'employeeHoursReport')">Download PDF</button>
     </div>
+   
   </div>
 </body>
 </html>
