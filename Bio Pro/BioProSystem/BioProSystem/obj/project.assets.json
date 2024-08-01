@@ -4679,23 +4679,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\leze7\\.nuget\\packages\\": {},
+    "C:\\Users\\piete\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\leze7\\Desktop\\UNI 2024\\INF 370\\Project\\A2\\Bio Pro\\BioProSystem\\BioProSystem\\BioProSystem.csproj",
+      "projectUniqueName": "C:\\Users\\piete\\Local Storage\\Uni\\370\\New folder (2)\\inf370systems-team41\\Bio Pro\\BioProSystem\\BioProSystem\\BioProSystem.csproj",
       "projectName": "BioProSystem",
-      "projectPath": "C:\\Users\\leze7\\Desktop\\UNI 2024\\INF 370\\Project\\A2\\Bio Pro\\BioProSystem\\BioProSystem\\BioProSystem.csproj",
-      "packagesPath": "C:\\Users\\leze7\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\leze7\\Desktop\\UNI 2024\\INF 370\\Project\\A2\\Bio Pro\\BioProSystem\\BioProSystem\\obj\\",
+      "projectPath": "C:\\Users\\piete\\Local Storage\\Uni\\370\\New folder (2)\\inf370systems-team41\\Bio Pro\\BioProSystem\\BioProSystem\\BioProSystem.csproj",
+      "packagesPath": "C:\\Users\\piete\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\piete\\Local Storage\\Uni\\370\\New folder (2)\\inf370systems-team41\\Bio Pro\\BioProSystem\\BioProSystem\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\leze7\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\piete\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -4802,7 +4802,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.200/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.204/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

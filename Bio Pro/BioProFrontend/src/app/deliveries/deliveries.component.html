@@ -1,52 +1,77 @@
-
 <body class="delivery-body">
 
-  <h1 style="font-size: 48px; color: #333; text-align: center; text-transform: uppercase; letter-spacing: 3px; margin-bottom: 20px;">
-    <i class="fas fa-user-plus" style="vertical-align: middle; margin-right: 8px;"></i> DELIVERIES
-</h1> 
-  <div *ngFor="let delivery of deliveries" class="mb-3 delivery-card">
+    <h1 style="font-size: 48px; color: #333; text-align: center; text-transform: uppercase; letter-spacing: 3px; margin-bottom: 20px;">
+      <i class="fas fa-user-plus" style="vertical-align: middle; margin-right: 8px;"></i> DELIVERIES
+    </h1> 
+  
+    <div class="filter-container">
+      <mat-form-field appearance="fill">
+        <mat-label>Filter by Delivery Status</mat-label>
+        <mat-select [(value)]="selectedStatus" (selectionChange)="filterDeliveries()">
+          <mat-option *ngFor="let status of deliveryStatuses" [value]="status.status">
+            {{ status.status }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
     
+      <mat-form-field appearance="fill" class="search-bar">
+        <mat-label>Search by Delivery ID or System Order ID</mat-label>
+        <input matInput [(ngModel)]="searchTerm" (ngModelChange)="filterDeliveries()" placeholder="Enter delivery ID or system order ID">
+      </mat-form-field>
+    </div>
+  
+    <div *ngIf="filteredDeliveries.length === 0" class="no-deliveries-message">
+      <mat-error>No deliveries found matching the criteria.</mat-error>
+    </div>
+  
+    <div *ngFor="let delivery of filteredDeliveries" class="mb-3 delivery-card">
       <mat-card>
-          <mat-card-header class="delivery-header">
-            <!-- <mat-card-title class="delivery-title" style="font-size: 28px; color: #333; text-align: center; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 20px;">
-              <i class="fas fa-user-plus" style="vertical-align: middle; margin-right: 8px;"></i> Delivery
-          </mat-card-title>           -->
-          </mat-card-header>
-          <mat-card-content>
-              <mat-list>
-                  <mat-list-item>
-                      <mat-icon matListIcon>local_shipping</mat-icon>
-                      <h4 matLine>Delivery ID</h4>
-                      <p matLine>{{ delivery.deliveryId }}</p>
-                  </mat-list-item>
-                  <mat-list-item *ngIf="delivery.deliveryDate != null">
-                      <mat-icon matListIcon>date_range</mat-icon>
-                      <h4 matLine>Delivery Date</h4>
-                      <p matLine>{{ delivery.deliveryDate | date: 'mediumDate' }}</p>
-                  </mat-list-item>
-                  <mat-list-item>
-                      <mat-icon matListIcon>info</mat-icon>
-                      <h4 matLine>Delivery Status</h4>
-                      <p matLine>{{ delivery.deliveryStatus?.status }}</p>
-                  </mat-list-item>
-                  <mat-list-item>
-                      <mat-icon matListIcon>person</mat-icon>
-                      <h4 matLine>Employee</h4>
-                      <p matLine>{{ delivery.employee.firstName }} {{ delivery.employee.lastName }}</p>
-                  </mat-list-item>
-                  <mat-list-item>
-                      <mat-icon matListIcon>assignment</mat-icon>
-                      <h4 matLine>System Order ID</h4>
-                      <p matLine>{{ delivery.systemOrderId }}</p>
-                  </mat-list-item>
-              </mat-list>
-          </mat-card-content>
+        <mat-card-header class="delivery-header"></mat-card-header>
+        <mat-card-content>
+          <mat-list>
+            <mat-list-item>
+              <mat-icon matListIcon>local_shipping</mat-icon>
+              <h4 matLine>Delivery ID</h4>
+              <p matLine>{{ delivery.deliveryId }}</p>
+            </mat-list-item>
+            <mat-list-item *ngIf="delivery.deliveryDate != null">
+              <mat-icon matListIcon>date_range</mat-icon>
+              <h4 matLine>Delivery Date</h4>
+              <p matLine>{{ delivery.deliveryDate | date: 'mediumDate' }}</p>
+            </mat-list-item>
+            <mat-list-item>
+              <mat-icon matListIcon>info</mat-icon>
+              <h4 matLine>Delivery Status</h4>
+              <p matLine>{{ delivery.deliveryStatus?.status }}</p>
+              <div *ngIf="delivery.deliveryStatus.deliveryStatusId == 2" style="display: flex; align-items: center; color: #28a745;">
+                <mat-icon>check</mat-icon>
+              </div>
+            </mat-list-item>
+            <mat-list-item>
+              <mat-icon matListIcon>person</mat-icon>
+              <h4 matLine>Employee</h4>
+              <p matLine>{{ delivery.employee.firstName }} {{ delivery.employee.lastName }}</p>
+            </mat-list-item>
+            <mat-list-item>
+              <mat-icon matListIcon>assignment</mat-icon>
+              <h4 matLine>System Order ID</h4>
+              <p matLine>{{ delivery.systemOrderId }}</p>
+            </mat-list-item>
+            <mat-list-item *ngIf="delivery.deliveryStatus.deliveryStatusId == 1">
+              <button mat-raised-button color="primary" (click)="updateDeliveryCollected(delivery.deliveryId)" >
+               Delivery collection
+              </button>
+            </mat-list-item>
+          </mat-list>
+        </mat-card-content>
       </mat-card>
-  </div>
-</body>
-<div class="help-button-container">
+    </div>
+  
+  </body>
+  <div class="help-button-container">
     <button mat-button [routerLink]="['/help-deliveries']" fragment="new-deliveries">
       <mat-icon>live_help</mat-icon>
       <span>Help</span>
     </button>
   </div>
+  
