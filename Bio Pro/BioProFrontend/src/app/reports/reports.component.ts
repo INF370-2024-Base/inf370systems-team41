@@ -13,6 +13,7 @@ import { OrderReportViewModel } from '../shared/OrderReportViewModel';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import { EmployeeService } from '../services/employee.service';
+import { DeliveryService } from '../services/deliver.service';
 
 
 
@@ -37,10 +38,16 @@ export class ReportsComponent implements OnInit {
   sortColumn: string = 'priorityLevel'; // Default sorting column
   sortDirection: 'asc' | 'desc' = 'asc'; 
   loggedInUserName: string = '';
-  
+  totalDeliveries: number = 0;
+  deliveryStatuses: any[] = [];
+  recentDeliveries: any[] = [];
+  deliveries: any[] = [];
 
 
-  constructor(private reportsService: ReportsServices, private datePipe: DatePipe, private employeeService:EmployeeService) { }
+  constructor(private reportsService: ReportsServices, 
+    private datePipe: DatePipe, 
+    private employeeService:EmployeeService,
+    private deliveryService: DeliveryService ) { }
 
   async ngOnInit(): Promise<void>  {
     this.getAllOrder();
@@ -58,6 +65,8 @@ export class ReportsComponent implements OnInit {
     } catch (error) {
       console.error('Error fetching user name:', error);
     }
+
+    this.getDeliveries();
   }
 
 
@@ -299,6 +308,44 @@ getAllStockWriteOffs() {
 
   formatDate(date: any) {
     return this.datePipe.transform(date, 'yyyy-MM-dd'); 
+  }
+
+
+  getDeliveries() {
+    this.deliveryService.getdeliveries().subscribe(results => {
+      this.deliveries = results;
+      this.processDeliveries();
+    
+    });
+  }
+
+  processDeliveries() {
+    this.totalDeliveries = this.deliveries.length;
+    this.calculateDeliveryStatuses();
+    this.getRecentDeliveries();
+  }
+
+  calculateDeliveryStatuses() {
+    const statusCount: { [key: string]: number } = {};
+    this.deliveries.forEach(delivery => {
+      const status = delivery.deliveryStatus?.status || 'Unknown';
+      if (statusCount[status]) {
+        statusCount[status]++;
+      } else {
+        statusCount[status] = 1;
+      }
+    });
+    this.deliveryStatuses = Object.keys(statusCount).map(status => ({
+      name: status,
+      count: statusCount[status]
+    }));
+  }
+  
+
+  getRecentDeliveries() {
+    this.recentDeliveries = this.deliveries
+      .sort((a, b) => new Date(b.deliveryDate).getTime() - new Date(a.deliveryDate).getTime())
+      .slice(0, 5);
   }
 
 }
