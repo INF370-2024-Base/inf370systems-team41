@@ -25,18 +25,17 @@ import autoTable from 'jspdf-autotable';
 })
 export class ReportsComponent implements OnInit {
   orders: OrderReportViewModel[] = [];
-  orderTypeWithCount: OrderTypeWithCount[] =[];
+  orderTypeWithCount: OrderTypeWithCount[] = [];
   stockTypes: StockTypeCountByCategory[] = [];
   stockItems: StockItemCountByCategory[] = [];
   stockWriteOffs: StockWriteOffViewModel[] = [];
-  //employeeHours: EmployeeMonthlyHours[] = [];
   totalQuantityWrittenOff: number = 0;
   chart: any;
   employeeHours: any[] = [];
   selectedPeriod: string = 'monthly';
   currentDate: Date = new Date();
   sortColumn: string = 'priorityLevel'; // Default sorting column
-  sortDirection: 'asc' | 'desc' = 'asc'; 
+  sortDirection: 'asc' | 'desc' = 'asc';
   loggedInUserName: string = '';
   totalDeliveries: number = 0;
   deliveryStatuses: any[] = [];
@@ -50,26 +49,26 @@ export class ReportsComponent implements OnInit {
     private employeeService:EmployeeService,
     private deliveryService: DeliveryService ) { }
 
-  async ngOnInit(): Promise<void>  {
-    this.getAllOrder();
-    this.getStockTypesCountByCategory();
-    this.getStockItemsCountByCategory();
-    this.getOrderTypesWithOrderCount();
-    this.getAllStockWriteOffs();
-    this.getEmployeesWithMonthlyHours();
-    this.updateChart();
-    this.getAllStockWriteOffs();
+    async ngOnInit(): Promise<void> {
+      this.getAllOrder();
+      this.getStockTypesCountByCategory();
+      this.getStockItemsCountByCategory();
+      this.getOrderTypesWithOrderCount();
+      this.getAllStockWriteOffs();
+      this.getEmployeesWithMonthlyHours();
+      this.updateChart();
+      this.getAllStockWriteOffs();
+      this.getDeliveries();
     
-    try {
-      await this.fetchLoggedInUserName();
-      console.log('Logged in user name before download:', this.loggedInUserName); // Log the name for debugging
-      this.downloadPDF('ReportName', 'sectionId'); // Replace with actual report name and section ID
-    } catch (error) {
-      console.error('Error fetching user name:', error);
+      try {
+        await this.fetchLoggedInUserName();
+        console.log('Logged in user name before download:', this.loggedInUserName); // Log the name for debugging
+        // Remove this line
+        // this.downloadPDF('ReportName', 'sectionId'); // Replace with actual report name and section ID
+      } catch (error) {
+        console.error('Error fetching user name:', error);
+      }
     }
-
-    this.getDeliveries();
-  }
 
 
   fetchLoggedInUserName(): Promise<void> {
@@ -122,34 +121,34 @@ export class ReportsComponent implements OnInit {
   async downloadPDF(reportName: string, sectionId: string) {
     const doc = new jsPDF();
     const logoUrl = 'assets/images/Company logo.jpg'; // Path to your logo image
-    
+
     // Add logo with adjusted dimensions for better appearance
     doc.addImage(logoUrl, 'JPEG', 10, 10, 40, 20);
-    
+
     // Set text color to dark grey
     doc.setTextColor(64, 64, 64); // RGB for dark grey
-    
+
     // Add report title with some space from the logo
     doc.setFont('helvetica', 'bold');
     doc.setFontSize(22);
     doc.text(reportName, 10, 40); // Adjusted Y coordinate for spacing
-    
+
     // Add current date
     const formattedDate = this.datePipe.transform(this.currentDate, 'yyyy-MM-dd');
     doc.setFont('helvetica', 'normal');
     doc.setFontSize(12);
     doc.text(`Date: ${formattedDate}`, 10, 50);
-    
+
     // Add logged-in user
     doc.text(`Downloaded by: ${this.loggedInUserName}`, 10, 60);
-    
+
     // Reset font to normal for table data
     doc.setFont('helvetica', 'normal');
     doc.setFontSize(10);
-    
+
     let data: any[] = [];
     let columns: string[] = [];
-    
+
     if (sectionId === 'allOrdersReport') {
       columns = ['Order ID', 'Dentist ID', 'Priority Level', 'Order Date'];
       data = this.orders.map(order => [order.orderId, order.dentistId, order.priorityLevel, this.formatDate(order.dueDate)]);
@@ -165,7 +164,45 @@ export class ReportsComponent implements OnInit {
     } else if (sectionId === 'stockWriteOffsReport') {
       columns = ['Stock Name', 'Total Quantity Written Off'];
       data = this.groupedStockWriteOffs.map(group => [group.stockName, group.totalQuantityWrittenOff]);
-    }else if (sectionId === 'employeeHoursReport') {
+
+      // Add total quantity written off at the end of the table
+      data.push(['Total', this.totalQuantityWrittenOff]);
+    } else if (sectionId === 'deliveryReport') {
+      // Add total deliveries
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(14);
+      doc.text('Total Deliveries', 10, 70);
+      doc.setFont('helvetica', 'normal');
+      doc.setFontSize(12);
+      doc.text(this.totalDeliveries.toString(), 60, 70);
+
+      // Add deliveries by status
+      columns = ['Status', 'Count'];
+      data = this.deliveryStatuses.map(status => [status.name, status.count.toString()]);
+
+      autoTable(doc, {
+        head: [columns],
+        body: data,
+        startY: 80,
+      });
+
+      // Add recent deliveries
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(14);
+      const finalY = (doc as any).lastAutoTable.finalY || 80;
+      doc.text('Recent Deliveries', 10, finalY + 10);
+      doc.setFont('helvetica', 'normal');
+      doc.setFontSize(12);
+
+      columns = ['Order ID', 'Status'];
+      data = this.recentDeliveries.map(delivery => [delivery.systemOrderId, delivery.deliveryStatus?.status]);
+
+      autoTable(doc, {
+        head: [columns],
+        body: data,
+        startY: finalY + 20,
+      });
+    } else if (sectionId === 'employeeHoursReport') {
       // Handle chart for Employee Hours Report
       const canvas = document.getElementById('canvas') as HTMLCanvasElement;
       if (canvas) {
@@ -177,24 +214,23 @@ export class ReportsComponent implements OnInit {
       }
     }
 
-    if (sectionId !== 'employeeHoursReport') {
+    if (sectionId !== 'employeeHoursReport' && sectionId !== 'deliveryReport') {
       autoTable(doc, {
         head: [columns],
         body: data,
         startY: 70, // Moved further down
+        didDrawCell: (data) => {
+          // Check if this is the last row and make the text bold and larger
+          if (data.row.index === data.table.body.length - 1) {
+            doc.setFont('helvetica', 'bold');
+            doc.setFontSize(12);
+          }
+        },
       });
     }
-    
-    autoTable(doc, {
-      head: [columns],
-      body: data,
-      startY: 70, // Moved further down
-    });
-    
-    doc.save(`${reportName}.pdf`);
-    
-  }
 
+    doc.save(`${reportName}.pdf`);
+  }
   // formatDate(date: string): string {
   //   return new Date(date).toLocaleDateString('en-GB');
   // }
@@ -306,11 +342,9 @@ groupStockWriteOffs() {
   this.calculateTotals();
 }
 
-
 calculateTotals() {
   this.totalQuantityWrittenOff = this.groupedStockWriteOffs.reduce((sum, group) => sum + group.totalQuantityWrittenOff, 0);
 }
-
 
   updateChart() {
     if (this.selectedPeriod === 'monthly') {

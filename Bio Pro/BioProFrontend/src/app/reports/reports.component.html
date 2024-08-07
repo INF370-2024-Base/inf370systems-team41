@@ -13,8 +13,13 @@
   <h1 style="font-size: 48px; color: #333; text-align: center; text-transform: uppercase; letter-spacing: 3px; margin-bottom: 20px;">
     REPORTS
   </h1> 
-  <div class="report-date">Reports generated on: {{ formatDate(currentDate) }}</div>
-  <p>Logged-in User: {{ loggedInUserName }}</p>
+  <div class="report-date" style="color: #404040; font-size: 12px;">
+    Reports generated on: {{ formatDate(currentDate) }}
+  </div>
+  <p style="color: #404040; font-size: 12px;">
+    Logged-in User: <span style="font-weight: bold;">{{ loggedInUserName }}</span>
+  </p>
+  
   <div class="reports-container">
     <div class="report-section" id="allOrdersReport">
       <h2>All Orders Report</h2>
