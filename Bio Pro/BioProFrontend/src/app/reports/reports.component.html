@@ -95,32 +95,48 @@
       </table>
       <button class="download-button" (click)="downloadPDF('Stock Items Report', 'stockItemsReport')">Download PDF</button>
     </div>
-
     <div class="report-section" id="stockWriteOffsReport">
       <h2>Stock Write-Offs Report</h2>
-      <table>
+      <table class="main-table">
         <thead>
           <tr>
             <th>Stock Name</th>
-            <th>Quantity Written Off</th>
-            <th>Write-Off Date</th>
-            <th>Reason</th>
+            <th>Total Quantity Written Off</th>
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let writeOff of stockWriteOffs">
-            <td>{{ writeOff.stockName }}</td>
-            <td>{{ writeOff.quantityWrittenOff }}</td>
-            <td>{{ writeOff.writtenOffDate | date:'yyyy-MM-dd' }}</td>
-            <td>{{ writeOff.reason }}</td>
+          <tr *ngFor="let group of groupedStockWriteOffs">
+            <td>{{ group.stockName }}</td>
+            <td>{{ group.totalQuantityWrittenOff }}</td>
           </tr>
         </tbody>
       </table>
-      <div>
+      <!-- <div *ngFor="let group of groupedStockWriteOffs" class="details-section">
+        <h3>{{ group.stockName }} - Write-Off Details</h3>
+        <table class="details-table">
+          <thead>
+            <tr>
+              <th>Quantity Written Off</th>
+              <th>Write-Off Date</th>
+              <th>Reason</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let detail of group.details">
+              <td>{{ detail.quantityWrittenOff }}</td>
+              <td>{{ detail.writtenOffDate | date:'yyyy-MM-dd' }}</td>
+              <td>{{ detail.reason }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div> -->
+      <div class="total-section">
         <strong>Total Quantity Written Off (Overall):</strong> {{ totalQuantityWrittenOff }}
       </div>
       <button class="download-button" (click)="downloadPDF('Stock Write-Offs Report', 'stockWriteOffsReport')">Download PDF</button>
     </div>
+    
+    
 
     <div class="report-section" id="deliveryReport">
       <h2>Delivery Report</h2>

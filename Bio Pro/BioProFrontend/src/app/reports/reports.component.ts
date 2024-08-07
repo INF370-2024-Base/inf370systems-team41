@@ -14,7 +14,7 @@ import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import { EmployeeService } from '../services/employee.service';
 import { DeliveryService } from '../services/deliver.service';
-
+import autoTable from 'jspdf-autotable';
 
 
 @Component({
@@ -42,6 +42,7 @@ export class ReportsComponent implements OnInit {
   deliveryStatuses: any[] = [];
   recentDeliveries: any[] = [];
   deliveries: any[] = [];
+  groupedStockWriteOffs: any[] = [];
 
 
   constructor(private reportsService: ReportsServices, 
@@ -57,6 +58,7 @@ export class ReportsComponent implements OnInit {
     this.getAllStockWriteOffs();
     this.getEmployeesWithMonthlyHours();
     this.updateChart();
+    this.getAllStockWriteOffs();
     
     try {
       await this.fetchLoggedInUserName();
@@ -117,42 +119,85 @@ export class ReportsComponent implements OnInit {
     });
   }
 
-  downloadPDF(reportName: string, sectionId: string) {
-    const element = document.getElementById(sectionId);
-    const downloadButtons = document.querySelectorAll('.download-button'); // Select all buttons
-
-    if (element) {
-      // Hide all download buttons
-      downloadButtons.forEach(button => (button as HTMLElement).classList.add('hidden'));
-
-      // Add a slight delay to ensure the button is hidden before capturing
-      setTimeout(() => {
-        html2canvas(element).then(canvas => {
-          const imgData = canvas.toDataURL('image/png');
-          const pdf = new jsPDF();
-
-          // Add logo
-          const logoUrl = 'assets/images/Company logo.jpg'; // Update with your logo path
-          pdf.addImage(logoUrl, 'JPEG', 10, 10, 50, 15);
-
-          // Add report content
-          pdf.addImage(imgData, 'PNG', 10, 30, 180, 150); // Adjust size and position
-
-          // Add footer with date and user
-          pdf.setFontSize(10);
-          pdf.setFont('helvetica', 'normal');
-          pdf.text(`Date: ${this.datePipe.transform(this.currentDate, 'yyyy-MM-dd')}`, 10, 270);
-          pdf.text(`Downloaded by: ${this.loggedInUserName}`, 10, 280); // Adjust position if needed
-
-          // Save PDF
-          pdf.save(`${reportName}.pdf`);
-
-          // Restore all download buttons
-          downloadButtons.forEach(button => (button as HTMLElement).classList.remove('hidden'));
-        });
-      }, 100); // 100ms delay
+  async downloadPDF(reportName: string, sectionId: string) {
+    const doc = new jsPDF();
+    const logoUrl = 'assets/images/Company logo.jpg'; // Path to your logo image
+    
+    // Add logo with adjusted dimensions for better appearance
+    doc.addImage(logoUrl, 'JPEG', 10, 10, 40, 20);
+    
+    // Set text color to dark grey
+    doc.setTextColor(64, 64, 64); // RGB for dark grey
+    
+    // Add report title with some space from the logo
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(22);
+    doc.text(reportName, 10, 40); // Adjusted Y coordinate for spacing
+    
+    // Add current date
+    const formattedDate = this.datePipe.transform(this.currentDate, 'yyyy-MM-dd');
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(12);
+    doc.text(`Date: ${formattedDate}`, 10, 50);
+    
+    // Add logged-in user
+    doc.text(`Downloaded by: ${this.loggedInUserName}`, 10, 60);
+    
+    // Reset font to normal for table data
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(10);
+    
+    let data: any[] = [];
+    let columns: string[] = [];
+    
+    if (sectionId === 'allOrdersReport') {
+      columns = ['Order ID', 'Dentist ID', 'Priority Level', 'Order Date'];
+      data = this.orders.map(order => [order.orderId, order.dentistId, order.priorityLevel, this.formatDate(order.dueDate)]);
+    } else if (sectionId === 'orderTypesReport') {
+      columns = ['Order Type', 'Order Count'];
+      data = this.orderTypeWithCount.map(orderType => [orderType.description, orderType.orderCount]);
+    } else if (sectionId === 'stockTypesReport') {
+      columns = ['Stock Type', 'Type Category Count'];
+      data = this.stockTypes.map(stockType => [stockType.description, stockType.stockCategoriesCount]);
+    } else if (sectionId === 'stockItemsReport') {
+      columns = ['Stock Category', 'Stock Item Count'];
+      data = this.stockItems.map(stockItem => [stockItem.description, stockItem.stockItemsCount]);
+    } else if (sectionId === 'stockWriteOffsReport') {
+      columns = ['Stock Name', 'Total Quantity Written Off'];
+      data = this.groupedStockWriteOffs.map(group => [group.stockName, group.totalQuantityWrittenOff]);
+    }else if (sectionId === 'employeeHoursReport') {
+      // Handle chart for Employee Hours Report
+      const canvas = document.getElementById('canvas') as HTMLCanvasElement;
+      if (canvas) {
+        const canvasImg = await html2canvas(canvas);
+        const imgData = canvasImg.toDataURL('image/png');
+        doc.addImage(imgData, 'PNG', 10, 70, 180, 90); // Adjust size and position as needed
+      } else {
+        console.error('Canvas element not found.');
+      }
     }
+
+    if (sectionId !== 'employeeHoursReport') {
+      autoTable(doc, {
+        head: [columns],
+        body: data,
+        startY: 70, // Moved further down
+      });
+    }
+    
+    autoTable(doc, {
+      head: [columns],
+      body: data,
+      startY: 70, // Moved further down
+    });
+    
+    doc.save(`${reportName}.pdf`);
+    
   }
+
+  // formatDate(date: string): string {
+  //   return new Date(date).toLocaleDateString('en-GB');
+  // }
 
   getAllOrder() {
     this.reportsService.getAllOrders().subscribe(
@@ -238,7 +283,7 @@ getAllStockWriteOffs() {
   this.reportsService.getAllStockWriteOffs().subscribe(
       data => {
           this.stockWriteOffs = data;
-          this.calculateTotals();
+          this.groupStockWriteOffs();
       },
       error => {
           console.error('Error fetching stock write-offs:', error);
@@ -246,9 +291,26 @@ getAllStockWriteOffs() {
   );
 }
 
-  calculateTotals() {
-    this.totalQuantityWrittenOff = this.stockWriteOffs.reduce((sum, item) => sum + item.quantityWrittenOff, 0);
-  }
+groupStockWriteOffs() {
+  const grouped: { [key: string]: { stockName: string; totalQuantityWrittenOff: number; details: any[] } } = this.stockWriteOffs.reduce((acc, writeOff) => {
+    const stockName = writeOff.stockName;
+    if (!acc[stockName]) {
+      acc[stockName] = { stockName: stockName, totalQuantityWrittenOff: 0, details: [] };
+    }
+    acc[stockName].totalQuantityWrittenOff += writeOff.quantityWrittenOff;
+    acc[stockName].details.push(writeOff);
+    return acc;
+  }, {} as { [key: string]: { stockName: string; totalQuantityWrittenOff: number; details: any[] } });
+
+  this.groupedStockWriteOffs = Object.values(grouped);
+  this.calculateTotals();
+}
+
+
+calculateTotals() {
+  this.totalQuantityWrittenOff = this.groupedStockWriteOffs.reduce((sum, group) => sum + group.totalQuantityWrittenOff, 0);
+}
+
 
   updateChart() {
     if (this.selectedPeriod === 'monthly') {
