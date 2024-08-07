@@ -242,6 +242,7 @@ namespace BioProSystem.Controllers
 
             Console.WriteLine(messageResponse.Sid);
         }
+       
         [HttpPost]
         [Route("SendResetEmail/{emailAddress}")]
         public async Task<IActionResult> SendResetEmail(string emailAddress)
@@ -495,5 +496,56 @@ namespace BioProSystem.Controllers
             }
 
         }
+        [HttpPost]
+        [Route("CreateTransaction")]
+        public async Task<IActionResult> CreateTransaction(AddAuditTrailViewModel vmd)
+        {
+            try
+            {
+                if(ModelState.IsValid)
+                {
+                    AuditTrail newAuditTrail= new AuditTrail();
+                    newAuditTrail.TransactionType=vmd.TransactionType;
+                    newAuditTrail.SystemUserId=vmd.SystemUserId;
+                    newAuditTrail.AdditionalData = vmd.AdditionalData;
+                    newAuditTrail.DateOfTransaction=vmd.DateOfTransaction;
+                    _repository.Add(newAuditTrail);
+                    if(await _repository.SaveChangesAsync())
+                    {
+                        return Ok(newAuditTrail);
+                    }
+                    else
+                    {
+                        return BadRequest("Unable to save changes to database. Please contact admin.");
+                    }
+                }
+                else
+                {
+                    return BadRequest(ModelState);
+                }
+            }
+            catch(Exception ex)
+            {
+                return BadRequest("Failed to add audit trail.Please contact admin." + ex.Message);
+            }
+        }
+        [HttpGet]
+        [Route("GetAllTransaction")]
+        public async Task<IActionResult> GetAllTransaction()
+        {
+            try
+            {
+                List<AuditTrail> result = await _repository.GetAllTransactions();
+
+                if (result == null) return NotFound("Transactions not found");
+
+                return Ok(result);
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, "Internal Server Error. Please contact support");
+            }
+        }
+
     }
 }

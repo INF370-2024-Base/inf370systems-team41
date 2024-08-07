@@ -197,6 +197,11 @@ namespace BioProSystem.Models
 
             return await query.FirstOrDefaultAsync();
         }
+        public async Task<List<AuditTrail>> GetAllTransactions()
+        {
+            List<AuditTrail> query = await _appDbContext.AuditTrails.Include(a=>a.SystemUser).ToListAsync();
+            return  query;
+        }
         public async Task<SystemOrder> GetSystemOrderByWorkflowId(int workflowtimelineId)
         {
             IQueryable<SystemOrder> query = _appDbContext.SystemOrders.Where(o => o.OrderWorkflowTimelineId == workflowtimelineId);

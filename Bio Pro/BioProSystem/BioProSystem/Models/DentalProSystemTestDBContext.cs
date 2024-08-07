@@ -13,8 +13,9 @@ namespace BioProSystem.Models
     }
 
     public virtual DbSet<ActionType> ActionTypes { get; set; }
+        public virtual DbSet<AuditTrail> AuditTrails { get; set; }
 
-    public virtual DbSet<Calander> Calanders { get; set; }
+        public virtual DbSet<Calander> Calanders { get; set; }
 
     public virtual DbSet<CalanderScheduleEvent> CalanderScheduleEvents { get; set; }
 

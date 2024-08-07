@@ -3,6 +3,8 @@ import { OrderService } from './services/order.service';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-dialog.component';
+import { DataService } from './services/login.service';
+import { AddAuditTrailViewModel } from './shared/AddAuditTrailViewModel';
 
 @Component({
   selector: 'app-root',
@@ -39,7 +41,7 @@ export class AppComponent {
   }
   isLoggedIn = false;
   user:any;
-  constructor(public dataService:OrderService,private router:Router,private dialog:MatDialog) {}
+  constructor(public dataService:OrderService,public loginService:DataService,private router:Router,private dialog:MatDialog) {}
   isSignedIn:boolean=false
   ngOnInit() {
     this.user=JSON.parse(sessionStorage.getItem('User')!)
@@ -55,9 +57,29 @@ export class AppComponent {
         width: '250px',
         data: 'Are you sure you want to sign out?'
       });
-   
+     
       dialogRef.afterClosed().subscribe(result => {
         if (result) {
+          const signedInUser=JSON.parse(sessionStorage.getItem('User')!)
+          const id=signedInUser.id
+         const transaction:AddAuditTrailViewModel={
+           AdditionalData:"Logged out",
+           DateOfTransaction:new Date,
+           TransactionType:"Post",
+           SystemUserId:id
+         }
+         console.log(transaction)
+         this.loginService.CreateTransaction(transaction).subscribe(
+           result=>{
+             console.log("Successfully added transaction.")
+             console.log(result)
+           }
+           ,
+           error=>{
+             console.log("Unable to add transaction.")
+             console.log(error.error)
+           }
+         )
           this.router.navigate(['login'])
         }
       });

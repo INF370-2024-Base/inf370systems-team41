@@ -13,6 +13,7 @@ namespace BioProSystem.Models
         Task<List<SystemOrder>> GetOrdersAwaitingDentalDesign();
         Task<List<Employee>> GetEmployeesWithJobTitleId(int jobTitileId, string jobTitleName = "");
         Task<SystemUser> GetsystemUserAsync(string systemUserEmail);
+        Task<List<AuditTrail>> GetAllTransactions();
         Task<List<SystemUser>> GetAllSystemUserActiveAsync();
         Task<IEnumerable<Dentist>> GetDentistsAsync(); // Method to fetch all dentists
         Task<IEnumerable<MedicalAid>> GetMedicalAidsAsync(); // Method to fetch all medical aids

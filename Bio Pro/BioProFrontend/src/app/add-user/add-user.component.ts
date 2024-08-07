@@ -9,6 +9,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { HttpErrorResponse } from '@angular/common/http';
 import { PhoneChecker } from '../validators/Validators';
 import { Router } from '@angular/router';
+import { AddAuditTrailViewModel } from '../shared/AddAuditTrailViewModel';
+import { DataService } from '../services/login.service';
 
 @Component({
   selector: 'app-add-user',
@@ -17,7 +19,7 @@ import { Router } from '@angular/router';
 })
 export class AddUserComponent implements OnInit {
 
-  constructor(private snackBar: MatSnackBar, private router: Router,private userServices:UserServices,private fb: FormBuilder,private employeeService:EmployeeService) {this.userForm = this.fb.group({
+  constructor(private snackBar: MatSnackBar, private router: Router,private userServices:UserServices,private loginService:DataService,private fb: FormBuilder,private employeeService:EmployeeService) {this.userForm = this.fb.group({
     surname: ['', Validators.required],
     name: ['', Validators.required],
     emailAddress: ['', [Validators.required, Validators.email]],
@@ -105,7 +107,27 @@ openSnackBar(message: string) {
         console.log('Form:', this.userForm.value);
   
         // Convert addUser() Observable to a promise and wait for its completion
-        const userResult = await this.userServices.addUser(newUser).toPromise(); 
+        const userResult = await this.userServices.addUser(newUser).subscribe( result=>{
+          const signedInUser=JSON.parse(sessionStorage.getItem('User')!)
+      const id=signedInUser.id
+     const transaction:AddAuditTrailViewModel={
+       AdditionalData:"Added user:"+this.userForm.value.emailAddress,
+       DateOfTransaction:new Date,
+       TransactionType:"Post",
+       SystemUserId:id
+     }
+     console.log(transaction)
+     this.loginService.CreateTransaction(transaction).subscribe(
+       result=>{
+         console.log("Successfully added transaction."+result)
+       }
+       ,
+       error=>{
+         console.log("Unable to add transaction."+error.error)
+         console.log(error.error)
+       }
+     )
+        }); 
         this.openSnackBar('User added successfully');
   
         if (this.isEmployee && this.employeeform.valid) {
@@ -115,7 +137,29 @@ openSnackBar(message: string) {
           console.log('Employee added:', newEmployee);
   
           // Convert addEmployee() Observable to a promise and wait for its completion
-          const employeeResult = await this.employeeService.addEmployee(newEmployee).toPromise(); 
+          const employeeResult = await this.employeeService.addEmployee(newEmployee).subscribe(
+            result=>{
+              const signedInUser=JSON.parse(sessionStorage.getItem('User')!)
+          const id=signedInUser.id
+         const transaction:AddAuditTrailViewModel={
+           AdditionalData:"Added employee:"+this.userForm.value.emailAddress,
+           DateOfTransaction:new Date,
+           TransactionType:"Post",
+           SystemUserId:id
+         }
+         console.log(transaction)
+         this.loginService.CreateTransaction(transaction).subscribe(
+           result=>{
+             console.log("Successfully added transaction."+result)
+           }
+           ,
+           error=>{
+             console.log("Unable to add transaction."+error.error)
+             console.log(error.error)
+           }
+         )
+            }
+          ); 
         }
   
         console.log('User and employee added successfully');

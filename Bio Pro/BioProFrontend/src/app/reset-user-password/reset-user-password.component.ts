@@ -4,6 +4,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { UserServices } from '../services/user.service';
 import { ResetPassword } from '../shared/UpdateUser';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { AddAuditTrailViewModel } from '../shared/AddAuditTrailViewModel';
+import { DataService } from '../services/login.service';
 
 @Component({
   selector: 'app-reset-user-password',
@@ -12,7 +14,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class ResetUserPasswordComponent implements OnInit {
   resetPasswordForm:FormGroup;
-  constructor(private route: ActivatedRoute,private fb: FormBuilder,private userService:UserServices,private snackBar:MatSnackBar,
+  constructor(private route: ActivatedRoute,private fb: FormBuilder,private userService:UserServices,private loginService:DataService,private snackBar:MatSnackBar,
     private router:Router) {this.resetPasswordForm = this.fb.group({
       Password: ['', [Validators.required, this.passwordValidator(), Validators.minLength(6)]],
       ConfirmPassword: ['', [Validators.required, this.passwordMatchValidator]]});}
@@ -36,6 +38,26 @@ export class ResetUserPasswordComponent implements OnInit {
         this.snackBar.open('Password was reset', 'Close', {
           duration: 2000,
         });
+        const signedInUser=JSON.parse(sessionStorage.getItem('User')!)
+        const id=signedInUser.id
+       const transaction:AddAuditTrailViewModel={
+         AdditionalData:userToUpdate.UserEmail+" reset their password",
+         DateOfTransaction:new Date,
+         TransactionType:"Put",
+         SystemUserId:id
+       }
+       console.log(transaction)
+       this.loginService.CreateTransaction(transaction).subscribe(
+         result=>{
+           console.log("Successfully added transaction.")
+           console.log(result)
+         }
+         ,
+         error=>{
+           console.log("Unable to add transaction.")
+           console.log(error.error)
+         }
+       )
         this.router.navigate(['login'])
       },error=>
       {

@@ -5,6 +5,7 @@ import { Dentist } from '../shared/dentist';
 import { Employee } from '../shared/employee';
 import { SystemUser } from '../shared/systemuser';
 import { catchError } from 'rxjs/operators';
+import { AddAuditTrailViewModel } from '../shared/AddAuditTrailViewModel';
 
 @Injectable({
   providedIn: 'root'
@@ -73,6 +74,14 @@ export class DataService {
   getAllUsers(): Observable<any>
   {
     return this.httpClient.get<any>(`${this.apiUrl}GetAllCurrentUsers`)
+  }
+  CreateTransaction(transaction: AddAuditTrailViewModel): Observable<Employee> {
+    return this.httpClient.post<Employee>(`${this.apiUrl}CreateTransaction`, transaction);
+    
+  }
+  GetAllTransaction(): Observable<any>
+  {
+    return this.httpClient.get<any>(`${this.apiUrl}GetAllTransaction`)
   }
 
  

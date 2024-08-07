@@ -4,6 +4,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { UserServices } from '../services/user.service';
 import { UpdateUser } from '../shared/UpdateUser';
+import { AddAuditTrailViewModel } from '../shared/AddAuditTrailViewModel';
+import { DataService } from '../services/login.service';
 
 @Component({
   selector: 'app-update-password',
@@ -23,7 +25,7 @@ export class UpdatePasswordComponent implements OnInit, OnDestroy, AfterViewInit
   @ViewChild('newPasswordInput') newPasswordInput: ElementRef | undefined;
   @ViewChild('confirmPasswordInput') confirmPasswordInput: ElementRef | undefined;
 
-  constructor(private route: ActivatedRoute, private fb: FormBuilder, private userService: UserServices, private snackBar: MatSnackBar,
+  constructor(private route: ActivatedRoute, private fb: FormBuilder, private userService: UserServices,private loginService: DataService, private snackBar: MatSnackBar,
     private router: Router) {
     this.updatePassword = this.fb.group({
       OldPassword: ['', [Validators.required]],
@@ -105,6 +107,26 @@ export class UpdatePasswordComponent implements OnInit, OnDestroy, AfterViewInit
         this.snackBar.open('Password updated!', 'Close', {
           duration: 2000,
         });
+        const signedInUser=JSON.parse(sessionStorage.getItem('User')!)
+        const id=signedInUser.id
+       const transaction:AddAuditTrailViewModel={
+         AdditionalData:"Updated their password",
+         DateOfTransaction:new Date,
+         TransactionType:"Put",
+         SystemUserId:id
+       }
+       console.log(transaction)
+       this.loginService.CreateTransaction(transaction).subscribe(
+         result=>{
+           console.log("Successfully added transaction.")
+           console.log(result)
+         }
+         ,
+         error=>{
+           console.log("Unable to add transaction.")
+           console.log(error.error)
+         }
+       )
         this.router.navigate(['login']);
       }, error => {
         console.error('Error updating password:', error);
