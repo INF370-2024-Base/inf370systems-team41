@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { UserServices } from '../services/user.service';
 import { UpdateUser } from '../shared/UpdateUser';
-import { AddAuditTrailViewModel } from '../shared/AddAuditTrailViewModel';
+import { AddAuditTrailViewModels } from '../shared/AddAuditTrailViewModel';
 import { DataService } from '../services/login.service';
 
 @Component({
@@ -109,7 +109,7 @@ export class UpdatePasswordComponent implements OnInit, OnDestroy, AfterViewInit
         });
         const signedInUser=JSON.parse(sessionStorage.getItem('User')!)
         const id=signedInUser.id
-       const transaction:AddAuditTrailViewModel={
+       const transaction:AddAuditTrailViewModels={
          AdditionalData:"Updated their password",
          DateOfTransaction:new Date,
          TransactionType:"Put",

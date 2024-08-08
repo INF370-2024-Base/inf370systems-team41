@@ -9,7 +9,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { HttpErrorResponse } from '@angular/common/http';
 import { PhoneChecker } from '../validators/Validators';
 import { Router } from '@angular/router';
-import { AddAuditTrailViewModel } from '../shared/AddAuditTrailViewModel';
+import { AddAuditTrailViewModels } from '../shared/AddAuditTrailViewModel';
 import { DataService } from '../services/login.service';
 
 @Component({
@@ -110,7 +110,7 @@ openSnackBar(message: string) {
         const userResult = await this.userServices.addUser(newUser).subscribe( result=>{
           const signedInUser=JSON.parse(sessionStorage.getItem('User')!)
       const id=signedInUser.id
-     const transaction:AddAuditTrailViewModel={
+     const transaction:AddAuditTrailViewModels={
        AdditionalData:"Added user:"+this.userForm.value.emailAddress,
        DateOfTransaction:new Date,
        TransactionType:"Post",
@@ -141,7 +141,7 @@ openSnackBar(message: string) {
             result=>{
               const signedInUser=JSON.parse(sessionStorage.getItem('User')!)
           const id=signedInUser.id
-         const transaction:AddAuditTrailViewModel={
+         const transaction:AddAuditTrailViewModels={
            AdditionalData:"Added employee:"+this.userForm.value.emailAddress,
            DateOfTransaction:new Date,
            TransactionType:"Post",

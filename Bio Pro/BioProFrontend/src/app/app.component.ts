@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-dialog.component';
 import { DataService } from './services/login.service';
-import { AddAuditTrailViewModel } from './shared/AddAuditTrailViewModel';
+import { AddAuditTrailViewModels } from './shared/AddAuditTrailViewModel';
 
 @Component({
   selector: 'app-root',
@@ -62,7 +62,7 @@ export class AppComponent {
         if (result) {
           const signedInUser=JSON.parse(sessionStorage.getItem('User')!)
           const id=signedInUser.id
-         const transaction:AddAuditTrailViewModel={
+         const transaction:AddAuditTrailViewModels={
            AdditionalData:"Logged out",
            DateOfTransaction:new Date,
            TransactionType:"Post",

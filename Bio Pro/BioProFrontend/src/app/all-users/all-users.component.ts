@@ -5,6 +5,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { EditAnyUserComponent } from '../edit-any-user/edit-any-user.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ConfirmDeleteUserComponent } from '../confirm-delete-user/confirm-delete-user.component';
+import { DataService } from '../services/login.service';
 
 @Component({
   selector: 'app-all-users',
@@ -13,7 +14,7 @@ import { ConfirmDeleteUserComponent } from '../confirm-delete-user/confirm-delet
 })
 export class AllUsersComponent implements OnInit {
 
-  constructor(private userService:UserServices,private dialog:MatDialog,private snackBar:MatSnackBar) { }
+  constructor(private userService:UserServices,private loginservice:DataService,private dialog:MatDialog,private snackBar:MatSnackBar) { }
 
   ngOnInit(): void {
     this.fetchAllusers() 
@@ -51,6 +52,7 @@ export class AllUsersComponent implements OnInit {
       if (result) {
         this.userService.RemoveAccess(user.email).subscribe(() => {
           this.fetchAllusers();
+          this.loginservice.addTransaction("Put","User removed access for:"+user.email)
           this.snackBar.open('User deleted successfully', 'Close', {
             duration: 3000,
           });

@@ -11,7 +11,7 @@ import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { MatDialog } from '@angular/material/dialog';
 import { ResetPasswordComponent } from '../reset-password/reset-password.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { AddAuditTrailViewModel } from '../shared/AddAuditTrailViewModel';
+import { AddAuditTrailViewModels } from '../shared/AddAuditTrailViewModel';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -53,7 +53,7 @@ export class LoginComponent implements OnInit {
         if( sessionStorage.getItem('User')!=undefined)
         {const signedInUser=JSON.parse(sessionStorage.getItem('User')!)
           const id=signedInUser.id
-         const transaction:AddAuditTrailViewModel={
+         const transaction:AddAuditTrailViewModels={
            AdditionalData:"Logged in",
            DateOfTransaction:new Date,
            TransactionType:"Post",

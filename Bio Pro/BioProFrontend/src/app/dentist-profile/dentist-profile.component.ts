@@ -5,6 +5,7 @@ import { DentistService } from '../shared/dentist.service';
 import { Dentist } from '../shared/dentist';
 import { DentistEditDialogComponent } from '../dentist-edit-dialog/dentist-edit-dialog.component';
 import { ConfirmDeleteDentistComponent } from '../confirm-delete-dentist/confirm-delete-dentist.component';
+import { DataService } from '../services/login.service';
 
 @Component({
   selector: 'app-dentist-profile',
@@ -20,7 +21,7 @@ export class DentistProfileComponent implements OnInit {
   constructor(
     private dentistService: DentistService,
     public dialog: MatDialog,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,private loginService: DataService,
   ) { }
 
   ngOnInit(): void {
@@ -69,6 +70,7 @@ export class DentistProfileComponent implements OnInit {
         this.dentistService.editDentist(editDentist.dentistId, editDentist).subscribe(
           editedDentist => {
             this.snackBar.open('Dentist edited successfully', 'Close', { duration: 3000 });
+            this.loginService.addTransaction("Put","User edited dentist:"+editDentist.firstName+' '+editDentist.lastName)
             this.fetchDentists();
           },
           error => {
@@ -89,6 +91,7 @@ export class DentistProfileComponent implements OnInit {
         this.dentistService.deleteDentist(dentist.dentistId).subscribe(
           () => {
             this.snackBar.open('Dentist deleted successfully', 'Close', { duration: 3000 });
+            this.loginService.addTransaction("Delete","User deleted dentist:"+dentist.firstName+' '+dentist.lastName)
             this.fetchDentists();
           },
           error => {

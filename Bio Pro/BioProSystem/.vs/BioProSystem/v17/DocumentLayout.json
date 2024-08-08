@@ -380,8 +380,7 @@
               "ViewState": "AQIAAEABAAAAAAAAAAAcwNgBAAAgAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-06-15T17:10:38.785Z",
-              "IsPinned": true,
-              "EditorCaption": ""
+              "IsPinned": true
             },
             {
               "$type": "Document",
@@ -420,8 +419,7 @@
               "ViewState": "AQIAAA8CAAAAAAAAAAAAwBkCAABOAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-05-14T00:58:57.413Z",
-              "IsPinned": true,
-              "EditorCaption": ""
+              "IsPinned": true
             },
             {
               "$type": "Document",
@@ -444,7 +442,7 @@
               "RelativeDocumentMoniker": "BioProSystem\\Models\\Repository.cs",
               "ToolTip": "C:\\Users\\piete\\Local Storage\\Uni\\370\\New folder (2)\\inf370systems-team41\\Bio Pro\\BioProSystem\\BioProSystem\\Models\\Repository.cs",
               "RelativeToolTip": "BioProSystem\\Models\\Repository.cs",
-              "ViewState": "AQIAALsAAAAAAAAAAAApwMkAAABcAAAA",
+              "ViewState": "AQIAAMEAAAAAAAAAAAApwMkAAABcAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-05-11T14:56:40.25Z",
               "IsPinned": true,

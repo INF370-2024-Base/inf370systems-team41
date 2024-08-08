@@ -4,6 +4,7 @@ import { EmployeeService } from '../services/employee.service';
 import { EditEmployeeDialogComponent } from '../edit-employee-dialog/edit-employee-dialog.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ConfirmDeleteEmployeeComponent } from '../confirm-delete-employee/confirm-delete-employee.component';
+import { DataService } from '../services/login.service';
 
 @Component({
   selector: 'app-employee-profile',
@@ -19,7 +20,7 @@ export class EmployeeProfileComponent implements OnInit {
   constructor(
     private employeeService: EmployeeService,
     public dialog: MatDialog,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,private loginService: DataService
   ) { }
 
   ngOnInit(): void {
@@ -31,6 +32,7 @@ export class EmployeeProfileComponent implements OnInit {
     this.employeeService.getAllEmployees().subscribe(data => {
       this.employees = data;
       this.noResultsFound = this.employees.length === 0;
+      console.log(this.employees)
     });
   }
 
@@ -49,6 +51,7 @@ export class EmployeeProfileComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
+       
         this.fetchAllEmployees();
         this.snackBar.open('Employee updated successfully', 'Close', {
           duration: 3000,
@@ -71,6 +74,7 @@ export class EmployeeProfileComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.employeeService.deleteEmployee(employee.employeeId).subscribe(() => {
+          this.loginService.addTransaction("Put","User removed employee:"+employee.firstName+' '+employee.lastName)
           this.fetchAllEmployees(); // Refresh the list after deleting
         }, error => {
           console.error('Error deleting employee:', error);

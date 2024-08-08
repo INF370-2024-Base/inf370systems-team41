@@ -4,7 +4,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { UserServices } from '../services/user.service';
 import { ResetPassword } from '../shared/UpdateUser';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { AddAuditTrailViewModel } from '../shared/AddAuditTrailViewModel';
+import { AddAuditTrailViewModels } from '../shared/AddAuditTrailViewModel';
+
 import { DataService } from '../services/login.service';
 
 @Component({
@@ -40,7 +41,7 @@ export class ResetUserPasswordComponent implements OnInit {
         });
         const signedInUser=JSON.parse(sessionStorage.getItem('User')!)
         const id=signedInUser.id
-       const transaction:AddAuditTrailViewModel={
+       const transaction:AddAuditTrailViewModels={
          AdditionalData:userToUpdate.UserEmail+" reset their password",
          DateOfTransaction:new Date,
          TransactionType:"Put",
