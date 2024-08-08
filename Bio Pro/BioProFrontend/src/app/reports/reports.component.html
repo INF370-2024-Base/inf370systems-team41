@@ -59,6 +59,12 @@
             <td>{{ orderType.orderCount }}</td>
           </tr>
         </tbody>
+        <tfoot>
+          <tr>
+            <td><strong>Total</strong></td>
+            <td><strong>{{ totalOrderCount }}</strong></td>
+          </tr>
+        </tfoot>
       </table>
       <button class="download-button" (click)="downloadPDF('Order Types Report', 'orderTypesReport')">Download PDF</button>
     </div>
@@ -78,6 +84,12 @@
             <td>{{ stockType.stockCategoriesCount }}</td>
           </tr>
         </tbody>
+        <tfoot>
+          <tr>
+            <td><strong>Total</strong></td>
+            <td><strong>{{  totalTypeCategoryCount }}</strong></td>
+          </tr>
+        </tfoot>
       </table>
       <button class="download-button" (click)="downloadPDF('Stock Types Report', 'stockTypesReport')">Download PDF</button>
     </div>

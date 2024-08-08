@@ -42,7 +42,8 @@ export class ReportsComponent implements OnInit {
   recentDeliveries: any[] = [];
   deliveries: any[] = [];
   groupedStockWriteOffs: any[] = [];
-
+  totalOrderCount: number = 0;
+  totalTypeCategoryCount: number = 0;
 
   constructor(private reportsService: ReportsServices, 
     private datePipe: DatePipe, 
@@ -155,9 +156,12 @@ export class ReportsComponent implements OnInit {
     } else if (sectionId === 'orderTypesReport') {
       columns = ['Order Type', 'Order Count'];
       data = this.orderTypeWithCount.map(orderType => [orderType.description, orderType.orderCount]);
+      // Add total order count at the end of the table
+      data.push(['Total', this.totalOrderCount]);
     } else if (sectionId === 'stockTypesReport') {
       columns = ['Stock Type', 'Type Category Count'];
       data = this.stockTypes.map(stockType => [stockType.description, stockType.stockCategoriesCount]);
+      data.push(['Total', this.totalTypeCategoryCount]);
     } else if (sectionId === 'stockItemsReport') {
       columns = ['Stock Category', 'Stock Item Count'];
       data = this.stockItems.map(stockItem => [stockItem.description, stockItem.stockItemsCount]);
@@ -230,7 +234,8 @@ export class ReportsComponent implements OnInit {
     }
 
     doc.save(`${reportName}.pdf`);
-  }
+}
+
   // formatDate(date: string): string {
   //   return new Date(date).toLocaleDateString('en-GB');
   // }
@@ -253,22 +258,33 @@ getOrderTypesWithOrderCount() {
   this.reportsService.getOrderTypesWithOrderCount().subscribe(
       data => {
           this.orderTypeWithCount = data;
+          this.calculateTotalOrderCount();
       },
       error => {
           console.error('Error fetching order types with count:', error);
       }
   );
 }
+calculateTotalOrderCount(): void {
+  this.totalOrderCount = this.orderTypeWithCount.reduce((total, orderType) => total + orderType.orderCount, 0);
+}
+
+
 getStockTypesCountByCategory() {
   this.reportsService.getStockTypesCountByCategory().subscribe(
       data => {
           this.stockTypes = data;
+          this.calculateTotalTypeCategoryCount();
       },
       error => {
           console.error('Error fetching stock types count by category:', error);
       }
   );
 }
+calculateTotalTypeCategoryCount(): void {
+  this.totalTypeCategoryCount = this.stockTypes.reduce((total, stockType) => total + stockType.stockCategoriesCount, 0);
+}
+
 sortOrders() {
   this.orders.sort((a, b) => {
     let valueA: any;
