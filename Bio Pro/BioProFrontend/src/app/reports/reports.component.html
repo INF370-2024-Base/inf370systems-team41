@@ -4,26 +4,32 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Reports</title>
- 
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+ 
 </head>
 <body>
   <h1 style="font-size: 48px; color: #333; text-align: center; text-transform: uppercase; letter-spacing: 3px; margin-bottom: 20px;">
-    <i class="fas fa-user-plus" style="vertical-align: middle; margin-right: 8px;"></i> REPORTS
+    REPORTS
   </h1> 
-  <div class="report-date" style="color: grey; font-size: small; text-align: right;">Reports generated on: {{ formatDate(currentDate) }}</div>
-
+  <div class="report-date" style="color: #404040; font-size: 12px;">
+    Reports generated on: {{ formatDate(currentDate) }}
+  </div>
+  <p style="color: #404040; font-size: 12px;">
+    Logged-in User: <span style="font-weight: bold;">{{ loggedInUserName }}</span>
+  </p>
+  
   <div class="reports-container">
-    <div class="report-section">
+    <div class="report-section" id="allOrdersReport">
       <h2>All Orders Report</h2>
       <table>
         <thead>
           <tr>
-            <th>Order ID</th>
-            <th>Dentist ID</th>
-            <th>Priority Level</th>
-            <th>Order Date</th>
-            <!-- Add other columns as needed -->
+            <th (click)="onSortChange('orderId')">Order ID</th>
+            <th (click)="onSortChange('dentistId')">Dentist ID</th>
+            <th (click)="onSortChange('priorityLevel')">Priority Level <span>{{ sortColumn === 'priorityLevel' ? (sortDirection === 'asc' ? '▲' : '▼') : '▲▼' }}</span></th>
+            <th (click)="onSortChange('dueDate')">Order Date <span>{{ sortColumn === 'dueDate' ? (sortDirection === 'asc' ? '▲' : '▼') : '▲▼' }}</span></th>
           </tr>
         </thead>
         <tbody>
@@ -32,13 +38,13 @@
             <td>{{ order.dentistId }}</td>
             <td>{{ order.priorityLevel }}</td>
             <td>{{ order.dueDate | date:'yyyy-MM-dd' }}</td>
-            <!-- Add other columns as needed -->
           </tr>
         </tbody>
       </table>
+      <button class="download-button" (click)="downloadPDF('All Orders Report', 'allOrdersReport')">Download PDF</button>
     </div>
 
-    <div class="report-section">
+    <div class="report-section" id="orderTypesReport">
       <h2>Order Types Report</h2>
       <table>
         <thead>
@@ -53,10 +59,17 @@
             <td>{{ orderType.orderCount }}</td>
           </tr>
         </tbody>
+        <tfoot>
+          <tr>
+            <td><strong>Total</strong></td>
+            <td><strong>{{ totalOrderCount }}</strong></td>
+          </tr>
+        </tfoot>
       </table>
+      <button class="download-button" (click)="downloadPDF('Order Types Report', 'orderTypesReport')">Download PDF</button>
     </div>
 
-    <div class="report-section">
+    <div class="report-section" id="stockTypesReport">
       <h2>Stock Types Count By Category Report</h2>
       <table>
         <thead>
@@ -71,10 +84,17 @@
             <td>{{ stockType.stockCategoriesCount }}</td>
           </tr>
         </tbody>
+        <tfoot>
+          <tr>
+            <td><strong>Total</strong></td>
+            <td><strong>{{  totalTypeCategoryCount }}</strong></td>
+          </tr>
+        </tfoot>
       </table>
+      <button class="download-button" (click)="downloadPDF('Stock Types Report', 'stockTypesReport')">Download PDF</button>
     </div>
 
-    <div class="report-section">
+    <div class="report-section" id="stockItemsReport">
       <h2>Stock Items Count By Category Report</h2>
       <table>
         <thead>
@@ -90,40 +110,104 @@
           </tr>
         </tbody>
       </table>
+      <button class="download-button" (click)="downloadPDF('Stock Items Report', 'stockItemsReport')">Download PDF</button>
     </div>
-
-    <div class="report-section">
+    <div class="report-section" id="stockWriteOffsReport">
       <h2>Stock Write-Offs Report</h2>
-      <table>
+      <table class="main-table">
         <thead>
           <tr>
             <th>Stock Name</th>
-            <th>Quantity Written Off</th>
-            <th>Write-Off Date</th>
-            <th>Reason</th>
+            <th>Total Quantity Written Off</th>
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let writeOff of stockWriteOffs">
-            <td>{{ writeOff.stockName }}</td>
-            <td>{{ writeOff.quantityWrittenOff }}</td>
-            <td>{{ writeOff.writtenOffDate | date:'yyyy-MM-dd' }}</td>
-            <td>{{ writeOff.reason }}</td>
+          <tr *ngFor="let group of groupedStockWriteOffs">
+            <td>{{ group.stockName }}</td>
+            <td>{{ group.totalQuantityWrittenOff }}</td>
           </tr>
         </tbody>
       </table>
-      <div>
+      <!-- <div *ngFor="let group of groupedStockWriteOffs" class="details-section">
+        <h3>{{ group.stockName }} - Write-Off Details</h3>
+        <table class="details-table">
+          <thead>
+            <tr>
+              <th>Quantity Written Off</th>
+              <th>Write-Off Date</th>
+              <th>Reason</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let detail of group.details">
+              <td>{{ detail.quantityWrittenOff }}</td>
+              <td>{{ detail.writtenOffDate | date:'yyyy-MM-dd' }}</td>
+              <td>{{ detail.reason }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div> -->
+      <div class="total-section">
         <strong>Total Quantity Written Off (Overall):</strong> {{ totalQuantityWrittenOff }}
       </div>
+      <button class="download-button" (click)="downloadPDF('Stock Write-Offs Report', 'stockWriteOffsReport')">Download PDF</button>
+    </div>
+    
+    
+
+    <div class="report-section" id="deliveryReport">
+      <h2>Delivery Report</h2>
+      <div class="main-container">
+        <div class="report-summary">
+          <mat-card class="summary-card">
+            <mat-card-header>
+              <mat-card-title>Total Deliveries</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+              <p>{{ totalDeliveries }}</p>
+            </mat-card-content>
+          </mat-card>
+          <mat-card class="summary-card">
+            <mat-card-header>
+              <mat-card-title>Deliveries by Status</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+              <mat-list>
+                <mat-list-item *ngFor="let status of deliveryStatuses" style="display: flex; justify-content: space-between; align-items: center;">
+                  <span style="flex: 1; margin-right: 16px; font-weight: bold;">{{ status.name }}</span>
+                  <span>{{ status.count }}</span>
+                </mat-list-item>
+              </mat-list>
+              
+             
+            </mat-card-content>
+          </mat-card>
+          <mat-card class="summary-card">
+            <mat-card-header>
+              <mat-card-title>Recent Deliveries</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+              <mat-list>
+                <mat-list-item *ngFor="let delivery of recentDeliveries">
+                  <h4 matLine  style="flex: 1; margin-right: 16px; font-weight: bold;">Order ID: {{ delivery.systemOrderId }}</h4>         
+                  <p matLine>Status: {{ delivery.deliveryStatus?.status }}</p>
+                </mat-list-item>
+              </mat-list>
+            </mat-card-content>
+          </mat-card>
+        </div>
+      </div>
+      <button class="download-button" (click)="downloadPDF('Delivery Report', 'deliveryReport')">Download PDF</button>
     </div>
 
-    <div class="report-section">
+    <div class="report-section" id="employeeHoursReport">
       <h2>Employee Hours Report</h2>
       <select [(ngModel)]="selectedPeriod" (change)="updateChart()">
         <option value="monthly">Monthly Hours</option>
         <option value="weekly">Weekly Hours</option>
       </select>
       <canvas id="canvas"></canvas>
+      <button class="download-button" (click)="downloadPDF('Employee Hours Report', 'employeeHoursReport')">Download PDF</button>
     </div>
   </div>
 </body>
