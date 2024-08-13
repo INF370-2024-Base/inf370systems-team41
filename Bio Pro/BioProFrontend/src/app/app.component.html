@@ -7,19 +7,12 @@
   <link rel="stylesheet" href="app.component.scss">
 </head>
 <body>
-  <div class="nav-background" [ngStyle]="{'background-image': 'linear-gradient(to bottom, rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(assets/images/Background.jpg)'}">
+  <div class="nav-background" style="background-image: linear-gradient(to bottom, rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(assets/images/Background.jpg);">
     <mat-toolbar class="nav-toolbar">
       <mat-toolbar-row>
-        <button mat-icon-button (click)="isSidenavOpen = !isSidenavOpen">
-          <mat-icon>menu</mat-icon>
-        </button>
         <img src="assets/images/Company logo.jpg" alt="Company Logo" class="company-logo">
         <h1 class="nav-title">BIO-PRO DENTAL STUDIO</h1>
-        <span class="spacer"></span> <!-- This spacer will push the buttons to the end -->
-        <!-- <button mat-button [routerLink]="['/edit-user']" *ngIf="isLoggedIn">
-          <mat-icon>edit</mat-icon>
-          <span>Edit Profile</span>
-        </button> -->
+        <span class="spacer"></span>
         <button mat-button (click)="signOut()" *ngIf="isLoggedIn" style="position: absolute; right: 20px;">
           <mat-icon>logout</mat-icon>
           <span>Sign Out</span>
@@ -30,7 +23,8 @@
   
   
   <mat-sidenav-container class="example-container">
-    <mat-sidenav #sidenav mode="side" [(opened)]="isSidenavOpen" class="example-sidenav" *ngIf="isLoggedIn">
+    <mat-sidenav mode="side" opened class="example-sidenav">
+    
       <mat-nav-list>
   
         <a mat-list-item routerLink="/home" (click)="isSidenavOpen = !isSidenavOpen">
@@ -183,16 +177,14 @@
         </a>
       
         
-    </mat-nav-list>
-    </mat-sidenav>
+      </mat-nav-list>
+    
+  </mat-sidenav>
     <mat-sidenav-content class="content-container">  
       <div style="height: 88vh;">
         <router-outlet></router-outlet>
       </div>
     </mat-sidenav-content>
   </mat-sidenav-container>
-  
-  
-</body>  
-  
+</body>
 </html>

@@ -23,12 +23,13 @@ import { HttpClient } from '@angular/common/http';
 })
 export class HomeComponent implements OnInit {
   weather: any;
-  dentalTips: string[] = [
-    'BRUSH YOUR TEETH TWICE A DAY',
-'FLOSS DAILY TO REMOVE PLAQUE',
-'LIMIT SUGARY DRINKS AND SNACKS',
-'VISIT YOUR DENTIST REGULARLY',
-'USE FLUORIDE TOOTHPASTE'
+  frequentlyVisitedPages: { name: string; route: string }[] = [
+    { name: 'New Order', route: '/addOrder' },
+    { name: 'Open Orders', route: '/openOrder' },
+    { name: 'Calendar', route: '/calendar' },
+    { name: 'Deliveries', route: '/deliveries' },
+    { name: 'Reports', route: '/reports' },
+   
   ];
 
   constructor(private http: HttpClient) {}

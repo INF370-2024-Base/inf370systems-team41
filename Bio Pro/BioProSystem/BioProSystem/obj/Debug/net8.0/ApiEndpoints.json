@@ -1037,6 +1037,32 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "BioProSystem.Controllers.DeliveryController",
+    "Method": "GetDeliveryStatuses",
+    "RelativePath": "delivery/GetDeliveryStatuses",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "BioProSystem.Controllers.DeliveryController",
+    "Method": "UpdateDeliveryCollected",
+    "RelativePath": "delivery/UpdateDeliveryCollected/{deliveryId}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "deliveryId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "BioProSystem.Controllers.LoginController",
     "Method": "EditUser",
     "RelativePath": "EditUser",

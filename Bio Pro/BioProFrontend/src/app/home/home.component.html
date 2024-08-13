@@ -13,6 +13,20 @@
 <!-- <img alt="Background Image" src="/assets/images/back g 2.jpg" class="background" /> -->
 
 <div class="info-cards">
+  
+  <mat-card class="frequently-visited-card">
+    <mat-card-header class="visited-header">
+      <mat-card-title class="visited-title">Frequently Visited Pages</mat-card-title>
+    </mat-card-header>
+    <mat-card-content class="visited-content">
+      <mat-list>
+        <mat-list-item *ngFor="let page of frequentlyVisitedPages">
+          <a [routerLink]="page.route">{{ page.name }}</a>
+        </mat-list-item>
+      </mat-list>
+    </mat-card-content>
+  </mat-card>
+  
   <mat-card class="weather-card" *ngIf="weather">
     <mat-card-header class="weather-header">
       <mat-card-title class="weather-title">Current Weather</mat-card-title>
@@ -30,14 +44,4 @@
     </mat-card-content>
   </mat-card>
 
-  <mat-card class="dental-tips-card">
-    <mat-card-header class="dental-header">
-      <mat-card-title class="dental-title">Dental Tips</mat-card-title>
-    </mat-card-header>
-    <mat-card-content class="dental-content">
-      <mat-list>
-        <mat-list-item *ngFor="let tip of dentalTips">{{ tip }}</mat-list-item>
-      </mat-list>
-    </mat-card-content>
-  </mat-card>
 </div>

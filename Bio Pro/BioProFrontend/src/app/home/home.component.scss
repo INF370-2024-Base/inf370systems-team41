@@ -2,12 +2,12 @@ body, html {
   height: 100%;
   margin: 0;
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  justify-content: center; /* Center the container horizontally */
+  align-items: center; /* Center the container vertically */
   background: linear-gradient(135deg, #72EDF2 10%, #5151E5 100%);
   font-family: 'Arial', sans-serif;
   color: #333; /* Ensures dark text color */
-  overflow: auto; /* Allow scrolling */
+  overflow: hidden; /* Prevent scrolling, assuming the content should fit the screen */
 }
 
 @keyframes gradientAnimation {
@@ -34,16 +34,23 @@ body, html {
   border-radius: 15px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
   background: rgba(255, 255, 255, 0.082);
-  margin: 20px;
   z-index: 1;
   overflow: hidden;
   animation: slideIn 1.5s ease-out;
+  max-width: 1800px; /* Adjust max-width as needed */
+  width: 100%; /* Ensure it takes up full width */
+  height: auto; /* Allow container to grow based on content */
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center the content horizontally */
+  justify-content: center; /* Center the content vertically */
 }
 
 .content {
   position: relative;
   z-index: 2;
   text-align: center;
+  width: 100%;
 }
 
 .home-logo {
@@ -179,4 +186,56 @@ body, html {
     transform: translateY(0);
     opacity: 1;
   }
+}
+.frequently-visited-card {
+  background: linear-gradient(135deg, #f5f7fa, #c3cfe2); /* Light gradient background */
+  border-radius: 12px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  margin: 20px auto;
+  max-width: 600px; /* Control the width */
+  width: 100%;
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.frequently-visited-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.3); /* Slight elevation effect on hover */
+}
+
+.visited-header {
+  background-color: #3f51b5; /* Primary color for the header */
+  color: #ffffff; /* White text color */
+  padding: 16px;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+}
+
+.visited-title {
+  font-size: 22px;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.visited-content {
+  padding: 16px;
+  background-color: #ffffff; /* White background for content */
+  border-bottom-left-radius: 12px;
+  border-bottom-right-radius: 12px;
+}
+
+mat-list-item {
+  font-size: 18px;
+  margin: 10px 0;
+  transition: color 0.3s ease;
+}
+
+mat-list-item a {
+  color: #3f51b5; /* Link color */
+  text-decoration: none;
+  font-weight: 500;
+}
+
+mat-list-item a:hover {
+  color: #1e3a8a; /* Darker shade on hover */
+  text-decoration: underline; /* Underline on hover */
 }

@@ -4,14 +4,49 @@ body {
     animation: gradientAnimation 20s ease infinite;
     font-family: 'Roboto', sans-serif;
     color: #333;
-    padding: 20px;
-    overflow-y: auto; /* Allow vertical scrolling */
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    overflow: hidden; /* Prevent body from scrolling */
 }
 
 @keyframes gradientAnimation {
     0% { background-position: 0% 50%; }
     50% { background-position: 100% 50%; }
     100% { background-position: 0% 50%; }
+}
+
+.main-container {
+    display: flex;
+    height: 100vh;
+    overflow: hidden; /* Prevent extra scrollbar */
+}
+
+.sidenav-container {
+    display: flex;
+    height: 100%;
+}
+
+.sidenav {
+    width: 280px;
+    background-color: #ffffff;
+    color: #000000;
+    padding: 10px;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    overflow-y: auto; /* Allow the sidenav to scroll if needed */
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.sidenav-content {
+    margin-left: 280px;
+    flex-grow: 1;
+    padding: 20px;
+    overflow-y: auto; /* Only this section should scroll */
+    height: 100vh;
+    box-sizing: border-box;
 }
 
 .container {
@@ -38,7 +73,7 @@ mat-form-field {
 }
 
 .mat-form-field-appearance-outline .mat-form-field-flex {
-    background-color: inherit; /* Inherit background color */
+    background-color: inherit;
 }
 
 .mat-form-field-appearance-outline .mat-form-field-underline {
