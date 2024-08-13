@@ -89,83 +89,56 @@ body, html {
   flex-wrap: wrap;
   margin-top: 20px;
 }
-
-.weather-card, .dental-tips-card {
+.weather-card, .frequently-visited-card {
   flex: 1;
   min-width: 300px;
   max-width: 45%;
   margin: 10px;
   text-align: left;
-  background: linear-gradient(to right, #6dd5fa, #2980b9);
+  background: linear-gradient(to right, #6dd5fa, #2980b9); /* Gradient for weather card */
   color: #eeeeee;
   border-radius: 15px;
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
   transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
 }
 
-.weather-card:hover, .dental-tips-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.4);
+.frequently-visited-card {
+  background: linear-gradient(to right, #c6fff1, #79b1a1); /* Gradient for frequently visited card */
+  padding: 15px; /* Ensure consistent padding */
 }
 
-.weather-header, .dental-header {
-  background: rgba(0, 0, 0, 0.2);
+.weather-card:hover, .frequently-visited-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.4); /* Consistent hover effect */
+}
+
+.weather-header, .visited-header {
+  background: rgba(0, 0, 0, 0.2); /* Consistent header background */
   padding: 15px;
   border-top-left-radius: 15px;
   border-top-right-radius: 15px;
 }
 
-.weather-title, .dental-title {
+.weather-title, .visited-title {
   font-size: 24px;
   font-weight: bold;
 }
 
-.weather-content {
-  display: flex;
-  align-items: center;
-  padding: 15px;
-}
-
-.weather-icon img {
-  width: 80px;
-  height: 80px;
-  margin-right: 20px;
-}
-
-.weather-details {
-  margin-left: 20px;
-}
-
-.weather-location {
-  font-size: 20px;
-  font-weight: bold;
-}
-
-.weather-description {
-  font-size: 16px;
-}
-
-.weather-temperature {
-  font-size: 24px;
-  font-weight: bold;
-}
-
-.weather-humidity {
-  font-size: 16px;
-}
-
-.dental-tips-card {
-  background: linear-gradient(to right, #ffecd2, #fcb69f);
-}
-
-.dental-content {
-  padding: 15px;
-}
-
-.dental-content mat-list-item {
+.visited-content mat-list-item {
   font-size: 16px;
   padding: 10px 0;
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+mat-list-item a {
+  color: #080808; /* Match link color to card text */
+  text-decoration: none;
+  font-weight: 500;
+}
+
+mat-list-item a:hover {
+  color: #2a56e6; /* Slightly lighter color on hover */
+  text-decoration: underline; /* Underline on hover */
 }
 
 @keyframes fadeIn {
@@ -186,56 +159,4 @@ body, html {
     transform: translateY(0);
     opacity: 1;
   }
-}
-.frequently-visited-card {
-  background: linear-gradient(135deg, #f5f7fa, #c3cfe2); /* Light gradient background */
-  border-radius: 12px;
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-  margin: 20px auto;
-  max-width: 600px; /* Control the width */
-  width: 100%;
-  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
-}
-
-.frequently-visited-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.3); /* Slight elevation effect on hover */
-}
-
-.visited-header {
-  background-color: #3f51b5; /* Primary color for the header */
-  color: #ffffff; /* White text color */
-  padding: 16px;
-  border-top-left-radius: 12px;
-  border-top-right-radius: 12px;
-}
-
-.visited-title {
-  font-size: 22px;
-  font-weight: bold;
-  text-transform: uppercase;
-}
-
-.visited-content {
-  padding: 16px;
-  background-color: #ffffff; /* White background for content */
-  border-bottom-left-radius: 12px;
-  border-bottom-right-radius: 12px;
-}
-
-mat-list-item {
-  font-size: 18px;
-  margin: 10px 0;
-  transition: color 0.3s ease;
-}
-
-mat-list-item a {
-  color: #3f51b5; /* Link color */
-  text-decoration: none;
-  font-weight: 500;
-}
-
-mat-list-item a:hover {
-  color: #1e3a8a; /* Darker shade on hover */
-  text-decoration: underline; /* Underline on hover */
 }

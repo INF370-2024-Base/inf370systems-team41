@@ -24,11 +24,11 @@ import { HttpClient } from '@angular/common/http';
 export class HomeComponent implements OnInit {
   weather: any;
   frequentlyVisitedPages: { name: string; route: string }[] = [
-    { name: 'New Order', route: '/addOrder' },
-    { name: 'Open Orders', route: '/openOrder' },
-    { name: 'Calendar', route: '/calendar' },
-    { name: 'Deliveries', route: '/deliveries' },
-    { name: 'Reports', route: '/reports' },
+    { name: 'NEW ORDER', route: '/addOrder' },
+    { name: 'OPEN ORDERS', route: '/openOrder' },
+    { name: 'VIEW CALENDAR', route: '/calendar' },
+    { name: 'DELIVERIES', route: '/deliveries' },
+    { name: 'REPORTS', route: '/reports' },
    
   ];
 

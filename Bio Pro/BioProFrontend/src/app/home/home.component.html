@@ -16,15 +16,20 @@
   
   <mat-card class="frequently-visited-card">
     <mat-card-header class="visited-header">
-      <mat-card-title class="visited-title">Frequently Visited Pages</mat-card-title>
+      <mat-card-title class="visited-title" style="font-size: 24px; font-weight: bold; color: #ffffff; text-transform: uppercase; text-align: center;">
+        Frequently Visited Pages
+      </mat-card-title>
     </mat-card-header>
-    <mat-card-content class="visited-content">
+    <mat-card-content class="visited-content" style="padding: 15px; color: #0e75ba;">
       <mat-list>
-        <mat-list-item *ngFor="let page of frequentlyVisitedPages">
-          <a [routerLink]="page.route">{{ page.name }}</a>
+        <mat-list-item *ngFor="let page of frequentlyVisitedPages" style="font-size: 18px; margin: 10px 0;">
+          <a [routerLink]="page.route" style="text-decoration: none; font-weight: 500;">
+            {{ page.name }}
+          </a>
         </mat-list-item>
       </mat-list>
     </mat-card-content>
+    
   </mat-card>
   
   <mat-card class="weather-card" *ngIf="weather">
