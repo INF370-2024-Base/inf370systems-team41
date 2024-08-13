@@ -1,5 +1,8 @@
 <body>
-    <div class="settings-container">
+    <h1 style="font-size: 48px; color: #4d4a4a; text-align: center; text-transform: uppercase; letter-spacing: 3px; margin-bottom: 24px; text-shadow: 2px 2px 4px rgba(124, 124, 124, 0.5);">
+        SETTINGS
+    </h1> 
+        <div class="settings-container">
         <!-- Profile Section -->
         <section class="settings-section">
           <h3 mat-subheader>Profile Settings</h3>
@@ -27,42 +30,69 @@
           </mat-list>
         </section>
       
-        <!-- Application Settings Section -->
-        <section class="settings-section">
-          <h3 mat-subheader>Application Settings</h3>
-          <mat-list>
-            <mat-list-item>
-              <mat-icon matListIcon>language</mat-icon>
-              <div matLine>Language</div>
-              <mat-select [(value)]="user.language" matLine>
-                <mat-option *ngFor="let language of languages" [value]="language">
-                  {{ language }}
-                </mat-option>
-              </mat-select>
-            </mat-list-item>
-            <mat-list-item>
-                <mat-icon matListIcon>brightness_6</mat-icon>
-                <div matLine>Theme</div>
-                <mat-select [(value)]="user.theme" matLine>
-                  <mat-option *ngFor="let theme of themes" [value]="theme">
-                    <mat-icon *ngIf="theme === 'light'">wb_sunny</mat-icon>
-                    <mat-icon *ngIf="theme === 'dark'">nights_stay</mat-icon>
-                    {{ theme | titlecase }}
-                  </mat-option>
-                </mat-select>
-              </mat-list-item>
-            <mat-list-item>
-              <mat-icon matListIcon>schedule</mat-icon>
-              <div matLine>Time Zone</div>
-              <mat-select [(value)]="user.timezone" matLine>
-                <mat-option *ngFor="let timezone of timezones" [value]="timezone">
-                  {{ timezone }}
-                </mat-option>
-              </mat-select>
-            </mat-list-item>
-          </mat-list>
-        </section>
-      
+  <!-- Application Settings Section -->
+<div class="application-settings-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
+    <!-- Language Setting -->
+    <div class="settings-item" style="padding: 15px; background-color: #ffffff; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); cursor: pointer;" (click)="languageSelect.open()">
+      <mat-form-field appearance="fill" style="width: 100%;">
+        <mat-label>
+          <mat-icon matListIcon style="margin-right: 10px; color: #3a506b;">language</mat-icon>
+          Language
+        </mat-label>
+        <mat-select #languageSelect [(value)]="user.language">
+          <mat-option *ngFor="let language of languages" [value]="language">
+            <span *ngIf="language === 'English'">English (English)</span>
+            <span *ngIf="language === 'Spanish'">Español (Spanish)</span>
+            <span *ngIf="language === 'French'">Français (French)</span>
+            <span *ngIf="language === 'German'">Deutsch (German)</span>
+            <span *ngIf="language === 'Korean'">한국어 (Korean)</span>
+            <span *ngIf="language === 'Chinese'">中文 (Chinese)</span>
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  
+    <!-- Theme Setting -->
+    <div class="settings-item" style="padding: 15px; background-color: #ffffff; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); cursor: pointer;" (click)="themeSelect.open()">
+      <mat-form-field appearance="fill" style="width: 100%;">
+        <mat-label>
+          <mat-icon matListIcon style="margin-right: 10px; color: #3a506b;">brightness_6</mat-icon>
+          Theme
+        </mat-label>
+        <mat-select #themeSelect [(value)]="user.theme">
+          <mat-option *ngFor="let theme of themes" [value]="theme">
+            <mat-icon *ngIf="theme === 'light'" style="margin-right: 5px;">wb_sunny</mat-icon>
+            <mat-icon *ngIf="theme === 'dark'" style="margin-right: 5px;">nights_stay</mat-icon>
+            {{ theme | titlecase }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  
+    <!-- Time Zone Setting -->
+    <div class="settings-item" style="padding: 15px; background-color: #ffffff; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); cursor: pointer;" (click)="timezoneSelect.open()">
+      <mat-form-field appearance="fill" style="width: 100%;">
+        <mat-label>
+          <mat-icon matListIcon style="margin-right: 10px; color: #3a506b;">schedule</mat-icon>
+          Time Zone
+        </mat-label>
+        <mat-select #timezoneSelect [(value)]="user.timezone">
+          <mat-option *ngFor="let timezone of timezones" [value]="timezone">
+            <!-- Including common states or regions for each timezone -->
+            <ng-container *ngIf="timezone === 'UTC'">UTC (Universal Time Coordinated)</ng-container>
+            <ng-container *ngIf="timezone === 'GMT'">GMT - London, Dublin</ng-container>
+            <ng-container *ngIf="timezone === 'PST'">PST - Los Angeles, Seattle</ng-container>
+            <ng-container *ngIf="timezone === 'EST'">EST - New York, Miami</ng-container>
+            <ng-container *ngIf="timezone === 'CST'">CST - Chicago, Dallas</ng-container>
+            <ng-container *ngIf="timezone === 'MST'">MST - Denver, Phoenix</ng-container>
+            <ng-container *ngIf="timezone === 'IST'">IST - New Delhi, Mumbai</ng-container>
+            <!-- Add more as needed -->
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </div>
+
         <!-- Save Button Section -->
         <section class="save-button-section">
           <button mat-raised-button color="primary">

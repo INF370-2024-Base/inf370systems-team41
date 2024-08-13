@@ -3,11 +3,13 @@ body {
     font-family: 'Verdana', sans-serif; /* Playful font */
     color: #333; /* Dark text color */
     margin: 0; /* Reset margin */
-    padding: 0; /* Reset padding */
+    padding: 20px; /* Add padding to the body */
     display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh; /* Full viewport height */
+    flex-direction: column; /* Ensure content stacks vertically */
+    justify-content: flex-start; /* Align content to the top */
+    align-items: center; /* Center content horizontally */
+    min-height: 100vh; /* Full viewport height */
+    overflow-y: auto; /* Allow the page to scroll */
   }
   
   /* Animated background gradients */
@@ -23,70 +25,94 @@ body {
     background-size: 400% 400%;
     animation: gradientAnimation 20s ease infinite;
   }
+  
   .settings-container {
     display: flex;
     flex-direction: column;
-    padding: 20px;
-    background-color: #ffffff;
-    max-width: 400px;
-    margin: auto;
-    border-radius: 15px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    padding: 15px; /* Reduced padding to make more room */
+    background-color: #f7f9fc; /* Softer background color for better contrast */
+    max-width: 50vw; /* Ensure it doesn't exceed 50% of the viewport width */
+    width: 100%;
+    margin-top: 20px; /* Add space between the title and the container */
+    border-radius: 15px; /* More rounded corners */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); /* Stronger shadow for better depth */
+    overflow: visible; /* Let the content extend the container */
   }
   
   .settings-section {
-    margin-bottom: 20px;
-    border-bottom: 1px solid #e0e0e0;
-    padding-bottom: 15px;
+    margin-bottom: 10px; /* Further reduced space between sections */
+    border-bottom: 1px solid #d1d9e6; /* Lighter border color */
+    padding-bottom: 10px; /* Further reduced padding at the bottom */
   }
   
   .settings-section:last-child {
     border-bottom: none;
   }
   
-  h3[mat-subheader] {
-    color: #333;
-    font-weight: bold;
-    margin-bottom: 10px;
-    padding: 0 16px;
+  .settings-section h3 {
+    font-size: 16px; /* Further reduced font size */
+    font-weight: 600; /* Slightly bolder */
+    color: #2e3c58; /* Darker text color for better contrast */
+    margin-bottom: 10px; /* Further reduced spacing between the title and the list */
   }
   
   mat-list-item {
     display: flex;
     align-items: center;
-    padding: 10px 16px;
+    padding: 10px 0; /* Reduced padding for better spacing */
+    border-radius: 8px; /* Rounded corners for list items */
+    transition: background-color 0.3s ease; /* Smooth hover transition */
+    margin-bottom: 8px;
+  }
+  
+  mat-list-item:hover {
+    background-color: #eaf0f9; /* Subtle hover effect */
   }
   
   mat-list-item mat-icon {
-    margin-right: 15px;
-    color: #616161;
+    margin-right: 10px; /* Reduced space between icon and text */
+    color: #3a506b; /* Softer icon color */
   }
   
-  mat-input-element {
-    font-size: 16px;
+  mat-input-element, input[matInput] {
+    font-size: 14px; /* Further reduced font for better readability */
+    color: #2e3c58; /* Text color matching the title */
+    width: 100%; /* Full width input fields */
+    padding: 6px 10px; /* Further reduced padding inside input fields */
+    border-radius: 8px; /* Curved edges for input fields */
+    border: 1px solid #d1d9e6; /* Subtle border color */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Slight shadow for depth */
+    background-color: #ffffff; /* White background for input fields */
+  }
+  
+  input[matInput]:focus {
+    border-color: #3a506b; /* Change border color on focus */
+    outline: none; /* Remove default outline */
   }
   
   mat-select {
-    width: 100%;
+    width: 100%; /* Full width for select dropdowns */
   }
   
   mat-select .mat-select-trigger {
     display: flex;
     align-items: center;
     padding-left: 5px;
+    color: #2e3c58; /* Matching select text color */
   }
   
   .save-button-section {
     text-align: center;
-    padding: 10px;
+    padding: 5px; /* Reduced padding */
+    margin-top: auto; /* Push the button to the bottom */
   }
   
   button[mat-raised-button] {
-    width: 100%;
-    padding: 12px 0;
-    font-size: 16px;
+    width: 80%; /* Further reduced width */
+    padding: 8px 0; /* Further reduced padding */
+    font-size: 14px; /* Slightly smaller font size */
     text-transform: uppercase;
-    border-radius: 25px;
+    border-radius: 20px;
     box-shadow: 0 5px 15px rgba(0, 123, 255, 0.3);
     transition: transform 0.2s ease, box-shadow 0.2s ease;
   }
