@@ -1,52 +1,45 @@
-<div class="container" [@fadeIn]>
-  <div class="content" [@slideIn]>
-    <h1 class="home-text">
-      <span class="home-text1">WARM WELCOME TO</span>
-      <br />
-      <span class="home-text3">BIO-PRO STUDIO</span>
-      <br />
-      <span class="home-text4">THANK YOU FOR ALL YOUR HARD WORK</span>
-    </h1>
-    <img alt="Company Logo" src="/assets/images/Company logo.jpg" class="home-logo" />
+
+<body>
+<div class="hero-section">
+  <div class="hero-content">
+    <h1 style="font-size: 60px; color: #f2eeee; text-align: center; text-transform: uppercase; letter-spacing: 3px; margin-bottom: 24px; text-shadow: 2px 2px 4px rgba(202, 198, 198, 0.949);">BIO-PRO DENTAL STUDIO</h1> 
+    
+    <p style="font-size: 30px; color: #f2eeee;; text-align: center; text-transform: uppercase; letter-spacing: 3px; margin-bottom: 24px; text-shadow: 2px 2px 4px rgba(202, 198, 198, 0.949);">MODERN AESTHECTIC DENTAL LABORATORY</p>
+    <div class="buttons">
+      <!-- Update the button to use Angular's click event binding -->
+      <button class="btn read-more" (click)="openModal()">READ MORE</button>
+    </div>
+<!-- Modal Structure -->
+<div id="thankYouModal" class="modal">
+  <div class="modal-content">
+    <p style="font-size: 30px; color: #f2eeee; text-align: center; text-transform: uppercase; letter-spacing: 3px; margin-bottom: 24px; text-shadow: 2px 2px 4px rgba(202, 198, 198, 0.949);">
+      BIO-PRO DENTAL STUDIO STAFF
+    </p>
+    <p style="font-size: 18px; color: #f2eeee; text-align: center; margin-bottom: 24px;">
+      At Bio-Pro Dental Studio, we recognize and celebrate the dedication and craftsmanship of our team. 
+      Together, we strive to uphold the highest standards of excellence, delivering exceptional quality in every project.
+      Let’s continue to innovate, inspire, and create work that not only meets but exceeds expectations—work that we can all be proud of.
+    </p>
+    <!-- Close button to close the modal -->
+    <button class="btn close-modal" (click)="closeModal()">Close</button>
   </div>
 </div>
-<!-- <img alt="Background Image" src="/assets/images/back g 2.jpg" class="background" /> -->
 
-<div class="info-cards">
-  
-  <mat-card class="frequently-visited-card">
-    <mat-card-header class="visited-header">
-      <mat-card-title class="visited-title" style="font-size: 24px; font-weight: bold; color: #ffffff; text-transform: uppercase; text-align: center;">
-        Frequently Visited Pages
-      </mat-card-title>
-    </mat-card-header>
-    <mat-card-content class="visited-content" style="padding: 15px; color: #0e75ba;">
-      <mat-list>
-        <mat-list-item *ngFor="let page of frequentlyVisitedPages" style="font-size: 18px; margin: 10px 0;">
-          <a [routerLink]="page.route" style="text-decoration: none; font-weight: 500;">
-            {{ page.name }}
-          </a>
-        </mat-list-item>
-      </mat-list>
-    </mat-card-content>
-    
-  </mat-card>
-  
-  <mat-card class="weather-card" *ngIf="weather">
-    <mat-card-header class="weather-header">
-      <mat-card-title class="weather-title">Current Weather</mat-card-title>
-    </mat-card-header>
-    <mat-card-content class="weather-content">
-      <div class="weather-icon">
-        <img [src]="'https:' + weather.current.condition.icon" alt="Weather Icon">
-      </div>
-      <div class="weather-details">
-        <p class="weather-location">{{ weather.location.name }}</p>
-        <p class="weather-description">{{ weather.current.condition.text }}</p>
-        <p class="weather-temperature">{{ weather.current.temp_c }}°C</p>
-        <p class="weather-humidity">Humidity: {{ weather.current.humidity }}%</p>
-      </div>
-    </mat-card-content>
-  </mat-card>
 
+  </div>
+  <div class="hero-image">
+    <img alt="Medical Professional" src="/assets/images/Company logo.jpg"/>
+  </div>
 </div>
+
+<div class="feature-cards">
+  <div 
+    *ngFor="let page of frequentlyVisitedPages" 
+    class="feature-card" 
+    [routerLink]="page.route">
+    <i class="material-icons icon">{{ page.icon }}</i>
+    <p>{{ page.name }}</p>
+  </div>
+</div>
+
+</body>
