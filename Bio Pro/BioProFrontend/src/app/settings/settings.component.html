@@ -1,0 +1,74 @@
+<body>
+    <div class="settings-container">
+        <!-- Profile Section -->
+        <section class="settings-section">
+          <h3 mat-subheader>Profile Settings</h3>
+          <mat-list>
+            <mat-list-item>
+              <mat-icon matListIcon>person</mat-icon>
+              <div matLine>Name</div>
+              <div matLine><input matInput [(ngModel)]="user.Name" placeholder="Enter your first name"></div>
+            </mat-list-item>
+            <mat-list-item>
+              <mat-icon matListIcon>person_outline</mat-icon>
+              <div matLine>Surname</div>
+              <div matLine><input matInput [(ngModel)]="user.Surname" placeholder="Enter your surname"></div>
+            </mat-list-item>
+            <mat-list-item>
+              <mat-icon matListIcon>email</mat-icon>
+              <div matLine>Email</div>
+              <div matLine><input matInput [(ngModel)]="user.EmailAddress" type="email" placeholder="Enter your email"></div>
+            </mat-list-item>
+            <mat-list-item>
+              <mat-icon matListIcon>lock</mat-icon>
+              <div matLine>Password</div>
+              <div matLine><input matInput [(ngModel)]="user.Password" type="password" placeholder="Enter your password"></div>
+            </mat-list-item>
+          </mat-list>
+        </section>
+      
+        <!-- Application Settings Section -->
+        <section class="settings-section">
+          <h3 mat-subheader>Application Settings</h3>
+          <mat-list>
+            <mat-list-item>
+              <mat-icon matListIcon>language</mat-icon>
+              <div matLine>Language</div>
+              <mat-select [(value)]="user.language" matLine>
+                <mat-option *ngFor="let language of languages" [value]="language">
+                  {{ language }}
+                </mat-option>
+              </mat-select>
+            </mat-list-item>
+            <mat-list-item>
+                <mat-icon matListIcon>brightness_6</mat-icon>
+                <div matLine>Theme</div>
+                <mat-select [(value)]="user.theme" matLine>
+                  <mat-option *ngFor="let theme of themes" [value]="theme">
+                    <mat-icon *ngIf="theme === 'light'">wb_sunny</mat-icon>
+                    <mat-icon *ngIf="theme === 'dark'">nights_stay</mat-icon>
+                    {{ theme | titlecase }}
+                  </mat-option>
+                </mat-select>
+              </mat-list-item>
+            <mat-list-item>
+              <mat-icon matListIcon>schedule</mat-icon>
+              <div matLine>Time Zone</div>
+              <mat-select [(value)]="user.timezone" matLine>
+                <mat-option *ngFor="let timezone of timezones" [value]="timezone">
+                  {{ timezone }}
+                </mat-option>
+              </mat-select>
+            </mat-list-item>
+          </mat-list>
+        </section>
+      
+        <!-- Save Button Section -->
+        <section class="save-button-section">
+          <button mat-raised-button color="primary">
+            <mat-icon>save</mat-icon> SAVE
+          </button>
+        </section>
+      </div>
+      
+</body>

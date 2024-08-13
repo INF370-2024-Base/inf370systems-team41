@@ -59,6 +59,7 @@ import { ResetUserPasswordComponent } from './reset-user-password/reset-user-pas
 import { UpdateModeEnum } from 'chart.js';
 import { UpdatePasswordComponent } from './update-password/update-password.component';
 import { HelpUserComponent } from './help-user/help-user.component';
+import { SettingsComponent } from './settings/settings.component';
 
 
 const routes: Routes = [
@@ -119,6 +120,7 @@ const routes: Routes = [
   {path: 'rp/:email', component:ResetUserPasswordComponent},
   {path: 'UpdatePassword', component:UpdatePasswordComponent},
   {path:'help-user', component:HelpUserComponent},
+  {path: 'settings', component:SettingsComponent}
 ];
 
 @NgModule({
