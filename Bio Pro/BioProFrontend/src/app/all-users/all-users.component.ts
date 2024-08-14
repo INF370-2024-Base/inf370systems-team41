@@ -18,6 +18,7 @@ export class AllUsersComponent implements OnInit {
   currentPage: number = 1;
   itemsPerPage: number = 9;
   searchControl = new FormControl();
+  loading: boolean = true; // Loading state
 
   
 
@@ -62,13 +63,16 @@ export class AllUsersComponent implements OnInit {
     }
   }
 
-
   fetchAllusers() {
+    this.loading = true;
     this.userService.getAllUsers().subscribe(data => {
       this.users = data;
-      console.log(this.users)
+      this.loading = false;
+    }, error => {
+      this.loading = false; // Handle error and stop loading
     });
   }
+
   editEmployee(user: any) {
     const dialogRef = this.dialog.open(EditAnyUserComponent, {
       width: '400px',

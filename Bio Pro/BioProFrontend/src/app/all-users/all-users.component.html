@@ -33,24 +33,32 @@
                     </div>
                 </div>
             </div>
-            <div class="card-container">
-                <div *ngFor="let user of paginatedUsers" class="card">
-                    <div class="card-body">
-                        <div class="card-header">
-                            <i class="material-icons example-header-image">person</i>
-                            <div>
-                                <h5 class="card-title">{{user.name}} {{user.surname}}</h5>
-                            </div>
+              <!-- Loading indicator -->
+        <div *ngIf="loading" class="d-flex justify-content-center align-items-center">
+            <div class="spinner-border" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+        </div>
+
+        <!-- User cards displayed when not loading -->
+        <div *ngIf="!loading" class="card-container">
+            <div *ngFor="let user of paginatedUsers" class="card">
+                <div class="card-body">
+                    <div class="card-header">
+                        <i class="material-icons example-header-image">person</i>
+                        <div>
+                            <h5 class="card-title">{{user.name}} {{user.surname}}</h5>
                         </div>
-                        <p class="card-text"><strong>Email:</strong> {{user.email}}</p>
-                        <p class="card-text"><strong>Phone Number:</strong> {{user.phoneNumber}}</p>
-                        <p class="card-text"><strong>Access Level:</strong> {{user.roles}}</p>
-                        <button (click)="editEmployee(user)"
-                            class="btn btn-secondary rounded-btn mr-2">Edit</button>
-                        <button (click)="deleteEmployee(user)"
-                            class="btn btn-outline-danger rounded-btn">Delete</button>
                     </div>
+                    <p class="card-text"><strong>Email:</strong> {{user.email}}</p>
+                    <p class="card-text"><strong>Phone Number:</strong> {{user.phoneNumber}}</p>
+                    <p class="card-text"><strong>Access Level:</strong> {{user.roles}}</p>
+                    <button (click)="editEmployee(user)"
+                        class="btn btn-secondary rounded-btn mr-2">Edit</button>
+                    <button (click)="deleteEmployee(user)"
+                        class="btn btn-outline-danger rounded-btn">Delete</button>
                 </div>
+            </div>
 
                 <!-- Placeholder cards to fill the grid -->
                 <div *ngFor="let i of [].constructor(9 - paginatedUsers.length)" class="card placeholder"></div>
