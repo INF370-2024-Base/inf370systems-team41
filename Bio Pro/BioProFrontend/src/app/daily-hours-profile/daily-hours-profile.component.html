@@ -22,6 +22,7 @@
 
     <div *ngIf="!isLoading">
         <div class="container">
+            <!-- Filter Section -->
             <div class="row mb-3">
                 <div class="col-md-6 col-sm-12 mb-2">
                     <label for="filterDate">Filter by Date:</label>
@@ -43,44 +44,55 @@
                 <a href="#" class="btn btn-primary rounded-btn" style="margin-right: 10px;" routerLink="/captureEmployeeDailyHours">Capture Hour</a>
             </div>
 
+         <!-- Week Navigation and Display -->
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <button (click)="navigateWeek(-1)" class="btn btn-outline-secondary">Previous Week</button>
+    <h3>{{ selectedWeek | date: 'MMMM d, y' }} - {{ endOfWeek | date: 'MMMM d, y' }}</h3>
+    <button (click)="navigateWeek(1)" class="btn btn-outline-secondary">Next Week</button>
+</div>
 
-            <div class="table-responsive">
-                <table class="table table-bordered  rounded-table">
-                    <thead>
-                        <tr>
-                            <th>Date</th>
-                            <th>Hours</th>
-                            <th>Employee Name</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr *ngFor="let dailyHour of dailyHoursData">
-                            <td>{{ dailyHour.workDate | date }}</td>
-                            <td>{{ dailyHour.hours }}</td>
-                            <td *ngFor="let employee of dailyHour.employees">{{ employee.firstName }} {{ employee.lastName }}</td>
-                            <td>
-                                <button (click)="onDeleteDailyHour(dailyHour.employeeDailyHoursId)" class="btn btn-outline-danger rounded-btn mr-2">
-                                    <i ></i> Delete
-                                </button>
-                            </td>
-                        </tr>
-                        <tr *ngIf="dailyHoursData.length === 0">
-                            <td colspan="4" class="text-center">No matching data found.</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+<!-- Daily Hours Cards by Day of the Week -->
+<!-- Daily Hours Cards by Day of the Week -->
+<div class="row">
+    <div class="col-md-4 col-sm-12 mb-2" *ngFor="let day of daysOfWeek; let i = index">
+      <div class="card">
+        <div class="card-header">
+          {{ day }}, {{ getDateString(i) | date: 'MMMM d, y' }}
+        </div>
+        <div class="card-body">
+          <pre>{{ groupedDailyHoursData[getDateString(i)] | json }}</pre> <!-- Inspect the data -->
+          <ul *ngIf="groupedDailyHoursData[getDateString(i)]">
+            <li *ngFor="let employeeEmail of getEmployeeEmails(getDateString(i))">
+              <strong>{{ getEmployeeName(employeeEmail) }}</strong>
+              <ul>
+                <li *ngFor="let hour of groupedDailyHoursData[getDateString(i)][employeeEmail]">
+                  {{ hour.Hours }} hours
+                  <button (click)="onDeleteDailyHour(hour.EmployeeId)" class="btn btn-outline-danger btn-sm">
+                    Delete
+                  </button>
+                </li>
+              </ul>
+            </li>
+          </ul>
+          <p *ngIf="!groupedDailyHoursData[getDateString(i)]">No data</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  
+
         </div>
     </div>
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.2/angular.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.1.12/angular-material.min.js"></script>
+
+    <div class="help-button-container">
+        <button mat-button [routerLink]="['/help-employee']">
+            <mat-icon>live_help</mat-icon>
+            <span>Help</span>
+        </button>
+    </div>
 </body>
-<div class="help-button-container">
-    <button mat-button [routerLink]="['/help-employee']" >
-      <mat-icon>live_help</mat-icon>
-      <span>Help</span>
-    </button>
-  </div>
+
 </html>
