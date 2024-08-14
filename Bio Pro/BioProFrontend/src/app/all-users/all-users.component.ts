@@ -16,7 +16,8 @@ export class AllUsersComponent implements OnInit {
   constructor(private userService:UserServices,private dialog:MatDialog,private snackBar:MatSnackBar) { }
 
   ngOnInit(): void {
-    this.fetchAllusers() 
+    this.fetchAllusers() ;
+    this.setupScrollListener();
   }
   users:any[]=[]
   fetchAllusers() {
@@ -80,5 +81,46 @@ export class AllUsersComponent implements OnInit {
                fullName.includes(searchCriteria);
       });
     }
+  }
+
+ 
+  scrollToBottom() {
+    const scrollableElement = document.querySelector('.scroll-container');
+    if (scrollableElement) {
+      scrollableElement.scrollTo({
+        top: scrollableElement.scrollHeight,
+        behavior: 'smooth'
+      });
+    }
+  }
+  
+  scrollToTop() {
+    const scrollableElement = document.querySelector('.scroll-container');
+    if (scrollableElement) {
+      scrollableElement.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    }
+  }
+  
+
+  setupScrollListener() {
+    window.addEventListener('scroll', () => {
+      const scrollTopButton = document.getElementById('scroll-to-top');
+      const scrollBottomButton = document.getElementById('scroll-to-bottom');
+      
+      if (window.scrollY > 300) {
+        scrollTopButton!.style.display = 'block';
+      } else {
+        scrollTopButton!.style.display = 'none';
+      }
+
+      if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 300) {
+        scrollBottomButton!.style.display = 'none';
+      } else {
+        scrollBottomButton!.style.display = 'block';
+      }
+    });
   }
 }
