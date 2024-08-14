@@ -6,7 +6,7 @@ body {
   background-size: 400% 400%;
   animation: gradientAnimation 20s ease infinite;
   color: #333; /* Dark text color */
-  overflow: auto; /* Allow scrolling */
+  
 }
 
 @keyframes gradientAnimation {

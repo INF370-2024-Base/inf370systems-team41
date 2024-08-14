@@ -5,6 +5,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { EditAnyUserComponent } from '../edit-any-user/edit-any-user.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ConfirmDeleteUserComponent } from '../confirm-delete-user/confirm-delete-user.component';
+import { FormControl } from '@angular/forms';
+import { debounceTime } from 'rxjs/operators';
 
 @Component({
   selector: 'app-all-users',
@@ -12,14 +14,55 @@ import { ConfirmDeleteUserComponent } from '../confirm-delete-user/confirm-delet
   styleUrls: ['./all-users.component.scss']
 })
 export class AllUsersComponent implements OnInit {
+  
+  currentPage: number = 1;
+  itemsPerPage: number = 9;
+  searchControl = new FormControl();
+
+  
 
   constructor(private userService:UserServices,private dialog:MatDialog,private snackBar:MatSnackBar) { }
 
   ngOnInit(): void {
     this.fetchAllusers() ;
     this.setupScrollListener();
+    this.searchControl.valueChanges.pipe(
+      debounceTime(700) // 1000 milliseconds = 1 second
+    ).subscribe(value => {
+      this.onOrderIdChange(value);
+    });
   }
   users:any[]=[]
+
+  get paginatedUsers(): any[] {
+    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+    const endIndex = startIndex + this.itemsPerPage;
+    return this.users.slice(startIndex, endIndex);
+  }
+
+  get totalPages(): number {
+    return Math.ceil(this.users.length / this.itemsPerPage);
+  }
+
+  goToPage(page: number): void {
+    if (page >= 1 && page <= this.totalPages) {
+      this.currentPage = page;
+    }
+  }
+
+  nextPage(): void {
+    if (this.currentPage < this.totalPages) {
+      this.currentPage++;
+    }
+  }
+
+  previousPage(): void {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+    }
+  }
+
+
   fetchAllusers() {
     this.userService.getAllUsers().subscribe(data => {
       this.users = data;
