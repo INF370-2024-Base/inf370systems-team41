@@ -12,11 +12,12 @@ import { ConfirmDeleteDailyHourComponent } from '../confirm-delete-daily-hour/co
   templateUrl: './daily-hours-profile.component.html',
   styleUrls: ['./daily-hours-profile.component.scss']
 })
+
 export class DailyHoursProfileComponent implements OnInit {
   dailyHours: DailyHours[] = [];
-  employees: any[] = [];
+  employees: Employee[] = [];
   isLoading: boolean = true;
-  dailyHoursData: any[] = [];
+  dailyHoursData: DailyHours[] = [];
   filterDate: Date | null = null;
   selectedDate: string | null = null;
   filterEmployeeName: string = '';
@@ -24,10 +25,9 @@ export class DailyHoursProfileComponent implements OnInit {
   selectedWeek: Date = new Date();
   endOfWeek: Date = new Date();
   
-  groupedDailyHoursData: { [key: string]: { [key: string]: DailyHours[] } } = {};
+  groupedDailyHoursData: { [key: string]: { [key: string]: { totalHours: number; hoursDetails: DailyHours[] } } } = {};
 
   daysOfWeek: string[] = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
-
 
   constructor(private employeeService: EmployeeService, private dialog: MatDialog) {}
 
@@ -40,15 +40,15 @@ export class DailyHoursProfileComponent implements OnInit {
   
   fetchData(): void {
     this.isLoading = true;
-    
+
     this.employeeService.getAllEmployees().subscribe(
       (results) => {
         this.employees = results;
-        console.log('Employees:', this.employees); // Check employees data
+        console.log('Employees:', this.employees);
         this.employeeService.getEmployeeDailyHours().subscribe(
           (hoursResults) => {
             this.dailyHoursData = hoursResults;
-            console.log('Daily Hours:', this.dailyHoursData); // Check daily hours data
+            console.log('Daily Hours:', this.dailyHoursData);
             this.groupDailyHoursByWeek();
             this.isLoading = false;
           },
@@ -64,7 +64,6 @@ export class DailyHoursProfileComponent implements OnInit {
     );
   }
   
-  
   navigateWeek(direction: number): void {
     this.selectedWeek.setDate(this.selectedWeek.getDate() + direction * 7);
     this.selectedWeek = this.getStartOfWeek(this.selectedWeek);
@@ -72,45 +71,55 @@ export class DailyHoursProfileComponent implements OnInit {
     this.endOfWeek.setDate(this.endOfWeek.getDate() + 6);
     this.groupDailyHoursByWeek();
   }
-  
 
-getStartOfWeek(date: Date): Date {
-  const start = new Date(date);
-  const day = start.getDay();
-  const diff = start.getDate() - day + (day === 0 ? -6 : 1); // Adjust when day is Sunday
-  return new Date(start.setDate(diff));
+  getStartOfWeek(date: Date): Date {
+    const start = new Date(date);
+    const day = start.getDay();
+    const diff = start.getDate() - day + (day === 0 ? -6 : 1); // Adjust when day is Sunday
+    return new Date(start.setDate(diff));
+  }
+
+  groupDailyHoursByWeek(): void {
+    const startOfWeek = this.getStartOfWeek(this.selectedWeek);
+    this.endOfWeek = new Date(startOfWeek);
+    this.endOfWeek.setDate(this.endOfWeek.getDate() + 6);
+
+    console.log('Start of Week:', startOfWeek);
+    console.log('End of Week:', this.endOfWeek);
+
+    this.groupedDailyHoursData = this.dailyHoursData.reduce((acc: {
+        [key: string]: { 
+            [email: string]: { 
+                totalHours: number; 
+                hoursDetails: DailyHours[] 
+            } 
+        }
+    }, hour) => {
+        const workDate = new Date(hour.WorkDate);
+        workDate.setHours(0, 0, 0, 0); // Normalize date
+
+        console.log('Processing WorkDate:', workDate);
+
+        if (workDate >= startOfWeek && workDate <= this.endOfWeek) {
+            const dayKey = workDate.toISOString().split('T')[0];
+            console.log('Processing WorkDate:', workDate, 'as DayKey:', dayKey);
+
+            if (!acc[dayKey]) acc[dayKey] = {};
+
+            const email = this.getEmployeeEmailById(hour.EmployeeId);
+            if (email) {
+                if (!acc[dayKey][email]) {
+                    acc[dayKey][email] = { totalHours: 0, hoursDetails: [] };
+                }
+                acc[dayKey][email].totalHours += hour.Hours;
+                acc[dayKey][email].hoursDetails.push(hour);
+            }
+        }
+        return acc;
+    }, {} as { [key: string]: { [email: string]: { totalHours: number; hoursDetails: DailyHours[] } } });
+
+    console.log('Grouped Daily Hours Data:', this.groupedDailyHoursData);
 }
-
-
-groupDailyHoursByWeek(): void {
-  const startOfWeek = this.getStartOfWeek(this.selectedWeek);
-  this.endOfWeek = new Date(startOfWeek);
-  this.endOfWeek.setDate(this.endOfWeek.getDate() + 6);
-
-  console.log('Start of Week:', startOfWeek);
-  console.log('End of Week:', this.endOfWeek);
-
-  this.groupedDailyHoursData = this.dailyHoursData.reduce((acc, hour) => {
-    const workDate = new Date(hour.workDate); 
-    workDate.setHours(0, 0, 0, 0); 
-
-    if (workDate >= startOfWeek && workDate <= this.endOfWeek) {
-      const dayKey = workDate.toISOString().split('T')[0];
-      if (!acc[dayKey]) acc[dayKey] = {};
-
-      const email = this.getEmployeeEmailById(hour.employeeId);
-      if (email) {
-        if (!acc[dayKey][email]) acc[dayKey][email] = [];
-        acc[dayKey][email].push(hour);
-      }
-    }
-    return acc;
-  }, {} as { [key: string]: { [key: string]: DailyHours[] } });
-
-  console.log('Grouped Daily Hours Data:', this.groupedDailyHoursData);
-}
-
-
 
 
   getEmployeeEmailById(employeeId: number): string | undefined {
@@ -126,19 +135,21 @@ groupDailyHoursByWeek(): void {
   getDateString(dayIndex: number): string {
     const date = new Date(this.getStartOfWeek(this.selectedWeek));
     date.setDate(date.getDate() + dayIndex);
-    console.log('Generated Date String for Day Index', dayIndex, ':', date.toISOString().split('T')[0]);
-    return date.toISOString().split('T')[0];
+    const dateString = date.toISOString().split('T')[0];
+    console.log('Generated Date String for Day Index', dayIndex, ':', dateString);
+    
+    if (this.groupedDailyHoursData[dateString]) {
+        console.log('Data exists for:', dateString, this.groupedDailyHoursData[dateString]);
+    } else {
+        console.log('No data for:', dateString);
+    }
+    
+    return dateString;
   }
-  
 
   getEmployeeEmails(dayKey: string): string[] {
     return Object.keys(this.groupedDailyHoursData[dayKey] || {});
   }
-
-  // navigateWeek(direction: number): void {
-  //   this.selectedWeek.setDate(this.selectedWeek.getDate() + direction * 7);
-  //   this.groupDailyHoursByWeek();
-  // }
 
   onDeleteDailyHour(dailyHourId: number): void {
     const dialogRef = this.dialog.open(ConfirmDeleteDailyHourComponent, {
@@ -160,11 +171,13 @@ groupDailyHoursByWeek(): void {
       }
     });
   }
+
   clearData(): void {
     this.selectedDate = null;
     this.selectedEmployeeEmail = '';
     this.fetchData();
   }
+
   onNameChange(event: any): void {
     const name = event.target.value.trim();
     if (name) {
@@ -203,5 +216,4 @@ groupDailyHoursByWeek(): void {
       this.clearData();
     }
   }
-  
 }

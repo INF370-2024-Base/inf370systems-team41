@@ -32,53 +32,53 @@
                     <label for="filterEmployeeName">Filter by Employee Name:</label>
                     <select id="filterEmployeeName" class="form-control" (change)="onNameChange($event)" [(ngModel)]="selectedEmployeeEmail">
                         <option disabled selected value="">Select an employee</option>
-                        <option *ngFor="let employee of employees" [value]="employee.email">
-                            {{ employee.firstName }} {{ employee.lastName }}
+                        <option *ngFor="let employee of employees" [value]="employee.EmailAddress">
+                            {{ employee.FirstName }} {{ employee.LastName }}
                         </option>
                     </select>
                 </div>
             </div>
-
+    
             <div class="d-flex justify-content-between align-items-center mb-3">
                 <button (click)="clearData()" class="btn btn-outline-secondary">Clear filter</button>
                 <a href="#" class="btn btn-primary rounded-btn" style="margin-right: 10px;" routerLink="/captureEmployeeDailyHours">Capture Hour</a>
             </div>
-
-         <!-- Week Navigation and Display -->
-<div class="d-flex justify-content-between align-items-center mb-3">
-    <button (click)="navigateWeek(-1)" class="btn btn-outline-secondary">Previous Week</button>
-    <h3>{{ selectedWeek | date: 'MMMM d, y' }} - {{ endOfWeek | date: 'MMMM d, y' }}</h3>
-    <button (click)="navigateWeek(1)" class="btn btn-outline-secondary">Next Week</button>
-</div>
-
-<!-- Daily Hours Cards by Day of the Week -->
-<!-- Daily Hours Cards by Day of the Week -->
-<div class="row">
-    <div class="col-md-4 col-sm-12 mb-2" *ngFor="let day of daysOfWeek; let i = index">
-      <div class="card">
-        <div class="card-header">
-          {{ day }}, {{ getDateString(i) | date: 'MMMM d, y' }}
-        </div>
-        <div class="card-body">
-          <pre>{{ groupedDailyHoursData[getDateString(i)] | json }}</pre> <!-- Inspect the data -->
-          <ul *ngIf="groupedDailyHoursData[getDateString(i)]">
-            <li *ngFor="let employeeEmail of getEmployeeEmails(getDateString(i))">
-              <strong>{{ getEmployeeName(employeeEmail) }}</strong>
-              <ul>
-                <li *ngFor="let hour of groupedDailyHoursData[getDateString(i)][employeeEmail]">
-                  {{ hour.Hours }} hours
-                  <button (click)="onDeleteDailyHour(hour.EmployeeId)" class="btn btn-outline-danger btn-sm">
-                    Delete
-                  </button>
-                </li>
-              </ul>
-            </li>
-          </ul>
-          <p *ngIf="!groupedDailyHoursData[getDateString(i)]">No data</p>
-        </div>
-      </div>
-    </div>
-  </div>
+    
+            <!-- Week Navigation and Display -->
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <button (click)="navigateWeek(-1)" class="btn btn-outline-secondary">Previous Week</button>
+                <h3>{{ selectedWeek | date: 'MMMM d, y' }} - {{ endOfWeek | date: 'MMMM d, y' }}</h3>
+                <button (click)="navigateWeek(1)" class="btn btn-outline-secondary">Next Week</button>
+            </div>
+    
+            <!-- Daily Hours Cards by Day of the Week -->
+            <div class="row">
+                <div class="col-md-4 col-sm-12 mb-2" *ngFor="let day of daysOfWeek; let i = index">
+                    <div class="card">
+                        <div class="card-header">
+                            {{ day }}, {{ getDateString(i) | date: 'MMMM d, y' }}
+                        </div>
+                        <div class="card-body">
+                            <ul *ngIf="groupedDailyHoursData[getDateString(i)]">
+                                <li *ngFor="let employeeEmail of getEmployeeEmails(getDateString(i))">
+                                    <strong>{{ getEmployeeName(employeeEmail) }}</strong>: 
+                                    {{ groupedDailyHoursData[getDateString(i)][employeeEmail].totalHours || 0 }} hours
+                                    <ul>
+                                        <li *ngFor="let hour of groupedDailyHoursData[getDateString(i)][employeeEmail].hoursDetails">
+                                            {{ hour.Hours }} hours
+                                            <button (click)="onDeleteDailyHour(hour.EmployeeId)" class="btn btn-outline-danger btn-sm">
+                                                Delete
+                                            </button>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            <p *ngIf="!groupedDailyHoursData[getDateString(i)]">No data</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    
   
   
 
