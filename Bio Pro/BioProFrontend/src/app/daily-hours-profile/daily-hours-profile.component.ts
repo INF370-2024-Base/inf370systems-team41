@@ -48,18 +48,14 @@ export class DailyHoursProfileComponent implements OnInit {
         (results) => {
             this.employees = results;
             console.log('Employees fetched:', this.employees);
+            
             this.employeeService.getEmployeeDailyHours().subscribe(
                 (hoursResults) => {
                     this.dailyHoursData = hoursResults;
                     console.log('Daily Hours fetched:', this.dailyHoursData);
-
-                    // Filter out entries with undefined WorkDate
-                    this.dailyHoursData = this.dailyHoursData.filter(hour => hour.WorkDate !== undefined);
-
-                    this.zone.run(() => {
-                        this.groupDailyHoursByWeek();
-                        this.isLoading = false;
-                    });
+                    
+                    this.groupDailyHoursByWeek();  // Process the data after fetching
+                    this.isLoading = false;
                 },
                 (error) => {
                     console.error('Error fetching daily hours:', error);
@@ -71,7 +67,7 @@ export class DailyHoursProfileComponent implements OnInit {
             console.error('Error fetching employees:', error);
         }
     );
-  }
+}
 
   
   navigateWeek(direction: number): void {
@@ -89,48 +85,46 @@ export class DailyHoursProfileComponent implements OnInit {
     return new Date(start.setDate(diff));
   }
 
-
   groupDailyHoursByWeek(): void {
-    const startOfWeek = this.getStartOfWeek(this.selectedWeek);
-    this.endOfWeek = new Date(startOfWeek);
-    this.endOfWeek.setDate(this.endOfWeek.getDate() + 6);
-
     // Reset the grouped data structure
     this.groupedDailyHoursData = {};
 
-    console.log('Start of Week:', startOfWeek);
-    console.log('End of Week:', this.endOfWeek);
+    console.log('Daily Hours Data:', this.dailyHoursData);
+    console.log('Employees Data:', this.employees);
 
-    this.dailyHoursData.forEach(hour => {
-        // Extract the date from the WorkDate and normalize it
-        const workDate = new Date(hour.WorkDate).toISOString().split('T')[0];
-        console.log('Processing WorkDate:', workDate, 'for EmployeeId:', hour.EmployeeId);
+    this.dailyHoursData.forEach((hour: any) => {
+        // Access the nested WorkDate and EmployeeId
+        const workDate = new Date(hour.workDate || hour.WorkDate || (hour.employees[0]?.workDate));
+        const employeeId = hour.EmployeeId || hour.employeeId || (hour.employees[0]?.employeeId);
 
-        // Initialize the date in the grouped data structure if not already present
-        if (!this.groupedDailyHoursData[workDate]) {
-            console.log(`Initializing group for ${workDate}`);
-            this.groupedDailyHoursData[workDate] = [];
+        if (!workDate || !employeeId || isNaN(workDate.getTime())) {
+            console.log('Skipping entry due to missing or invalid WorkDate or EmployeeId:', hour);
+            return;
         }
 
-        // Find the employee associated with this entry
-        const employee = this.employees.find(emp => emp.EmployeeId === hour.EmployeeId);
-        if (employee) {
-            console.log('Matched Employee:', employee.FirstName, employee.LastName);
+        const formattedDate = workDate.toISOString().split('T')[0];
 
-            // Add the employee's name and hours to the array for this date
-            this.groupedDailyHoursData[workDate].push({
-                employeeName: `${employee.FirstName} ${employee.LastName}`,
-                hours: hour.Hours
-            });
-        } else {
-            console.log('No matching employee found for EmployeeId:', hour.EmployeeId);
+        // Ensure there's a group for the given date
+        if (!this.groupedDailyHoursData[formattedDate]) {
+            this.groupedDailyHoursData[formattedDate] = [];
         }
+
+        // Find the corresponding employee in the main employees array
+        const employee = this.employees.find(e => e.EmployeeId === employeeId);
+        if (!employee) {
+            console.log('Employee not found for EmployeeId:', employeeId);
+            return;
+        }
+
+        // Add the employee and their hours to the group
+        this.groupedDailyHoursData[formattedDate].push({
+            employeeName: `${employee.FirstName} ${employee.LastName}`,
+            hours: hour.Hours || hour.hours
+        });
     });
 
-    // Log the final grouped data to see the structure before rendering
-    console.log('Final Grouped Daily Hours Data:', this.groupedDailyHoursData);
+    console.log('Final Grouped Daily Hours Data:', JSON.stringify(this.groupedDailyHoursData, null, 2));
 }
-
 
 
 
