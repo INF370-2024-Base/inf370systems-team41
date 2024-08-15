@@ -44,43 +44,6 @@
             <a href="#" class="btn btn-primary rounded-btn" routerLink="/captureEmployeeDailyHours">Capture Hour</a>
         </div>
 
-      <!-- Week Navigation and Display -->
-<div class="d-flex justify-content-between align-items-center mb-3">
-    <button (click)="navigateWeek(-1)" class="btn btn-outline-secondary">Previous Week</button>
-    <h3>{{ selectedWeek | date: 'MMMM d, y' }} - {{ endOfWeek | date: 'MMMM d, y' }}</h3>
-    <button (click)="navigateWeek(1)" class="btn btn-outline-secondary">Next Week</button>
-</div>
-
-<!-- Debugging Information -->
-<div *ngIf="groupedDailyHoursData">
-    <pre>{{ groupedDailyHoursData | json }}</pre>
-</div>
-
-<!-- Daily Hours Cards by Day of the Week -->
-<div class="row">
-    <div class="col-md-4 col-sm-12 mb-2" *ngFor="let day of daysOfWeek; let i = index">
-        <div class="card">
-            <div class="card-header">
-                <!-- Display day and corresponding date -->
-                {{ day }}, {{ getDateString(i) | date: 'MMMM d, y' }}
-            </div>
-            <div class="card-body">
-                <!-- Check if there is any data for the current date -->
-                <ul *ngIf="groupedDailyHoursData[getDateString(i)]?.length">
-                    <!-- Loop through records for this specific date -->
-                    <li *ngFor="let record of groupedDailyHoursData[getDateString(i)]">
-                        <strong>{{ record.employeeName }}</strong>: 
-                        {{ record.hours }} hours
-                    </li>
-                </ul>
-                <!-- Show 'No data' message if there's no record for this date -->
-                <p *ngIf="!groupedDailyHoursData[getDateString(i)]?.length">
-                    No data
-                </p>
-            </div>
-        </div>
-    </div>
-</div>
     </div>
 </div>
   
