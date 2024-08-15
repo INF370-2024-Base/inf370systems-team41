@@ -5,6 +5,7 @@ import { Chart, ChartConfiguration, ChartItem, registerables } from 'chart.js';
 import { StockServices } from '../services/stock.service';
 import { WriteOffModalComponent } from '../write-off-modal/write-off-modal.component';
 import { CaptureNewStockModalComponent } from '../capture-new-stock-modal/capture-new-stock-modal.component';
+import { DataService } from '../services/login.service';
 
 @Component({
   selector: 'app-stock',
@@ -27,7 +28,7 @@ export class StockComponent implements OnInit, AfterViewInit {
   belowMinStock: any[] = [];
 
 
-  constructor(private stockService: StockServices, public dialog: MatDialog, private snackBar: MatSnackBar) { }
+  constructor(private stockService: StockServices, public dialog: MatDialog, private snackBar: MatSnackBar,private dataService:DataService) { }
 
   ngOnInit(): void {
     this.fetchData();
@@ -145,6 +146,8 @@ export class StockComponent implements OnInit, AfterViewInit {
       if (result) {
         this.stockService.addStockWriteOff(result).subscribe(
           response => {
+            console.log(result)
+            this.dataService.addTransaction("Put","Wrote off stock with Id:"+ result.stockId+".Amount written off:"+result.quantityWrittenOff+".Reason:"+result.reason)
             this.fetchData();
             this.snackBar.open('Stock successfully written off', 'Close', {
               duration: 3000
@@ -171,6 +174,8 @@ export class StockComponent implements OnInit, AfterViewInit {
       if (result) {
         this.stockService.captureNewStock(result).subscribe(
           response => {
+            console.log(result)
+            this.dataService.addTransaction("Put","Captured new stock with id:"+ result.stockId+".Amount added:"+result.amountAdded)
             this.fetchData();
             this.snackBar.open('Stock successfully captured', 'Close', {
               duration: 3000

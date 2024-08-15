@@ -8,6 +8,7 @@ import { SystemOrderViewModel } from '../shared/SystemOrderViewModel ';
 import { MediaFileViewModel } from '../shared/SystemOrderViewModel ';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatFormFieldControl } from '@angular/material/form-field';
+import { DataService } from '../services/login.service';
 @Component({
   selector: 'app-edit-order-modal',
   templateUrl: './edit-order-modal.component.html',
@@ -42,6 +43,7 @@ export class EditOrderModalComponent implements OnInit {
     private sanitizer: DomSanitizer,
     private datePipe: DatePipe,
     private snackBar: MatSnackBar,
+    private loginService:DataService
   ) {
     this.editForm = this.formBuilder.group({
       OrderId: [{ value: '', disabled: true }, Validators.required],
@@ -264,6 +266,7 @@ export class EditOrderModalComponent implements OnInit {
             mediaFileViewModel.SystemOrderId = viewModel.OrderId;
             return mediaFileViewModel;
         });
+        
     } catch (error) {
         console.error('Error while mapping mediaFileViewModels:', error);
         throw error; // Rethrow the error after logging it
@@ -274,6 +277,13 @@ export class EditOrderModalComponent implements OnInit {
 
     this.dataService.updateOrder(viewModel).subscribe(
         () => {
+          if(viewModel.mediaFileViewModels!=null)
+          {
+            viewModel.mediaFileViewModels.forEach(element => {
+              this.loginService.addTransaction("Post","Added mediafile "+element.FileName)
+            });
+            this.loginService.addTransaction("Put","Edited order with ID: "+viewModel.OrderId)
+          }
             console.log('Order updated successfully');
             this.dialogRef.close('Order success');
         },

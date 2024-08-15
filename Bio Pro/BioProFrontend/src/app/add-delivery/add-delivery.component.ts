@@ -5,6 +5,7 @@ import { error } from 'console';
 import { HttpErrorResponse } from '@angular/common/http';
 import { DeliverAddViewModel } from '../shared/deliverAddViewModel';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { DataService } from '../services/login.service';
 @Component({
   selector: 'app-add-delivery',
   templateUrl: './add-delivery.component.html',
@@ -12,7 +13,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class AddDeliveryComponent implements OnInit {
 
-  constructor(private snackBar:MatSnackBar,private deliveryService:DeliveryService,private orderService:OrderService) { 
+  constructor(private snackBar:MatSnackBar,private deliveryService:DeliveryService,private orderService:OrderService,private dataService:DataService) { 
 
   }
 orders:any[]=[]
@@ -53,6 +54,7 @@ email:any
     };
     this.deliveryService.createdelivery(delivery).subscribe(
       result=>{
+        this.dataService.addTransaction("Post","User created delivery for order with id:"+ delivery.SystemOrderId)
       console.log(result)
       location.reload()
       },

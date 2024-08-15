@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { ProceduralTimelineViewModel } from '../shared/proceduralTimelineViewModel';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ProceduralTimelineService } from '../services/proceduraltimeline.services';
+import { DataService } from '../services/login.service';
 
 @Component({
   selector: 'app-add-order-proceduraltimeline',
@@ -27,7 +28,8 @@ export class AddProceduralTimeline implements OnInit {
     private orderService: OrderService,
     private router: Router,
     private snackBar: MatSnackBar,
-    private timelineServices: ProceduralTimelineService
+    private timelineServices: ProceduralTimelineService,
+    private loginService:DataService
   ) {
     this.timelineForm = this.fb.group({
       description: ['', Validators.required]
@@ -76,6 +78,7 @@ export class AddProceduralTimeline implements OnInit {
           this.proceduralTimeline.TimelineDetail = this.timelineForm.value.description;
           this.timelineServices.addOrder(this.proceduralTimeline).subscribe(result=>
             {
+              this.loginService.addTransaction("Post","Added procedural timeline: "+this.proceduralTimeline.TimelineDetail)
               console.log(result)
               location.reload()
             },

@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { StockServices } from '../services/stock.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { DataService } from '../services/login.service';
 
 @Component({
   selector: 'app-edit-stock-type',
@@ -20,7 +21,7 @@ export class EditStockTypeComponent implements OnInit {
     private stockService: StockServices,
     private snackBar: MatSnackBar,
     private dialog: MatDialog,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,private loginService:DataService
   ) {
     this.editForm = this.formBuilder.group({
       StockTypeId: [this.data.type.stockTypeId, Validators.required],
@@ -51,6 +52,7 @@ export class EditStockTypeComponent implements OnInit {
       // Call the service to save the updated category
       this.stockService.EditStockType(updatedType).subscribe(
         (response) => {
+          this.loginService.addTransaction("Put","Edited stock type: "+updatedType.Description)
           this.snackBar.open('Stock category updated successfully', 'Close', {
             duration: 2000,
           });

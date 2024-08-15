@@ -8,6 +8,7 @@ import { EditOrderModalComponent } from '../edit-order-modal/edit-order-modal.co
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
+import { DataService } from '../services/login.service';
 
 @Component({
   selector: 'app-orders',
@@ -39,7 +40,7 @@ export class OrdersComponent implements OnInit {
   selectedOrderForStatus: any = null;
   originalOrders:any[]=[]
   baseUrl: string ='https://localhost:44315/Api/';
-  constructor(private dialog: MatDialog,private http: HttpClient,private dataservices:OrderService,private snackBar:MatSnackBar) { }
+  constructor(private dialog: MatDialog,private http: HttpClient,private dataservices:OrderService,private snackBar:MatSnackBar,private loginService:DataService) { }
 
   ngAfterViewChecked(): void {
 
@@ -127,6 +128,7 @@ downloadFile(base64String: string, fileName: string) {
   document.body.appendChild(link);
   link.click();
   document.body.removeChild(link);
+  this.loginService.addTransaction("Exported","Exported mediafile "+fileName+".")
 }
   searchOrders() {
     if (this.orderId.trim() !== '') {
@@ -257,6 +259,7 @@ downloadFile(base64String: string, fileName: string) {
       if (result) {
         this.dataservices.deleteMediaFile(mediaFileId).subscribe(
           () => {
+            this.loginService.addTransaction("Delete","Deleted mediafile with ID:"+mediaFileId)
             this.showSnackBar('Successfully deleted media file');
             setTimeout(() => {
               location.reload(); // Reload or update data as needed
@@ -280,6 +283,7 @@ downloadFile(base64String: string, fileName: string) {
     if (result) {
       // If the user confirms, delete the event
       this.dataservices.CancelOrder(id).subscribe(() => {
+        this.loginService.addTransaction("Put","Cancelled an order. Order ID:"+id)
         console.log('Order canceled:');
         dialogRefCancel.close(true);
         this.showSnackBar('Canceled order:'+id)

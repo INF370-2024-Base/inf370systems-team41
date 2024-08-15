@@ -5,6 +5,7 @@ import { AddStock } from '../shared/Stock';
 import { HttpErrorResponse } from '@angular/common/http';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import { DataService } from '../services/login.service';
 
 @Component({
   selector: 'app-add-stock',
@@ -20,7 +21,7 @@ export class AddStockComponent implements OnInit {
     nonNegative: false
   };
 
-  constructor(private stockService: StockServices, private fb: FormBuilder, private snackBar: MatSnackBar, private router: Router) {
+  constructor(private stockService: StockServices, private fb: FormBuilder, private snackBar: MatSnackBar, private router: Router,private loginService:DataService) {
     this.captureStockForm = this.fb.group({
       stockCategoryId: ['', Validators.required],
       supplierId: ['', Validators.required],
@@ -82,6 +83,7 @@ export class AddStockComponent implements OnInit {
       const captureStockData: AddStock = this.captureStockForm.value;
       this.stockService.addStock(captureStockData).subscribe(
         response => {
+          this.loginService.addTransaction("Post","Added stock : "+captureStockData.stockName)
           console.log('Stock captured successfully', response);
           this.snackBar.open('Successfully added stock item.', 'Close', {
             duration: 3000,

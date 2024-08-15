@@ -6,6 +6,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { MediaFileViewModel } from '../shared/SystemOrderViewModel ';
 import { Router } from '@angular/router';
+import { DataService } from '../services/login.service';
 
 @Component({
   selector: 'app-orders-awaiting-dental-design',
@@ -16,7 +17,7 @@ export class OrdersAwaitingDentalDesignComponent implements OnInit {
   addDentalDesign!: FormGroup;
   uploadedFileUrls!: { url: SafeUrl, name: string }
   uploadedFiles!: CustomFile 
-  constructor(private router:Router,private orderService:OrderService,private formBuilder: FormBuilder,private snackbar:MatSnackBar, private sanitizer:DomSanitizer) 
+  constructor(private router:Router,private orderService:OrderService,private loginService:DataService,private formBuilder: FormBuilder,private snackbar:MatSnackBar, private sanitizer:DomSanitizer) 
   {  this.addDentalDesign = this.formBuilder.group({
     MediaFiles: [null],
     OrderId:['', Validators.required]
@@ -88,6 +89,7 @@ onSubmit(orderId:string): void {
       this.orderService.sendDentalDesign(viewModel).subscribe(
         result=>
           {
+            this.loginService.addTransaction("Put","Sent dental design for approval for order with id:"+ viewModel.DentalDesign.SystemOrderId+".")
             this.showSnackBar("Successfully added dental design")
             this.router.navigate(['/orders']);
           }

@@ -4,6 +4,7 @@ import { EmployeeService } from '../services/employee.service';
 import { DailyHours } from '../shared/dailyhours';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ConfirmDeleteDailyHourComponent } from '../confirm-delete-daily-hour/confirm-delete-daily-hour.component';
+import { DataService } from '../services/login.service';
 
 @Component({
   selector: 'app-daily-hours-profile',
@@ -20,7 +21,7 @@ export class DailyHoursProfileComponent implements OnInit {
   filterEmployeeName: string = '';
   selectedEmployeeEmail: string = '';
 
-  constructor(private employeeService: EmployeeService, private dialog: MatDialog) {}
+  constructor(private employeeService: EmployeeService, private dialog: MatDialog,private loginService:DataService) {}
 
   ngOnInit(): void {
     this.fetchData();
@@ -97,6 +98,7 @@ export class DailyHoursProfileComponent implements OnInit {
       if (result) {
         this.employeeService.deleteEmployeeDailyHours(dailyHourId).subscribe(
           () => {
+            this.loginService.addTransaction("Post","Employee daily hours deleted.Employee daily hours ID:"+dailyHourId)
             console.log(`Successfully deleted daily hour with ID: ${dailyHourId}`);
             this.fetchData(); // Refresh the list of daily hours after deletion
           },

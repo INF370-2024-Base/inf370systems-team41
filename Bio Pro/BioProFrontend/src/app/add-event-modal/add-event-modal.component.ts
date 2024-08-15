@@ -7,6 +7,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { EditCalanderEventViewModel } from '../shared/EditCalanderEvent';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DatePipe } from '@angular/common';
+import { DataService } from '../services/login.service';
 
 @Component({
   selector: 'app-add-event-modal',
@@ -20,7 +21,7 @@ export class AddEventModalComponent implements OnInit {
   todayDate = this.datePipe.transform(new Date(this.today.setDate(this.today.getDate())), 'yyyy-MM-dd');
   constructor(
     public dialogRef: MatDialogRef<EventModalComponent>,
-    private calendarService: CalendarService,private snackBar:MatSnackBar,private dialog: MatDialog,private datePipe: DatePipe,private fb:FormBuilder
+    private calendarService: CalendarService,private snackBar:MatSnackBar,private dialog: MatDialog,private datePipe: DatePipe,private fb:FormBuilder,private loginService:DataService
   ) {this.addForm = this.fb.group({
     Description: ['', Validators.required],
     EventInformation: ['', Validators.required],
@@ -47,6 +48,7 @@ export class AddEventModalComponent implements OnInit {
               this.addEvent.CalanderScheduleEventDateTime = this.combineDateAndTime(this.addEvent.CalanderScheduleEventDateTime, this.time);
             const adjustedDateOfEvent = new Date(this.addEvent.CalanderScheduleEventDateTime.setHours(this.addEvent.CalanderScheduleEventDateTime.getHours() + 2))
           this.calendarService.addCalendarEvent(this.addEvent).subscribe(() => {
+            this.loginService.addTransaction("Post","Created patient event:"+ this.addEvent.EventInformation+".Date of event:"+ adjustedDateOfEvent)
           this.dialogRef.close(true);
         }, error => {
           console.error('Error updating event', error);

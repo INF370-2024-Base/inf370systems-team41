@@ -57,6 +57,9 @@ export class EmployeeService {
   CompleteStepAndJob(stepId:number): Observable<any> {
     return this.httpClient.put(`${this.apiUrl}/CompleteStepAndJob/${stepId}`,stepId);
   }
+  GetSystemOrderStepById(stepId:number): Observable<any> {
+    return this.httpClient.get(`${this.apiUrl}/GetStepByID/${stepId}`);
+  }
   getEmployeeDailyHoursByDate(date: Date): Observable<any> {
     // Create query parameters
     const params = new HttpParams().set('date', date.toISOString());

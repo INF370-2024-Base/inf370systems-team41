@@ -3,6 +3,7 @@ import { OrderService } from '../services/order.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { error } from 'console';
 import { HttpErrorResponse } from '@angular/common/http';
+import { DataService } from '../services/login.service';
 
 @Component({
   selector: 'app-approve-order',
@@ -11,7 +12,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 })
 export class ApproveOrderComponent implements OnInit {
 
-  constructor( private dataService: OrderService,private snackBar: MatSnackBar) {}
+  constructor( private dataService: OrderService,private snackBar: MatSnackBar,private loginService:DataService) {}
 pendingOrders:any[]=[]
 pendingOrdersData:any[]=[]
 
@@ -41,6 +42,7 @@ ngOnInit(): void {
   }
   approveOrder(orderId:number){
   this.dataService.apporvePendingOrder(orderId).subscribe(result=>{
+    this.loginService.addTransaction("Put","Approved an order. Order ID:"+orderId)
     console.log(result)
     location.reload()
   },
@@ -52,6 +54,7 @@ ngOnInit(): void {
   }
   rejectOrder(orderId:number){
     this.dataService.dissaprovePendingOrders(orderId).subscribe(result=>{
+      this.loginService.addTransaction("Put","Rejected an order. Order ID:"+orderId)
       console.log(result)
       location.reload()
     })

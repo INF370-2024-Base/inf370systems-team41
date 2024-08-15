@@ -10,6 +10,7 @@ import { PhoneChecker } from '../validators/Validators';
 import { error } from 'console';
 import { DatePipe } from '@angular/common';
 import { DomSanitizer } from '@angular/platform-browser';
+import { DataService } from '../services/login.service';
 
 @Component({
   selector: 'app-add-order',
@@ -46,7 +47,7 @@ export class AddOrderComponent implements OnInit {
     private dataService: OrderService,
     private httpClient: HttpClient,
     private router: Router,
-    private formBuilder: FormBuilder,private snackBar:MatSnackBar,private datePipe: DatePipe,private sanitizer:DomSanitizer
+    private formBuilder: FormBuilder,private snackBar:MatSnackBar,private datePipe: DatePipe,private sanitizer:DomSanitizer,private loginService:DataService
   ) {
     this.addForm = this.formBuilder.group({
       OrderId: ['', [Validators.required,Validators.maxLength(7),Validators.minLength(7)]],
@@ -406,6 +407,7 @@ export class AddOrderComponent implements OnInit {
               console.log(viewModel);
               this.dataService.addOrder(viewModel).subscribe(
                 (result) => {
+                  this.loginService.addTransaction("Post","Created an order. Order ID:"+viewModel.OrderId)
                   console.log('SystemOrder added successfully!');
                   const dueDate = new Date(viewModel.DueDate);
                   const adjustedDueDate = new Date(dueDate);
