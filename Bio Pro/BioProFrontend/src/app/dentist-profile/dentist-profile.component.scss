@@ -6,10 +6,14 @@ body {
     animation: gradientAnimation 20s ease infinite;
     font-family: 'Roboto', sans-serif;
     color: #333;
-    padding: 20px;
-    overflow-x: hidden;
-    overflow-y: auto;
-}
+    margin: 0;
+    padding: 0;
+    height:max-content;
+    
+    display: flex;
+    flex-direction: column;
+    
+  }
 
 /* Animated background gradients */
 @keyframes gradientAnimation {

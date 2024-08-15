@@ -4,9 +4,14 @@ body {
     animation: gradientAnimation 20s ease infinite;
     font-family: 'Roboto', sans-serif;
     color: #333;
-    padding: 20px;
-    overflow-y: auto; /* Allow vertical scrolling */
-}
+    margin: 0;
+    padding: 0;
+    height:max-content;
+    
+    display: flex;
+    flex-direction: column;
+    
+  }
 
 @keyframes gradientAnimation {
     0% { background-position: 0% 50%; }

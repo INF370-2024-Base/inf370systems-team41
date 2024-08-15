@@ -1,13 +1,16 @@
 .delivery-body {
-    background: linear-gradient(120deg, #aed9e0, #c2e2f3, #eaf1fa, #c2e2f3, #aed9e0);
-    background-size: 400% 400%;
-    animation: gradientAnimation 20s ease infinite;
-    font-family: 'Roboto', sans-serif;
-    color: #333;
-    padding: 20px;
-    margin: 0 auto;
-    overflow-y: auto; /* Allow vertical scrolling */
-    max-height: 80vh;  /* Allow vertical scrolling */
+  background: linear-gradient(120deg, #aed9e0, #c2e2f3, #eaf1fa, #c2e2f3, #aed9e0);
+  background-size: 400% 400%;
+  animation: gradientAnimation 20s ease infinite;
+  font-family: 'Roboto', sans-serif;
+  color: #333;
+  margin: 0;
+  padding: 0;
+  height:max-content;
+  
+  display: flex;
+  flex-direction: column;
+  
 }
 
 .delivery-card {
