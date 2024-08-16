@@ -6,12 +6,16 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { ConfirmDeleteDailyHourComponent } from '../confirm-delete-daily-hour/confirm-delete-daily-hour.component';
 import { formatDate } from '@angular/common';
 import { CaptureEmployeeHoursComponent } from '../capture-employee-hours/capture-employee-hours.component';
+import { ChangeDetectorRef } from '@angular/core';
+
 
 @Component({
   selector: 'app-daily-hours-profile',
   templateUrl: './daily-hours-profile.component.html',
   styleUrls: ['./daily-hours-profile.component.scss']
 })
+
+
 export class DailyHoursProfileComponent implements OnInit {
   dailyHours: DailyHours[] = [];
   employees: any[] = [];
@@ -19,6 +23,7 @@ export class DailyHoursProfileComponent implements OnInit {
   dailyHoursData: any[] = [];
   filteredDailyHours: any[] = []; // To hold the filtered data
   selectedDate: Date = new Date();
+  selectedIndex: number = 0; // Add this line
   filterEmployeeName: string = '';
   selectedEmployeeEmail: string = '';
   displayedColumns: string[] = ['date', 'hours', 'employee', 'action'];
@@ -29,7 +34,7 @@ export class DailyHoursProfileComponent implements OnInit {
   ];
   selectedMonth: number | null = null;
 
-  constructor(private employeeService: EmployeeService, private dialog: MatDialog) {}
+  constructor(private employeeService: EmployeeService, private dialog: MatDialog, private cdr: ChangeDetectorRef ) {}
 
   ngOnInit(): void {
     this.updateWeekDays(this.selectedDate);
@@ -37,29 +42,34 @@ export class DailyHoursProfileComponent implements OnInit {
   }
 
   updateWeekDays(selectedDate: Date): void {
-    const startOfWeek = new Date(selectedDate);
-    startOfWeek.setDate(startOfWeek.getDate() - startOfWeek.getDay() + 1); // Monday
-    const endOfWeek = new Date(startOfWeek);
-    endOfWeek.setDate(startOfWeek.getDate() + 6); // Sunday
-  
+    const startOfWeek = this.getStartOfWeek(selectedDate);
     this.weekDays = [];
-    let currentDate = startOfWeek;
-    while (currentDate <= endOfWeek) {
-      this.weekDays.push({ 
-        label: formatDate(currentDate, 'EEEE, MMMM d, yyyy', 'en-US'), // Assuming this format for label
-        date: new Date(currentDate)
+    for (let i = 0; i < 7; i++) {
+      const currentDate = new Date(startOfWeek);
+      currentDate.setDate(startOfWeek.getDate() + i);
+      this.weekDays.push({
+        label: formatDate(currentDate, 'EEEE, MMMM d, yyyy', 'en-US'),
+        date: currentDate
       });
-      currentDate.setDate(currentDate.getDate() + 1);
     }
+  
+    // Ensure UI updates correctly
+    this.cdr.detectChanges();
+  }
+  
+  
+  trackByDate(index: number, day: { date: Date }): string {
+    return day.date.toISOString(); // Or any other unique identifier for the day
   }
   
   
 
   getStartOfWeek(date: Date): Date {
     const day = date.getDay();
-    const diff = date.getDate() - day + (day === 0 ? -6 : 1); // adjust when day is Sunday
+    const diff = date.getDate() - day + (day === 0 ? -6 : 1); // Adjust when day is Sunday
     return new Date(date.setDate(diff));
   }
+  
 
   fetchData(): void {
     this.isLoading = true;
@@ -89,40 +99,54 @@ export class DailyHoursProfileComponent implements OnInit {
   getEmployeeName(email: string): string {
     const employee = this.employees.find(e => e.email === email);
     return employee ? `${employee.firstName} ${employee.lastName}` : 'Unknown Employee';
+
   }
   
 
   filterDataBySelectedDate(): void {
-    if (this.selectedDate) {
-      // Only proceed if selectedDate is not null
-      const dateToFilter = this.selectedDate;
-      this.filteredDailyHours = this.dailyHoursData.filter(dailyHour => {
-        const workDate = new Date(dailyHour.workDate);
-        return formatDate(workDate, 'yyyy-MM-dd', 'en-US') === formatDate(dateToFilter, 'yyyy-MM-dd', 'en-US');
-      });
-    } else {
-      // Handle case when selectedDate is null, if needed
-      this.filteredDailyHours = this.dailyHoursData;
-    }
+    this.filteredDailyHours = this.dailyHoursData.filter(dailyHour => {
+      const workDate = new Date(dailyHour.workDate);
+      return formatDate(workDate, 'yyyy-MM-dd', 'en-US') === formatDate(this.selectedDate, 'yyyy-MM-dd', 'en-US');
+    });
+    this.cdr.detectChanges(); // Ensure the filtered data triggers a UI update
   }
+  
+  
   
 
   onDateChange(event: any): void {
     this.selectedDate = event.value ? new Date(event.value) : new Date();
     this.filterDataBySelectedDate();
+    this.updateWeekDays(this.selectedDate); // Update weekDays based on the selectedDate
+    this.selectTabForDate(this.selectedDate); // Make sure the correct tab is selected
   }
   
+  selectTabForDate(date: Date): void {
+    const index = this.weekDays.findIndex(day => day.date.toDateString() === date.toDateString());
+    if (index !== -1) {
+      this.selectedIndex = index; // Set the selected index for the tab group
+      this.cdr.detectChanges(); // Trigger change detection
+    }
+  }
   
   onMonthChange(event: any): void {
-    this.selectedMonth = event.value ? parseInt(event.value, 10) : null;
+    this.selectedMonth = event.value ? event.value : null;
     this.filterDataBySelectedDate();
-  }
+}                                                        
+getMonthName(month: number): string {
+  const date = new Date();
+  date.setMonth(month - 1);
+  return formatDate(date, 'MMMM', 'en-US');
+}
 
-  onTabChange(index: number): void {
-    this.selectedDate = this.weekDays[index].date;
-    this.filterDataBySelectedDate(); // Re-filter the data based on the new selected date
-  }
-  
+onTabChange(index: number): void {
+  this.selectedIndex = index;
+  this.selectedDate = this.weekDays[index].date; // Set selectedDate based on the selected tab
+  this.filterDataBySelectedDate();
+  // No need to reset week days to Monday, keep the selected date intact
+  this.cdr.detectChanges(); // Ensure the UI updates correctly
+}
+
 
   clearData(): void {
     this.selectedDate = new Date();
