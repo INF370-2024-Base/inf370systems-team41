@@ -12,75 +12,52 @@
 </head>
 
 <body>
-    <h1>DAILY HOURS</h1>
+<h1 class="text-center my-4">DAILY HOURS</h1>
 
-    <div *ngIf="isLoading" class="text-center">
-        <div class="spinner-border" role="status">
-            <span class="sr-only">Loading...</span>
-        </div>
+<div *ngIf="isLoading" class="text-center">
+    <div class="spinner-border" role="status">
+        <span class="sr-only">Loading...</span>
     </div>
+</div>
 
-    <div *ngIf="!isLoading">
-        <div class="container">
-            <div class="row mb-3">
-                <div class="col-md-6 col-sm-12 mb-2">
-                    <label for="filterDate">Filter by Date:</label>
-                    <input type="date" id="filterDate" class="form-control" (change)="onDateChange($event)" [(ngModel)]="selectedDate" />
-                </div>
-                <div class="col-md-6 col-sm-12 mb-2">
-                    <label for="filterEmployeeName">Filter by Employee Name:</label>
-                    <select id="filterEmployeeName" class="form-control" (change)="onNameChange($event)" [(ngModel)]="selectedEmployeeEmail">
-                        <option disabled selected value="">Select an employee</option>
-                        <option *ngFor="let employee of employees" [value]="employee.email">
-                            {{ employee.firstName }} {{ employee.lastName }}
-                        </option>
-                    </select>
-                </div>
+<div *ngIf="!isLoading">
+    <div class="container">
+        <!-- Filter Section -->
+        <div class="row mb-3">
+            <div class="col-md-6 col-sm-12 mb-2">
+                <label for="filterDate">Filter by Date:</label>
+                <input type="date" id="filterDate" class="form-control" (change)="onDateChange($event)" [(ngModel)]="selectedDate" />
             </div>
-
-            <div class="d-flex justify-content-between align-items-center mb-3">
-                <button (click)="clearData()" class="btn btn-outline-secondary">Clear filter</button>
-                <a href="#" class="btn btn-primary rounded-btn" style="margin-right: 10px;" routerLink="/captureEmployeeDailyHours">Capture Hour</a>
-            </div>
-
-
-            <div class="table-responsive">
-                <table class="table table-bordered  rounded-table">
-                    <thead>
-                        <tr>
-                            <th>Date</th>
-                            <th>Hours</th>
-                            <th>Employee Name</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr *ngFor="let dailyHour of dailyHoursData">
-                            <td>{{ dailyHour.workDate | date }}</td>
-                            <td>{{ dailyHour.hours }}</td>
-                            <td *ngFor="let employee of dailyHour.employees">{{ employee.firstName }} {{ employee.lastName }}</td>
-                            <td>
-                                <button (click)="onDeleteDailyHour(dailyHour.employeeDailyHoursId)" class="btn btn-outline-danger rounded-btn mr-2">
-                                    <i ></i> Delete
-                                </button>
-                            </td>
-                        </tr>
-                        <tr *ngIf="dailyHoursData.length === 0">
-                            <td colspan="4" class="text-center">No matching data found.</td>
-                        </tr>
-                    </tbody>
-                </table>
+            <div class="col-md-6 col-sm-12 mb-2">
+                <label for="filterEmployeeName">Filter by Employee Name:</label>
+                <select id="filterEmployeeName" class="form-control" (change)="onNameChange($event)" [(ngModel)]="selectedEmployeeEmail">
+                    <option disabled selected value="">Select an employee</option>
+                    <option *ngFor="let employee of employees" [value]="employee.EmailAddress">
+                        {{ employee.FirstName }} {{ employee.LastName }}
+                    </option>
+                </select>
             </div>
         </div>
-    </div>
 
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <button (click)="clearData()" class="btn btn-outline-secondary">Clear filter</button>
+            <a href="#" class="btn btn-primary rounded-btn" routerLink="/captureEmployeeDailyHours">Capture Hour</a>
+        </div>
+
+    </div>
+</div>
+  
+
+     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.2/angular.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.1.12/angular-material.min.js"></script>
 </body>
-<div class="help-button-container">
-    <button mat-button [routerLink]="['/help-employee']" >
-      <mat-icon>live_help</mat-icon>
-      <span>Help</span>
-    </button>
-  </div>
+    <div class="help-button-container">
+        <button mat-button [routerLink]="['/help-employee']">
+            <mat-icon>live_help</mat-icon>
+            <span>Help</span>
+        </button>
+    </div>
+
+
 </html>

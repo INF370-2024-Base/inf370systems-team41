@@ -16,6 +16,8 @@ export class EmployeeProfileComponent implements OnInit {
   searchQuery = '';
   jobTitles: any[] = [];
   noResultsFound = false;
+  currentPage = 1;
+  itemsPerPage = 9;
 
   constructor(
     private employeeService: EmployeeService,
@@ -27,6 +29,34 @@ export class EmployeeProfileComponent implements OnInit {
     this.fetchAllEmployees();
     this.getJobTitles();
   }
+  get paginatedEmployees(): any[] {
+    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+    const endIndex = startIndex + this.itemsPerPage;
+    return this.employees.slice(startIndex, endIndex);
+  }
+
+  get totalPages(): number {
+    return Math.ceil(this.employees.length / this.itemsPerPage);
+  }
+
+  goToPage(page: number): void {
+    if (page >= 1 && page <= this.totalPages) {
+      this.currentPage = page;
+    }
+  }
+
+  nextPage(): void {
+    if (this.currentPage < this.totalPages) {
+      this.currentPage++;
+    }
+  }
+
+  previousPage(): void {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+    }
+  }
+
 
   fetchAllEmployees() {
     this.employeeService.getAllEmployees().subscribe(data => {

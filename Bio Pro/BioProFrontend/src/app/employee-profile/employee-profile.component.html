@@ -15,30 +15,29 @@
     <div class="row">
       <div class="col-md-12 d-flex justify-content-between align-items-center mb-3">
         <div class="col-md-6 d-flex align-items-center">
-            <div style="display: flex; gap: 10px; align-items: center; text-align: center;">
-                <mat-form-field class="search-field">
-                    <mat-icon matPrefix>search</mat-icon>
-                    <input matInput [(ngModel)]="searchQuery" placeholder="Search Employee..." (ngModelChange)="onOrderIdChange($event)">
-                </mat-form-field>        
-                <button (click)="searchEmployees()" class="btn btn-outline-primary rounded-btn">Search</button>
-            </div>
+          <div style="display: flex; gap: 10px; align-items: center; text-align: center;">
+            <mat-form-field class="search-field" style="width: 100%; max-width: 900px; padding: 20px 30px; font-size: 20px;">
+              <mat-icon matPrefix style="font-size: 28px;">search</mat-icon>
+              <input matInput [(ngModel)]="searchQuery" placeholder="Search Employee..." (ngModelChange)="onOrderIdChange($event)" style="font-size: 20px; padding: 10px;">
+            </mat-form-field>
+            
+            <button (click)="searchEmployees()" class="btn btn-outline-primary rounded-btn">Search</button>
+          </div>
         </div>
         <div class="col-md-6 d-flex justify-content-end">
-            <a href="#" class="btn btn-primary rounded-btn" routerLink="/addEmployee">Add Employee</a>
+          <a href="#" class="btn btn-primary rounded-btn" routerLink="/addEmployee">Add Employee</a>
         </div>
       </div>
     </div>
     <div class="row" *ngIf="noResultsFound">
       <div class="col-md-12">
-        <div >
-          No employees found for the given search criteria.
-        </div>
+        <div>No employees found for the given search criteria.</div>
       </div>
     </div>
     <div class="row" *ngIf="!noResultsFound">
       <div class="col-md-12">
         <div class="card-container">
-          <div class="card mb-3 example-card" *ngFor="let employee of employees">
+          <div class="card mb-3 example-card" *ngFor="let employee of paginatedEmployees">
             <div class="card-body">
               <div class="card-header">
                 <i class="material-icons example-header-image">person</i>
@@ -56,7 +55,20 @@
         </div>
       </div>
     </div>
+    
+    <div class="row">
+      <div class="col-md-12 d-flex justify-content-between align-items-center pagination">
+          <button class="btn btn-outline-secondary" (click)="previousPage()" [disabled]="currentPage === 1">
+              Previous
+          </button>
+          <span>Page {{currentPage}} of {{totalPages}}</span>
+          <button class="btn btn-outline-secondary" (click)="nextPage()" [disabled]="currentPage === totalPages">
+              Next
+          </button>
+      </div>
   </div>
+  </div>
+  
  
 </body>
 
