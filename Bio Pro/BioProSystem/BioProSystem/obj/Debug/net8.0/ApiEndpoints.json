@@ -645,6 +645,32 @@
   },
   {
     "ContainingType": "BioProSystem.Controllers.EmployeeController",
+    "Method": "GetStepByID",
+    "RelativePath": "api/Employee/GetStepByID/{Id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "Id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[BioProSystem.Models.SystemOrder, BioProSystem, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "BioProSystem.Controllers.EmployeeController",
     "Method": "SearchEmployees",
     "RelativePath": "api/Employee/SearchEmployees",
     "HttpMethod": "GET",
@@ -1011,6 +1037,22 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "BioProSystem.Controllers.LoginController",
+    "Method": "CreateTransaction",
+    "RelativePath": "CreateTransaction",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "vmd",
+        "Type": "BioProSystem.ViewModels.AddAuditTrailViewModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "BioProSystem.Controllers.DeliveryController",
     "Method": "CreateDelivery",
     "RelativePath": "delivery/createDelivery",
@@ -1092,6 +1134,16 @@
     "ContainingType": "BioProSystem.Controllers.OpenOrderController",
     "Method": "GetAllOpenOrders",
     "RelativePath": "GetAllOpenOrders",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "BioProSystem.Controllers.LoginController",
+    "Method": "GetAllTransaction",
+    "RelativePath": "GetAllTransaction",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,

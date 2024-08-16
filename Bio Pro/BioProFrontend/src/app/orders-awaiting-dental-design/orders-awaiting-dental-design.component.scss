@@ -11,7 +11,7 @@ body {
     font-family: 'Roboto', sans-serif; /* Playful font */
     color: #333; /* Dark text color */
     padding: 20px; /* Add some padding */
-    overflow: hidden; /* Hide overflowing content */
+    overflow:scroll; /* Hide overflowing content */
     background: linear-gradient(120deg, #aed9e0, #c2e2f3, #eaf1fa, #c2e2f3, #aed9e0);
     background-size: 400% 400%;
     animation: gradientAnimation 20s ease infinite;

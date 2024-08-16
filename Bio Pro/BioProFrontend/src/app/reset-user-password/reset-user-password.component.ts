@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { UserServices } from '../services/user.service';
 import { ResetPassword } from '../shared/UpdateUser';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { AddAuditTrailViewModels } from '../shared/AddAuditTrailViewModel';
+import { AddAuditTrailViewModels } from '../shared/addAuditTrailViewModel';
 
 import { DataService } from '../services/login.service';
 

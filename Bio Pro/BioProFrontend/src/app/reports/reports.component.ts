@@ -15,6 +15,7 @@ import html2canvas from 'html2canvas';
 import { EmployeeService } from '../services/employee.service';
 import { DeliveryService } from '../services/deliver.service';
 import autoTable from 'jspdf-autotable';
+import { DataService } from '../services/login.service';
 
 
 @Component({
@@ -48,7 +49,7 @@ export class ReportsComponent implements OnInit {
   constructor(private reportsService: ReportsServices, 
     private datePipe: DatePipe, 
     private employeeService:EmployeeService,
-    private deliveryService: DeliveryService ) { }
+    private deliveryService: DeliveryService,private loginService:DataService ) { }
 
     async ngOnInit(): Promise<void> {
       this.getAllOrder();
@@ -152,20 +153,25 @@ export class ReportsComponent implements OnInit {
 
     if (sectionId === 'allOrdersReport') {
       columns = ['Order ID', 'Dentist ID', 'Priority Level', 'Order Date'];
+      this.loginService.addTransaction("Generated","Generated all orders report.")
       data = this.orders.map(order => [order.orderId, order.dentistId, order.priorityLevel, this.formatDate(order.dueDate)]);
     } else if (sectionId === 'orderTypesReport') {
       columns = ['Order Type', 'Order Count'];
       data = this.orderTypeWithCount.map(orderType => [orderType.description, orderType.orderCount]);
       // Add total order count at the end of the table
+      this.loginService.addTransaction("Generated","Generated ordertype with counts report.")
       data.push(['Total', this.totalOrderCount]);
     } else if (sectionId === 'stockTypesReport') {
       columns = ['Stock Type', 'Type Category Count'];
       data = this.stockTypes.map(stockType => [stockType.description, stockType.stockCategoriesCount]);
+      this.loginService.addTransaction("Generated","Generate stock type report.")
       data.push(['Total', this.totalTypeCategoryCount]);
     } else if (sectionId === 'stockItemsReport') {
       columns = ['Stock Category', 'Stock Item Count'];
+      this.loginService.addTransaction("Generated","Generated stock category report.")
       data = this.stockItems.map(stockItem => [stockItem.description, stockItem.stockItemsCount]);
     } else if (sectionId === 'stockWriteOffsReport') {
+      this.loginService.addTransaction("Generated","Generated stock write off report.")
       columns = ['Stock Name', 'Total Quantity Written Off'];
       data = this.groupedStockWriteOffs.map(group => [group.stockName, group.totalQuantityWrittenOff]);
 
@@ -173,6 +179,7 @@ export class ReportsComponent implements OnInit {
       data.push(['Total', this.totalQuantityWrittenOff]);
     } else if (sectionId === 'deliveryReport') {
       // Add total deliveries
+      this.loginService.addTransaction("Generated","Generated delivery report.")
       doc.setFont('helvetica', 'bold');
       doc.setFontSize(14);
       doc.text('Total Deliveries', 10, 70);
@@ -208,6 +215,7 @@ export class ReportsComponent implements OnInit {
       });
     } else if (sectionId === 'employeeHoursReport') {
       // Handle chart for Employee Hours Report
+      this.loginService.addTransaction("Generated","Generated employee hours report.")
       const canvas = document.getElementById('canvas') as HTMLCanvasElement;
       if (canvas) {
         const canvasImg = await html2canvas(canvas);

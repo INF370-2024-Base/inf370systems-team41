@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-dialog.component';
 import { DataService } from './services/login.service';
-import { AddAuditTrailViewModels } from './shared/AddAuditTrailViewModel';
+import { AddAuditTrailViewModels } from './shared/addAuditTrailViewModel';
 
 @Component({
   selector: 'app-root',

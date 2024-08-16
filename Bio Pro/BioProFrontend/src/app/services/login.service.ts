@@ -5,7 +5,7 @@ import { Dentist } from '../shared/dentist';
 import { Employee } from '../shared/employee';
 import { SystemUser } from '../shared/systemuser';
 import { catchError } from 'rxjs/operators';
-import { AddAuditTrailViewModels } from '../shared/AddAuditTrailViewModel';
+import { AddAuditTrailViewModels } from '../shared/addAuditTrailViewModel';
 
 @Injectable({
   providedIn: 'root'

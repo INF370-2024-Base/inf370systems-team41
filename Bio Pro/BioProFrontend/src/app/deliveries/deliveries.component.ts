@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { DeliveryService } from '../services/deliver.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { DataService } from '../services/login.service';
 
 @Component({
   selector: 'app-deliveries',
@@ -16,7 +17,7 @@ export class DeliveriesComponent implements OnInit {
   selectedStatus: string = 'Any';
   searchTerm: string = '';
 
-  constructor(private deliveryService: DeliveryService, private snackBar: MatSnackBar) { }
+  constructor(private deliveryService: DeliveryService, private snackBar: MatSnackBar,private loginService:DataService) { }
 
   ngOnInit(): void {
     this.getDeliveries();
@@ -46,6 +47,7 @@ export class DeliveriesComponent implements OnInit {
 
   updateDeliveryCollected(id: number) {
     this.deliveryService.UpdateDeliveryCollected(id).subscribe(results => {
+      this.loginService.addTransaction("Put","Captured delivery collection. Delivery Id:"+id)
       console.log(this.deliveries);
       this.showSnackbar("Delivery with id:" + id + ", has been updated");
       this.getDeliveries();

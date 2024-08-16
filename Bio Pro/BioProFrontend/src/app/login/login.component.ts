@@ -11,7 +11,7 @@ import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { MatDialog } from '@angular/material/dialog';
 import { ResetPasswordComponent } from '../reset-password/reset-password.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { AddAuditTrailViewModels } from '../shared/AddAuditTrailViewModel';
+import { AddAuditTrailViewModels } from '../shared/addAuditTrailViewModel';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',

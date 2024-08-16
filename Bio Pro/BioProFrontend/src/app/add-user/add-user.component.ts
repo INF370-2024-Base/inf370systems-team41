@@ -9,7 +9,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { HttpErrorResponse } from '@angular/common/http';
 import { PhoneChecker } from '../validators/Validators';
 import { Router } from '@angular/router';
-import { AddAuditTrailViewModels } from '../shared/AddAuditTrailViewModel';
+import { AddAuditTrailViewModels } from '../shared/addAuditTrailViewModel';
 import { DataService } from '../services/login.service';
 
 @Component({
