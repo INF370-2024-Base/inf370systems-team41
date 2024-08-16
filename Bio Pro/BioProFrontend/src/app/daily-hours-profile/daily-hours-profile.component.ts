@@ -23,6 +23,10 @@ export class DailyHoursProfileComponent implements OnInit {
   selectedEmployeeEmail: string = '';
   displayedColumns: string[] = ['date', 'hours', 'employee', 'action'];
   weekDays: { label: string, date: Date }[] = [];
+  months: string[] = [
+    'January', 'February', 'March', 'April', 'May', 'June',
+    'July', 'August', 'September', 'October', 'November', 'December'
+  ];
   selectedMonth: number | null = null;
 
   constructor(private employeeService: EmployeeService, private dialog: MatDialog) {}
@@ -32,18 +36,24 @@ export class DailyHoursProfileComponent implements OnInit {
     this.fetchData();
   }
 
-  updateWeekDays(date: Date): void {
-    const startOfWeek = this.getStartOfWeek(date);
-    this.weekDays = Array.from({ length: 7 }).map((_, i) => {
-      const day = new Date(startOfWeek);
-      day.setDate(startOfWeek.getDate() + i);
-      return {
-        label: formatDate(day, 'EEEE', 'en-US'), // "EEEE" for the full name of the day
-        date: day
-      };
-    });
-    this.filterDataBySelectedDate(); // Filter data whenever the week days are updated
+  updateWeekDays(selectedDate: Date): void {
+    const startOfWeek = new Date(selectedDate);
+    startOfWeek.setDate(startOfWeek.getDate() - startOfWeek.getDay() + 1); // Monday
+    const endOfWeek = new Date(startOfWeek);
+    endOfWeek.setDate(startOfWeek.getDate() + 6); // Sunday
+  
+    this.weekDays = [];
+    let currentDate = startOfWeek;
+    while (currentDate <= endOfWeek) {
+      this.weekDays.push({ 
+        label: formatDate(currentDate, 'EEEE, MMMM d, yyyy', 'en-US'), // Assuming this format for label
+        date: new Date(currentDate)
+      });
+      currentDate.setDate(currentDate.getDate() + 1);
+    }
   }
+  
+  
 
   getStartOfWeek(date: Date): Date {
     const day = date.getDay();
@@ -83,23 +93,28 @@ export class DailyHoursProfileComponent implements OnInit {
   
 
   filterDataBySelectedDate(): void {
-    // Filter the dailyHoursData to only include entries that match the selected date
-    this.filteredDailyHours = this.dailyHoursData.filter(dailyHour => {
-      const matchesDate = formatDate(dailyHour.workDate, 'yyyy-MM-dd', 'en-US') === formatDate(this.selectedDate, 'yyyy-MM-dd', 'en-US');
-      const matchesMonth = this.selectedMonth ? (new Date(dailyHour.workDate).getMonth() + 1) === this.selectedMonth : true;
-      return matchesDate && matchesMonth;
-    });
+    if (this.selectedDate) {
+      // Only proceed if selectedDate is not null
+      const dateToFilter = this.selectedDate;
+      this.filteredDailyHours = this.dailyHoursData.filter(dailyHour => {
+        const workDate = new Date(dailyHour.workDate);
+        return formatDate(workDate, 'yyyy-MM-dd', 'en-US') === formatDate(dateToFilter, 'yyyy-MM-dd', 'en-US');
+      });
+    } else {
+      // Handle case when selectedDate is null, if needed
+      this.filteredDailyHours = this.dailyHoursData;
+    }
   }
-
+  
 
   onDateChange(event: any): void {
-    const newDate = event.target.value ? new Date(event.target.value) : new Date();
-    this.selectedDate = newDate;
-    this.updateWeekDays(newDate);
+    this.selectedDate = event.value ? new Date(event.value) : new Date();
+    this.filterDataBySelectedDate();
   }
-
+  
+  
   onMonthChange(event: any): void {
-    this.selectedMonth = event.target.value ? parseInt(event.target.value, 10) : null;
+    this.selectedMonth = event.value ? parseInt(event.value, 10) : null;
     this.filterDataBySelectedDate();
   }
 
@@ -107,6 +122,7 @@ export class DailyHoursProfileComponent implements OnInit {
     this.selectedDate = this.weekDays[index].date;
     this.filterDataBySelectedDate(); // Re-filter the data based on the new selected date
   }
+  
 
   clearData(): void {
     this.selectedDate = new Date();
