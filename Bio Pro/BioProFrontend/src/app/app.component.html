@@ -5,8 +5,27 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>BIO PRO DENTAL STUDIO</title>
   <link rel="stylesheet" href="app.component.scss">
+  <style>
+    /* Add CSS for the loading spinner here */
+    .loading-spinner {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: rgba(255, 255, 255, 0.8);
+      z-index: 1000; /* Ensure it is on top of other content */
+    }
+  </style>
 </head>
 <body>
+  <div *ngIf="loading$ | async" class="loading-spinner">
+    <!-- You can use a spinner from Angular Material or any other spinner -->
+    <mat-spinner></mat-spinner>
+  </div>
   <div class="nav-background" style="background-image: linear-gradient(to bottom, rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(assets/images/Background.jpg);">
     <mat-toolbar class="nav-toolbar">
       <mat-toolbar-row>
@@ -197,5 +216,6 @@
       </div>
     </mat-sidenav-content>
   </mat-sidenav-container>
+  
 </body>
 </html>

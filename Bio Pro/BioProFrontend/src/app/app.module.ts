@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import {  ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { OpenOrdersComponent } from './open-orders/open-orders.component';
 import { Component, ViewChild } from '@angular/core';
@@ -103,6 +103,9 @@ import { ConfirmDeleteUserComponent } from './confirm-delete-user/confirm-delete
 import { ConfirmDeleteDailyHourComponent } from './confirm-delete-daily-hour/confirm-delete-daily-hour.component';
 import { SettingsComponent } from './settings/settings.component';
 import { AuditTrailComponent } from './audit-trail/audit-trail.component';
+import { ErrorInterceptor } from './services/HttpInterceptor';
+import { LoadingService } from './services/loading.service';
+import { LoadingInterceptor } from './services/loading.interceptor';
 
 
 @NgModule({
@@ -151,7 +154,8 @@ import { AuditTrailComponent } from './audit-trail/audit-trail.component';
     MatExpansionModule,
     MatSelectModule
   ],
-  providers: [DatePipe],
+  providers: [DatePipe,{ provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },LoadingService,
+    { provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true }],
   bootstrap: [AppComponent],
   exports: [CalendarComponent]
 })

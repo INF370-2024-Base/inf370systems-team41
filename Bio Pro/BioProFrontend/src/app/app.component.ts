@@ -5,6 +5,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-dialog.component';
 import { DataService } from './services/login.service';
 import { AddAuditTrailViewModels } from './shared/addAuditTrailViewModel';
+import { LoadingService } from './services/loading.service';
 
 @Component({
   selector: 'app-root',
@@ -18,7 +19,7 @@ export class AppComponent {
   isDeliveriesMenuOpen = false;
   isStockMenuOpen = false;
   isUserSubNavOpen = false;
-  
+  loading$ = this.loadingService.loading$;
   title = 'BioProSystem';
   toggleOrdersMenu(): void {
     this.isOrdersMenuOpen = !this.isOrdersMenuOpen;
@@ -41,7 +42,7 @@ export class AppComponent {
   }
   isLoggedIn = false;
   user:any;
-  constructor(public dataService:OrderService,public loginService:DataService,private router:Router,private dialog:MatDialog) {}
+  constructor(private loadingService: LoadingService,public dataService:OrderService,public loginService:DataService,private router:Router,private dialog:MatDialog) {}
   isSignedIn:boolean=false
   ngOnInit() {
     this.user=JSON.parse(sessionStorage.getItem('User')!)

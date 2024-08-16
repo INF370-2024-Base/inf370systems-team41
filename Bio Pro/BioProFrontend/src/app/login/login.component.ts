@@ -40,9 +40,13 @@ export class LoginComponent implements OnInit {
           this.dataService.Login
           this.checkSignInStatusAndNavigate(); 
         },
-        (error:HttpErrorResponse) => {
+        (error) => {
           console.log(error)
-          alert(error)
+          if(error=="Invalid login credentials")
+          {
+            alert(error)
+          }
+          
         }
       );
   }
