@@ -5,7 +5,7 @@ import { DailyHours } from '../shared/dailyhours';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ConfirmDeleteDailyHourComponent } from '../confirm-delete-daily-hour/confirm-delete-daily-hour.component';
 import { formatDate } from '@angular/common';
-
+import { CaptureEmployeeHoursComponent } from '../capture-employee-hours/capture-employee-hours.component';
 
 @Component({
   selector: 'app-daily-hours-profile',
@@ -23,6 +23,7 @@ export class DailyHoursProfileComponent implements OnInit {
   selectedEmployeeEmail: string = '';
   displayedColumns: string[] = ['date', 'hours', 'employee', 'action'];
   weekDays: { label: string, date: Date }[] = [];
+  selectedMonth: number | null = null;
 
   constructor(private employeeService: EmployeeService, private dialog: MatDialog) {}
 
@@ -77,15 +78,23 @@ export class DailyHoursProfileComponent implements OnInit {
 
   filterDataBySelectedDate(): void {
     // Filter the dailyHoursData to only include entries that match the selected date
-    this.filteredDailyHours = this.dailyHoursData.filter(dailyHour =>
-      formatDate(dailyHour.workDate, 'yyyy-MM-dd', 'en-US') === formatDate(this.selectedDate, 'yyyy-MM-dd', 'en-US')
-    );
+    this.filteredDailyHours = this.dailyHoursData.filter(dailyHour => {
+      const matchesDate = formatDate(dailyHour.workDate, 'yyyy-MM-dd', 'en-US') === formatDate(this.selectedDate, 'yyyy-MM-dd', 'en-US');
+      const matchesMonth = this.selectedMonth ? (new Date(dailyHour.workDate).getMonth() + 1) === this.selectedMonth : true;
+      return matchesDate && matchesMonth;
+    });
   }
+
 
   onDateChange(event: any): void {
     const newDate = event.target.value ? new Date(event.target.value) : new Date();
     this.selectedDate = newDate;
     this.updateWeekDays(newDate);
+  }
+
+  onMonthChange(event: any): void {
+    this.selectedMonth = event.target.value ? parseInt(event.target.value, 10) : null;
+    this.filterDataBySelectedDate();
   }
 
   onTabChange(index: number): void {
@@ -95,6 +104,7 @@ export class DailyHoursProfileComponent implements OnInit {
 
   clearData(): void {
     this.selectedDate = new Date();
+    this.selectedMonth = null;
     this.updateWeekDays(this.selectedDate);
     this.selectedEmployeeEmail = '';
     this.fetchData();
@@ -133,6 +143,18 @@ export class DailyHoursProfileComponent implements OnInit {
             console.error('Error deleting daily hour:', error);
           }
         );
+      }
+    });
+  }
+
+  captureEmployeeHours(): void {
+    const dialogRef = this.dialog.open(CaptureEmployeeHoursComponent, {
+      width: '600px'
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.fetchData(); // Refresh data after capturing new hours
       }
     });
   }
