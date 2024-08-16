@@ -12,7 +12,9 @@
 </head>
 
 <body>
-   
+    <h1 style="font-size: 48px; color: #4d4a4a; text-align: center; text-transform: uppercase; letter-spacing: 3px; margin-bottom: 24px; text-shadow: 2px 2px 4px rgba(124, 124, 124, 0.5);">Employee Hours
+
+    </h1>
     <div *ngIf="!isLoading">
         <div class="container">
           <mat-tab-group (selectedIndexChange)="onTabChange($event)">
@@ -54,6 +56,7 @@
             <button mat-raised-button color="primary" (click)="captureEmployeeHours()">Capture Hour</button>
           </div>
       
+      
           <mat-card>
             <mat-card-header>
               <mat-card-title>{{ selectedDate ? (selectedDate | date: 'fullDate') : 'Select a Date' }}</mat-card-title>
@@ -61,10 +64,11 @@
             </mat-card-header>
             <mat-card-content>
               <table mat-table [dataSource]="filteredDailyHours" class="mat-elevation-z8">
+
                 <!-- Date Column -->
-                <ng-container matColumnDef="date">
-                  <th mat-header-cell *matHeaderCellDef> Date </th>
-                  <td mat-cell *matCellDef="let dailyHour">{{ dailyHour.workDate | date }}</td>
+                <ng-container matColumnDef="date" class="hidden-column">
+                  <th mat-header-cell *matHeaderCellDef class="hidden-column"> Date </th>
+                  <td mat-cell *matCellDef="let dailyHour" class="hidden-column">{{ dailyHour.workDate | date }} </td>
                 </ng-container>
       
                 <!-- Hours Column -->

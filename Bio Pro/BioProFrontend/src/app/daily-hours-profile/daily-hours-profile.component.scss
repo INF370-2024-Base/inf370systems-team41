@@ -257,3 +257,93 @@ a.btn.btn-primary.rounded-btn:hover {
 .action-button:hover {
   background-color: #0056b3;
 }
+
+/* Add this to your component's SCSS file */
+
+mat-card {
+  margin: 20px;
+  padding: 16px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+mat-card-header {
+  background-color: #d3d3d3cc;
+  color: #000000;
+  padding: 16px;
+  border-radius: 4px 4px 0 0;
+}
+
+mat-card-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+mat-card-subtitle {
+  font-size: 1rem;
+  margin-top: 4px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th.mat-header-cell {
+  background-color: #f0f0f0;
+  color: #000000;
+  padding: 12px;
+  text-align: left;
+  font-weight: bold;
+}
+
+td.mat-cell {
+  padding: 12px;
+}
+
+tr.mat-header-row {
+  background-color: #e4e4e4;
+}
+
+.mat-cell {
+  font-size: 0.875rem;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.875rem;
+  padding: 6px 12px;
+}
+
+.btn-outline-danger {
+  border: 1px solid #dc3545;
+  color: #dc3545;
+}
+
+.btn-outline-danger:hover {
+  background-color: #dc3545;
+  color: #ffffff;
+}
+
+.rounded-btn {
+  border-radius: 4px;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.mat-elevation-z8 {
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.hidden-column {
+  display: none;
+}
+
+.hidden-column th.mat-header-cell,
+.hidden-column td.mat-cell {
+  display: none;
+}

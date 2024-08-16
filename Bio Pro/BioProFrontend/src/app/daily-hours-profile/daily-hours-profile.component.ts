@@ -76,6 +76,12 @@ export class DailyHoursProfileComponent implements OnInit {
     );
   }
 
+  getEmployeeName(email: string): string {
+    const employee = this.employees.find(e => e.email === email);
+    return employee ? `${employee.firstName} ${employee.lastName}` : 'Unknown Employee';
+  }
+  
+
   filterDataBySelectedDate(): void {
     // Filter the dailyHoursData to only include entries that match the selected date
     this.filteredDailyHours = this.dailyHoursData.filter(dailyHour => {
@@ -111,20 +117,14 @@ export class DailyHoursProfileComponent implements OnInit {
   }
 
   onNameChange(event: any): void {
-    this.filterEmployeeName = event.target.value;
-    this.employeeService.getEmployeeDailyHoursByEmployeeEmail(this.filterEmployeeName).subscribe(
-      (results) => {
-        this.dailyHoursData = results;
-        this.isLoading = false;
-        this.selectedDate = new Date(); // Set to current date instead of null
-        this.filterDataBySelectedDate(); // Re-filter the data after name change
-      },
-      (error) => {
-        console.error('Error fetching daily hours:', error);
-        this.isLoading = false;
-      }
+    this.selectedEmployeeEmail = event.value;
+    this.filteredDailyHours = this.dailyHoursData.filter(dailyHour =>
+      dailyHour.employees.some((employee: any) => employee.email === this.selectedEmployeeEmail)
     );
+    this.selectedMonth = null; // Reset month selection when filtering by employee
+    this.selectedDate = new Date(); // Reset date selection
   }
+  
 
   onDeleteDailyHour(dailyHourId: number): void {
     const dialogRef = this.dialog.open(ConfirmDeleteDailyHourComponent, {
