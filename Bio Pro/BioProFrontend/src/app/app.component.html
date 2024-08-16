@@ -26,6 +26,7 @@
     <!-- You can use a spinner from Angular Material or any other spinner -->
     <mat-spinner></mat-spinner>
   </div>
+  <div *ngIf="showNavBar">
   <div class="nav-background" style="background-image: linear-gradient(to bottom, rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(assets/images/Background.jpg);">
     <mat-toolbar class="nav-toolbar">
       <mat-toolbar-row>
@@ -210,12 +211,14 @@
       </mat-nav-list>
     
   </mat-sidenav>
-    <mat-sidenav-content class="content-container">  
-      <div style="height: 88vh;">
-        <router-outlet></router-outlet>
-      </div>
-    </mat-sidenav-content>
-  </mat-sidenav-container>
-  
+  <mat-sidenav-content class="content-container">
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>
+</div>
+
+<div *ngIf="!showNavBar">
+<router-outlet></router-outlet>
+</div>
 </body>
 </html>
