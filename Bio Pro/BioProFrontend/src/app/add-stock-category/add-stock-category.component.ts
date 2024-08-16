@@ -65,6 +65,7 @@ export class AddStockCategoryComponent implements OnInit {
     }
   }
 
+
   onCancel() {
     this.dialogRef.close(false);
   }

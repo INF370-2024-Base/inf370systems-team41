@@ -1,0 +1,33 @@
+.mat-dialog-container {
+    max-width: 500px;  /* Adjust the width if needed */
+    width: 100%;  
+    padding: 24px;
+    overflow: hidden;  /* Remove scroll bar */
+    max-height: 90vh;  /* Ensure the dialog fits within the viewport */
+  }
+  
+  .mat-dialog-content {
+    overflow: hidden;  /* Ensure no scroll bar within the content */
+    max-height: 60vh;  /* Fit the content within the dialog */
+  }
+  
+  .mat-dialog-actions {
+    justify-content: flex-end;
+    margin-top: 20px;  /* Space between content and actions */
+  }
+  
+  .mat-dialog-actions button {
+    border-radius: 20px;
+    padding: 10px 20px;
+    font-size: 14px;
+  }
+  
+  .mat-dialog-actions button[type="submit"] {
+    background-color: #007bff;
+    color: #fff;
+  }
+  
+  .mat-dialog-actions button[type="submit"]:hover {
+    background-color: #0056b3;
+  }
+  
