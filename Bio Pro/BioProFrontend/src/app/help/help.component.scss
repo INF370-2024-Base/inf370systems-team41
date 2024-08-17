@@ -6,24 +6,20 @@ body {
   color: #333;
   margin: 0;
   padding: 0;
-  height:max-content;
-  
+  min-height: 100vh; /* Ensure body covers the full viewport height */
   display: flex;
   flex-direction: column;
-  
 }
 
+/* Ensure HTML and Body elements cover full height */
+html, body {
+  height: 100%;
+}
 
 @keyframes gradientAnimation {
   0% { background-position: 0% 50%; }
   50% { background-position: 100% 50%; }
   100% { background-position: 0% 50%; }
-}
-
-body {
-  background: linear-gradient(120deg, #aed9e0, #c2e2f3, #eaf1fa, #c2e2f3, #aed9e0);
-  background-size: 400% 400%;
-  animation: gradientAnimation 20s ease infinite;
 }
 
 .help-container {
@@ -44,6 +40,7 @@ body {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
+  align-items: stretch; /* Ensure all cards are stretched to the same height */
 }
 
 .help-card {
@@ -51,10 +48,10 @@ body {
   max-width: 300px;
   min-width: 280px;
   margin: 10px;
-  height: 100%; /* Ensures all cards have the same height */
   display: flex;
   flex-direction: column;
   transition: transform 0.3s;
+  box-sizing: border-box; /* Ensures padding doesn't affect overall size */
 }
 
 .help-card:hover {
@@ -67,7 +64,7 @@ mat-card {
   border-radius: 8px;
   display: flex;
   flex-direction: column;
-  height: 100%;
+  flex-grow: 1; /* Ensures mat-card takes full height available */
 }
 
 mat-card-header {
@@ -89,6 +86,9 @@ mat-card-header mat-icon {
 mat-card-content {
   flex-grow: 1;
   padding: 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* Distribute content evenly */
 }
 
 mat-card-content p {
@@ -101,6 +101,7 @@ mat-card-actions {
   display: flex;
   justify-content: flex-end;
   padding: 16px;
+  margin-top: auto; /* Pushes actions to the bottom of the card */
 }
 
 /* Additional styling for the PDF card */
@@ -160,6 +161,7 @@ mat-card-actions {
   background: rgba(0, 0, 0, 0.5);
   z-index: 999;
 }
+
 @media only screen and (max-width: 768px) {
   .help-grid {
     flex-direction: column;
