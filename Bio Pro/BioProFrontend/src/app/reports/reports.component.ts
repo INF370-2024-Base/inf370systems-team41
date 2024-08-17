@@ -15,7 +15,7 @@ import html2canvas from 'html2canvas';
 import { EmployeeService } from '../services/employee.service';
 import { DeliveryService } from '../services/deliver.service';
 import autoTable from 'jspdf-autotable';
-
+import { DentistService } from '../shared/dentist.service'; 
 
 @Component({
   selector: 'app-reports',
@@ -44,11 +44,17 @@ export class ReportsComponent implements OnInit {
   groupedStockWriteOffs: any[] = [];
   totalOrderCount: number = 0;
   totalTypeCategoryCount: number = 0;
+  dentists: any[] = []; // Add a new property for dentists
+  totalDentists: number = 0;
+  displayedColumns: string[] = ['name', 'contact', 'address'];
+  employee: any[]=[];
+  totalEmployees: number = 0;
 
   constructor(private reportsService: ReportsServices, 
     private datePipe: DatePipe, 
     private employeeService:EmployeeService,
-    private deliveryService: DeliveryService ) { }
+    private deliveryService: DeliveryService,
+    private dentistService: DentistService  ) { }
 
     async ngOnInit(): Promise<void> {
       this.getAllOrder();
@@ -60,6 +66,8 @@ export class ReportsComponent implements OnInit {
       this.updateChart();
       this.getAllStockWriteOffs();
       this.getDeliveries();
+      this.getAllDentists(); 
+      this.getAllEmployees();
     
       try {
         await this.fetchLoggedInUserName();
@@ -217,7 +225,34 @@ export class ReportsComponent implements OnInit {
         console.error('Canvas element not found.');
       }
     }
+    
 
+    if (sectionId !== 'employeeHoursReport' && sectionId !== 'deliveryReport') {
+      autoTable(doc, {
+        head: [columns],
+        body: data,
+        startY: 70, // Moved further down
+        didDrawCell: (data) => {
+          // Check if this is the last row and make the text bold and larger
+          if (data.row.index === data.table.body.length - 1) {
+            doc.setFont('helvetica', 'bold');
+            doc.setFontSize(12);
+          }
+        },
+      });
+    }
+     if (sectionId === 'dentistReport') {
+      // Dentist Report
+      columns = ['Dentist Name', 'Contact', 'Address'];
+      data = this.dentists.map(dentist => [dentist.firstName + dentist.lastName, dentist.contactDetail, dentist.address]);
+      data.push(['Total Dentists', this.totalDentists.toString()]);
+    } else if (sectionId === 'employeeReport') {
+      // Employee Report
+      columns = ['Employee Name', 'Contact', 'Address'];
+      data = this.employee.map(employee => [employee.firstName + employee.lastName, employee.cellphoneNumber, employee.address]);
+      data.push(['Total Employees', this.totalEmployees.toString()]);
+    }
+  
     if (sectionId !== 'employeeHoursReport' && sectionId !== 'deliveryReport') {
       autoTable(doc, {
         head: [columns],
@@ -251,8 +286,25 @@ export class ReportsComponent implements OnInit {
         }
     );
 }
+getAllDentists(): void {
+  this.dentistService.getAllDentists().subscribe((data: any[]) => {
+    // Sort by first name, then last name
+    this.dentists = data.sort((a, b) => {
+      return a.firstName.localeCompare(b.firstName) || a.lastName.localeCompare(b.lastName);
+    });
+    this.totalDentists = this.dentists.length;
+  });
+}
 
-
+getAllEmployees(): void {
+  this.employeeService.getAllEmployees().subscribe((data: any[]) => {
+    // Sort by first name, then last name
+    this.employee = data.sort((a, b) => {
+      return a.firstName.localeCompare(b.firstName) || a.lastName.localeCompare(b.lastName);
+    });
+    this.totalEmployees = this.employee.length;
+  });
+}
 
 getOrderTypesWithOrderCount() {
   this.reportsService.getOrderTypesWithOrderCount().subscribe(
@@ -291,8 +343,11 @@ sortOrders() {
     let valueB: any;
 
     if (this.sortColumn === 'priorityLevel') {
-      valueA = a.priorityLevel;
-      valueB = b.priorityLevel;
+      // Define priority order
+      const priorityOrder = ['high', 'medium', 'low'];
+
+      valueA = priorityOrder.indexOf(a.priorityLevel);
+      valueB = priorityOrder.indexOf(b.priorityLevel);
     } else if (this.sortColumn === 'dueDate') {
       valueA = new Date(a.dueDate);
       valueB = new Date(b.dueDate);
