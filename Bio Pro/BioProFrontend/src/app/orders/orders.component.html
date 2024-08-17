@@ -3,6 +3,10 @@
   <div class="scroll-container">
     <h1 style="font-size: 48px; color: #4d4a4a; text-align: center; text-transform: uppercase; letter-spacing: 3px; margin-bottom: 24px; text-shadow: 2px 2px 4px rgba(124, 124, 124, 0.5);">ORDERS</h1>
   <div class="container">
+    <div *ngIf="loading" class="loading-spinner">
+      <!-- You can use a spinner from Angular Material or any other spinner -->
+      <mat-spinner></mat-spinner>
+    </div>
     <div class="search-filter">
       <mat-form-field class="search-field">
         <mat-icon matPrefix>search</mat-icon>
@@ -23,7 +27,7 @@
       </button>
       
     </div>
-
+    
     <mat-accordion>
       <mat-expansion-panel *ngFor="let order of ordersInfo">
         <mat-expansion-panel-header>

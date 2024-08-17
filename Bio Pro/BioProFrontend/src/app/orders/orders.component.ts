@@ -40,6 +40,7 @@ export class OrdersComponent implements OnInit {
   selectedOrderForStatus: any = null;
   originalOrders:any[]=[]
   baseUrl: string ='https://localhost:44315/Api/';
+  loading:boolean=false
   constructor(private dialog: MatDialog,private http: HttpClient,private dataservices:OrderService,private snackBar:MatSnackBar,private loginService:DataService) { }
 
   ngAfterViewChecked(): void {
@@ -64,7 +65,9 @@ export class OrdersComponent implements OnInit {
               this.orderTypes=results
             }
           )
+          this.loading=true
           return forkJoin(this.orders.map(order => this.dataservices.getAllOrderInfo(order.orderId)));
+          
           
         } else {
           console.error('No orders found.');
@@ -76,6 +79,7 @@ export class OrdersComponent implements OnInit {
         this.ordersInfo = orderInfos;
         console.log('It works');
         console.log('Orders and order info retrieved:', this.orders, this.ordersInfo);
+        this.loading=false
       },
       (error) => {
         console.error('Error fetching orders or order info:', error);
@@ -145,24 +149,23 @@ downloadFile(base64String: string, fileName: string) {
             } else {
               this.ordersInfo=[]
               this.orders = [data]; 
-              this.getOrderInfo() // Reset orders array if no data found
+              this.getOrderInfo()
   
             }
           },
           (error:HttpErrorResponse) => {
             if (error.status === 404) {
-              // Show the snackbar when a 404 error occurs
               this.showSnackBar('No orders');
             }
           }
         );
     } else {
-      this.getOrderInfo()
 
+      this.orders= this.originalOrders
     }
   }
   clearSeacrhOrders() {
-    this.getOrdersAndInfo();
+    this.orders= this.originalOrders
     this.orderId=""
     this.selectedFilter=0
     this.onFilterChange(null);
@@ -174,7 +177,7 @@ downloadFile(base64String: string, fileName: string) {
   }
   onOrderIdChange(newOrderId: string) {
     if (newOrderId.trim() === '') {
-      this.getOrdersAndInfo()
+      this.orders= this.originalOrders
       this.selectedFilter=0
       this.onFilterChange(null);
       
