@@ -28,7 +28,8 @@
     
       <mat-nav-list>
   
-        <a mat-list-item routerLink="/home" (click)="isSidenavOpen = !isSidenavOpen">
+        <a mat-list-item routerLink="/home" routerLinkActive="active-link" (click)="isSidenavOpen = !isSidenavOpen">
+
           <mat-icon>home</mat-icon>
           <span class="nav-text">Home</span>
         </a>
