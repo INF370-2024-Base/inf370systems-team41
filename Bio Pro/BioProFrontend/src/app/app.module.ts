@@ -102,7 +102,7 @@ import { HelpUserComponent } from './help-user/help-user.component';
 import { ConfirmDeleteUserComponent } from './confirm-delete-user/confirm-delete-user.component';
 import { ConfirmDeleteDailyHourComponent } from './confirm-delete-daily-hour/confirm-delete-daily-hour.component';
 import { SettingsComponent } from './settings/settings.component';
-
+import { NgxPaginationModule } from 'ngx-pagination';
 
 @NgModule({
   declarations: [
@@ -133,7 +133,7 @@ import { SettingsComponent } from './settings/settings.component';
     ReactiveFormsModule,
     HttpClientModule,
     FormsModule,
-   
+    NgxPaginationModule,
     BrowserAnimationsModule,
     MaterialModule,
     MatSnackBarModule,

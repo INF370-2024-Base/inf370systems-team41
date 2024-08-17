@@ -25,6 +25,14 @@ export class StockComponent implements OnInit, AfterViewInit {
   stockChart?: Chart;
   displayedColumns: string[] = ['stockName', 'quantityAvailable', 'minimumStockLevel'];
   belowMinStock: any[] = [];
+  page: number = 1; // Current page
+
+  frequentlyVisitedPages: { name: string; route: string; icon: string }[] = [
+    { name: 'ADD STOCK', route: '/addStock', icon: 'add_box' }, // Represents adding items
+    
+    { name: 'STOCK TYPE', route: '/stock-type', icon: 'list_alt' }, // Represents a list or type of items
+    { name: 'STOCK CATEGORY', route: '/stock-categories', icon: 'category' }, // Represents categories
+  ];
 
 
   constructor(private stockService: StockServices, public dialog: MatDialog, private snackBar: MatSnackBar) { }
@@ -118,6 +126,14 @@ export class StockComponent implements OnInit, AfterViewInit {
 
     // Re-create the chart after applying filters
     this.updateChart();
+  }
+  
+  clearFilters(): void {
+    this.searchTerm = '';
+    this.selectedCategory = '';
+    this.selectedStockType = '';
+    this.page = 1; // Reset to the first page
+    this.applyFilters(); // Reapply filters to reset the filtered stock list
   }
 
   getCategoryDescription(categoryId: number): string {

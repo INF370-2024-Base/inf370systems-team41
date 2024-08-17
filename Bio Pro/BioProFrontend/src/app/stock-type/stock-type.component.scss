@@ -7,11 +7,13 @@ body {
   color: #333;
   margin: 0;
   padding: 0;
-  height:max-content;
- 
+  min-height: 100vh; /* Ensure body covers the full viewport height */
   display: flex;
   flex-direction: column;
-  
+}
+
+html, body {
+  height: 100%;
 }
 
   /* Animated background gradients */
@@ -21,10 +23,11 @@ body {
     100% { background-position: 0% 50%; }
   }
 
-  /* Container styles */
   .container {
+    flex: 1; /* Allow the container to grow and fill available space */
     max-width: 1200px;
     margin: 0 auto;
+    padding-bottom: 20px;
   }
 
   /* Row styles */
@@ -102,8 +105,9 @@ body {
     flex-wrap: wrap;
     gap: 20px;
     justify-content: center;
+    width: 100%;
+    flex: 1; /* Allow the card container to fill remaining space */
   }
-
   /* Card styles */
   .card {
     width: calc(33.333% - 20px);

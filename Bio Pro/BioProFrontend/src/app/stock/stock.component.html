@@ -17,6 +17,16 @@
                 <span class="sr-only">Loading...</span>
             </div>
         </div>
+                   
+<div class="feature-cards">
+    <div 
+      *ngFor="let page of frequentlyVisitedPages" 
+      class="feature-card" 
+      [routerLink]="page.route">
+      <i class="material-icons icon">{{ page.icon }}</i>
+      <p>{{ page.name }}</p>
+    </div>
+  </div>
 
         <div *ngIf="!isLoading">
             <div class="search-filter">
@@ -43,7 +53,13 @@
                         <mat-option *ngFor="let category of categories" [value]="category.stockCategoryId">{{ category.description }}</mat-option>
                     </mat-select>
                 </mat-form-field>
+
+                <button class="btn btn-primary clear-filter-btn" (click)="clearFilters()">Clear Filters</button>
             </div>
+
+ 
+  
+
             <table class="table table-bordered rounded-table">
                 <thead>
                     <tr>
@@ -55,7 +71,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let stock of filteredStock">
+                    <tr *ngFor="let stock of filteredStock | paginate: { itemsPerPage: 9, currentPage: page }">
                         <td>{{ stock.stockName }}</td>
                         <td>{{ stock.quantityAvailable }}</td>
                         <td>{{ getCategoryDescription(stock.stockCategoryId) }}</td>
@@ -71,31 +87,12 @@
                     </tr>
                 </tbody>
             </table>
+            
+            <!-- Pagination Controls -->
+            <pagination-controls (pageChange)="page = $event"></pagination-controls>
+            
         </div>
-        <!-- <table mat-table [dataSource]="belowMinStock" class="mat-elevation-z8 mat-table">
-          
-          <ng-container matColumnDef="stockName">
-            <th mat-header-cell *matHeaderCellDef> Stock Name </th>
-            <td mat-cell *matCellDef="let stock"> {{stock.stockName}} </td>
-          </ng-container>
-    
-          
-          <ng-container matColumnDef="quantityAvailable">
-            <th mat-header-cell *matHeaderCellDef> Quantity Available </th>
-            <td mat-cell *matCellDef="let stock"> {{stock.quantityAvailable}} </td>
-          </ng-container>
-    
-         
-          <ng-container matColumnDef="minimumStockLevel">
-            <th mat-header-cell *matHeaderCellDef> Minimum Stock Level </th>
-            <td mat-cell *matCellDef="let stock"> {{stock.minimumStockLevel}} </td>
-          </ng-container>
-    
-          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-        </table>
        
-      </div> -->
       <div class="chart-container">
         <h2 class="chart-heading">Stock Levels vs Minimum Stock Levels</h2>
         <canvas id="stockLevelChart"></canvas>

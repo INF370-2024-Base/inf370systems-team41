@@ -7,7 +7,7 @@ import { ConfirmDeleteDailyHourComponent } from '../confirm-delete-daily-hour/co
 import { formatDate } from '@angular/common';
 import { CaptureEmployeeHoursComponent } from '../capture-employee-hours/capture-employee-hours.component';
 import { ChangeDetectorRef } from '@angular/core';
-
+import { Employee } from '../shared/employee';
 
 @Component({
   selector: 'app-daily-hours-profile',
@@ -33,6 +33,8 @@ export class DailyHoursProfileComponent implements OnInit {
     'July', 'August', 'September', 'October', 'November', 'December'
   ];
   selectedMonth: number | null = null;
+  filterApplied: boolean = false;
+
 
   constructor(private employeeService: EmployeeService, private dialog: MatDialog, private cdr: ChangeDetectorRef ) {}
 
@@ -158,12 +160,48 @@ onTabChange(index: number): void {
 
   onNameChange(event: any): void {
     this.selectedEmployeeEmail = event.value;
-    this.filteredDailyHours = this.dailyHoursData.filter(dailyHour =>
-      dailyHour.employees.some((employee: any) => employee.email === this.selectedEmployeeEmail)
-    );
-    this.selectedMonth = null; // Reset month selection when filtering by employee
-    this.selectedDate = new Date(); // Reset date selection
+  
+    if (this.selectedEmployeeEmail) {
+      this.filterApplied = true; // Set the flag to true when the filter is applied
+  
+      // Debugging: Log the selected employee email
+      console.log('Selected Employee Email:', this.selectedEmployeeEmail);
+  
+      // Debugging: Log the first entry of dailyHoursData to inspect its structure
+      if (this.dailyHoursData.length > 0) {
+        console.log('Daily Hours Data Sample:', this.dailyHoursData[0]);
+      }
+  
+      // Filter the dailyHoursData by the selected employee email
+      this.filteredDailyHours = this.dailyHoursData.filter(dailyHour => {
+        const matchFound = dailyHour.employees.some((emp: any) => {
+          console.log('Inspecting employee:', emp);
+          if (emp.EmailAddress) {
+            const isMatch = emp.EmailAddress.trim().toLowerCase() === this.selectedEmployeeEmail.trim().toLowerCase();
+            console.log('Comparing:', emp.EmailAddress, 'with', this.selectedEmployeeEmail, '=>', isMatch);
+            return isMatch;
+          }
+          return false;
+        });
+  
+        return matchFound;
+      });
+  
+      // Debugging: Log the filtered result
+      console.log('Filtered Daily Hours:', this.filteredDailyHours);
+    } else {
+      this.filterApplied = false; // Reset the flag when the filter is cleared
+      this.filterDataBySelectedDate(); // Reset to filter by date if no employee is selected
+    }
+  
+    // Trigger change detection to update the UI
+    this.cdr.detectChanges();
   }
+  
+  
+  
+  
+  
   
 
   onDeleteDailyHour(dailyHourId: number): void {

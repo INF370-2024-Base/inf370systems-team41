@@ -31,7 +31,7 @@
               <mat-datepicker #picker></mat-datepicker>
             </mat-form-field>
       
-            <mat-form-field appearance="fill" class="example-full-width">
+            <!-- <mat-form-field appearance="fill" class="example-full-width">
               <mat-label>Filter by Month</mat-label>
               <mat-select [(ngModel)]="selectedMonth" (selectionChange)="onMonthChange($event)">
                 <mat-option value="">All Months</mat-option>
@@ -39,7 +39,7 @@
                   {{ getMonthName(month) }}
                 </mat-option>
               </mat-select>
-            </mat-form-field>
+            </mat-form-field> -->
             
       
             <mat-form-field appearance="fill" class="example-full-width">
@@ -51,17 +51,20 @@
                 </mat-option>
               </mat-select>
             </mat-form-field>
+            
       
             <button mat-button (click)="clearData()" class="btn btn-outline-secondary">Clear filter</button>
-            <button mat-raised-button color="primary" (click)="captureEmployeeHours()">Capture Hour</button>
+            <button mat-raised-button color="primary" [routerLink]="['/captureEmployeeDailyHours']">Capture Hour</button>
           </div>
       
       
-          <mat-card>
-            <mat-card-header>
+          <mat-card *ngIf="!filterApplied">
+            <mat-card-header >
               <mat-card-title>{{ selectedDate ? (selectedDate | date: 'fullDate') : 'Select a Date' }}</mat-card-title>
               <mat-card-subtitle>{{ filteredDailyHours.length }} hours logged</mat-card-subtitle>
             </mat-card-header>
+
+            
             <mat-card-content>
               <table mat-table [dataSource]="filteredDailyHours" class="mat-elevation-z8">
 
@@ -109,6 +112,33 @@
               </table>
             </mat-card-content>
           </mat-card>
+        <!-- New table, completely independent of the mat-card -->
+<div *ngIf="filterApplied">
+  <h2>Employee Details</h2>
+  <table mat-table [dataSource]="filteredDailyHours" class="mat-elevation-z8">
+    <ng-container matColumnDef="date">
+      <th mat-header-cell *matHeaderCellDef> Date </th>
+      <td mat-cell *matCellDef="let dailyHour">{{ dailyHour.workDate | date }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="hours">
+      <th mat-header-cell *matHeaderCellDef> Hours </th>
+      <td mat-cell *matCellDef="let dailyHour">{{ dailyHour.hours }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="employee">
+      <th mat-header-cell *matHeaderCellDef> Employee Name </th>
+      <td mat-cell *matCellDef="let dailyHour">
+        {{ getEmployeeName(dailyHour.employeeEmail) }}
+      </td>
+    </ng-container>
+
+    <!-- Header Row -->
+    <tr mat-header-row *matHeaderRowDef="['date', 'hours', 'employee']"></tr>
+    <!-- Data Row -->
+    <tr mat-row *matRowDef="let row; columns: ['date', 'hours', 'employee'];"></tr>
+  </table>
+</div>
         </div>
       </div>
      
