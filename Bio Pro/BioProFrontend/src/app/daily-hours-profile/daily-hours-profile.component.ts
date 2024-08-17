@@ -150,55 +150,42 @@ onTabChange(index: number): void {
 }
 
 
-  clearData(): void {
-    this.selectedDate = new Date();
-    this.selectedMonth = null;
-    this.updateWeekDays(this.selectedDate);
-    this.selectedEmployeeEmail = '';
-    this.fetchData();
-  }
+clearData(): void {
+  this.selectedDate = new Date();
+  this.selectedMonth = null;
+  this.selectedEmployeeEmail = '';
+  this.filterApplied = false; // Reset the filter flag
+
+  this.updateWeekDays(this.selectedDate);
+  this.filterDataBySelectedDate(); // Reapply the date filter to reset the list
+  this.fetchData(); // Refetch data to ensure the table is updated with the reset filters
+}
 
   onNameChange(event: any): void {
     this.selectedEmployeeEmail = event.value;
-  
+
     if (this.selectedEmployeeEmail) {
-      this.filterApplied = true; // Set the flag to true when the filter is applied
-  
-      // Debugging: Log the selected employee email
-      console.log('Selected Employee Email:', this.selectedEmployeeEmail);
-  
-      // Debugging: Log the first entry of dailyHoursData to inspect its structure
-      if (this.dailyHoursData.length > 0) {
-        console.log('Daily Hours Data Sample:', this.dailyHoursData[0]);
-      }
-  
-      // Filter the dailyHoursData by the selected employee email
-      this.filteredDailyHours = this.dailyHoursData.filter(dailyHour => {
-        const matchFound = dailyHour.employees.some((emp: any) => {
-          console.log('Inspecting employee:', emp);
-          if (emp.EmailAddress) {
-            const isMatch = emp.EmailAddress.trim().toLowerCase() === this.selectedEmployeeEmail.trim().toLowerCase();
-            console.log('Comparing:', emp.EmailAddress, 'with', this.selectedEmployeeEmail, '=>', isMatch);
-            return isMatch;
-          }
-          return false;
+        this.filterApplied = true; // Set the flag to true when the filter is applied
+
+        // Filter the dailyHoursData by the selected employee email
+        this.filteredDailyHours = this.dailyHoursData.filter(dailyHour => {
+            const matchFound = dailyHour.employees.some((emp: any) => {
+                return emp.email && emp.email.trim().toLowerCase() === this.selectedEmployeeEmail.trim().toLowerCase();
+            });
+            return matchFound;
         });
-  
-        return matchFound;
-      });
-  
-      // Debugging: Log the filtered result
-      console.log('Filtered Daily Hours:', this.filteredDailyHours);
+
+        // Debugging: Log the filtered result
+        console.log('Filtered Daily Hours:', this.filteredDailyHours);
     } else {
-      this.filterApplied = false; // Reset the flag when the filter is cleared
-      this.filterDataBySelectedDate(); // Reset to filter by date if no employee is selected
+        this.filterApplied = false; // Reset the flag when the filter is cleared
+        this.filterDataBySelectedDate(); // Reset to filter by date if no employee is selected
     }
-  
+
     // Trigger change detection to update the UI
     this.cdr.detectChanges();
-  }
-  
-  
+}
+
   
   
   
