@@ -1,22 +1,20 @@
-//* Styling for OrdersAwaitingDentalDesignComponent */
 body {
-    background-color: #a7a7a7; /* Light gray background */
-    font-family: 'Roboto', sans-serif; /* Playful font */
-    color: #333; /* Dark text color */
-    padding: 20px; /* Add some padding */
-    overflow: hidden; /* Hide overflowing content */
-  }
-  body {
-    background-color: #a7a7a7; /* Light gray background */
-    font-family: 'Roboto', sans-serif; /* Playful font */
-    color: #333; /* Dark text color */
-    padding: 20px; /* Add some padding */
-    overflow:scroll; /* Hide overflowing content */
     background: linear-gradient(120deg, #aed9e0, #c2e2f3, #eaf1fa, #c2e2f3, #aed9e0);
     background-size: 400% 400%;
     animation: gradientAnimation 20s ease infinite;
-}
-
+    font-family: 'Roboto', sans-serif;
+    color: #333;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh; /* Ensure body covers the full viewport height */
+    display: flex;
+    flex-direction: column;
+  }
+  
+  /* Ensure HTML and Body elements cover full height */
+  html, body {
+    height: 100%;
+  }
 /* Animated background gradients */
 @keyframes gradientAnimation {
     0% { background-position: 0% 50%; }
@@ -31,6 +29,7 @@ body {
     background-color: rgb(246, 246, 246);
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    flex:wrap;
 }
 
 .order-details {

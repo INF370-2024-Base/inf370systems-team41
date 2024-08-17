@@ -107,6 +107,7 @@ import { ErrorInterceptor } from './services/HttpInterceptor';
 import { LoadingService } from './services/loading.service';
 import { LoadingInterceptor } from './services/loading.interceptor';
 
+import { NgxPaginationModule } from 'ngx-pagination';
 
 @NgModule({
   declarations: [
@@ -137,7 +138,7 @@ import { LoadingInterceptor } from './services/loading.interceptor';
     ReactiveFormsModule,
     HttpClientModule,
     FormsModule,
-   
+    NgxPaginationModule,
     BrowserAnimationsModule,
     MaterialModule,
     MatSnackBarModule,

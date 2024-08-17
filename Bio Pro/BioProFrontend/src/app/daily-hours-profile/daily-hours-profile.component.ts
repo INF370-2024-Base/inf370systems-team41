@@ -7,12 +7,16 @@ import { ConfirmDeleteDailyHourComponent } from '../confirm-delete-daily-hour/co
 import { DataService } from '../services/login.service';
 import { formatDate } from '@angular/common';
 import { CaptureEmployeeHoursComponent } from '../capture-employee-hours/capture-employee-hours.component';
+import { ChangeDetectorRef } from '@angular/core';
+import { Employee } from '../shared/employee';
 
 @Component({
   selector: 'app-daily-hours-profile',
   templateUrl: './daily-hours-profile.component.html',
   styleUrls: ['./daily-hours-profile.component.scss']
 })
+
+
 export class DailyHoursProfileComponent implements OnInit {
   dailyHours: DailyHours[] = [];
   employees: any[] = [];
@@ -20,37 +24,54 @@ export class DailyHoursProfileComponent implements OnInit {
   dailyHoursData: any[] = [];
   filteredDailyHours: any[] = []; // To hold the filtered data
   selectedDate: Date = new Date();
+  selectedIndex: number = 0; // Add this line
   filterEmployeeName: string = '';
   selectedEmployeeEmail: string = '';
   displayedColumns: string[] = ['date', 'hours', 'employee', 'action'];
   weekDays: { label: string, date: Date }[] = [];
+  months: string[] = [
+    'January', 'February', 'March', 'April', 'May', 'June',
+    'July', 'August', 'September', 'October', 'November', 'December'
+  ];
   selectedMonth: number | null = null;
+  filterApplied: boolean = false;
 
-  constructor(private employeeService: EmployeeService, private dialog: MatDialog,private loginService:DataService) {}
+  constructor(private employeeService: EmployeeService, private dialog: MatDialog,private loginService:DataService,private cdr: ChangeDetectorRef) {}
 
   ngOnInit(): void {
     this.updateWeekDays(this.selectedDate);
     this.fetchData();
   }
 
-  updateWeekDays(date: Date): void {
-    const startOfWeek = this.getStartOfWeek(date);
-    this.weekDays = Array.from({ length: 7 }).map((_, i) => {
-      const day = new Date(startOfWeek);
-      day.setDate(startOfWeek.getDate() + i);
-      return {
-        label: formatDate(day, 'EEEE', 'en-US'), // "EEEE" for the full name of the day
-        date: day
-      };
-    });
-    this.filterDataBySelectedDate(); // Filter data whenever the week days are updated
+  updateWeekDays(selectedDate: Date): void {
+    const startOfWeek = this.getStartOfWeek(selectedDate);
+    this.weekDays = [];
+    for (let i = 0; i < 7; i++) {
+      const currentDate = new Date(startOfWeek);
+      currentDate.setDate(startOfWeek.getDate() + i);
+      this.weekDays.push({
+        label: formatDate(currentDate, 'EEEE, MMMM d, yyyy', 'en-US'),
+        date: currentDate
+      });
+    }
+  
+    // Ensure UI updates correctly
+    this.cdr.detectChanges();
   }
+  
+  
+  trackByDate(index: number, day: { date: Date }): string {
+    return day.date.toISOString(); // Or any other unique identifier for the day
+  }
+  
+  
 
   getStartOfWeek(date: Date): Date {
     const day = date.getDay();
-    const diff = date.getDate() - day + (day === 0 ? -6 : 1); // adjust when day is Sunday
+    const diff = date.getDate() - day + (day === 0 ? -6 : 1); // Adjust when day is Sunday
     return new Date(date.setDate(diff));
   }
+  
 
   fetchData(): void {
     this.isLoading = true;
@@ -80,51 +101,94 @@ export class DailyHoursProfileComponent implements OnInit {
   getEmployeeName(email: string): string {
     const employee = this.employees.find(e => e.email === email);
     return employee ? `${employee.firstName} ${employee.lastName}` : 'Unknown Employee';
+
   }
   
 
   filterDataBySelectedDate(): void {
-    // Filter the dailyHoursData to only include entries that match the selected date
     this.filteredDailyHours = this.dailyHoursData.filter(dailyHour => {
-      const matchesDate = formatDate(dailyHour.workDate, 'yyyy-MM-dd', 'en-US') === formatDate(this.selectedDate, 'yyyy-MM-dd', 'en-US');
-      const matchesMonth = this.selectedMonth ? (new Date(dailyHour.workDate).getMonth() + 1) === this.selectedMonth : true;
-      return matchesDate && matchesMonth;
+      const workDate = new Date(dailyHour.workDate);
+      return formatDate(workDate, 'yyyy-MM-dd', 'en-US') === formatDate(this.selectedDate, 'yyyy-MM-dd', 'en-US');
     });
+    this.cdr.detectChanges(); // Ensure the filtered data triggers a UI update
   }
-
+  
+  
+  
 
   onDateChange(event: any): void {
-    const newDate = event.target.value ? new Date(event.target.value) : new Date();
-    this.selectedDate = newDate;
-    this.updateWeekDays(newDate);
-  }
-
-  onMonthChange(event: any): void {
-    this.selectedMonth = event.target.value ? parseInt(event.target.value, 10) : null;
+    this.selectedDate = event.value ? new Date(event.value) : new Date();
     this.filterDataBySelectedDate();
+    this.updateWeekDays(this.selectedDate); // Update weekDays based on the selectedDate
+    this.selectTabForDate(this.selectedDate); // Make sure the correct tab is selected
   }
+  
+  selectTabForDate(date: Date): void {
+    const index = this.weekDays.findIndex(day => day.date.toDateString() === date.toDateString());
+    if (index !== -1) {
+      this.selectedIndex = index; // Set the selected index for the tab group
+      this.cdr.detectChanges(); // Trigger change detection
+    }
+  }
+  
+  onMonthChange(event: any): void {
+    this.selectedMonth = event.value ? event.value : null;
+    this.filterDataBySelectedDate();
+}                                                        
+getMonthName(month: number): string {
+  const date = new Date();
+  date.setMonth(month - 1);
+  return formatDate(date, 'MMMM', 'en-US');
+}
 
-  onTabChange(index: number): void {
-    this.selectedDate = this.weekDays[index].date;
-    this.filterDataBySelectedDate(); // Re-filter the data based on the new selected date
-  }
+onTabChange(index: number): void {
+  this.selectedIndex = index;
+  this.selectedDate = this.weekDays[index].date; // Set selectedDate based on the selected tab
+  this.filterDataBySelectedDate();
+  // No need to reset week days to Monday, keep the selected date intact
+  this.cdr.detectChanges(); // Ensure the UI updates correctly
+}
 
-  clearData(): void {
-    this.selectedDate = new Date();
-    this.selectedMonth = null;
-    this.updateWeekDays(this.selectedDate);
-    this.selectedEmployeeEmail = '';
-    this.fetchData();
-  }
+
+clearData(): void {
+  this.selectedDate = new Date();
+  this.selectedMonth = null;
+  this.selectedEmployeeEmail = '';
+  this.filterApplied = false; // Reset the filter flag
+
+  this.updateWeekDays(this.selectedDate);
+  this.filterDataBySelectedDate(); // Reapply the date filter to reset the list
+  this.fetchData(); // Refetch data to ensure the table is updated with the reset filters
+}
 
   onNameChange(event: any): void {
     this.selectedEmployeeEmail = event.value;
-    this.filteredDailyHours = this.dailyHoursData.filter(dailyHour =>
-      dailyHour.employees.some((employee: any) => employee.email === this.selectedEmployeeEmail)
-    );
-    this.selectedMonth = null; // Reset month selection when filtering by employee
-    this.selectedDate = new Date(); // Reset date selection
-  }
+
+    if (this.selectedEmployeeEmail) {
+        this.filterApplied = true; // Set the flag to true when the filter is applied
+
+        // Filter the dailyHoursData by the selected employee email
+        this.filteredDailyHours = this.dailyHoursData.filter(dailyHour => {
+            const matchFound = dailyHour.employees.some((emp: any) => {
+                return emp.email && emp.email.trim().toLowerCase() === this.selectedEmployeeEmail.trim().toLowerCase();
+            });
+            return matchFound;
+        });
+
+        // Debugging: Log the filtered result
+        console.log('Filtered Daily Hours:', this.filteredDailyHours);
+    } else {
+        this.filterApplied = false; // Reset the flag when the filter is cleared
+        this.filterDataBySelectedDate(); // Reset to filter by date if no employee is selected
+    }
+
+    // Trigger change detection to update the UI
+    this.cdr.detectChanges();
+}
+
+  
+  
+  
   
 
   onDeleteDailyHour(dailyHourId: number): void {

@@ -2,7 +2,7 @@ body, html {
   margin: 0;
   padding: 0;
   font-family: 'Arial', sans-serif;
-  background: linear-gradient(to right, #007bff, #00bfff);
+  background: linear-gradient(to right, #94b8df, #abdcec, #d2ecf5, #cdf3ff);
   color: #333;
   line-height: 1.6;
 }
@@ -41,7 +41,7 @@ body, html {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: linear-gradient(to right, #007bff, #00bfff);
+  background: linear-gradient(to right, #94b8df, #abdcec, #d2ecf5, #cdf3ff);
   padding: 50px 100px;
   position: relative;
 }
@@ -96,7 +96,7 @@ body, html {
   flex-wrap: wrap;
   justify-content: center; /* Center the content horizontally */
   padding: 30px 40px;
-  background: linear-gradient(to right, #007bff, #00bfff);
+  background: linear-gradient(to right, #94b8df, #abdcec, #d2ecf5, #cdf3ff);
   gap: 20px;
 }
 
@@ -145,7 +145,7 @@ body, html {
 }
 
 .modal-content {
-  background-color: #007bff;
+  background: linear-gradient(to right,#94b8df, #abdcec);
   margin: 15% auto; /* 15% from the top and centered */
   padding: 20px;
   border-radius: 10px;

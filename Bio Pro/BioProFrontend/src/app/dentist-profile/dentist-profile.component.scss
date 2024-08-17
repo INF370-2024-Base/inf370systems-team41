@@ -1,5 +1,4 @@
 
-/* Body styles */
 body {
     background: linear-gradient(120deg, #aed9e0, #c2e2f3, #eaf1fa, #c2e2f3, #aed9e0);
     background-size: 400% 400%;
@@ -8,13 +7,16 @@ body {
     color: #333;
     margin: 0;
     padding: 0;
-    height:max-content;
-    
+    min-height: 100vh; /* Ensure body covers the full viewport height */
     display: flex;
     flex-direction: column;
-    
   }
-
+  
+  /* Ensure HTML and Body elements cover full height */
+  html, body {
+    height: 100%;
+  }
+  
 /* Animated background gradients */
 @keyframes gradientAnimation {
     0% { background-position: 0% 50%; }
@@ -22,11 +24,22 @@ body {
     100% { background-position: 0% 50%; }
 }
 
+.pagination-controls {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+  }
+
+.pagination-controls button {
+    margin: 0 10px;
+}
+
 
 /* Container styles */
 .container {
     max-width: 1200px;
     margin: 0 auto;
+    flex:wrap;
 }
 
 /* Row styles */
