@@ -4,11 +4,15 @@ body {
   animation: gradientAnimation 20s ease infinite;
   font-family: 'Roboto', sans-serif;
   color: #333;
-  padding: 20px;
   margin: 0;
-  height:max-content;
+  padding: 0;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
+}
+
+html, body {
+  height: 100%;
 }
 
 @keyframes gradientAnimation {
@@ -17,35 +21,27 @@ body {
   100% { background-position: 0% 50%; }
 }
 
-/* Container styles */
 .container {
-  max-width: 100%;
+  width: 100%;
+  flex-grow: 1;
   margin: 0 auto;
-  flex: 1;
   padding: 20px;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
   align-items: center;
+  flex-wrap: wrap;
 }
 
-.scroll-container {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-/* Card container styles */
 .card-container {
   display: flex;
   flex-wrap: wrap;
-  gap: 20px;
   justify-content: center;
+  gap: 20px;
   width: 100%;
+  max-width: 1200px;
 }
 
-/* Card styles */
 .card {
   width: calc(33.333% - 20px);
   margin-bottom: 20px;
@@ -88,7 +84,6 @@ body {
   margin-bottom: 10px;
 }
 
-/* Gradient background for cards */
 .card::before {
   content: '';
   position: absolute;
@@ -101,18 +96,74 @@ body {
   border-radius: 10px;
 }
 
-/* Placeholder cards to maintain grid layout consistency */
 .placeholder {
   visibility: hidden; /* Hide placeholder cards */
 }
-
 .pagination {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
+  align-items: center;
   margin: 20px 0;
+  width: 100%;
 }
 
-/* Button styles */
+.pagination-text {
+  font-size: 16px;
+  font-weight: bold;
+  color: #4a5568;
+  text-align: center;
+  flex-grow: 1;
+  margin: 0 390px; /* This will create space between the text and the buttons */
+}
+
+.pagination button {
+  min-width: 100px; /* Ensures the buttons are wide enough to fill space */
+  margin: 0;
+  flex-shrink: 0; /* Prevents the buttons from shrinking */
+}
+
+.pagination button:first-child {
+  margin-left: 0;
+}
+
+.pagination button:last-child {
+  margin-right: 0;
+}
+
+
+.help-button-container {
+  display: flex;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.help-button-container button {
+  display: flex;
+  align-items: center;
+}
+
+.help-button-container mat-icon {
+  margin-right: 8px;
+}
+
+.help-button-container span {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+@media (max-width: 992px) {
+  .card {
+      width: calc(50% - 20px);
+  }
+}
+
+@media (max-width: 768px) {
+  .card {
+      width: calc(100% - 20px);
+  }
+}
+
+/* General Button Styles */
 .btn {
   border-radius: 12px;
   padding: 8px 16px;
@@ -151,7 +202,7 @@ body {
   border-color: #e53e3e;
 }
 
-/* Primary Button (Search, Add Employee) */
+/* Primary Button (Search, Add User/Employee) */
 .btn-outline-primary {
   border: 1px solid #3182ce;
   color: #3182ce;

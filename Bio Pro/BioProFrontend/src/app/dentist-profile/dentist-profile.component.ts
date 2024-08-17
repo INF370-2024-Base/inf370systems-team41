@@ -16,6 +16,8 @@ export class DentistProfileComponent implements OnInit {
   filteredDentists: Dentist[] = [];
   searchQuery = '';
   noResultsFound = false;
+  currentPage: number = 1;
+  itemsPerPage: number = 9;
 
   constructor(
     private dentistService: DentistService,
@@ -34,6 +36,39 @@ export class DentistProfileComponent implements OnInit {
       console.log(this.dentists)
     });
   }
+  get paginatedDentists(): Dentist[] {
+    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+    const endIndex = startIndex + this.itemsPerPage;
+    return this.filteredDentists.slice(startIndex, endIndex);
+  }
+
+  get totalPages(): number {
+    return Math.ceil(this.filteredDentists.length / this.itemsPerPage);
+  }
+
+  goToPage(page: number): void {
+    if (page >= 1 && page <= this.totalPages) {
+      this.currentPage = page;
+    }
+  }
+
+  nextPage(): void {
+    if (this.currentPage < this.totalPages) {
+      this.currentPage++;
+    }
+  }
+
+  previousPage(): void {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+    }
+  }
+
+  // Update paginated dentists after filtering or changing page
+  private updatePaginatedDentists(): void {
+    this.filteredDentists = this.paginatedDentists;
+  }
+
 
   search(): void {
     if (this.searchQuery.trim() === '') {
@@ -47,6 +82,8 @@ export class DentistProfileComponent implements OnInit {
       );
       this.noResultsFound = this.filteredDentists.length === 0;
     }
+    this.updatePaginatedDentists();
+  
   }
 
   openEditDialog(dentist: Dentist): void {
