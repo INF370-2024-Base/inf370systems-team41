@@ -353,7 +353,7 @@ sortOrders() {
 
     if (this.sortColumn === 'priorityLevel') {
       // Define priority order
-      const priorityOrder = ['high', 'medium', 'low'];
+      const priorityOrder = ['High', 'Medium', 'Low'];
 
       valueA = priorityOrder.indexOf(a.priorityLevel);
       valueB = priorityOrder.indexOf(b.priorityLevel);
