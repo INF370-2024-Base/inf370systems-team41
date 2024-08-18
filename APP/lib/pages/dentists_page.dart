@@ -38,20 +38,30 @@ class _DentistsPageState extends State<DentistsPage> {
               final dentists = snapshot.data!;
               return Scrollbar(
                 child: GridView.builder(
-                  padding: const EdgeInsets.all(10.0),
+                  padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 10.0),
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
                     crossAxisSpacing: 10.0,
                     mainAxisSpacing: 10.0,
-                    childAspectRatio: 2 / 2.5,
+                    childAspectRatio: 3 / 3,
                   ),
                   itemCount: dentists.length,
                   itemBuilder: (context, index) {
                     final dentist = dentists[index];
-                    return DentistCard(
-                      name: '${dentist['firstName']} ${dentist['lastName']}',
-                      contactDetail: dentist['contactDetail'] ?? '',
-                      address: dentist['address'] ?? '',
+                    return Card(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15.0),
+                      ),
+                      elevation: 5,
+                      margin: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 5.0),
+                      child: Padding(
+                        padding: const EdgeInsets.all(15.0),
+                        child: DentistCard(
+                          name: '${dentist['firstName']} ${dentist['lastName']}',
+                          contactDetail: dentist['contactDetail'] ?? '',
+                          address: dentist['address'] ?? '',
+                        ),
+                      ),
                     );
                   },
                 ),

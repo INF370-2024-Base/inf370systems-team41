@@ -1,10 +1,13 @@
+import 'package:biopromobileflutter/pages/components/timer_component.dart';
+import 'package:biopromobileflutter/pages/deliveries_page.dart';
+import 'package:biopromobileflutter/pages/dentists_page.dart';
 import 'package:biopromobileflutter/pages/help_page.dart';
+import 'package:biopromobileflutter/pages/orders_page.dart';
+import 'package:biopromobileflutter/pages/photo_upload.dart';
+import 'package:biopromobileflutter/pages/qr_code_scanner_page.dart';
+import 'package:biopromobileflutter/pages/stocks_page.dart';
 import 'package:flutter/material.dart';
-import 'pages/stocks_page.dart';
-import 'pages/deliveries_page.dart';
-import 'pages/dentists_page.dart';
-import 'pages/orders_page.dart';
-import 'pages/qr_code_scanner_page.dart';
+
 
 void main() {
   runApp(MyApp());
@@ -24,6 +27,8 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatelessWidget {
+  final ValueNotifier<Duration> workedHoursNotifier = ValueNotifier(Duration.zero);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -49,7 +54,7 @@ class MyHomePage extends StatelessWidget {
               ),
               NavigationButton(
                 text: 'Deliveries',
-                page: const DeliveriesPage(),
+                page: DeliveriesPage(),
               ),
               NavigationButton(
                 text: 'Dentists',
@@ -59,11 +64,20 @@ class MyHomePage extends StatelessWidget {
                 text: 'Orders',
                 page: OrdersPage(),
               ),
-                 NavigationButton(
+              NavigationButton(
                 text: 'Help',
                 page: HelpPage(),
               ),
-              
+              NavigationButton(
+                text: 'Photo Upload',
+                page: PhotoUploadPage(),
+              ),
+              ValueListenableBuilder<Duration>(
+                valueListenable: workedHoursNotifier,
+                builder: (context, workedHours, child) {
+                  return TimerComponent(duration: workedHours);
+                },
+              ),
             ],
           ),
         ],
@@ -73,7 +87,11 @@ class MyHomePage extends StatelessWidget {
         onPressed: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => QRCodeScannerPage()),
+            MaterialPageRoute(
+              builder: (context) => QRCodeScannerPage(
+                workedHoursNotifier: workedHoursNotifier,
+              ),
+            ),
           );
         },
         child: Icon(Icons.camera_alt),
