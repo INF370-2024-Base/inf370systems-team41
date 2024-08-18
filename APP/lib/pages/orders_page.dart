@@ -10,7 +10,7 @@ class OrdersPage extends StatefulWidget {
 
 class _OrdersPageState extends State<OrdersPage> {
   late Future<List<dynamic>> futureOrders;
-  final OrderService orderService = OrderService(baseUrl: 'https://localhost:44315/Api/GetAllOrders');
+  final OrderService orderService = OrderService(baseUrl: 'https://localhost:44315/Api');
 
   @override
   void initState() {

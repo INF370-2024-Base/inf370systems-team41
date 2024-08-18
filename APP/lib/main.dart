@@ -68,10 +68,10 @@ class MyHomePage extends StatelessWidget {
                 text: 'Help',
                 page: HelpPage(),
               ),
-              NavigationButton(
-                text: 'Photo Upload',
-                page: PhotoUploadPage(),
-              ),
+              // NavigationButton(
+              //   text: 'Photo Upload',
+              //   page: PhotoUploadPage(),
+              // ),
               ValueListenableBuilder<Duration>(
                 valueListenable: workedHoursNotifier,
                 builder: (context, workedHours, child) {
