@@ -14,7 +14,9 @@ body {
   50% { background-position: 100% 50%; }
   100% { background-position: 0% 50%; }
 }
-
+html{
+  overflow-x: auto;
+}
 .nav-background {
   position: fixed;
   top: 0;
@@ -63,6 +65,7 @@ body {
   height: 100%;
   background-color: #f4f6f8;
   padding-top: 75px; /* Adjust padding to avoid content overlapping with fixed header */
+  
 }
 
 .example-sidenav {
@@ -102,3 +105,18 @@ body {
   opacity: 0.7;
   filter: blur(8px);
 }
+.content-container {
+  padding: 20px;
+  transition: margin 0.3s ease;
+}
+
+// /* When the sidenav is open */
+// mat-sidenav-container.sidenav-open .content-container {
+//   margin-left: 250px; /* Adjust the margin according to the sidenav width */
+// }
+
+// /* When the sidenav is closed */
+// mat-sidenav-container.sidenav-closed .content-container {
+//   margin-left: 0;
+//   width: 100%;
+// }

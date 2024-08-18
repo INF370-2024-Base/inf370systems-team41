@@ -12,7 +12,7 @@ import { DataService } from '../services/login.service';
   templateUrl: './stock.component.html',
   styleUrls: ['./stock.component.scss']
 })
-export class StockComponent implements OnInit, AfterViewInit {
+export class StockComponent implements OnInit {
   stockList: any[] = [];
   filteredStock: any[] = [];
   categories: any[] = [];
@@ -40,13 +40,12 @@ export class StockComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     this.fetchData();
-  }
-
-  ngAfterViewInit(): void {
     setTimeout(() => {
       this.createStockLevelChart();
     }, 0);
   }
+
+
 
   ngOnDestroy(): void {
     // Destroy the chart when the component is destroyed to avoid memory leaks

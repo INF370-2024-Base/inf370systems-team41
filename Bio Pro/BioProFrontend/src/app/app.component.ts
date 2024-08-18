@@ -27,23 +27,20 @@ export class AppComponent implements OnInit {
 
   constructor(public dataService: OrderService, private router: Router, private dialog: MatDialog,private loadingService:LoadingService) {
     // Listen to router events to determine the current route
-    this.router.events.subscribe(event => {
-      if (event instanceof NavigationEnd) {
-        this.showNavBar = !this.isLoginPage(event.urlAfterRedirects);
-      }
-    });
   }
 
   ngOnInit() {
     this.user = JSON.parse(sessionStorage.getItem('User')!);
     this.isLoggedIn = sessionStorage.getItem('Token') != undefined || sessionStorage.getItem('User') != null;
-    this.showNavBar = !this.isLoginPage(this.router.url);
-    
-    this.router.events.subscribe(event => {
-      if (event instanceof NavigationEnd) {
-        this.showNavBar = !this.isLoginPage(event.urlAfterRedirects);
+
+    this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+    this.router.events.subscribe((evt) => {
+      if (evt instanceof NavigationEnd) {
+        this.router.navigated = false;
+        window.scrollTo(0, 0);
       }
     });
+    
   }
   
   toggleOrdersMenu(): void {
@@ -84,9 +81,6 @@ export class AppComponent implements OnInit {
     });
   }
 
-  private isLoginPage(url: string): boolean {
-    console.log('Current URL:', url);
-    return url.includes('/login');
-  }
+
   
 }

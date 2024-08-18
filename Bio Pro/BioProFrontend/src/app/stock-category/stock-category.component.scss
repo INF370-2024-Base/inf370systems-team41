@@ -6,11 +6,13 @@ body {
   color: #333;
   margin: 0;
   padding: 0;
-  height:max-content;
-  
+  min-height: 100vh; /* Ensure body covers the full viewport height */
   display: flex;
   flex-direction: column;
+}
   
+html, body {
+  height: 100%;
 }
 
 
@@ -25,6 +27,7 @@ body {
   .container {
     max-width: 1200px;
     margin: 0 auto;
+    flex: 1;
   }
 
   /* Row styles */

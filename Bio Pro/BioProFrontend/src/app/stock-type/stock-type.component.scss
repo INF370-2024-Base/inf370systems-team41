@@ -10,7 +10,9 @@ body {
   min-height: 100vh; /* Ensure body covers the full viewport height */
   display: flex;
   flex-direction: column;
+  flex: 1;
 }
+
 
 html, body {
   height: 100%;
