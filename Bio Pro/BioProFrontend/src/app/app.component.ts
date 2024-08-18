@@ -38,8 +38,14 @@ export class AppComponent implements OnInit {
     this.user = JSON.parse(sessionStorage.getItem('User')!);
     this.isLoggedIn = sessionStorage.getItem('Token') != undefined || sessionStorage.getItem('User') != null;
     this.showNavBar = !this.isLoginPage(this.router.url);
+    
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        this.showNavBar = !this.isLoginPage(event.urlAfterRedirects);
+      }
+    });
   }
-
+  
   toggleOrdersMenu(): void {
     this.isOrdersMenuOpen = !this.isOrdersMenuOpen;
   }
@@ -79,6 +85,8 @@ export class AppComponent implements OnInit {
   }
 
   private isLoginPage(url: string): boolean {
-    return url === '/login';
+    console.log('Current URL:', url);
+    return url.includes('/login');
   }
+  
 }
