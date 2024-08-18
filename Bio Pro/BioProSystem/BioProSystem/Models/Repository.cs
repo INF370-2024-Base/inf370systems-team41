@@ -1,4 +1,5 @@
-﻿using BioProSystem.Models;
+﻿using BioProSystem.Controllers;
+using BioProSystem.Models;
 using BioProSystem.ViewModels;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
@@ -468,7 +469,24 @@ namespace BioProSystem.Models
         public async Task<List<Delivery>> GetDeliveries()
         {
 
-            return await _appDbContext.Deliveries.Include(d => d.DeliveryStatus).Include(e => e.Employee).ToListAsync();
+            return await _appDbContext.Deliveries
+                               .Include(d => d.DeliveryStatus)
+                               .Include(e => e.Employee)
+                               .OrderByDescending(d => d.DeliveryId)
+                               .ToListAsync();
+        }
+        public async Task<List<DeliveryStatus>> GetDeliveryStatuses()
+        {
+
+            return await _appDbContext.DeliveryStatuses
+                            .Where(ds => ds.DeliveryStatusId == 1 || ds.DeliveryStatusId == 2 || ds.DeliveryStatusId == 3)
+                            .ToListAsync();
+        }
+
+        public async Task<Delivery> GetDeliveryById(int id)
+        {
+
+            return await _appDbContext.Deliveries.Where(d => d.DeliveryId==id).FirstOrDefaultAsync();
         }
         public async Task<List<CalanderScheduleEvent>> GetAllScheduledEvents()
         {

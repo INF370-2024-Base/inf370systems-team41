@@ -70,6 +70,8 @@ namespace BioProSystem.Models
         Task<SystemOrder> GetSystemOrderByWorkflowId(int workflowtimelineId);
         Task<List<SystemOrder>> GetFinishedSystemWithoutDeliveriesOrders();
         Task<List<Delivery>> GetDeliveries();
+        Task<List<DeliveryStatus>> GetDeliveryStatuses();
+        Task<Delivery> GetDeliveryById(int id);
         Task<List<CalanderScheduleEvent>> GetAllScheduledEvents();
         Task<List<Calander>> GetAllCalendar();
         Task<List<ProceduralTimeline>> GetAllProceduralTimelinesAsync();

@@ -23,8 +23,14 @@ export class DeliveryService {
     getdeliveries(): Observable<any[]> {
         return this.httpClient.get<any[]>(`${this.apiUrl}delivery/GetDeliveries`);
       }
+      GetDeliveryStatuses(): Observable<any[]> {
+        return this.httpClient.get<any[]>(`${this.apiUrl}delivery/GetDeliveryStatuses`);
+      }
         createdelivery(delivery:DeliverAddViewModel): Observable<DeliverAddViewModel> {
         return this.httpClient.post<DeliverAddViewModel>(`${this.apiUrl}delivery/createDelivery`,delivery);
+      }
+      UpdateDeliveryCollected(id: number): Observable<any> {
+        return this.httpClient.put(`${this.apiUrl}delivery/UpdateDeliveryCollected/${id}`,id);
       }
 
 }

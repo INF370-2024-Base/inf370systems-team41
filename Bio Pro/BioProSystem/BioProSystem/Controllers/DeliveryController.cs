@@ -107,5 +107,62 @@ namespace BioProSystem.Controllers
                 return StatusCode(500, $"Internal Server Error: {ex.Message}");
             }
         }
+        [HttpGet]
+        [Route("GetDeliveryStatuses")]
+        public async Task<IActionResult> GetDeliveryStatuses()
+        {
+            try
+            {
+                List<DeliveryStatus> deliveryStatuses = await _repository.GetDeliveryStatuses();
+                if (deliveryStatuses.Count == 0)
+                {
+                    return BadRequest("No delivery statuses found");
+                }
+                else
+                {
+                    return Ok(deliveryStatuses);
+                }
+
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal Server Error: {ex.Message}");
+            }
+        }
+        [HttpPut]
+        [Route("UpdateDeliveryCollected/{deliveryId}")]
+        public async Task<IActionResult> UpdateDeliveryCollected(int deliveryId)
+        {
+            try
+            {
+                Delivery delivery= await _repository.GetDeliveryById(deliveryId);
+                if (delivery ==null)
+                {
+                    return BadRequest("Delivery not found found");
+                }
+                else
+                {
+                    if (delivery.DeliveryStatusId == 2)
+                    {
+                        return BadRequest("Delivery already out");
+                    }
+                    delivery.DeliveryStatusId = 2;
+                    if(await _repository.SaveChangesAsync())
+                    {
+                        return Ok(delivery);
+                    }
+                    else
+                    {
+                        return BadRequest("Failed to update delivery.Please contact admin.");
+                    }
+                   
+                }
+
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal Server Error: {ex.Message}");
+            }
+        }
     }
 }
