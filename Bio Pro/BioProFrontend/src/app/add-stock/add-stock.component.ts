@@ -15,7 +15,11 @@ import { DataService } from '../services/login.service';
 export class AddStockComponent implements OnInit {
   captureStockForm: FormGroup;
   StockCategories: any[] = [];
+  StockTypes: any[] = [];
   StockSuppliers: any[] = [];
+  Categories:any[]=[]
+  selectedCategory: string = '';
+  selectedStockType:string="";
   formErrors = {
     maxGreaterThanMin: false,
     nonNegative: false
@@ -62,6 +66,7 @@ export class AddStockComponent implements OnInit {
     this.stockService.getAllStockCategories().subscribe(
       categories => {
         this.StockCategories = categories;
+        this.Categories=categories
       },
       (error: HttpErrorResponse) => {
         console.error('Error fetching stock categories:', error);
@@ -76,6 +81,22 @@ export class AddStockComponent implements OnInit {
         console.error('Error fetching stock suppliers:', error);
       }
     );
+
+        this.stockService.getAllStockTypes().subscribe(
+          (typeData: any[]) => {
+            this.StockTypes = typeData.filter(type => type.stockCategories && type.stockCategories.length > 0);
+            console.log(this.StockTypes)
+          },
+          (error) => {
+            console.error('Error fetching stock types:', error);
+          }
+        );
+      
+  }
+  onStockTypeChange(event: any): void {
+    const selectedStockType = event.value;
+    this.Categories = this.StockCategories.filter(category => category.stockTypeId === +selectedStockType || selectedStockType === '');
+    this.selectedCategory = '';
   }
 
   captureStock(): void {
