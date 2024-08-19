@@ -1,8 +1,8 @@
 import 'dart:async';
+import 'package:biopromobileflutter/services/employee_hours_capture_service.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 import 'package:mobile_scanner/mobile_scanner.dart';
-import 'dart:convert';
+import 'timer_component.dart';
 
 class QRCodeScannerPage extends StatefulWidget {
   final ValueNotifier<Duration> workedHoursNotifier;
@@ -22,19 +22,17 @@ class _QRCodeScannerPageState extends State<QRCodeScannerPage> with WidgetsBindi
   MobileScannerController scannerController = MobileScannerController();
   bool isCooldown = false;
 
+  late final EmployeeHoursCaptureService _captureService;
+
   @override
   void initState() {
     super.initState();
+    _captureService = EmployeeHoursCaptureService(baseUrl: 'https://localhost:44315');
     WidgetsBinding.instance.addObserver(this);
     if (widget.workedHoursNotifier.value > Duration.zero) {
       startTime = DateTime.now().subtract(widget.workedHoursNotifier.value);
       _startTimer();
     }
-  }
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
   }
 
   @override
@@ -161,26 +159,33 @@ class _QRCodeScannerPageState extends State<QRCodeScannerPage> with WidgetsBindi
     });
   }
 
-void _stopTimerAndSendData(String employeeId) async {
+  void _stopTimerAndSendData(String employeeId) async {
     print('Stopping timer...');
     final endTime = DateTime.now();
     workedHours = endTime.difference(startTime!);
     widget.workedHoursNotifier.value = workedHours;
 
-    // Convert workedHours to decimal hours
     double totalHours = workedHours.inHours +
         (workedHours.inMinutes % 60) / 60 +
         (workedHours.inSeconds % 60) / 3600;
     
-    // Round up to the nearest hour if less than 1 hour
     if (totalHours < 1) {
         totalHours = 1.0;
     }
 
     print('Total worked hours (rounded up): $totalHours');
 
-    // Send the data to the backend
-    await _sendTimeToBackend(employeeId, totalHours);
+    try {
+      await _captureService.captureDailyHours(
+        employeeId: employeeId,
+        totalHours: totalHours,
+      );
+    } catch (e) {
+      print('Error: $e');
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Failed to capture time: $e')),
+      );
+    }
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -194,48 +199,7 @@ void _stopTimerAndSendData(String employeeId) async {
       startTime = null;
       scannerController.stop();
     });
-}
-
-Future<void> _sendTimeToBackend(String employeeId, double totalHours) async {
-    print('Sending worked hours to backend: $totalHours hours');
-    final String apiUrl =
-        'https://localhost:44315/api/Employee/capture-daily-hours/$employeeId';
-
-    final Map<String, dynamic> data = {
-      "employeeDailyHoursId": 0,
-      "employeeId": int.parse(employeeId),
-      "workDate": DateTime.now().toIso8601String(),
-      "hours": totalHours, // Sending as double
-    };
-
-    print('Sending the following data to $apiUrl:');
-    print(jsonEncode(data));
-
-    try {
-      final response = await http.post(
-        Uri.parse(apiUrl),
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: jsonEncode(data),
-      );
-
-      if (response.statusCode == 200) {
-        print('Time successfully captured.');
-      } else {
-        print('Failed to capture time: ${response.body}');
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Failed to capture time: ${response.body}')),
-        );
-      }
-    } catch (e) {
-      print('Error: $e');
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('An error occurred: $e')),
-      );
-    }
-}
-
+  }
 
   void _resetScanner() {
     setState(() {
@@ -265,59 +229,5 @@ Future<void> _sendTimeToBackend(String employeeId, double totalHours) async {
     String twoDigitMinutes = twoDigits(duration.inMinutes.remainder(60));
     String twoDigitSeconds = twoDigits(duration.inSeconds.remainder(60));
     return "${twoDigits(duration.inHours)}:$twoDigitMinutes:$twoDigitSeconds";
-  }
-}
-
-class TimerComponent extends StatelessWidget {
-  final Duration duration;
-
-  TimerComponent({required this.duration});
-
-  @override
-  Widget build(BuildContext context) {
-    String formatTime(int time) {
-      return time.toString().padLeft(2, '0');
-    }
-
-    final hours = formatTime(duration.inHours);
-    final minutes = formatTime(duration.inMinutes.remainder(60));
-    final seconds = formatTime(duration.inSeconds.remainder(60));
-
-    return Container(
-      padding: const EdgeInsets.all(20),
-      decoration: BoxDecoration(
-        color: Colors.blueGrey,
-        borderRadius: BorderRadius.circular(15),
-        boxShadow: const [
-          BoxShadow(
-            color: Colors.black26,
-            blurRadius: 10,
-            offset: Offset(0, 4),
-          ),
-        ],
-      ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          const Text(
-            'Work Time',
-            style: TextStyle(
-              fontSize: 24,
-              color: Colors.white,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          const SizedBox(height: 10),
-          Text(
-            '$hours:$minutes:$seconds',
-            style: const TextStyle(
-              fontSize: 48,
-              color: Colors.white,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ],
-      ),
-    );
   }
 }

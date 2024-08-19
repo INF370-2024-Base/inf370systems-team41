@@ -1,13 +1,11 @@
-import 'package:biopromobileflutter/pages/components/timer_component.dart';
+import 'package:biopromobileflutter/pages//timer_component.dart';
 import 'package:biopromobileflutter/pages/deliveries_page.dart';
 import 'package:biopromobileflutter/pages/dentists_page.dart';
 import 'package:biopromobileflutter/pages/help_page.dart';
 import 'package:biopromobileflutter/pages/orders_page.dart';
-import 'package:biopromobileflutter/pages/photo_upload.dart';
 import 'package:biopromobileflutter/pages/qr_code_scanner_page.dart';
 import 'package:biopromobileflutter/pages/stocks_page.dart';
 import 'package:flutter/material.dart';
-
 
 void main() {
   runApp(MyApp());

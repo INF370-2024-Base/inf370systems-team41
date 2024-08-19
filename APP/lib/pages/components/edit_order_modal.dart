@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'dart:io';
+import 'package:image_picker/image_picker.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 
 class EditOrderModal extends StatefulWidget {
   final Map<String, dynamic> order;
@@ -13,6 +16,8 @@ class EditOrderModal extends StatefulWidget {
 
 class _EditOrderModalState extends State<EditOrderModal> {
   final _formKey = GlobalKey<FormState>();
+  final ImagePicker _picker = ImagePicker();
+  XFile? _selectedImage;
 
   late TextEditingController _priorityLevelController;
   late TextEditingController _specialRequirementsController;
@@ -48,46 +53,58 @@ class _EditOrderModalState extends State<EditOrderModal> {
     super.dispose();
   }
 
+  Future<void> _pickImage() async {
+    final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
+
+    if (pickedFile != null) {
+      setState(() {
+        _selectedImage = pickedFile;
+      });
+    }
+  }
+
   Future<void> _saveChanges() async {
     if (_formKey.currentState!.validate()) {
-      final updatedOrder = {
-        "orderId": widget.order['orderId'],
-        "orderDate": widget.order['orderDate'],
-        "priorityLevel": _priorityLevelController.text,
-        "specialRequirements": _specialRequirementsController.text,
-        "dueDate": _dueDateController.text,
-        "emergencyNumber": _emergencyNumberController.text,
-        "mouthArea": _mouthAreaController.text,
-        "estimatedDurationInDays": int.tryParse(_estimatedDurationController.text) ?? 0,
-        "medicalAidNumber": _medicalAidNumberController.text,
-        "dentistId": widget.order['dentistId'],
-        "orderTypeId": widget.order['orderTypeId'],
-        "orderStatusId": widget.order['orderStatusId'],
-        "orderWorkflowTimelineId": widget.order['orderWorkflowTimelineId'],
-        "teethShadesIds": widget.order['teethShadesIds'] ?? [],
-        "selectedAreasIds": selectedAreasIds.isNotEmpty ? selectedAreasIds : [0], // Ensure it's populated
-        "mediaFileViewModels": widget.order['mediaFileViewModels'] ?? [],
-      };
+      if (_selectedImage != null) {
+        final bytes = await _selectedImage!.readAsBytes();
+        final base64Image = base64Encode(bytes);
 
-      try {
-        final response = await http.put(
-          Uri.parse('https://localhost:44315/Api/UpdateOrder'),
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: jsonEncode(updatedOrder),
-        );
+        final requestBody = {
+          "mediaFileViewModels": [
+            {
+              "systemOrderId": widget.order['orderId'], 
+              "fileName": _selectedImage!.name,
+              "fileSelf": base64Image,
+              "fileSizeKb": (bytes.length / 1024).toString(), 
+            }
+          ],
+          "orderId": widget.order['orderId'],
+        };
 
-        if (response.statusCode == 200) {
-          Navigator.pop(context, 'Order updated successfully');
-        } else {
+        try {
+          final response = await http.post(
+            Uri.parse('https://localhost:44315/Api/AddMediaFile'),
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: jsonEncode(requestBody),
+          );
+
+          if (response.statusCode == 200) {
+            Navigator.pop(context, 'Media file added successfully');
+          } else {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text('Failed to add media file: ${response.body}')),
+            );
+          }
+        } catch (e) {
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Failed to update order: ${response.body}')),
+            SnackBar(content: Text('An error occurred: $e')),
           );
         }
-      } catch (e) {
+      } else {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('An error occurred: $e')),
+          SnackBar(content: Text('Please select an image to attach.')),
         );
       }
     }
@@ -110,75 +127,57 @@ class _EditOrderModalState extends State<EditOrderModal> {
                 const SizedBox(height: 16.0),
                 TextFormField(
                   controller: _priorityLevelController,
+                  readOnly: true,  
                   decoration: const InputDecoration(labelText: 'Priority Level'),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter a priority level';
-                    }
-                    return null;
-                  },
                 ),
                 const SizedBox(height: 8.0),
                 TextFormField(
                   controller: _specialRequirementsController,
+                  readOnly: true,  
                   decoration: const InputDecoration(labelText: 'Special Requirements'),
                 ),
                 const SizedBox(height: 8.0),
                 TextFormField(
                   controller: _dueDateController,
+                  readOnly: true,  
                   decoration: const InputDecoration(labelText: 'Due Date'),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter a due date';
-                    }
-                    return null;
-                  },
                 ),
                 const SizedBox(height: 8.0),
                 TextFormField(
                   controller: _emergencyNumberController,
+                  readOnly: true, 
                   decoration: const InputDecoration(labelText: 'Emergency Number'),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter an emergency number';
-                    }
-                    return null;
-                  },
                 ),
                 const SizedBox(height: 8.0),
                 TextFormField(
                   controller: _mouthAreaController,
+                  readOnly: true,  
                   decoration: const InputDecoration(labelText: 'Mouth Area'),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter the mouth area';
-                    }
-                    return null;
-                  },
                 ),
                 const SizedBox(height: 8.0),
                 TextFormField(
                   controller: _estimatedDurationController,
+                  readOnly: true,  
                   decoration: const InputDecoration(labelText: 'Estimated Duration (Days)'),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter the estimated duration';
-                    }
-                    return null;
-                  },
                 ),
                 const SizedBox(height: 8.0),
                 TextFormField(
                   controller: _medicalAidNumberController,
+                  readOnly: true, 
                   decoration: const InputDecoration(labelText: 'Medical Aid Number'),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter a medical aid number';
-                    }
-                    return null;
-                  },
                 ),
+                const SizedBox(height: 16.0),
+                _selectedImage != null
+                    ? kIsWeb
+                        ? Image.network(_selectedImage!.path)
+                        : Image.file(File(_selectedImage!.path))
+                    : const Text('No image selected'),
                 const SizedBox(height: 8.0),
+                ElevatedButton(
+                  onPressed: _pickImage,
+                  child: const Text('Attach Image'),
+                ),
+                const SizedBox(height: 16.0),
                 ElevatedButton(
                   onPressed: _saveChanges,
                   child: const Text('Save Changes'),
