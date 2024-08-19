@@ -183,10 +183,29 @@ nosearch:boolean=true
   dayClicked(): void {
     console.log('Day clicked');
   }
+  timeClicked(event: any): void {
+    console.log(event);
+    const dialogRef = this.dialog.open(AddEventModalComponent, {
+      width: '400px',
+      data:{event}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        // Refresh events if an event was edited or deleted
+        this.fetchCalendarScheduleEvents();
+      }
+    });
+    console.log('Event clicked:', event);
+  }
+  onEventClick(event: any): void {
+    // Assuming you have a method to handle the event click
+    this.proceduralTimelineEventClicked(event);
+  }
 
   eventClicked(event: any): void {
     const dialogRef = this.dialog.open(EventModalComponent, {
-      width: '300px',
+      width: '400px',
       data: { event }
     });
 

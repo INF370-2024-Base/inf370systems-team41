@@ -197,12 +197,18 @@ downloadFile(base64String: string, fileName: string) {
   });
 
   dialogRef.afterClosed().subscribe(result => {
-    console.log(`Dialog result: ${result}`);
+    if(result!="Order update canceled")
+    {console.log(`Dialog result: ${result}`);
     this.closeModal();
      this.showSnackBar(result);
      setTimeout(() => {
-      location.reload();
+      this.getOrdersAndInfo();
     }, 2000); 
+    }
+    else{
+      this.showSnackBar(result);
+    }
+    
   
      
   });

@@ -1,19 +1,19 @@
 <h2 mat-dialog-title>Event Details</h2>
 <mat-dialog-content>
-  <form #eventForm="ngForm" [formGroup]="addForm">
-    <mat-form-field appearance="fill" *ngIf="isEditMode">
+  <form #eventForm="ngForm" [formGroup]="addForm" >
+    <mat-form-field appearance="fill" *ngIf="isEditMode" style="width: 100%;">
       <mat-label>Title</mat-label>
       <input matInput placeholder="Title" [(ngModel)]="selectedEvent.TitleOfEvent"  formControlName="Description">
       <mat-error *ngIf="addForm.get('Description')?.hasError('required')"></mat-error>
     </mat-form-field>
-    <mat-form-field appearance="fill" *ngIf="isEditMode">
+    <mat-form-field appearance="fill" *ngIf="isEditMode" style="width: 100%;">
       <mat-label>Information</mat-label>
       <input matInput placeholder="Additional information" [(ngModel)]="selectedEvent.EventInformation" formControlName="EventInformation">
       <mat-error *ngIf="addForm.get('EventInformation')?.hasError('required')"></mat-error>
     </mat-form-field>
     <h2 *ngIf="!isEditMode">{{ selectedEvent.TitleOfEvent }}</h2>
     <p *ngIf="!isEditMode">{{ selectedEvent.EventInformation }}</p>
-    <mat-form-field appearance="fill" *ngIf="isEditMode">
+    <mat-form-field appearance="fill" *ngIf="isEditMode" style="width: 100%;">
       <mat-label>Start Date</mat-label>
       <div >
         <input
@@ -31,7 +31,7 @@
       
     </mat-form-field>
     <h2 *ngIf="!isEditMode">{{ selectedEvent.DateOfEvent | date:'mediumDate' }}</h2>
-    <mat-form-field appearance="fill"  *ngIf="isEditMode">
+    <mat-form-field appearance="fill"  *ngIf="isEditMode" style="width: 100%;">
       <mat-label>Time</mat-label>
       <input
         matInput

@@ -26,7 +26,7 @@
       </mat-select>
     </mat-form-field>
 
-    <div *ngIf="selectedCalendarId === 1" class="button-container">
+    <div *ngIf="selectedCalendarId === 1" style="width: 100%;">
       <button mat-button matSuffix mat-icon-button aria-label="Clear" (click)="addEventClicked($event)">
         <mat-icon>add</mat-icon>
         Add event
@@ -43,18 +43,23 @@
         </mat-form-field>
         <button mat-button (click)="BackToToday()" slot="end" class="nav-button">Today</button>
       </div>
+      
       <mwl-calendar-week-view
         *ngIf="view === 'week'"
+        style="width: max-content;"
+        [draggable]="true"
         [viewDate]="viewDate"
         [events]="filteredEvents.length > 0 ? filteredEvents : events"
         [refresh]="refresh"
-        (dayClicked)="dayClicked()"
+        (hourSegmentClicked)="timeClicked($event)"
         (eventClicked)="eventClicked($event.event)">
       </mwl-calendar-week-view>
-<div  *ngIf="view === 'month'"><h1>{{viewDate|date:"MMMM"}}</h1>
 
-</div>
+
+
+<div  *ngIf="view === 'month'"><h1>{{viewDate|date:"MMMM"}}</h1></div>
       <mwl-calendar-month-view
+      style="width: max-content;"
         *ngIf="view === 'month'"
         [viewDate]="viewDate"
         [events]="filteredEvents.length > 0 ? filteredEvents : events"
@@ -66,19 +71,35 @@
   </div>
 
   <div *ngIf="selectedCalendarId === 2" class="container" style="display: flex;flex-direction: column;align-items: center;">
-   <div style=" display: flex; gap: 10px; margin-bottom: 20px;">
+   <div style=" display: flex; gap: 10px; margin-bottom: 20px;width: 100%;">
     <button mat-button (click)="previousPeriodForProc()" class="nav-button">Previous</button>
     <button mat-button (click)="nextPeriodForProc()" class="nav-button">Next</button>
     <button mat-button (click)="BackToToday()" slot="end" class="nav-button">Today</button>
   </div>
-    <h1>{{viewDate|date:"MMMM"}}</h1>
+  <div style="width: 100%;"><h1>{{viewDate|date:"MMMM"}}</h1>
+    <ng-template #monthCellTemplate let-day="day" let-events="day.events" >
+      <div class="custom-month-cell">
+        <div class="cell-header">
+          {{ day.date | date: 'd' }}
+        </div>
+        <div *ngFor="let event of events" 
+             class="event-details" 
+             (click)="onEventClick(event)">
+          <!-- Customize event display here -->
+          <span class="event-title">{{ event.title }}</span>
+          <span class="event-time">{{ event.start | date: 'shortTime' }}</span>
+        </div>
+      </div>
+    </ng-template>
     <mwl-calendar-month-view
       [viewDate]="viewDate"
       [events]="filteredEvents.length > 0 ? filteredEvents : ProceduralTimelinesevents"
       [refresh]="refresh"
-      (dayClicked)="dayClicked()"
+      style="width: max-content;"
+      [cellTemplate]="monthCellTemplate"
       (eventClicked)="proceduralTimelineEventClicked($event.event)">
-    </mwl-calendar-month-view>
+    </mwl-calendar-month-view></div>
+    
   </div>
 
   <div *ngIf="!nosearch && selectedCalendarId === 1">
@@ -94,7 +115,7 @@
             [viewDate]="singleEvent.start"
             [events]="[singleEvent]"
             [refresh]="refresh"
-            (dayClicked)="dayClicked()"
+            (timeSlotClicked)="dayClicked()"
             (eventClicked)="eventClicked($event.event)">
           </mwl-calendar-day-view>
         </mat-expansion-panel>
@@ -102,3 +123,34 @@
     </div>
   </div>
 </body>
+<style>.custom-month-cell {
+  position: relative;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #f9f9f9;
+}
+
+.cell-header {
+  font-weight: bold;
+  margin-bottom: 5px;
+  text-align: center;
+}
+
+.event-details {
+  background-color: #e0f7fa;
+  margin: 2px 0;
+  padding: 2px 5px;
+  border-radius: 3px;
+  font-size: 0.9em;
+}
+
+.event-title {
+  font-weight: bold;
+  display: block;
+}
+
+.event-time {
+  font-size: 0.8em;
+  color: #00796b;
+}</style>

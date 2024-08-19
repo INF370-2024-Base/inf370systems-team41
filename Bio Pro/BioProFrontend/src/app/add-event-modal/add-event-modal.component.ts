@@ -20,7 +20,7 @@ export class AddEventModalComponent implements OnInit {
   today = new Date();
   todayDate = this.datePipe.transform(new Date(this.today.setDate(this.today.getDate())), 'yyyy-MM-dd');
   constructor(
-    public dialogRef: MatDialogRef<EventModalComponent>,
+    public dialogRef: MatDialogRef<EventModalComponent>, @Inject(MAT_DIALOG_DATA) public data: { event: any },
     private calendarService: CalendarService,private snackBar:MatSnackBar,private dialog: MatDialog,private datePipe: DatePipe,private fb:FormBuilder,private loginService:DataService
   ) {this.addForm = this.fb.group({
     Description: ['', Validators.required],
@@ -36,7 +36,22 @@ export class AddEventModalComponent implements OnInit {
   }
   time:string='00:00'
   ngOnInit(): void {
+    if(this.data!=null)
+      {
+        this.addEvent.CalanderScheduleEventDateTime=this.data.event.date
+        this.addForm.patchValue({
+          DateOfEvent: this.datePipe.transform(this.data.event.date, 'yyyy-MM-dd'),
+
+        });
+
+          this.time = this.datePipe.transform(this.data.event.date, 'HH:mm')|| '00:00'
+        
+       
+        
+      }
     console.log(this.addEvent)
+    
+
   }
   SubmitForm() {
     if(this.addEvent.EventInformation==''||this.addEvent.Description=='')

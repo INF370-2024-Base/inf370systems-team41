@@ -70,6 +70,7 @@ console.log(this.selectedEvent)
               TitleOfEvent:this.data.event.title,
               EventInformation:this.data.event.object.information
             }
+            console.log(this.selectedEvent.TimeOfEvent)
             this.showSnackBar("Please fill in all input fields")
 
         }
