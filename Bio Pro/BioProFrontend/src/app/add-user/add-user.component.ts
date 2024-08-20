@@ -120,15 +120,6 @@ openSnackBar(message: string) {
      this.loginService.CreateTransaction(transaction).subscribe(
        result=>{
          console.log("Successfully added transaction."+result)
-       }
-       ,
-       error=>{
-         console.log("Unable to add transaction."+error.error)
-         console.log(error.error)
-       }
-     )
-        }); 
-        this.openSnackBar('User added successfully');
   
         if (this.isEmployee && this.employeeform.valid) {
           const newEmployee: Employee = this.employeeform.value;
@@ -137,7 +128,7 @@ openSnackBar(message: string) {
           console.log('Employee added:', newEmployee);
   
           // Convert addEmployee() Observable to a promise and wait for its completion
-          const employeeResult = await this.employeeService.addEmployee(newEmployee).subscribe(
+          this.employeeService.addEmployee(newEmployee).subscribe(
             result=>{
               const signedInUser=JSON.parse(sessionStorage.getItem('User')!)
           const id=signedInUser.id
@@ -148,6 +139,9 @@ openSnackBar(message: string) {
            SystemUserId:id
          }
          console.log(transaction)
+         console.log('User and employee added successfully');
+        this.openSnackBar('User and employee added successfully');
+        this.router.navigate(['/all-user'])
          this.loginService.CreateTransaction(transaction).subscribe(
            result=>{
              console.log("Successfully added transaction."+result)
@@ -161,10 +155,21 @@ openSnackBar(message: string) {
             }
           ); 
         }
+        else{
+          this.router.navigate(['/all-user'])
+        }
+        this.openSnackBar('User and employee added successfully');
   
-        console.log('User and employee added successfully');
-        this.openSnackBar('Employee added successfully');
-        this.router.navigate(['/all-user'])
+       }
+       ,
+       error=>{
+         console.log("Unable to add transaction."+error.error)
+         console.log(error.error)
+       }
+     )
+        }); 
+        
+        
       } catch (error) {
         if (error instanceof HttpErrorResponse) {
           // Handle HTTP error response
