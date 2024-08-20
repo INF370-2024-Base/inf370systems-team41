@@ -263,7 +263,7 @@ namespace BioProSystem.Controllers
             { 
                 try
                 {
-                    var editedOrder = _repository.GetSystemOrderByIdAsync(viewModel.OrderId).Result;
+                    var editedOrder = _repository.GetSystemOrderWithoutInfoByIdAsync(viewModel.OrderId).Result;
                     if (editedOrder != null)
                     {
 
@@ -448,12 +448,12 @@ namespace BioProSystem.Controllers
                 return StatusCode(500, $"Internal Server Error: {ex.Message}");
             }
         }
-        [HttpGet("GetAllOrderInfo/{OrderId}")]
-        public async Task<IActionResult> GetAllOrderInfo(string OrderId)
+        [HttpGet("GetAllOrderInfo")]
+        public async Task<IActionResult> GetAllOrderInfo()
         {
             try
             {
-                var result = await _repository.GetAllSystemOrdersInformationAsync(OrderId);
+                var result = await _repository.GetAllSystemOrdersInfoAsync();
 
                 if (result == null)
                     return NotFound("No order found");
@@ -575,7 +575,7 @@ namespace BioProSystem.Controllers
         {
             try
             {
-                var pendingOrders = await _repository.GetSystemOrderByIdAsync(orderId);
+                var pendingOrders = await _repository.GetSystemOrderWithoutInfoByIdAsync(orderId);
                 if (pendingOrders == null)
                 {
                     return NotFound("No pending orders found");
@@ -650,7 +650,7 @@ namespace BioProSystem.Controllers
         {
             try
             {
-                var order = await _repository.GetSystemOrderByIdAsync(orderId);
+                var order = await _repository.GetSystemOrderWithoutInfoByIdAsync(orderId);
                 if (order == null)
                 {
                     return NotFound("No order found");
@@ -735,7 +735,7 @@ namespace BioProSystem.Controllers
                 mediaFile1.FileSelf = Convert.FromBase64String(dentalDesign.DentalDesign.FileSelf);
                 mediaFile1.FileSizeKb = dentalDesign.DentalDesign.FileSizeKb;
 
-                SystemOrder order = await _repository.GetSystemOrderByIdAsync(dentalDesign.OrderId);
+                SystemOrder order = await _repository.GetSystemOrderWithoutInfoByIdAsync(dentalDesign.OrderId);
                 if (order == null)
                 { 
                     return NotFound("Order not found"); 
@@ -818,7 +818,7 @@ namespace BioProSystem.Controllers
         {
             try
             {
-                var pendingOrders = await _repository.GetSystemOrderByIdAsync(orderId);
+                var pendingOrders = await _repository.GetSystemOrderWithoutInfoByIdAsync(orderId);
                 if (pendingOrders == null)
                 {
                     return NotFound("No pending orders found");
@@ -883,7 +883,7 @@ namespace BioProSystem.Controllers
         {
             try
             {
-                SystemOrder pendingOrders = await _repository.GetSystemOrderByIdAsync(orderId);
+                SystemOrder pendingOrders = await _repository.GetSystemOrderWithoutInfoByIdAsync(orderId);
                 if (pendingOrders == null)
                 {
                     return NotFound("No pending orders found");

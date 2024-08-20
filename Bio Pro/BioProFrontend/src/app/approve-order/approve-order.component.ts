@@ -19,20 +19,11 @@ pendingOrdersData:any[]=[]
 
 ngOnInit(): void {
   this.dataService.getPendingOrders().subscribe(
-    async (result: any[]) => {
-      this.pendingOrders = result;
-      this.pendingOrdersData = [];
-
-      for (const element of this.pendingOrders) {
-        const results = await this.dataService.getAllOrderInfo(element.orderId).toPromise();
-        this.pendingOrdersData.push(results);
-        console.log(this.pendingOrdersData);
-      }
-    },
-    (error) => {
-      this.showSnackBar("No pending orders found.");
-    }
-  );
+     (result: any[]) => {
+      console.log(result)
+      this.pendingOrdersData = result;
+      console.log(this.pendingOrdersData)
+});
 }
 
   showSnackBar(message:string) {

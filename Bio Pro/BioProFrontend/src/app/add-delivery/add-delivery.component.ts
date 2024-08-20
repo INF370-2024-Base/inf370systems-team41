@@ -25,13 +25,8 @@ email:any
   }
   getsystemOrders() {
     this.orderService.getFinishedOrders().subscribe(results => {
-      this.orders = results;
-      results.forEach(element => {
-        this.orderService.getAllOrderInfo(element.orderId).subscribe(results => {
-          this.orderInfo.push(results);
-          console.log(this.orderInfo);
-        });
-      });
+      this.orderInfo = results;
+      console.log(this.orderInfo)
     }, (error: HttpErrorResponse) => console.log(error));
   }
   createdeliveries(systemOrderId:string)

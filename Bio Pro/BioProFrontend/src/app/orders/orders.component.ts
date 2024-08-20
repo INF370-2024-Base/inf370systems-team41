@@ -55,8 +55,8 @@ export class OrdersComponent implements OnInit {
   }
 
   getOrdersAndInfo() {
-    this.dataservices.getAllOrders().pipe(
-      switchMap((allOrders: any[]) => {
+    this.dataservices.getAllOrderInfo().subscribe(
+      ((allOrders: any[]) => {
         if (Array.isArray(allOrders)) {
           this.orders = allOrders;
           this.originalOrders=allOrders
@@ -65,41 +65,16 @@ export class OrdersComponent implements OnInit {
               this.orderTypes=results
             }
           )
-          this.loading=true
-          return forkJoin(this.orders.map(order => this.dataservices.getAllOrderInfo(order.orderId)));
+          this.loading=false
+          this.ordersInfo=allOrders
+          console.log(this.ordersInfo)
           
           
         } else {
           console.error('No orders found.');
-          return of([]); // Empty observable
         }
       })
-    ).subscribe(
-      (orderInfos: any[]) => {
-        this.ordersInfo = orderInfos;
-        console.log('It works');
-        console.log('Orders and order info retrieved:', this.orders, this.ordersInfo);
-        this.loading=false
-      },
-      (error) => {
-        console.error('Error fetching orders or order info:', error);
-      }
-    );
-  }
-  getOrderInfo()
-  {
-    this.ordersInfo=[]
-    this.orders.forEach((order) => {
-      console.log(order); 
-      this.dataservices.getAllOrderInfo(order.orderId).subscribe(
-        (result: any) => {
-            this.ordersInfo.push(result);
-                   },
-        (error) => {
-          console.error('Error fetching order info:', error);
-        }
-      );
-    });
+    )
   }
   
 isImage(base64String: string): boolean {
@@ -135,34 +110,34 @@ downloadFile(base64String: string, fileName: string) {
   this.loginService.addTransaction("Exported","Exported mediafile "+fileName+".")
 }
   searchOrders() {
-    if (this.orderId.trim() !== '') {
-      const url = `${this.baseUrl}GetOrdersById/${this.orderId}`;
-      this.http.get<any>(url)
-        .subscribe(
-          (data) => {
-            console.log(data)
-            if (data) {
-              this.ordersInfo=[]
-              this.orders = [data]; 
-              this.getOrderInfo()
+    // if (this.orderId.trim() !== '') {
+    //   const url = `${this.baseUrl}GetOrdersById/${this.orderId}`;
+    //   this.http.get<any>(url)
+    //     .subscribe(
+    //       (data) => {
+    //         console.log(data)
+    //         if (data) {
+    //           this.ordersInfo=[]
+    //           this.orders = [data]; 
+    //           this.getOrdersAndInfo()
 
-            } else {
-              this.ordersInfo=[]
-              this.orders = [data]; 
-              this.getOrderInfo()
+    //         } else {
+    //           this.ordersInfo=[]
+    //           this.orders = [data]; 
+    //           this.getOrdersAndInfo()
   
-            }
-          },
-          (error:HttpErrorResponse) => {
-            if (error.status === 404) {
-              this.showSnackBar('No orders');
-            }
-          }
-        );
-    } else {
+    //         }
+    //       },
+    //       (error:HttpErrorResponse) => {
+    //         if (error.status === 404) {
+    //           this.showSnackBar('No orders');
+    //         }
+    //       }
+    //     );
+    // } else {
 
-      this.orders= this.originalOrders
-    }
+    //   this.orders= this.originalOrders
+    // }
   }
   clearSeacrhOrders() {
     this.orders= this.originalOrders
@@ -177,19 +152,18 @@ downloadFile(base64String: string, fileName: string) {
   }
   onOrderIdChange(newOrderId: string) {
     if (newOrderId.trim() === '') {
-      this.orders= this.originalOrders
+      this.ordersInfo= this.originalOrders
       this.selectedFilter=0
       this.onFilterChange(null);
       
     } else {
       // Filter restaurants based on query
-      this.orders = this.orders.filter((d) => d.orderId.toLowerCase().includes(newOrderId));
-      this.getOrderInfo()
+      this.ordersInfo = this.originalOrders.filter((d) => d.orderId.toLowerCase().includes(newOrderId));
 
     }
   }
   editOrder(orderId: string): void {
-    const selectedOrder = this.ordersInfo.find(order => order.systemOrder.orderId === orderId);
+    const selectedOrder = this.ordersInfo.find(order => order.orderId === orderId);
   console.log('Selected order for editing:', selectedOrder); // Debug log for selected order
 
   const dialogRef = this.dialog.open(EditOrderModalComponent, {
@@ -237,7 +211,7 @@ downloadFile(base64String: string, fileName: string) {
         () => {
           console.log('Order status updated successfully');
           this.closeStatusModal();
-          this.getOrderInfo();
+          this.getOrdersAndInfo();
         },
         (error) => {
           console.error('Error updating order status:', error);
@@ -249,13 +223,10 @@ downloadFile(base64String: string, fileName: string) {
   {
     console.log(this.selectedFilter)
     if (this.selectedFilter == 0) {
-      this.orders=[...this.originalOrders]
-      this.getOrderInfo()
-    } else {
-      this.orders=[...this.originalOrders]
-      this.orders = this.orders.filter((d) => d.orderTypeId==this.selectedFilter);
-      this.getOrderInfo()
 
+      this.ordersInfo=this.originalOrders
+    } else {
+      this.ordersInfo = this.originalOrders.filter((d) => d.orderType.orderTypeId==this.selectedFilter);
     }
   }
   deleteMediaFile(mediaFileId: number): void {

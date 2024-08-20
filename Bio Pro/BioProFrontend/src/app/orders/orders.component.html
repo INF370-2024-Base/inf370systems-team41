@@ -1,10 +1,10 @@
-<!-- <p>orders works!</p> -->
-<body>
+<p>orders works!</p>
+ <body>
   <div class="scroll-container">
     <h1 style="font-size: 48px; color: #4d4a4a; text-align: center; text-transform: uppercase; letter-spacing: 3px; margin-bottom: 24px; text-shadow: 2px 2px 4px rgba(124, 124, 124, 0.5);">ORDERS</h1>
   <div class="container">
     <div *ngIf="loading" class="loading-spinner">
-      <!-- You can use a spinner from Angular Material or any other spinner -->
+      You can use a spinner from Angular Material or any other spinner
       <mat-spinner></mat-spinner>
     </div>
     <div class="search-filter">
@@ -34,7 +34,7 @@
           <mat-panel-title>
             <mat-error *ngIf="order.orderStatus.orderStatusId==9" align="end">Canceled:</mat-error>
             <mat-icon>assignment</mat-icon>
-            Order ID: {{ order.systemOrder.orderId }} - Patient: {{ order.patient.firstName }} {{ order.patient.lastname }}  
+            Order ID: {{ order.orderId }} - Dentist: {{ order.dentist.firstName }} {{ order.dentist.lastName }}  
             
           </mat-panel-title>          
         </mat-expansion-panel-header>
@@ -49,22 +49,22 @@
         </div>
           <p><strong>Order Status:</strong> {{ order.orderStatus.description }}</p>
           <p><strong>Order Type:</strong> {{ order.orderType.description }}</p>
-          <p><strong>Order Direction:</strong> {{ order.orderDirection.description }}</p>
-          <p><strong>Timeline Details:</strong> {{ order.timeline.timelineDetails }}</p>
-          <div *ngFor="let stock of order.systemOrder.stockItems">
+           <p><strong>Order Direction:</strong> {{ order.orderWorkflowTimeline.orderDirection.description }}</p> 
+           <p><strong>Timeline Details:</strong> {{ order.orderWorkflowTimeline.timelineDetails }}</p> 
+          <div *ngFor="let stock of order.stockItems">
           <p><strong>Stock amount used</strong> {{ stock.stock.stockName}}: {{stock.quantity}} {{stock.stock.measurement}}</p>
         </div>
           <strong>Teethshades:</strong>
           <div class="teethshades">
-            <div *ngFor="let teethshade of order.teethshades" class="teethshade-item">
+            <div *ngFor="let teethshade of order.teethShades" class="teethshade-item">
               <div class="color-box" [style.background]="teethshade.colourCode"></div>
               <span>{{ teethshade.colourName }}</span>
             </div>
           </div>
 
           <div>
-            <div *ngIf="order.systemOrder.mediaFiles" class="media-container">
-              <div *ngFor="let media of order.systemOrder.mediaFiles">
+            <div *ngIf="order.mediaFiles" class="media-container">
+              <div *ngFor="let media of order.mediaFiles">
                 <div *ngIf="isImage(media.fileSelf)">
                   <img [src]="getBase64ImageSrc(media.fileSelf)" alt="Base64 Image" class="image-item">
                   <div class="button-container">
@@ -96,10 +96,10 @@
         </div>
         
         <div class="action-icons">
-          <button mat-raised-button color="primary" class="edit-button" (click)="editOrder(order.systemOrder.orderId)">
+          <button mat-raised-button color="primary" class="edit-button" (click)="editOrder(order.orderId)">
             <mat-icon>edit</mat-icon>Edit
           </button>
-          <button mat-raised-button color="warn" class="trash-button" (click)="cancelOrder(order.systemOrder.orderId)">
+          <button mat-raised-button color="warn" class="trash-button" (click)="cancelOrder(order.orderId)">
             <mat-icon>cancel</mat-icon>Cancel
           </button>
         </div>
