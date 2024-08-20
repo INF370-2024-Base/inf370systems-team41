@@ -77,6 +77,31 @@ table th:last-child, table td:last-child {
 table tr:last-child td {
   border-bottom: none;
 }
+mat-form-field {
+  font-size: 14px;
+  color: #6c757d; /* Grey color for text */
+}
+
+mat-label {
+  font-size: 12px;
+  color: grey; /* Matches the "Filter By" text color */
+}
+
+.mat-select-placeholder, .mat-select-value {
+  font-size: 14px;
+  color: #000; /* Adjust to match the 'No Filter' text color */
+}
+
+.mat-form-field-appearance-outline .mat-form-field-outline-thick {
+  border-color: rgba(0, 0, 0, 0.12); /* Adjusts the border color of the dropdown */
+}
+
+
+mat-form-field {
+  font-size: 14px;
+  color: #6c757d;
+}
+
 
 select {
   padding: 10px;
