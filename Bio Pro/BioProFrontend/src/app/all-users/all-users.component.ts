@@ -20,30 +20,34 @@ export class AllUsersComponent implements OnInit {
   itemsPerPage: number = 9;
   searchControl = new FormControl();
   loading: boolean = true; // Loading state
+  users: any[] = []; // Array to hold all users
+  filteredUsers: any[] = []; // Array to hold filtered users based on search
 
-  
-
-  constructor(private userService:UserServices,private loginservice:DataService,private dialog:MatDialog,private snackBar:MatSnackBar) { }
+  constructor(
+    private userService: UserServices,
+    private loginservice: DataService,
+    private dialog: MatDialog,
+    private snackBar: MatSnackBar
+  ) {}
 
   ngOnInit(): void {
-    this.fetchAllusers() ;
+    this.fetchAllUsers();
     this.setupScrollListener();
     this.searchControl.valueChanges.pipe(
-      debounceTime(700) // 1000 milliseconds = 1 second
+      debounceTime(700) // 700 milliseconds debounce
     ).subscribe(value => {
       this.onOrderIdChange(value);
     });
   }
-  users:any[]=[]
 
   get paginatedUsers(): any[] {
     const startIndex = (this.currentPage - 1) * this.itemsPerPage;
     const endIndex = startIndex + this.itemsPerPage;
-    return this.users.slice(startIndex, endIndex);
+    return this.filteredUsers.slice(startIndex, endIndex);
   }
 
   get totalPages(): number {
-    return Math.ceil(this.users.length / this.itemsPerPage);
+    return Math.ceil(this.filteredUsers.length / this.itemsPerPage);
   }
 
   goToPage(page: number): void {
@@ -64,14 +68,18 @@ export class AllUsersComponent implements OnInit {
     }
   }
 
-  fetchAllusers() {
+  fetchAllUsers() {
     this.loading = true;
-    this.userService.getAllUsers().subscribe(data => {
-      this.users = data;
-      this.loading = false;
-    }, error => {
-      this.loading = false; // Handle error and stop loading
-    });
+    this.userService.getAllUsers().subscribe(
+      data => {
+        this.users = data;
+        this.filteredUsers = data; // Initially show all users
+        this.loading = false;
+      },
+      error => {
+        this.loading = false; // Handle error and stop loading
+      }
+    );
   }
 
   editEmployee(user: any) {
@@ -82,7 +90,7 @@ export class AllUsersComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.fetchAllusers();
+        this.fetchAllUsers();
         this.snackBar.open('User updated successfully', 'Close', {
           duration: 3000,
         });
@@ -99,8 +107,8 @@ export class AllUsersComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.userService.RemoveAccess(user.email).subscribe(() => {
-          this.fetchAllusers();
-          this.loginservice.addTransaction("Put","User removed access for:"+user.email)
+          this.fetchAllUsers();
+          this.loginservice.addTransaction("Put", "User removed access for:" + user.email)
           this.snackBar.open('User deleted successfully', 'Close', {
             duration: 3000,
           });
@@ -113,26 +121,31 @@ export class AllUsersComponent implements OnInit {
     });
   }
 
-  searchQuery:string=''
   searchEmployees() {
-    // Add your search logic here
+    const searchCriteria = this.searchControl.value.trim().toLowerCase();
+    if (!searchCriteria) {
+      this.filteredUsers = this.users; // Show all users if search is empty
+      return;
+    }
+
+    this.filteredUsers = this.users.filter(user => {
+      const fullName = (user.name + ' ' + user.surname).toLowerCase();
+      return (
+        user.name.toLowerCase().includes(searchCriteria) ||
+        user.surname.toLowerCase().includes(searchCriteria) ||
+        fullName.includes(searchCriteria) ||
+        user.email.toLowerCase().includes(searchCriteria) ||
+        user.phoneNumber.toLowerCase().includes(searchCriteria) ||
+        user.roles.toLowerCase().includes(searchCriteria)
+      );
+    });
   }
 
   onOrderIdChange(searchCriteria: string) {
-    if (searchCriteria.trim() === '') {
-      this.fetchAllusers();
-    } else {
-      this.users = this.users.filter((d) => {
-        let fullName = (d.name + ' ' + d.surname).toLowerCase();
-        return d.email.toLowerCase().includes(searchCriteria) ||
-               d.name.toLowerCase().includes(searchCriteria) ||
-               d.surname.toLowerCase().includes(searchCriteria) ||
-               fullName.includes(searchCriteria);
-      });
-    }
+    this.searchEmployees();
   }
 
- 
+  // Scroll functions remain the same as before
   scrollToBottom() {
     const scrollableElement = document.querySelector('.scroll-container');
     if (scrollableElement) {
@@ -152,7 +165,6 @@ export class AllUsersComponent implements OnInit {
       });
     }
   }
-  
 
   setupScrollListener() {
     window.addEventListener('scroll', () => {

@@ -127,6 +127,14 @@ mat-label i.material-icons {
         margin-right: 4px;
     }
 }
+.mat-raised-button[color="primary"] {
+    background-color: #3c54b4;
+    color: white;
+  }
+  
+  .mat-raised-button[color="primary"]:hover {
+    background-color: #0056b3;
+  }
 
 mat-label {
     font-size: 1.2em;

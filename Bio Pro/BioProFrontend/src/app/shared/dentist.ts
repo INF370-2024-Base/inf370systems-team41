@@ -4,6 +4,6 @@ export interface Dentist {
     lastName: string;
     firstName: string;
     contactDetail: string;
-    address: string | null;
+    address: string ;
   }
   

@@ -123,12 +123,17 @@ export class EmployeeProfileComponent implements OnInit {
     if (searchCriteria.trim() === '') {
       this.fetchAllEmployees();
     } else {
-      this.employees = this.employees.filter((d) => {
-        let fullName = (d.firstName + ' ' + d.lastName).toLowerCase();
-        return d.email.toLowerCase().includes(searchCriteria) ||
-               d.firstName.toLowerCase().includes(searchCriteria) ||
-               d.lastName.toLowerCase().includes(searchCriteria) ||
-               fullName.includes(searchCriteria);
+      searchCriteria = searchCriteria.toLowerCase();
+      this.employees = this.employees.filter((employee) => {
+        const fullName = (employee.firstName + ' ' + employee.lastName).toLowerCase();
+        const email = employee.email.toLowerCase();
+        const phoneNumber = employee.cellphoneNumber.toLowerCase();
+        const address = employee.address.toLowerCase();
+  
+        return fullName.includes(searchCriteria) ||
+               email.includes(searchCriteria) ||
+               phoneNumber.includes(searchCriteria) ||
+               address.includes(searchCriteria);
       });
       this.noResultsFound = this.employees.length === 0;
     }
