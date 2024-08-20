@@ -1,4 +1,6 @@
 import 'dart:async';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 import 'package:biopromobileflutter/services/employee_hours_capture_service.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
@@ -118,7 +120,7 @@ class _QRCodeScannerPageState extends State<QRCodeScannerPage> {
     );
   }
 
-  void _handleQRCodeScanned(String code) async {
+void _handleQRCodeScanned(String code) async {
     print('QR code scanned: $code');
 
     if (isTimeCaptured) {
@@ -131,16 +133,46 @@ class _QRCodeScannerPageState extends State<QRCodeScannerPage> {
       return;
     }
 
-    setState(() {
-      employeeId = code; 
-      if (startTime == null) {
-        _startTimer();
-      } else {
-        _stopTimerAndSendData(code);
-      }
-    });
+    final isValidEmployee = await _validateEmployeeId(code);
+
+    if (isValidEmployee) {
+      setState(() {
+        employeeId = code; 
+        if (startTime == null) {
+          _startTimer();
+        } else {
+          _stopTimerAndSendData(code);
+        }
+      });
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Invalid Employee ID: $code')),
+      );
+    }
 
     _startCooldown();
+  }
+
+  Future<bool> _validateEmployeeId(String employeeId) async {
+    try {
+      final response = await http.get(Uri.parse('https://localhost:44315/api/Employee/GetAllEmployee'),
+      );
+
+      if (response.statusCode == 200) {
+        final List<dynamic> employees = jsonDecode(response.body);
+        return employees.any((employee) => employee['EmployeeId'].toString() == employeeId);
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Failed to validate Employee ID')),
+        );
+        return false;
+      }
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Error validating Employee ID: $e')),
+      );
+      return false;
+    }
   }
 
   void _startTimer({bool resume = false}) {
