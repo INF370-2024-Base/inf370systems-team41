@@ -99,94 +99,90 @@ openSnackBar(message: string) {
   toggleEmployee() {
     this.isEmployee = !this.isEmployee;
   }
-  async addUser() {
+  addUser() {
     if (this.userForm.valid) {
-      try {
-        const newUser: addUser = this.userForm.value;
-        console.log('User added:', newUser);
-        console.log('Form:', this.userForm.value);
+      const newUser: addUser = this.userForm.value;
+      console.log('User added:', newUser);
+      console.log('Form:', this.userForm.value);
   
-        // Convert addUser() Observable to a promise and wait for its completion
-        const userResult = await this.userServices.addUser(newUser).subscribe( result=>{
-          const signedInUser=JSON.parse(sessionStorage.getItem('User')!)
-      const id=signedInUser.id
-     const transaction:AddAuditTrailViewModels={
-       AdditionalData:"Added user:"+this.userForm.value.emailAddress,
-       DateOfTransaction:new Date,
-       TransactionType:"Post",
-       SystemUserId:id
-     }
-     console.log(transaction)
-     this.loginService.CreateTransaction(transaction).subscribe(
-       result=>{
-         console.log("Successfully added transaction."+result)
+      // Attempt to add the user
+      this.userServices.addUser(newUser).subscribe(
+        result => {
+          const signedInUser = JSON.parse(sessionStorage.getItem('User')!);
+          const id = signedInUser.id;
+          const transaction: AddAuditTrailViewModels = {
+            AdditionalData: "Added user:" + this.userForm.value.emailAddress,
+            DateOfTransaction: new Date(),
+            TransactionType: "Post",
+            SystemUserId: id
+          };
+          console.log(transaction);
   
-        if (this.isEmployee && this.employeeform.valid) {
-          const newEmployee: Employee = this.employeeform.value;
-          newEmployee.EmailAddress = this.userForm.value.emailAddress;
-          newEmployee.PhoneNumber = this.userForm.value.phoneNumber;
-          console.log('Employee added:', newEmployee);
+          // Add audit trail transaction
+          this.loginService.CreateTransaction(transaction).subscribe(
+            result => {
+              console.log("Successfully added transaction." + result);
   
-          // Convert addEmployee() Observable to a promise and wait for its completion
-          this.employeeService.addEmployee(newEmployee).subscribe(
-            result=>{
-              const signedInUser=JSON.parse(sessionStorage.getItem('User')!)
-          const id=signedInUser.id
-         const transaction:AddAuditTrailViewModels={
-           AdditionalData:"Added employee:"+this.userForm.value.emailAddress,
-           DateOfTransaction:new Date,
-           TransactionType:"Post",
-           SystemUserId:id
-         }
-         console.log(transaction)
-         console.log('User and employee added successfully');
-        this.openSnackBar('User and employee added successfully');
-        this.router.navigate(['/all-user'])
-         this.loginService.CreateTransaction(transaction).subscribe(
-           result=>{
-             console.log("Successfully added transaction."+result)
-           }
-           ,
-           error=>{
-             console.log("Unable to add transaction."+error.error)
-             console.log(error.error)
-           }
-         )
+              if (this.isEmployee && this.employeeform.valid) {
+                const newEmployee: Employee = this.employeeform.value;
+                newEmployee.EmailAddress = this.userForm.value.emailAddress;
+                newEmployee.PhoneNumber = this.userForm.value.phoneNumber;
+                console.log('Employee added:', newEmployee);
+  
+                // Attempt to add the employee
+                this.employeeService.addEmployee(newEmployee).subscribe(
+                  result => {
+                    const transaction: AddAuditTrailViewModels = {
+                      AdditionalData: "Added employee:" + this.userForm.value.emailAddress,
+                      DateOfTransaction: new Date(),
+                      TransactionType: "Post",
+                      SystemUserId: id
+                    };
+                    console.log(transaction);
+                    console.log('User and employee added successfully');
+                    this.openSnackBar('User and employee added successfully');
+  
+                    // Add another audit trail transaction
+                    this.loginService.CreateTransaction(transaction).subscribe(
+                      result => {
+                        console.log("Successfully added transaction." + result);
+                        this.router.navigate(['/all-user']);
+                      },
+                      error => {
+                        console.log("Unable to add transaction." + error.error);
+                        this.openSnackBar('Unable to add employee transaction.');
+                      }
+                    );
+                  },
+                  error => {
+                    console.log('Failed to add employee:', error.error);
+                    this.openSnackBar('Failed to add employee.');
+                  }
+                );
+              } else {
+                this.router.navigate(['/all-user']);
+                this.openSnackBar('User added successfully');
+              }
+            },
+            error => {
+              console.log("Unable to add user transaction." + error.error);
+              this.openSnackBar('Unable to add user transaction.');
             }
-          ); 
+          );
+        },
+        error => {
+          console.log('Failed to add user:', error.error);
+          this.openSnackBar('Failed to add user.');
         }
-        else{
-          this.router.navigate(['/all-user'])
-        }
-        this.openSnackBar('User and employee added successfully');
-  
-       }
-       ,
-       error=>{
-         console.log("Unable to add transaction."+error.error)
-         console.log(error.error)
-       }
-     )
-        }); 
-        
-        
-      } catch (error) {
-        if (error instanceof HttpErrorResponse) {
-          // Handle HTTP error response
-          console.error('HTTP Error:', error);
-          this.openSnackBar('HTTP Error:'+error.error[1].description); // Display error message from server
-        } else {
-          // Handle other types of errors
-          console.error('Error adding user or employee:', error);
-          this.openSnackBar('Error adding user or employee');
-        }
-      }
+      );
     } else {
       console.log('User form is invalid');
       this.openSnackBar('User form is invalid');
+  
       if (this.isEmployee && this.employeeform.invalid) {
         this.openSnackBar('Employee form is invalid');
       }
     }
   }
+  
 }
