@@ -79,9 +79,9 @@ html{
 }
 
 .mat-sidenav-content {
-  margin-left: 280px; /* Offset content for fixed sidenav */
+  margin-left: 0px; /* Offset content for fixed sidenav */
   background-color: #f4f6f8;
-  padding: 20px;
+  padding: 25px;
 }
 
 .nav-expansion-panel {
@@ -110,6 +110,33 @@ html{
   transition: margin 0.3s ease;
 }
 
+.mat-nav-list {
+  padding-left: 0; /* Remove default padding from the list */
+}
+
+.mat-list-item, 
+.mat-expansion-panel-header {
+  padding-left: 17px; /* Align the main headings with Home */
+}
+
+.mat-expansion-panel-header.mat-expanded .mat-expansion-panel-header-title {
+  padding-left: 22px; /* Ensure expanded panel headers are aligned */
+}
+
+.sub-nav-link {
+  padding-left: 40px; /* Add padding to indent nested items */
+}
+
+.nav-text {
+  margin-left: 7px; /* Adjust the alignment of the text relative to icons */
+}
+
+.mat-expansion-panel-header {
+  display: flex;
+  align-items: center;
+}
+
+
 // /* When the sidenav is open */
 // mat-sidenav-container.sidenav-open .content-container {
 //   margin-left: 250px; /* Adjust the margin according to the sidenav width */
@@ -120,3 +147,4 @@ html{
 //   margin-left: 0;
 //   width: 100%;
 // }
+

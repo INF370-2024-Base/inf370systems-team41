@@ -167,15 +167,25 @@
         <span>Reports</span>
       </a>
 
+      <a mat-list-item routerLink="/pageStock" (click)="isSidenavOpen = !isSidenavOpen">
+        <mat-icon>inventory_2</mat-icon>
+        <span>Stock</span>
+      </a>
+
+      <a mat-list-item routerLink="/help" (click)="isSidenavOpen = !isSidenavOpen">
+        <mat-icon>help</mat-icon>
+        <span>Help Page</span>
+      </a>
+      
 <!-- Stock Section -->
-<mat-expansion-panel class="nav-expansion-panel" (opened)="toggleStockMenu()" (closed)="toggleStockMenu()">
+<!-- <mat-expansion-panel class="nav-expansion-panel" >
 <mat-expansion-panel-header>
-  <a [routerLink]="['/pageStock']" class="nav-link" (click)="$event.stopPropagation()">
+  <a [routerLink]="['/pageStock']" class="nav-link" >
     <mat-icon>inventory_2</mat-icon>
     <span>Stock</span>
   </a>
-</mat-expansion-panel-header>
-<div>
+</mat-expansion-panel-header> -->
+<!-- <div>
   <a mat-list-item [routerLink]="['/addStock']" (click)="isSidenavOpen = !isSidenavOpen">
     <mat-icon>add_box</mat-icon>
     <span>Add Stock</span>
@@ -188,8 +198,8 @@
     <mat-icon>category</mat-icon>
     <span>Stock Categories</span>
   </a>
-</div>
-</mat-expansion-panel>
+</div> -->
+<!-- </mat-expansion-panel> -->
 
 <!-- <a [routerLink]="['/Audit']" class="nav-link">
   <mat-icon>inventory_2</mat-icon>
@@ -198,10 +208,7 @@
 
 
       <!-- Help Page -->
-      <a mat-list-item routerLink="/help" (click)="isSidenavOpen = !isSidenavOpen">
-        <mat-icon>help</mat-icon>
-        <span>Help Page</span>
-      </a>
+     
       
       <!-- Settings Page -->
       <!-- <a mat-list-item routerLink="/settings" (click)="isSidenavOpen = !isSidenavOpen">
