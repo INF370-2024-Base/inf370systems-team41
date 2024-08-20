@@ -51,6 +51,7 @@ export class ReportsComponent implements OnInit {
   displayedColumns: string[] = ['name', 'contact', 'address'];
   employee: any[]=[];
   totalEmployees: number = 0;
+  selectedReport: string = 'all';
 
   constructor(private reportsService: ReportsServices, 
     private datePipe: DatePipe, 
@@ -79,6 +80,20 @@ export class ReportsComponent implements OnInit {
       } catch (error) {
         console.error('Error fetching user name:', error);
       }
+    }
+
+    filterReports(reportId: string) {
+      // Get all report sections by their ID
+      const reports = document.querySelectorAll('.report-section');
+  
+      // Loop through all reports and toggle visibility based on the selected report
+      reports.forEach((report: any) => {
+        if (reportId === 'all') {
+          report.style.display = 'block'; // Show all reports if 'No Filter' is selected
+        } else {
+          report.style.display = report.id === reportId ? 'block' : 'none'; // Show the selected report, hide others
+        }
+      });
     }
 
 
@@ -191,7 +206,7 @@ export class ReportsComponent implements OnInit {
       this.loginService.addTransaction("Generated","Generated delivery report.")
       doc.setFont('helvetica', 'bold');
       doc.setFontSize(14);
-      doc.text('Total Deliveries', 10, 70);
+      doc.text('Total Deliveries Captured', 10, 70);
       doc.setFont('helvetica', 'normal');
       doc.setFontSize(12);
       doc.text(this.totalDeliveries.toString(), 60, 70);
