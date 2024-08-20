@@ -16,14 +16,14 @@ class TimerComponent extends StatelessWidget {
     final seconds = formatTime(duration.inSeconds.remainder(60));
 
     return Container(
-      padding: const EdgeInsets.all(20),
+      padding: const EdgeInsets.symmetric(vertical: 3, horizontal: 15), 
       decoration: BoxDecoration(
-        color: Colors.blueGrey,
-        borderRadius: BorderRadius.circular(15),
+        color: Colors.blueAccent,
+        borderRadius: BorderRadius.circular(10),
         boxShadow: const [
           BoxShadow(
             color: Colors.black26,
-            blurRadius: 10,
+            blurRadius: 8,
             offset: Offset(0, 4),
           ),
         ],
@@ -34,18 +34,19 @@ class TimerComponent extends StatelessWidget {
           const Text(
             'Work Time',
             style: TextStyle(
-              fontSize: 24,
+              fontSize: 14, 
               color: Colors.white,
-              fontWeight: FontWeight.bold,
+              fontWeight: FontWeight.w500,
             ),
           ),
-          const SizedBox(height: 10),
+          const SizedBox(height: 3), 
           Text(
             '$hours:$minutes:$seconds',
             style: const TextStyle(
-              fontSize: 48,
+              fontSize: 24, 
               color: Colors.white,
               fontWeight: FontWeight.bold,
+              letterSpacing: 1.5,
             ),
           ),
         ],

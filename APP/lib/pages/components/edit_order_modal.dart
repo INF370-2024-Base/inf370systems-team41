@@ -27,18 +27,27 @@ class _EditOrderModalState extends State<EditOrderModal> {
   late TextEditingController _estimatedDurationController;
   late TextEditingController _medicalAidNumberController;
   List<int> selectedAreasIds = [];
+  List<dynamic> mediaFiles = []; 
 
   @override
   void initState() {
     super.initState();
-    _priorityLevelController = TextEditingController(text: widget.order['priorityLevel']);
-    _specialRequirementsController = TextEditingController(text: widget.order['specialRequirements']);
+    _priorityLevelController =
+        TextEditingController(text: widget.order['priorityLevel']);
+    _specialRequirementsController =
+        TextEditingController(text: widget.order['specialRequirements']);
     _dueDateController = TextEditingController(text: widget.order['dueDate']);
-    _emergencyNumberController = TextEditingController(text: widget.order['emergencyNumber']);
-    _mouthAreaController = TextEditingController(text: widget.order['mouthArea']);
-    _estimatedDurationController = TextEditingController(text: widget.order['estimatedDurationInDays']?.toString() ?? '');
-    _medicalAidNumberController = TextEditingController(text: widget.order['patientMedicalAidNumber']);
+    _emergencyNumberController =
+        TextEditingController(text: widget.order['emergencyNumber']);
+    _mouthAreaController =
+        TextEditingController(text: widget.order['mouthArea']);
+    _estimatedDurationController = TextEditingController(
+        text: widget.order['estimatedDurationInDays']?.toString() ?? '');
+    _medicalAidNumberController =
+        TextEditingController(text: widget.order['patientMedicalAidNumber']);
     selectedAreasIds = widget.order['selectedAreasIds']?.cast<int>() ?? [];
+
+    _fetchMediaFiles(); 
   }
 
   @override
@@ -53,6 +62,28 @@ class _EditOrderModalState extends State<EditOrderModal> {
     super.dispose();
   }
 
+  Future<void> _fetchMediaFiles() async {
+    try {
+      final response = await http.get(
+        Uri.parse('https://localhost:44315/Api/GetAllOrderInfo/${widget.order['orderId']}'),
+      );
+
+      if (response.statusCode == 200) {
+        setState(() {
+          mediaFiles = jsonDecode(response.body)['mediaFiles'];
+        });
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Failed to load media files')),
+        );
+      }
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('An error occurred while fetching media files: $e')),
+      );
+    }
+  }
+
   Future<void> _pickImage() async {
     final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
 
@@ -63,7 +94,7 @@ class _EditOrderModalState extends State<EditOrderModal> {
     }
   }
 
-  Future<void> _saveChanges() async {
+Future<void> _saveChanges() async {
     if (_formKey.currentState!.validate()) {
       if (_selectedImage != null) {
         final bytes = await _selectedImage!.readAsBytes();
@@ -72,10 +103,10 @@ class _EditOrderModalState extends State<EditOrderModal> {
         final requestBody = {
           "mediaFileViewModels": [
             {
-              "systemOrderId": widget.order['orderId'], 
+              "systemOrderId": widget.order['orderId'],
               "fileName": _selectedImage!.name,
               "fileSelf": base64Image,
-              "fileSizeKb": (bytes.length / 1024).toString(), 
+              "fileSizeKb": (bytes.length / 1024).toString(),
             }
           ],
           "orderId": widget.order['orderId'],
@@ -91,7 +122,24 @@ class _EditOrderModalState extends State<EditOrderModal> {
           );
 
           if (response.statusCode == 200) {
-            Navigator.pop(context, 'Media file added successfully');
+            showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return AlertDialog(
+                  title: Text('Success'),
+                  content: Text('Media file attached successfully.'),
+                  actions: <Widget>[
+                    TextButton(
+                      child: Text('OK'),
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                        Navigator.of(context).pop('Media file added successfully');
+                      },
+                    ),
+                  ],
+                );
+              },
+            );
           } else {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(content: Text('Failed to add media file: ${response.body}')),
@@ -110,6 +158,7 @@ class _EditOrderModalState extends State<EditOrderModal> {
     }
   }
 
+
   @override
   Widget build(BuildContext context) {
     return Dialog(
@@ -123,71 +172,110 @@ class _EditOrderModalState extends State<EditOrderModal> {
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                Text('Edit Order: ${widget.order['orderId']}', style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
+                Text('Order: ${widget.order['orderId']}',
+                    style: const TextStyle(
+                        fontWeight: FontWeight.bold, fontSize: 20)),
                 const SizedBox(height: 16.0),
                 TextFormField(
                   controller: _priorityLevelController,
-                  readOnly: true,  
-                  decoration: const InputDecoration(labelText: 'Priority Level'),
+                  readOnly: true,
+                  decoration:
+                      const InputDecoration(labelText: 'Priority Level'),
                 ),
                 const SizedBox(height: 8.0),
                 TextFormField(
                   controller: _specialRequirementsController,
-                  readOnly: true,  
-                  decoration: const InputDecoration(labelText: 'Special Requirements'),
+                  readOnly: true,
+                  decoration:
+                      const InputDecoration(labelText: 'Special Requirements'),
                 ),
                 const SizedBox(height: 8.0),
                 TextFormField(
                   controller: _dueDateController,
-                  readOnly: true,  
+                  readOnly: true,
                   decoration: const InputDecoration(labelText: 'Due Date'),
                 ),
                 const SizedBox(height: 8.0),
                 TextFormField(
                   controller: _emergencyNumberController,
-                  readOnly: true, 
-                  decoration: const InputDecoration(labelText: 'Emergency Number'),
+                  readOnly: true,
+                  decoration:
+                      const InputDecoration(labelText: 'Emergency Number'),
                 ),
                 const SizedBox(height: 8.0),
                 TextFormField(
                   controller: _mouthAreaController,
-                  readOnly: true,  
+                  readOnly: true,
                   decoration: const InputDecoration(labelText: 'Mouth Area'),
                 ),
                 const SizedBox(height: 8.0),
                 TextFormField(
                   controller: _estimatedDurationController,
-                  readOnly: true,  
-                  decoration: const InputDecoration(labelText: 'Estimated Duration (Days)'),
+                  readOnly: true,
+                  decoration: const InputDecoration(
+                      labelText: 'Estimated Duration (Days)'),
                 ),
                 const SizedBox(height: 8.0),
                 TextFormField(
                   controller: _medicalAidNumberController,
-                  readOnly: true, 
-                  decoration: const InputDecoration(labelText: 'Medical Aid Number'),
+                  readOnly: true,
+                  decoration:
+                      const InputDecoration(labelText: 'Medical Aid Number'),
                 ),
                 const SizedBox(height: 16.0),
+
+                if (mediaFiles.isNotEmpty)
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: mediaFiles.map((mediaFile) {
+                      return Padding(
+                        padding: const EdgeInsets.only(bottom: 8.0),
+                        child: Column(
+                          children: [
+                            Image.memory(
+                              base64Decode(mediaFile['fileSelf']),
+                              height: 100,
+                              fit: BoxFit.cover,
+                            ),
+                            Text(mediaFile['fileName']),
+                          ],
+                        ),
+                      );
+                    }).toList(),
+                  ),
+                const SizedBox(height: 16.0),
+
                 _selectedImage != null
                     ? kIsWeb
                         ? Image.network(_selectedImage!.path)
                         : Image.file(File(_selectedImage!.path))
                     : const Text('No image selected'),
                 const SizedBox(height: 8.0),
-                ElevatedButton(
-                  onPressed: _pickImage,
-                  child: const Text('Attach Image'),
-                ),
-                const SizedBox(height: 16.0),
-                ElevatedButton(
-                  onPressed: _saveChanges,
-                  child: const Text('Save Changes'),
-                ),
-                const SizedBox(height: 8.0),
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  child: const Text('Cancel'),
+                Row(
+                  children: [
+                    ElevatedButton(
+                      onPressed: _pickImage,
+                      child: const Text('Attach Image'),
+                    ),
+                    Spacer(),
+                    ElevatedButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      child: const Text('Cancel'),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.red,
+                      ),
+                    ),
+                    const SizedBox(width: 8.0),
+                    ElevatedButton(
+                      onPressed: _saveChanges,
+                      child: const Text('Save'),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.green,
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),

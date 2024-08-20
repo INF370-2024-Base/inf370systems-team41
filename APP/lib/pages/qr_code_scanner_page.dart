@@ -13,11 +13,12 @@ class QRCodeScannerPage extends StatefulWidget {
   _QRCodeScannerPageState createState() => _QRCodeScannerPageState();
 }
 
-class _QRCodeScannerPageState extends State<QRCodeScannerPage> with WidgetsBindingObserver {
+class _QRCodeScannerPageState extends State<QRCodeScannerPage> {
   DateTime? startTime;
   Timer? _timer;
   bool isScanning = true;
   bool isTimeCaptured = false;
+  String? employeeId; 
   Duration workedHours = Duration.zero;
   MobileScannerController scannerController = MobileScannerController();
   bool isCooldown = false;
@@ -28,30 +29,18 @@ class _QRCodeScannerPageState extends State<QRCodeScannerPage> with WidgetsBindi
   void initState() {
     super.initState();
     _captureService = EmployeeHoursCaptureService(baseUrl: 'https://localhost:44315');
-    WidgetsBinding.instance.addObserver(this);
+
     if (widget.workedHoursNotifier.value > Duration.zero) {
       startTime = DateTime.now().subtract(widget.workedHoursNotifier.value);
-      _startTimer();
+      _startTimer(resume: true);
     }
   }
 
   @override
   void dispose() {
-    WidgetsBinding.instance.removeObserver(this);
     _timer?.cancel();
     scannerController.dispose();
     super.dispose();
-  }
-
-  @override
-  void didChangeAppLifecycleState(AppLifecycleState state) {
-    if (state == AppLifecycleState.resumed) {
-      if (isScanning) {
-        scannerController.start();
-      }
-    } else if (state == AppLifecycleState.paused) {
-      scannerController.stop();
-    }
   }
 
   @override
@@ -62,6 +51,16 @@ class _QRCodeScannerPageState extends State<QRCodeScannerPage> with WidgetsBindi
       ),
       body: Column(
         children: <Widget>[
+          if (startTime != null)
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: ValueListenableBuilder<Duration>(
+                valueListenable: widget.workedHoursNotifier,
+                builder: (context, duration, child) {
+                  return TimerComponent(duration: duration);
+                },
+              ),
+            ),
           Expanded(
             flex: 5,
             child: isScanning
@@ -81,7 +80,7 @@ class _QRCodeScannerPageState extends State<QRCodeScannerPage> with WidgetsBindi
                     },
                   )
                 : Center(
-                    child: TimerComponent(duration: widget.workedHoursNotifier.value),
+                    child: const Text('Scanner Stopped'),
                   ),
           ),
           Expanded(
@@ -97,8 +96,9 @@ class _QRCodeScannerPageState extends State<QRCodeScannerPage> with WidgetsBindi
                         ),
                         const SizedBox(height: 10),
                         Text(
-                          'Worked Time: ${_formatDuration(workedHours)}',
-                          style: const TextStyle(fontSize: 18, color: Colors.white),
+                          'Worked Time: ${_formatDuration(workedHours)}\nEmployee ID: ${employeeId ?? "Unknown"}',
+                          style: const TextStyle(fontSize: 18, color: Colors.black),
+                          textAlign: TextAlign.center,
                         ),
                         const SizedBox(height: 20),
                         ElevatedButton(
@@ -132,6 +132,7 @@ class _QRCodeScannerPageState extends State<QRCodeScannerPage> with WidgetsBindi
     }
 
     setState(() {
+      employeeId = code; 
       if (startTime == null) {
         _startTimer();
       } else {
@@ -142,17 +143,18 @@ class _QRCodeScannerPageState extends State<QRCodeScannerPage> with WidgetsBindi
     _startCooldown();
   }
 
-  void _startTimer() {
-    print('Starting timer...');
-    setState(() {
+  void _startTimer({bool resume = false}) {
+    print(resume ? 'Resuming timer...' : 'Starting timer...');
+
+    if (!resume) {
       startTime = DateTime.now();
+      widget.workedHoursNotifier.value = Duration.zero;
+    }
+
+    setState(() {
       isTimeCaptured = false;
     });
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Timer started. Scan again to stop.')),
-      );
-    });
+
     _timer = Timer.periodic(const Duration(seconds: 1), (Timer t) {
       final workedHours = DateTime.now().difference(startTime!);
       widget.workedHoursNotifier.value = workedHours;
@@ -168,9 +170,9 @@ class _QRCodeScannerPageState extends State<QRCodeScannerPage> with WidgetsBindi
     double totalHours = workedHours.inHours +
         (workedHours.inMinutes % 60) / 60 +
         (workedHours.inSeconds % 60) / 3600;
-    
+
     if (totalHours < 1) {
-        totalHours = 1.0;
+      totalHours = 1.0;
     }
 
     print('Total worked hours (rounded up): $totalHours');
@@ -198,6 +200,7 @@ class _QRCodeScannerPageState extends State<QRCodeScannerPage> with WidgetsBindi
       isTimeCaptured = true;
       startTime = null;
       scannerController.stop();
+      _timer?.cancel();
     });
   }
 
@@ -217,7 +220,7 @@ class _QRCodeScannerPageState extends State<QRCodeScannerPage> with WidgetsBindi
       isCooldown = true;
     });
 
-    Future.delayed(Duration(seconds: 3), () {
+    Future.delayed(Duration(seconds: 5), () {
       setState(() {
         isCooldown = false;
       });

@@ -24,35 +24,38 @@ class _OrdersPageState extends State<OrdersPage> {
       appBar: AppBar(
         title: const Text('Orders'),
       ),
-      body: FutureBuilder<List<dynamic>>(
-        future: futureOrders,
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator());
-          } else if (snapshot.hasError) {
-            return Center(child: Text('Error: ${snapshot.error}'));
-          } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-            return const Center(child: Text('No orders found'));
-          } else {
-            final orders = snapshot.data!;
-            return ListView.builder(
-              padding: const EdgeInsets.all(10.0),
-              itemCount: orders.length,
-              itemBuilder: (context, index) {
-                final order = orders[index];
-                return OrderComponent(
-                  order: order,
-                  onTap: () {
-                    showModalBottomSheet(
-                      context: context,
-                      builder: (context) => EditOrderModal(order: order),
-                    );
-                  },
-                );
-              },
-            );
-          }
-        },
+      body: Container(
+        color: const Color(0xFF8B9AAD), 
+        child: FutureBuilder<List<dynamic>>(
+          future: futureOrders,
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(child: CircularProgressIndicator());
+            } else if (snapshot.hasError) {
+              return Center(child: Text('Error: ${snapshot.error}'));
+            } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+              return const Center(child: Text('No orders found'));
+            } else {
+              final orders = snapshot.data!;
+              return ListView.builder(
+                padding: const EdgeInsets.all(10.0),
+                itemCount: orders.length,
+                itemBuilder: (context, index) {
+                  final order = orders[index];
+                  return OrderComponent(
+                    order: order,
+                    onTap: () {
+                      showModalBottomSheet(
+                        context: context,
+                        builder: (context) => EditOrderModal(order: order),
+                      );
+                    },
+                  );
+                },
+              );
+            }
+          },
+        ),
       ),
     );
   }
