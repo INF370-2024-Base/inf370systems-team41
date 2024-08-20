@@ -191,7 +191,7 @@ export class ReportsComponent implements OnInit {
       this.loginService.addTransaction("Generated","Generated delivery report.")
       doc.setFont('helvetica', 'bold');
       doc.setFontSize(14);
-      doc.text('Total Deliveries', 10, 70);
+      doc.text('Total Deliveries Captured', 10, 70);
       doc.setFont('helvetica', 'normal');
       doc.setFontSize(12);
       doc.text(this.totalDeliveries.toString(), 60, 70);
