@@ -142,3 +142,48 @@ canvas {
   font-size: 16px;
   font-weight: bold;
 }
+.alert-message {
+  background-color: #f8d7da;
+  border: 1px solid #f5c6cb;
+  color: #721c24;
+  padding: 15px;
+  border-radius: 5px;
+  margin-top: 20px;
+  font-weight: bold;
+  text-align: center;
+  font-size: 16px; /* Adjust font size for better readability */
+  line-height: 1.5; /* Increase line height for better spacing */
+}
+.btn {
+  border-radius: 20px;
+  padding: 10px 20px;
+  font-size: 14px;
+}
+
+.btn-outline-primary {
+  margin-left: 10px;
+}
+
+.btn-outline-danger {
+  border-color: #dc3545;
+  color: #dc3545;
+  transition: color 0.3s;
+}
+
+.btn-outline-danger:hover {
+  background-color: #dc3545;
+  color: white;
+}
+
+a.btn.btn-primary.rounded-btn {
+  background-color: #3c54b4;
+  color: #fff;
+  border-radius: 20px;
+  padding: 10px 30px;
+  text-decoration: none;
+  margin-right: auto;
+}
+
+a.btn.btn-primary.rounded-btn:hover {
+  background-color: #0056b3;
+}

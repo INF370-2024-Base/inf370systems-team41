@@ -1,5 +1,5 @@
 <body>
-  <mat-form-field appearance="outline" *ngIf="selectedCalendarId === 1" class="search-form-field">
+  <mat-form-field appearance="outline" *ngIf="selectedCalendarId === 1" class="search-form-field search-style">
     <mat-label><mat-icon>search</mat-icon>Search</mat-label>
     <input matInput [(ngModel)]="searchTerm" (ngModelChange)="onSearchTermChange($event)" placeholder="Search events">
     <button mat-button matSuffix mat-icon-button aria-label="Clear" (click)="clearSearch()">

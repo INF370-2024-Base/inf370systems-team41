@@ -147,7 +147,8 @@ export class DentistProfileComponent implements OnInit {
         return d.firstName.toLowerCase().includes(searchCriteria.toLowerCase()) ||
           d.address?.toLowerCase().includes(searchCriteria.toLowerCase()) ||
           d.lastName.toLowerCase().includes(searchCriteria.toLowerCase()) ||
-          fullName.includes(searchCriteria.toLowerCase());
+          fullName.includes(searchCriteria.toLowerCase())||
+          d.contactDetail.toLowerCase().includes(searchCriteria.toLowerCase()) ;
       });
       this.noResultsFound = this.filteredDentists.length === 0;
     }
