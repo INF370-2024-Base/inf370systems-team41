@@ -50,8 +50,8 @@ export class OrderService {
   getAllOrders(): Observable<any[]> {
     return this.httpClient.get<any[]>(`${this.apiUrl}Api/GetAllOrders`);
   }
-  getAllOrderInfo(orderId: string): Observable<any[]> {
-    return this.httpClient.get<any[]>(`${this.apiUrl}Api/GetAllOrderInfo/${orderId}`);
+  getAllOrderInfo(): Observable<any[]> {
+    return this.httpClient.get<any[]>(`${this.apiUrl}Api/GetAllOrderInfo`);
   }
   getAllOrderById(orderId: string): Observable<any> {
     return this.httpClient.get<any>(`${this.apiUrl}Api/GetOrdersById/${orderId}`);

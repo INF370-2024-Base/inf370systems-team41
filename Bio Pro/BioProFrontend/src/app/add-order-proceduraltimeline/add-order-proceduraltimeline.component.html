@@ -27,7 +27,7 @@
                 </mat-error>
                 <mat-list-item *ngFor="let order of orderInfo">
                     <mat-checkbox [checked]="systemOrderIds.includes(order.orderId)" (change)="toggleOrderSelection(order)">
-                        <span><i class="material-icons">assignment</i> {{ order.systemOrder.orderId}} -{{ order.orderDirection.description }} - Due Date:{{ order.systemOrder.dueDate|date }}</span>
+                        <span><i class="material-icons">assignment</i> {{ order.orderId}}  {{ order.orderWorkflowTimeline.orderDirection.description }} - Due Date:{{ order.dueDate|date }}</span>
                     </mat-checkbox>
                 </mat-list-item>
             </mat-list>
