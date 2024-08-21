@@ -142,7 +142,17 @@ export class AllUsersComponent implements OnInit {
   }
 
   onOrderIdChange(searchCriteria: string) {
-    this.searchEmployees();
+    this.filteredUsers = this.users.filter(user => {
+      const fullName = (user.name + ' ' + user.surname).toLowerCase();
+      return (
+        user.name.toLowerCase().includes(searchCriteria) ||
+        user.surname.toLowerCase().includes(searchCriteria) ||
+        fullName.includes(searchCriteria) ||
+        user.email.toLowerCase().includes(searchCriteria) ||
+        user.phoneNumber.toLowerCase().includes(searchCriteria) ||
+        user.roles.toLowerCase().includes(searchCriteria)
+      );
+    });
   }
 
   // Scroll functions remain the same as before
