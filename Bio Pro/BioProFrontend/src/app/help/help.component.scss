@@ -82,7 +82,16 @@ mat-card-title {
 mat-card-header mat-icon {
   margin-right: 8px;
 }
-
+mat-raised-button{
+  display: inline-block;
+  margin-top: 10px;
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+  text-align: center;
+}
 mat-card-content {
   flex-grow: 1;
   padding: 16px;
@@ -173,18 +182,21 @@ mat-card-actions {
     max-width: 400px;
   }
 }
-
 .download-button {
-  display: inline-block;
-  margin-top: 10px;
   padding: 10px 20px;
-  background-color: #007bff;
+  background-color: #3e2dfa;
   color: white;
   text-decoration: none;
   border-radius: 5px;
   text-align: center;
+  position: relative; /* Keeps the button relative to its normal flow */
+  float: right; /* Aligns the button to the right without overlapping */
+  margin-top: 30px; /* Adds space above the button to separate it from the PDF */
+  bottom: -22px; /* Positions the button lower if needed */
 }
 
+
 .download-button:hover {
-  background-color: #0056b3;
+  background-color: #3a2eff;
 }
+
