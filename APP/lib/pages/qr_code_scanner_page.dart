@@ -153,27 +153,30 @@ void _handleQRCodeScanned(String code) async {
     _startCooldown();
   }
 
-  Future<bool> _validateEmployeeId(String employeeId) async {
-    try {
-      final response = await http.get(Uri.parse('https://localhost:44315/api/Employee/GetAllEmployee'),
-      );
+Future<bool> _validateEmployeeId(String scannedEmployeeId) async {
+  try {
+    final response = await http.get(
+      Uri.parse('https://localhost:44315/api/Employee/GetAllEmployee'),
+    );
 
-      if (response.statusCode == 200) {
-        final List<dynamic> employees = jsonDecode(response.body);
-        return employees.any((employee) => employee['EmployeeId'].toString() == employeeId);
-      } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Failed to validate Employee ID')),
-        );
-        return false;
-      }
-    } catch (e) {
+    if (response.statusCode == 200) {
+      final List<dynamic> employees = jsonDecode(response.body);
+
+      return employees.any((employee) => employee['employeeId'].toString() == scannedEmployeeId);
+    } else {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Error validating Employee ID: $e')),
+        SnackBar(content: Text('Failed to validate Employee ID')),
       );
       return false;
     }
+  } catch (e) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text('Error validating Employee ID: $e')),
+    );
+    return false;
   }
+}
+
 
   void _startTimer({bool resume = false}) {
     print(resume ? 'Resuming timer...' : 'Starting timer...');

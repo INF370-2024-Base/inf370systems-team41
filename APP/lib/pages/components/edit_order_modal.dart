@@ -27,7 +27,7 @@ class _EditOrderModalState extends State<EditOrderModal> {
   late TextEditingController _estimatedDurationController;
   late TextEditingController _medicalAidNumberController;
   List<int> selectedAreasIds = [];
-  List<dynamic> mediaFiles = []; 
+  List<dynamic> mediaFiles = [];
 
   @override
   void initState() {
@@ -47,7 +47,7 @@ class _EditOrderModalState extends State<EditOrderModal> {
         TextEditingController(text: widget.order['patientMedicalAidNumber']);
     selectedAreasIds = widget.order['selectedAreasIds']?.cast<int>() ?? [];
 
-    _fetchMediaFiles(); 
+    _fetchMediaFiles();
   }
 
   @override
@@ -63,56 +63,73 @@ class _EditOrderModalState extends State<EditOrderModal> {
   }
 
   Future<void> _fetchMediaFiles() async {
+    final url = 'https://localhost:44315/Api/GetAllOrderInfo/${widget.order['orderId']}';
     try {
-      final response = await http.get(
-        Uri.parse('https://localhost:44315/Api/GetAllOrderInfo/${widget.order['orderId']}'),
-      );
+      print('Fetching media files from $url');
+      final response = await http.get(Uri.parse(url));
 
+      print('Response status code: ${response.statusCode}');
       if (response.statusCode == 200) {
+        final decodedResponse = jsonDecode(response.body);
+        print('Response body: $decodedResponse');
         setState(() {
-          mediaFiles = jsonDecode(response.body)['mediaFiles'];
+          mediaFiles = decodedResponse['mediaFiles'];
         });
       } else {
+        print('Failed to load media files: ${response.body}');
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Failed to load media files')),
+          SnackBar(
+              content: Text('Failed to load media files: ${response.body}')),
         );
       }
     } catch (e) {
+      print('Exception occurred while fetching media files: $e');
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('An error occurred while fetching media files: $e')),
+        SnackBar(
+            content: Text('An error occurred while fetching media files: $e')),
       );
     }
   }
 
   Future<void> _pickImage() async {
-    final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
-
-    if (pickedFile != null) {
-      setState(() {
-        _selectedImage = pickedFile;
-      });
+    try {
+      final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
+      if (pickedFile != null) {
+        setState(() {
+          _selectedImage = pickedFile;
+        });
+        print('Selected image: ${pickedFile.path}');
+      } else {
+        print('No image selected.');
+      }
+    } catch (e) {
+      print('Error picking image: $e');
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('An error occurred while picking the image: $e')),
+      );
     }
   }
 
-Future<void> _saveChanges() async {
+  Future<void> _saveChanges() async {
     if (_formKey.currentState!.validate()) {
       if (_selectedImage != null) {
-        final bytes = await _selectedImage!.readAsBytes();
-        final base64Image = base64Encode(bytes);
-
-        final requestBody = {
-          "mediaFileViewModels": [
-            {
-              "systemOrderId": widget.order['orderId'],
-              "fileName": _selectedImage!.name,
-              "fileSelf": base64Image,
-              "fileSizeKb": (bytes.length / 1024).toString(),
-            }
-          ],
-          "orderId": widget.order['orderId'],
-        };
-
         try {
+          final bytes = await _selectedImage!.readAsBytes();
+          final base64Image = base64Encode(bytes);
+          final requestBody = {
+            "mediaFileViewModels": [
+              {
+                "systemOrderId": widget.order['orderId'],
+                "fileName": _selectedImage!.name,
+                "fileSelf": base64Image,
+                "fileSizeKb": (bytes.length / 1024).toString(),
+              }
+            ],
+            "orderId": widget.order['orderId'],
+          };
+
+          print('Submitting media file with request body: $requestBody');
+
           final response = await http.post(
             Uri.parse('https://localhost:44315/Api/AddMediaFile'),
             headers: {
@@ -121,7 +138,9 @@ Future<void> _saveChanges() async {
             body: jsonEncode(requestBody),
           );
 
+          print('Response status code: ${response.statusCode}');
           if (response.statusCode == 200) {
+            print('Media file attached successfully.');
             showDialog(
               context: context,
               builder: (BuildContext context) {
@@ -133,7 +152,8 @@ Future<void> _saveChanges() async {
                       child: Text('OK'),
                       onPressed: () {
                         Navigator.of(context).pop();
-                        Navigator.of(context).pop('Media file added successfully');
+                        Navigator.of(context)
+                            .pop('Media file added successfully');
                       },
                     ),
                   ],
@@ -141,23 +161,26 @@ Future<void> _saveChanges() async {
               },
             );
           } else {
+            print('Failed to add media file: ${response.body}');
             ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text('Failed to add media file: ${response.body}')),
+              SnackBar(
+                  content: Text('Failed to add media file: ${response.body}')),
             );
           }
         } catch (e) {
+          print('Exception occurred while saving media file: $e');
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: Text('An error occurred: $e')),
           );
         }
       } else {
+        print('No image selected for upload.');
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('Please select an image to attach.')),
         );
       }
     }
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -223,28 +246,35 @@ Future<void> _saveChanges() async {
                       const InputDecoration(labelText: 'Medical Aid Number'),
                 ),
                 const SizedBox(height: 16.0),
-
                 if (mediaFiles.isNotEmpty)
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: mediaFiles.map((mediaFile) {
-                      return Padding(
-                        padding: const EdgeInsets.only(bottom: 8.0),
-                        child: Column(
-                          children: [
-                            Image.memory(
-                              base64Decode(mediaFile['fileSelf']),
-                              height: 100,
-                              fit: BoxFit.cover,
-                            ),
-                            Text(mediaFile['fileName']),
-                          ],
-                        ),
-                      );
+                      try {
+                        return Padding(
+                          padding: const EdgeInsets.only(bottom: 8.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text('File Name: ${mediaFile['fileName']}'),
+                              Image.memory(
+                                base64Decode(mediaFile['fileSelf']),
+                                height: 100,
+                                fit: BoxFit.cover,
+                                errorBuilder: (context, error, stackTrace) {
+                                  return Text('Error displaying image: $error');
+                                },
+                              ),
+                            ],
+                          ),
+                        );
+                      } catch (e) {
+                        print('Error decoding image for file ${mediaFile['fileName']}: $e');
+                        return Text('Error decoding image: $e');
+                      }
                     }).toList(),
                   ),
                 const SizedBox(height: 16.0),
-
                 _selectedImage != null
                     ? kIsWeb
                         ? Image.network(_selectedImage!.path)
