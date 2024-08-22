@@ -152,16 +152,14 @@ downloadFile(base64String: string, fileName: string) {
   }
   onOrderIdChange(newOrderId: string) {
     if (newOrderId.trim() === '') {
-      this.ordersInfo= this.originalOrders
-      this.selectedFilter=0
-      this.onFilterChange(null);
-      
+      this.ordersInfo = this.originalOrders;
     } else {
-      // Filter restaurants based on query
-      this.ordersInfo = this.originalOrders.filter((d) => d.orderId.toLowerCase().includes(newOrderId));
-
+      this.ordersInfo = this.originalOrders.filter((d) => 
+        d.orderId.toLowerCase().includes(newOrderId.toLowerCase())
+      );
     }
   }
+  
   editOrder(orderId: string): void {
     const selectedOrder = this.ordersInfo.find(order => order.orderId === orderId);
   console.log('Selected order for editing:', selectedOrder); // Debug log for selected order
@@ -219,16 +217,23 @@ downloadFile(base64String: string, fileName: string) {
       );
     }
   }
-  onFilterChange(event: any)
-  {
-    console.log(this.selectedFilter)
+  onFilterChange(event: any) {
+    console.log(this.selectedFilter);
+  
     if (this.selectedFilter == 0) {
-
-      this.ordersInfo=this.originalOrders
+      this.ordersInfo = this.originalOrders;
     } else {
-      this.ordersInfo = this.originalOrders.filter((d) => d.orderType.orderTypeId==this.selectedFilter);
+      this.ordersInfo = this.originalOrders.filter((d) => 
+        d.orderType.orderTypeId == this.selectedFilter
+      );
+    }
+    
+    // Ensure the "No orders found" message is triggered
+    if (this.ordersInfo.length === 0) {
+      this.showSnackBar('No orders found.');
     }
   }
+  
   deleteMediaFile(mediaFileId: number): void {
      const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
       width: '250px',

@@ -106,11 +106,12 @@
       </mat-expansion-panel>
     </mat-accordion>
 
-    <div *ngIf="orders.length === 0 && orderId.trim() !== ''">
+    <div *ngIf="ordersInfo.length === 0 && (orderId.trim() !== '' || selectedFilter !== 0)">
       <div class="alert-message">
         No orders found.
       </div>
     </div>
+    
   </div>
   <app-edit-order-modal *ngIf="selectedOrder" (close)="closeModal()"></app-edit-order-modal>
   </div>
@@ -122,7 +123,7 @@
   </button>
 </div>
 
-<style>
+<!-- <style>
 .media-container {
   display: flex;
   flex-wrap: wrap;
@@ -238,4 +239,4 @@ a.btn.btn-primary.rounded-btn:hover {
     padding: 10px 20px;
 }
 
-</style>
+</style> -->

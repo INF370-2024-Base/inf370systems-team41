@@ -1,18 +1,144 @@
-/* Styling for OrdersComponent */
+/* General Styling */
 body {
-  background-color: #f5f5f5; /* Light gray background */
-  font-family: 'Roboto', sans-serif; /* Playful font */
-  color: #333; /* Dark text color */
-  padding: 20px; /* Add some padding */
-  overflow: hidden; /* Hide overflowing content */
+  background-color: #f5f5f5;
+  font-family: 'Roboto', sans-serif;
+  color: #333;
+  padding: 20px;
+  overflow: hidden;
+  background: linear-gradient(120deg, #aed9e0, #c2e2f3, #eaf1fa, #c2e2f3, #aed9e0);
+  background-size: 400% 400%;
+  animation: gradientAnimation 20s ease infinite;
 }
 
-/* Animated background gradients */
+/* Keyframes for Background Animation */
 @keyframes gradientAnimation {
   0% { background-position: 0% 50%; }
   50% { background-position: 100% 50%; }
   100% { background-position: 0% 50%; }
 }
+
+/* Container Styling */
+.container {
+  width: 80%;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.scroll-container {
+  height: calc(100vh - 150px);
+  overflow-y: auto;
+}
+
+.row {
+  margin-top: 20px;
+}
+
+/* Heading */
+h1 {
+  font-size: 48px;
+  color: #4d4a4a;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  margin-bottom: 24px;
+  text-shadow: 2px 2px 4px rgba(124, 124, 124, 0.5);
+}
+
+/* Search and Filter Styling */
+.search-filter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.search-field,
+.filter-field {
+  width: calc(50% - 5px);
+  margin-bottom: 10px;
+  margin-right: 20px;
+}
+
+@media only screen and (max-width: 768px) {
+  .search-field,
+  .filter-field,
+  .action-button {
+    width: 100%;
+    margin-left: 0;
+    margin-bottom: 10px;
+  }
+}
+
+/* Button Styling */
+.btn {
+  border-radius: 20px;
+  padding: 10px 20px;
+  font-size: 14px;
+  height: 40px; /* Ensures all buttons have the same height */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.button-container .btn {
+  margin-right: 20px; /* Spacing between buttons */
+  flex-grow: 1;
+}
+
+.button-container .btn:last-child {
+  margin-right: 0; /* No margin for the last button */
+}
+
+.btn-outline-primary {
+  border-color: #3c54b4;
+  margin-left: 10px;
+}
+
+.btn-outline-danger {
+  border-color: #dc3545;
+  color: #dc3545;
+  transition: color 0.3s;
+}
+
+.btn-outline-danger:hover {
+  background-color: #dc3545;
+  color: white;
+}
+
+.btn-secondary {
+  background-color: #558dbd;
+  color: #fff;
+  border: none;
+}
+
+.rounded-btn {
+  border-radius: 20px;
+  padding: 10px 20px;
+}
+
+.action-icons {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.edit-button,
+.trash-button {
+  margin-left: 10px;
+}
+
+a.btn.btn-primary.rounded-btn {
+  background-color: #3c54b4;
+  color: #fff;
+  border-radius: 20px;
+  padding: 10px 30px;
+  text-decoration: none;
+  margin-right: auto;
+}
+
+a.btn.btn-primary.rounded-btn:hover {
+  background-color: #0056b3;
+}
+
+/* Loading Spinner */
 .loading-spinner {
   position: fixed;
   top: 0;
@@ -23,51 +149,16 @@ body {
   justify-content: center;
   align-items: center;
   background: rgba(255, 255, 255, 0.8);
-  z-index: 1000; /* Ensure it is on top of other content */
-}
-/* Enhanced blue gradient animation */
-body {
-  background: linear-gradient(120deg, #aed9e0, #c2e2f3, #eaf1fa, #c2e2f3, #aed9e0);
-  background-size: 400% 400%;
-  animation: gradientAnimation 20s ease infinite;
+  z-index: 1000;
 }
 
-.row {
-  margin-top: 20px; /* Add some margin to separate the rows from the top */
-}
-.container {
-  width: 80%; /* Adjust the width as needed */
-  margin: 0 auto; /* Center the container horizontally */
-  padding: 20px;
-  
-}
-
-.search-filter {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 20px;
-}
-
-.search-field,
-.filter-field {
-  width: calc(50% - 5px); /* Adjust width for smaller screens */
-  margin-bottom: 10px; /* Add some space between fields */
-}
-
-/* Action Buttons */
-.action-button {
-  width: calc(50% - 5px); /* Adjust width for smaller screens */
-  margin-left: 5px; /* Add a small gap between buttons */
-}
-
+/* Order Details */
 .order-details {
   padding: 20px;
   background-color: #f9f9f9;
   margin-bottom: 20px;
   border-radius: 5px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  
 }
 
 .teethshades {
@@ -92,38 +183,73 @@ p {
   margin: 10px 0;
 }
 
-canvas {
+.alert-message {
+  background-color: #f8d7da;
+  border: 1px solid #f5c6cb;
+  color: #721c24;
+  padding: 15px;
+  border-radius: 5px;
   margin-top: 20px;
-  border: 1px solid #ddd;
+  font-weight: bold;
+  text-align: center;
+  font-size: 16px;
+  line-height: 1.5;
 }
 
-.action-icons {
+/* Media Files */
+.media-container {
   display: flex;
-  justify-content: flex-end;
+  flex-wrap: wrap;
 }
 
-.edit-button,
-.trash-button {
-  margin-left: 10px;
+.image-item {
+  width: 100px;
+  height: 100px;
+  margin: 5px;
 }
 
-.scroll-container {
-  height: calc(100vh - 150px); // Adjust the height as needed
-  overflow-y: auto;
-}
-.search-field, .filter-field {
-  margin-right: 20px; /* Adjust the margin as needed */
+.button-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-top: 5px;
+  height: 20px;
+  width: 20px;
 }
 
-@media only screen and (max-width: 768px) {
-  .search-field,
-  .filter-field,
-  .action-button {
-    width: 100%; /* Adjust width for smaller screens */
-    margin-left: 0; /* Reset margin for smaller screens */
-    margin-bottom: 10px; /* Add some space between fields and buttons */
-  }
+.file-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  width: 100px;
+  height: 100px;
 }
+
+.fileIcon {
+  font-size: 50px;
+  margin-bottom: 5px;
+}
+
+.file-name {
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  max-width: 100px;
+  font-size: 10px;
+  justify-content: center;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.file-item:hover .file-name {
+  max-width: none;
+  overflow: visible;
+}
+
+/* Help Button */
 .help-button-container {
   display: flex;
   align-items: center;
@@ -141,49 +267,4 @@ canvas {
 .help-button-container span {
   font-size: 16px;
   font-weight: bold;
-}
-.alert-message {
-  background-color: #f8d7da;
-  border: 1px solid #f5c6cb;
-  color: #721c24;
-  padding: 15px;
-  border-radius: 5px;
-  margin-top: 20px;
-  font-weight: bold;
-  text-align: center;
-  font-size: 16px; /* Adjust font size for better readability */
-  line-height: 1.5; /* Increase line height for better spacing */
-}
-.btn {
-  border-radius: 20px;
-  padding: 10px 20px;
-  font-size: 14px;
-}
-
-.btn-outline-primary {
-  margin-left: 10px;
-}
-
-.btn-outline-danger {
-  border-color: #dc3545;
-  color: #dc3545;
-  transition: color 0.3s;
-}
-
-.btn-outline-danger:hover {
-  background-color: #dc3545;
-  color: white;
-}
-
-a.btn.btn-primary.rounded-btn {
-  background-color: #3c54b4;
-  color: #fff;
-  border-radius: 20px;
-  padding: 10px 30px;
-  text-decoration: none;
-  margin-right: auto;
-}
-
-a.btn.btn-primary.rounded-btn:hover {
-  background-color: #0056b3;
 }
