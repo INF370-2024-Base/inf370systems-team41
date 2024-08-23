@@ -688,17 +688,11 @@
   {
     "ContainingType": "BioProSystem.Controllers.OrderController",
     "Method": "GetAllOrderInfo",
-    "RelativePath": "Api/GetAllOrderInfo/{OrderId}",
+    "RelativePath": "Api/GetAllOrderInfo",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
-    "Parameters": [
-      {
-        "Name": "OrderId",
-        "Type": "System.String",
-        "IsRequired": true
-      }
-    ],
+    "Parameters": [],
     "ReturnTypes": []
   },
   {

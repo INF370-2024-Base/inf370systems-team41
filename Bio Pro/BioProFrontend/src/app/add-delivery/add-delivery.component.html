@@ -4,8 +4,8 @@
     <mat-expansion-panel *ngFor="let order of orderInfo" class="delivery-panel">
       <mat-expansion-panel-header>
         <mat-panel-title>
-          <span class="order-details">Order ID: {{ order.systemOrder.orderId }} - Patient: {{ order.patient.firstName }} {{ order.patient.lastName }}</span>
-          <button class="edit-button" (click)="createdeliveries(order.systemOrder.orderId)">Create Delivery</button>
+          <span class="order-details">Order ID: {{ order.orderId }} - Patient: {{ order.dentist.firstname }} {{ order.dentist.lastName }}</span>
+          <button class="edit-button" (click)="createdeliveries(order.orderId)">Create Delivery</button>
         </mat-panel-title>
         <mat-panel-description>
             
@@ -13,12 +13,11 @@
       </mat-expansion-panel-header>
 
       <p class="order-info">Order Status: {{ order.orderStatus.description }}</p>
-      <p class="order-info">Order Type: {{ order.orderType.description }}</p>
-      <p class="order-info">Order Direction: {{ order.orderDirection.description }}</p>
-      <p class="order-info">Timeline Details: {{ order.timeline.timelineDetails }}</p>
+      <p class="order-info">Order Direction: {{ order.orderWorkflowTimeline.orderDirection.description }}</p>
+      <p class="order-info">Timeline Details: {{ order.orderWorkflowTimeline.timelineDetails }}</p>
   
       <strong>Teethshades</strong>
-      <div *ngFor="let teethshade of order.teethshades" class="teethshade">
+      <div *ngFor="let teethshade of order.teethShades" class="teethshade">
         <div class="color-box" [style.background]="teethshade.colourCode"></div>
         <span class="shade-name">{{ teethshade.colourName }}</span>
       </div>

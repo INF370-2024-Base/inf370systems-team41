@@ -42,18 +42,13 @@ export class AddProceduralTimeline implements OnInit {
 
   getsystemOrders() {
     this.orderService.getOrdersWithNoTimelineAndInProgress().subscribe(results => {
-      this.orders = results;
-      results.forEach(element => {
-        this.orderService.getAllOrderInfo(element.orderId).subscribe(results => {
-          this.orderInfo.push(results);
-          console.log(this.orderInfo);
-        });
-      });
+      this.orderInfo = results;
+      console.log(this.orderInfo)
     }, (error: HttpErrorResponse) => console.log(error));
   }
 
   toggleOrderSelection(order: any) {
-    const orderId = order.systemOrder.orderId;
+    const orderId = order.orderId;
     const isSelected = this.systemOrderIds.includes(orderId);
 
     if (isSelected) {

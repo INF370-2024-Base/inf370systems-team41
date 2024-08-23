@@ -1,10 +1,10 @@
-<!-- <p>orders works!</p> -->
-<body>
+
+ <body>
   <div class="scroll-container">
     <h1 style="font-size: 48px; color: #4d4a4a; text-align: center; text-transform: uppercase; letter-spacing: 3px; margin-bottom: 24px; text-shadow: 2px 2px 4px rgba(124, 124, 124, 0.5);">ORDERS</h1>
   <div class="container">
     <div *ngIf="loading" class="loading-spinner">
-      <!-- You can use a spinner from Angular Material or any other spinner -->
+      You can use a spinner from Angular Material or any other spinner
       <mat-spinner></mat-spinner>
     </div>
     <div class="search-filter">
@@ -19,10 +19,10 @@
           <mat-option *ngFor="let ordertype of orderTypes" [value]="ordertype.orderTypeId">{{ ordertype.description }}</mat-option>
         </mat-select>
       </mat-form-field>
-      <button mat-raised-button color="primary" class="action-button" style="margin-right: 10px;" (click)="searchOrders()">
+      <button class="btn btn-outline-primary rounded-btn" (click)="searchOrders()">
         <mat-icon>search</mat-icon>Search
       </button>
-      <button mat-raised-button color="warn" class="action-button" style="margin-right: 10px;" (click)="clearSeacrhOrders()">
+      <button class="btn btn-outline-danger rounded-btn" (click)="clearSeacrhOrders()">
         <mat-icon>clear</mat-icon>Clear
       </button>
       
@@ -34,7 +34,7 @@
           <mat-panel-title>
             <mat-error *ngIf="order.orderStatus.orderStatusId==9" align="end">Canceled:</mat-error>
             <mat-icon>assignment</mat-icon>
-            Order ID: {{ order.systemOrder.orderId }} - Patient: {{ order.patient.firstName }} {{ order.patient.lastname }}  
+            Order ID: {{ order.orderId }} - Dentist: {{ order.dentist.firstName }} {{ order.dentist.lastName }}  
             
           </mat-panel-title>          
         </mat-expansion-panel-header>
@@ -49,22 +49,22 @@
         </div>
           <p><strong>Order Status:</strong> {{ order.orderStatus.description }}</p>
           <p><strong>Order Type:</strong> {{ order.orderType.description }}</p>
-          <p><strong>Order Direction:</strong> {{ order.orderDirection.description }}</p>
-          <p><strong>Timeline Details:</strong> {{ order.timeline.timelineDetails }}</p>
-          <div *ngFor="let stock of order.systemOrder.stockItems">
+           <p><strong>Order Direction:</strong> {{ order.orderWorkflowTimeline.orderDirection.description }}</p> 
+           <p><strong>Timeline Details:</strong> {{ order.orderWorkflowTimeline.timelineDetails }}</p> 
+          <div *ngFor="let stock of order.stockItems">
           <p><strong>Stock amount used</strong> {{ stock.stock.stockName}}: {{stock.quantity}} {{stock.stock.measurement}}</p>
         </div>
           <strong>Teethshades:</strong>
           <div class="teethshades">
-            <div *ngFor="let teethshade of order.teethshades" class="teethshade-item">
+            <div *ngFor="let teethshade of order.teethShades" class="teethshade-item">
               <div class="color-box" [style.background]="teethshade.colourCode"></div>
               <span>{{ teethshade.colourName }}</span>
             </div>
           </div>
 
           <div>
-            <div *ngIf="order.systemOrder.mediaFiles" class="media-container">
-              <div *ngFor="let media of order.systemOrder.mediaFiles">
+            <div *ngIf="order.mediaFiles" class="media-container">
+              <div *ngFor="let media of order.mediaFiles">
                 <div *ngIf="isImage(media.fileSelf)">
                   <img [src]="getBase64ImageSrc(media.fileSelf)" alt="Base64 Image" class="image-item">
                   <div class="button-container">
@@ -96,19 +96,22 @@
         </div>
         
         <div class="action-icons">
-          <button mat-raised-button color="primary" class="edit-button" (click)="editOrder(order.systemOrder.orderId)">
+          <button class="btn btn-secondary rounded-btn mr-2" (click)="editOrder(order.orderId)">
             <mat-icon>edit</mat-icon>Edit
           </button>
-          <button mat-raised-button color="warn" class="trash-button" (click)="cancelOrder(order.systemOrder.orderId)">
+          <button class="btn btn-outline-danger rounded-btn" (click)="cancelOrder(order.orderId)">
             <mat-icon>cancel</mat-icon>Cancel
           </button>
         </div>
       </mat-expansion-panel>
     </mat-accordion>
 
-    <div *ngIf="orders.length === 0 && orderId.trim() !== ''">
-      <p>No orders found.</p>
+    <div *ngIf="ordersInfo.length === 0 && (orderId.trim() !== '' || selectedFilter !== 0)">
+      <div class="alert-message">
+        No orders found.
+      </div>
     </div>
+    
   </div>
   <app-edit-order-modal *ngIf="selectedOrder" (close)="closeModal()"></app-edit-order-modal>
   </div>
@@ -120,7 +123,7 @@
   </button>
 </div>
 
-<style>
+<!-- <style>
 .media-container {
   display: flex;
   flex-wrap: wrap;
@@ -141,24 +144,41 @@
   width: 20px;
 }
 
-.mat-icon-button {
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 10px;
-  margin: 2px;
-  width: 28px; /* Adjust width to make buttons smaller */
-  height: 28px;
-  display: flex;
-  justify-content: center; /* Center horizontally */
-  align-items: center;  /* Adjust height to make buttons smaller */
+.btn {
+  border-radius: 20px;
+  padding: 10px 20px;
+  font-size: 14px;
 }
 
-.mat-icon-button:hover {
+.btn-outline-primary {
+  border-color: #3c54b4;
+  margin-left: 10px;
+}
+
+.btn-outline-danger {
+  border-color: #dc3545;
+  color: #dc3545;
+  transition: color 0.3s;
+}
+
+.btn-outline-danger:hover {
+  background-color: #dc3545;
+  color: white;
+}
+
+a.btn.btn-primary.rounded-btn {
+  background-color: #3c54b4;
+  color: #fff;
+  border-radius: 20px;
+  padding: 10px 30px;
+  text-decoration: none;
+  margin-right: auto;
+}
+
+a.btn.btn-primary.rounded-btn:hover {
   background-color: #0056b3;
 }
+
 
 .file-item {
   display: flex;
@@ -191,5 +211,32 @@
   max-width: none;
   overflow: visible;
 }
+.btn {
+    border-radius: 20px;
+    padding: 10px 20px;
+    font-size: 14px;
+}
 
-</style>
+.btn-secondary {
+    background-color: #558dbd;
+    color: #fff;
+    border: none;
+}
+
+.btn-outline-danger {
+    border-color: #dc3545;
+    color: #dc3545;
+    transition: color 0.3s;
+}
+
+.btn-outline-danger:hover {
+    background-color: #dc3545;
+    color: white;
+}
+
+.rounded-btn {
+    border-radius: 20px;
+    padding: 10px 20px;
+}
+
+</style> -->

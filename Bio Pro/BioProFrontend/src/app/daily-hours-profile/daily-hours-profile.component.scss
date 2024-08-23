@@ -1,3 +1,4 @@
+/* General body and layout settings */
 body {
   background: linear-gradient(120deg, #aed9e0, #c2e2f3, #eaf1fa, #c2e2f3, #aed9e0);
   background-size: 400% 400%;
@@ -6,18 +7,15 @@ body {
   color: #333;
   margin: 0;
   padding: 0;
-  min-height: 100vh; /* Ensure body covers the full viewport height */
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
-  overflow-x:visible;
+  overflow-x: visible;
 }
 
-/* Ensure HTML and Body elements cover full height */
 html, body {
   height: 100%;
 }
-
-
 
 h1 {
   font-size: 48px;
@@ -30,25 +28,20 @@ h1 {
 }
 
 @keyframes gradientAnimation {
-  0% {
-      background-position: 0% 50%;
-  }
-  50% {
-      background-position: 100% 50%;
-  }
-  100% {
-      background-position: 0% 50%;
-  }
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
 
+/* Rounded table styles */
 .rounded-table {
   border-radius: 10px;
   overflow: hidden;
 }
 
 .rounded-table thead th {
-  background-color: #8b9aad; /* Set the background color for table header */
-  color: white; /* Text color for table header */
+  background-color: #8b9aad;
+  color: white;
 }
 
 .rounded-table tbody td,
@@ -79,43 +72,11 @@ h1 {
   border-color: #bd2130;
 }
 
-/* Media Queries for responsiveness */
-@media (max-width: 767.98px) {
-  h1 {
-      font-size: 32px;
-      letter-spacing: 2px;
-      margin-bottom: 16px;
-  }
-
-  .table-responsive {
-      border: 0;
-  }
-
-  .btn {
-      width: 100%;
-      margin-bottom: 10px;
-  }
-}
-
-@media (max-width: 575.98px) {
-  .table-responsive {
-      overflow-x: auto;
-  }
-
-  .d-flex {
-      flex-direction: column;
-      align-items: stretch;
-  }
-
-  .d-flex .btn {
-      margin-bottom: 10px;
-  }
-}
-
+/* Button styles */
 .btn {
   border-radius: 20px;
-  padding: 10px 20px;
-  font-size: 14px;
+  padding: 12px 24px;
+  font-size: 16px;
 }
 
 .btn-secondary {
@@ -137,91 +98,149 @@ h1 {
 
 /* Primary button styles */
 a.btn.btn-primary.rounded-btn {
-  background-color: 
-  #3c54b4;
+  background-color: #3c54b4;
   color: #fff;
   border-radius: 20px;
-  padding: 10px 30px;
+  padding: 12px 30px;
   text-decoration: none;
   margin-right: auto;
 }
 
 a.btn.btn-primary.rounded-btn:hover {
-  background-color:  #0056b3;
+  background-color: #0056b3;
 }
 
+/* Button sizes and spacing for smaller screens */
 @media (max-width: 992px) {
   .btn, a.btn {
-      padding: 8px 15px;
-      font-size: 12px;
+    padding: 8px 15px;
+    font-size: 12px;
   }
 
   .btn-outline-primary, .btn-secondary, .btn-outline-danger {
-      margin-left: 5px;
+    margin-left: 5px;
   }
 
   a.btn.btn-primary.rounded-btn {
-      padding: 8px 20px;
+    padding: 8px 20px;
   }
 }
 
 @media (max-width: 768px) {
   .btn, a.btn {
-      padding: 8px 15px;
-      font-size: 12px;
+    padding: 8px 15px;
+    font-size: 12px;
   }
 
   .btn-outline-primary, .btn-secondary, .btn-outline-danger {
-      margin-left: 5px;
+    margin-left: 5px;
   }
 
   a.btn.btn-primary.rounded-btn {
-      padding: 8px 20px;
+    padding: 8px 20px;
   }
 }
 
 @media (max-width: 576px) {
   .container {
-      padding-left: 10px;
-      padding-right: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
   }
 
   .btn {
-      width: 100%; /* Set buttons to full width */
-      margin-top: 10px; /* Add margin between buttons */
+    width: 100%;
+    margin-top: 10px;
   }
 
   a.btn.btn-primary.rounded-btn,
   .btn-secondary {
-      margin-left: 0; /* Remove left margin for primary and secondary buttons */
+    margin-left: 0;
   }
 }
 
 @media (max-width: 400px) {
   h1 {
-      font-size: 36px;
+    font-size: 36px;
   }
 
   .search-field {
-      padding: 10px 15px;
+    padding: 10px 15px;
   }
 }
 
+/* Flexbox for spacing between filters and buttons */
 .d-flex {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: center;
   margin-bottom: 20px;
 }
 
+.filter-container {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin-bottom: 20px; /* Space below filters */
+}
+
+.filter-container .mat-form-field {
+  margin-right: 20px; /* Space between the filters */
+}
+
+.button-container {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start; /* Align buttons to the start */
+  margin-top: 20px; /* Space above buttons */
+}
+
+.btn {
+  border-radius: 15px;
+  padding: 10px 20px; /* Increase padding for bigger buttons */
+  font-size: 12px; /* Increase font size for bigger buttons */
+}
+
+.action-button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 12px;
+  padding: 10px 20px; /* Increase padding for bigger buttons */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  margin-left: 20px; /* Add spacing between buttons */
+}
+
+.btn-outline-secondary {
+  border: 1px solid #6c757d;
+  color: #6c757d;
+  padding: 10px 20px; /* Increase padding for bigger buttons */
+}
+
+.btn-outline-secondary:hover {
+  background-color: #6c757d;
+  color: #ffffff;
+}
+
+.capture-btn {
+  margin-left: auto; /* Ensures the Capture Hours button stays to the right */
+  padding: 10px 20px; /* Increase padding for bigger buttons */
+}
+
+/* Responsive flex adjustments */
 @media (max-width: 576px) {
   .d-flex {
-      flex-direction: column;
+    flex-direction: column;
+    align-items: stretch;
   }
 
   .d-flex .btn {
-      width: 100%;
-      margin-top: 10px;
+    width: 100%;
+    margin-top: 10px;
   }
 }
 
@@ -233,38 +252,18 @@ a.btn.btn-primary.rounded-btn:hover {
   cursor: pointer;
   font-size: 10px;
   margin: 2px;
-  width: 28px; /* Adjust width to make buttons smaller */
+  width: 28px;
   height: 28px;
   display: flex;
-  justify-content: center; /* Center horizontally */
-  align-items: center; /* Adjust height to make buttons smaller */
+  justify-content: center;
+  align-items: center;
 }
 
 .mat-icon-button:hover {
   background-color: #0056b3;
 }
 
-/* Styles for Capture Hour button */
-.action-button {
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 14px;
-  padding: 10px 20px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-decoration: none;
-}
-
-.action-button:hover {
-  background-color: #0056b3;
-}
-
-/* Add this to your component's SCSS file */
-
+/* Card styles */
 mat-card {
   margin: 20px;
   padding: 16px;
@@ -313,35 +312,6 @@ tr.mat-header-row {
 
 .mat-cell {
   font-size: 0.875rem;
-}
-
-.btn {
-  display: inline-flex;
-  align-items: center;
-  font-size: 0.875rem;
-  padding: 6px 12px;
-}
-
-.btn-outline-danger {
-  border: 1px solid #dc3545;
-  color: #dc3545;
-}
-
-.btn-outline-danger:hover {
-  background-color: #dc3545;
-  color: #ffffff;
-}
-
-.rounded-btn {
-  border-radius: 4px;
-}
-
-.text-center {
-  text-align: center;
-}
-
-.mat-elevation-z8 {
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
 .hidden-column {

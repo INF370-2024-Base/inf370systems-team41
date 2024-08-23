@@ -70,22 +70,21 @@ export class DentistProfileComponent implements OnInit {
     this.filteredDentists = this.paginatedDentists;
   }
 
-
   search(): void {
     if (this.searchQuery.trim() === '') {
-      this.filteredDentists = [...this.dentists];
-      this.noResultsFound = false;
+        this.filteredDentists = [...this.dentists];
+        this.noResultsFound = false;
     } else {
-      this.filteredDentists = this.dentists.filter(dentist =>
-        dentist.firstName.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
-        dentist.lastName.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
-        dentist.contactDetail.toLowerCase().includes(this.searchQuery.toLowerCase())
-      );
-      this.noResultsFound = this.filteredDentists.length === 0;
+        this.filteredDentists = this.dentists.filter(dentist =>
+            dentist.firstName.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
+            dentist.lastName.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
+            dentist.contactDetail.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
+            dentist.address.toLowerCase().includes(this.searchQuery.toLowerCase())
+        );
+        this.noResultsFound = this.filteredDentists.length === 0;
     }
     this.updatePaginatedDentists();
-  
-  }
+}
 
   openEditDialog(dentist: Dentist): void {
     const dialogRef = this.dialog.open(DentistEditDialogComponent, {
@@ -148,7 +147,8 @@ export class DentistProfileComponent implements OnInit {
         return d.firstName.toLowerCase().includes(searchCriteria.toLowerCase()) ||
           d.address?.toLowerCase().includes(searchCriteria.toLowerCase()) ||
           d.lastName.toLowerCase().includes(searchCriteria.toLowerCase()) ||
-          fullName.includes(searchCriteria.toLowerCase());
+          fullName.includes(searchCriteria.toLowerCase())||
+          d.contactDetail.toLowerCase().includes(searchCriteria.toLowerCase()) ;
       });
       this.noResultsFound = this.filteredDentists.length === 0;
     }

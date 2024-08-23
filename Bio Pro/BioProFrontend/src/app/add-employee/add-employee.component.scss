@@ -63,7 +63,24 @@ mat-form-field {
     margin-top: 20px;
     display: block;
     width: 100%;
-}
+  }
+  .mat-raised-button[color="primary"] {
+    background-color: #3c54b4;
+    color: white;
+  }
+  
+  .mat-raised-button[color="primary"]:hover {
+    background-color: #0056b3;
+  }
+  
+  .mat-raised-button[color="warn"] {
+    background-color: #dc3545;
+    color: white;
+  }
+  
+  .mat-raised-button[color="warn"]:hover {
+    background-color: #c62828;
+  }
 
 mat-label i.material-icons {
     vertical-align: middle;
