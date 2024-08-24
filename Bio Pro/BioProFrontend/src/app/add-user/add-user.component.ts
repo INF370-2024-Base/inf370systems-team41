@@ -51,11 +51,29 @@ newEmployee:addEmployee={
 userForm: FormGroup;
 employeeform:FormGroup;
 
-openSnackBar(message: string) {
-  this.snackBar.open(message, 'Close', {
+openSnackBar(message: string, error?: any) {
+  let fullMessage = message;
+
+  if (error) {
+    if (Array.isArray(error)) {
+      // If error is an array, iterate through it and append each error's description
+      error.forEach((err: any) => {
+        if (err.description) {
+          fullMessage += `\n${err.description}`;
+        }
+      });
+    } else if (error.description) {
+      // If error is a single object with a description
+      fullMessage += `: ${error.description}`;
+    }
+  }
+
+  this.snackBar.open(fullMessage, 'Close', {
     duration: 5000, // Duration in milliseconds
   });
 }
+
+
   ngOnInit(): void {
     this.getAllRoles();
     this.getJobtitles();
@@ -105,7 +123,6 @@ openSnackBar(message: string) {
       console.log('User added:', newUser);
       console.log('Form:', this.userForm.value);
   
-      // Attempt to add the user
       this.userServices.addUser(newUser).subscribe(
         result => {
           const signedInUser = JSON.parse(sessionStorage.getItem('User')!);
@@ -118,7 +135,6 @@ openSnackBar(message: string) {
           };
           console.log(transaction);
   
-          // Add audit trail transaction
           this.loginService.CreateTransaction(transaction).subscribe(
             result => {
               console.log("Successfully added transaction." + result);
@@ -129,7 +145,6 @@ openSnackBar(message: string) {
                 newEmployee.PhoneNumber = this.userForm.value.phoneNumber;
                 console.log('Employee added:', newEmployee);
   
-                // Attempt to add the employee
                 this.employeeService.addEmployee(newEmployee).subscribe(
                   result => {
                     const transaction: AddAuditTrailViewModels = {
@@ -142,7 +157,6 @@ openSnackBar(message: string) {
                     console.log('User and employee added successfully');
                     this.openSnackBar('User and employee added successfully');
   
-                    // Add another audit trail transaction
                     this.loginService.CreateTransaction(transaction).subscribe(
                       result => {
                         console.log("Successfully added transaction." + result);
@@ -150,13 +164,13 @@ openSnackBar(message: string) {
                       },
                       error => {
                         console.log("Unable to add transaction." + error.error);
-                        this.openSnackBar('Unable to add employee transaction.');
+                        this.openSnackBar('Unable to add employee transaction', error.error);
                       }
                     );
                   },
                   error => {
                     console.log('Failed to add employee:', error.error);
-                    this.openSnackBar('Failed to add employee.');
+                    this.openSnackBar('Failed to add employee', error.error);
                   }
                 );
               } else {
@@ -166,13 +180,13 @@ openSnackBar(message: string) {
             },
             error => {
               console.log("Unable to add user transaction." + error.error);
-              this.openSnackBar('Unable to add user transaction.');
+              this.openSnackBar('Unable to add user transaction', error.error);
             }
           );
         },
         error => {
           console.log('Failed to add user:', error.error);
-          this.openSnackBar('Failed to add user.');
+          this.openSnackBar('Failed to add user', error.error);
         }
       );
     } else {
@@ -184,5 +198,6 @@ openSnackBar(message: string) {
       }
     }
   }
+  
   
 }

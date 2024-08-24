@@ -6,8 +6,8 @@ body {
     color: #333;
     margin: 0;
     padding: 0;
-    height: 100vh;
-    overflow: hidden; /* Prevent body from scrolling */
+    min-height: 100vh;
+    overflow-x: hidden; /* Prevent horizontal scrolling */
 }
 
 @keyframes gradientAnimation {
@@ -18,8 +18,7 @@ body {
 
 .main-container {
     display: flex;
-    // height: 100vh;
-    overflow: hidden; /* Prevent extra scrollbar */
+    min-height: 100vh;
 }
 
 .sidenav-container {
@@ -44,8 +43,7 @@ body {
     margin-left: 280px;
     flex-grow: 1;
     padding: 20px;
-    overflow-y: auto; /* Only this section should scroll */
-    height: 100vh;
+    height: auto; /* Ensure this section expands with content */
     box-sizing: border-box;
 }
 
@@ -55,7 +53,8 @@ body {
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     max-width: 600px;
-    margin: 0 auto !important;
+    margin: 0 auto;
+    margin-bottom: 20px; /* Add some margin at the bottom to avoid touching the bottom of the page */
 }
 
 h1 {
@@ -127,14 +126,15 @@ mat-label i.material-icons {
         margin-right: 4px;
     }
 }
+
 .mat-raised-button[color="primary"] {
     background-color: #3c54b4;
     color: white;
-  }
+}
   
-  .mat-raised-button[color="primary"]:hover {
+.mat-raised-button[color="primary"]:hover {
     background-color: #0056b3;
-  }
+}
 
 mat-label {
     font-size: 1.2em;
