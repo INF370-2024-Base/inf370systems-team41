@@ -99,7 +99,7 @@
           <button class="btn btn-secondary rounded-btn mr-2" (click)="editOrder(order.orderId)">
             <mat-icon>edit</mat-icon>Edit
           </button>
-          <button class="btn btn-outline-danger rounded-btn" (click)="cancelOrder(order.orderId)">
+          <button *ngIf="order.orderStatus.orderStatusId!=9"  class="btn btn-outline-danger rounded-btn" (click)="cancelOrder(order.orderId)">
             <mat-icon>cancel</mat-icon>Cancel
           </button>
         </div>
