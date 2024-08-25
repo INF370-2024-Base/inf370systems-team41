@@ -77,6 +77,7 @@ export class AddOrderComponent implements OnInit {
     this.loadOrderTypes();
     this.loadOrderStatuses();
     this.loadTeethShades();
+    
     console.log(this.areas)
   }
   selectedAreas: number[] = [];
@@ -154,9 +155,20 @@ export class AddOrderComponent implements OnInit {
     // Update your form logic here with selectedAreas list
     console.log('Selected areas:', this.selectedAreas); // Example usage
   }
-  
+  patchDueDate(): void {
+    const dueDate = this.addDays(new Date(), 14);
+    this.addForm.patchValue({ DueDate: this.formatDate(dueDate) });
+}
+
+addDays(date: Date, days: number): Date {
+    const result = new Date(date);
+    result.setDate(result.getDate() + days);
+    return result;
+}
   
   loadDentists(): void {
+    this.addForm.patchValue({ OrderDate: this.formatDate(new Date()) });
+    this.patchDueDate()
     this.dataService.getDentists().subscribe(
       (data: any[]) => {
         this.dentists = data;
@@ -168,7 +180,12 @@ export class AddOrderComponent implements OnInit {
       }
     );
   }
-
+  formatDate(date: Date): string {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+}
   loadTeethShades(): void {
     this.dataService.getTeethShades().subscribe(
       (data: any[]) => {
