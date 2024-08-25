@@ -33,18 +33,18 @@ class _EditOrderModalState extends State<EditOrderModal> {
   void initState() {
     super.initState();
     _priorityLevelController =
-        TextEditingController(text: widget.order['priorityLevel']);
+        TextEditingController(text: widget.order['priorityLevel'] ?? '');
     _specialRequirementsController =
-        TextEditingController(text: widget.order['specialRequirements']);
-    _dueDateController = TextEditingController(text: widget.order['dueDate']);
+        TextEditingController(text: widget.order['specialRequirements'] ?? '');
+    _dueDateController = TextEditingController(text: widget.order['dueDate'] ?? '');
     _emergencyNumberController =
-        TextEditingController(text: widget.order['emergencyNumber']);
+        TextEditingController(text: widget.order['emergencyNumber'] ?? '');
     _mouthAreaController =
-        TextEditingController(text: widget.order['mouthArea']);
+        TextEditingController(text: widget.order['mouthArea'] ?? '');
     _estimatedDurationController = TextEditingController(
         text: widget.order['estimatedDurationInDays']?.toString() ?? '');
     _medicalAidNumberController =
-        TextEditingController(text: widget.order['patientMedicalAidNumber']);
+        TextEditingController(text: widget.order['patientMedicalAidNumber'] ?? '');
     selectedAreasIds = widget.order['selectedAreasIds']?.cast<int>() ?? [];
 
     _fetchMediaFiles();
@@ -73,7 +73,7 @@ class _EditOrderModalState extends State<EditOrderModal> {
         final decodedResponse = jsonDecode(response.body);
         print('Response body: $decodedResponse');
         setState(() {
-          mediaFiles = decodedResponse['mediaFiles'];
+          mediaFiles = decodedResponse['mediaFiles'] ?? [];
         });
       } else {
         print('Failed to load media files: ${response.body}');
@@ -195,7 +195,7 @@ class _EditOrderModalState extends State<EditOrderModal> {
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                Text('Order: ${widget.order['orderId']}',
+                Text('Order: ${widget.order['orderId'] ?? ''}',
                     style: const TextStyle(
                         fontWeight: FontWeight.bold, fontSize: 20)),
                 const SizedBox(height: 16.0),
@@ -256,15 +256,18 @@ class _EditOrderModalState extends State<EditOrderModal> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text('File Name: ${mediaFile['fileName']}'),
-                              Image.memory(
-                                base64Decode(mediaFile['fileSelf']),
-                                height: 100,
-                                fit: BoxFit.cover,
-                                errorBuilder: (context, error, stackTrace) {
-                                  return Text('Error displaying image: $error');
-                                },
-                              ),
+                              Text('File Name: ${mediaFile['fileName'] ?? 'Unknown'}'),
+                              if (mediaFile['fileSelf'] != null)
+                                Image.memory(
+                                  base64Decode(mediaFile['fileSelf']),
+                                  height: 100,
+                                  fit: BoxFit.cover,
+                                  errorBuilder: (context, error, stackTrace) {
+                                    return Text('Error displaying image: $error');
+                                  },
+                                )
+                              else
+                                Text('No image data available.'),
                             ],
                           ),
                         );
