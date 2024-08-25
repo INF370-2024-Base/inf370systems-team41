@@ -8,6 +8,7 @@ import { EditOrderModalComponent } from '../edit-order-modal/edit-order-modal.co
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
+import { DataService } from '../services/login.service';
 
 @Component({
   selector: 'app-orders',
@@ -39,7 +40,8 @@ export class OrdersComponent implements OnInit {
   selectedOrderForStatus: any = null;
   originalOrders:any[]=[]
   baseUrl: string ='https://localhost:44315/Api/';
-  constructor(private dialog: MatDialog,private http: HttpClient,private dataservices:OrderService,private snackBar:MatSnackBar) { }
+  loading:boolean=false
+  constructor(private dialog: MatDialog,private http: HttpClient,private dataservices:OrderService,private snackBar:MatSnackBar,private loginService:DataService) { }
 
   ngAfterViewChecked(): void {
 
@@ -53,8 +55,8 @@ export class OrdersComponent implements OnInit {
   }
 
   getOrdersAndInfo() {
-    this.dataservices.getAllOrders().pipe(
-      switchMap((allOrders: any[]) => {
+    this.dataservices.getAllOrderInfo().subscribe(
+      ((allOrders: any[]) => {
         if (Array.isArray(allOrders)) {
           this.orders = allOrders;
           this.originalOrders=allOrders
@@ -63,38 +65,16 @@ export class OrdersComponent implements OnInit {
               this.orderTypes=results
             }
           )
-          return forkJoin(this.orders.map(order => this.dataservices.getAllOrderInfo(order.orderId)));
+          this.loading=false
+          this.ordersInfo=allOrders
+          console.log(this.ordersInfo)
+          
           
         } else {
           console.error('No orders found.');
-          return of([]); // Empty observable
         }
       })
-    ).subscribe(
-      (orderInfos: any[]) => {
-        this.ordersInfo = orderInfos;
-        console.log('It works');
-        console.log('Orders and order info retrieved:', this.orders, this.ordersInfo);
-      },
-      (error) => {
-        console.error('Error fetching orders or order info:', error);
-      }
-    );
-  }
-  getOrderInfo()
-  {
-    this.ordersInfo=[]
-    this.orders.forEach((order) => {
-      console.log(order); 
-      this.dataservices.getAllOrderInfo(order.orderId).subscribe(
-        (result: any) => {
-            this.ordersInfo.push(result);
-                   },
-        (error) => {
-          console.error('Error fetching order info:', error);
-        }
-      );
-    });
+    )
   }
   
 isImage(base64String: string): boolean {
@@ -127,40 +107,40 @@ downloadFile(base64String: string, fileName: string) {
   document.body.appendChild(link);
   link.click();
   document.body.removeChild(link);
+  this.loginService.addTransaction("Exported","Exported mediafile "+fileName+".")
 }
   searchOrders() {
-    if (this.orderId.trim() !== '') {
-      const url = `${this.baseUrl}GetOrdersById/${this.orderId}`;
-      this.http.get<any>(url)
-        .subscribe(
-          (data) => {
-            console.log(data)
-            if (data) {
-              this.ordersInfo=[]
-              this.orders = [data]; 
-              this.getOrderInfo()
+    // if (this.orderId.trim() !== '') {
+    //   const url = `${this.baseUrl}GetOrdersById/${this.orderId}`;
+    //   this.http.get<any>(url)
+    //     .subscribe(
+    //       (data) => {
+    //         console.log(data)
+    //         if (data) {
+    //           this.ordersInfo=[]
+    //           this.orders = [data]; 
+    //           this.getOrdersAndInfo()
 
-            } else {
-              this.ordersInfo=[]
-              this.orders = [data]; 
-              this.getOrderInfo() // Reset orders array if no data found
+    //         } else {
+    //           this.ordersInfo=[]
+    //           this.orders = [data]; 
+    //           this.getOrdersAndInfo()
   
-            }
-          },
-          (error:HttpErrorResponse) => {
-            if (error.status === 404) {
-              // Show the snackbar when a 404 error occurs
-              this.showSnackBar('No orders');
-            }
-          }
-        );
-    } else {
-      this.getOrderInfo()
+    //         }
+    //       },
+    //       (error:HttpErrorResponse) => {
+    //         if (error.status === 404) {
+    //           this.showSnackBar('No orders');
+    //         }
+    //       }
+    //     );
+    // } else {
 
-    }
+    //   this.orders= this.originalOrders
+    // }
   }
   clearSeacrhOrders() {
-    this.getOrdersAndInfo();
+    this.orders= this.originalOrders
     this.orderId=""
     this.selectedFilter=0
     this.onFilterChange(null);
@@ -172,19 +152,16 @@ downloadFile(base64String: string, fileName: string) {
   }
   onOrderIdChange(newOrderId: string) {
     if (newOrderId.trim() === '') {
-      this.getOrdersAndInfo()
-      this.selectedFilter=0
-      this.onFilterChange(null);
-      
+      this.ordersInfo = this.originalOrders;
     } else {
-      // Filter restaurants based on query
-      this.orders = this.orders.filter((d) => d.orderId.toLowerCase().includes(newOrderId));
-      this.getOrderInfo()
-
+      this.ordersInfo = this.originalOrders.filter((d) => 
+        d.orderId.toLowerCase().includes(newOrderId.toLowerCase())
+      );
     }
   }
+  
   editOrder(orderId: string): void {
-    const selectedOrder = this.ordersInfo.find(order => order.systemOrder.orderId === orderId);
+    const selectedOrder = this.ordersInfo.find(order => order.orderId === orderId);
   console.log('Selected order for editing:', selectedOrder); // Debug log for selected order
 
   const dialogRef = this.dialog.open(EditOrderModalComponent, {
@@ -192,12 +169,18 @@ downloadFile(base64String: string, fileName: string) {
   });
 
   dialogRef.afterClosed().subscribe(result => {
-    console.log(`Dialog result: ${result}`);
+    if(result!="Order update canceled")
+    {console.log(`Dialog result: ${result}`);
     this.closeModal();
      this.showSnackBar(result);
      setTimeout(() => {
-      location.reload();
+      this.getOrdersAndInfo();
     }, 2000); 
+    }
+    else{
+      this.showSnackBar(result);
+    }
+    
   
      
   });
@@ -226,7 +209,7 @@ downloadFile(base64String: string, fileName: string) {
         () => {
           console.log('Order status updated successfully');
           this.closeStatusModal();
-          this.getOrderInfo();
+          this.getOrdersAndInfo();
         },
         (error) => {
           console.error('Error updating order status:', error);
@@ -234,19 +217,23 @@ downloadFile(base64String: string, fileName: string) {
       );
     }
   }
-  onFilterChange(event: any)
-  {
-    console.log(this.selectedFilter)
+  onFilterChange(event: any) {
+    console.log(this.selectedFilter);
+  
     if (this.selectedFilter == 0) {
-      this.orders=[...this.originalOrders]
-      this.getOrderInfo()
+      this.ordersInfo = this.originalOrders;
     } else {
-      this.orders=[...this.originalOrders]
-      this.orders = this.orders.filter((d) => d.orderTypeId==this.selectedFilter);
-      this.getOrderInfo()
-
+      this.ordersInfo = this.originalOrders.filter((d) => 
+        d.orderType.orderTypeId == this.selectedFilter
+      );
+    }
+    
+    // Ensure the "No orders found" message is triggered
+    if (this.ordersInfo.length === 0) {
+      this.showSnackBar('No orders found.');
     }
   }
+  
   deleteMediaFile(mediaFileId: number): void {
      const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
       width: '250px',
@@ -257,6 +244,7 @@ downloadFile(base64String: string, fileName: string) {
       if (result) {
         this.dataservices.deleteMediaFile(mediaFileId).subscribe(
           () => {
+            this.loginService.addTransaction("Delete","Deleted mediafile with ID:"+mediaFileId)
             this.showSnackBar('Successfully deleted media file');
             setTimeout(() => {
               location.reload(); // Reload or update data as needed
@@ -280,6 +268,7 @@ downloadFile(base64String: string, fileName: string) {
     if (result) {
       // If the user confirms, delete the event
       this.dataservices.CancelOrder(id).subscribe(() => {
+        this.loginService.addTransaction("Put","Cancelled an order. Order ID:"+id)
         console.log('Order canceled:');
         dialogRefCancel.close(true);
         this.showSnackBar('Canceled order:'+id)

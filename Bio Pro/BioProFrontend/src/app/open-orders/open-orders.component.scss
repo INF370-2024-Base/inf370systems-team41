@@ -1,11 +1,19 @@
 body {
-  background-color: #f5f5f5;
+  background: linear-gradient(120deg, #aed9e0, #c2e2f3, #eaf1fa, #c2e2f3, #aed9e0);
+  background-size: 400% 400%;
+  animation: gradientAnimation 20s ease infinite;
   font-family: 'Roboto', sans-serif;
   color: #333;
-  padding: 20px;
-  overflow: auto;
-  overflow-y: auto;
-  font-size: medium;
+  margin: 0;
+  padding: 0;
+  min-height: 100vh; /* Ensure body covers the full viewport height */
+  display: flex;
+  flex-direction: column;
+}
+
+/* Ensure HTML and Body elements cover full height */
+html, body {
+  height: 100%;
 }
 
 /* Animated background gradients */
@@ -28,6 +36,7 @@ body {
   max-width: 1200px;
   margin: 0 auto;
   padding: 20px; /* Add padding */
+  flex: wrap;
 }
 
 /* Row styles */

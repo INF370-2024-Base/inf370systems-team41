@@ -6,6 +6,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router'; // Import Router
 import { PhoneChecker } from '../validators/Validators';
+import { DataService } from '../services/login.service';
 
 @Component({
   selector: 'app-add-employee',
@@ -20,7 +21,8 @@ export class AddEmployeeComponent implements OnInit {
     private fb: FormBuilder,
     private employeeService: EmployeeService,
     private snackBar: MatSnackBar,
-    private router: Router // Inject Router
+    private router: Router ,
+    private loginService:DataService
   ) {
     this.employeeForm = this.fb.group({
       FirstName: ['', Validators.required],
@@ -60,6 +62,7 @@ export class AddEmployeeComponent implements OnInit {
             panelClass: ['success-snackbar']
           });
           // Navigate to the desired route after successful submission
+          this.loginService.addTransaction("Post","User created employee:"+newEmployee.EmailAddress)
           this.router.navigate(['/employee']); // Example: Navigate to the employees list
         },
         error: (error: HttpErrorResponse) => {

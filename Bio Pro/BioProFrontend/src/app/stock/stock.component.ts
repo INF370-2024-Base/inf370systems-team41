@@ -5,13 +5,14 @@ import { Chart, ChartConfiguration, ChartItem, registerables } from 'chart.js';
 import { StockServices } from '../services/stock.service';
 import { WriteOffModalComponent } from '../write-off-modal/write-off-modal.component';
 import { CaptureNewStockModalComponent } from '../capture-new-stock-modal/capture-new-stock-modal.component';
+import { DataService } from '../services/login.service';
 
 @Component({
   selector: 'app-stock',
   templateUrl: './stock.component.html',
   styleUrls: ['./stock.component.scss']
 })
-export class StockComponent implements OnInit, AfterViewInit {
+export class StockComponent implements OnInit {
   stockList: any[] = [];
   filteredStock: any[] = [];
   categories: any[] = [];
@@ -25,19 +26,26 @@ export class StockComponent implements OnInit, AfterViewInit {
   stockChart?: Chart;
   displayedColumns: string[] = ['stockName', 'quantityAvailable', 'minimumStockLevel'];
   belowMinStock: any[] = [];
+  page: number = 1; // Current page
+
+  frequentlyVisitedPages: { name: string; route: string; icon: string }[] = [
+    { name: 'ADD STOCK', route: '/addStock', icon: 'add_box' }, // Represents adding items
+    
+    { name: 'STOCK TYPE', route: '/stock-type', icon: 'list_alt' }, // Represents a list or type of items
+    { name: 'STOCK CATEGORY', route: '/stock-categories', icon: 'category' }, // Represents categories
+  ];
 
 
-  constructor(private stockService: StockServices, public dialog: MatDialog, private snackBar: MatSnackBar) { }
+  constructor(private stockService: StockServices, public dialog: MatDialog, private snackBar: MatSnackBar,private dataService:DataService) { }
 
   ngOnInit(): void {
     this.fetchData();
-  }
-
-  ngAfterViewInit(): void {
     setTimeout(() => {
       this.createStockLevelChart();
     }, 0);
   }
+
+
 
   ngOnDestroy(): void {
     // Destroy the chart when the component is destroyed to avoid memory leaks
@@ -119,6 +127,14 @@ export class StockComponent implements OnInit, AfterViewInit {
     // Re-create the chart after applying filters
     this.updateChart();
   }
+  
+  clearFilters(): void {
+    this.searchTerm = '';
+    this.selectedCategory = '';
+    this.selectedStockType = '';
+    this.page = 1; // Reset to the first page
+    this.applyFilters(); // Reapply filters to reset the filtered stock list
+  }
 
   getCategoryDescription(categoryId: number): string {
     const category = this.allCategories.find(cat => cat.stockCategoryId === categoryId);
@@ -145,6 +161,8 @@ export class StockComponent implements OnInit, AfterViewInit {
       if (result) {
         this.stockService.addStockWriteOff(result).subscribe(
           response => {
+            console.log(result)
+            this.dataService.addTransaction("Put","Wrote off stock with Id:"+ result.stockId+".Amount written off:"+result.quantityWrittenOff+".Reason:"+result.reason)
             this.fetchData();
             this.snackBar.open('Stock successfully written off', 'Close', {
               duration: 3000
@@ -171,6 +189,8 @@ export class StockComponent implements OnInit, AfterViewInit {
       if (result) {
         this.stockService.captureNewStock(result).subscribe(
           response => {
+            console.log(result)
+            this.dataService.addTransaction("Put","Captured new stock with id:"+ result.stockId+".Amount added:"+result.amountAdded)
             this.fetchData();
             this.snackBar.open('Stock successfully captured', 'Close', {
               duration: 3000

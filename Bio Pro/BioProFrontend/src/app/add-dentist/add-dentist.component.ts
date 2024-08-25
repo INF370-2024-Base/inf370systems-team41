@@ -46,6 +46,7 @@ dentist:Dentist={
       this.dentist.lastName=this.addDentistForm.value.LastName  
       this.dataService.addDentist(this.dentist).subscribe({
         next: (dentist) => {
+          this.dataService.addTransaction("Post","User created dentist:"+ this.dentist.firstName+' '+this.dentist.lastName)
           this.router.navigate(['Dentist']);
           this.snackBar.open('Dentist added successfully!', 'Close', {
             duration: 3000,

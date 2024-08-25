@@ -8,6 +8,7 @@ import { EditCalanderEventViewModel } from '../shared/EditCalanderEvent';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { DataService } from '../services/login.service';
 
 
 @Component({
@@ -21,7 +22,7 @@ export class EventModalComponent implements OnInit {
   constructor(
     public dialogRef: MatDialogRef<EventModalComponent>,
     @Inject(MAT_DIALOG_DATA) public data: { event: CalendarEvent },
-    private calendarService: CalendarService,private snackBar:MatSnackBar,private dialog: MatDialog,private fb:FormBuilder
+    private calendarService: CalendarService,private snackBar:MatSnackBar,private dialog: MatDialog,private fb:FormBuilder,private loginService:DataService
   ) {this.addForm = this.fb.group({
     Description: ['', Validators.required],
     EventInformation: ['', Validators.required],DateOfEvent:['', Validators.required],
@@ -69,6 +70,7 @@ console.log(this.selectedEvent)
               TitleOfEvent:this.data.event.title,
               EventInformation:this.data.event.object.information
             }
+            console.log(this.selectedEvent.TimeOfEvent)
             this.showSnackBar("Please fill in all input fields")
 
         }
@@ -85,6 +87,8 @@ console.log(this.selectedEvent)
           }
           console.log('Event updated:', eventToEdit.CalanderScheduleEventDateTime);
          this.calendarService.updateCalendarEvent(eventToEdit).subscribe(() => {
+          this.loginService.addTransaction("Put","Edited event: "+eventToEdit.Description)
+
         console.log('Event updated:', this.data.event);
         this.dialogRef.close(true);
       }, error => {
@@ -129,6 +133,8 @@ console.log(this.selectedEvent)
       if (result) {
         // If the user confirms, delete the event
         this.calendarService.deleteCalendarEvent(this.data.event.object.calanderScheduleEventId).subscribe(() => {
+          this.loginService.addTransaction("Deleted","Deleted event: "+this.data.event.object.description)
+
           console.log('Event deleted:', this.selectedEvent);
           this.dialogRef.close(true);
         }, error => {

@@ -197,6 +197,11 @@ namespace BioProSystem.Models
 
             return await query.FirstOrDefaultAsync();
         }
+        public async Task<List<AuditTrail>> GetAllTransactions()
+        {
+            List<AuditTrail> query = await _appDbContext.AuditTrails.Include(a=>a.SystemUser).ToListAsync();
+            return  query;
+        }
         public async Task<SystemOrder> GetSystemOrderByWorkflowId(int workflowtimelineId)
         {
             IQueryable<SystemOrder> query = _appDbContext.SystemOrders.Where(o => o.OrderWorkflowTimelineId == workflowtimelineId);
@@ -209,12 +214,12 @@ namespace BioProSystem.Models
         }
         public async Task<List<SystemOrder>> GetFinishedSystemWithoutDeliveriesOrders()
         {
-            IQueryable<SystemOrder> query = _appDbContext.SystemOrders.Where(o => o.OrderStatusId == 5).Include(o => o.Deliveries).Where(o => o.Deliveries.Count < 1);
+            IQueryable<SystemOrder> query = _appDbContext.SystemOrders.Where(o => o.OrderStatusId == 5).Include(o => o.Deliveries).Include(o=>o.TeethShades).Include(s => s.OrderStatus).Include(s => s.OrderWorkflowTimeline).ThenInclude(o => o.orderDirection).Include(o=>o.Dentist).Where(o => o.Deliveries.Count < 1);
             return await query.ToListAsync();
         }
         public async Task<List<SystemOrder>> GetOrdersInProgressAndNoTimeline()
         {
-            IQueryable<SystemOrder> query = _appDbContext.SystemOrders.Where(c => c.OrderStatusId == 4).Include(o => o.OrderWorkflowTimeline).Where(ow => ow.OrderWorkflowTimeline.TimelineId == null);
+            IQueryable<SystemOrder> query = _appDbContext.SystemOrders.Where(c => c.OrderStatusId == 4).Include(s => s.OrderStatus).Include(s => s.OrderWorkflowTimeline).ThenInclude(o => o.orderDirection).Include(s => s.Dentist).Include(s => s.OrderType).Include(o => o.MediaFiles).Where(ow => ow.OrderWorkflowTimeline.TimelineId == null);
             return await query.ToListAsync();
         }
         public async Task<bool> CheckSystemPatient(string medicalAidNumber)
@@ -251,29 +256,53 @@ namespace BioProSystem.Models
         {
             return await _appDbContext.SystemOrderSteps.Where(sos => sos.SystemOrderId == orderId).Include(sos => sos.Employee).ToListAsync();
         }
-        public async Task<SystemOrderViewModel> GetAllSystemOrdersInformationAsync(string orderId)
+
+        public async Task<IEnumerable<SystemOrder>> GetAllSystemOrdersInfoAsync()
         {
-            SystemOrderViewModel orderinformation = new SystemOrderViewModel();
-            orderinformation.systemOrder = GetSystemOrderByIdAsync(orderId).Result;
-            orderinformation.Dentist = GetDentistdByIdAsync(orderinformation.systemOrder.DentistId).Result;
-            orderinformation.Timeline = GetOrderTimelineByIdAsync(orderinformation.systemOrder.OrderWorkflowTimelineId).Result;
-            orderinformation.patient = GetPatientByMedicalAidNumber(orderinformation.systemOrder.PatientMedicalAidNumber).Result;
-            orderinformation.OrderStatus = GetOrderStatusByIdAsync(orderinformation.systemOrder.OrderStatusId).Result;
-            orderinformation.OrderType = GetOrderTypeByIdAsync(orderinformation.systemOrder.OrderTypeId).Result;
-            orderinformation.orderDirection = GetOrderDirectionById(orderinformation.Timeline.OrderDirectionId).Result;
-            if (orderinformation.systemOrder.SystemOrderSteps.Any())
-            {
-                orderinformation.SystemOrderSteps = await GetAllSystemOrderStepsAsync(orderId);
-            }
-            foreach (TeethShade teethShades in orderinformation.systemOrder.TeethShades)
-            {
-                orderinformation.Teethshades.Add(teethShades);
-            }
-            foreach (SelectedArea selectedArea in orderinformation.systemOrder.SelectedAreas)
-            {
-                orderinformation.SelectedAreas.Add(selectedArea);
-            }
-            return orderinformation;
+            var ordersWithPatients = await _appDbContext.SystemOrders
+                .Include(so => so.SystemOrderSteps)
+                    .ThenInclude(sos => sos.Employee)
+                .Include(so => so.Dentist)
+                    .ThenInclude(d => d.Patients)
+                .Include(so => so.OrderWorkflowTimeline)
+                    .ThenInclude(owt => owt.orderDirection)
+                .Include(so => so.OrderStatus)
+                .Include(so => so.TeethShades)
+                .Include(so => so.SelectedAreas)
+                .Include(so => so.OrderType)
+                .Include(so => so.MediaFiles)
+                .Select(so => new SystemOrder
+                {
+                    OrderId = so.OrderId,
+                    Dentist = new Dentist
+                    {
+                        DentistId = so.Dentist.DentistId,
+                        FirstName = so.Dentist.FirstName,
+                        LastName = so.Dentist.LastName,
+                        Patients = so.Dentist.Patients
+                            .Where(p => p.MedicalAidNumber == so.PatientMedicalAidNumber)
+                            .ToList()
+                    },
+                    OrderStatus = so.OrderStatus,
+                    TeethShades = so.TeethShades,
+                    SelectedAreas = so.SelectedAreas,
+                    OrderType = new OrderType
+                    {
+                        Description = so.OrderType.Description,
+                        OrderTypeId = so.OrderType.OrderTypeId,
+                    },
+                    MediaFiles = so.MediaFiles,
+                    SystemOrderSteps = so.SystemOrderSteps,
+                    OrderWorkflowTimeline = so.OrderWorkflowTimeline,
+                    EmergencyNumber = so.EmergencyNumber,
+                    PriorityLevel=so.PriorityLevel,
+                    SpecialRequirements = so.SpecialRequirements,
+                    DueDate = so.DueDate,
+                    OrderDate = so.DueDate,
+                })
+                .ToListAsync();
+
+            return ordersWithPatients;
         }
         public async Task<IEnumerable<Dentist>> GetDentistsAsync()
         {
@@ -306,6 +335,10 @@ namespace BioProSystem.Models
         public async Task<SystemOrder> GetSystemOrderByIdAsync(string orderId)
         {
             return await _appDbContext.SystemOrders.Include(s => s.TeethShades).Include(s => s.SelectedAreas).Include(s => s.SystemOrderSteps).Include(s => s.OrderWorkflowTimeline).Include(s => s.SystemOrderSteps).Include(s => s.MediaFiles).Include(o=>o.StockItems).ThenInclude(s=>s.Stock).FirstOrDefaultAsync(o => o.OrderId == orderId);
+        }
+        public async Task<SystemOrder> GetSystemOrderWithoutInfoByIdAsync(string orderId)
+        {
+            return await _appDbContext.SystemOrders.Include(o=>o.MediaFiles).FirstOrDefaultAsync(o => o.OrderId == orderId);
         }
         public async Task<OrderDirection> GetOrderDirectionById(int orderDirectionId)
         {

@@ -1,4 +1,3 @@
-/* Apply global font */
 body {
   margin: 0;
   padding: 0;
@@ -7,7 +6,7 @@ body {
   background-size: 400% 400%;
   animation: gradientAnimation 20s ease infinite;
   color: #333; /* Dark text color */
-  overflow: auto; /* Allow scrolling */
+  
 }
 
 @keyframes gradientAnimation {
@@ -15,9 +14,12 @@ body {
   50% { background-position: 100% 50%; }
   100% { background-position: 0% 50%; }
 }
-
+html{
+  overflow-x: auto;
+}
 .nav-background {
-  position: relative;
+  position: fixed;
+  top: 0;
   width: 100%;
   height: 75px;
   display: flex;
@@ -26,34 +28,24 @@ body {
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
-  overflow: hidden;
-
+  z-index: 1000;
 }
 
 .nav-toolbar {
   width: 100%;
   background: rgba(255, 255, 255, 0.8);
   color: #0a0a0a;
-  position: relative;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1001;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  border-radius: 8px;
+  border-radius: 0; /* Remove the border-radius for a consistent fixed header */
   padding: 0 20px;
-  height: 100%;
+  height: 75px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  transition: transform 0.3s ease, opacity 0.3s ease;
-}
-
-.nav-toolbar:hover {
-  transform: scale(1.02);
-  opacity: 0.9;
-}
-
-.nav-toolbar mat-toolbar-row {
-  display: flex;
-  align-items: center;
-  width: 100%;
 }
 
 .company-logo {
@@ -72,6 +64,8 @@ body {
 .example-container {
   height: 100%;
   background-color: #f4f6f8;
+  padding-top: 75px; /* Adjust padding to avoid content overlapping with fixed header */
+  
 }
 
 .example-sidenav {
@@ -79,68 +73,15 @@ body {
   background-color: #ffffff;
   color: #000000;
   padding: 10px;
-}
-
-.nav-list {
-  display: flex;
-  flex-direction: column;
-}
-
-.nav-item {
-  display: flex;
-  align-items: center;
-  padding: 10px 15px;
-  margin: 5px 0;
-  color: #333333;
-  transition: background-color 0.3s, color 0.3s;
-  text-decoration: none;
-  border-radius: 4px;
-}
-
-.main-nav {
-  background-color: #f0f4f8;
-  font-weight: bold;
-}
-
-.sub-nav {
-  background-color: #ffffff;
-  padding-left: 30px;
-}
-
-.nav-item:hover {
-  background-color: #e3f2fd;
-  color: #007bff;
-}
-
-.nav-header {
-  display: flex;
-  align-items: center;
-  padding: 10px 15px;
-  margin: 10px 0 5px;
-  background-color: #f9fafc;
-  border-radius: 4px;
-  color: #333333;
-  cursor: pointer;
-}
-
-.nav-section {
-  display: flex;
-  flex-direction: column;
-}
-
-.mat-icon {
-  margin-right: 10px;
-  color: #3b3b3b;
-}
-
-.nav-text {
-  font-weight: 500;
-  color: #333333;
+  position: fixed;
+  top: 75px; /* Align the sidenav below the fixed header */
+  bottom: 0;
 }
 
 .mat-sidenav-content {
+  margin-left: 0px; /* Offset content for fixed sidenav */
   background-color: #f4f6f8;
-  padding: 20px;
+  padding: 25px;
 }
 
 .nav-expansion-panel {
@@ -164,4 +105,46 @@ body {
   opacity: 0.7;
   filter: blur(8px);
 }
+.content-container {
+  padding: 20px;
+  transition: margin 0.3s ease;
+}
+
+.mat-nav-list {
+  padding-left: 0; /* Remove default padding from the list */
+}
+
+.mat-list-item, 
+.mat-expansion-panel-header {
+  padding-left: 17px; /* Align the main headings with Home */
+}
+
+.mat-expansion-panel-header.mat-expanded .mat-expansion-panel-header-title {
+  padding-left: 22px; /* Ensure expanded panel headers are aligned */
+}
+
+.sub-nav-link {
+  padding-left: 40px; /* Add padding to indent nested items */
+}
+
+.nav-text {
+  margin-left: 7px; /* Adjust the alignment of the text relative to icons */
+}
+
+.mat-expansion-panel-header {
+  display: flex;
+  align-items: center;
+}
+
+
+// /* When the sidenav is open */
+// mat-sidenav-container.sidenav-open .content-container {
+//   margin-left: 250px; /* Adjust the margin according to the sidenav width */
+// }
+
+// /* When the sidenav is closed */
+// mat-sidenav-container.sidenav-closed .content-container {
+//   margin-left: 0;
+//   width: 100%;
+// }
 

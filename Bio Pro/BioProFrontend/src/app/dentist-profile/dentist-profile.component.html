@@ -15,8 +15,8 @@
             <div class="col-md-12 d-flex justify-content-between align-items-center mb-3">
                 <div class="col-md-6 d-flex align-items-center">
                     <i class="material-icons mr-2">search</i>
-                    <mat-form-field class="search-field" style="flex-grow: 1;">
-                        <input matInput [(ngModel)]="searchQuery" (ngModelChange)="onSearchChange($event)" placeholder="Search Dentist..." class="w-100 mr-2" />
+                    <mat-form-field class="search-field">
+                        <input matInput [(ngModel)]="searchQuery" (ngModelChange)="onSearchChange($event)" placeholder="Search Dentist..." class="w-100" />
                     </mat-form-field>
                     <button (click)="search()" class="btn btn-outline-primary rounded-btn">Search</button>
                 </div>
@@ -25,40 +25,47 @@
                 </div>
             </div>
         </div>
-        <div class="row" *ngIf="noResultsFound">
-            <div class="col-md-12">
-                <div >
-                    No dentists found for the given search criteria.
-                </div>
-            </div>
+        <div *ngIf="noResultsFound" class="alert-message no-dentists">
+            <span class="icon">&#9888;</span> No dentists found for the given search criteria.
         </div>
-        <div class="row" *ngIf="!noResultsFound">
-            <div class="col-md-12">
-                <div class="card-container">
-                    <div class="card mb-3 example-card" *ngFor="let dentist of filteredDentists">
-                        <div class="card-body">
-                            <div class="card-header">
-                                <i class="material-icons example-header-image">local_hospital</i>
-                                <div>
-                                    <h5 class="card-title">{{dentist.firstName}} {{dentist.lastName}}</h5>
-                                </div>
+        <div *ngIf="!noResultsFound">
+            <div class="card-container">
+                <div class="card mb-3" *ngFor="let dentist of paginatedDentists">
+                    <div class="card-body">
+                        <div class="card-header">
+                            <i class="material-icons">local_hospital</i>
+                            <div>
+                                <h5 class="card-title">{{dentist.firstName}} {{dentist.lastName}}</h5>
                             </div>
-                            <p class="card-text"><strong>Contact Detail:</strong> {{dentist.contactDetail}}</p>
-                            <p class="card-text"><strong>Address:</strong> {{dentist.address}}</p>
-                            <button (click)="openEditDialog(dentist)" class="btn btn-secondary rounded-btn mr-2">Edit</button>
-                            <button (click)="deleteDentist(dentist)" class="btn btn-outline-danger rounded-btn">Delete</button>
                         </div>
+                        <p class="card-text"><strong>Contact Detail:</strong> {{dentist.contactDetail}}</p>
+                        <p class="card-text"><strong>Address:</strong> {{dentist.address}}</p>
+                        <button (click)="openEditDialog(dentist)" class="btn btn-secondary rounded-btn mr-2">Edit</button>
+                        <button (click)="deleteDentist(dentist)" class="btn btn-outline-danger rounded-btn">Delete</button>
                     </div>
                 </div>
             </div>
         </div>
+        
+        <!-- Pagination controls -->
+        <div class="row">
+            <div class="col-md-12 d-flex justify-content-between align-items-center pagination">
+                <button class="btn btn-outline-secondary" (click)="previousPage()" [disabled]="currentPage === 1">
+                    Previous
+                </button>
+                <span>Page {{currentPage}} of {{totalPages}}</span>
+                <button class="btn btn-outline-secondary" (click)="nextPage()" [disabled]="currentPage === totalPages">
+                    Next
+                </button>
+            </div>
+        </div>
     </div>
-  
+    <div class="help-button-container">
+        <button mat-button [routerLink]="['/help-dentist']">
+            <mat-icon>live_help</mat-icon>
+            <span>Help</span>
+        </button>
+    </div>
 </body>
-<div class="help-button-container">
-    <button mat-button [routerLink]="['/help-dentist']" >
-      <mat-icon>live_help</mat-icon>
-      <span>Help</span>
-    </button>
-  </div>
 </html>
+

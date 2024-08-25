@@ -4,8 +4,10 @@ body {
     animation: gradientAnimation 20s ease infinite;
     font-family: 'Roboto', sans-serif;
     color: #333;
-    padding: 20px;
-    overflow-y: auto; /* Allow vertical scrolling */
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    overflow-x: hidden; /* Prevent horizontal scrolling */
 }
 
 @keyframes gradientAnimation {
@@ -14,13 +16,45 @@ body {
     100% { background-position: 0% 50%; }
 }
 
-.container {
+.main-container {
+    display: flex;
+    min-height: 100vh;
+}
+
+.sidenav-container {
+    display: flex;
+    height: 100%;
+}
+
+.sidenav {
+    width: 280px;
+    background-color: #ffffff;
+    color: #000000;
+    padding: 10px;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    overflow-y: auto; /* Allow the sidenav to scroll if needed */
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.sidenav-content {
+    margin-left: 280px;
+    flex-grow: 1;
+    padding: 20px;
+    height: auto; /* Ensure this section expands with content */
+    box-sizing: border-box;
+}
+
+.test-container {
     background-color: #fff;
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     max-width: 600px;
     margin: 0 auto;
+    margin-bottom: 20px; /* Add some margin at the bottom to avoid touching the bottom of the page */
 }
 
 h1 {
@@ -38,7 +72,7 @@ mat-form-field {
 }
 
 .mat-form-field-appearance-outline .mat-form-field-flex {
-    background-color: inherit; /* Inherit background color */
+    background-color: inherit;
 }
 
 .mat-form-field-appearance-outline .mat-form-field-underline {
@@ -91,6 +125,15 @@ mat-label i.material-icons {
     @media (max-width: 480px) {
         margin-right: 4px;
     }
+}
+
+.mat-raised-button[color="primary"] {
+    background-color: #3c54b4;
+    color: white;
+}
+  
+.mat-raised-button[color="primary"]:hover {
+    background-color: #0056b3;
 }
 
 mat-label {

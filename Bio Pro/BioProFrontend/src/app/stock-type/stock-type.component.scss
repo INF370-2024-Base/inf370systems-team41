@@ -1,14 +1,22 @@
 /* Body styles */
 body {
-    background: linear-gradient(120deg, #aed9e0, #c2e2f3, #eaf1fa, #c2e2f3, #aed9e0);
-    background-size: 400% 400%;
-    animation: gradientAnimation 20s ease infinite;
-    font-family: 'Roboto', sans-serif;
-    color: #333;
-    padding: 20px;
-    overflow-x: hidden;
-    overflow-y: auto;
-  }
+  background: linear-gradient(120deg, #aed9e0, #c2e2f3, #eaf1fa, #c2e2f3, #aed9e0);
+  background-size: 400% 400%;
+  animation: gradientAnimation 20s ease infinite;
+  font-family: 'Roboto', sans-serif;
+  color: #333;
+  margin: 0;
+  padding: 0;
+  min-height: 100vh; /* Ensure body covers the full viewport height */
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+
+html, body {
+  height: 100%;
+}
 
   /* Animated background gradients */
   @keyframes gradientAnimation {
@@ -17,10 +25,11 @@ body {
     100% { background-position: 0% 50%; }
   }
 
-  /* Container styles */
   .container {
+    flex: 1; /* Allow the container to grow and fill available space */
     max-width: 1200px;
     margin: 0 auto;
+    padding-bottom: 20px;
   }
 
   /* Row styles */
@@ -80,26 +89,27 @@ body {
     margin-right: 10px;
   }
 
-  .rounded-btn {
-    background-color: #007bff;
+  a.btn.btn-primary.rounded-btn {
+    background-color: #3c54b4;
     color: #fff;
     border-radius: 20px;
     padding: 10px 30px;
     text-decoration: none;
+    margin-right: auto;
   }
-
-  .rounded-btn:hover {
+  
+  a.btn.btn-primary.rounded-btn:hover {
     background-color: #0056b3;
   }
-
   /* Card container styles */
   .card-container {
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
     justify-content: center;
+    width: 100%;
+    flex: 1; /* Allow the card container to fill remaining space */
   }
-
   /* Card styles */
   .card {
     width: calc(33.333% - 20px);

@@ -23,14 +23,15 @@ import { HttpClient } from '@angular/common/http';
 })
 export class HomeComponent implements OnInit {
   weather: any;
-  dentalTips: string[] = [
-    'BRUSH YOUR TEETH TWICE A DAY',
-'FLOSS DAILY TO REMOVE PLAQUE',
-'LIMIT SUGARY DRINKS AND SNACKS',
-'VISIT YOUR DENTIST REGULARLY',
-'USE FLUORIDE TOOTHPASTE'
+  frequentlyVisitedPages: { name: string; route: string; icon: string }[] = [
+    { name: 'NEW ORDER', route: '/addOrder', icon: 'assignment' },
+    { name: 'ALL ORDERS', route: '/orders', icon: 'folder_open' },
+    { name: 'VIEW CALENDAR', route: '/calendar', icon: 'calendar_today' },
+    { name: 'DELIVERIES MANAGEMENT', route: '/deliveries', icon: 'delivery_dining' },
+    { name: 'STOCK MANAGEMENT', route: '/pageStock', icon: 'stock' },
+    { name: 'REPORTS', route: '/reports', icon: 'analytics' },
   ];
-
+  
   constructor(private http: HttpClient) {}
 
   ngOnInit(): void {
@@ -43,5 +44,21 @@ export class HomeComponent implements OnInit {
     this.http
       .get(`http://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${city}`)
       .subscribe((data) => (this.weather = data));
+  }
+  
+  openModal(): void {
+    // Logic to open modal
+    const modal = document.getElementById("thankYouModal");
+    if (modal) {
+      modal.style.display = "block";
+    }
+  }
+
+  closeModal(): void {
+    // Logic to close modal
+    const modal = document.getElementById("thankYouModal");
+    if (modal) {
+      modal.style.display = "none";
+    }
   }
 }

@@ -6,6 +6,7 @@ import { EditStockTypeComponent } from '../edit-stock-type/edit-stock-type.compo
 import { AddStockTypeComponent } from '../add-stock-type/add-stock-type.component';
 import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { DataService } from '../services/login.service';
 
 @Component({
   selector: 'app-stock-type',
@@ -15,7 +16,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class StockTypeComponent implements OnInit {
 
 
-    constructor(private stockService:StockServices,private dialog: MatDialog,private snackBar:MatSnackBar) { }
+    constructor(private stockService:StockServices,private dialog: MatDialog,private snackBar:MatSnackBar,private loginService:DataService) { }
   
     ngOnInit(): void {
   this.GetAllStockTypes();
@@ -67,6 +68,7 @@ export class StockTypeComponent implements OnInit {
       confirmdialog.afterClosed().subscribe(result => {
         if (result) {
           this.stockService.DeleteStockType(id).subscribe(() => {
+            this.loginService.addTransaction("Deleted","Deleted stock type with id: "+id)
             this.GetAllStockTypes();
             console.log('Deleted type');
             this.snackBar.open('Deleted type successfully', 'Dismiss', {

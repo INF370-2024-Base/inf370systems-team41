@@ -4,6 +4,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { EmployeeService } from '../services/employee.service';
 import { EditEmployee } from '../shared/EditEmployee';
 import { HttpErrorResponse } from '@angular/common/http';
+import { DataService } from '../services/login.service';
 
 @Component({
   selector: 'app-edit-employee-dialog',
@@ -20,7 +21,7 @@ export class EditEmployeeDialogComponent implements OnInit {
     public dialogRef: MatDialogRef<EditEmployeeDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private fb: FormBuilder,
-    private employeeService: EmployeeService
+    private employeeService: EmployeeService,private loginService: DataService
   ) {
     this.editEmployeeForm = this.fb.group({
       jobTitleId: ['', Validators.required],
@@ -71,6 +72,7 @@ export class EditEmployeeDialogComponent implements OnInit {
     this.isLoading = true;
     this.employeeService.editEmployee(updatedEmployee).subscribe(response => {
       console.log('Employee details updated successfully:', response);
+      this.loginService.addTransaction("Put","User edited employe with id:"+updatedEmployee.EmployeeId)
       this.dialogRef.close(response);
     }, (error: HttpErrorResponse) => {
       console.error('Error saving employee:', error);

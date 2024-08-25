@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import {  ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { OpenOrdersComponent } from './open-orders/open-orders.component';
 import { Component, ViewChild } from '@angular/core';
@@ -101,7 +101,13 @@ import { ConfirmDeleteDentistComponent } from './confirm-delete-dentist/confirm-
 import { HelpUserComponent } from './help-user/help-user.component';
 import { ConfirmDeleteUserComponent } from './confirm-delete-user/confirm-delete-user.component';
 import { ConfirmDeleteDailyHourComponent } from './confirm-delete-daily-hour/confirm-delete-daily-hour.component';
+import { SettingsComponent } from './settings/settings.component';
+import { AuditTrailComponent } from './audit-trail/audit-trail.component';
+import { ErrorInterceptor } from './services/HttpInterceptor';
+import { LoadingService } from './services/loading.service';
+import { LoadingInterceptor } from './services/loading.interceptor';
 
+import { NgxPaginationModule } from 'ngx-pagination';
 
 @NgModule({
   declarations: [
@@ -124,7 +130,7 @@ import { ConfirmDeleteDailyHourComponent } from './confirm-delete-daily-hour/con
     , OrdersAwaitingDentalDesignComponent, DentalDesignApprovalComponent, EmployeeOrdersAndStepsComponent,CalendarComponent, SearchBarComponent, EventModalComponent, ProcededuralTimelineViewComponent, AddEventModalComponent, StockUsedComponent, HelpComponent,HelpStockComponent, HelpEmployeesComponent, HelpDentistComponent, DentistEditDialogComponent, HelpDentistSearchComponent, HelpDentistAddComponent, HelpDentistEditComponent, HelpDentistDeleteComponent, HelpEmployeeAddComponent, HelpEmployeeEditComponent, HelpEmployeeDeleteComponent, HelpEmployeeSearchComponent, HelpEmployeeHourComponent, HelpEmploueeHourDeleteComponent, HelpStockAddComponent, HelpStockCaptureComponent, HelpStockWriteoffComponent, HelpStockSearchComponent,
     ReportsComponent,
     CaptureEmployeeHoursComponent,LoginComponent,EditOrderModalComponent, AddUserComponent, AddProceduralTimeline, DeliveriesComponent, AddDeliveryComponent, HomeComponent, TestingBackendComponent, ConfirmationDialogComponent, OrdersAwaitingDentalDesignComponent, DentalDesignApprovalComponent, HelpComponent, HelpOrdersComponent, HelpTimelineOfOrdersComponent, HelpDeliveriesComponent, StockCategoryComponent, EditStockCategoryComponent, StockTypeComponent, EditStockTypeComponent, AddStockTypeComponent, AddStockCategoryComponent, UpdatePasswordComponent, ResetPasswordComponent, ResetUserPasswordComponent
-    ,CaptureEmployeeHoursComponent,LoginComponent,EditOrderModalComponent, AddUserComponent, AddProceduralTimeline, DeliveriesComponent, AddDeliveryComponent, HomeComponent, TestingBackendComponent, ConfirmationDialogComponent, OrdersAwaitingDentalDesignComponent, DentalDesignApprovalComponent, HelpComponent, HelpOrdersComponent, HelpTimelineOfOrdersComponent, HelpDeliveriesComponent, ConfirmDeleteEmployeeComponent, ConfirmDeleteDentistComponent, HelpUserComponent, ConfirmDeleteUserComponent, ConfirmDeleteDailyHourComponent
+    ,CaptureEmployeeHoursComponent,LoginComponent,EditOrderModalComponent, AddUserComponent, AddProceduralTimeline, DeliveriesComponent, AddDeliveryComponent, HomeComponent, TestingBackendComponent, ConfirmationDialogComponent, OrdersAwaitingDentalDesignComponent, DentalDesignApprovalComponent, HelpComponent, HelpOrdersComponent, HelpTimelineOfOrdersComponent, HelpDeliveriesComponent, ConfirmDeleteEmployeeComponent, ConfirmDeleteDentistComponent, HelpUserComponent, ConfirmDeleteUserComponent, ConfirmDeleteDailyHourComponent, SettingsComponent, AuditTrailComponent
   ],
   imports: [
     BrowserModule,
@@ -132,7 +138,7 @@ import { ConfirmDeleteDailyHourComponent } from './confirm-delete-daily-hour/con
     ReactiveFormsModule,
     HttpClientModule,
     FormsModule,
-   
+    NgxPaginationModule,
     BrowserAnimationsModule,
     MaterialModule,
     MatSnackBarModule,
@@ -149,7 +155,8 @@ import { ConfirmDeleteDailyHourComponent } from './confirm-delete-daily-hour/con
     MatExpansionModule,
     MatSelectModule
   ],
-  providers: [DatePipe],
+  providers: [DatePipe,{ provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },LoadingService,
+    { provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true }],
   bootstrap: [AppComponent],
   exports: [CalendarComponent]
 })

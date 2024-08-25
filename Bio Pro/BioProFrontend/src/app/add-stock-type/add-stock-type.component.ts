@@ -3,6 +3,7 @@ import { StockServices } from '../services/stock.service';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { DataService } from '../services/login.service';
 
 @Component({
   selector: 'app-add-stock-type',
@@ -19,7 +20,7 @@ export class AddStockTypeComponent implements OnInit {
     private stockService: StockServices,
     private snackBar: MatSnackBar,
     private dialog: MatDialog,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,private loginService:DataService
   ) {
     this.addForm = this.formBuilder.group({
       Description: ['', Validators.required],
@@ -35,6 +36,7 @@ export class AddStockTypeComponent implements OnInit {
       // Call the service to save the updated category
       this.stockService.CreateStockType(updatedType).subscribe(
         (response) => {
+          this.loginService.addTransaction("Post","Created stock type: "+updatedType.Description)
           this.snackBar.open('Stock category updated successfully', 'Close', {
             duration: 2000,
           });

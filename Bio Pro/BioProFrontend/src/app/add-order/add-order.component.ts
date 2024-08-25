@@ -10,6 +10,7 @@ import { PhoneChecker } from '../validators/Validators';
 import { error } from 'console';
 import { DatePipe } from '@angular/common';
 import { DomSanitizer } from '@angular/platform-browser';
+import { DataService } from '../services/login.service';
 
 @Component({
   selector: 'app-add-order',
@@ -46,7 +47,7 @@ export class AddOrderComponent implements OnInit {
     private dataService: OrderService,
     private httpClient: HttpClient,
     private router: Router,
-    private formBuilder: FormBuilder,private snackBar:MatSnackBar,private datePipe: DatePipe,private sanitizer:DomSanitizer
+    private formBuilder: FormBuilder,private snackBar:MatSnackBar,private datePipe: DatePipe,private sanitizer:DomSanitizer,private loginService:DataService
   ) {
     this.addForm = this.formBuilder.group({
       OrderId: ['', [Validators.required,Validators.maxLength(7),Validators.minLength(7)]],
@@ -76,6 +77,7 @@ export class AddOrderComponent implements OnInit {
     this.loadOrderTypes();
     this.loadOrderStatuses();
     this.loadTeethShades();
+    
     console.log(this.areas)
   }
   selectedAreas: number[] = [];
@@ -153,9 +155,20 @@ export class AddOrderComponent implements OnInit {
     // Update your form logic here with selectedAreas list
     console.log('Selected areas:', this.selectedAreas); // Example usage
   }
-  
+  patchDueDate(): void {
+    const dueDate = this.addDays(new Date(), 14);
+    this.addForm.patchValue({ DueDate: this.formatDate(dueDate) });
+}
+
+addDays(date: Date, days: number): Date {
+    const result = new Date(date);
+    result.setDate(result.getDate() + days);
+    return result;
+}
   
   loadDentists(): void {
+    this.addForm.patchValue({ OrderDate: this.formatDate(new Date()) });
+    this.patchDueDate()
     this.dataService.getDentists().subscribe(
       (data: any[]) => {
         this.dentists = data;
@@ -167,7 +180,12 @@ export class AddOrderComponent implements OnInit {
       }
     );
   }
-
+  formatDate(date: Date): string {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+}
   loadTeethShades(): void {
     this.dataService.getTeethShades().subscribe(
       (data: any[]) => {
@@ -406,6 +424,7 @@ export class AddOrderComponent implements OnInit {
               console.log(viewModel);
               this.dataService.addOrder(viewModel).subscribe(
                 (result) => {
+                  this.loginService.addTransaction("Post","Created an order. Order ID:"+viewModel.OrderId)
                   console.log('SystemOrder added successfully!');
                   const dueDate = new Date(viewModel.DueDate);
                   const adjustedDueDate = new Date(dueDate);

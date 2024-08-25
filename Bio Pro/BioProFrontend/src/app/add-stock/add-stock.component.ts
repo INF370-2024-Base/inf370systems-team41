@@ -5,6 +5,7 @@ import { AddStock } from '../shared/Stock';
 import { HttpErrorResponse } from '@angular/common/http';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import { DataService } from '../services/login.service';
 
 @Component({
   selector: 'app-add-stock',
@@ -14,13 +15,17 @@ import { Router } from '@angular/router';
 export class AddStockComponent implements OnInit {
   captureStockForm: FormGroup;
   StockCategories: any[] = [];
+  StockTypes: any[] = [];
   StockSuppliers: any[] = [];
+  Categories:any[]=[]
+  selectedCategory: string = '';
+  selectedStockType:string="";
   formErrors = {
     maxGreaterThanMin: false,
     nonNegative: false
   };
 
-  constructor(private stockService: StockServices, private fb: FormBuilder, private snackBar: MatSnackBar, private router: Router) {
+  constructor(private stockService: StockServices, private fb: FormBuilder, private snackBar: MatSnackBar, private router: Router,private loginService:DataService) {
     this.captureStockForm = this.fb.group({
       stockCategoryId: ['', Validators.required],
       supplierId: ['', Validators.required],
@@ -61,6 +66,7 @@ export class AddStockComponent implements OnInit {
     this.stockService.getAllStockCategories().subscribe(
       categories => {
         this.StockCategories = categories;
+        this.Categories=categories
       },
       (error: HttpErrorResponse) => {
         console.error('Error fetching stock categories:', error);
@@ -75,6 +81,22 @@ export class AddStockComponent implements OnInit {
         console.error('Error fetching stock suppliers:', error);
       }
     );
+
+        this.stockService.getAllStockTypes().subscribe(
+          (typeData: any[]) => {
+            this.StockTypes = typeData.filter(type => type.stockCategories && type.stockCategories.length > 0);
+            console.log(this.StockTypes)
+          },
+          (error) => {
+            console.error('Error fetching stock types:', error);
+          }
+        );
+      
+  }
+  onStockTypeChange(event: any): void {
+    const selectedStockType = event.value;
+    this.Categories = this.StockCategories.filter(category => category.stockTypeId === +selectedStockType || selectedStockType === '');
+    this.selectedCategory = '';
   }
 
   captureStock(): void {
@@ -82,6 +104,7 @@ export class AddStockComponent implements OnInit {
       const captureStockData: AddStock = this.captureStockForm.value;
       this.stockService.addStock(captureStockData).subscribe(
         response => {
+          this.loginService.addTransaction("Post","Added stock : "+captureStockData.stockName)
           console.log('Stock captured successfully', response);
           this.snackBar.open('Successfully added stock item.', 'Close', {
             duration: 3000,

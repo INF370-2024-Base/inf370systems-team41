@@ -2,6 +2,7 @@
 <html lang="en">
 
 <head>
+    ead>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User Management</title>
@@ -14,14 +15,14 @@
 </head>
 
 <body style="background: linear-gradient(120deg, #aed9e0, #c2e2f3, #eaf1fa, #c2e2f3, #aed9e0); background-size: 400% 400%; animation: gradientAnimation 20s ease infinite; font-family: 'Roboto', sans-serif; color: #333; padding: 20px; overflow-x: hidden; overflow-y: auto;">
-    <h1 style="font-size: 48px; color: #4d4a4a; text-align: center; text-transform: uppercase; letter-spacing: 3px; margin-bottom: 24px; text-shadow: 2px 2px 4px rgba(124, 124, 124, 0.5);">USERS</h1>
+    <h1 style="font-size: 48px; color: #4d4a4a; text-align: center; text-transform: uppercase; letter-spacing: 3px; margin-bottom: 24px; text-shadow: 2px 2px 4px rgba(124, 124, 124, 0.5);">USER</h1>
     <div class="container">
         <div class="row">
             <div class="col-md-12 d-flex justify-content-between align-items-center mb-3">
                 <div class="col-md-6 d-flex align-items-center">
-                    <i class="material-icons mr-2">search</i>
-                    <mat-form-field class="search-field" style="flex-grow: 1;">
-                        <input matInput [(ngModel)]="searchQuery" (ngModelChange)="onOrderIdChange($event)" placeholder="Search User..." class="w-100 mr-2" />
+                    <mat-form-field class="search-field">
+                        <mat-icon matPrefix>search</mat-icon>
+                        <input matInput [formControl]="searchControl" placeholder="Search User..." class="w-100 mr-2">
                     </mat-form-field>
                     <button (click)="searchEmployees()" class="btn btn-outline-primary rounded-btn">Search</button>
                 </div>
@@ -30,38 +31,58 @@
                 </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-md-12">
-                <div class="card-container">
-                    <div class="card mb-3 example-card" *ngFor="let user of users">
-                        <div class="card-body">
-                            <div class="card-header">
-                                <i class="material-icons example-header-image">person</i>
-                                <div>
-                                    <h5 class="card-title">{{user.name}} {{user.surname}}</h5>
-                                </div>
-                            </div>
-                            <p class="card-text"><strong>Email:</strong> {{user.email}}</p>
-                            <p class="card-text"><strong>Phone Number:</strong> {{user.phoneNumber}}</p>
-                            <p class="card-text"><strong>Access Level:</strong> {{user.roles}}</p>
-                            <button (click)="editEmployee(user)" class="btn btn-secondary rounded-btn mr-2">Edit</button>
-                            <button (click)="deleteEmployee(user)" class="btn btn-outline-danger rounded-btn">Delete</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+
+       <!-- Loading indicator -->
+       <div *ngIf="loading" class="d-flex justify-content-center align-items-center">
+        <div class="spinner-border" role="status">
+            <span class="sr-only">Loading...</span>
         </div>
     </div>
-   
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.2/angular.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.1.12/angular-material.min.js"></script>
-  </body>
 
-  <div class="help-button-container">
-    <button mat-button [routerLink]="['/help-user']" >
-      <mat-icon>live_help</mat-icon>
-      <span>Help</span>
+    <!-- No users found message -->
+    <div *ngIf="!loading && paginatedUsers.length === 0" class="no-users alert-message">
+        <span class="icon">&#9888;</span> No users found.
+    </div>
+
+    <!-- User cards displayed when users are found -->
+    <div *ngIf="!loading && paginatedUsers.length > 0" class="card-container">
+        <div *ngFor="let user of paginatedUsers" class="card">
+            <div class="card-body">
+                <div class="card-header">
+                    <i class="material-icons example-header-image">person</i>
+                    <div>
+                        <h5 class="card-title">{{user.name}} {{user.surname}}</h5>
+                    </div>
+                </div>
+                <p class="card-text"><strong>Email:</strong> {{user.email}}</p>
+                <p class="card-text"><strong>Phone Number:</strong> {{user.phoneNumber}}</p>
+                <p class="card-text"><strong>Access Level:</strong> {{user.roles}}</p>
+                <button (click)="editEmployee(user)" class="btn btn-secondary rounded-btn mr-2">Edit</button>
+                <button (click)="deleteEmployee(user)" class="btn btn-outline-danger rounded-btn">Revoke User</button>
+            </div>
+        </div>
+
+     
+    </div>
+    
+    <!-- Pagination controls -->
+    <div class="row">
+        <div class="col-md-12 d-flex justify-content-between align-items-center pagination">
+            <button class="btn btn-outline-secondary" (click)="previousPage()" [disabled]="currentPage === 1">
+                Previous
+            </button>
+            <span>Page {{currentPage}} of {{totalPages}}</span>
+            <button class="btn btn-outline-secondary" (click)="nextPage()" [disabled]="currentPage === totalPages">
+                Next
+            </button>
+        </div>
+    </div>
+</div>
+<div class="help-button-container">
+    <button mat-button [routerLink]="['/help-user']">
+        <mat-icon>live_help</mat-icon>
+        <span>Help</span>
     </button>
-  </div>
-  </html>
-  
+</div>
+</body>
+</html>

@@ -13,6 +13,7 @@ namespace BioProSystem.Models
         Task<List<SystemOrder>> GetOrdersAwaitingDentalDesign();
         Task<List<Employee>> GetEmployeesWithJobTitleId(int jobTitileId, string jobTitleName = "");
         Task<SystemUser> GetsystemUserAsync(string systemUserEmail);
+        Task<List<AuditTrail>> GetAllTransactions();
         Task<List<SystemUser>> GetAllSystemUserActiveAsync();
         Task<IEnumerable<Dentist>> GetDentistsAsync(); // Method to fetch all dentists
         Task<IEnumerable<MedicalAid>> GetMedicalAidsAsync(); // Method to fetch all medical aids
@@ -21,6 +22,7 @@ namespace BioProSystem.Models
         Task<IEnumerable<SystemOrder>> GetAllSystemOrdersAsync();
         Task<IEnumerable<SelectedArea>> GetSelectedAreasAsync();
         Task<SystemOrder> GetSystemOrderByIdAsync(string orderId);
+        Task<SystemOrder> GetSystemOrderWithoutInfoByIdAsync(string orderId);
         Task<bool> CheckSystemPatient(string medicalAidNumber);
         Task<Patient> GetPatientByMedicalAidNumber(string medicalAidNumber);
         Task<MedicalAid> GetMedicalAidByMedicalAidId(int medicalAidId);
@@ -40,7 +42,7 @@ namespace BioProSystem.Models
         Task<MedicalAid> GetMedicalAidByIdAsync(int medicalAidId);
 
         Task<Dentist> GetDentistdByIdAsync(int dentistId);
-        Task<SystemOrderViewModel> GetAllSystemOrdersInformationAsync(string orderId);
+        Task<IEnumerable<SystemOrder>> GetAllSystemOrdersInfoAsync();
         Task<List<SystemOrder>> GetSystemOrdersWithOrderStatusID(int orderStatusId);
         Task<List<Employee>> AssignAvailableTechnicians(int orderDirectionId, string systemOrderId);
         Task<OrderWorkflowTimeline> GetOrdertimeFlowBySystemOrderId(string systemOrderId);

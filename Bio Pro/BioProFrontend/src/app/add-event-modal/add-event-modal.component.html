@@ -1,17 +1,17 @@
 <h2 mat-dialog-title>Event Details</h2>
 <mat-dialog-content class="mat-dialog-content-expanded">
-  <form #eventForm="ngForm" class="form-container" [formGroup]="addForm">
-    <mat-form-field appearance="fill" class="form-field">
+  <form #eventForm="ngForm" class="form-container" [formGroup]="addForm" style="width: 100%;">
+    <mat-form-field appearance="fill" class="form-field" style="width: 100%;">
       <mat-label><i class="material-icons">event_note</i> Title</mat-label>
       <input matInput placeholder="Title" [(ngModel)]="addEvent.Description" name="title" formControlName="Description">
       <mat-error *ngIf="addEvent.Description===' ' ">Description is required</mat-error>
     </mat-form-field>
-    <mat-form-field appearance="fill" class="form-field">
+    <mat-form-field appearance="fill" class="form-field" style="width: 100%;">
       <mat-label><i class="material-icons">info</i> Information</mat-label>
       <input matInput placeholder="Additional information" [(ngModel)]="addEvent.EventInformation" formControlName="EventInformation">
       <mat-error *ngIf="addEvent.EventInformation===' ' ">Event Information is required</mat-error>
     </mat-form-field>
-    <mat-form-field appearance="fill" class="form-field">
+    <mat-form-field appearance="fill" class="form-field" style="width: 100%;">
       <mat-label><i class="material-icons">date_range</i> Start Date</mat-label>
       <div>
         <input
@@ -27,7 +27,7 @@
         <mat-datepicker #startPicker></mat-datepicker>
       </div>
     </mat-form-field>
-    <mat-form-field appearance="fill" class="form-field">
+    <mat-form-field appearance="fill" class="form-field" style="width: 100%;">
       <mat-label><i class="material-icons">access_time</i> Time</mat-label>
       <input
         matInput

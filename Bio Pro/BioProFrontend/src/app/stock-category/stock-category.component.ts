@@ -6,6 +6,7 @@ import { EditStockCategoryComponent } from '../edit-stock-category/edit-stock-ca
 import { AddStockCategoryComponent } from '../add-stock-category/add-stock-category.component';
 import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { DataService } from '../services/login.service';
 
 @Component({
   selector: 'app-stock-category',
@@ -15,7 +16,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class StockCategoryComponent implements OnInit {
   
 
-  constructor(private stockService:StockServices,private dialog: MatDialog,private snackBar:MatSnackBar) { }
+  constructor(private stockService:StockServices,private dialog: MatDialog,private snackBar:MatSnackBar,private loginService:DataService) { }
 
   ngOnInit(): void {
 this.GetAllStockCategories();
@@ -69,6 +70,7 @@ this.GetAllStockCategories();
       if (result) {
         this.stockService.DeleteStockCategory(id).subscribe(() => {
           this.GetAllStockCategories();
+          this.loginService.addTransaction("Deleted","Deleted stock category with id: "+id)
           console.log('Deleted category');
           this.snackBar.open('Deleted category successfully', 'Dismiss', {
             duration: 3000,

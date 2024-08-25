@@ -1,14 +1,20 @@
- /* Body styles */
- body {
-    background: linear-gradient(120deg, #aed9e0, #c2e2f3, #eaf1fa, #c2e2f3, #aed9e0);
-    background-size: 400% 400%;
-    animation: gradientAnimation 20s ease infinite;
-    font-family: 'Roboto', sans-serif;
-    color: #333;
-    padding: 20px;
-    overflow-x: hidden;
-    overflow-y: auto;
-  }
+body {
+  background: linear-gradient(120deg, #aed9e0, #c2e2f3, #eaf1fa, #c2e2f3, #aed9e0);
+  background-size: 400% 400%;
+  animation: gradientAnimation 20s ease infinite;
+  font-family: 'Roboto', sans-serif;
+  color: #333;
+  margin: 0;
+  padding: 0;
+  min-height: 100vh; /* Ensure body covers the full viewport height */
+  display: flex;
+  flex-direction: column;
+}
+  
+html, body {
+  height: 100%;
+}
+
 
   /* Animated background gradients */
   @keyframes gradientAnimation {
@@ -21,6 +27,7 @@
   .container {
     max-width: 1200px;
     margin: 0 auto;
+    flex: 1;
   }
 
   /* Row styles */
@@ -80,15 +87,16 @@
     margin-right: 10px;
   }
 
-  .rounded-btn {
-    background-color: #007bff;
+  a.btn.btn-primary.rounded-btn {
+    background-color: #3c54b4;
     color: #fff;
     border-radius: 20px;
     padding: 10px 30px;
     text-decoration: none;
+    margin-right: auto;
   }
-
-  .rounded-btn:hover {
+  
+  a.btn.btn-primary.rounded-btn:hover {
     background-color: #0056b3;
   }
 

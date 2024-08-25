@@ -32,6 +32,7 @@ export class CaptureNewStockModalComponent {
   onSubmit(): void {
     if (this.captureStockForm.valid) {
       this.dialogRef.close({ ...this.captureStockForm.value, stockId: this.data.stockId });
+      
     }
   }
 }

@@ -11,6 +11,8 @@ import { StockData, StockUsedComponent } from '../stock-used/stock-used.componen
 import { OrderService } from '../services/order.service';
 import { AddStockItemViewModel } from '../shared/Stock';
 import { StockServices } from '../services/stock.service';
+import { DataService } from '../services/login.service';
+import { map, switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-employee-orders-and-steps',
@@ -19,7 +21,7 @@ import { StockServices } from '../services/stock.service';
 })
 export class EmployeeOrdersAndStepsComponent implements OnInit {
   editForm!: FormGroup;
-  constructor(private employeeService:EmployeeService,private orderService:OrderService, private stockService:StockServices, private formBuilder: FormBuilder,private sanitizer:DomSanitizer,private dialog:MatDialog) {this.editForm = this.formBuilder.group({
+  constructor(private employeeService:EmployeeService,private orderService:OrderService,private loginService:DataService, private stockService:StockServices, private formBuilder: FormBuilder,private sanitizer:DomSanitizer,private dialog:MatDialog) {this.editForm = this.formBuilder.group({
     MediaFiles: [null]
   }); }
 
@@ -49,7 +51,8 @@ export class EmployeeOrdersAndStepsComponent implements OnInit {
   dialogRef.afterClosed().subscribe(result => {
     if (result) {
       this.stockUsed=result
-      this.stockUsed.StockUsed.forEach(element => {
+      if(this.stockUsed!=null)
+      {this.stockUsed.StockUsed.forEach(element => {
         this.stockService.getStockById(element.StockId).subscribe(
           result=>
           {
@@ -58,7 +61,7 @@ export class EmployeeOrdersAndStepsComponent implements OnInit {
         )
       });
       console.log(this.stockUsed)
-      console.log(result)
+      console.log(result)}
     }
   });
   console.log('Event clicked:', event);
@@ -143,7 +146,8 @@ mediaFileViewModels:MediaFileViewModel[]=[]
     {
       
       this.stockUsed.StockUsed.forEach(element => {
-        const stockToSend:AddStockItemViewModel=
+        if(this.stockUsed!=null)
+        {const stockToSend:AddStockItemViewModel=
         {
           StockId:element.StockId,
           OrderId:this.stockUsed.OrderId,
@@ -156,18 +160,30 @@ mediaFileViewModels:MediaFileViewModel[]=[]
               console.log(error)
               this.errorsFound=true;
             }
-        )
+        )}
       });
       if(!this.errorsFound)
         {
-          this.employeeService.CompleteStepAndJob(stepId).subscribe(result=>
-          {
-            console.log(result)
-            this.getCurrentOrders()
-            },(error:HttpErrorResponse)=>{
-              console.log(error.error)
+          this.employeeService.CompleteStepAndJob(stepId).pipe(
+            switchMap(result => {
+              return this.employeeService.GetSystemOrderStepById(stepId).pipe(
+                map(step => {
+                  this.loginService.addTransaction("Put", `Completed step: ${step.description}. For order with id: ${step.systemOrderId}`);
+                  console.log(result);
+                  this.getCurrentOrders();
+                  this.stockUsed = null
+                  return result; // Or any other value you want to return
+                })
+              );
+            })
+          ).subscribe(
+            result => {
+             
+            },
+            error => {
+              console.error(error);
             }
-          ) 
+          );
       }
        
     }
@@ -176,7 +192,7 @@ mediaFileViewModels:MediaFileViewModel[]=[]
     }
  }
  stockView:any[]=[]
-stockUsed!:StockData
+stockUsed!:StockData|null
 uploadedFiles: CustomFile[]=[]
  
  onSubmit(orderId:string){

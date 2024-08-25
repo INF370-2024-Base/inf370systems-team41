@@ -39,6 +39,36 @@ namespace BioProSystem.Migrations
                     b.ToTable("ActionTypes");
                 });
 
+            modelBuilder.Entity("BioProSystem.Models.AuditTrail", b =>
+                {
+                    b.Property<int>("AuditTrailId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("AuditTrailId"));
+
+                    b.Property<string>("AdditionalData")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("DateOfTransaction")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("SystemUserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("TransactionType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("AuditTrailId");
+
+                    b.HasIndex("SystemUserId");
+
+                    b.ToTable("AuditTrails");
+                });
+
             modelBuilder.Entity("BioProSystem.Models.Calander", b =>
                 {
                     b.Property<int>("CalanderId")
@@ -1299,6 +1329,17 @@ namespace BioProSystem.Migrations
                     b.ToTable("SystemOrderTeethShade");
                 });
 
+            modelBuilder.Entity("BioProSystem.Models.AuditTrail", b =>
+                {
+                    b.HasOne("BioProSystem.Models.SystemUser", "SystemUser")
+                        .WithMany("AuditTrails")
+                        .HasForeignKey("SystemUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("SystemUser");
+                });
+
             modelBuilder.Entity("BioProSystem.Models.CalanderScheduleEvent", b =>
                 {
                     b.HasOne("BioProSystem.Models.Calander", "Calander")
@@ -1879,6 +1920,8 @@ namespace BioProSystem.Migrations
 
             modelBuilder.Entity("BioProSystem.Models.SystemUser", b =>
                 {
+                    b.Navigation("AuditTrails");
+
                     b.Navigation("Employees");
 
                     b.Navigation("UserActions");

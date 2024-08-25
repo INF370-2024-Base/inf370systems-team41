@@ -1,110 +1,130 @@
-/* Body styles */
 body {
-    background-color: #f5f5f5; /* Light gray background */
-    font-family: 'Verdana', sans-serif; /* Playful font */
-    color: #333; /* Dark text color */
-    margin: 0; /* Reset margin */
-    padding: 0; /* Reset padding */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh; /* Full viewport height */
+  background: linear-gradient(120deg, #aed9e0, #c2e2f3, #eaf1fa, #c2e2f3, #aed9e0);
+  background-size: 400% 400%;
+  animation: gradientAnimation 20s ease infinite;
+  font-family: 'Roboto', sans-serif;
+  color: #333;
+  margin: 0;
+  padding: 0;
+  height: 100vh; /* Full viewport height */
+  display: flex;
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
+}
+
+/* Animated background gradients */
+@keyframes gradientAnimation {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Login page container */
+.login-page {
+  text-align: center;
+  width: 100%; /* Full width */
+  display: flex;
+  justify-content: center; /* Center content */
+  align-items: center; /* Center content */
+  height: 100%; /* Full height of body */
+}
+
+/* Container for login */
+.login-container {
+  max-width: 350px; /* Maximum width for larger screens */
+  width: 100%; /* Full width for smaller screens */
+  background-color: #ffffff; /* White background */
+  padding: 40px; /* Add more padding */
+  border-radius: 10px; /* Rounded corners */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add subtle shadow */
+}
+
+/* Company logo */
+.logo {
+  width: 150px; /* Increase the width */
+  height: auto; /* Maintain aspect ratio */
+  margin-bottom: 20px; /* Add margin below the logo */
+}
+
+/* Login form */
+.login-form {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Style form groups to align label and input side by side */
+.form-group {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+/* Align labels and input fields */
+.form-group label {
+  font-size: 14px; /* Consistent font size */
+  margin-right: 10px; /* Space between label and input */
+  width: 100px; /* Set width for labels to align inputs */
+  text-align: right; /* Right-align labels */
+}
+
+.form-group input {
+  padding: 10px;
+  flex-grow: 1; /* Input will take the remaining space */
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  box-sizing: border-box; /* Ensure padding doesn't affect width */
+}
+
+/* Login form buttons */
+.login-form button {
+  padding: 10px 20px;
+  margin-bottom: 10px; /* Add margin bottom for buttons */
+  border: none;
+  border-radius: 5px;
+  background-color: #007bff; /* Blue button color */
+  color: #fff; /* White text color */
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.login-form button:hover {
+  background-color: #0056b3; /* Darker blue on hover */
+}
+
+/* Secondary button for forgot password */
+.login-form button.secondary {
+  background-color: #6c757d; /* Grey button color */
+}
+
+.login-form button.secondary:hover {
+  background-color: #495057; /* Darker grey on hover */
+}
+
+.login-form .forgotb {
+  padding: 10px 20px;
+  margin-bottom: 10px; /* Add margin bottom for the button */
+  border: none;
+  border-radius: 5px;
+  background-color: #6c757d; /* Grey button color */
+  color: #fff; /* White text color */
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.login-form .forgotb:hover {
+  background-color: #495057; /* Darker grey on hover */
+}
+
+/* Media Queries for Responsiveness */
+@media (max-width: 600px) {
+  .login-container {
+    padding: 20px; /* Reduce padding for smaller screens */
   }
-  
-  /* Animated background gradients */
-  @keyframes gradientAnimation {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
-  }
-  
-  /* Enhanced blue gradient animation */
-  body {
-    background: linear-gradient(120deg, #aed9e0, #c2e2f3, #eaf1fa, #c2e2f3, #aed9e0);
-    background-size: 400% 400%;
-    animation: gradientAnimation 20s ease infinite;
-  }
-  
-  /* Login page container */
-  .login-page {
-    text-align: center;
-  }
-  
- /* Container for login */
- .login-container {
-    width: 350px; /* Adjust container width as needed */
-    background-color: #ffffff; /* White background */
-    padding: 40px; /* Add more padding */
-    border-radius: 10px; /* Rounded corners */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add subtle shadow */
-    text-align: center; /* Center the content horizontally */
-  }
-  
-  /* Company logo */
   .logo {
-    width: 150px; /* Increase the width */
-    height: auto; /* Maintain aspect ratio */
-    margin-bottom: 20px; /* Add margin below the logo */
+    width: 100px; /* Adjust logo size for smaller screens */
   }
-
-  /* Login form */
-  .login-form {
-    display: flex;
-    flex-direction: column;
+  .form-group label {
+    width: 80px; /* Adjust label width for smaller screens */
+    font-size: 12px; /* Adjust label font size */
   }
-  
-  /* Login form labels */
-  .login-form label {
-    margin-bottom: 10px;
-    font-size: 14px;  /* Increase margin bottom for labels */
-  }
-  
-  /* Login form input fields */
-  .login-form input {
-    padding: 10px;
-    margin-bottom: 20px; 
-    margin-left: 10px; /* Increase margin bottom for input fields */
-    border-radius: 5px;
-    border: 1px solid #ccc;
-  }
-  
-  /* Login form buttons */
-  .login-form button {
-    padding: 10px 20px;
-    margin-bottom: 10px; /* Add margin bottom for buttons */
-    border: none;
-    border-radius: 5px;
-    background-color: #007bff; /* Blue button color */
-    color: #fff; /* White text color */
-    cursor: pointer;
-    transition: background-color 0.3s;
-  }
-  
-  .login-form button:hover {
-    background-color: #0056b3; /* Darker blue on hover */
-  }
-  
-  /* Secondary button for forgot password */
-  .login-form button.secondary {
-    background-color: #6c757d; /* Grey button color */
-  }
-  
-  .login-form button.secondary:hover {
-    background-color: #495057; /* Darker grey on hover */
-  }
-
-  .login-form .forgotb {
-    padding: 10px 20px;
-    margin-bottom: 10px; /* Add margin bottom for the button */
-    border: none;
-    border-radius: 5px;
-    background-color: #6c757d; /* Grey button color */
-    color: #fff; /* White text color */
-    cursor: pointer;
-    transition: background-color 0.3s;
-  }
-  
-  .login-form .forgotb:hover {
-    background-color: #495057; /* Darker grey on hover */
-  }
-  
+}

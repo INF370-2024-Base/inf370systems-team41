@@ -11,6 +11,7 @@ import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { MatDialog } from '@angular/material/dialog';
 import { ResetPasswordComponent } from '../reset-password/reset-password.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { AddAuditTrailViewModels } from '../shared/addAuditTrailViewModel';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -35,11 +36,17 @@ export class LoginComponent implements OnInit {
       .subscribe(
         (result: any) => {          
           sessionStorage.setItem('Token', JSON.stringify(result));
+           
+          this.dataService.Login
           this.checkSignInStatusAndNavigate(); 
         },
-        (error:HttpErrorResponse) => {
+        (error) => {
           console.log(error)
-          alert(error)
+          if(error=="Invalid login credentials")
+          {
+            alert(error)
+          }
+          
         }
       );
   }
@@ -48,7 +55,26 @@ export class LoginComponent implements OnInit {
     this.dataService.checkSignInStatus()
       .subscribe(() => {
         if( sessionStorage.getItem('User')!=undefined)
-        {this.router.navigate(['/home']);
+        {const signedInUser=JSON.parse(sessionStorage.getItem('User')!)
+          const id=signedInUser.id
+         const transaction:AddAuditTrailViewModels={
+           AdditionalData:"Logged in",
+           DateOfTransaction:new Date,
+           TransactionType:"Post",
+           SystemUserId:id
+         }
+         console.log(transaction)
+         this.dataService.CreateTransaction(transaction).subscribe(
+           result=>{
+             console.log("Successfully added transaction."+result)
+           }
+           ,
+           error=>{
+             console.log("Unable to add transaction."+error.error)
+             console.log(error.error)
+           }
+         )
+          this.router.navigate(['/home']);
         this.appComponent.getSignInUser();} 
       });
   }

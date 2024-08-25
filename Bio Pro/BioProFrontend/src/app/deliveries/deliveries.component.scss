@@ -1,13 +1,16 @@
 .delivery-body {
-    background: linear-gradient(120deg, #aed9e0, #c2e2f3, #eaf1fa, #c2e2f3, #aed9e0);
-    background-size: 400% 400%;
-    animation: gradientAnimation 20s ease infinite;
-    font-family: 'Roboto', sans-serif;
-    color: #333;
-    padding: 20px;
-    margin: 0 auto;
-    overflow-y: auto; /* Allow vertical scrolling */
-    max-height: 80vh;  /* Allow vertical scrolling */
+  background: linear-gradient(120deg, #aed9e0, #c2e2f3, #eaf1fa, #c2e2f3, #aed9e0);
+  background-size: 400% 400%;
+  animation: gradientAnimation 20s ease infinite;
+  font-family: 'Roboto', sans-serif;
+  color: #333;
+  margin: 0;
+  padding: 0;
+  height:max-content;
+  
+  display: flex;
+  flex-direction: column;
+  
 }
 
 .delivery-card {
@@ -119,3 +122,15 @@ mat-list-item {
     }
   }
   
+  .alert-message {
+    background-color: #f8d7da;
+    border: 1px solid #f5c6cb;
+    color: #721c24;
+    padding: 15px;
+    border-radius: 5px;
+    margin-top: 20px;
+    font-weight: bold;
+    text-align: center;
+    font-size: 16px; /* Adjust font size for better readability */
+    line-height: 1.5; /* Increase line height for better spacing */
+  }

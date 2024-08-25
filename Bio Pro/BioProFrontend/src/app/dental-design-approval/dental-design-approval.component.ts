@@ -5,6 +5,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { error } from 'console';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
+import { DataService } from '../services/login.service';
 
 @Component({
   selector: 'app-dental-design-approval',
@@ -13,7 +14,7 @@ import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation
 })
 export class DentalDesignApprovalComponent implements OnInit {
 
-  constructor(private snackBar:MatSnackBar,private orderService:OrderService,private dialog:MatDialog) { }
+  constructor(private snackBar:MatSnackBar,private orderService:OrderService,private dialog:MatDialog,private loginService:DataService) { }
   pendingOrdersData:any[]=[]
   ngOnInit(): void {
       this.orderService.GetOrdersAwaitingDentalDesignApproval().subscribe(
@@ -90,6 +91,8 @@ export class DentalDesignApprovalComponent implements OnInit {
     this.orderService.apporveDentalDesign(orderId).subscribe(result=>{
       console.log(result)
       location.reload()
+      this.loginService.addTransaction("Put","Approved dental design for order with id:"+ orderId+".")
+
     },
   (error:HttpErrorResponse)=>
   {
@@ -99,6 +102,7 @@ export class DentalDesignApprovalComponent implements OnInit {
     }
     rejectOrder(orderId:number){
       this.orderService.rejectDentalDesign(orderId).subscribe(result=>{
+        this.loginService.addTransaction("Put","Rejected dental design for order with id:"+ orderId+".")
         console.log(result)
         location.reload()
       })

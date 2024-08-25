@@ -15,7 +15,9 @@ import html2canvas from 'html2canvas';
 import { EmployeeService } from '../services/employee.service';
 import { DeliveryService } from '../services/deliver.service';
 import autoTable from 'jspdf-autotable';
+import { DataService } from '../services/login.service';
 
+import { DentistService } from '../shared/dentist.service'; 
 
 @Component({
   selector: 'app-reports',
@@ -44,11 +46,18 @@ export class ReportsComponent implements OnInit {
   groupedStockWriteOffs: any[] = [];
   totalOrderCount: number = 0;
   totalTypeCategoryCount: number = 0;
+  dentists: any[] = []; // Add a new property for dentists
+  totalDentists: number = 0;
+  displayedColumns: string[] = ['name', 'contact', 'address'];
+  employee: any[]=[];
+  totalEmployees: number = 0;
+  selectedReport: string = 'all';
 
   constructor(private reportsService: ReportsServices, 
     private datePipe: DatePipe, 
     private employeeService:EmployeeService,
-    private deliveryService: DeliveryService ) { }
+    private deliveryService: DeliveryService,private loginService:DataService,
+    private dentistService: DentistService  ) { }
 
     async ngOnInit(): Promise<void> {
       this.getAllOrder();
@@ -60,6 +69,8 @@ export class ReportsComponent implements OnInit {
       this.updateChart();
       this.getAllStockWriteOffs();
       this.getDeliveries();
+      this.getAllDentists(); 
+      this.getAllEmployees();
     
       try {
         await this.fetchLoggedInUserName();
@@ -69,6 +80,20 @@ export class ReportsComponent implements OnInit {
       } catch (error) {
         console.error('Error fetching user name:', error);
       }
+    }
+
+    filterReports(reportId: string) {
+      // Get all report sections by their ID
+      const reports = document.querySelectorAll('.report-section');
+  
+      // Loop through all reports and toggle visibility based on the selected report
+      reports.forEach((report: any) => {
+        if (reportId === 'all') {
+          report.style.display = 'block'; // Show all reports if 'No Filter' is selected
+        } else {
+          report.style.display = report.id === reportId ? 'block' : 'none'; // Show the selected report, hide others
+        }
+      });
     }
 
 
@@ -152,20 +177,25 @@ export class ReportsComponent implements OnInit {
 
     if (sectionId === 'allOrdersReport') {
       columns = ['Order ID', 'Dentist ID', 'Priority Level', 'Order Date'];
+      this.loginService.addTransaction("Generated","Generated all orders report.")
       data = this.orders.map(order => [order.orderId, order.dentistId, order.priorityLevel, this.formatDate(order.dueDate)]);
     } else if (sectionId === 'orderTypesReport') {
       columns = ['Order Type', 'Order Count'];
       data = this.orderTypeWithCount.map(orderType => [orderType.description, orderType.orderCount]);
       // Add total order count at the end of the table
+      this.loginService.addTransaction("Generated","Generated ordertype with counts report.")
       data.push(['Total', this.totalOrderCount]);
     } else if (sectionId === 'stockTypesReport') {
       columns = ['Stock Type', 'Type Category Count'];
       data = this.stockTypes.map(stockType => [stockType.description, stockType.stockCategoriesCount]);
+      this.loginService.addTransaction("Generated","Generate stock type report.")
       data.push(['Total', this.totalTypeCategoryCount]);
     } else if (sectionId === 'stockItemsReport') {
       columns = ['Stock Category', 'Stock Item Count'];
+      this.loginService.addTransaction("Generated","Generated stock category report.")
       data = this.stockItems.map(stockItem => [stockItem.description, stockItem.stockItemsCount]);
     } else if (sectionId === 'stockWriteOffsReport') {
+      this.loginService.addTransaction("Generated","Generated stock write off report.")
       columns = ['Stock Name', 'Total Quantity Written Off'];
       data = this.groupedStockWriteOffs.map(group => [group.stockName, group.totalQuantityWrittenOff]);
 
@@ -173,9 +203,10 @@ export class ReportsComponent implements OnInit {
       data.push(['Total', this.totalQuantityWrittenOff]);
     } else if (sectionId === 'deliveryReport') {
       // Add total deliveries
+      this.loginService.addTransaction("Generated","Generated delivery report.")
       doc.setFont('helvetica', 'bold');
       doc.setFontSize(14);
-      doc.text('Total Deliveries', 10, 70);
+      doc.text('Total Deliveries Captured', 10, 70);
       doc.setFont('helvetica', 'normal');
       doc.setFontSize(12);
       doc.text(this.totalDeliveries.toString(), 60, 70);
@@ -208,6 +239,7 @@ export class ReportsComponent implements OnInit {
       });
     } else if (sectionId === 'employeeHoursReport') {
       // Handle chart for Employee Hours Report
+      this.loginService.addTransaction("Generated","Generated employee hours report.")
       const canvas = document.getElementById('canvas') as HTMLCanvasElement;
       if (canvas) {
         const canvasImg = await html2canvas(canvas);
@@ -217,7 +249,34 @@ export class ReportsComponent implements OnInit {
         console.error('Canvas element not found.');
       }
     }
+    
 
+    if (sectionId !== 'employeeHoursReport' && sectionId !== 'deliveryReport') {
+      autoTable(doc, {
+        head: [columns],
+        body: data,
+        startY: 70, // Moved further down
+        didDrawCell: (data) => {
+          // Check if this is the last row and make the text bold and larger
+          if (data.row.index === data.table.body.length - 1) {
+            doc.setFont('helvetica', 'bold');
+            doc.setFontSize(12);
+          }
+        },
+      });
+    }
+     if (sectionId === 'dentistReport') {
+      // Dentist Report
+      columns = ['Dentist Name', 'Contact', 'Address'];
+      data = this.dentists.map(dentist => [dentist.firstName + dentist.lastName, dentist.contactDetail, dentist.address]);
+      data.push(['Total Dentists', this.totalDentists.toString()]);
+    } else if (sectionId === 'employeeReport') {
+      // Employee Report
+      columns = ['Employee Name', 'Contact', 'Address'];
+      data = this.employee.map(employee => [employee.firstName + employee.lastName, employee.cellphoneNumber, employee.address]);
+      data.push(['Total Employees', this.totalEmployees.toString()]);
+    }
+  
     if (sectionId !== 'employeeHoursReport' && sectionId !== 'deliveryReport') {
       autoTable(doc, {
         head: [columns],
@@ -251,8 +310,25 @@ export class ReportsComponent implements OnInit {
         }
     );
 }
+getAllDentists(): void {
+  this.dentistService.getAllDentists().subscribe((data: any[]) => {
+    // Sort by first name, then last name
+    this.dentists = data.sort((a, b) => {
+      return a.firstName.localeCompare(b.firstName) || a.lastName.localeCompare(b.lastName);
+    });
+    this.totalDentists = this.dentists.length;
+  });
+}
 
-
+getAllEmployees(): void {
+  this.employeeService.getAllEmployees().subscribe((data: any[]) => {
+    // Sort by first name, then last name
+    this.employee = data.sort((a, b) => {
+      return a.firstName.localeCompare(b.firstName) || a.lastName.localeCompare(b.lastName);
+    });
+    this.totalEmployees = this.employee.length;
+  });
+}
 
 getOrderTypesWithOrderCount() {
   this.reportsService.getOrderTypesWithOrderCount().subscribe(
@@ -291,8 +367,11 @@ sortOrders() {
     let valueB: any;
 
     if (this.sortColumn === 'priorityLevel') {
-      valueA = a.priorityLevel;
-      valueB = b.priorityLevel;
+      // Define priority order
+      const priorityOrder = ['High', 'Medium', 'Low'];
+
+      valueA = priorityOrder.indexOf(a.priorityLevel);
+      valueB = priorityOrder.indexOf(b.priorityLevel);
     } else if (this.sortColumn === 'dueDate') {
       valueA = new Date(a.dueDate);
       valueB = new Date(b.dueDate);

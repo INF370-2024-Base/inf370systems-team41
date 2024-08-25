@@ -5,6 +5,7 @@ import { error } from 'console';
 import { HttpErrorResponse } from '@angular/common/http';
 import { DeliverAddViewModel } from '../shared/deliverAddViewModel';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { DataService } from '../services/login.service';
 @Component({
   selector: 'app-add-delivery',
   templateUrl: './add-delivery.component.html',
@@ -12,7 +13,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class AddDeliveryComponent implements OnInit {
 
-  constructor(private snackBar:MatSnackBar,private deliveryService:DeliveryService,private orderService:OrderService) { 
+  constructor(private snackBar:MatSnackBar,private deliveryService:DeliveryService,private orderService:OrderService,private dataService:DataService) { 
 
   }
 orders:any[]=[]
@@ -24,13 +25,8 @@ email:any
   }
   getsystemOrders() {
     this.orderService.getFinishedOrders().subscribe(results => {
-      this.orders = results;
-      results.forEach(element => {
-        this.orderService.getAllOrderInfo(element.orderId).subscribe(results => {
-          this.orderInfo.push(results);
-          console.log(this.orderInfo);
-        });
-      });
+      this.orderInfo = results;
+      console.log(this.orderInfo)
     }, (error: HttpErrorResponse) => console.log(error));
   }
   createdeliveries(systemOrderId:string)
@@ -53,6 +49,7 @@ email:any
     };
     this.deliveryService.createdelivery(delivery).subscribe(
       result=>{
+        this.dataService.addTransaction("Post","User created delivery for order with id:"+ delivery.SystemOrderId)
       console.log(result)
       location.reload()
       },

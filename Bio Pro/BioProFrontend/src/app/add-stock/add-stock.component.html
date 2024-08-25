@@ -18,9 +18,16 @@
             <!-- Stock Category -->
             <div class="form-group">
               <mat-form-field appearance="outline">
+                <mat-label><i class="material-icons">category</i> Stock Type</mat-label>
+                <mat-select [value]="selectedStockType" (selectionChange)="onStockTypeChange($event)">
+                    <mat-option value="" >All Stock Types</mat-option>
+                    <mat-option *ngFor="let type of StockTypes" [value]="type.stockTypeId">{{ type.description }}</mat-option>
+                </mat-select>
+            </mat-form-field>
+              <mat-form-field appearance="outline">
                 <mat-label><i class="material-icons">category</i> Stock Category</mat-label>
                 <mat-select formControlName="stockCategoryId" required>
-                  <mat-option *ngFor="let category of StockCategories" [value]="category.stockCategoryId">
+                  <mat-option *ngFor="let category of Categories" [value]="category.stockCategoryId">
                     {{ category.description }}
                   </mat-option>
                 </mat-select>

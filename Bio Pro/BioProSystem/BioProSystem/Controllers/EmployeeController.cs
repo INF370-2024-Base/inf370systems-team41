@@ -284,7 +284,19 @@ namespace BioProSystem.Controllers
                 return NotFound("No Jobtitiles found");
             }
         }
+        [HttpGet]
+        [Route("GetStepByID/{Id}")]
+        public async Task<ActionResult<List<SystemOrder>>> GetStepByID(int Id)
+        {
+            var result = await _repository.GetSystemOrderStepById(Id);
 
+            if (result != null)
+            { return Ok(result); }
+            else
+            {
+                return NotFound("No Jobtitiles found");
+            }
+        }
         [HttpPut]
         [Route("CompleteStepAndJob/{stepId}")]
         public async Task<IActionResult> CompleteStepAndJob(int stepId)

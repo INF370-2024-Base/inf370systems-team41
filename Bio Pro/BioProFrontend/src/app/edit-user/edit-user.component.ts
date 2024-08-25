@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { UserServices } from '../services/user.service';
 import { EmployeeService } from '../services/employee.service';
 import { EditUser } from '../shared/EditUser';
+import { DataService } from '../services/login.service';
 
 @Component({
   selector: 'app-edit-user',
@@ -21,7 +22,7 @@ export class EditUserComponent implements OnInit {
     private fb: FormBuilder,
     private userServices: UserServices,
     private employeeService: EmployeeService,
-    private router: Router
+    private router: Router,private transactionService: DataService
   ) {
     this.editUserForm = this.fb.group({
       name: ['', Validators.required],
@@ -67,6 +68,7 @@ export class EditUserComponent implements OnInit {
             emailaddress: employee.email,
             phonenumber: employee.cellphoneNumber,
           });
+
         },
         error => {
           console.error('Error fetching employee details:', error);
@@ -96,6 +98,7 @@ export class EditUserComponent implements OnInit {
             console.log('User details updated successfully:', response);
             this.successMessage = 'User details updated successfully!';
             sessionStorage.setItem('User', JSON.stringify(editedUser));
+            this.transactionService.addTransaction('Put', 'Edited their profile to:Name:'+editedUser.Name+';Surname:'+editedUser.Surname+';Phonenumber:'+editedUser.Phonenumber+';Email:'+editedUser.UpdatedEmail+".");
             this.router.navigate(['/login']);
           },
           error => {
