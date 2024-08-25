@@ -48,6 +48,7 @@ export class OrdersComponent implements OnInit {
   }
   ngOnInit(): void {
     this.getOrdersAndInfo();
+    this.getOrderTypes();
   }
   
   toggleHover(state: string) {
@@ -60,11 +61,7 @@ export class OrdersComponent implements OnInit {
         if (Array.isArray(allOrders)) {
           this.orders = allOrders;
           this.originalOrders=allOrders
-          this.dataservices.getOrderTypes().subscribe(results=>
-            {
-              this.orderTypes=results
-            }
-          )
+         
           this.loading=false
           this.ordersInfo=allOrders
           console.log(this.ordersInfo)
@@ -74,6 +71,14 @@ export class OrdersComponent implements OnInit {
           console.error('No orders found.');
         }
       })
+    )
+  }
+
+  getOrderTypes() {
+    this.dataservices.getOrderTypes().subscribe(results=>
+      {
+        this.orderTypes=results
+      }
     )
   }
   

@@ -185,8 +185,8 @@ openSnackBar(message: string, error?: any) {
           );
         },
         error => {
-          console.log('Failed to add user:', error.error);
-          this.openSnackBar('Failed to add user', error.error);
+          console.log('Failed to add user:', error.error[0]);
+          this.openSnackBar('Failed to add user', error.error[0]);
         }
       );
     } else {
