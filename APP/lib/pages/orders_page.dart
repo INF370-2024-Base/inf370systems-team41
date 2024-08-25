@@ -16,6 +16,7 @@ class _OrdersPageState extends State<OrdersPage> {
   void initState() {
     super.initState();
     futureOrders = orderService.fetchOrders();
+    print('Submitting media file with request body: $futureOrders');
   }
 
   @override
