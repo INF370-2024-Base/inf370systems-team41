@@ -6,34 +6,60 @@
         <!-- Profile Section -->
         <section class="settings-section">
           <h3 mat-subheader>Profile Settings</h3>
-          <mat-list>
-            <mat-list-item>
-              <mat-icon matListIcon>person</mat-icon>
-              <div matLine>Name</div>
-              <div matLine><input matInput [(ngModel)]="user.Name" placeholder="Enter your first name"></div>
-            </mat-list-item>
-            <mat-list-item>
-              <mat-icon matListIcon>person_outline</mat-icon>
-              <div matLine>Surname</div>
-              <div matLine><input matInput [(ngModel)]="user.Surname" placeholder="Enter your surname"></div>
-            </mat-list-item>
-            <mat-list-item>
-              <mat-icon matListIcon>email</mat-icon>
-              <div matLine>Email</div>
-              <div matLine><input matInput [(ngModel)]="user.EmailAddress" type="email" placeholder="Enter your email"></div>
-            </mat-list-item>
-            <mat-list-item>
-              <mat-icon matListIcon>lock</mat-icon>
-              <div matLine>Password</div>
-              <div matLine><input matInput [(ngModel)]="user.Password" type="password" placeholder="Enter your password"></div>
-            </mat-list-item>
-          </mat-list>
+          <form [formGroup]="userForm" (ngSubmit)="saveSettings()">
+            <div class="form-group">
+              <mat-form-field appearance="outline">
+                <mat-label>Name</mat-label>
+                <input matInput formControlName="Name" placeholder="Enter your first name">
+                <mat-error *ngIf="userForm.get('Name')?.hasError('required') && userForm.get('Name')?.touched">
+                  Name is required
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="form-group">
+              <mat-form-field appearance="outline">
+                <mat-label>Surname</mat-label>
+                <input matInput formControlName="Surname" placeholder="Enter your surname">
+                <mat-error *ngIf="userForm.get('Surname')?.hasError('required') && userForm.get('Surname')?.touched">
+                  Surname is required
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="form-group">
+              <mat-form-field appearance="outline">
+                <mat-label>Email</mat-label>
+                <input matInput formControlName="EmailAddress" type="email" placeholder="Enter your email">
+                <mat-error *ngIf="userForm.get('EmailAddress')?.hasError('required') && userForm.get('EmailAddress')?.touched">
+                  Email is required
+                </mat-error>
+                <mat-error *ngIf="userForm.get('EmailAddress')?.hasError('email') && userForm.get('EmailAddress')?.touched">
+                  Enter a valid email
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="form-group">
+              <mat-form-field appearance="outline">
+                <mat-label>Phonenumber</mat-label>
+                <input matInput formControlName="Phonenumber" type="text" placeholder="Enter your phonenumber">
+                <mat-error *ngIf="userForm.get('Phonenumber')?.invalid">
+                  Phonenumber is required and must be a valid number
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <mat-error style="text-align: center;">Warning: This will sign you out</mat-error>
+            <div class="save-button-section">
+              <button mat-raised-button color="primary" type="submit">
+                <mat-icon>save</mat-icon> SAVE
+              </button>
+            </div>
+          </form>
+          
         </section>
       
   <!-- Application Settings Section -->
 <div class="application-settings-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
     <!-- Language Setting -->
-    <div class="settings-item" style="padding: 15px; background-color: #ffffff; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); cursor: pointer;" (click)="languageSelect.open()">
+    <!-- <div class="settings-item" style="padding: 15px; background-color: #ffffff; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); cursor: pointer;" (click)="languageSelect.open()">
       <mat-form-field appearance="fill" style="width: 100%;">
         <mat-label>
           <mat-icon matListIcon style="margin-right: 10px; color: #3a506b;">language</mat-icon>
@@ -50,10 +76,10 @@
           </mat-option>
         </mat-select>
       </mat-form-field>
-    </div>
+    </div> -->
   
     <!-- Theme Setting -->
-    <div class="settings-item" style="padding: 15px; background-color: #ffffff; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); cursor: pointer;" (click)="themeSelect.open()">
+    <!-- <div class="settings-item" style="padding: 15px; background-color: #ffffff; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); cursor: pointer;" (click)="themeSelect.open()">
       <mat-form-field appearance="fill" style="width: 100%;">
         <mat-label>
           <mat-icon matListIcon style="margin-right: 10px; color: #3a506b;">brightness_6</mat-icon>
@@ -67,38 +93,35 @@
           </mat-option>
         </mat-select>
       </mat-form-field>
-    </div>
+    </div> -->
   
     <!-- Time Zone Setting -->
-    <div class="settings-item" style="padding: 15px; background-color: #ffffff; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); cursor: pointer;" (click)="timezoneSelect.open()">
+    <!-- <div class="settings-item" style="padding: 15px; background-color: #ffffff; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); cursor: pointer;" (click)="timezoneSelect.open()">
       <mat-form-field appearance="fill" style="width: 100%;">
         <mat-label>
           <mat-icon matListIcon style="margin-right: 10px; color: #3a506b;">schedule</mat-icon>
           Time Zone
         </mat-label>
         <mat-select #timezoneSelect [(value)]="user.timezone">
-          <mat-option *ngFor="let timezone of timezones" [value]="timezone">
+          <mat-option *ngFor="let timezone of timezones" [value]="timezone"> -->
             <!-- Including common states or regions for each timezone -->
-            <ng-container *ngIf="timezone === 'UTC'">UTC (Universal Time Coordinated)</ng-container>
+            <!-- <ng-container *ngIf="timezone === 'UTC'">UTC (Universal Time Coordinated)</ng-container>
+
             <ng-container *ngIf="timezone === 'GMT'">GMT - London, Dublin</ng-container>
             <ng-container *ngIf="timezone === 'PST'">PST - Los Angeles, Seattle</ng-container>
             <ng-container *ngIf="timezone === 'EST'">EST - New York, Miami</ng-container>
             <ng-container *ngIf="timezone === 'CST'">CST - Chicago, Dallas</ng-container>
             <ng-container *ngIf="timezone === 'MST'">MST - Denver, Phoenix</ng-container>
-            <ng-container *ngIf="timezone === 'IST'">IST - New Delhi, Mumbai</ng-container>
+            <ng-container *ngIf="timezone === 'IST'">IST - New Delhi, Mumbai</ng-container> -->
             <!-- Add more as needed -->
-          </mat-option>
+          <!-- </mat-option>
         </mat-select>
       </mat-form-field>
-    </div>
+    </div> -->
   </div>
 
         <!-- Save Button Section -->
-        <section class="save-button-section">
-          <button mat-raised-button color="primary">
-            <mat-icon>save</mat-icon> SAVE
-          </button>
-        </section>
+        
       </div>
       
 </body>

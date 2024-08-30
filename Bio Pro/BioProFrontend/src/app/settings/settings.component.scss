@@ -116,12 +116,32 @@ body {
     padding-left: 5px;
     color: #2e3c58; /* Matching select text color */
   }
+  mat-form-field input {
+    box-sizing: border-box; /* Include padding and border in the element's total width and height */
+  }
   
+  /* Optional: Add padding and margin adjustments if needed */
+  .settings-section .form-group {
+    margin-bottom: 16px; /* Space between fields */
+  }
+  
+  mat-form-field {
+    width: 100%; 
+  box-sizing: border-box;
+  }
+  input{
+    width: 90%;
+  }
   .save-button-section {
     text-align: center;
+    align-items: center;
     padding: 5px; /* Reduced padding */
     margin-top: auto; /* Push the button to the bottom */
   }
+  .form-group {
+    width: 100%;
+  }
+  
   
   button[mat-raised-button] {
     width: 80%; /* Further reduced width */

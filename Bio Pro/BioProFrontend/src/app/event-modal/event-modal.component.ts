@@ -9,6 +9,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DataService } from '../services/login.service';
+import { RoleGuardService } from '../services/roleCheck';
 
 
 @Component({
@@ -20,6 +21,7 @@ export class EventModalComponent implements OnInit {
   isEditMode = false;
   addForm:FormGroup;
   constructor(
+    public roleService:RoleGuardService,
     public dialogRef: MatDialogRef<EventModalComponent>,
     @Inject(MAT_DIALOG_DATA) public data: { event: CalendarEvent },
     private calendarService: CalendarService,private snackBar:MatSnackBar,private dialog: MatDialog,private fb:FormBuilder,private loginService:DataService

@@ -193,8 +193,7 @@ namespace BioProSystem.Models
         }
         public async Task<SystemUser> GetsystemUserAsync(string systemUserEmail)
         {
-            IQueryable<SystemUser> query = _appDbContext.SystemUsers.Where(c => c.Email == systemUserEmail);
-
+            IQueryable<SystemUser> query = _appDbContext.SystemUsers.Include(u=>u.AuditTrails).Include(u=>u.Employees).Where(c => c.Email == systemUserEmail);
             return await query.FirstOrDefaultAsync();
         }
         public async Task<List<AuditTrail>> GetAllTransactions()

@@ -48,7 +48,7 @@
 </mat-dialog-content>
 
 <mat-dialog-actions>
-  <button mat-button (click)="toggleEditMode()">{{ isEditMode ? 'Save' : 'Edit' }}</button>
+  <button *ngIf="roleService.hasRole(['admin', 'owner','lab manager'])" mat-button (click)="toggleEditMode()">{{ isEditMode ? 'Save' : 'Edit' }}</button>
   <button mat-button mat-dialog-close>Close</button>
-  <button *ngIf="!isEditMode" mat-button (click)="deleteEvent()">Delete</button>
+  <button *ngIf="!isEditMode && roleService.hasRole(['admin', 'owner','lab manager'])" mat-button (click)="deleteEvent()">Delete</button>
 </mat-dialog-actions>

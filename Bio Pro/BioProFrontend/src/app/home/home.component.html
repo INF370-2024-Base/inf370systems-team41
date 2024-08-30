@@ -31,14 +31,14 @@
     <img alt="Medical Professional" src="/assets/images/Company logo.jpg"/>
   </div>
 </div>
-
 <div class="feature-cards">
-  <div 
-    *ngFor="let page of frequentlyVisitedPages" 
-    class="feature-card" 
-    [routerLink]="page.route">
-    <i class="material-icons icon">{{ page.icon }}</i>
-    <p>{{ page.name }}</p>
+  <div *ngFor="let page of frequentlyVisitedPages">
+    <div *ngIf="roleService.hasRole(page.roles)">
+      <div class="feature-card" [routerLink]="page.route">
+        <i class="material-icons icon">{{ page.icon }}</i>
+        <p>{{ page.name }}</p>
+      </div>
+    </div>
   </div>
 </div>
 

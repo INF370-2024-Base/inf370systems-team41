@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import Swiper from 'swiper';
+import { RoleGuardService } from '../services/roleCheck';
 
 @Component({
   selector: 'app-help',
@@ -9,7 +10,7 @@ import Swiper from 'swiper';
 export class HelpComponent implements OnInit {
   isPdfEnlarged = false;
 
-  constructor() { }
+  constructor(public roleService: RoleGuardService) { }
 
   ngOnInit(): void {
   }

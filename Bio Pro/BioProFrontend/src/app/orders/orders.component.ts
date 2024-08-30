@@ -9,6 +9,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
 import { DataService } from '../services/login.service';
+import { RoleGuardService } from '../services/roleCheck';
 
 @Component({
   selector: 'app-orders',
@@ -40,8 +41,8 @@ export class OrdersComponent implements OnInit {
   selectedOrderForStatus: any = null;
   originalOrders:any[]=[]
   baseUrl: string ='https://localhost:44315/Api/';
-  loading:boolean=false
-  constructor(private dialog: MatDialog,private http: HttpClient,private dataservices:OrderService,private snackBar:MatSnackBar,private loginService:DataService) { }
+  loading:boolean=true
+  constructor(public roleService:RoleGuardService, private dialog: MatDialog,private http: HttpClient,private dataservices:OrderService,private snackBar:MatSnackBar,private loginService:DataService) { }
 
   ngAfterViewChecked(): void {
 
@@ -61,7 +62,6 @@ export class OrdersComponent implements OnInit {
         if (Array.isArray(allOrders)) {
           this.orders = allOrders;
           this.originalOrders=allOrders
-         
           this.loading=false
           this.ordersInfo=allOrders
           console.log(this.ordersInfo)
@@ -114,36 +114,7 @@ downloadFile(base64String: string, fileName: string) {
   document.body.removeChild(link);
   this.loginService.addTransaction("Exported","Exported mediafile "+fileName+".")
 }
-  searchOrders() {
-    // if (this.orderId.trim() !== '') {
-    //   const url = `${this.baseUrl}GetOrdersById/${this.orderId}`;
-    //   this.http.get<any>(url)
-    //     .subscribe(
-    //       (data) => {
-    //         console.log(data)
-    //         if (data) {
-    //           this.ordersInfo=[]
-    //           this.orders = [data]; 
-    //           this.getOrdersAndInfo()
 
-    //         } else {
-    //           this.ordersInfo=[]
-    //           this.orders = [data]; 
-    //           this.getOrdersAndInfo()
-  
-    //         }
-    //       },
-    //       (error:HttpErrorResponse) => {
-    //         if (error.status === 404) {
-    //           this.showSnackBar('No orders');
-    //         }
-    //       }
-    //     );
-    // } else {
-
-    //   this.orders= this.originalOrders
-    // }
-  }
   clearSeacrhOrders() {
     this.orders= this.originalOrders
     this.orderId=""

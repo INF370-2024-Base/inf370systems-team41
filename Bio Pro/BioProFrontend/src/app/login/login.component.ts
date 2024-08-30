@@ -12,6 +12,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ResetPasswordComponent } from '../reset-password/reset-password.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { AddAuditTrailViewModels } from '../shared/addAuditTrailViewModel';
+import { RoleGuardService } from '../services/roleCheck';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -21,14 +22,16 @@ export class LoginComponent implements OnInit {
 
   errorMessage: string = ''; 
 
-  constructor(private snackBar:MatSnackBar, private router: Router, private dataService: DataService,private appComponent:AppComponent,private userService:UserServices,private dialog: MatDialog) { }
+  constructor(private snackBar:MatSnackBar, private router: Router, private dataService: DataService,private appComponent:AppComponent,private userService:UserServices,private dialog: MatDialog,private roleService:RoleGuardService) { }
 
+  
   user:SystemUser={
     EmailAddress:"",
     Password:"",
   }
 
   onSubmit() {
+
     sessionStorage.removeItem('Token')
     sessionStorage.removeItem('User')
     this.appComponent.getSignInUser();
@@ -36,7 +39,7 @@ export class LoginComponent implements OnInit {
       .subscribe(
         (result: any) => {          
           sessionStorage.setItem('Token', JSON.stringify(result));
-           
+          
           this.dataService.Login
           this.checkSignInStatusAndNavigate(); 
         },
@@ -54,30 +57,40 @@ export class LoginComponent implements OnInit {
   private checkSignInStatusAndNavigate() {
     this.dataService.checkSignInStatus()
       .subscribe(() => {
-        if( sessionStorage.getItem('User')!=undefined)
-        {const signedInUser=JSON.parse(sessionStorage.getItem('User')!)
-          const id=signedInUser.id
-         const transaction:AddAuditTrailViewModels={
-           AdditionalData:"Logged in",
-           DateOfTransaction:new Date,
-           TransactionType:"Post",
-           SystemUserId:id
-         }
-         console.log(transaction)
-         this.dataService.CreateTransaction(transaction).subscribe(
-           result=>{
-             console.log("Successfully added transaction."+result)
-           }
-           ,
-           error=>{
-             console.log("Unable to add transaction."+error.error)
-             console.log(error.error)
-           }
-         )
-          this.router.navigate(['/home']);
-        this.appComponent.getSignInUser();} 
+        const userInSession = sessionStorage.getItem('User');
+        if (userInSession) {
+          const signedInUser = JSON.parse(userInSession);
+          const id = signedInUser.id;
+          const transaction: AddAuditTrailViewModels = {
+            AdditionalData: "Logged in",
+            DateOfTransaction: new Date(),
+            TransactionType: "Post",
+            SystemUserId: id
+          };
+  
+          console.log(transaction);
+  
+          // Create the transaction
+          this.dataService.CreateTransaction(transaction).subscribe(
+            result => {
+              this.roleService.loadRoles();
+              console.log(this.roleService.getRoles())
+              this.router.navigate(['/home']);
+              this.appComponent.getSignInUser(); 
+              console.log("Successfully added transaction: " + result);
+            },
+            error => {
+              this.roleService.loadRoles();
+              console.log(this.roleService.getRoles())
+              this.router.navigate(['/home']);
+              this.appComponent.getSignInUser(); 
+              console.log("Unable to add transaction: " + error.error);
+            }
+          );
+        }
       });
   }
+  
 
 
 

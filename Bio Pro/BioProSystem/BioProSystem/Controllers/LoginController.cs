@@ -442,9 +442,34 @@ namespace BioProSystem.Controllers
             {
                 var result = await _repository.GetsystemUserAsync(emailAddress);
 
-                if (result == null) return NotFound("user does not exist");
+                if (result == null) return NotFound("User does not exist");
 
-                return Ok(result);
+                var roles = await _userManager.GetRolesAsync(result);
+                var userWithRoles = new UserInfoWithRolesViewModel
+                {
+                    Id = result.Id,
+                    Email = result.Email,
+                    UserName = result.UserName,
+                    EmailConfirmed = result.EmailConfirmed,
+                    PhoneNumber = result.PhoneNumber,
+                    PhoneNumberConfirmed = result.PhoneNumberConfirmed,
+                    TwoFactorEnabled = result.TwoFactorEnabled,
+                    LockoutEnabled = result.LockoutEnabled,
+                    LockoutEnd = result.LockoutEnd,
+                    AccessFailedCount = result.AccessFailedCount,
+                    ConcurrencyStamp = result.ConcurrencyStamp,
+                    SecurityStamp = result.SecurityStamp,
+                    PasswordHash = result.PasswordHash,
+                    NormalizedEmail = result.NormalizedEmail,
+                    NormalizedUserName = result.NormalizedUserName,
+                    Name = result.Name,
+                    Surname = result.Surname,
+                    IsActiveUser = result.isActiveUser,
+                    AuditTrails = result.AuditTrails.ToList(),
+                    Roles = roles.ToList()
+                };
+
+                return Ok(userWithRoles);
             }
             catch (Exception)
             {

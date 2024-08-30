@@ -12,6 +12,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { addMonths, subMonths, addWeeks, subWeeks } from 'date-fns';
 import { AddEventModalComponent } from '../add-event-modal/add-event-modal.component';
 import { HttpErrorResponse } from '@angular/common/http';
+import { RoleGuardService } from '../services/roleCheck';
 
 @Component({
   selector: 'app-calendar',
@@ -22,7 +23,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 })
 
 export class CalendarComponent implements OnInit{
-  constructor(private calendarService:CalendarService,private snackBar:MatSnackBar,private dialog: MatDialog,private fb: FormBuilder){this.form = this.fb.group({
+  constructor(public roleService:RoleGuardService,private calendarService:CalendarService,private snackBar:MatSnackBar,private dialog: MatDialog,private fb: FormBuilder){this.form = this.fb.group({
     Calendar: [''],
     Procedural:['']
   });}
@@ -184,19 +185,26 @@ nosearch:boolean=true
     console.log('Day clicked');
   }
   timeClicked(event: any): void {
-    console.log(event);
-    const dialogRef = this.dialog.open(AddEventModalComponent, {
-      width: '400px',
-      data:{event}
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        // Refresh events if an event was edited or deleted
-        this.fetchCalendarScheduleEvents();
-      }
-    });
-    console.log('Event clicked:', event);
+    if(this.roleService.hasRole(['admin', 'owner','lab manager']))
+    {
+      console.log(event);
+      const dialogRef = this.dialog.open(AddEventModalComponent, {
+        width: '400px',
+        data:{event}
+      });
+  
+      dialogRef.afterClosed().subscribe(result => {
+        if (result) {
+          // Refresh events if an event was edited or deleted
+          this.fetchCalendarScheduleEvents();
+        }
+      });
+      console.log('Event clicked:', event);
+    }
+    else{
+      this.showSnackBar("Not authorized to add events")
+    }
+   
   }
   onEventClick(event: any): void {
     // Assuming you have a method to handle the event click

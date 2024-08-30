@@ -4,7 +4,7 @@
   </div>
 
   <div class="help-grid">
-    <div class="help-card orders-container">
+    <div class="help-card orders-container" *ngIf="roleService.hasRole(['admin', 'owner','lab manager'])">
       <mat-card>
         <mat-card-header>
           <mat-card-title>
@@ -20,7 +20,7 @@
       </mat-card>
     </div>
 
-    <div class="help-card timeline-container">
+    <div class="help-card timeline-container"  *ngIf="roleService.hasRole(['admin', 'owner','lab manager'])">
       <mat-card>
         <mat-card-header>
           <mat-card-title>
@@ -36,7 +36,7 @@
       </mat-card>
     </div>
 
-    <div class="help-card delivery-container">
+    <div class="help-card delivery-container"  *ngIf="roleService.hasRole(['admin', 'owner','lab manager'])">
       <mat-card>
         <mat-card-header>
           <mat-card-title>
@@ -52,7 +52,7 @@
       </mat-card>
     </div>
 
-    <div class="help-card stock-container">
+    <div class="help-card stock-container"  *ngIf="roleService.hasRole(['admin', 'owner','lab manager'])">
       <mat-card>
         <mat-card-header>
           <mat-card-title>
@@ -68,7 +68,7 @@
       </mat-card>
     </div>
 
-    <div class="help-card employee-container">
+    <div class="help-card employee-container"  *ngIf="roleService.hasRole(['admin', 'owner','lab manager'])">
       <mat-card>
         <mat-card-header>
           <mat-card-title>
@@ -84,7 +84,7 @@
       </mat-card>
     </div>
 
-    <div class="help-card dentist-container">
+    <div class="help-card dentist-container"  *ngIf="roleService.hasRole(['admin', 'owner','lab manager'])">
       <mat-card>
         <mat-card-header>
           <mat-card-title>
@@ -100,7 +100,7 @@
       </mat-card>
     </div>
 
-    <div class="help-card dentist-container">
+    <div class="help-card dentist-container" *ngIf="roleService.hasRole(['admin', 'owner','lab manager'])">
       <mat-card>
         <mat-card-header>
           <mat-card-title>

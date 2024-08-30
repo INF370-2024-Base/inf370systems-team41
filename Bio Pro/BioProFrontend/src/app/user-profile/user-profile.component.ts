@@ -23,6 +23,7 @@ export class UserProfileComponent implements OnInit {
       data => {
         this.users = data;
         this.filteredUsers = data;
+        console.log(this.users)
       },
       error => {
         this.errorMessage = 'Error fetching user data';
