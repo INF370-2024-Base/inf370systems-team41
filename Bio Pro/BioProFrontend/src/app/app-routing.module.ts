@@ -121,7 +121,7 @@ const routes: Routes = [
   { path: 'stock-categories', component: StockCategoryComponent, canActivate: [RoleGuardService], data: { expectedRoles: ['Admin', 'Lab Manager',"Owner"]} },
   { path: 'stock-type', component: StockTypeComponent, canActivate: [RoleGuardService], data: { expectedRoles: ['Admin', 'Lab Manager',"Owner"] } },
   { path: 'rp/:email', component: ResetUserPasswordComponent},
-  { path: 'audit-trail', component: AuditTrailComponent, canActivate: [RoleGuardService], data: { expectedRoles: ['Admin', 'Employee'] } },
+  { path: 'audit-trail', component: AuditTrailComponent, canActivate: [RoleGuardService], data: { expectedRoles: ['Admin', 'Lab Manager','Owner'] } },
   { path: 'unauthorized', component: UnauthorizedComponent },
 ];
 

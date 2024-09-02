@@ -12,13 +12,14 @@ export class RoleGuardService implements CanActivate {
     const expectedRoles: string[] = route.data['expectedRoles'];
     const userRoles: string[] = JSON.parse(sessionStorage.getItem('User') || '[]').roles;
     const user: any = JSON.parse(sessionStorage.getItem('User') || '[]')
+    console.log(user)
 
-    if (!user) {
+    if (user.length==0) {
         this.router.navigate(['unauthorized'], { queryParams: { reason: 'notSignedIn' } });
         return false;
       }
   
-      // Check if the user has any of the expected roles
+
       if (!expectedRoles.some(role => this.roles.map(r => r.toLowerCase()).includes(role.toLowerCase()))) {
         this.router.navigate(['unauthorized']);
         return false;
@@ -29,6 +30,7 @@ export class RoleGuardService implements CanActivate {
   public loadRoles() {
     const user = JSON.parse(sessionStorage.getItem('User') || '{}');
     this.roles = user.roles || [];
+
   }
 
   // Get roles

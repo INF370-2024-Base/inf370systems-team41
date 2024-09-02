@@ -173,10 +173,10 @@
       </a>
       
 
-<!-- <a [routerLink]="['/Audit']" class="nav-link">
-  <mat-icon>inventory_2</mat-icon>
-  <span>Audit</span>
-</a> -->
+      <a mat-list-item [routerLink]="['/audit-trail']" class="nav-link" *ngIf="roleService.hasRole(['admin','lab manager','owner'])">
+        <mat-icon>inventory_2</mat-icon>
+        <span>Audit</span>
+      </a>
 
 
       <!-- Help Page -->

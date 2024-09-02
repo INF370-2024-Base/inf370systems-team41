@@ -1,3 +1,4 @@
+
 <div class="filter-container">
     <!-- Date Range Filter -->
     <mat-form-field appearance="fill">
@@ -74,4 +75,24 @@
       <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
     </mat-table>
   </div>
-  
+  <mat-card class="error-card" *ngIf="filteredAuditTrails.data.length === 0">
+    <mat-card-content>
+      <mat-icon class="error-icon">error_outline</mat-icon>
+      <h1>None found</h1>
+    </mat-card-content>
+  </mat-card>
+  <style>
+    .error-card {
+  max-width: 400px;
+  margin: auto;
+  padding: 20px;
+  color: red;
+  text-align: center;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+}
+.error-icon {
+  font-size: 48px;
+  color: red;
+  margin-bottom: 20px;
+}
+  </style>
