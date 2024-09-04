@@ -43,6 +43,7 @@ namespace BioProSystem.Controllers
         }
         [HttpPost]
         [Route("Register")]
+        [Authorize(Roles = " Lab Manager, Owner")]
         public async Task<IActionResult> Register(SystemUserAddViewModel uvm)
         {
             var user = await _userManager.FindByIdAsync(uvm.emailaddress);
@@ -275,6 +276,7 @@ namespace BioProSystem.Controllers
 
             [HttpPost]
         [Route("CreateRole")]
+        [Authorize(Roles = " Lab Manager, Owner")]
         public async Task<IActionResult> CreateRole(string roleName)
         {
             var role = await _roleManager.FindByNameAsync(roleName);
@@ -300,7 +302,8 @@ namespace BioProSystem.Controllers
 
         [HttpPost]
         [Route("AssignRole")]
-        
+        [Authorize(Roles = " Lab Manager, Owner")]
+
         public async Task<IActionResult> AssignRole(string emailAddress, string roleName)
         {
             var user = await _userManager.FindByEmailAsync(emailAddress);
@@ -313,6 +316,7 @@ namespace BioProSystem.Controllers
         }
         [HttpPut]
         [Route("EditUser")]
+        [Authorize(Roles = " Lab Manager, Owner")]
         public async Task<IActionResult> EditUser(EditUser user)
         {
             var userToEdit = await _userManager.FindByEmailAsync(user.OldEmail);
@@ -374,6 +378,7 @@ namespace BioProSystem.Controllers
 
         [HttpPut]
         [Route("RemoveAccess/{userEmail}")]
+        [Authorize(Roles = " Lab Manager, Owner")]
 
         public async Task<IActionResult> RemoveAccess(string userEmail)
         {
