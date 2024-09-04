@@ -3,8 +3,52 @@
   "WorkspaceRootPath": "C:\\Users\\leze7\\Desktop\\UNI 2024\\INF 370\\Don\u0027t panic IT 5 code\\inf370systems-team41\\Bio Pro\\BioProSystem\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{F4A9456E-E44A-4271-BCB7-291A4F4ADE4E}|BioProSystem\\BioProSystem.csproj|c:\\users\\leze7\\desktop\\uni 2024\\inf 370\\don\u0027t panic it 5 code\\inf370systems-team41\\bio pro\\bioprosystem\\bioprosystem\\controllers\\stockcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F4A9456E-E44A-4271-BCB7-291A4F4ADE4E}|BioProSystem\\BioProSystem.csproj|solutionrelative:bioprosystem\\controllers\\stockcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F4A9456E-E44A-4271-BCB7-291A4F4ADE4E}|BioProSystem\\BioProSystem.csproj|c:\\users\\leze7\\desktop\\uni 2024\\inf 370\\don\u0027t panic it 5 code\\inf370systems-team41\\bio pro\\bioprosystem\\bioprosystem\\controllers\\reportscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F4A9456E-E44A-4271-BCB7-291A4F4ADE4E}|BioProSystem\\BioProSystem.csproj|solutionrelative:bioprosystem\\controllers\\reportscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F4A9456E-E44A-4271-BCB7-291A4F4ADE4E}|BioProSystem\\BioProSystem.csproj|c:\\users\\leze7\\desktop\\uni 2024\\inf 370\\don\u0027t panic it 5 code\\inf370systems-team41\\bio pro\\bioprosystem\\bioprosystem\\controllers\\ordercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F4A9456E-E44A-4271-BCB7-291A4F4ADE4E}|BioProSystem\\BioProSystem.csproj|solutionrelative:bioprosystem\\controllers\\ordercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F4A9456E-E44A-4271-BCB7-291A4F4ADE4E}|BioProSystem\\BioProSystem.csproj|c:\\users\\leze7\\desktop\\uni 2024\\inf 370\\don\u0027t panic it 5 code\\inf370systems-team41\\bio pro\\bioprosystem\\bioprosystem\\controllers\\proceduraltimelinecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F4A9456E-E44A-4271-BCB7-291A4F4ADE4E}|BioProSystem\\BioProSystem.csproj|solutionrelative:bioprosystem\\controllers\\proceduraltimelinecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F4A9456E-E44A-4271-BCB7-291A4F4ADE4E}|BioProSystem\\BioProSystem.csproj|c:\\users\\leze7\\desktop\\uni 2024\\inf 370\\don\u0027t panic it 5 code\\inf370systems-team41\\bio pro\\bioprosystem\\bioprosystem\\models\\jobtitle.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F4A9456E-E44A-4271-BCB7-291A4F4ADE4E}|BioProSystem\\BioProSystem.csproj|solutionrelative:bioprosystem\\models\\jobtitle.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F4A9456E-E44A-4271-BCB7-291A4F4ADE4E}|BioProSystem\\BioProSystem.csproj|c:\\users\\leze7\\desktop\\uni 2024\\inf 370\\don\u0027t panic it 5 code\\inf370systems-team41\\bio pro\\bioprosystem\\bioprosystem\\models\\employee.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F4A9456E-E44A-4271-BCB7-291A4F4ADE4E}|BioProSystem\\BioProSystem.csproj|solutionrelative:bioprosystem\\models\\employee.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F4A9456E-E44A-4271-BCB7-291A4F4ADE4E}|BioProSystem\\BioProSystem.csproj|c:\\users\\leze7\\desktop\\uni 2024\\inf 370\\don\u0027t panic it 5 code\\inf370systems-team41\\bio pro\\bioprosystem\\bioprosystem\\models\\systemuser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F4A9456E-E44A-4271-BCB7-291A4F4ADE4E}|BioProSystem\\BioProSystem.csproj|solutionrelative:bioprosystem\\models\\systemuser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F4A9456E-E44A-4271-BCB7-291A4F4ADE4E}|BioProSystem\\BioProSystem.csproj|c:\\users\\leze7\\desktop\\uni 2024\\inf 370\\don\u0027t panic it 5 code\\inf370systems-team41\\bio pro\\bioprosystem\\bioprosystem\\controllers\\teethshadecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F4A9456E-E44A-4271-BCB7-291A4F4ADE4E}|BioProSystem\\BioProSystem.csproj|solutionrelative:bioprosystem\\controllers\\teethshadecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F4A9456E-E44A-4271-BCB7-291A4F4ADE4E}|BioProSystem\\BioProSystem.csproj|c:\\users\\leze7\\desktop\\uni 2024\\inf 370\\don\u0027t panic it 5 code\\inf370systems-team41\\bio pro\\bioprosystem\\bioprosystem\\viewmodels\\updateuser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F4A9456E-E44A-4271-BCB7-291A4F4ADE4E}|BioProSystem\\BioProSystem.csproj|solutionrelative:bioprosystem\\viewmodels\\updateuser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F4A9456E-E44A-4271-BCB7-291A4F4ADE4E}|BioProSystem\\BioProSystem.csproj|c:\\users\\leze7\\desktop\\uni 2024\\inf 370\\don\u0027t panic it 5 code\\inf370systems-team41\\bio pro\\bioprosystem\\bioprosystem\\controllers\\calendarcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F4A9456E-E44A-4271-BCB7-291A4F4ADE4E}|BioProSystem\\BioProSystem.csproj|solutionrelative:bioprosystem\\controllers\\calendarcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{F4A9456E-E44A-4271-BCB7-291A4F4ADE4E}|BioProSystem\\BioProSystem.csproj|c:\\users\\leze7\\desktop\\uni 2024\\inf 370\\don\u0027t panic it 5 code\\inf370systems-team41\\bio pro\\bioprosystem\\bioprosystem\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
       "RelativeMoniker": "D:0:0:{F4A9456E-E44A-4271-BCB7-291A4F4ADE4E}|BioProSystem\\BioProSystem.csproj|solutionrelative:bioprosystem\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F4A9456E-E44A-4271-BCB7-291A4F4ADE4E}|BioProSystem\\BioProSystem.csproj|c:\\users\\leze7\\desktop\\uni 2024\\inf 370\\don\u0027t panic it 5 code\\inf370systems-team41\\bio pro\\bioprosystem\\bioprosystem\\controllers\\logincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F4A9456E-E44A-4271-BCB7-291A4F4ADE4E}|BioProSystem\\BioProSystem.csproj|solutionrelative:bioprosystem\\controllers\\logincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{F4A9456E-E44A-4271-BCB7-291A4F4ADE4E}|BioProSystem\\BioProSystem.csproj|c:\\users\\leze7\\desktop\\uni 2024\\inf 370\\don\u0027t panic it 5 code\\inf370systems-team41\\bio pro\\bioprosystem\\bioprosystem\\models\\userwithrolesviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -17,10 +61,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{F4A9456E-E44A-4271-BCB7-291A4F4ADE4E}|BioProSystem\\BioProSystem.csproj|c:\\users\\leze7\\desktop\\uni 2024\\inf 370\\don\u0027t panic it 5 code\\inf370systems-team41\\bio pro\\bioprosystem\\bioprosystem\\models\\teethshade.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{F4A9456E-E44A-4271-BCB7-291A4F4ADE4E}|BioProSystem\\BioProSystem.csproj|solutionrelative:bioprosystem\\models\\teethshade.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F4A9456E-E44A-4271-BCB7-291A4F4ADE4E}|BioProSystem\\BioProSystem.csproj|c:\\users\\leze7\\desktop\\uni 2024\\inf 370\\don\u0027t panic it 5 code\\inf370systems-team41\\bio pro\\bioprosystem\\bioprosystem\\models\\systemuser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F4A9456E-E44A-4271-BCB7-291A4F4ADE4E}|BioProSystem\\BioProSystem.csproj|solutionrelative:bioprosystem\\models\\systemuser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{F4A9456E-E44A-4271-BCB7-291A4F4ADE4E}|BioProSystem\\BioProSystem.csproj|c:\\users\\leze7\\desktop\\uni 2024\\inf 370\\don\u0027t panic it 5 code\\inf370systems-team41\\bio pro\\bioprosystem\\bioprosystem\\models\\systemordersteps.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -111,20 +151,12 @@
       "RelativeMoniker": "D:0:0:{F4A9456E-E44A-4271-BCB7-291A4F4ADE4E}|BioProSystem\\BioProSystem.csproj|solutionrelative:bioprosystem\\models\\mediafile.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{F4A9456E-E44A-4271-BCB7-291A4F4ADE4E}|BioProSystem\\BioProSystem.csproj|c:\\users\\leze7\\desktop\\uni 2024\\inf 370\\don\u0027t panic it 5 code\\inf370systems-team41\\bio pro\\bioprosystem\\bioprosystem\\models\\jobtitle.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F4A9456E-E44A-4271-BCB7-291A4F4ADE4E}|BioProSystem\\BioProSystem.csproj|solutionrelative:bioprosystem\\models\\jobtitle.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{F4A9456E-E44A-4271-BCB7-291A4F4ADE4E}|BioProSystem\\BioProSystem.csproj|c:\\users\\leze7\\desktop\\uni 2024\\inf 370\\don\u0027t panic it 5 code\\inf370systems-team41\\bio pro\\bioprosystem\\bioprosystem\\models\\irepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{F4A9456E-E44A-4271-BCB7-291A4F4ADE4E}|BioProSystem\\BioProSystem.csproj|solutionrelative:bioprosystem\\models\\irepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{F4A9456E-E44A-4271-BCB7-291A4F4ADE4E}|BioProSystem\\BioProSystem.csproj|c:\\users\\leze7\\desktop\\uni 2024\\inf 370\\don\u0027t panic it 5 code\\inf370systems-team41\\bio pro\\bioprosystem\\bioprosystem\\models\\employeedailyhours.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{F4A9456E-E44A-4271-BCB7-291A4F4ADE4E}|BioProSystem\\BioProSystem.csproj|solutionrelative:bioprosystem\\models\\employeedailyhours.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F4A9456E-E44A-4271-BCB7-291A4F4ADE4E}|BioProSystem\\BioProSystem.csproj|c:\\users\\leze7\\desktop\\uni 2024\\inf 370\\don\u0027t panic it 5 code\\inf370systems-team41\\bio pro\\bioprosystem\\bioprosystem\\models\\employee.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F4A9456E-E44A-4271-BCB7-291A4F4ADE4E}|BioProSystem\\BioProSystem.csproj|solutionrelative:bioprosystem\\models\\employee.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{F4A9456E-E44A-4271-BCB7-291A4F4ADE4E}|BioProSystem\\BioProSystem.csproj|c:\\users\\leze7\\desktop\\uni 2024\\inf 370\\don\u0027t panic it 5 code\\inf370systems-team41\\bio pro\\bioprosystem\\bioprosystem\\models\\discount.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -175,18 +207,6 @@
       "RelativeMoniker": "D:0:0:{F4A9456E-E44A-4271-BCB7-291A4F4ADE4E}|BioProSystem\\BioProSystem.csproj|solutionrelative:bioprosystem\\controllers\\employeecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{F4A9456E-E44A-4271-BCB7-291A4F4ADE4E}|BioProSystem\\BioProSystem.csproj|c:\\users\\leze7\\desktop\\uni 2024\\inf 370\\don\u0027t panic it 5 code\\inf370systems-team41\\bio pro\\bioprosystem\\bioprosystem\\controllers\\ordercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F4A9456E-E44A-4271-BCB7-291A4F4ADE4E}|BioProSystem\\BioProSystem.csproj|solutionrelative:bioprosystem\\controllers\\ordercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F4A9456E-E44A-4271-BCB7-291A4F4ADE4E}|BioProSystem\\BioProSystem.csproj|c:\\users\\leze7\\desktop\\uni 2024\\inf 370\\don\u0027t panic it 5 code\\inf370systems-team41\\bio pro\\bioprosystem\\bioprosystem\\controllers\\proceduraltimelinecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F4A9456E-E44A-4271-BCB7-291A4F4ADE4E}|BioProSystem\\BioProSystem.csproj|solutionrelative:bioprosystem\\controllers\\proceduraltimelinecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F4A9456E-E44A-4271-BCB7-291A4F4ADE4E}|BioProSystem\\BioProSystem.csproj|c:\\users\\leze7\\desktop\\uni 2024\\inf 370\\don\u0027t panic it 5 code\\inf370systems-team41\\bio pro\\bioprosystem\\bioprosystem\\controllers\\reportscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F4A9456E-E44A-4271-BCB7-291A4F4ADE4E}|BioProSystem\\BioProSystem.csproj|solutionrelative:bioprosystem\\controllers\\reportscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{F4A9456E-E44A-4271-BCB7-291A4F4ADE4E}|BioProSystem\\BioProSystem.csproj|c:\\users\\leze7\\desktop\\uni 2024\\inf 370\\don\u0027t panic it 5 code\\inf370systems-team41\\bio pro\\bioprosystem\\bioprosystem\\controllers\\deliverycontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{F4A9456E-E44A-4271-BCB7-291A4F4ADE4E}|BioProSystem\\BioProSystem.csproj|solutionrelative:bioprosystem\\controllers\\deliverycontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -203,16 +223,8 @@
       "RelativeMoniker": "D:0:0:{F4A9456E-E44A-4271-BCB7-291A4F4ADE4E}|BioProSystem\\BioProSystem.csproj|solutionrelative:bioprosystem\\controllers\\dentistcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{F4A9456E-E44A-4271-BCB7-291A4F4ADE4E}|BioProSystem\\BioProSystem.csproj|c:\\users\\leze7\\desktop\\uni 2024\\inf 370\\don\u0027t panic it 5 code\\inf370systems-team41\\bio pro\\bioprosystem\\bioprosystem\\controllers\\logincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F4A9456E-E44A-4271-BCB7-291A4F4ADE4E}|BioProSystem\\BioProSystem.csproj|solutionrelative:bioprosystem\\controllers\\logincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{F4A9456E-E44A-4271-BCB7-291A4F4ADE4E}|BioProSystem\\BioProSystem.csproj|c:\\users\\leze7\\desktop\\uni 2024\\inf 370\\don\u0027t panic it 5 code\\inf370systems-team41\\bio pro\\bioprosystem\\bioprosystem\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{F4A9456E-E44A-4271-BCB7-291A4F4ADE4E}|BioProSystem\\BioProSystem.csproj|solutionrelative:bioprosystem\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F4A9456E-E44A-4271-BCB7-291A4F4ADE4E}|BioProSystem\\BioProSystem.csproj|c:\\users\\leze7\\desktop\\uni 2024\\inf 370\\don\u0027t panic it 5 code\\inf370systems-team41\\bio pro\\bioprosystem\\bioprosystem\\controllers\\stockcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F4A9456E-E44A-4271-BCB7-291A4F4ADE4E}|BioProSystem\\BioProSystem.csproj|solutionrelative:bioprosystem\\controllers\\stockcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{F4A9456E-E44A-4271-BCB7-291A4F4ADE4E}|BioProSystem\\BioProSystem.csproj|c:\\users\\leze7\\desktop\\uni 2024\\inf 370\\don\u0027t panic it 5 code\\inf370systems-team41\\bio pro\\bioprosystem\\bioprosystem\\viewmodels\\addstockviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -227,10 +239,6 @@
     },
     {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\piete\\Local Storage\\Uni\\370\\New folder (2)\\inf370systems-team41\\Bio Pro\\BioProSystem\\BioProSystem\\Migrations\\20240807170209_AuditTrail.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F4A9456E-E44A-4271-BCB7-291A4F4ADE4E}|BioProSystem\\BioProSystem.csproj|c:\\users\\leze7\\desktop\\uni 2024\\inf 370\\don\u0027t panic it 5 code\\inf370systems-team41\\bio pro\\bioprosystem\\bioprosystem\\controllers\\calendarcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F4A9456E-E44A-4271-BCB7-291A4F4ADE4E}|BioProSystem\\BioProSystem.csproj|solutionrelative:bioprosystem\\controllers\\calendarcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{F4A9456E-E44A-4271-BCB7-291A4F4ADE4E}|BioProSystem\\BioProSystem.csproj|c:\\users\\leze7\\desktop\\uni 2024\\inf 370\\don\u0027t panic it 5 code\\inf370systems-team41\\bio pro\\bioprosystem\\bioprosystem\\viewmodels\\stocktypeviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -275,10 +283,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{F4A9456E-E44A-4271-BCB7-291A4F4ADE4E}|BioProSystem\\BioProSystem.csproj|c:\\users\\leze7\\desktop\\uni 2024\\inf 370\\don\u0027t panic it 5 code\\inf370systems-team41\\bio pro\\bioprosystem\\bioprosystem\\migrations\\20240701164411_sotckorderid.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{F4A9456E-E44A-4271-BCB7-291A4F4ADE4E}|BioProSystem\\BioProSystem.csproj|solutionrelative:bioprosystem\\migrations\\20240701164411_sotckorderid.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F4A9456E-E44A-4271-BCB7-291A4F4ADE4E}|BioProSystem\\BioProSystem.csproj|c:\\users\\leze7\\desktop\\uni 2024\\inf 370\\don\u0027t panic it 5 code\\inf370systems-team41\\bio pro\\bioprosystem\\bioprosystem\\controllers\\teethshadecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F4A9456E-E44A-4271-BCB7-291A4F4ADE4E}|BioProSystem\\BioProSystem.csproj|solutionrelative:bioprosystem\\controllers\\teethshadecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{F4A9456E-E44A-4271-BCB7-291A4F4ADE4E}|BioProSystem\\BioProSystem.csproj|c:\\users\\leze7\\desktop\\uni 2024\\inf 370\\don\u0027t panic it 5 code\\inf370systems-team41\\bio pro\\bioprosystem\\bioprosystem\\viewmodels\\addstockitemviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -369,10 +373,6 @@
       "RelativeMoniker": "D:0:0:{F4A9456E-E44A-4271-BCB7-291A4F4ADE4E}|BioProSystem\\BioProSystem.csproj|solutionrelative:bioprosystem\\viewmodels\\editemployee.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{F4A9456E-E44A-4271-BCB7-291A4F4ADE4E}|BioProSystem\\BioProSystem.csproj|c:\\users\\leze7\\desktop\\uni 2024\\inf 370\\don\u0027t panic it 5 code\\inf370systems-team41\\bio pro\\bioprosystem\\bioprosystem\\viewmodels\\updateuser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F4A9456E-E44A-4271-BCB7-291A4F4ADE4E}|BioProSystem\\BioProSystem.csproj|solutionrelative:bioprosystem\\viewmodels\\updateuser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{F4A9456E-E44A-4271-BCB7-291A4F4ADE4E}|BioProSystem\\BioProSystem.csproj|c:\\users\\leze7\\desktop\\uni 2024\\inf 370\\don\u0027t panic it 5 code\\inf370systems-team41\\bio pro\\bioprosystem\\bioprosystem\\factory\\appuserclaimsprincipalfactory.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{F4A9456E-E44A-4271-BCB7-291A4F4ADE4E}|BioProSystem\\BioProSystem.csproj|solutionrelative:bioprosystem\\factory\\appuserclaimsprincipalfactory.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -409,37 +409,39 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 6,
+          "SelectedChildIndex": 0,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 52,
+              "DocumentIndex": 0,
               "Title": "StockController.cs",
               "DocumentMoniker": "C:\\Users\\leze7\\Desktop\\UNI 2024\\INF 370\\Don\u0027t panic IT 5 code\\inf370systems-team41\\Bio Pro\\BioProSystem\\BioProSystem\\Controllers\\StockController.cs",
               "RelativeDocumentMoniker": "BioProSystem\\Controllers\\StockController.cs",
               "ToolTip": "C:\\Users\\leze7\\Desktop\\UNI 2024\\INF 370\\Don\u0027t panic IT 5 code\\inf370systems-team41\\Bio Pro\\BioProSystem\\BioProSystem\\Controllers\\StockController.cs",
               "RelativeToolTip": "BioProSystem\\Controllers\\StockController.cs",
-              "ViewState": "AQIAAGMBAAAAAAAAAAAuwEsBAAATAAAA",
+              "ViewState": "AQIAAIYCAAAAAAAAAAAYwJcCAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-06-15T17:10:38.785Z",
-              "IsPinned": true
+              "IsPinned": true,
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 43,
+              "DocumentIndex": 2,
               "Title": "OrderController.cs",
               "DocumentMoniker": "C:\\Users\\leze7\\Desktop\\UNI 2024\\INF 370\\Don\u0027t panic IT 5 code\\inf370systems-team41\\Bio Pro\\BioProSystem\\BioProSystem\\Controllers\\OrderController.cs",
               "RelativeDocumentMoniker": "BioProSystem\\Controllers\\OrderController.cs",
               "ToolTip": "C:\\Users\\leze7\\Desktop\\UNI 2024\\INF 370\\Don\u0027t panic IT 5 code\\inf370systems-team41\\Bio Pro\\BioProSystem\\BioProSystem\\Controllers\\OrderController.cs",
               "RelativeToolTip": "BioProSystem\\Controllers\\OrderController.cs",
-              "ViewState": "AQIAAKgBAAAAAAAAAIAwwMEBAAAJAAAA",
+              "ViewState": "AQIAAAMAAAAAAAAAAAAnwFkAAAAuAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-05-11T09:32:26.094Z",
-              "IsPinned": true
+              "IsPinned": true,
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 49,
+              "DocumentIndex": 54,
               "Title": "DentistController.cs",
               "DocumentMoniker": "C:\\Users\\leze7\\Desktop\\UNI 2024\\INF 370\\Don\u0027t panic IT 5 code\\inf370systems-team41\\Bio Pro\\BioProSystem\\BioProSystem\\Controllers\\DentistController.cs",
               "RelativeDocumentMoniker": "BioProSystem\\Controllers\\DentistController.cs",
@@ -452,21 +454,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 50,
+              "DocumentIndex": 11,
               "Title": "LoginController.cs",
               "DocumentMoniker": "C:\\Users\\leze7\\Desktop\\UNI 2024\\INF 370\\Don\u0027t panic IT 5 code\\inf370systems-team41\\Bio Pro\\BioProSystem\\BioProSystem\\Controllers\\LoginController.cs",
               "RelativeDocumentMoniker": "BioProSystem\\Controllers\\LoginController.cs",
               "ToolTip": "C:\\Users\\leze7\\Desktop\\UNI 2024\\INF 370\\Don\u0027t panic IT 5 code\\inf370systems-team41\\Bio Pro\\BioProSystem\\BioProSystem\\Controllers\\LoginController.cs",
               "RelativeToolTip": "BioProSystem\\Controllers\\LoginController.cs",
-              "ViewState": "AQIAAAwCAAAAAAAAAAAAwBkCAABOAAAA",
+              "ViewState": "AQIAAAsCAAAAAAAAAAAQwBkCAABOAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-05-14T00:58:57.413Z",
-              "IsPinned": true,
-              "EditorCaption": ""
+              "IsPinned": true
             },
             {
               "$type": "Document",
-              "DocumentIndex": 28,
+              "DocumentIndex": 37,
               "Title": "IRepository.cs",
               "DocumentMoniker": "C:\\Users\\leze7\\Desktop\\UNI 2024\\INF 370\\Don\u0027t panic IT 5 code\\inf370systems-team41\\Bio Pro\\BioProSystem\\BioProSystem\\Models\\IRepository.cs",
               "RelativeDocumentMoniker": "BioProSystem\\Models\\IRepository.cs",
@@ -479,7 +480,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 48,
+              "DocumentIndex": 53,
               "Title": "Repository.cs",
               "DocumentMoniker": "C:\\Users\\leze7\\Desktop\\UNI 2024\\INF 370\\Don\u0027t panic IT 5 code\\inf370systems-team41\\Bio Pro\\BioProSystem\\BioProSystem\\Models\\Repository.cs",
               "RelativeDocumentMoniker": "BioProSystem\\Models\\Repository.cs",
@@ -492,32 +493,124 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 6,
+              "Title": "SystemUser.cs",
+              "DocumentMoniker": "C:\\Users\\leze7\\Desktop\\UNI 2024\\INF 370\\Don\u0027t panic IT 5 code\\inf370systems-team41\\Bio Pro\\BioProSystem\\BioProSystem\\Models\\SystemUser.cs",
+              "RelativeDocumentMoniker": "BioProSystem\\Models\\SystemUser.cs",
+              "ToolTip": "C:\\Users\\leze7\\Desktop\\UNI 2024\\INF 370\\Don\u0027t panic IT 5 code\\inf370systems-team41\\Bio Pro\\BioProSystem\\BioProSystem\\Models\\SystemUser.cs",
+              "RelativeToolTip": "BioProSystem\\Models\\SystemUser.cs",
+              "ViewState": "AQIAAAMAAAAAAAAAAAAMwA4AAAAnAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-05-23T15:35:40.913Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "TeethShadeController.cs",
+              "DocumentMoniker": "C:\\Users\\leze7\\Desktop\\UNI 2024\\INF 370\\Don\u0027t panic IT 5 code\\inf370systems-team41\\Bio Pro\\BioProSystem\\BioProSystem\\Controllers\\TeethShadeController.cs",
+              "RelativeDocumentMoniker": "BioProSystem\\Controllers\\TeethShadeController.cs",
+              "ToolTip": "C:\\Users\\leze7\\Desktop\\UNI 2024\\INF 370\\Don\u0027t panic IT 5 code\\inf370systems-team41\\Bio Pro\\BioProSystem\\BioProSystem\\Controllers\\TeethShadeController.cs",
+              "RelativeToolTip": "BioProSystem\\Controllers\\TeethShadeController.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABAAAAAIAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-05-11T11:10:14.99Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "Employee.cs",
+              "DocumentMoniker": "C:\\Users\\leze7\\Desktop\\UNI 2024\\INF 370\\Don\u0027t panic IT 5 code\\inf370systems-team41\\Bio Pro\\BioProSystem\\BioProSystem\\Models\\Employee.cs",
+              "RelativeDocumentMoniker": "BioProSystem\\Models\\Employee.cs",
+              "ToolTip": "C:\\Users\\leze7\\Desktop\\UNI 2024\\INF 370\\Don\u0027t panic IT 5 code\\inf370systems-team41\\Bio Pro\\BioProSystem\\BioProSystem\\Models\\Employee.cs",
+              "RelativeToolTip": "BioProSystem\\Models\\Employee.cs",
+              "ViewState": "AQIAABUAAAAAAAAAAAA7wCAAAAAbAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-05-21T15:44:38.396Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "JobTitle.cs",
+              "DocumentMoniker": "C:\\Users\\leze7\\Desktop\\UNI 2024\\INF 370\\Don\u0027t panic IT 5 code\\inf370systems-team41\\Bio Pro\\BioProSystem\\BioProSystem\\Models\\JobTitle.cs",
+              "RelativeDocumentMoniker": "BioProSystem\\Models\\JobTitle.cs",
+              "ToolTip": "C:\\Users\\leze7\\Desktop\\UNI 2024\\INF 370\\Don\u0027t panic IT 5 code\\inf370systems-team41\\Bio Pro\\BioProSystem\\BioProSystem\\Models\\JobTitle.cs",
+              "RelativeToolTip": "BioProSystem\\Models\\JobTitle.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAgAAAAJAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-05-16T20:14:27.43Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "ProceduralTimelineController.cs",
+              "DocumentMoniker": "C:\\Users\\leze7\\Desktop\\UNI 2024\\INF 370\\Don\u0027t panic IT 5 code\\inf370systems-team41\\Bio Pro\\BioProSystem\\BioProSystem\\Controllers\\ProceduralTimelineController.cs",
+              "RelativeDocumentMoniker": "BioProSystem\\Controllers\\ProceduralTimelineController.cs",
+              "ToolTip": "C:\\Users\\leze7\\Desktop\\UNI 2024\\INF 370\\Don\u0027t panic IT 5 code\\inf370systems-team41\\Bio Pro\\BioProSystem\\BioProSystem\\Controllers\\ProceduralTimelineController.cs",
+              "RelativeToolTip": "BioProSystem\\Controllers\\ProceduralTimelineController.cs",
+              "ViewState": "AQIAAF0AAAAAAAAAAAAgwCQAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-30T22:29:28.751Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "ReportsController.cs",
+              "DocumentMoniker": "C:\\Users\\leze7\\Desktop\\UNI 2024\\INF 370\\Don\u0027t panic IT 5 code\\inf370systems-team41\\Bio Pro\\BioProSystem\\BioProSystem\\Controllers\\ReportsController.cs",
+              "RelativeDocumentMoniker": "BioProSystem\\Controllers\\ReportsController.cs",
+              "ToolTip": "C:\\Users\\leze7\\Desktop\\UNI 2024\\INF 370\\Don\u0027t panic IT 5 code\\inf370systems-team41\\Bio Pro\\BioProSystem\\BioProSystem\\Controllers\\ReportsController.cs",
+              "RelativeToolTip": "BioProSystem\\Controllers\\ReportsController.cs",
+              "ViewState": "AQIAAGwAAAAAAAAAAAAowJYAAAAzAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-08-16T11:23:40.028Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "UpdateUser.cs",
+              "DocumentMoniker": "C:\\Users\\leze7\\Desktop\\UNI 2024\\INF 370\\Don\u0027t panic IT 5 code\\inf370systems-team41\\Bio Pro\\BioProSystem\\BioProSystem\\ViewModels\\UpdateUser.cs",
+              "RelativeDocumentMoniker": "BioProSystem\\ViewModels\\UpdateUser.cs",
+              "ToolTip": "C:\\Users\\leze7\\Desktop\\UNI 2024\\INF 370\\Don\u0027t panic IT 5 code\\inf370systems-team41\\Bio Pro\\BioProSystem\\BioProSystem\\ViewModels\\UpdateUser.cs",
+              "RelativeToolTip": "BioProSystem\\ViewModels\\UpdateUser.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAcAAAAhAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-03T11:41:45.03Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "CalendarController.cs",
+              "DocumentMoniker": "C:\\Users\\leze7\\Desktop\\UNI 2024\\INF 370\\Don\u0027t panic IT 5 code\\inf370systems-team41\\Bio Pro\\BioProSystem\\BioProSystem\\Controllers\\CalendarController.cs",
+              "RelativeDocumentMoniker": "BioProSystem\\Controllers\\CalendarController.cs",
+              "ToolTip": "C:\\Users\\leze7\\Desktop\\UNI 2024\\INF 370\\Don\u0027t panic IT 5 code\\inf370systems-team41\\Bio Pro\\BioProSystem\\BioProSystem\\Controllers\\CalendarController.cs",
+              "RelativeToolTip": "BioProSystem\\Controllers\\CalendarController.cs",
+              "ViewState": "AQIAACgAAAAAAAAAAAAQwDAAAAAvAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-30T18:57:22.038Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
               "Title": "appsettings.json",
               "DocumentMoniker": "C:\\Users\\leze7\\Desktop\\UNI 2024\\INF 370\\Don\u0027t panic IT 5 code\\inf370systems-team41\\Bio Pro\\BioProSystem\\BioProSystem\\appsettings.json",
               "RelativeDocumentMoniker": "BioProSystem\\appsettings.json",
-              "ToolTip": "C:\\Users\\leze7\\Desktop\\UNI 2024\\INF 370\\Don\u0027t panic IT 5 code\\inf370systems-team41\\Bio Pro\\BioProSystem\\BioProSystem\\appsettings.json*",
-              "RelativeToolTip": "BioProSystem\\appsettings.json*",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAoAAAAxAAAA",
+              "ToolTip": "C:\\Users\\leze7\\Desktop\\UNI 2024\\INF 370\\Don\u0027t panic IT 5 code\\inf370systems-team41\\Bio Pro\\BioProSystem\\BioProSystem\\appsettings.json",
+              "RelativeToolTip": "BioProSystem\\appsettings.json",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABAAAAAEAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
               "WhenOpened": "2024-05-13T13:29:18.467Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "UserWithRolesViewModel.cs",
-              "DocumentMoniker": "C:\\Users\\leze7\\Desktop\\UNI 2024\\INF 370\\Don\u0027t panic IT 5 code\\inf370systems-team41\\Bio Pro\\BioProSystem\\BioProSystem\\Models\\UserWithRolesViewModel.cs",
-              "RelativeDocumentMoniker": "BioProSystem\\Models\\UserWithRolesViewModel.cs",
-              "ToolTip": "C:\\Users\\leze7\\Desktop\\UNI 2024\\INF 370\\Don\u0027t panic IT 5 code\\inf370systems-team41\\Bio Pro\\BioProSystem\\BioProSystem\\Models\\UserWithRolesViewModel.cs",
-              "RelativeToolTip": "BioProSystem\\Models\\UserWithRolesViewModel.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAgAAAAGAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-08-24T08:30:16.982Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 13,
               "Title": "UserAction.cs",
               "DocumentMoniker": "C:\\Users\\leze7\\Desktop\\UNI 2024\\INF 370\\Don\u0027t panic IT 5 code\\inf370systems-team41\\Bio Pro\\BioProSystem\\BioProSystem\\Models\\UserAction.cs",
               "RelativeDocumentMoniker": "BioProSystem\\Models\\UserAction.cs",
@@ -529,19 +622,19 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "SystemUser.cs",
-              "DocumentMoniker": "C:\\Users\\leze7\\Desktop\\UNI 2024\\INF 370\\Don\u0027t panic IT 5 code\\inf370systems-team41\\Bio Pro\\BioProSystem\\BioProSystem\\Models\\SystemUser.cs",
-              "RelativeDocumentMoniker": "BioProSystem\\Models\\SystemUser.cs",
-              "ToolTip": "C:\\Users\\leze7\\Desktop\\UNI 2024\\INF 370\\Don\u0027t panic IT 5 code\\inf370systems-team41\\Bio Pro\\BioProSystem\\BioProSystem\\Models\\SystemUser.cs",
-              "RelativeToolTip": "BioProSystem\\Models\\SystemUser.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAABMAAAAAAAAA",
+              "DocumentIndex": 12,
+              "Title": "UserWithRolesViewModel.cs",
+              "DocumentMoniker": "C:\\Users\\leze7\\Desktop\\UNI 2024\\INF 370\\Don\u0027t panic IT 5 code\\inf370systems-team41\\Bio Pro\\BioProSystem\\BioProSystem\\Models\\UserWithRolesViewModel.cs",
+              "RelativeDocumentMoniker": "BioProSystem\\Models\\UserWithRolesViewModel.cs",
+              "ToolTip": "C:\\Users\\leze7\\Desktop\\UNI 2024\\INF 370\\Don\u0027t panic IT 5 code\\inf370systems-team41\\Bio Pro\\BioProSystem\\BioProSystem\\Models\\UserWithRolesViewModel.cs",
+              "RelativeToolTip": "BioProSystem\\Models\\UserWithRolesViewModel.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAgAAAAGAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-23T15:35:40.913Z"
+              "WhenOpened": "2024-08-24T08:30:16.982Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 14,
               "Title": "TeethShade.cs",
               "DocumentMoniker": "C:\\Users\\leze7\\Desktop\\UNI 2024\\INF 370\\Don\u0027t panic IT 5 code\\inf370systems-team41\\Bio Pro\\BioProSystem\\BioProSystem\\Models\\TeethShade.cs",
               "RelativeDocumentMoniker": "BioProSystem\\Models\\TeethShade.cs",
@@ -553,7 +646,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 15,
               "Title": "SystemOrderSteps.cs",
               "DocumentMoniker": "C:\\Users\\leze7\\Desktop\\UNI 2024\\INF 370\\Don\u0027t panic IT 5 code\\inf370systems-team41\\Bio Pro\\BioProSystem\\BioProSystem\\Models\\SystemOrderSteps.cs",
               "RelativeDocumentMoniker": "BioProSystem\\Models\\SystemOrderSteps.cs",
@@ -565,7 +658,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 16,
               "Title": "SystemOrder.cs",
               "DocumentMoniker": "C:\\Users\\leze7\\Desktop\\UNI 2024\\INF 370\\Don\u0027t panic IT 5 code\\inf370systems-team41\\Bio Pro\\BioProSystem\\BioProSystem\\Models\\SystemOrder.cs",
               "RelativeDocumentMoniker": "BioProSystem\\Models\\SystemOrder.cs",
@@ -577,7 +670,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 17,
               "Title": "Supplier.cs",
               "DocumentMoniker": "C:\\Users\\leze7\\Desktop\\UNI 2024\\INF 370\\Don\u0027t panic IT 5 code\\inf370systems-team41\\Bio Pro\\BioProSystem\\BioProSystem\\Models\\Supplier.cs",
               "RelativeDocumentMoniker": "BioProSystem\\Models\\Supplier.cs",
@@ -589,7 +682,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 19,
               "Title": "StockType.cs",
               "DocumentMoniker": "C:\\Users\\leze7\\Desktop\\UNI 2024\\INF 370\\Don\u0027t panic IT 5 code\\inf370systems-team41\\Bio Pro\\BioProSystem\\BioProSystem\\Models\\StockType.cs",
               "RelativeDocumentMoniker": "BioProSystem\\Models\\StockType.cs",
@@ -601,7 +694,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 18,
               "Title": "StockWriteOff.cs",
               "DocumentMoniker": "C:\\Users\\leze7\\Desktop\\UNI 2024\\INF 370\\Don\u0027t panic IT 5 code\\inf370systems-team41\\Bio Pro\\BioProSystem\\BioProSystem\\Models\\StockWriteOff.cs",
               "RelativeDocumentMoniker": "BioProSystem\\Models\\StockWriteOff.cs",
@@ -613,7 +706,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 20,
               "Title": "StockItem.cs",
               "DocumentMoniker": "C:\\Users\\leze7\\Desktop\\UNI 2024\\INF 370\\Don\u0027t panic IT 5 code\\inf370systems-team41\\Bio Pro\\BioProSystem\\BioProSystem\\Models\\StockItem.cs",
               "RelativeDocumentMoniker": "BioProSystem\\Models\\StockItem.cs",
@@ -625,7 +718,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 21,
               "Title": "StockCategory.cs",
               "DocumentMoniker": "C:\\Users\\leze7\\Desktop\\UNI 2024\\INF 370\\Don\u0027t panic IT 5 code\\inf370systems-team41\\Bio Pro\\BioProSystem\\BioProSystem\\Models\\StockCategory.cs",
               "RelativeDocumentMoniker": "BioProSystem\\Models\\StockCategory.cs",
@@ -637,7 +730,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 22,
               "Title": "Stock.cs",
               "DocumentMoniker": "C:\\Users\\leze7\\Desktop\\UNI 2024\\INF 370\\Don\u0027t panic IT 5 code\\inf370systems-team41\\Bio Pro\\BioProSystem\\BioProSystem\\Models\\Stock.cs",
               "RelativeDocumentMoniker": "BioProSystem\\Models\\Stock.cs",
@@ -649,7 +742,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 23,
               "Title": "SelectedArea.cs",
               "DocumentMoniker": "C:\\Users\\leze7\\Desktop\\UNI 2024\\INF 370\\Don\u0027t panic IT 5 code\\inf370systems-team41\\Bio Pro\\BioProSystem\\BioProSystem\\Models\\SelectedArea.cs",
               "RelativeDocumentMoniker": "BioProSystem\\Models\\SelectedArea.cs",
@@ -661,7 +754,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 24,
               "Title": "RefundPayment.cs",
               "DocumentMoniker": "C:\\Users\\leze7\\Desktop\\UNI 2024\\INF 370\\Don\u0027t panic IT 5 code\\inf370systems-team41\\Bio Pro\\BioProSystem\\BioProSystem\\Models\\RefundPayment.cs",
               "RelativeDocumentMoniker": "BioProSystem\\Models\\RefundPayment.cs",
@@ -673,7 +766,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 16,
+              "DocumentIndex": 26,
               "Title": "Patient.cs",
               "DocumentMoniker": "C:\\Users\\leze7\\Desktop\\UNI 2024\\INF 370\\Don\u0027t panic IT 5 code\\inf370systems-team41\\Bio Pro\\BioProSystem\\BioProSystem\\Models\\Patient.cs",
               "RelativeDocumentMoniker": "BioProSystem\\Models\\Patient.cs",
@@ -685,7 +778,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
+              "DocumentIndex": 25,
               "Title": "ProceduralTimeline.cs",
               "DocumentMoniker": "C:\\Users\\leze7\\Desktop\\UNI 2024\\INF 370\\Don\u0027t panic IT 5 code\\inf370systems-team41\\Bio Pro\\BioProSystem\\BioProSystem\\Models\\ProceduralTimeline.cs",
               "RelativeDocumentMoniker": "BioProSystem\\Models\\ProceduralTimeline.cs",
@@ -697,7 +790,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 17,
+              "DocumentIndex": 27,
               "Title": "PasswordManagement.cs",
               "DocumentMoniker": "C:\\Users\\leze7\\Desktop\\UNI 2024\\INF 370\\Don\u0027t panic IT 5 code\\inf370systems-team41\\Bio Pro\\BioProSystem\\BioProSystem\\Models\\PasswordManagement.cs",
               "RelativeDocumentMoniker": "BioProSystem\\Models\\PasswordManagement.cs",
@@ -709,7 +802,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 18,
+              "DocumentIndex": 28,
               "Title": "OrderWorkflowTimeline.cs",
               "DocumentMoniker": "C:\\Users\\leze7\\Desktop\\UNI 2024\\INF 370\\Don\u0027t panic IT 5 code\\inf370systems-team41\\Bio Pro\\BioProSystem\\BioProSystem\\Models\\OrderWorkflowTimeline.cs",
               "RelativeDocumentMoniker": "BioProSystem\\Models\\OrderWorkflowTimeline.cs",
@@ -721,7 +814,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 19,
+              "DocumentIndex": 29,
               "Title": "OrderType.cs",
               "DocumentMoniker": "C:\\Users\\leze7\\Desktop\\UNI 2024\\INF 370\\Don\u0027t panic IT 5 code\\inf370systems-team41\\Bio Pro\\BioProSystem\\BioProSystem\\Models\\OrderType.cs",
               "RelativeDocumentMoniker": "BioProSystem\\Models\\OrderType.cs",
@@ -733,7 +826,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 20,
+              "DocumentIndex": 30,
               "Title": "OrderStatus.cs",
               "DocumentMoniker": "C:\\Users\\leze7\\Desktop\\UNI 2024\\INF 370\\Don\u0027t panic IT 5 code\\inf370systems-team41\\Bio Pro\\BioProSystem\\BioProSystem\\Models\\OrderStatus.cs",
               "RelativeDocumentMoniker": "BioProSystem\\Models\\OrderStatus.cs",
@@ -745,7 +838,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 21,
+              "DocumentIndex": 31,
               "Title": "OrderPayment.cs",
               "DocumentMoniker": "C:\\Users\\leze7\\Desktop\\UNI 2024\\INF 370\\Don\u0027t panic IT 5 code\\inf370systems-team41\\Bio Pro\\BioProSystem\\BioProSystem\\Models\\OrderPayment.cs",
               "RelativeDocumentMoniker": "BioProSystem\\Models\\OrderPayment.cs",
@@ -757,7 +850,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 22,
+              "DocumentIndex": 32,
               "Title": "OrderDirectionState.cs",
               "DocumentMoniker": "C:\\Users\\leze7\\Desktop\\UNI 2024\\INF 370\\Don\u0027t panic IT 5 code\\inf370systems-team41\\Bio Pro\\BioProSystem\\BioProSystem\\Models\\OrderDirectionState.cs",
               "RelativeDocumentMoniker": "BioProSystem\\Models\\OrderDirectionState.cs",
@@ -769,7 +862,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 23,
+              "DocumentIndex": 33,
               "Title": "OrderDirection.cs",
               "DocumentMoniker": "C:\\Users\\leze7\\Desktop\\UNI 2024\\INF 370\\Don\u0027t panic IT 5 code\\inf370systems-team41\\Bio Pro\\BioProSystem\\BioProSystem\\Models\\OrderDirection.cs",
               "RelativeDocumentMoniker": "BioProSystem\\Models\\OrderDirection.cs",
@@ -781,7 +874,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 24,
+              "DocumentIndex": 34,
               "Title": "OpenOrder.cs",
               "DocumentMoniker": "C:\\Users\\leze7\\Desktop\\UNI 2024\\INF 370\\Don\u0027t panic IT 5 code\\inf370systems-team41\\Bio Pro\\BioProSystem\\BioProSystem\\Models\\OpenOrder.cs",
               "RelativeDocumentMoniker": "BioProSystem\\Models\\OpenOrder.cs",
@@ -793,7 +886,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 25,
+              "DocumentIndex": 35,
               "Title": "MedicalAid.cs",
               "DocumentMoniker": "C:\\Users\\leze7\\Desktop\\UNI 2024\\INF 370\\Don\u0027t panic IT 5 code\\inf370systems-team41\\Bio Pro\\BioProSystem\\BioProSystem\\Models\\MedicalAid.cs",
               "RelativeDocumentMoniker": "BioProSystem\\Models\\MedicalAid.cs",
@@ -805,7 +898,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 26,
+              "DocumentIndex": 36,
               "Title": "MediaFile.cs",
               "DocumentMoniker": "C:\\Users\\leze7\\Desktop\\UNI 2024\\INF 370\\Don\u0027t panic IT 5 code\\inf370systems-team41\\Bio Pro\\BioProSystem\\BioProSystem\\Models\\MediaFile.cs",
               "RelativeDocumentMoniker": "BioProSystem\\Models\\MediaFile.cs",
@@ -817,7 +910,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 29,
+              "DocumentIndex": 38,
               "Title": "EmployeeDailyHours.cs",
               "DocumentMoniker": "C:\\Users\\leze7\\Desktop\\UNI 2024\\INF 370\\Don\u0027t panic IT 5 code\\inf370systems-team41\\Bio Pro\\BioProSystem\\BioProSystem\\Models\\EmployeeDailyHours.cs",
               "RelativeDocumentMoniker": "BioProSystem\\Models\\EmployeeDailyHours.cs",
@@ -829,19 +922,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 27,
-              "Title": "JobTitle.cs",
-              "DocumentMoniker": "C:\\Users\\leze7\\Desktop\\UNI 2024\\INF 370\\Don\u0027t panic IT 5 code\\inf370systems-team41\\Bio Pro\\BioProSystem\\BioProSystem\\Models\\JobTitle.cs",
-              "RelativeDocumentMoniker": "BioProSystem\\Models\\JobTitle.cs",
-              "ToolTip": "C:\\Users\\leze7\\Desktop\\UNI 2024\\INF 370\\Don\u0027t panic IT 5 code\\inf370systems-team41\\Bio Pro\\BioProSystem\\BioProSystem\\Models\\JobTitle.cs",
-              "RelativeToolTip": "BioProSystem\\Models\\JobTitle.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAYAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-16T20:14:27.43Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 31,
+              "DocumentIndex": 39,
               "Title": "Discount.cs",
               "DocumentMoniker": "C:\\Users\\leze7\\Desktop\\UNI 2024\\INF 370\\Don\u0027t panic IT 5 code\\inf370systems-team41\\Bio Pro\\BioProSystem\\BioProSystem\\Models\\Discount.cs",
               "RelativeDocumentMoniker": "BioProSystem\\Models\\Discount.cs",
@@ -853,19 +934,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 30,
-              "Title": "Employee.cs",
-              "DocumentMoniker": "C:\\Users\\leze7\\Desktop\\UNI 2024\\INF 370\\Don\u0027t panic IT 5 code\\inf370systems-team41\\Bio Pro\\BioProSystem\\BioProSystem\\Models\\Employee.cs",
-              "RelativeDocumentMoniker": "BioProSystem\\Models\\Employee.cs",
-              "ToolTip": "C:\\Users\\leze7\\Desktop\\UNI 2024\\INF 370\\Don\u0027t panic IT 5 code\\inf370systems-team41\\Bio Pro\\BioProSystem\\BioProSystem\\Models\\Employee.cs",
-              "RelativeToolTip": "BioProSystem\\Models\\Employee.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAgAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-21T15:44:38.396Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 32,
+              "DocumentIndex": 40,
               "Title": "Dentist.cs",
               "DocumentMoniker": "C:\\Users\\leze7\\Desktop\\UNI 2024\\INF 370\\Don\u0027t panic IT 5 code\\inf370systems-team41\\Bio Pro\\BioProSystem\\BioProSystem\\Models\\Dentist.cs",
               "RelativeDocumentMoniker": "BioProSystem\\Models\\Dentist.cs",
@@ -877,7 +946,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 33,
+              "DocumentIndex": 41,
               "Title": "DentalProSystemTestDBContext.cs",
               "DocumentMoniker": "C:\\Users\\leze7\\Desktop\\UNI 2024\\INF 370\\Don\u0027t panic IT 5 code\\inf370systems-team41\\Bio Pro\\BioProSystem\\BioProSystem\\Models\\DentalProSystemTestDBContext.cs",
               "RelativeDocumentMoniker": "BioProSystem\\Models\\DentalProSystemTestDBContext.cs",
@@ -889,7 +958,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 34,
+              "DocumentIndex": 42,
               "Title": "DeliveryStatus.cs",
               "DocumentMoniker": "C:\\Users\\leze7\\Desktop\\UNI 2024\\INF 370\\Don\u0027t panic IT 5 code\\inf370systems-team41\\Bio Pro\\BioProSystem\\BioProSystem\\Models\\DeliveryStatus.cs",
               "RelativeDocumentMoniker": "BioProSystem\\Models\\DeliveryStatus.cs",
@@ -901,7 +970,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 36,
+              "DocumentIndex": 44,
               "Title": "DecisionLog.cs",
               "DocumentMoniker": "C:\\Users\\leze7\\Desktop\\UNI 2024\\INF 370\\Don\u0027t panic IT 5 code\\inf370systems-team41\\Bio Pro\\BioProSystem\\BioProSystem\\Models\\DecisionLog.cs",
               "RelativeDocumentMoniker": "BioProSystem\\Models\\DecisionLog.cs",
@@ -913,7 +982,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 35,
+              "DocumentIndex": 43,
               "Title": "Delivery.cs",
               "DocumentMoniker": "C:\\Users\\leze7\\Desktop\\UNI 2024\\INF 370\\Don\u0027t panic IT 5 code\\inf370systems-team41\\Bio Pro\\BioProSystem\\BioProSystem\\Models\\Delivery.cs",
               "RelativeDocumentMoniker": "BioProSystem\\Models\\Delivery.cs",
@@ -925,7 +994,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 37,
+              "DocumentIndex": 45,
               "Title": "ActionType.cs",
               "DocumentMoniker": "C:\\Users\\leze7\\Desktop\\UNI 2024\\INF 370\\Don\u0027t panic IT 5 code\\inf370systems-team41\\Bio Pro\\BioProSystem\\BioProSystem\\Models\\ActionType.cs",
               "RelativeDocumentMoniker": "BioProSystem\\Models\\ActionType.cs",
@@ -937,7 +1006,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 38,
+              "DocumentIndex": 46,
               "Title": "CalanderScheduleEvent.cs",
               "DocumentMoniker": "C:\\Users\\leze7\\Desktop\\UNI 2024\\INF 370\\Don\u0027t panic IT 5 code\\inf370systems-team41\\Bio Pro\\BioProSystem\\BioProSystem\\Models\\CalanderScheduleEvent.cs",
               "RelativeDocumentMoniker": "BioProSystem\\Models\\CalanderScheduleEvent.cs",
@@ -949,7 +1018,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 39,
+              "DocumentIndex": 47,
               "Title": "Calander.cs",
               "DocumentMoniker": "C:\\Users\\leze7\\Desktop\\UNI 2024\\INF 370\\Don\u0027t panic IT 5 code\\inf370systems-team41\\Bio Pro\\BioProSystem\\BioProSystem\\Models\\Calander.cs",
               "RelativeDocumentMoniker": "BioProSystem\\Models\\Calander.cs",
@@ -961,7 +1030,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 40,
+              "DocumentIndex": 48,
               "Title": "MediaFileViewModel.cs",
               "DocumentMoniker": "C:\\Users\\leze7\\Desktop\\UNI 2024\\INF 370\\Don\u0027t panic IT 5 code\\inf370systems-team41\\Bio Pro\\BioProSystem\\BioProSystem\\ViewModels\\MediaFileViewModel.cs",
               "RelativeDocumentMoniker": "BioProSystem\\ViewModels\\MediaFileViewModel.cs",
@@ -973,7 +1042,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 41,
+              "DocumentIndex": 49,
               "Title": "BioProSystem.csproj",
               "DocumentMoniker": "C:\\Users\\leze7\\Desktop\\UNI 2024\\INF 370\\Don\u0027t panic IT 5 code\\inf370systems-team41\\Bio Pro\\BioProSystem\\BioProSystem\\BioProSystem.csproj",
               "RelativeDocumentMoniker": "BioProSystem\\BioProSystem.csproj",
@@ -985,7 +1054,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 42,
+              "DocumentIndex": 50,
               "Title": "EmployeeController.cs",
               "DocumentMoniker": "C:\\Users\\leze7\\Desktop\\UNI 2024\\INF 370\\Don\u0027t panic IT 5 code\\inf370systems-team41\\Bio Pro\\BioProSystem\\BioProSystem\\Controllers\\EmployeeController.cs",
               "RelativeDocumentMoniker": "BioProSystem\\Controllers\\EmployeeController.cs",
@@ -997,31 +1066,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 44,
-              "Title": "ProceduralTimelineController.cs",
-              "DocumentMoniker": "C:\\Users\\leze7\\Desktop\\UNI 2024\\INF 370\\Don\u0027t panic IT 5 code\\inf370systems-team41\\Bio Pro\\BioProSystem\\BioProSystem\\Controllers\\ProceduralTimelineController.cs",
-              "RelativeDocumentMoniker": "BioProSystem\\Controllers\\ProceduralTimelineController.cs",
-              "ToolTip": "C:\\Users\\leze7\\Desktop\\UNI 2024\\INF 370\\Don\u0027t panic IT 5 code\\inf370systems-team41\\Bio Pro\\BioProSystem\\BioProSystem\\Controllers\\ProceduralTimelineController.cs",
-              "RelativeToolTip": "BioProSystem\\Controllers\\ProceduralTimelineController.cs",
-              "ViewState": "AQIAADkAAAAAAAAAAAAAAD4AAAAZAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-30T22:29:28.751Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 45,
-              "Title": "ReportsController.cs",
-              "DocumentMoniker": "C:\\Users\\leze7\\Desktop\\UNI 2024\\INF 370\\Don\u0027t panic IT 5 code\\inf370systems-team41\\Bio Pro\\BioProSystem\\BioProSystem\\Controllers\\ReportsController.cs",
-              "RelativeDocumentMoniker": "BioProSystem\\Controllers\\ReportsController.cs",
-              "ToolTip": "C:\\Users\\leze7\\Desktop\\UNI 2024\\INF 370\\Don\u0027t panic IT 5 code\\inf370systems-team41\\Bio Pro\\BioProSystem\\BioProSystem\\Controllers\\ReportsController.cs",
-              "RelativeToolTip": "BioProSystem\\Controllers\\ReportsController.cs",
-              "ViewState": "AQIAAIcAAAAAAAAAAAAAAJQAAAAQAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-08-16T11:23:40.028Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 46,
+              "DocumentIndex": 51,
               "Title": "DeliveryController.cs",
               "DocumentMoniker": "C:\\Users\\leze7\\Desktop\\UNI 2024\\INF 370\\Don\u0027t panic IT 5 code\\inf370systems-team41\\Bio Pro\\BioProSystem\\BioProSystem\\Controllers\\DeliveryController.cs",
               "RelativeDocumentMoniker": "BioProSystem\\Controllers\\DeliveryController.cs",
@@ -1033,7 +1078,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 47,
+              "DocumentIndex": 52,
               "Title": "appsettings.Development.json",
               "DocumentMoniker": "C:\\Users\\leze7\\Desktop\\UNI 2024\\INF 370\\Don\u0027t panic IT 5 code\\inf370systems-team41\\Bio Pro\\BioProSystem\\BioProSystem\\appsettings.Development.json",
               "RelativeDocumentMoniker": "BioProSystem\\appsettings.Development.json",
@@ -1045,7 +1090,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 51,
+              "DocumentIndex": 55,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\leze7\\Desktop\\UNI 2024\\INF 370\\Don\u0027t panic IT 5 code\\inf370systems-team41\\Bio Pro\\BioProSystem\\BioProSystem\\Program.cs",
               "RelativeDocumentMoniker": "BioProSystem\\Program.cs",
@@ -1057,7 +1102,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 53,
+              "DocumentIndex": 56,
               "Title": "AddStockViewModel.cs",
               "DocumentMoniker": "C:\\Users\\leze7\\Desktop\\UNI 2024\\INF 370\\Don\u0027t panic IT 5 code\\inf370systems-team41\\Bio Pro\\BioProSystem\\BioProSystem\\ViewModels\\AddStockViewModel.cs",
               "RelativeDocumentMoniker": "BioProSystem\\ViewModels\\AddStockViewModel.cs",
@@ -1069,7 +1114,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 54,
+              "DocumentIndex": 57,
               "Title": "20240807170718_AuditTrail.cs",
               "DocumentMoniker": "C:\\Users\\piete\\Local Storage\\Uni\\370\\New folder (2)\\inf370systems-team41\\Bio Pro\\BioProSystem\\BioProSystem\\Migrations\\20240807170718_AuditTrail.cs",
               "RelativeDocumentMoniker": "..\\..\\..\\..\\..\\..\\..\\..\\piete\\Local Storage\\Uni\\370\\New folder (2)\\inf370systems-team41\\Bio Pro\\BioProSystem\\BioProSystem\\Migrations\\20240807170718_AuditTrail.cs",
@@ -1081,7 +1126,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 55,
+              "DocumentIndex": 58,
               "Title": "DentalProSystemTestDBContextModelSnapshot.cs",
               "DocumentMoniker": "C:\\Users\\leze7\\Desktop\\UNI 2024\\INF 370\\Don\u0027t panic IT 5 code\\inf370systems-team41\\Bio Pro\\BioProSystem\\BioProSystem\\Migrations\\DentalProSystemTestDBContextModelSnapshot.cs",
               "RelativeDocumentMoniker": "BioProSystem\\Migrations\\DentalProSystemTestDBContextModelSnapshot.cs",
@@ -1093,7 +1138,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 56,
+              "DocumentIndex": 59,
               "Title": "20240807170209_AuditTrail.cs",
               "DocumentMoniker": "C:\\Users\\piete\\Local Storage\\Uni\\370\\New folder (2)\\inf370systems-team41\\Bio Pro\\BioProSystem\\BioProSystem\\Migrations\\20240807170209_AuditTrail.cs",
               "RelativeDocumentMoniker": "..\\..\\..\\..\\..\\..\\..\\..\\piete\\Local Storage\\Uni\\370\\New folder (2)\\inf370systems-team41\\Bio Pro\\BioProSystem\\BioProSystem\\Migrations\\20240807170209_AuditTrail.cs",
@@ -1105,19 +1150,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 57,
-              "Title": "CalendarController.cs",
-              "DocumentMoniker": "C:\\Users\\leze7\\Desktop\\UNI 2024\\INF 370\\Don\u0027t panic IT 5 code\\inf370systems-team41\\Bio Pro\\BioProSystem\\BioProSystem\\Controllers\\CalendarController.cs",
-              "RelativeDocumentMoniker": "BioProSystem\\Controllers\\CalendarController.cs",
-              "ToolTip": "C:\\Users\\leze7\\Desktop\\UNI 2024\\INF 370\\Don\u0027t panic IT 5 code\\inf370systems-team41\\Bio Pro\\BioProSystem\\BioProSystem\\Controllers\\CalendarController.cs",
-              "RelativeToolTip": "BioProSystem\\Controllers\\CalendarController.cs",
-              "ViewState": "AQIAACMAAAAAAAAAAAAmwD8AAAAxAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-30T18:57:22.038Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 58,
+              "DocumentIndex": 60,
               "Title": "StockTypeViewModel.cs",
               "DocumentMoniker": "C:\\Users\\leze7\\Desktop\\UNI 2024\\INF 370\\Don\u0027t panic IT 5 code\\inf370systems-team41\\Bio Pro\\BioProSystem\\BioProSystem\\ViewModels\\StockTypeViewModel.cs",
               "RelativeDocumentMoniker": "BioProSystem\\ViewModels\\StockTypeViewModel.cs",
@@ -1129,7 +1162,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 59,
+              "DocumentIndex": 61,
               "Title": "StockCategoryViewModel.cs",
               "DocumentMoniker": "C:\\Users\\leze7\\Desktop\\UNI 2024\\INF 370\\Don\u0027t panic IT 5 code\\inf370systems-team41\\Bio Pro\\BioProSystem\\BioProSystem\\ViewModels\\StockCategoryViewModel.cs",
               "RelativeDocumentMoniker": "BioProSystem\\ViewModels\\StockCategoryViewModel.cs",
@@ -1141,7 +1174,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 60,
+              "DocumentIndex": 62,
               "Title": "StockWriteOffViewModel.cs",
               "DocumentMoniker": "C:\\Users\\leze7\\Desktop\\UNI 2024\\INF 370\\Don\u0027t panic IT 5 code\\inf370systems-team41\\Bio Pro\\BioProSystem\\BioProSystem\\ViewModels\\StockWriteOffViewModel.cs",
               "RelativeDocumentMoniker": "BioProSystem\\ViewModels\\StockWriteOffViewModel.cs",
@@ -1153,7 +1186,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 61,
+              "DocumentIndex": 63,
               "Title": "ResetPassword.cs",
               "DocumentMoniker": "C:\\Users\\leze7\\Desktop\\UNI 2024\\INF 370\\Don\u0027t panic IT 5 code\\inf370systems-team41\\Bio Pro\\BioProSystem\\BioProSystem\\ViewModels\\ResetPassword.cs",
               "RelativeDocumentMoniker": "BioProSystem\\ViewModels\\ResetPassword.cs",
@@ -1165,7 +1198,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 62,
+              "DocumentIndex": 64,
               "Title": "20240514193421_SwappedErdRelations.cs",
               "DocumentMoniker": "C:\\Users\\leze7\\Desktop\\UNI 2024\\INF 370\\Don\u0027t panic IT 5 code\\inf370systems-team41\\Bio Pro\\BioProSystem\\BioProSystem\\Migrations\\20240514193421_SwappedErdRelations.cs",
               "RelativeDocumentMoniker": "BioProSystem\\Migrations\\20240514193421_SwappedErdRelations.cs",
@@ -1177,7 +1210,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 63,
+              "DocumentIndex": 65,
               "Title": "20240615181727_Reason.Designer.cs",
               "DocumentMoniker": "C:\\Users\\leze7\\Desktop\\UNI 2024\\INF 370\\Don\u0027t panic IT 5 code\\inf370systems-team41\\Bio Pro\\BioProSystem\\BioProSystem\\Migrations\\20240615181727_Reason.Designer.cs",
               "RelativeDocumentMoniker": "BioProSystem\\Migrations\\20240615181727_Reason.Designer.cs",
@@ -1189,7 +1222,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 64,
+              "DocumentIndex": 66,
               "Title": "20240625094023_FinalStep.Designer.cs",
               "DocumentMoniker": "C:\\Users\\leze7\\Desktop\\UNI 2024\\INF 370\\Don\u0027t panic IT 5 code\\inf370systems-team41\\Bio Pro\\BioProSystem\\BioProSystem\\Migrations\\20240625094023_FinalStep.Designer.cs",
               "RelativeDocumentMoniker": "BioProSystem\\Migrations\\20240625094023_FinalStep.Designer.cs",
@@ -1201,7 +1234,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 65,
+              "DocumentIndex": 67,
               "Title": "20240628203628_calendarevents.Designer.cs",
               "DocumentMoniker": "C:\\Users\\leze7\\Desktop\\UNI 2024\\INF 370\\Don\u0027t panic IT 5 code\\inf370systems-team41\\Bio Pro\\BioProSystem\\BioProSystem\\Migrations\\20240628203628_calendarevents.Designer.cs",
               "RelativeDocumentMoniker": "BioProSystem\\Migrations\\20240628203628_calendarevents.Designer.cs",
@@ -1213,7 +1246,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 66,
+              "DocumentIndex": 68,
               "Title": "20240630223701_proceduralTimeline.Designer.cs",
               "DocumentMoniker": "C:\\Users\\leze7\\Desktop\\UNI 2024\\INF 370\\Don\u0027t panic IT 5 code\\inf370systems-team41\\Bio Pro\\BioProSystem\\BioProSystem\\Migrations\\20240630223701_proceduralTimeline.Designer.cs",
               "RelativeDocumentMoniker": "BioProSystem\\Migrations\\20240630223701_proceduralTimeline.Designer.cs",
@@ -1225,7 +1258,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 67,
+              "DocumentIndex": 69,
               "Title": "20240701135753_eventInfo.Designer.cs",
               "DocumentMoniker": "C:\\Users\\leze7\\Desktop\\UNI 2024\\INF 370\\Don\u0027t panic IT 5 code\\inf370systems-team41\\Bio Pro\\BioProSystem\\BioProSystem\\Migrations\\20240701135753_eventInfo.Designer.cs",
               "RelativeDocumentMoniker": "BioProSystem\\Migrations\\20240701135753_eventInfo.Designer.cs",
@@ -1237,7 +1270,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 68,
+              "DocumentIndex": 70,
               "Title": "20240701164411_sotckOrderID.Designer.cs",
               "DocumentMoniker": "C:\\Users\\leze7\\Desktop\\UNI 2024\\INF 370\\Don\u0027t panic IT 5 code\\inf370systems-team41\\Bio Pro\\BioProSystem\\BioProSystem\\Migrations\\20240701164411_sotckOrderID.Designer.cs",
               "RelativeDocumentMoniker": "BioProSystem\\Migrations\\20240701164411_sotckOrderID.Designer.cs",
@@ -1249,19 +1282,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 69,
-              "Title": "TeethShadeController.cs",
-              "DocumentMoniker": "C:\\Users\\leze7\\Desktop\\UNI 2024\\INF 370\\Don\u0027t panic IT 5 code\\inf370systems-team41\\Bio Pro\\BioProSystem\\BioProSystem\\Controllers\\TeethShadeController.cs",
-              "RelativeDocumentMoniker": "BioProSystem\\Controllers\\TeethShadeController.cs",
-              "ToolTip": "C:\\Users\\leze7\\Desktop\\UNI 2024\\INF 370\\Don\u0027t panic IT 5 code\\inf370systems-team41\\Bio Pro\\BioProSystem\\BioProSystem\\Controllers\\TeethShadeController.cs",
-              "RelativeToolTip": "BioProSystem\\Controllers\\TeethShadeController.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAABAAAAAIAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-11T11:10:14.99Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 70,
+              "DocumentIndex": 71,
               "Title": "AddStockItemViewModel.cs",
               "DocumentMoniker": "C:\\Users\\leze7\\Desktop\\UNI 2024\\INF 370\\Don\u0027t panic IT 5 code\\inf370systems-team41\\Bio Pro\\BioProSystem\\BioProSystem\\ViewModels\\AddStockItemViewModel.cs",
               "RelativeDocumentMoniker": "BioProSystem\\ViewModels\\AddStockItemViewModel.cs",
@@ -1273,7 +1294,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 71,
+              "DocumentIndex": 72,
               "Title": "20240615172722_updateddecimal.cs",
               "DocumentMoniker": "C:\\Users\\leze7\\Desktop\\UNI 2024\\INF 370\\Don\u0027t panic IT 5 code\\inf370systems-team41\\Bio Pro\\BioProSystem\\BioProSystem\\Migrations\\20240615172722_updateddecimal.cs",
               "RelativeDocumentMoniker": "BioProSystem\\Migrations\\20240615172722_updateddecimal.cs",
@@ -1285,7 +1306,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 72,
+              "DocumentIndex": 73,
               "Title": "20240615173228_updatename.Designer.cs",
               "DocumentMoniker": "C:\\Users\\leze7\\Desktop\\UNI 2024\\INF 370\\Don\u0027t panic IT 5 code\\inf370systems-team41\\Bio Pro\\BioProSystem\\BioProSystem\\Migrations\\20240615173228_updatename.Designer.cs",
               "RelativeDocumentMoniker": "BioProSystem\\Migrations\\20240615173228_updatename.Designer.cs",
@@ -1297,7 +1318,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 73,
+              "DocumentIndex": 74,
               "Title": "20240615172722_updateddecimal.Designer.cs",
               "DocumentMoniker": "C:\\Users\\leze7\\Desktop\\UNI 2024\\INF 370\\Don\u0027t panic IT 5 code\\inf370systems-team41\\Bio Pro\\BioProSystem\\BioProSystem\\Migrations\\20240615172722_updateddecimal.Designer.cs",
               "RelativeDocumentMoniker": "BioProSystem\\Migrations\\20240615172722_updateddecimal.Designer.cs",
@@ -1309,7 +1330,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 74,
+              "DocumentIndex": 75,
               "Title": "20240615171313_measurement.Designer.cs",
               "DocumentMoniker": "C:\\Users\\leze7\\Desktop\\UNI 2024\\INF 370\\Don\u0027t panic IT 5 code\\inf370systems-team41\\Bio Pro\\BioProSystem\\BioProSystem\\Migrations\\20240615171313_measurement.Designer.cs",
               "RelativeDocumentMoniker": "BioProSystem\\Migrations\\20240615171313_measurement.Designer.cs",
@@ -1321,7 +1342,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 75,
+              "DocumentIndex": 76,
               "Title": "20240701164411_sotckOrderID.cs",
               "DocumentMoniker": "C:\\Users\\leze7\\Desktop\\UNI 2024\\INF 370\\Don\u0027t panic IT 5 code\\inf370systems-team41\\Bio Pro\\BioProSystem\\BioProSystem\\Migrations\\20240701164411_sotckOrderID.cs",
               "RelativeDocumentMoniker": "BioProSystem\\Migrations\\20240701164411_sotckOrderID.cs",
@@ -1333,7 +1354,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 76,
+              "DocumentIndex": 77,
               "Title": "20240602071427_referential_integ.cs",
               "DocumentMoniker": "C:\\Users\\leze7\\Desktop\\UNI 2024\\INF 370\\Don\u0027t panic IT 5 code\\inf370systems-team41\\Bio Pro\\BioProSystem\\BioProSystem\\Migrations\\20240602071427_referential_integ.cs",
               "RelativeDocumentMoniker": "BioProSystem\\Migrations\\20240602071427_referential_integ.cs",
@@ -1345,7 +1366,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 78,
+              "DocumentIndex": 79,
               "Title": "AddMediaFileViewModel.cs",
               "DocumentMoniker": "C:\\Users\\leze7\\Desktop\\UNI 2024\\INF 370\\Don\u0027t panic IT 5 code\\inf370systems-team41\\Bio Pro\\BioProSystem\\BioProSystem\\ViewModels\\AddMediaFileViewModel.cs",
               "RelativeDocumentMoniker": "BioProSystem\\ViewModels\\AddMediaFileViewModel.cs",
@@ -1357,7 +1378,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 77,
+              "DocumentIndex": 78,
               "Title": "SystemOrderAddViewModel .cs",
               "DocumentMoniker": "C:\\Users\\leze7\\Desktop\\UNI 2024\\INF 370\\Don\u0027t panic IT 5 code\\inf370systems-team41\\Bio Pro\\BioProSystem\\BioProSystem\\ViewModels\\SystemOrderAddViewModel .cs",
               "RelativeDocumentMoniker": "BioProSystem\\ViewModels\\SystemOrderAddViewModel .cs",
@@ -1369,7 +1390,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 79,
+              "DocumentIndex": 80,
               "Title": "EditCalanderEventViewModel.cs",
               "DocumentMoniker": "C:\\Users\\leze7\\Desktop\\UNI 2024\\INF 370\\Don\u0027t panic IT 5 code\\inf370systems-team41\\Bio Pro\\BioProSystem\\BioProSystem\\ViewModels\\EditCalanderEventViewModel.cs",
               "RelativeDocumentMoniker": "BioProSystem\\ViewModels\\EditCalanderEventViewModel.cs",
@@ -1381,7 +1402,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 80,
+              "DocumentIndex": 81,
               "Title": "20240701135753_eventInfo.cs",
               "DocumentMoniker": "C:\\Users\\leze7\\Desktop\\UNI 2024\\INF 370\\Don\u0027t panic IT 5 code\\inf370systems-team41\\Bio Pro\\BioProSystem\\BioProSystem\\Migrations\\20240701135753_eventInfo.cs",
               "RelativeDocumentMoniker": "BioProSystem\\Migrations\\20240701135753_eventInfo.cs",
@@ -1393,7 +1414,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 82,
+              "DocumentIndex": 83,
               "Title": "ProceduralTimelineViewModel.cs",
               "DocumentMoniker": "C:\\Users\\leze7\\Desktop\\UNI 2024\\INF 370\\Don\u0027t panic IT 5 code\\inf370systems-team41\\Bio Pro\\BioProSystem\\BioProSystem\\ViewModels\\ProceduralTimelineViewModel.cs",
               "RelativeDocumentMoniker": "BioProSystem\\ViewModels\\ProceduralTimelineViewModel.cs",
@@ -1405,7 +1426,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 81,
+              "DocumentIndex": 82,
               "Title": "20240630223701_proceduralTimeline.cs",
               "DocumentMoniker": "C:\\Users\\leze7\\Desktop\\UNI 2024\\INF 370\\Don\u0027t panic IT 5 code\\inf370systems-team41\\Bio Pro\\BioProSystem\\BioProSystem\\Migrations\\20240630223701_proceduralTimeline.cs",
               "RelativeDocumentMoniker": "BioProSystem\\Migrations\\20240630223701_proceduralTimeline.cs",
@@ -1417,7 +1438,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 84,
+              "DocumentIndex": 85,
               "Title": "EditUser.cs",
               "DocumentMoniker": "C:\\Users\\leze7\\Desktop\\UNI 2024\\INF 370\\Don\u0027t panic IT 5 code\\inf370systems-team41\\Bio Pro\\BioProSystem\\BioProSystem\\ViewModels\\EditUser.cs",
               "RelativeDocumentMoniker": "BioProSystem\\ViewModels\\EditUser.cs",
@@ -1429,7 +1450,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 83,
+              "DocumentIndex": 84,
               "Title": "AddDentalDesignViewModel.cs",
               "DocumentMoniker": "C:\\Users\\leze7\\Desktop\\UNI 2024\\INF 370\\Don\u0027t panic IT 5 code\\inf370systems-team41\\Bio Pro\\BioProSystem\\BioProSystem\\ViewModels\\AddDentalDesignViewModel.cs",
               "RelativeDocumentMoniker": "BioProSystem\\ViewModels\\AddDentalDesignViewModel.cs",
@@ -1441,7 +1462,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 85,
+              "DocumentIndex": 86,
               "Title": "20240615181727_Reason.cs",
               "DocumentMoniker": "C:\\Users\\leze7\\Desktop\\UNI 2024\\INF 370\\Don\u0027t panic IT 5 code\\inf370systems-team41\\Bio Pro\\BioProSystem\\BioProSystem\\Migrations\\20240615181727_Reason.cs",
               "RelativeDocumentMoniker": "BioProSystem\\Migrations\\20240615181727_Reason.cs",
@@ -1453,7 +1474,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 86,
+              "DocumentIndex": 87,
               "Title": "CaptureNewStockViewModel.cs",
               "DocumentMoniker": "C:\\Users\\leze7\\Desktop\\UNI 2024\\INF 370\\Don\u0027t panic IT 5 code\\inf370systems-team41\\Bio Pro\\BioProSystem\\BioProSystem\\ViewModels\\CaptureNewStockViewModel.cs",
               "RelativeDocumentMoniker": "BioProSystem\\ViewModels\\CaptureNewStockViewModel.cs",
@@ -1465,7 +1486,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 87,
+              "DocumentIndex": 88,
               "Title": "EmailViewModel.cs",
               "DocumentMoniker": "C:\\Users\\leze7\\Desktop\\UNI 2024\\INF 370\\Don\u0027t panic IT 5 code\\inf370systems-team41\\Bio Pro\\BioProSystem\\BioProSystem\\ViewModels\\EmailViewModel.cs",
               "RelativeDocumentMoniker": "BioProSystem\\ViewModels\\EmailViewModel.cs",
@@ -1477,7 +1498,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 88,
+              "DocumentIndex": 89,
               "Title": "20240615173228_updatename.cs",
               "DocumentMoniker": "C:\\Users\\leze7\\Desktop\\UNI 2024\\INF 370\\Don\u0027t panic IT 5 code\\inf370systems-team41\\Bio Pro\\BioProSystem\\BioProSystem\\Migrations\\20240615173228_updatename.cs",
               "RelativeDocumentMoniker": "BioProSystem\\Migrations\\20240615173228_updatename.cs",
@@ -1489,7 +1510,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 89,
+              "DocumentIndex": 90,
               "Title": "20240615171313_measurement.cs",
               "DocumentMoniker": "C:\\Users\\leze7\\Desktop\\UNI 2024\\INF 370\\Don\u0027t panic IT 5 code\\inf370systems-team41\\Bio Pro\\BioProSystem\\BioProSystem\\Migrations\\20240615171313_measurement.cs",
               "RelativeDocumentMoniker": "BioProSystem\\Migrations\\20240615171313_measurement.cs",
@@ -1501,7 +1522,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 90,
+              "DocumentIndex": 91,
               "Title": "SystemOrderViewModel.cs",
               "DocumentMoniker": "C:\\Users\\leze7\\Desktop\\UNI 2024\\INF 370\\Don\u0027t panic IT 5 code\\inf370systems-team41\\Bio Pro\\BioProSystem\\BioProSystem\\ViewModels\\SystemOrderViewModel.cs",
               "RelativeDocumentMoniker": "BioProSystem\\ViewModels\\SystemOrderViewModel.cs",
@@ -1514,18 +1535,6 @@
             {
               "$type": "Document",
               "DocumentIndex": 92,
-              "Title": "UpdateUser.cs",
-              "DocumentMoniker": "C:\\Users\\leze7\\Desktop\\UNI 2024\\INF 370\\Don\u0027t panic IT 5 code\\inf370systems-team41\\Bio Pro\\BioProSystem\\BioProSystem\\ViewModels\\UpdateUser.cs",
-              "RelativeDocumentMoniker": "BioProSystem\\ViewModels\\UpdateUser.cs",
-              "ToolTip": "C:\\Users\\leze7\\Desktop\\UNI 2024\\INF 370\\Don\u0027t panic IT 5 code\\inf370systems-team41\\Bio Pro\\BioProSystem\\BioProSystem\\ViewModels\\UpdateUser.cs",
-              "RelativeToolTip": "BioProSystem\\ViewModels\\UpdateUser.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAcAAAAhAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-03T11:41:45.03Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 91,
               "Title": "EditEmployee.cs",
               "DocumentMoniker": "C:\\Users\\leze7\\Desktop\\UNI 2024\\INF 370\\Don\u0027t panic IT 5 code\\inf370systems-team41\\Bio Pro\\BioProSystem\\BioProSystem\\ViewModels\\EditEmployee.cs",
               "RelativeDocumentMoniker": "BioProSystem\\ViewModels\\EditEmployee.cs",
