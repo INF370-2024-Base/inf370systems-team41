@@ -44,7 +44,7 @@ namespace BioProSystem.Controllers
         [HttpPost]
         [Route("createDelivery")]
         //[Authorize(AuthenticationSchemes = "Bearer")]
-        //[Authorize(Roles = "Admin, Manager")]
+        [Authorize(Roles = "Admin, Lab Manager, Owner")]
         public async Task<IActionResult> CreateDelivery(DeliverAddViewModel viewModel)
         {
             if (ModelState.IsValid)
@@ -88,6 +88,7 @@ namespace BioProSystem.Controllers
         }
         [HttpGet]
         [Route("GetDeliveries")]
+        [Authorize(Roles = "Admin, Lab Manager, Owner")]
         public async Task<IActionResult> GetDeliveries()
         {
             try
@@ -131,6 +132,7 @@ namespace BioProSystem.Controllers
         }
         [HttpPut]
         [Route("UpdateDeliveryCollected/{deliveryId}")]
+        [Authorize(Roles = "Admin, Lab Manager, Owner")]
         public async Task<IActionResult> UpdateDeliveryCollected(int deliveryId)
         {
             try
