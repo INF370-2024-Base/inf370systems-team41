@@ -1,5 +1,6 @@
 ﻿using BioProSystem.Models;
 using BioProSystem.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -31,6 +32,9 @@ namespace BioProSystem.Controllers
         }
 
         [HttpPost("CreateTimeline")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
+        [Authorize(Roles = " Admin, Owner, Manager")]
+
         public async Task<IActionResult> CreateTimeline(ProceduralTimelineViewModel viewModel)
         {
             if (ModelState.IsValid)

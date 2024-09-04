@@ -86,8 +86,8 @@ namespace BioProSystem.Controllers
         // POST: /Order/Add
         [HttpPost]
         [Route("AddOrders")]
-        //[Authorize(AuthenticationSchemes = "Bearer")]
-        //[Authorize(Roles = "Admin, Manager")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
+        [Authorize(Roles = "Admin, Lab Manager, Owner")]
         public async Task<IActionResult> Add(SystemOrderAddViewModel viewModel)
         {
             if (ModelState.IsValid)
@@ -255,8 +255,8 @@ namespace BioProSystem.Controllers
         }
         [HttpPut]
         [Route("UpdateOrder")]
-        //[Authorize(AuthenticationSchemes = "Bearer")]
-        //[Authorize(Roles = "Admin, Manager")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
+        [Authorize(Roles = "Admin, Lab Manager, Owner")]
         public async Task<IActionResult> Update(SystemOrderAddViewModel viewModel)
         {
             if (ModelState.IsValid)
@@ -340,6 +340,8 @@ namespace BioProSystem.Controllers
 
 
         [HttpGet("api/medicalaids")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
+        [Authorize(Roles = "Admin, Lab Manager, Owner")]
         public async Task<IActionResult> GetMedicalAids()
         {
             try
@@ -354,6 +356,8 @@ namespace BioProSystem.Controllers
         }
 
         [HttpGet("api/dentists")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
+        [Authorize(Roles = "Admin, Lab Manager, Owner")]
         public async Task<IActionResult> GetDentists()
         {
             try
@@ -366,7 +370,10 @@ namespace BioProSystem.Controllers
                 return StatusCode(500, $"Internal Server Error: {ex.Message}");
             }
         }
+
         [HttpGet("GetOrdersInProgressAndNullTimlines")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
+        [Authorize(Roles = "Admin, Lab Manager, Owner")]
         public async Task<IActionResult> GetOrdersInProgressAndNullTimlines()
         {
             try
@@ -549,6 +556,8 @@ namespace BioProSystem.Controllers
         }
 
         [HttpGet("GetPendingOrders")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
+        [Authorize(Roles = " Lab Manager, Owner")]
         public async Task<ActionResult<IEnumerable<SystemOrder>>> GetPendingOrders()
         {
             try
@@ -571,6 +580,8 @@ namespace BioProSystem.Controllers
         }
         [HttpPut]
         [Route("ApprovePendingOrder/{orderId}")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
+        [Authorize(Roles = "Lab Manager, Owner")]
         public async Task<ActionResult<IEnumerable<SystemOrder>>> ApprovePendingOrders(string orderId)
         {
             try
@@ -612,6 +623,8 @@ namespace BioProSystem.Controllers
         }
         [HttpPut]
         [Route("DissaprovePendingOrder/{orderId}")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
+        [Authorize(Roles = " Lab Manager, Owner")]
         public async Task<ActionResult<IEnumerable<SystemOrder>>> DissaprovePendingOrders(string orderId)
         {
             try
@@ -646,6 +659,8 @@ namespace BioProSystem.Controllers
         }
         [HttpPut]
         [Route("CancelOrder/{orderId}")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
+        [Authorize(Roles = "Lab Manager, Owner")]
         public async Task<ActionResult<IEnumerable<SystemOrder>>> CancelOrder(string orderId)
         {
             try
@@ -680,6 +695,8 @@ namespace BioProSystem.Controllers
         }
         [HttpDelete]
         [Route("DeleteMediaFile/{mediaFileId}")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
+        [Authorize(Roles = " Lab Manager, Owner")]
         public async Task<IActionResult> DeleteMediaFile(int mediaFileId)
         {
             try
@@ -705,6 +722,8 @@ namespace BioProSystem.Controllers
         }
         [HttpGet]
         [Route("GetOrdersAwaitingDentalDesign")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
+        [Authorize(Roles = "  Owner, Design Technician")]
         public async Task<IActionResult> GetOrdersAwaitingDentalDesign()
         {
             try
@@ -726,6 +745,8 @@ namespace BioProSystem.Controllers
         }
         [HttpPost]
         [Route("SendDentalDesign")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
+        [Authorize(Roles = " Design Technician")]
         public async Task<IActionResult> SendDentalDesign(AddDentalDesignViewModel dentalDesign)
         {
             try
@@ -773,8 +794,11 @@ namespace BioProSystem.Controllers
                 return StatusCode(500, "An error occurred while deleting daily hours." + ex.InnerException.Message);
             }
         }
+
         [HttpPost]
         [Route("AddMediaFile")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
+        [Authorize(Roles = "  Owner, Design Technician, Employee")]
         public async Task<IActionResult> SendDentalDesign(AddMediaFileViewModel mediaFileViewModels)
         {
             try
@@ -812,8 +836,11 @@ namespace BioProSystem.Controllers
                 return StatusCode(500, "An error occurred while deleting daily hours." + ex.InnerException.Message);
             }
         }
+
         [HttpPut]
         [Route("ApproveDentalDesign/{orderId}")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
+        [Authorize(Roles = "  Owner, Lab Manager")]
         public async Task<ActionResult<IEnumerable<SystemOrder>>> ApproveDentalDesign(string orderId)
         {
             try
@@ -877,8 +904,11 @@ namespace BioProSystem.Controllers
                 return StatusCode(500, $"Internal Server Error: {ex.Message}");
             }
         }
+
         [HttpPut]
         [Route("DisapproveDentalDesign/{orderId}")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
+        [Authorize(Roles = "  Owner, Lab Manager")]
         public async Task<ActionResult<IEnumerable<SystemOrder>>> DisapproveDentalDesign(string orderId)
         {
             try
@@ -920,8 +950,11 @@ namespace BioProSystem.Controllers
                 return StatusCode(500, $"Internal Server Error: {ex.Message}");
             }
         }
+
         [HttpGet]
         [Route("GetOrdersAwaitingDentalDesignApproval")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
+        [Authorize(Roles = " Admin, Owner, Lab Manager")]
         public async Task<IActionResult> GetOrdersAwaitingDentalDesignApproval()
         {
             try

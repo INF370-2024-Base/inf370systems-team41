@@ -1,6 +1,7 @@
 ﻿using BioProSystem.EmailService;
 using BioProSystem.Models;
 using BioProSystem.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -36,6 +37,8 @@ namespace BioProSystem.Controllers
 
         [HttpPost]
         [Route("AddStock")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
+        [Authorize(Roles = " Admin, Owner, Lab Manager")]
         public async Task<IActionResult> AddStock(AddStockViewModel viewModel)
         {
             if (viewModel == null) { return BadRequest(ModelState); }
@@ -77,6 +80,8 @@ namespace BioProSystem.Controllers
         }
         [HttpPost]
         [Route("AddStockItem")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
+        [Authorize(Roles = " Design Techician, Employee, Lab Manager")]
         public async Task<IActionResult> AddStockItem(AddStockItemViewModel viewModel)
         {
             if (viewModel == null)
@@ -254,6 +259,8 @@ namespace BioProSystem.Controllers
         }
         [HttpPost]
         [Route("WriteOffStock")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
+        [Authorize(Roles = " Admin, Owner, Lab Manager")]
         public async Task<IActionResult> WriteOffStock(StockWriteOffViewModel viewModel)
         {
             if (viewModel == null) { return BadRequest(ModelState); }
@@ -324,6 +331,8 @@ namespace BioProSystem.Controllers
         }
         [HttpPut]
         [Route("CaptureNewStock")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
+        [Authorize(Roles = " Admin, Owner, Lab Manager")]
         public async Task<IActionResult> CaptureNewStock(CaptureNewStockViewModel viewModel)
         {
             if (viewModel == null) { return BadRequest(ModelState); }
@@ -384,6 +393,8 @@ namespace BioProSystem.Controllers
         }
         [HttpPost]
         [Route("CreateStockCategory")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
+        [Authorize(Roles = " Admin, Owner, Lab Manager")]
         public async Task<IActionResult> CreateStockCategory(StockCategoryViewModel viewModel)
         {
             if (viewModel == null) { return BadRequest(ModelState); }
@@ -424,6 +435,8 @@ namespace BioProSystem.Controllers
 
         [HttpPost]
         [Route("CreateStockType")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
+        [Authorize(Roles = " Admin, Owner, Lab Manager")]
         public async Task<IActionResult> CreateStockType(StockTypeViewModel viewModel)
         {
             if (viewModel == null) { return BadRequest(ModelState); }
@@ -471,6 +484,8 @@ namespace BioProSystem.Controllers
         }
         [HttpPut]
         [Route("EditStockType")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
+        [Authorize(Roles = " Admin, Owner, Lab Manager")]
         public async Task<IActionResult> EditStockType(StockTypeViewModel viewModel)
         {
             if (viewModel == null) { return BadRequest(ModelState); }
@@ -531,6 +546,8 @@ namespace BioProSystem.Controllers
         }
         [HttpPut]
         [Route("EditStockCategory")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
+        [Authorize(Roles = " Admin, Owner, Lab Manager")]
         public async Task<IActionResult> EditStockCategory(StockCategoryViewModel viewModel)
         {
             if (viewModel == null) { return BadRequest(ModelState); }
@@ -574,6 +591,8 @@ namespace BioProSystem.Controllers
         }
         [HttpDelete]
         [Route("DeleteStockCategory/{stockCategoryId}")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
+        [Authorize(Roles = " Admin, Owner, Lab Manager")]
         public async Task<IActionResult> DeleteStockCategory(int stockCategoryId)
         {
             if (stockCategoryId == null) { return BadRequest("No Id sent."); }
@@ -606,6 +625,8 @@ namespace BioProSystem.Controllers
         }
         [HttpDelete]
         [Route("DeleteStockType/{stockTypeId}")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
+        [Authorize(Roles = " Admin, Owner, Lab Manager")]
         public async Task<IActionResult> DeleteStockType(int stockTypeId)
         {
             if (stockTypeId == null) { return BadRequest("No Id sent."); }
