@@ -19,6 +19,7 @@ namespace BioProSystem.Controllers
 
         [HttpGet]
         [Route("GetAllDentists")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
         [Authorize(Roles = "Admin, Lab Manager, Owner")]
         public async Task<IActionResult> GetAllDentists()
         {
@@ -35,6 +36,7 @@ namespace BioProSystem.Controllers
 
         [HttpGet]
         [Route("GetDentist/{dentistId}")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
         [Authorize(Roles = "Admin, Lab Manager, Owner")]
         public async Task<IActionResult> GetDentistAsync(int dentistId)
         {
@@ -53,6 +55,7 @@ namespace BioProSystem.Controllers
 
         [HttpPost]
         [Route("AddDentist")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
         [Authorize(Roles = "Admin, Lab Manager, Owner")]
         public async Task<IActionResult> AddDentist(DentistViewModel model)
         {
@@ -72,6 +75,7 @@ namespace BioProSystem.Controllers
 
         [HttpPut]
         [Route("EditDentist/{dentistId}")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
         [Authorize(Roles = "Admin, Lab Manager, Owner")]
         public async Task<IActionResult> EditDentist(int dentistId, DentistViewModel model)
         {
@@ -104,6 +108,7 @@ namespace BioProSystem.Controllers
 
         [HttpDelete]
         [Route("DeleteDentist/{dentistId}")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
         [Authorize(Roles = "Admin, Lab Manager, Owner")]
         public async Task<IActionResult> DeleteDentist(int dentistId)
         {
