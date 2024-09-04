@@ -7,7 +7,7 @@ export class AuthInterceptor implements HttpInterceptor {
 
     intercept(req: HttpRequest<any>,
               next: HttpHandler): Observable<HttpEvent<any>> {
-         
+         console.log("now")
         if (sessionStorage.getItem('Token')) {
             const jwt = JSON.parse(sessionStorage.getItem('Token')!)
             const token = jwt.token
@@ -15,7 +15,7 @@ export class AuthInterceptor implements HttpInterceptor {
                 headers: req.headers.set("Authorization",
                     "Bearer " + token)
             });
-
+             console.log(jwt)
              return next.handle(cloned);
         }
         else {

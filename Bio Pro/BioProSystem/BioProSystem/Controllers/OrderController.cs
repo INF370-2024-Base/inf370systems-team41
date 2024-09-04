@@ -439,6 +439,8 @@ namespace BioProSystem.Controllers
             }
         }
         [HttpGet("GetFinishedOrders")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
+        [Authorize(Roles = "Admin, Lab Manager, Owner")]
         public async Task<IActionResult> GetFinishedOrders()
         {
             try

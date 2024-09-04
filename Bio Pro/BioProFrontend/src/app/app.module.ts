@@ -157,7 +157,7 @@ import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
     MatSelectModule
   ],
   providers: [DatePipe,{ provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },LoadingService,
-    { provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true }],
+    { provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true },{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }],
   bootstrap: [AppComponent],
   exports: [CalendarComponent]
 })

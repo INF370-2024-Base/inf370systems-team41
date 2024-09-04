@@ -18,6 +18,7 @@ import { EditCalanderEventViewModel } from '../shared/EditCalanderEvent';
 import { CaptureEmployeeHoursComponent } from '../capture-employee-hours/capture-employee-hours.component';
 import { DailyHours } from '../shared/dailyhours';
 import { HttpErrorResponse } from '@angular/common/http';
+import { RoleGuardService } from '../services/roleCheck';
 
 @Component({
   selector: 'app-testing-backend',
@@ -57,10 +58,10 @@ firstName:"Pieter",
 contactDetail:"0811456789",
 address:"tersert"
 }
-  constructor(private calendarService:CalendarService, private userService:UserServices,private employeeService:EmployeeService,private dentistService:DentistService,private stockService:StockServices) { }
-
+  constructor(private isLabMangerChecker:RoleGuardService,private calendarService:CalendarService, private userService:UserServices,private employeeService:EmployeeService,private dentistService:DentistService,private stockService:StockServices) { }
+isLabManager:boolean=false
   ngOnInit(): void {
-       
+    this.isLabManager=this.isLabMangerChecker.hasRole(["Lab Manager"])
   }
   editUser(){
     //edit user

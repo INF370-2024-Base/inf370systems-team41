@@ -4,13 +4,14 @@ import { ActivatedRoute, Router } from '@angular/router';
 @Component({
   selector: 'app-unauthorized',
   template: `
-    <ng-container *ngIf="notSignedIn;">
-    <mat-card class="unauthorized-container">
-    <mat-icon class="error-icon">lock</mat-icon>
-  <h1>Unauthorized Access</h1>
-  <p>You are not signed in. Please log in to access this page.</p>
-  <button mat-raised-button class="login-button" color="primary" (click)="login()">Login</button>
-</mat-card>
+     <ng-container *ngIf="notSignedIn; else defaultUnauthorized">
+      <mat-card class="error-card">
+        <mat-card-content>
+          <mat-icon class="error-icon">lock</mat-icon>
+          <h1>Unauthorized Access</h1>
+          <p>You are not signed in. Please log in to access this page.</p>
+        </mat-card-content>
+      </mat-card>
     </ng-container>
 
     <ng-template #defaultUnauthorized>
