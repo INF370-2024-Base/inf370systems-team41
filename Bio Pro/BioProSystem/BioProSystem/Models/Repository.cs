@@ -35,7 +35,7 @@ namespace BioProSystem.Models
         public async Task<List<Employee>> AssignAvailableTechnicians(int orderDirectionId, string systemOrderId)
         {
             var availableEmployees = await _appDbContext.Employees
-                .Where(e => e.SystemOrders.Count(so => so.OrderStatusId == 2) < 3)
+                .Where(e => e.SystemOrders.Count(so => so.OrderStatusId == 4) <= 3)
                 .ToListAsync();
 
             var orderDirectionSteps = await _appDbContext.OrderDirectionStates
@@ -44,6 +44,10 @@ namespace BioProSystem.Models
             if (orderDirectionSteps.Count == 0)
             {
                 throw new Exception("No orderdirection steps found");
+            }
+            if(availableEmployees.Count==0)
+            {
+                throw new Exception("No employees found");
             }
             OrderWorkflowTimeline timeline = await GetOrdertimeFlowBySystemOrderId(systemOrderId);
             var assignedEmployees = new List<Employee>();

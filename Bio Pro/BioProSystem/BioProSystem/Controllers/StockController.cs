@@ -106,7 +106,9 @@ namespace BioProSystem.Controllers
                     {
                         OrderId = viewModel.OrderId,
                         StockId = viewModel.StockId,
-                        Quantity = viewModel.Quantity
+                        Quantity = viewModel.Quantity,
+                        DateUsed = viewModel.DateUsed,
+                        
                     };
 
                     order.StockItems.Add(newStock);

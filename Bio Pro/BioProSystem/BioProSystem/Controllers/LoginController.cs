@@ -320,6 +320,7 @@ namespace BioProSystem.Controllers
         [HttpPut]
         [Route("EditUser")]
         [Authorize(Roles = " Lab Manager, Owner")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
         public async Task<IActionResult> EditUser(EditUser user)
         {
             var userToEdit = await _userManager.FindByEmailAsync(user.OldEmail);
@@ -335,6 +336,14 @@ namespace BioProSystem.Controllers
                     if (currentRole != null && !currentRole.Equals(user.Role, StringComparison.OrdinalIgnoreCase))
                     {
                         await _userManager.RemoveFromRoleAsync(userToEdit, currentRole);
+                        var result = await _userManager.AddToRoleAsync(userToEdit, user.Role);
+                        if (!result.Succeeded)
+                        {
+                            return BadRequest(result.Errors);
+                        }
+                    }
+                    else if(currentRole == null)
+                    {
                         var result = await _userManager.AddToRoleAsync(userToEdit, user.Role);
                         if (!result.Succeeded)
                         {
