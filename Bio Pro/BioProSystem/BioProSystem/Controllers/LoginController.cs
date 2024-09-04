@@ -43,6 +43,7 @@ namespace BioProSystem.Controllers
         }
         [HttpPost]
         [Route("Register")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
         [Authorize(Roles = " Lab Manager, Owner")]
         public async Task<IActionResult> Register(SystemUserAddViewModel uvm)
         {
@@ -274,8 +275,9 @@ namespace BioProSystem.Controllers
         }
 
 
-            [HttpPost]
+        [HttpPost]
         [Route("CreateRole")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
         [Authorize(Roles = " Lab Manager, Owner")]
         public async Task<IActionResult> CreateRole(string roleName)
         {
@@ -302,6 +304,7 @@ namespace BioProSystem.Controllers
 
         [HttpPost]
         [Route("AssignRole")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
         [Authorize(Roles = " Lab Manager, Owner")]
 
         public async Task<IActionResult> AssignRole(string emailAddress, string roleName)
@@ -378,6 +381,7 @@ namespace BioProSystem.Controllers
 
         [HttpPut]
         [Route("RemoveAccess/{userEmail}")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
         [Authorize(Roles = " Lab Manager, Owner")]
 
         public async Task<IActionResult> RemoveAccess(string userEmail)

@@ -90,6 +90,7 @@ namespace BioProSystem.Controllers
         [Route("GetDeliveries")]
         [Authorize(AuthenticationSchemes = "Bearer")]
         [Authorize(Roles = "Admin, Lab Manager, Owner")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
         public async Task<IActionResult> GetDeliveries()
         {
             try
@@ -133,7 +134,9 @@ namespace BioProSystem.Controllers
         }
         [HttpPut]
         [Route("UpdateDeliveryCollected/{deliveryId}")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
         [Authorize(Roles = "Admin, Lab Manager, Owner")]
+
         public async Task<IActionResult> UpdateDeliveryCollected(int deliveryId)
         {
             try
