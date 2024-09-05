@@ -626,7 +626,7 @@ namespace BioProSystem.Controllers
         [HttpPut]
         [Route("DissaprovePendingOrder/{orderId}")]
         [Authorize(AuthenticationSchemes = "Bearer")]
-        [Authorize(Roles = " Lab Manager, Owner")]
+        [Authorize(Roles = "Lab Manager, Owner")]
         public async Task<ActionResult<IEnumerable<SystemOrder>>> DissaprovePendingOrders(string orderId)
         {
             try
@@ -642,7 +642,7 @@ namespace BioProSystem.Controllers
                 }
                 else
                 {
-                    pendingOrders.OrderStatusId = 10;
+                    pendingOrders.OrderStatusId = 11;
                 }
                 if (await _repository.SaveChangesAsync())
                 {
@@ -662,7 +662,7 @@ namespace BioProSystem.Controllers
         [HttpPut]
         [Route("CancelOrder/{orderId}")]
         [Authorize(AuthenticationSchemes = "Bearer")]
-        [Authorize(Roles = "Lab Manager, Owner")]
+        [Authorize(Roles ="Lab Manager, Owner")]
         public async Task<ActionResult<IEnumerable<SystemOrder>>> CancelOrder(string orderId)
         {
             try
@@ -698,7 +698,7 @@ namespace BioProSystem.Controllers
         [HttpDelete]
         [Route("DeleteMediaFile/{mediaFileId}")]
         [Authorize(AuthenticationSchemes = "Bearer")]
-        [Authorize(Roles = " Lab Manager, Owner")]
+        [Authorize(Roles = "Lab Manager, Owner")]
         public async Task<IActionResult> DeleteMediaFile(int mediaFileId)
         {
             try
@@ -725,7 +725,7 @@ namespace BioProSystem.Controllers
         [HttpGet]
         [Route("GetOrdersAwaitingDentalDesign")]
         [Authorize(AuthenticationSchemes = "Bearer")]
-        [Authorize(Roles = "  Owner, Design Technician")]
+        [Authorize(Roles = "Owner, Design Technician")]
         public async Task<IActionResult> GetOrdersAwaitingDentalDesign()
         {
             try
@@ -748,7 +748,7 @@ namespace BioProSystem.Controllers
         [HttpPost]
         [Route("SendDentalDesign")]
         [Authorize(AuthenticationSchemes = "Bearer")]
-        [Authorize(Roles = " Design Technician")]
+        [Authorize(Roles = "Design Technician")]
         public async Task<IActionResult> SendDentalDesign(AddDentalDesignViewModel dentalDesign)
         {
             try
@@ -800,7 +800,7 @@ namespace BioProSystem.Controllers
         [HttpPost]
         [Route("AddMediaFile")]
         [Authorize(AuthenticationSchemes = "Bearer")]
-        [Authorize(Roles = "  Owner, Design Technician, Employee")]
+        [Authorize(Roles = "Owner, Design Technician, Employee")]
         public async Task<IActionResult> SendDentalDesign(AddMediaFileViewModel mediaFileViewModels)
         {
             try
@@ -838,11 +838,54 @@ namespace BioProSystem.Controllers
                 return StatusCode(500, "An error occurred while deleting daily hours." + ex.InnerException.Message);
             }
         }
+        [HttpPost]
+        [Route("AddDecision")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
+        [Authorize(Roles = "Lab Manager, Owner")]
+        public async Task<IActionResult> AddDecision(DecisionViewModel viewModel)
+        {
+            try
+            {
+               DecisionLog newDecision=new DecisionLog();
+                newDecision.DateOfDecision = viewModel.DateOfDecision;
+                newDecision.DecisionLogState = viewModel.DecisionLogState;
+                newDecision.SystemOrderId = viewModel.SystemOrderId;
+                newDecision.Justification = viewModel.Justification;
+               SystemOrder systemOrder=await _repository.GetSystemOrderWithoutInfoByIdAsync(viewModel.SystemOrderId);
+                if(systemOrder != null)
+                {
+                    newDecision.SystemOrder = systemOrder;
+                    systemOrder.DecisionLogs.Add(newDecision);
+                    EmailViewModel emailViewModel = new EmailViewModel();
+                    emailViewModel.Email = systemOrder.Dentist.ContactDetail;
+                    emailViewModel.EmailContent = "Order with ID:" + systemOrder.OrderId + ", has been " + viewModel.DecisionLogState + ". If you have any queries contact us at bioprosystem717@gmail.com.";
+                    emailViewModel.Emailheader = "Order " + systemOrder.OrderId + " decision.";
+                    SendTestEmail(emailViewModel);
+                }
+                else
+                {
+                    return NotFound("Order is was not found");
+                }
+                _repository.Add(newDecision);
+                if(await _repository.SaveChangesAsync())
+                {
+                    return Ok(newDecision);
+                }
+                else
+                {
+                    return BadRequest("Unable to upload decision. Please contact admin."+_repository.SaveChangesAsync().Result);
+                }
 
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "An error occurred adding decision" + ex.InnerException.Message);
+            }
+        }
         [HttpPut]
         [Route("ApproveDentalDesign/{orderId}")]
         [Authorize(AuthenticationSchemes = "Bearer")]
-        [Authorize(Roles = "  Owner, Lab Manager")]
+        [Authorize(Roles = "Owner, Lab Manager")]
         public async Task<ActionResult<IEnumerable<SystemOrder>>> ApproveDentalDesign(string orderId)
         {
             try
@@ -910,7 +953,7 @@ namespace BioProSystem.Controllers
         [HttpPut]
         [Route("DisapproveDentalDesign/{orderId}")]
         [Authorize(AuthenticationSchemes = "Bearer")]
-        [Authorize(Roles = "  Owner, Lab Manager")]
+        [Authorize(Roles = "Owner, Lab Manager")]
         public async Task<ActionResult<IEnumerable<SystemOrder>>> DisapproveDentalDesign(string orderId)
         {
             try

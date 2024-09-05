@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map, Observable, Subject } from 'rxjs';
-import { OpenOrder } from '../shared/openorder';
+import { DecisionViewModel, OpenOrder } from '../shared/ordersViewModel';
 import { SystemOrderViewModel } from '../shared/SystemOrderViewModel ';
 import { AddDentalDesignViewModel } from '../orders-awaiting-dental-design/orders-awaiting-dental-design.component';
 import { AddMediaFileViewModel } from '../employee-orders-and-steps/employee-orders-and-steps.component';
@@ -35,6 +35,9 @@ export class OrderService {
   }
   addOrder(order: any): Observable<any> {
     return this.httpClient.post(`${this.apiUrl}Api/AddOrders`, order, this.httpOptions);
+  }
+  AddDecision(decision: DecisionViewModel): Observable<any> {
+    return this.httpClient.post(`${this.apiUrl}Api/AddDecision`, decision, this.httpOptions);
   }
   addMediaFile(mediaFile: AddMediaFileViewModel): Observable<AddMediaFileViewModel> {
     return this.httpClient.post<AddMediaFileViewModel>(`${this.apiUrl}Api/AddMediaFile`, mediaFile, this.httpOptions);

@@ -32,6 +32,7 @@
         <mat-expansion-panel-header>
           <mat-panel-title>
             <mat-error *ngIf="order.orderStatus.orderStatusId==9" align="end">Canceled:</mat-error>
+            <mat-error *ngIf="order.orderStatus.orderStatusId==11" align="end">Rejected:</mat-error>
             <mat-icon>assignment</mat-icon>
             Order ID: {{ order.orderId }} - Dentist: {{ order.dentist.firstName }} {{ order.dentist.lastName }}  
             

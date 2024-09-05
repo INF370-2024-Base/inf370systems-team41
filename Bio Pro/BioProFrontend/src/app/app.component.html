@@ -120,7 +120,7 @@
           <mat-icon>add_circle_outline</mat-icon>
           <span>Approve Dental Designs</span>
         </a>
-        <a mat-list-item [routerLink]="['/approval']" (click)="isSidenavOpen = !isSidenavOpen" *ngIf="roleService.hasRole(['owner'])">
+        <a mat-list-item [routerLink]="['/approval']" (click)="isSidenavOpen = !isSidenavOpen" *ngIf="roleService.hasRole(['owner','lab manager'])">
           <mat-icon>check_circle</mat-icon>
           <span>Approve Orders</span>
         </a>

@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map, Observable, Subject } from 'rxjs';
-import { OpenOrder } from '../shared/openorder';
+import { OpenOrder } from '../shared/ordersViewModel';
 import { SystemOrderViewModel } from '../shared/SystemOrderViewModel ';
 import { ProceduralTimelineViewModel } from '../shared/proceduralTimelineViewModel';
 import { DeliverAddViewModel } from '../shared/deliverAddViewModel';

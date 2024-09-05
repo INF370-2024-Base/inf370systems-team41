@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { OpenOrder } from '../shared/openorder';
+import { OpenOrder } from '../shared/ordersViewModel';
 import { OrderService } from '../services/order.service';
 import { Router } from '@angular/router';
 import { trigger, state, style, animate, transition } from '@angular/animations';

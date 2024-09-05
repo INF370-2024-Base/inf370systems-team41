@@ -341,7 +341,7 @@ namespace BioProSystem.Models
         }
         public async Task<SystemOrder> GetSystemOrderWithoutInfoByIdAsync(string orderId)
         {
-            return await _appDbContext.SystemOrders.Include(o=>o.MediaFiles).FirstOrDefaultAsync(o => o.OrderId == orderId);
+            return await _appDbContext.SystemOrders.Include(o => o.Dentist).Include(o=>o.MediaFiles).FirstOrDefaultAsync(o => o.OrderId == orderId);
         }
         public async Task<OrderDirection> GetOrderDirectionById(int orderDirectionId)
         {
