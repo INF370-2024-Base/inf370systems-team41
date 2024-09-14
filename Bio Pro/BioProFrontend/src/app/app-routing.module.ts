@@ -30,20 +30,7 @@ import { StockComponent } from './stock/stock.component';
 import { EditUserComponent } from './edit-user/edit-user.component';
 import { EditAnyUserComponent } from './edit-any-user/edit-any-user.component';
 import { AllUsersComponent } from './all-users/all-users.component';
-import { HelpDentistSearchComponent } from './help-dentist-search/help-dentist-search.component';
-import { HelpDentistAddComponent } from './help-dentist-add/help-dentist-add.component';
-import { HelpDentistEditComponent } from './help-dentist-edit/help-dentist-edit.component';
-import { HelpDentistDeleteComponent } from './help-dentist-delete/help-dentist-delete.component';
-import { HelpEmployeeAddComponent } from './help-employee-add/help-employee-add.component';
-import { HelpEmployeeEditComponent } from './help-employee-edit/help-employee-edit.component';
-import { HelpEmployeeDeleteComponent } from './help-employee-delete/help-employee-delete.component';
-import { HelpEmployeeSearchComponent } from './help-employee-search/help-employee-search.component';
-import { HelpEmployeeHourComponent } from './help-employee-hour/help-employee-hour.component';
-import { HelpEmploueeHourDeleteComponent } from './help-emplouee-hour-delete/help-emplouee-hour-delete.component';
-import { HelpStockAddComponent } from './help-stock-add/help-stock-add.component';
-import { HelpStockCaptureComponent } from './help-stock-capture/help-stock-capture.component';
-import { HelpStockWriteoffComponent } from './help-stock-writeoff/help-stock-writeoff.component';
-import { HelpStockSearchComponent } from './help-stock-search/help-stock-search.component';
+
 import { ReportsComponent } from './reports/reports.component';
 import { ReportsServices } from './services/reports';
 import { StockItemCountByCategory } from './shared/StockItemCountByCategory';
@@ -100,20 +87,7 @@ const routes: Routes = [
   { path: 'help-employee', component: HelpEmployeesComponent, canActivate: [RoleGuardService], data: { expectedRoles: ['Admin', 'Lab Manager',"Owner"] } },
   { path: 'help-dentist', component: HelpDentistComponent, canActivate: [RoleGuardService], data: { expectedRoles: ['Admin', 'Lab Manager',"Owner"] } },
   { path: 'all-user', component: AllUsersComponent, canActivate: [RoleGuardService], data: { expectedRoles: ['Admin', 'Lab Manager',"Owner"] } },
-  { path: 'help-dentist-search', component: HelpDentistSearchComponent, canActivate: [RoleGuardService], data: { expectedRoles: ['Admin', 'Dentist'] } },
-  { path: 'help-dentist-add', component: HelpDentistAddComponent, canActivate: [RoleGuardService], data: { expectedRoles: ['Admin', 'Lab Manager',"Owner"] } },
-  { path: 'help-dentist-edit', component: HelpDentistEditComponent , canActivate: [RoleGuardService], data: { expectedRoles: ['Admin', 'Lab Manager',"Owner"] }},
-  { path: 'help-dentist-delete', component: HelpDentistDeleteComponent, canActivate: [RoleGuardService], data: { expectedRoles: ['Admin', 'Lab Manager',"Owner"] } },
-  { path: 'help-employee-search', component: HelpEmployeeSearchComponent, canActivate: [RoleGuardService], data: { expectedRoles: ['Admin', 'Lab Manager',"Owner"] }},
-  { path: 'help-employee-add', component: HelpEmployeeAddComponent, canActivate: [RoleGuardService], data: { expectedRoles: ['Admin', 'Lab Manager',"Owner"] }},
-  { path: 'help-employee-edit', component: HelpEmployeeEditComponent, canActivate: [RoleGuardService], data: { expectedRoles: ['Admin', 'Lab Manager',"Owner"] } },
-  { path: 'help-employee-delete', component: HelpEmployeeDeleteComponent, canActivate: [RoleGuardService], data: { expectedRoles: ['Admin', 'Lab Manager',"Owner"] } },
-  { path: 'help-stock-search', component: HelpStockSearchComponent },
-  { path: 'help-stock-add', component: HelpStockAddComponent, canActivate: [RoleGuardService], data: { expectedRoles: ['Admin', 'Lab Manager',"Owner"] }},
-  { path: 'help-stock-capture', component: HelpStockCaptureComponent, canActivate: [RoleGuardService], data: { expectedRoles: ['Admin', 'Lab Manager',"Owner"] }},
-  { path: 'help-stock-writeoff', component: HelpStockWriteoffComponent, canActivate: [RoleGuardService], data: { expectedRoles: ['Admin', 'Lab Manager',"Owner"] } },
-  { path: 'help-employee-hour', component: HelpEmployeeHourComponent, canActivate: [RoleGuardService], data: { expectedRoles: ['Admin', 'Lab Manager',"Owner"] } },
-  { path: 'help-employee-hour-delete', component: HelpEmploueeHourDeleteComponent},
+
   { path: 'reports', component: ReportsComponent},
   { path: 'help-orders', component: HelpOrdersComponent, canActivate: [RoleGuardService], data: { expectedRoles: ['Admin', 'Lab Manager',"Owner"] } },
   { path: 'help-orderTimeline', component: HelpTimelineOfOrdersComponent, canActivate: [RoleGuardService], data: { expectedRoles: ['Admin', 'Lab Manager',"Owner"] } },

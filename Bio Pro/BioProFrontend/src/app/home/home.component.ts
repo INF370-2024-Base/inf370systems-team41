@@ -31,6 +31,9 @@ export class HomeComponent implements OnInit {
     { name: 'DELIVERIES MANAGEMENT', route: '/deliveries', icon: 'delivery_dining',roles:['Lab Manager','Owner','Admin'] },
     { name: 'STOCK MANAGEMENT', route: '/pageStock', icon: 'stock',roles:['Lab Manager','Owner','Admin','Employee','Design Technician'] },
     { name: 'REPORTS', route: '/reports', icon: 'analytics',roles:['Lab Manager','Owner','Admin'] },
+    { name: 'APPROVE ORDER', route: '/approval', icon: 'analytics',roles:['Owner','Lab Manager'] },
+    { name: 'AWAITING DENTAL DESIGN', route: '/orderAwaitingDentalDesign', icon: 'folder_open',roles:['Lab Manager','Design Technician'] },
+    { name: 'APPROVE DENTAL DESIGN', route: '/dentalDesignApproval', icon: 'add_circle_outline',roles:['Lab Manager','Owner'] },
   ];
   
   constructor(private http: HttpClient,public roleService: RoleGuardService) {}
