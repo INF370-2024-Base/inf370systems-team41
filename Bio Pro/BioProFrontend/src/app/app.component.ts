@@ -26,6 +26,9 @@ export class AppComponent implements OnInit {
   showNavBar = true;
   title = 'BioProSystem';
   userRoles: string[] = [];
+  pendingOrdersCount: number = 0;
+  ordersAwaitingDentalDesignCount: number = 0;
+  ordersAwaitingDesignApprovalCount: number = 0;
 
   constructor(public dataService: OrderService, private router: Router, private dialog: MatDialog,private loadingService:LoadingService,public  roleService: RoleGuardService) {
     // Listen to router events to determine the current route
@@ -42,8 +45,28 @@ export class AppComponent implements OnInit {
         window.scrollTo(0, 0);
       }
     });
-    
+    this.loadPendingOrders();
+    this.loadOrdersAwaitingDentalDesign();
+    this.loadOrdersAwaitingDesignApproval();
   }
+  loadPendingOrders(): void {
+    this.dataService.getPendingOrders().subscribe((orders: any[]) => {
+      this.pendingOrdersCount = orders.length;
+    });
+  }
+    // Load count of orders awaiting dental design
+    loadOrdersAwaitingDentalDesign(): void {
+      this.dataService.getOrdersAwaitingDentalDesign().subscribe((orders: any[]) => {
+        this.ordersAwaitingDentalDesignCount = orders.length;
+      });
+    }
+  
+    // Load count of orders awaiting dental design approval
+    loadOrdersAwaitingDesignApproval(): void {
+      this.dataService.GetOrdersAwaitingDentalDesignApproval().subscribe((orders: any[]) => {
+        this.ordersAwaitingDesignApprovalCount = orders.length;
+      });
+    }
   
   toggleOrdersMenu(): void {
     this.isOrdersMenuOpen = !this.isOrdersMenuOpen;
