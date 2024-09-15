@@ -241,7 +241,37 @@
       <button class="download-button" (click)="downloadPDF('Overall Stock Write-Offs Report', 'stockWriteOffsReport')">Download PDF</button>
     </div> 
     
-    
+    <!-- Stock Usage Per Week Table -->
+<div class="stock-usage-weekly">
+  <h3>Weekly Stock Usage</h3>
+  <table>
+      <thead>
+          <tr>
+              <th>Week Ending</th>
+              <th>Stock Item</th>
+              <th>Quantity Used</th>
+          </tr>
+      </thead>
+      <tbody>
+          <tr *ngFor="let usage of weeklyStockUsage">
+              <td>{{ usage.weekEnding | date: 'mediumDate' }}</td>
+              <td>{{ usage.stockName }}</td>
+              <td>{{ usage.quantityUsed }}</td>
+          </tr>
+      </tbody>
+  </table>
+</div>
+
+<div>
+  <div *ngFor="let week of weeklyStockUsage">
+    <h3>Week: {{ week.week }}</h3>
+    <p>Total Usage: {{ week.totalUsage }}</p>
+    <ul>
+      <li *ngFor="let stock of week.stockDetails">
+        Stock: {{ stock.stockName }}, Quantity Used: {{ stock.usageAmount }}
+      </li>
+    </ul>
+</div>
 
     <div class="report-section" id="deliveryReport">
       <h2>Deliveries Report</h2>
@@ -298,6 +328,7 @@
       <button class="download-button" (click)="downloadPDF('Employee Hours Report', 'employeeHoursReport')">Download PDF</button>
     </div>
  
+  </div>
   </div>
 </body>
 </html>

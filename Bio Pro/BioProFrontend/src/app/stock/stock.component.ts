@@ -29,6 +29,10 @@ export class StockComponent implements OnInit {
   belowMinStock: any[] = [];
   page: number = 1; // Current page
 
+  weeklyStockUsage: { week: number; year: number; totalQuantity: number }[] = [];
+
+
+
   frequentlyVisitedPages: { name: string; route: string; icon: string }[] = [
     { name: 'ADD STOCK', route: '/addStock', icon: 'add_box' }, // Represents adding items
     
@@ -75,6 +79,8 @@ export class StockComponent implements OnInit {
           (categoryData: any[]) => {
             this.allCategories = categoryData;
             this.categories = [...this.allCategories];
+
+            //fetch stock
 
             // Fetch all stock types
             this.stockService.getAllStockTypes().subscribe(

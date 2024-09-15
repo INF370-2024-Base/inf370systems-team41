@@ -472,6 +472,11 @@ namespace BioProSystem.Models
             _appDbContext.StockItems.Add(stockItem);
         }
 
+        public async Task<List<StockItem>> GetAllStockItems()
+        {
+            return await _appDbContext.StockItems.ToListAsync();
+        }
+
         public void UpdateDentist(Dentist dentist)
         {
             _appDbContext.Entry(dentist).State = EntityState.Modified;

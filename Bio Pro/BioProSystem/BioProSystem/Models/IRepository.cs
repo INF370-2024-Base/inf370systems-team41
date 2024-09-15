@@ -47,6 +47,9 @@ namespace BioProSystem.Models
         Task<List<Employee>> AssignAvailableTechnicians(int orderDirectionId, string systemOrderId);
         Task<OrderWorkflowTimeline> GetOrdertimeFlowBySystemOrderId(string systemOrderId);
         Task<StockCategory> GetStockCategoryById(int stockCategoryID);
+
+        Task<List<StockItem>> GetAllStockItems();
+
         //Employee
         Task<List<JobTitle>> GetJobTitlesAsync();
         Task<Employee[]> GetAllEmployeeAsync();

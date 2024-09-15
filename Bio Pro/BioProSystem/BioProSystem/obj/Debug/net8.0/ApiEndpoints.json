@@ -1495,6 +1495,16 @@
   },
   {
     "ContainingType": "BioProSystem.Controllers.StockController",
+    "Method": "GetAllStockItems",
+    "RelativePath": "stock/GetAllStockItems",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "BioProSystem.Controllers.StockController",
     "Method": "GetAllStockTypes",
     "RelativePath": "stock/GetAllStockTypes",
     "HttpMethod": "GET",
