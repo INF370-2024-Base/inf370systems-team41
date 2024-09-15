@@ -45,9 +45,12 @@ export class AppComponent implements OnInit {
         window.scrollTo(0, 0);
       }
     });
-    this.loadPendingOrders();
-    this.loadOrdersAwaitingDentalDesign();
-    this.loadOrdersAwaitingDesignApproval();
+    if(this.roleService.hasRole(['Lab Manager', 'Owner'])){
+    this.loadPendingOrders();};
+    if(this.roleService.hasRole(['Owner','Design Technician'])){
+    this.loadOrdersAwaitingDentalDesign();};
+    if(this.roleService.hasRole([' Admin', 'Owner', 'Lab Manager'])){
+    this.loadOrdersAwaitingDesignApproval();};
   }
   loadPendingOrders(): void {
     this.dataService.getPendingOrders().subscribe((orders: any[]) => {

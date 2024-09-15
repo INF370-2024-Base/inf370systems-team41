@@ -183,3 +183,17 @@ body, html {
   transform: translateY(-2px);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
+
+.feature-card {
+  position: relative;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+}
+
+.mat-badge-content {
+  font-size: 0.75rem;
+}
+

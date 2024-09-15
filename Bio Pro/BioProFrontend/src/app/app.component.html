@@ -113,36 +113,52 @@
           <span>Open Orders</span>
         </a> -->
 <!-- Orders Awaiting Dental Design -->
+<!-- Orders Awaiting Dental Design -->
 <a mat-list-item [routerLink]="['/orderAwaitingDentalDesign']" 
    (click)="isSidenavOpen = !isSidenavOpen"
-   *ngIf="roleService.hasRole(['Design technician', 'lab manager'])"
-   matBadge="{{ ordersAwaitingDentalDesignCount }}"
-   matBadgeOverlap="false"
-   matBadgeHidden="{{ ordersAwaitingDentalDesignCount === 0 }}">
+   *ngIf="roleService.hasRole(['Design technician', 'lab manager'])">
   <mat-icon>folder_open</mat-icon>
-  <span>Orders Awaiting Dental Design</span>
+  <!-- Wrap the text and badge together in a span -->
+  <span class="badge-container">
+    Orders Awaiting Dental Design
+    <span matBadge="{{ ordersAwaitingDentalDesignCount }}"
+          matBadgeOverlap="false"
+          matBadgeHidden="{{ ordersAwaitingDentalDesignCount === 0 }}">
+    </span>
+  </span>
 </a>
 
 <!-- Approve Dental Designs -->
 <a mat-list-item [routerLink]="['/dentalDesignApproval']" 
    (click)="isSidenavOpen = !isSidenavOpen"
-   *ngIf="roleService.hasRole(['lab manager', 'owner'])"
-   matBadge="{{ ordersAwaitingDesignApprovalCount }}"
-   matBadgeOverlap="false"
-   matBadgeHidden="{{ ordersAwaitingDesignApprovalCount === 0 }}">
+   *ngIf="roleService.hasRole(['lab manager', 'owner'])">
   <mat-icon>add_circle_outline</mat-icon>
-  <span>Approve Dental Designs</span>
+  <!-- Wrap the text and badge together in a span -->
+  <span class="badge-container">
+    Approve Dental Designs
+    <span matBadge="{{ ordersAwaitingDesignApprovalCount }}"
+          matBadgeOverlap="false"
+          matBadgeHidden="{{ ordersAwaitingDesignApprovalCount === 0 }}">
+    </span>
+  </span>
 </a>
 
 
-        <a mat-list-item [routerLink]="['/approval']" (click)="isSidenavOpen = !isSidenavOpen"
-        *ngIf="roleService.hasRole(['owner'])" 
-        matBadge="{{ pendingOrdersCount }}"
-        matBadgeOverlap="false"
-        matBadgeHidden="{{ pendingOrdersCount === 0 }}">
-       <mat-icon>check_circle</mat-icon>
-       <span>Approve Orders</span>
-     </a>
+<!-- Approve Orders -->
+<a mat-list-item [routerLink]="['/approval']" 
+   (click)="isSidenavOpen = !isSidenavOpen"
+   *ngIf="roleService.hasRole(['owner'])">
+  <mat-icon>check_circle</mat-icon>
+  <!-- Wrap the text and badge together in a span -->
+  <span class="badge-container">
+    Approve Orders
+    <span matBadge="{{ pendingOrdersCount }}"
+          matBadgeOverlap="false"
+          matBadgeHidden="{{ pendingOrdersCount === 0 }}">
+    </span>
+  </span>
+</a>
+
         <a mat-list-item [routerLink]="['/employeeOrders']" (click)="isSidenavOpen = !isSidenavOpen" *ngIf="roleService.hasRole(['Employee','Design technician','Lab manager'])">
           <mat-icon>description</mat-icon>
           <span>Employee Order Steps</span>

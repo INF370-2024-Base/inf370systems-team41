@@ -135,6 +135,14 @@ html{
   display: flex;
   align-items: center;
 }
+.badge-container {
+  display: inline-flex;
+  align-items: center;
+}
+
+.mat-badge-content {
+  margin-left: 30px; /* Add some space between the text and the badge */
+}
 
 
 // /* When the sidenav is open */
