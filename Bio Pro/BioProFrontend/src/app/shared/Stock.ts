@@ -78,8 +78,8 @@ export class AddStockItemViewModel {
 export interface StockItems {
     StockId: number;
      OrderId: string;
-     Quantity:number;
-    DateUsed:Date;
+     quantity:number;
+    dateUsed:Date;
     stockName?: string;
     
    

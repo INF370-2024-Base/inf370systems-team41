@@ -44,7 +44,7 @@
           <p>Total Usage: {{ weekData.totalUsage }} units</p>
           <ul>
             <li *ngFor="let detail of weekData.stockDetails">
-              {{ detail.stockName }}: {{ detail.Quantity }} used on {{ detail.DateUsed | date: 'MMM d, y' }}
+              {{ detail.stockName }}: {{ detail.quantity }} used on {{ detail.dateUsed | date: 'MMM d, y' }}
             </li>
           </ul>
         </div>
