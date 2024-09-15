@@ -86,7 +86,7 @@ export interface StockItems {
   }
 
   export interface Stock {
-    stockId: number;
+    stockitemId: number;
     
     stockName: string;
     quantityAvailable: number;

@@ -52,16 +52,17 @@
       <p *ngIf="weeklyStockUsage.length === 0">No stock usage data available for the selected week.</p>
     </div>
 
-    <!-- Stock Items Below Minimum Level -->
-    <div class="below-minimum-level">
-      <h3>Stock Items Below Minimum Level</h3>
-      <ul *ngIf="belowMinStock.length > 0">
-        <li *ngFor="let stock of belowMinStock">
-          {{ stock.stockName }} ({{ stock.quantityAvailable }} units left, minimum required: {{ stock.minimumStockLevel }})
-        </li>
-      </ul>
-      <p *ngIf="belowMinStock.length === 0">All stock items are above the minimum level.</p>
-    </div>
+  <!-- Stock Items Below Minimum Level -->
+<div class="below-minimum-level">
+    <h3>Stock Items Below Minimum Level</h3>
+    <ul *ngIf="belowMinStock.length > 0">
+      <li *ngFor="let stock of belowMinStock">
+        {{ stock.stockName }} ({{ stock.quantityAvailable }} units left, minimum required: {{ stock.minimumStockLevel }})
+      </li>
+    </ul>
+    <p *ngIf="belowMinStock.length === 0">All stock items are above the minimum level.</p>
+  </div>
+  
   </div>
 
   <div mat-dialog-actions align="end">
