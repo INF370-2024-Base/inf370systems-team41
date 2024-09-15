@@ -7,6 +7,7 @@ import { addUser } from '../shared/adduser';
 import { ResetPassword, UpdateUser } from '../shared/UpdateUser';
 import { AddStock, AddStockItemViewModel, CaptureNewStockViewModel, StockCategoryViewModel, StockTypeViewModel, StockWriteOffViewModel } from '../shared/Stock';
 import { StockTypeComponent } from '../stock-type/stock-type.component';
+import { StockItems } from '../shared/Stock';
 
 @Injectable({
   providedIn: 'root'
@@ -35,6 +36,12 @@ export class StockServices {
     return this.httpClient.get(`${this.apiUrl}GetAllStockTypes`)
     .pipe(map(result => result))
   }
+  
+  getStockItems(): Observable<any>{
+    return this.httpClient.get(`${this.apiUrl}GetAllStockItems`)
+    .pipe(map(result => result))
+  }
+
   addStock(stock:AddStock): Observable<AddStock>{
     return this.httpClient.post<AddStock>(`${this.apiUrl}AddStock`,stock)
     .pipe(map(result => result))

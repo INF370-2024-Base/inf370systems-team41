@@ -19,12 +19,12 @@ import { DataService } from '../services/login.service';
 import {  ChartConfiguration, ChartItem, registerables } from 'chart.js';
 import { StockServices } from '../services/stock.service';
 import { DentistService } from '../shared/dentist.service'; 
-import { StockUsage } from '../shared/Stock';
+import {StockItems } from '../shared/Stock';
 
 interface WeeklyStockUsage {
   week: number;
   totalUsage: number;
-  stockDetails: StockUsage[];
+  stockDetails: StockItems[];
 }
 
 
@@ -107,40 +107,55 @@ export class ReportsComponent implements OnInit {
         }
       });
     }
-  // Fetch the stock usage data
-  fetchStockData(): void {
-    this.stockServices.getAllStock().subscribe((data: StockUsage[]) => {
+// Fetch the stock usage data
+fetchStockData(): void {
+  this.stockServices.getStockItems().subscribe(
+    (data: StockItems[]) => {
+      console.log('Stock items fetched:', data);  // Log fetched data
       this.groupStockUsageByWeek(data);
-    });
+    },
+    (error) => {
+      console.error('Error fetching stock items:', error);  // Log errors
+    }
+  );
+}
+
+// Function to group stock usage by week
+groupStockUsageByWeek(stockItems: StockItems[]): void {
+  const groupedByWeek = stockItems.reduce((acc: { [key: number]: WeeklyStockUsage }, item: StockItems) => {
+    const weekNumber = this.getWeekNumber(new Date(item.DateUsed));
+    if (!acc[weekNumber]) {
+      acc[weekNumber] = {
+        week: weekNumber,
+        totalUsage: 0,
+        stockDetails: []
+      };
+    }
+    // Use Quantity field for usage calculation
+    acc[weekNumber].totalUsage += item.Quantity;
+    acc[weekNumber].stockDetails.push(item);
+    return acc;
+  }, {} as { [key: number]: WeeklyStockUsage });
+
+  // Convert the grouped object into an array for easier handling in the template
+  this.weeklyStockUsage = Object.values(groupedByWeek);
+}
+
+// Helper function to calculate the week number for a given date
+// Helper function to calculate the week number for a given date
+getWeekNumber(date: Date): number {
+  const target = new Date(date.valueOf());
+  const dayNr = (date.getDay() + 6) % 7;
+  target.setDate(target.getDate() - dayNr + 3);
+  const firstThursday = target.valueOf();
+  target.setMonth(0, 1);
+  if (target.getDay() !== 4) {
+    target.setMonth(0, 1 + ((4 - target.getDay()) + 7) % 7);
   }
+  const weekNumber = 1 + Math.ceil((firstThursday - target) / 604800000);
+  return weekNumber;
+}
 
-  // Function to group stock usage by week
-  groupStockUsageByWeek(stockItems: StockUsage[]): void {
-    const groupedByWeek = stockItems.reduce((acc: { [key: number]: WeeklyStockUsage }, item: StockUsage) => {
-      const weekNumber = this.getWeekNumber(new Date(item.DateUsed));
-      if (!acc[weekNumber]) {
-        acc[weekNumber] = {
-          week: weekNumber,
-          totalUsage: 0,
-          stockDetails: []
-        };
-      }
-      acc[weekNumber].totalUsage += item.usageAmount;
-      acc[weekNumber].stockDetails.push(item);
-      return acc;
-    }, {} as { [key: number]: WeeklyStockUsage });
-
-    // Convert the grouped object into an array for easier handling in the template
-    this.weeklyStockUsage = Object.values(groupedByWeek);
-  }
-
-
-  // Helper function to calculate the week number for a given date
-  getWeekNumber(date: Date): number {
-    const oneJan = new Date(date.getFullYear(), 0, 1);
-    const numberOfDays = Math.floor((date.getTime() - oneJan.getTime()) / (24 * 60 * 60 * 1000));
-    return Math.ceil((date.getDay() + 1 + numberOfDays) / 7);
-  }
 
 
   fetchLoggedInUserName(): Promise<void> {

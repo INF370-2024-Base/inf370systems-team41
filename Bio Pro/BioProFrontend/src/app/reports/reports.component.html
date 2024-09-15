@@ -262,16 +262,19 @@
   </table>
 </div>
 
-<div>
-  <div *ngFor="let week of weeklyStockUsage">
-    <h3>Week: {{ week.week }}</h3>
-    <p>Total Usage: {{ week.totalUsage }}</p>
-    <ul>
-      <li *ngFor="let stock of week.stockDetails">
-        Stock: {{ stock.stockName }}, Quantity Used: {{ stock.usageAmount }}
-      </li>
-    </ul>
-</div>
+
+<div *ngFor="let week of weeklyStockUsage">
+  <h3>Week: {{ week.week }}</h3>
+  <p>Total Usage: {{ week.totalUsage }}</p>
+  <ul>
+    <li *ngFor="let stock of week.stockDetails">
+      Stock: {{ stock.stockId }}, Quantity Used: {{ stock.quantity }}
+    </li>
+  </ul>
+
+
+
+
 
     <div class="report-section" id="deliveryReport">
       <h2>Deliveries Report</h2>

@@ -75,11 +75,12 @@ export class AddStockItemViewModel {
         this.DateUsed=dateUsed;
     }
 }
-export interface StockUsage {
-    stockId: number;
-    stockName: string;
-    usageAmount: number;
-     DateUsed:Date // Date when the stock was used
+export interface StockItems {
+    StockId: number;
+     OrderId: string;
+     Quantity:number;
+    DateUsed:Date;
+   
   }
 export class StockCategoryViewModel {
     public StockTypeId: number;
