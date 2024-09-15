@@ -109,6 +109,7 @@ import { LoadingInterceptor } from './services/loading.interceptor';
 
 import { NgxPaginationModule } from 'ngx-pagination';
 import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
+import { StockUsageModalComponent } from './stock-usage-modal/stock-usage-modal.component';
 
 @NgModule({
   declarations: [
@@ -130,8 +131,9 @@ import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
     ConfirmationDialogComponent, OrdersAwaitingDentalDesignComponent, DentalDesignApprovalComponent, EmployeeOrdersAndStepsComponent,CalendarComponent, SearchBarComponent, EventModalComponent, ProcededuralTimelineViewComponent, AddEventModalComponent, StockUsedComponent, HelpComponent,HelpStockComponent, HelpEmployeesComponent, HelpDentistComponent, AllUsersComponent, EditAnyUserComponent
     , OrdersAwaitingDentalDesignComponent, DentalDesignApprovalComponent, EmployeeOrdersAndStepsComponent,CalendarComponent, SearchBarComponent, EventModalComponent, ProcededuralTimelineViewComponent, AddEventModalComponent, StockUsedComponent, HelpComponent,HelpStockComponent, HelpEmployeesComponent, HelpDentistComponent, DentistEditDialogComponent, HelpDentistSearchComponent, HelpDentistAddComponent, HelpDentistEditComponent, HelpDentistDeleteComponent, HelpEmployeeAddComponent, HelpEmployeeEditComponent, HelpEmployeeDeleteComponent, HelpEmployeeSearchComponent, HelpEmployeeHourComponent, HelpEmploueeHourDeleteComponent, HelpStockAddComponent, HelpStockCaptureComponent, HelpStockWriteoffComponent, HelpStockSearchComponent,
     ReportsComponent,
+    StockUsageModalComponent,
     CaptureEmployeeHoursComponent,LoginComponent,EditOrderModalComponent, AddUserComponent, AddProceduralTimeline, DeliveriesComponent, AddDeliveryComponent, HomeComponent, TestingBackendComponent, ConfirmationDialogComponent, OrdersAwaitingDentalDesignComponent, DentalDesignApprovalComponent, HelpComponent, HelpOrdersComponent, HelpTimelineOfOrdersComponent, HelpDeliveriesComponent, StockCategoryComponent, EditStockCategoryComponent, StockTypeComponent, EditStockTypeComponent, AddStockTypeComponent, AddStockCategoryComponent, UpdatePasswordComponent, ResetPasswordComponent, ResetUserPasswordComponent
-    ,CaptureEmployeeHoursComponent,LoginComponent,EditOrderModalComponent, AddUserComponent, AddProceduralTimeline, DeliveriesComponent, AddDeliveryComponent, HomeComponent, TestingBackendComponent, ConfirmationDialogComponent, OrdersAwaitingDentalDesignComponent, DentalDesignApprovalComponent, HelpComponent, HelpOrdersComponent, HelpTimelineOfOrdersComponent, HelpDeliveriesComponent, ConfirmDeleteEmployeeComponent, ConfirmDeleteDentistComponent, HelpUserComponent, ConfirmDeleteUserComponent, ConfirmDeleteDailyHourComponent, SettingsComponent, AuditTrailComponent, UnauthorizedComponent
+    ,CaptureEmployeeHoursComponent,LoginComponent,EditOrderModalComponent, AddUserComponent, AddProceduralTimeline, DeliveriesComponent, AddDeliveryComponent, HomeComponent, TestingBackendComponent, ConfirmationDialogComponent, OrdersAwaitingDentalDesignComponent, DentalDesignApprovalComponent, HelpComponent, HelpOrdersComponent, HelpTimelineOfOrdersComponent, HelpDeliveriesComponent, ConfirmDeleteEmployeeComponent, ConfirmDeleteDentistComponent, HelpUserComponent, ConfirmDeleteUserComponent, ConfirmDeleteDailyHourComponent, SettingsComponent, AuditTrailComponent, UnauthorizedComponent, StockUsageModalComponent
   ],
   imports: [
     BrowserModule,

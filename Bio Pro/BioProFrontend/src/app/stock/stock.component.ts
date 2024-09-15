@@ -7,6 +7,10 @@ import { WriteOffModalComponent } from '../write-off-modal/write-off-modal.compo
 import { CaptureNewStockModalComponent } from '../capture-new-stock-modal/capture-new-stock-modal.component';
 import { DataService } from '../services/login.service';
 import { RoleGuardService } from '../services/roleCheck';
+import {StockItems } from '../shared/Stock';
+import { StockUsageModalComponent } from '../stock-usage-modal/stock-usage-modal.component';
+
+
 
 @Component({
   selector: 'app-stock',
@@ -28,10 +32,8 @@ export class StockComponent implements OnInit {
   displayedColumns: string[] = ['stockName', 'quantityAvailable', 'minimumStockLevel'];
   belowMinStock: any[] = [];
   page: number = 1; // Current page
-
-  weeklyStockUsage: { week: number; year: number; totalQuantity: number }[] = [];
-
-
+  
+ 
 
   frequentlyVisitedPages: { name: string; route: string; icon: string }[] = [
     { name: 'ADD STOCK', route: '/addStock', icon: 'add_box' }, // Represents adding items
@@ -48,9 +50,15 @@ export class StockComponent implements OnInit {
     setTimeout(() => {
       this.createStockLevelChart();
     }, 0);
+   
   }
 
-
+  openModal(): void {
+    this.dialog.open(StockUsageModalComponent, {
+      width: '1000px',
+      height: '700px'
+    });
+  }
 
   ngOnDestroy(): void {
     // Destroy the chart when the component is destroyed to avoid memory leaks
@@ -282,4 +290,8 @@ export class StockComponent implements OnInit {
       this.stockChart.update();
     }
   }
+
+
 }
+
+

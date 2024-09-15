@@ -17,6 +17,10 @@
                 <span class="sr-only">Loading...</span>
             </div>
         </div>
+
+        <div class="stock-dashboard">
+            <button mat-raised-button color="primary" (click)="openModal()">Open Stock Dashboard</button>
+          </div>
                    
 <div class="feature-cards" *ngIf="roleService.hasRole(['admin', 'owner','lab manager'])">
     <div 
@@ -93,13 +97,13 @@
             
         </div>
 
-        
        
-      <div class="chart-container">
+       
+      <!-- <div class="chart-container">
         <h2 class="chart-heading">Stock Levels vs Minimum Stock Levels</h2>
         <canvas id="stockLevelChart"></canvas>
-      </div>
-    </div>
+      </div> -->
+    </div> 
 
     
 </body>

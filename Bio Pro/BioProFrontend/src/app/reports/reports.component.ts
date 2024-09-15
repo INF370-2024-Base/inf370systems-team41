@@ -21,11 +21,7 @@ import { StockServices } from '../services/stock.service';
 import { DentistService } from '../shared/dentist.service'; 
 import {StockItems } from '../shared/Stock';
 
-interface WeeklyStockUsage {
-  week: number;
-  totalUsage: number;
-  stockDetails: StockItems[];
-}
+
 
 
 @Component({
@@ -82,7 +78,7 @@ export class ReportsComponent implements OnInit {
       this.getDeliveries();
       this.getAllDentists(); 
       this.getAllEmployees();
-      this.fetchStockData();
+      
     
       try {
         await this.fetchLoggedInUserName();
@@ -107,54 +103,6 @@ export class ReportsComponent implements OnInit {
         }
       });
     }
-// Fetch the stock usage data
-fetchStockData(): void {
-  this.stockServices.getStockItems().subscribe(
-    (data: StockItems[]) => {
-      console.log('Stock items fetched:', data);  // Log fetched data
-      this.groupStockUsageByWeek(data);
-    },
-    (error) => {
-      console.error('Error fetching stock items:', error);  // Log errors
-    }
-  );
-}
-
-// Function to group stock usage by week
-groupStockUsageByWeek(stockItems: StockItems[]): void {
-  const groupedByWeek = stockItems.reduce((acc: { [key: number]: WeeklyStockUsage }, item: StockItems) => {
-    const weekNumber = this.getWeekNumber(new Date(item.DateUsed));
-    if (!acc[weekNumber]) {
-      acc[weekNumber] = {
-        week: weekNumber,
-        totalUsage: 0,
-        stockDetails: []
-      };
-    }
-    // Use Quantity field for usage calculation
-    acc[weekNumber].totalUsage += item.Quantity;
-    acc[weekNumber].stockDetails.push(item);
-    return acc;
-  }, {} as { [key: number]: WeeklyStockUsage });
-
-  // Convert the grouped object into an array for easier handling in the template
-  this.weeklyStockUsage = Object.values(groupedByWeek);
-}
-
-// Helper function to calculate the week number for a given date
-// Helper function to calculate the week number for a given date
-getWeekNumber(date: Date): number {
-  const target = new Date(date.valueOf());
-  const dayNr = (date.getDay() + 6) % 7;
-  target.setDate(target.getDate() - dayNr + 3);
-  const firstThursday = target.valueOf();
-  target.setMonth(0, 1);
-  if (target.getDay() !== 4) {
-    target.setMonth(0, 1 + ((4 - target.getDay()) + 7) % 7);
-  }
-  const weekNumber = 1 + Math.ceil((firstThursday - target) / 604800000);
-  return weekNumber;
-}
 
 
 

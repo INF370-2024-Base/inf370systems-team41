@@ -80,8 +80,26 @@ export interface StockItems {
      OrderId: string;
      Quantity:number;
     DateUsed:Date;
+    stockName?: string;
+    
    
   }
+
+  export interface Stock {
+    stockId: number;
+    
+    stockName: string;
+    quantityAvailable: number;
+    maximumStockLevel: number;
+    minimumStockLevel: number;
+  }
+  
+  export interface WeeklyStockUsage {
+    week: number;
+    totalUsage: number;
+    stockDetails: StockItems[];
+  }
+
 export class StockCategoryViewModel {
     public StockTypeId: number;
     public Description: string;
