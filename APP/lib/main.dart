@@ -1,7 +1,8 @@
-import 'package:biopromobileflutter/pages//timer_component.dart';
+import 'package:biopromobileflutter/pages/timer_component.dart';
 import 'package:biopromobileflutter/pages/deliveries_page.dart';
 import 'package:biopromobileflutter/pages/dentists_page.dart';
 import 'package:biopromobileflutter/pages/help_page.dart';
+import 'package:biopromobileflutter/pages/login_page.dart';
 import 'package:biopromobileflutter/pages/orders_page.dart';
 import 'package:biopromobileflutter/pages/qr_code_scanner_page.dart';
 import 'package:biopromobileflutter/pages/stocks_page.dart';
@@ -19,7 +20,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: MyHomePage(),
+      home: BioProLoginPage(), 
     );
   }
 }
@@ -66,10 +67,10 @@ class MyHomePage extends StatelessWidget {
                 text: 'Help',
                 page: HelpPage(),
               ),
-              // NavigationButton(
-              //   text: 'Photo Upload',
-              //   page: PhotoUploadPage(),
-              // ),
+              NavigationButton(
+                text: 'Login',
+                page: BioProLoginPage(),
+              ),
               ValueListenableBuilder<Duration>(
                 valueListenable: workedHoursNotifier,
                 builder: (context, workedHours, child) {
