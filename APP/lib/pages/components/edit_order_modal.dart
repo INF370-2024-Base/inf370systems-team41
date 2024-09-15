@@ -3,7 +3,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'dart:io';
 import 'package:image_picker/image_picker.dart';
-import 'package:flutter/foundation.dart' show kIsWeb;
+import 'package:flutter/foundation.dart' show Uint8List, kIsWeb;
 
 class EditOrderModal extends StatefulWidget {
   final Map<String, dynamic> order;
@@ -63,7 +63,7 @@ class _EditOrderModalState extends State<EditOrderModal> {
   }
 
   Future<void> _fetchMediaFiles() async {
-    final url = 'https://localhost:44315/Api/GetAllOrderInfo/${widget.order['orderId']}';
+    final url = 'https://localhost:44315/Api/GetOrdersById/${widget.order['orderId']}';
     try {
       print('Fetching media files from $url');
       final response = await http.get(Uri.parse(url));
@@ -246,37 +246,42 @@ class _EditOrderModalState extends State<EditOrderModal> {
                       const InputDecoration(labelText: 'Medical Aid Number'),
                 ),
                 const SizedBox(height: 16.0),
-                if (mediaFiles.isNotEmpty)
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: mediaFiles.map((mediaFile) {
-                      try {
-                        return Padding(
-                          padding: const EdgeInsets.only(bottom: 8.0),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text('File Name: ${mediaFile['fileName'] ?? 'Unknown'}'),
-                              if (mediaFile['fileSelf'] != null)
-                                Image.memory(
-                                  base64Decode(mediaFile['fileSelf']),
-                                  height: 100,
-                                  fit: BoxFit.cover,
-                                  errorBuilder: (context, error, stackTrace) {
-                                    return Text('Error displaying image: $error');
-                                  },
-                                )
-                              else
-                                Text('No image data available.'),
-                            ],
-                          ),
-                        );
-                      } catch (e) {
-                        print('Error decoding image for file ${mediaFile['fileName']}: $e');
-                        return Text('Error decoding image: $e');
-                      }
-                    }).toList(),
-                  ),
+if (mediaFiles.isNotEmpty)
+  Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: mediaFiles.where((mediaFile) {
+      final fileName = mediaFile['fileName'] ?? '';
+      final fileExtension = fileName.split('.').last.toLowerCase();
+      return ['jpg', 'jpeg', 'png', 'gif'].contains(fileExtension) &&
+             mediaFile['fileSelf'] != null;
+    }).map((mediaFile) {
+      try {
+        final fileData = mediaFile['fileSelf'];
+        final fileBytes = base64Decode(fileData);
+
+        return Padding(
+          padding: const EdgeInsets.only(bottom: 8.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text('File Name: ${mediaFile['fileName']}'),
+              Image.memory(
+                Uint8List.fromList(fileBytes),
+                height: 100,
+                fit: BoxFit.cover,
+                errorBuilder: (context, error, stackTrace) {
+                  return Text('Error displaying image: $error');
+                },
+              ),
+            ],
+          ),
+        );
+      } catch (e) {
+        print('Error decoding image for file ${mediaFile['fileName']}: $e');
+        return Text('Error decoding image: $e');
+      }
+    }).toList(),
+  ),
                 const SizedBox(height: 16.0),
                 _selectedImage != null
                     ? kIsWeb
