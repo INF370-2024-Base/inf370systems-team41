@@ -57,7 +57,7 @@ export class StockUsageModalComponent implements OnInit {
       ({ stockItems, stocks }) => {
         this.stocks = stocks;
         stocks.forEach((stock: Stock) => {
-          this.stockMap.set(stock.stockitemId, stock.stockName);
+          this.stockMap.set(stock.stockId, stock.stockName);
           console.log('Fetched Stock Items:', stockItems);
           console.log('Fetched Stocks:', stocks);
 
@@ -107,12 +107,12 @@ export class StockUsageModalComponent implements OnInit {
     // Populate the stock map with valid stocks
     stocks.forEach((stock: Stock) => {
       // Ensure stockitemId is a valid number
-      const stockId: number = Number(stock.stockitemId);
+      const stockId: number = Number(stock.stockId);
   
       if (!isNaN(stockId) && stockId !== undefined && stockId !== null) {
         this.stockMap.set(stockId, stock.stockName.trim());
       } else {
-        console.error(`Invalid stockitemId detected:`, stock.stockitemId, `for stock:`, stock);
+        console.error(`Invalid stockitemId detected:`, stock.stockId, `for stock:`, stock);
       }
     });
   
@@ -247,10 +247,10 @@ groupStockUsageByWeek(stockItems: StockItems[]): void {
   const stockIdToNameMap = new Map<number, string>();
   this.stocks.forEach(stock => {
     // Ensure stockitemId is valid before using it
-    if (typeof stock.stockitemId !== 'undefined' && stock.stockitemId !== null) {
-      stockIdToNameMap.set(stock.stockitemId, stock.stockName.trim());
+    if (typeof stock.stockId !== 'undefined' && stock.stockId !== null) {
+      stockIdToNameMap.set(stock.stockId, stock.stockName.trim());
     } else {
-      console.error(`Stock entry missing stockitemId:`, stock);
+      console.error(`Stock entry missing stockId:`, stock);
     }
   });
 

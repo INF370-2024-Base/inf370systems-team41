@@ -81,13 +81,14 @@ export interface StockItems {
      quantity:number;
     dateUsed:Date;
     stockName?: string;
+    stockitemId: number;
     
    
   }
 
   export interface Stock {
-    stockitemId: number;
     
+    stockId: number;
     stockName: string;
     quantityAvailable: number;
     maximumStockLevel: number;

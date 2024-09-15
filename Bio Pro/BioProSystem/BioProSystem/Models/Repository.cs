@@ -474,7 +474,7 @@ namespace BioProSystem.Models
 
         public async Task<List<StockItem>> GetAllStockItems()
         {
-            return await _appDbContext.StockItems.ToListAsync();
+            return await _appDbContext.StockItems.Include(S=>S.Stock).ToListAsync();
         }
 
         public void UpdateDentist(Dentist dentist)
