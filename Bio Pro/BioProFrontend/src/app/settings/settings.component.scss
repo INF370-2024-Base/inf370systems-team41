@@ -90,21 +90,6 @@ body {
     color: #3a506b; /* Softer icon color */
   }
   
-  mat-input-element, input[matInput] {
-    font-size: 14px; /* Further reduced font for better readability */
-    color: #2e3c58; /* Text color matching the title */
-    width: 100%; /* Full width input fields */
-    padding: 6px 10px; /* Further reduced padding inside input fields */
-    border-radius: 8px; /* Curved edges for input fields */
-    border: 1px solid #d1d9e6; /* Subtle border color */
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Slight shadow for depth */
-    background-color: #ffffff; /* White background for input fields */
-  }
-  
-  input[matInput]:focus {
-    border-color: #3a506b; /* Change border color on focus */
-    outline: none; /* Remove default outline */
-  }
   
   mat-select {
     width: 100%; /* Full width for select dropdowns */
@@ -116,9 +101,7 @@ body {
     padding-left: 5px;
     color: #2e3c58; /* Matching select text color */
   }
-  mat-form-field input {
-    box-sizing: border-box; /* Include padding and border in the element's total width and height */
-  }
+
   
   /* Optional: Add padding and margin adjustments if needed */
   .settings-section .form-group {
@@ -127,11 +110,8 @@ body {
   
   mat-form-field {
     width: 100%; 
-  box-sizing: border-box;
   }
-  input{
-    width: 90%;
-  }
+
   .save-button-section {
     text-align: center;
     align-items: center;
@@ -157,63 +137,50 @@ body {
     transform: translateY(-2px);
     box-shadow: 0 10px 20px rgba(0, 123, 255, 0.5);
   }
-  .filter-container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    gap: 16px;
-    margin-bottom: 16px;
-  }
   
-  .filter-container mat-form-field {
-    width: 100%;
-    max-width: 250px;
-  }
-  
-  /* Buttons styling */
-  .filter-container button {
-    align-self: center;
-    margin: 0 8px;
-  }
-  
-  /* Audit table container styling */
-  .audit-trail-container {
-    margin-top: 20px;
-    overflow-x: auto;
-  }
-  
-  .blue-theme-table {
-    background-color: #f1f5f8;
-    border-radius: 8px;
-    padding: 16px;
-  }
-  
-  /* Table row hover effect */
-  .mat-row:hover {
-    background-color: rgba(0, 0, 255, 0.1);
-  }
-  
-  /* Adjust table header styling */
-  .mat-header-cell {
-    font-weight: bold;
-    color: #1976d2;
-  }
-  
-  /* Error card styling */
-  .error-card {
-    text-align: center;
-    padding: 20px;
-    margin-top: 20px;
-  }
-  
-  .error-card .error-icon {
-    font-size: 48px;
-    color: #ff5252;
-  }
-  
-  .error-card h1 {
-    font-size: 24px;
-    color: #ff5252;
-    margin: 0;
-  }
-  
+.button-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Audit table container styling */
+.audit-trail-container {
+  margin-top: 20px;
+  overflow-x: auto;
+}
+
+.blue-theme-table {
+  background-color: #f1f5f8;
+  border-radius: 8px;
+  padding: 16px;
+}
+
+/* Table row hover effect */
+.mat-row:hover {
+  background-color: rgba(0, 0, 255, 0.1);
+}
+
+/* Adjust table header styling */
+.mat-header-cell {
+  font-weight: bold;
+  color: #1976d2;
+}
+
+/* Error card styling */
+.error-card {
+  text-align: center;
+  padding: 20px;
+  margin-top: 20px;
+}
+
+.error-card .error-icon {
+  font-size: 48px;
+  color: #ff5252;
+}
+
+.error-card h1 {
+  font-size: 24px;
+  color: #ff5252;
+  margin: 0;
+}

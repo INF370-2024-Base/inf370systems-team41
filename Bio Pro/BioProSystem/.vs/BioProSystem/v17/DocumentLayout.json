@@ -3,12 +3,16 @@
   "WorkspaceRootPath": "C:\\Users\\piete\\Local Storage\\Uni\\370\\New folder (2)\\inf370systems-team41\\Bio Pro\\BioProSystem\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{F4A9456E-E44A-4271-BCB7-291A4F4ADE4E}|BioProSystem\\BioProSystem.csproj|c:\\users\\piete\\local storage\\uni\\370\\new folder (2)\\inf370systems-team41\\bio pro\\bioprosystem\\bioprosystem\\controllers\\ordercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F4A9456E-E44A-4271-BCB7-291A4F4ADE4E}|BioProSystem\\BioProSystem.csproj|solutionrelative:bioprosystem\\controllers\\ordercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{F4A9456E-E44A-4271-BCB7-291A4F4ADE4E}|BioProSystem\\BioProSystem.csproj|c:\\users\\piete\\local storage\\uni\\370\\new folder (2)\\inf370systems-team41\\bio pro\\bioprosystem\\bioprosystem\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{F4A9456E-E44A-4271-BCB7-291A4F4ADE4E}|BioProSystem\\BioProSystem.csproj|solutionrelative:bioprosystem\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{F4A9456E-E44A-4271-BCB7-291A4F4ADE4E}|BioProSystem\\BioProSystem.csproj|c:\\users\\piete\\local storage\\uni\\370\\new folder (2)\\inf370systems-team41\\bio pro\\bioprosystem\\bioprosystem\\models\\repository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{F4A9456E-E44A-4271-BCB7-291A4F4ADE4E}|BioProSystem\\BioProSystem.csproj|solutionrelative:bioprosystem\\models\\repository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F4A9456E-E44A-4271-BCB7-291A4F4ADE4E}|BioProSystem\\BioProSystem.csproj|c:\\users\\piete\\local storage\\uni\\370\\new folder (2)\\inf370systems-team41\\bio pro\\bioprosystem\\bioprosystem\\controllers\\ordercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F4A9456E-E44A-4271-BCB7-291A4F4ADE4E}|BioProSystem\\BioProSystem.csproj|solutionrelative:bioprosystem\\controllers\\ordercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{F4A9456E-E44A-4271-BCB7-291A4F4ADE4E}|BioProSystem\\BioProSystem.csproj|c:\\users\\piete\\local storage\\uni\\370\\new folder (2)\\inf370systems-team41\\bio pro\\bioprosystem\\bioprosystem\\models\\irepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -21,10 +25,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{F4A9456E-E44A-4271-BCB7-291A4F4ADE4E}|BioProSystem\\BioProSystem.csproj|c:\\users\\piete\\local storage\\uni\\370\\new folder (2)\\inf370systems-team41\\bio pro\\bioprosystem\\bioprosystem\\controllers\\dentistcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{F4A9456E-E44A-4271-BCB7-291A4F4ADE4E}|BioProSystem\\BioProSystem.csproj|solutionrelative:bioprosystem\\controllers\\dentistcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F4A9456E-E44A-4271-BCB7-291A4F4ADE4E}|BioProSystem\\BioProSystem.csproj|c:\\users\\piete\\local storage\\uni\\370\\new folder (2)\\inf370systems-team41\\bio pro\\bioprosystem\\bioprosystem\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
-      "RelativeMoniker": "D:0:0:{F4A9456E-E44A-4271-BCB7-291A4F4ADE4E}|BioProSystem\\BioProSystem.csproj|solutionrelative:bioprosystem\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{F4A9456E-E44A-4271-BCB7-291A4F4ADE4E}|BioProSystem\\BioProSystem.csproj|c:\\users\\piete\\local storage\\uni\\370\\new folder (2)\\inf370systems-team41\\bio pro\\bioprosystem\\bioprosystem\\models\\decisionlog.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -423,7 +423,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 6,
           "Children": [
             {
               "$type": "Document",
@@ -440,7 +440,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 2,
               "Title": "OrderController.cs",
               "DocumentMoniker": "C:\\Users\\piete\\Local Storage\\Uni\\370\\New folder (2)\\inf370systems-team41\\Bio Pro\\BioProSystem\\BioProSystem\\Controllers\\OrderController.cs",
               "RelativeDocumentMoniker": "BioProSystem\\Controllers\\OrderController.cs",
@@ -454,7 +454,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 5,
               "Title": "DentistController.cs",
               "DocumentMoniker": "C:\\Users\\piete\\Local Storage\\Uni\\370\\New folder (2)\\inf370systems-team41\\Bio Pro\\BioProSystem\\BioProSystem\\Controllers\\DentistController.cs",
               "RelativeDocumentMoniker": "BioProSystem\\Controllers\\DentistController.cs",
@@ -480,7 +480,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "IRepository.cs",
               "DocumentMoniker": "C:\\Users\\piete\\Local Storage\\Uni\\370\\New folder (2)\\inf370systems-team41\\Bio Pro\\BioProSystem\\BioProSystem\\Models\\IRepository.cs",
               "RelativeDocumentMoniker": "BioProSystem\\Models\\IRepository.cs",
@@ -502,11 +502,12 @@
               "ViewState": "AQIAAEcBAAAAAAAAAAAewFcBAABLAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-05-11T14:56:40.25Z",
-              "IsPinned": true
+              "IsPinned": true,
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 0,
               "Title": "appsettings.json",
               "DocumentMoniker": "C:\\Users\\piete\\Local Storage\\Uni\\370\\New folder (2)\\inf370systems-team41\\Bio Pro\\BioProSystem\\BioProSystem\\appsettings.json",
               "RelativeDocumentMoniker": "BioProSystem\\appsettings.json",
@@ -514,11 +515,12 @@
               "RelativeToolTip": "BioProSystem\\appsettings.json",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAABYAAAARAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2024-05-13T13:29:18.467Z"
+              "WhenOpened": "2024-05-13T13:29:18.467Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 4,
               "Title": "DecisionViewModel.cs",
               "DocumentMoniker": "C:\\Users\\piete\\Local Storage\\Uni\\370\\New folder (2)\\inf370systems-team41\\Bio Pro\\BioProSystem\\BioProSystem\\ViewModels\\DecisionViewModel.cs",
               "RelativeDocumentMoniker": "BioProSystem\\ViewModels\\DecisionViewModel.cs",

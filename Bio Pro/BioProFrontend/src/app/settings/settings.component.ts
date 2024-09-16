@@ -23,7 +23,7 @@ export class SettingsComponent implements OnInit {
   userForm: FormGroup;
   auditTrail: any[] = [];
   filteredAuditTrails = new MatTableDataSource<any>();
-  currentView:string="Settings"
+  currentView:string="User Profile"
   @ViewChild(MatSort) sort!: MatSort;
 
   displayedColumns: string[] = ['auditTrailId', 'dateOfTransaction', 'systemUser', 'transactionType', 'additionalData'];
@@ -32,7 +32,7 @@ export class SettingsComponent implements OnInit {
   endDate: Date | null = null;
   selectedUserEmail: string | null = null;
   selectedTransactionType: string | null = null;
-
+today:Date=new Date()
   uniqueUsers: any[] = [];
   uniqueTransactionTypes: string[] = [];
   constructor(
@@ -161,9 +161,10 @@ export class SettingsComponent implements OnInit {
     }
   
     applyFilters() {
+      console.log(this.startDate)
       this.filteredAuditTrails.data = this.auditTrail.filter(item => {
-        const matchesDateRange = (!this.startDate || new Date(item.dateOfTransaction) >= this.startDate) &&
-                                 (!this.endDate || new Date(item.dateOfTransaction) <= this.endDate);
+        const matchesDateRange = (!this.startDate || new Date(item.dateOfTransaction) > this.startDate) &&
+                                 (!this.endDate || new Date(item.dateOfTransaction) < this.endDate);
         const matchesUser = !this.selectedUserEmail || item.systemUser.email === this.selectedUserEmail;
         const matchesTransactionType = !this.selectedTransactionType || item.transactionType === this.selectedTransactionType;
   
@@ -180,8 +181,14 @@ export class SettingsComponent implements OnInit {
     }
   
     onStartDateChange(event: any) {
+      console.log('is today')
       if (this.endDate && this.startDate && new Date(this.startDate) > new Date(this.endDate)) {
         this.endDate = this.startDate;
+        if(this.startDate==this.today)
+        {
+          
+          this.endDate=this.today
+        }
         this.applyFilters();
       }
     }
