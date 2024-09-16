@@ -26,11 +26,12 @@ interface WeeklyStockUsage {
 })
 export class StockUsageModalComponent implements OnInit {
   @ViewChild('stockLevelChart', { static: true }) stockLevelChartRef!: ElementRef<HTMLCanvasElement>;
-  @ViewChild('uniqueStockUsageChart', { static: true }) uniqueStockUsageChartRef!: ElementRef<HTMLCanvasElement>;// Use unique ID here
+  @ViewChild('stockUsageChartCanvas', { static: true }) stockUsageChartRef!: ElementRef<HTMLCanvasElement>;
   @ViewChild('quarter1Gauge', { static: true }) quarter1GaugeRef!: ElementRef<HTMLCanvasElement>;
   @ViewChild('quarter2Gauge', { static: true }) quarter2GaugeRef!: ElementRef<HTMLCanvasElement>;
   @ViewChild('quarter3Gauge', { static: true }) quarter3GaugeRef!: ElementRef<HTMLCanvasElement>;
   @ViewChild('quarter4Gauge', { static: true }) quarter4GaugeRef!: ElementRef<HTMLCanvasElement>;
+
 
   quarterlyUsage: number[] = [0, 0, 0, 0];
   filteredStock: StockItems[] = [];
@@ -52,11 +53,66 @@ export class StockUsageModalComponent implements OnInit {
 
   ngOnInit(): void {
     this.fetchStockData();
-    
+    this.createSkeletonChart();
   }
   get totalStockUsed(): number {
     return this.quarterlyUsage.reduce((a, b) => a + b, 0);
   }
+
+  createSkeletonChart(): void {
+    console.log('Creating skeleton chart...');
+  
+    // Destroy the previous chart if it exists
+    if (this.stockUsageChart) {
+      this.stockUsageChart.destroy();
+      this.stockUsageChart = undefined; // Ensure it's reset
+    }
+  
+    // Get the canvas element for the chart
+    const canvas = this.stockUsageChartRef.nativeElement;
+    if (!canvas) {
+      console.error('Cannot find canvas element for stock usage chart');
+      return;
+    }
+  
+    const context = canvas.getContext('2d');
+    if (!context) {
+      console.error('Unable to get context for skeleton chart creation');
+      return;
+    }
+  
+    // Create a skeleton chart configuration
+    const skeletonChartConfig: ChartConfiguration<'doughnut'> = {
+      type: 'doughnut',
+      data: {
+        labels: ['No Data'],
+        datasets: [{
+          label: 'Stock Usage',
+          data: [1], // Placeholder data
+          backgroundColor: ['rgba(200, 200, 200, 0.2)'], // Grey color to indicate no data
+          borderColor: ['rgba(200, 200, 200, 1)'],
+          borderWidth: 1
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: {
+            display: false // No legend needed for the skeleton chart
+          },
+          title: {
+            display: true,
+            text: 'No Stock Usage Data Available'
+          }
+        }
+      }
+    };
+  
+    // Create the skeleton chart
+    this.stockUsageChart = new Chart<'doughnut'>(context, skeletonChartConfig);
+    console.log('Created skeleton chart:', this.stockUsageChart);
+  }
+  
 
   calculateQuarterlyStockUsage(stockItems: StockItems[]): void {
     const quarterlyUsage = [0, 0, 0, 0];
@@ -87,17 +143,22 @@ export class StockUsageModalComponent implements OnInit {
 
   createQuarterlyGauges(): void {
     const quarters = [
-      { ref: this.quarter1GaugeRef.nativeElement, data: this.quarterlyUsage[0], label: 'Q1' },
-      { ref: this.quarter2GaugeRef.nativeElement, data: this.quarterlyUsage[1], label: 'Q2' },
-      { ref: this.quarter3GaugeRef.nativeElement, data: this.quarterlyUsage[2], label: 'Q3' },
-      { ref: this.quarter4GaugeRef.nativeElement, data: this.quarterlyUsage[3], label: 'Q4' }
+      { ref: this.quarter1GaugeRef.nativeElement, data: this.quarterlyUsage[0], label: 'Q1', chart: this.charts.get('quarter1Gauge') },
+      { ref: this.quarter2GaugeRef.nativeElement, data: this.quarterlyUsage[1], label: 'Q2', chart: this.charts.get('quarter2Gauge') },
+      { ref: this.quarter3GaugeRef.nativeElement, data: this.quarterlyUsage[2], label: 'Q3', chart: this.charts.get('quarter3Gauge') },
+      { ref: this.quarter4GaugeRef.nativeElement, data: this.quarterlyUsage[3], label: 'Q4', chart: this.charts.get('quarter4Gauge') }
     ];
-
+  
     quarters.forEach(quarter => {
+      // Destroy the existing chart if it exists
+      if (quarter.chart) {
+        quarter.chart.destroy();
+      }
+  
       const context = quarter.ref.getContext('2d');
       if (!context) return;
-
-      new Chart(context, {
+  
+      const newChart = new Chart(context, {
         type: 'doughnut',
         data: {
           labels: [quarter.label],
@@ -119,8 +180,12 @@ export class StockUsageModalComponent implements OnInit {
           }
         }
       });
+  
+      // Store the new chart instance in the Map
+      this.charts.set(quarter.ref.id, newChart);
     });
   }
+  
 
   fetchStockData(): void {
     forkJoin({
@@ -287,53 +352,57 @@ groupStockUsageByWeek(stockItems: StockItems[]): void {
 
   createStockUsageChart(): void {
     console.log('Attempting to create stock usage chart...');
-
-    // Check if there is data to display for the selected week
-    if (!this.weeklyStockUsage.length || !this.weeklyStockUsage[0].stockDetails.length) {
-      console.error('No weekly stock usage data available for the selected week.');
-      alert('No stock usage detected for the selected week.');
-      return;
-    }
-
-    // Extract stock names and quantities for the chart
-    const labels = this.weeklyStockUsage.flatMap(weekData =>
-      weekData.stockDetails.map(detail => detail.stockName || 'Unknown')
-    );
-
-    const data = this.weeklyStockUsage.flatMap(weekData =>
-      weekData.stockDetails.map(detail => detail.quantity)
-    );
-
+  
     // Destroy the previous chart if it exists
     if (this.stockUsageChart) {
       console.log('Destroying existing chart...');
       this.stockUsageChart.destroy();
       this.stockUsageChart = undefined; // Ensure it's reset
     }
-
+  
     // Get the canvas element for the chart
-    const canvas = this.uniqueStockUsageChartRef.nativeElement;
+    const canvas = this.stockUsageChartRef.nativeElement;
     if (!canvas) {
       console.error('Cannot find canvas element for stock usage chart');
       return;
     }
-
+  
     // Clear the canvas content before creating a new chart
     const context = canvas.getContext('2d');
     if (!context) {
       console.error('Unable to get context for chart creation');
       return;
     }
-
+  
     // Clear the canvas content
     context.clearRect(0, 0, canvas.width, canvas.height); // Clear the entire canvas
-
+  
     // Reset canvas dimensions to ensure no conflicts
     canvas.width = canvas.width; // Reset the canvas width
     canvas.height = canvas.height; // Reset the canvas height
-
-    // Create a chart configuration object
-    const chartConfig: ChartConfiguration<'doughnut'> = {
+  
+    let chartConfig: ChartConfiguration<'doughnut'>;
+  
+    // Check if there is data to display for the selected week
+    if (!this.weeklyStockUsage.length || !this.weeklyStockUsage[0].stockDetails.length) {
+      console.warn('No weekly stock usage data available for the selected week.');
+  
+      // Display a skeleton chart
+      this.createSkeletonChart();
+      return; // Exit the method to avoid creating a real chart
+    }
+  
+    // Extract stock names and quantities for the chart
+    const labels = this.weeklyStockUsage.flatMap(weekData =>
+      weekData.stockDetails.map(detail => detail.stockName || 'Unknown')
+    );
+  
+    const data = this.weeklyStockUsage.flatMap(weekData =>
+      weekData.stockDetails.map(detail => detail.quantity)
+    );
+  
+    // Create a chart configuration with actual data
+    chartConfig = {
       type: 'doughnut',
       data: {
         labels: labels,
@@ -372,7 +441,7 @@ groupStockUsageByWeek(stockItems: StockItems[]): void {
         }
       }
     };
-
+  
     // Create the chart using the configuration
     this.stockUsageChart = new Chart<'doughnut'>(context, chartConfig);
     console.log('Created stock usage chart:', this.stockUsageChart);

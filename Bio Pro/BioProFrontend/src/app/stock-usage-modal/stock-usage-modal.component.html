@@ -1,14 +1,15 @@
-<h2 mat-dialog-title>Stock Inventory Management Dashboard</h2>
+<h1 style="font-size: 48px; color: #4d4a4a; text-align: center; text-transform: uppercase; letter-spacing: 3px; margin-bottom: 24px; text-shadow: 2px 2px 4px rgba(124, 124, 124, 0.5);">STOCK DETAILS</h1>
 <div mat-dialog-content>
   <div class="modal-dashboard">
-    <!-- Week Picker for Weekly Selection -->
-    <mat-form-field appearance="fill" class="week-picker">
-      <mat-label>Select Week</mat-label>
-      <input matInput type="week" [(ngModel)]="selectedWeek" (change)="changeWeek(selectedWeek)">
-    </mat-form-field>
+<!-- Week Picker for Weekly Selection -->
+<mat-form-field appearance="fill" class="week-picker" style="width: 100%;  font-size: 16px; padding: 10px;">
+  <mat-label style="font-size: 18px;">Select Week</mat-label>
+  <input matInput type="week" [(ngModel)]="selectedWeek" (change)="changeWeek(selectedWeek)" style="font-size: 16px; padding: 12px;">
+</mat-form-field>
 
+  
     <!-- KPIs Section -->
-    <div class="dashboard-summary">
+    <!-- <div class="dashboard-summary">
       <div class="kpi">
         <h4>Total Stock Items</h4>
         <p>{{ filteredStock.length }}</p>
@@ -21,60 +22,65 @@
         <h4>Items Below Minimum Level</h4>
         <p>{{ belowMinStock.length }}</p>
       </div>
-    </div>
-
-     <!-- Weekly Stock Usage Details -->
-    <mat-card class="stock-usage-details">
-      <mat-card-title>Weekly Stock Usage Details</mat-card-title>
-      <mat-divider></mat-divider>
-      <mat-card-content>
-        <div *ngIf="weeklyStockUsage.length > 0">
-          <div *ngFor="let weekData of weeklyStockUsage" class="week-card">
-            <h6>Week {{ weekData.week }}</h6>
-            <p>Total Usage: {{ weekData.totalUsage }} units</p>
-            <ul>
-              <li *ngFor="let detail of weekData.stockDetails">
-                {{ detail.stockName }}: {{ detail.quantity }} used on {{ detail.dateUsed | date: 'MMM d, y' }}
-              </li>
-            </ul>
+    </div> -->
+  
+    <!-- Flex container to align details and chart side by side -->
+    <div style="display: flex; gap: 20px; align-items: flex-start;">
+      <!-- Weekly Stock Usage Details -->
+      <mat-card class="stock-usage-details" style="flex: 1; min-width: 300px;">
+        <mat-card-title>Weekly Stock Usage Details</mat-card-title>
+        <mat-divider></mat-divider>
+        <mat-card-content>
+          <div *ngIf="weeklyStockUsage.length > 0">
+            <div *ngFor="let weekData of weeklyStockUsage" class="week-card">
+              <h6>Week {{ weekData.week }}</h6>
+              <p>Total Usage: {{ weekData.totalUsage }} units</p>
+              <ul>
+                <li *ngFor="let detail of weekData.stockDetails">
+                  {{ detail.stockName }}: {{ detail.quantity }} used on {{ detail.dateUsed | date: 'MMM d, y' }}
+                </li>
+              </ul>
+            </div>
           </div>
-        </div>
-        <p *ngIf="weeklyStockUsage.length === 0">No stock usage data available for the selected week.</p>
-      </mat-card-content>
-    </mat-card>
- <!-- Stock Usage Chart Section -->
- <mat-card class="chart-container">
-  <mat-card-title>Weekly Stock Usage Chart</mat-card-title>
-  <mat-divider></mat-divider>
-  <mat-card-content>
-    <canvas #uniqueStockUsageChart id="uniqueStockUsageChart"></canvas>
-  </mat-card-content>
-</mat-card>
+          <p *ngIf="weeklyStockUsage.length === 0">No stock usage data available for the selected week.</p>
+        </mat-card-content>
+      </mat-card>
+  
+      <!-- Stock Usage Chart Section -->
+      <mat-card class="chart-container" style="width: 300px; height: 300px; padding: 10px; flex: 1; min-width: 300px;">
+        <mat-card-title style="font-size: 14px; margin-bottom: 8px;">Weekly Stock Usage Chart</mat-card-title>
+        <mat-divider></mat-divider>
+        <mat-card-content style="display: flex; justify-content: center; align-items: center;">
+          <canvas #stockUsageChartCanvas id="stockUsageChartCanvas" style="max-width: 280px; max-height: 200px;"></canvas>
+        </mat-card-content>
+      </mat-card>
+    </div>
+    
 
     <!-- Quarterly Gauges Section -->
     <div class="quarterly-gauge-container">
       <h5>Quarterly Total Stock Use</h5>
       <div class="gauge-row">
         <div class="gauge">
-          <h6>Q1</h6>
-          <canvas #quarter1Gauge></canvas>
+          <h6>QUATER 1</h6>
+          <canvas #quarter1Gauge id="quarter1Gauge"></canvas>
           <p>Total: {{ quarterlyUsage[0] }} units</p> <!-- Display Q1 total -->
         </div>
         <div class="gauge">
-          <h6>Q2</h6>
-          <canvas #quarter2Gauge></canvas>
+          <h6>QUATER 2</h6>
+          <canvas #quarter2Gauge id="quarter2Gauge"></canvas>
           <p>Total: {{ quarterlyUsage[1] }} units</p> <!-- Display Q2 total -->
         </div>
       </div>
       <div class="gauge-row">
         <div class="gauge">
-          <h6>Q3</h6>
-          <canvas #quarter3Gauge></canvas>
+          <h6>QUATER 3</h6>
+          <canvas #quarter3Gauge id="quarter3Gauge"></canvas>
           <p>Total: {{ quarterlyUsage[2] }} units</p> <!-- Display Q3 total -->
         </div>
         <div class="gauge">
-          <h6>Q4</h6>
-          <canvas #quarter4Gauge></canvas>
+          <h6>QUATER 4</h6>
+          <canvas #quarter4Gauge id="quarter4Gauge"></canvas>
           <p>Total: {{ quarterlyUsage[3] }} units</p> <!-- Display Q4 total -->
         </div>
       </div>
@@ -84,11 +90,12 @@
       </div>
     </div>
 
+    <!-- Stock Levels Below Minimum Allowed Level Chart Section -->
     <mat-card class="chart-container">
-      <mat-card-title>Stock Levels vs Minimum Stock Levels</mat-card-title>
+      <mat-card-title>Stock Levels Below Minimum Allowed Level</mat-card-title>
       <mat-divider></mat-divider>
       <mat-card-content>
-        <canvas #stockLevelChart></canvas>
+        <canvas #stockLevelChart id="stockLevelChart"></canvas>
       </mat-card-content>
     </mat-card>
   </div>
