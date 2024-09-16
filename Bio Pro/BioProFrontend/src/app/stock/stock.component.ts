@@ -35,7 +35,8 @@ export class StockComponent implements OnInit {
   
  
 
-  frequentlyVisitedPages: { name: string; route: string; icon: string }[] = [
+  frequentlyVisitedPages:  { name: string; route: string; icon: string; action?: () => void }[] = [
+    { name: 'STOCK DASHBOARD', route: '', icon: 'dashboard', action: this.openModal.bind(this) },
     { name: 'ADD STOCK', route: '/addStock', icon: 'add_box' }, // Represents adding items
     
     { name: 'STOCK TYPE', route: '/stock-type', icon: 'list_alt' }, // Represents a list or type of items

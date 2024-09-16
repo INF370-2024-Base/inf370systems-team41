@@ -18,19 +18,21 @@
             </div>
         </div>
 
-        <div class="stock-dashboard">
+        <!-- <div class="stock-dashboard">
             <button mat-raised-button color="primary" (click)="openModal()">Open Stock Dashboard</button>
-          </div>
+          </div> -->
                    
-<div class="feature-cards" *ngIf="roleService.hasRole(['admin', 'owner','lab manager'])">
-    <div 
-      *ngFor="let page of frequentlyVisitedPages" 
-      class="feature-card" 
-      [routerLink]="page.route">
-      <i class="material-icons icon">{{ page.icon }}</i>
-      <p>{{ page.name }}</p>
-    </div>
-  </div>
+          <div class="feature-cards" *ngIf="roleService.hasRole(['admin', 'owner', 'lab manager'])">
+            <div 
+              *ngFor="let page of frequentlyVisitedPages" 
+              class="feature-card" 
+              [routerLink]="!page.action ? page.route : null" 
+              (click)="page.action ? page.action() : null">
+              <i class="material-icons icon">{{ page.icon }}</i>
+              <p>{{ page.name }}</p>
+            </div>
+          </div>
+          
 
         <div *ngIf="!isLoading">
             <div class="search-filter">
