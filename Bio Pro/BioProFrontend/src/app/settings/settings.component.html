@@ -3,8 +3,20 @@
         SETTINGS
     </h1> 
         <div class="settings-container">
-        <!-- Profile Section -->
-        <section class="settings-section">
+          <div *ngIf="roleService.hasRole(['Lab Manager','Owner'])">
+            <mat-form-field appearance="outline">
+              <mat-select [(ngModel)]="currentView"> <!-- Two-way binding -->
+                <mat-option value="Settings">
+                  Settings
+                </mat-option>
+                <mat-option value="Audit">
+                  Audit
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        <section class="settings-section" *ngIf="currentView=='Settings'">
+          
           <h3 mat-subheader>Profile Settings</h3>
           <form [formGroup]="userForm" (ngSubmit)="saveSettings()">
             <div class="form-group">
@@ -55,7 +67,103 @@
           </form>
           
         </section>
-      
+  
+<div class="filter-container" *ngIf="currentView=='Audit'">
+  <mat-form-field appearance="fill">
+    <mat-label>Start Date</mat-label>
+    <input matInput [matDatepicker]="startPicker" [(ngModel)]="startDate" 
+           [max]="endDate ? addDays(endDate, -1) : null">
+    <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
+    <mat-datepicker #startPicker></mat-datepicker>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>End Date</mat-label>
+    <input matInput [matDatepicker]="endPicker" [(ngModel)]="endDate" 
+           [min]="startDate ? addDays(startDate, 1) : null">
+    <mat-datepicker-toggle matSuffix [for]="endPicker"></mat-datepicker-toggle>
+    <mat-datepicker #endPicker></mat-datepicker>
+  </mat-form-field>
+
+  <!-- User Dropdown Filter -->
+  <mat-form-field appearance="fill">
+    <mat-label>User</mat-label>
+    <mat-select [(ngModel)]="selectedUserEmail">
+      <mat-option *ngFor="let user of uniqueUsers" [value]="user.email">{{user.name}} {{user.surname}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <!-- Transaction Type Dropdown Filter -->
+  <mat-form-field appearance="fill">
+    <mat-label>Transaction Type</mat-label>
+    <mat-select [(ngModel)]="selectedTransactionType">
+      <mat-option *ngFor="let type of uniqueTransactionTypes" [value]="type">{{type}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <button mat-raised-button color="primary" (click)="applyFilters()">Apply Filters</button>
+  <button mat-raised-button color="warn" (click)="clearFilters()">Clear Filters</button>
+</div>
+
+<div class="audit-trail-container" *ngIf="currentView=='Audit'">
+  <mat-table [dataSource]="filteredAuditTrails" matSort class="mat-elevation-z8 blue-theme-table">
+    
+    <!-- Audit Trail ID Column -->
+    <ng-container matColumnDef="auditTrailId">
+      <mat-header-cell *matHeaderCellDef> Audit Trail ID </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.auditTrailId}} </mat-cell>
+    </ng-container>
+
+    <!-- Date of Transaction Column -->
+    <ng-container matColumnDef="dateOfTransaction">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Date of Transaction </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.dateOfTransaction | date: 'short'}} </mat-cell>
+    </ng-container>
+
+    <!-- System User Column -->
+    <ng-container matColumnDef="systemUser">
+      <mat-header-cell *matHeaderCellDef> System User </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.systemUser.name}} {{element.systemUser.surname}} </mat-cell>
+    </ng-container>
+
+    <!-- Transaction Type Column -->
+    <ng-container matColumnDef="transactionType">
+      <mat-header-cell *matHeaderCellDef> Transaction Type </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.transactionType}} </mat-cell>
+    </ng-container>
+
+    <!-- Additional Data Column -->
+    <ng-container matColumnDef="additionalData">
+      <mat-header-cell *matHeaderCellDef> Additional Data </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.additionalData}} </mat-cell>
+    </ng-container>
+
+    <!-- Header and Rows -->
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </mat-table>
+</div>
+<mat-card class="error-card" *ngIf="filteredAuditTrails.data.length === 0">
+  <mat-card-content>
+    <mat-icon class="error-icon">error_outline</mat-icon>
+    <h1>None found</h1>
+  </mat-card-content>
+</mat-card>
+<style>
+  .error-card {
+max-width: 400px;
+margin: auto;
+padding: 20px;
+color: red;
+text-align: center;
+box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+}
+.error-icon {
+font-size: 48px;
+color: red;
+margin-bottom: 20px;
+}
+</style>    
   <!-- Application Settings Section -->
 <div class="application-settings-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
     <!-- Language Setting -->

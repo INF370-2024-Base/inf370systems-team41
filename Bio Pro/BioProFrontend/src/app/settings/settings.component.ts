@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DataService } from '../services/login.service';
@@ -9,6 +9,9 @@ import { EditUser } from '../shared/EditUser';
 import { PhoneChecker } from '../validators/Validators';
 import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
+import { RoleGuardService } from '../services/roleCheck';
 
 @Component({
   selector: 'app-settings',
@@ -18,14 +21,27 @@ import { MatDialog } from '@angular/material/dialog';
 export class SettingsComponent implements OnInit {
   
   userForm: FormGroup;
+  auditTrail: any[] = [];
+  filteredAuditTrails = new MatTableDataSource<any>();
+  currentView:string="Settings"
+  @ViewChild(MatSort) sort!: MatSort;
 
+  displayedColumns: string[] = ['auditTrailId', 'dateOfTransaction', 'systemUser', 'transactionType', 'additionalData'];
+
+  startDate: Date | null = null;
+  endDate: Date | null = null;
+  selectedUserEmail: string | null = null;
+  selectedTransactionType: string | null = null;
+
+  uniqueUsers: any[] = [];
+  uniqueTransactionTypes: string[] = [];
   constructor(
     private snackBar: MatSnackBar,
     private router: Router,
     private dataService: DataService,
     private userService: UserServices,
     private dialog:MatDialog,
-    private fb: FormBuilder,private loginService:DataService
+    private fb: FormBuilder,private loginService:DataService,public roleService:RoleGuardService
   ) {
     this.userForm = this.fb.group({
       Name: ['', Validators.required],
@@ -38,6 +54,21 @@ export class SettingsComponent implements OnInit {
   ngOnInit(): void {
     // Load user data if needed
     this.loadUserSettings();
+    if(this.roleService.hasRole(['Lab Manager','Owner']))
+    {
+      this.loginService.GetAllTransaction().subscribe(
+        (result: any[]) => {
+          this.auditTrail = result;
+          this.filteredAuditTrails.data = this.auditTrail;
+          this.filteredAuditTrails.sort = this.sort;
+          this.extractUniqueValues();
+        },
+        (error) => {
+          this.showSnackBar("Failed to load audit trails. Please contact admin. " + error.error);
+        }
+      );
+    }
+    
   }
    userDetails = JSON.parse(sessionStorage.getItem('User')!);
      user:EditUser={
@@ -108,6 +139,70 @@ export class SettingsComponent implements OnInit {
          } 
         }
        
+    }
+    extractUniqueValues() {
+      const uniqueUserEmails = new Set();
+      this.uniqueUsers = this.auditTrail
+        .filter(item => {
+          if (uniqueUserEmails.has(item.systemUser.email)) {
+            return false;
+          } else {
+            uniqueUserEmails.add(item.systemUser.email);
+            return true;
+          }
+        })
+        .map(item => ({
+          email: item.systemUser.email,
+          name: item.systemUser.name,
+          surname: item.systemUser.surname
+        }));
+  
+      this.uniqueTransactionTypes = [...new Set(this.auditTrail.map(item => item.transactionType))];
+    }
+  
+    applyFilters() {
+      this.filteredAuditTrails.data = this.auditTrail.filter(item => {
+        const matchesDateRange = (!this.startDate || new Date(item.dateOfTransaction) >= this.startDate) &&
+                                 (!this.endDate || new Date(item.dateOfTransaction) <= this.endDate);
+        const matchesUser = !this.selectedUserEmail || item.systemUser.email === this.selectedUserEmail;
+        const matchesTransactionType = !this.selectedTransactionType || item.transactionType === this.selectedTransactionType;
+  
+        return matchesDateRange && matchesUser && matchesTransactionType;
+      });
+    }
+  
+    clearFilters() {
+      this.startDate = null;
+      this.endDate = null;
+      this.selectedUserEmail = null;
+      this.selectedTransactionType = null;
+      this.filteredAuditTrails.data = this.auditTrail;
+    }
+  
+    onStartDateChange(event: any) {
+      if (this.endDate && this.startDate && new Date(this.startDate) > new Date(this.endDate)) {
+        this.endDate = this.startDate;
+        this.applyFilters();
+      }
+    }
+  
+    onEndDateChange(event: any) {
+      if (this.startDate && this.endDate && new Date(this.endDate) < new Date(this.startDate)) {
+        this.startDate = this.endDate;
+        this.applyFilters();
+      }
+    }
+  
+    addDays(date: Date, days: number): Date {
+      let result = new Date(date);
+      result.setDate(result.getDate() + days);
+      return result;
+    }
+  
+    showSnackBar(message: string) {
+      this.snackBar.open(message, 'Dismiss', {
+        duration: 3000,
+      });
     }
   
 }
