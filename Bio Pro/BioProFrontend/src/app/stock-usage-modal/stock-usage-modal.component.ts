@@ -1,7 +1,7 @@
 import { Component, OnInit, ChangeDetectorRef , ElementRef, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { Chart, ChartConfiguration, ChartItem, registerables } from 'chart.js';
+import { Chart, ChartConfiguration, ChartItem, registerables, ChartType } from 'chart.js';
 import { StockServices } from '../services/stock.service';
 import { WriteOffModalComponent } from '../write-off-modal/write-off-modal.component';
 import { CaptureNewStockModalComponent } from '../capture-new-stock-modal/capture-new-stock-modal.component';
@@ -27,7 +27,11 @@ interface WeeklyStockUsage {
 export class StockUsageModalComponent implements OnInit {
   @ViewChild('stockLevelChart', { static: true }) stockLevelChartRef!: ElementRef<HTMLCanvasElement>;
   @ViewChild('stockUsageChart', { static: true }) stockUsageChartRef!: ElementRef<HTMLCanvasElement>;
-
+  @ViewChild('quarter1Gauge', { static: true }) quarter1GaugeRef!: ElementRef<HTMLCanvasElement>;
+  @ViewChild('quarter2Gauge', { static: true }) quarter2GaugeRef!: ElementRef<HTMLCanvasElement>;
+  @ViewChild('quarter3Gauge', { static: true }) quarter3GaugeRef!: ElementRef<HTMLCanvasElement>;
+  @ViewChild('quarter4Gauge', { static: true }) quarter4GaugeRef!: ElementRef<HTMLCanvasElement>;
+  quarterlyUsage: number[] = [0, 0, 0, 0];
   filteredStock: StockItems[] = [];
   belowMinStock: Stock[] = [];
   weeklyStockUsage: WeeklyStockUsage[] = [];
@@ -46,7 +50,75 @@ export class StockUsageModalComponent implements OnInit {
 
   ngOnInit(): void {
     this.fetchStockData();
+    
   }
+
+  calculateQuarterlyStockUsage(stockItems: StockItems[]): void {
+    const quarterlyUsage = [0, 0, 0, 0];
+  
+    stockItems.forEach((item) => {
+      const dateUsed = new Date(item.dateUsed);
+      const month = dateUsed.getMonth();
+  
+      if (item.quantity && !isNaN(Number(item.quantity))) { // Ensure quantity is a valid number
+        const quantity = Number(item.quantity);
+        if (month >= 0 && month <= 2) {
+          quarterlyUsage[0] += quantity; // Q1
+        } else if (month >= 3 && month <= 5) {
+          quarterlyUsage[1] += quantity; // Q2
+        } else if (month >= 6 && month <= 8) {
+          quarterlyUsage[2] += quantity; // Q3
+        } else if (month >= 9 && month <= 11) {
+          quarterlyUsage[3] += quantity; // Q4
+        }
+      } else {
+        console.warn(`Invalid quantity for stock item:`, item);
+      }
+    });
+  
+    this.quarterlyUsage = quarterlyUsage;
+  
+    console.log('Quarterly Stock Usage:', this.quarterlyUsage);
+  }
+  
+  
+  createQuarterlyGauges(): void {
+    const quarters = [
+      { ref: this.quarter1GaugeRef.nativeElement, data: this.quarterlyUsage[0], label: 'Q1' },
+      { ref: this.quarter2GaugeRef.nativeElement, data: this.quarterlyUsage[1], label: 'Q2' },
+      { ref: this.quarter3GaugeRef.nativeElement, data: this.quarterlyUsage[2], label: 'Q3' },
+      { ref: this.quarter4GaugeRef.nativeElement, data: this.quarterlyUsage[3], label: 'Q4' }
+    ];
+  
+    quarters.forEach(quarter => {
+      const context = quarter.ref.getContext('2d');
+      if (!context) return;
+  
+      new Chart(context, {
+        type: 'doughnut',
+        data: {
+          labels: [quarter.label],
+          datasets: [
+            {
+              data: [quarter.data, 100 - quarter.data], // Ensure the gauge data is accurate
+              backgroundColor: ['#FF6384', '#E0E0E0'],
+              borderWidth: 1
+            }
+          ]
+        },
+        options: {
+          rotation: 270,
+          circumference: 180,
+          cutout: '70%',
+          plugins: {
+            tooltip: { enabled: false },
+            legend: { display: false }
+          }
+        }
+      });
+    });
+  }
+  
 
 
   fetchStockData(): void {
@@ -71,6 +143,8 @@ export class StockUsageModalComponent implements OnInit {
         // Always create the stock level chart
         this.createStockLevelChart();
         this.updateStockLevelChart(); // Ensure stock levels are displayed
+        this.calculateQuarterlyStockUsage(stockItems);
+      this.createQuarterlyGauges(); // Create the gauges after calculation
 
         // Only proceed with weekly usage if a week is selected
         if (this.selectedWeek) {
@@ -101,41 +175,31 @@ export class StockUsageModalComponent implements OnInit {
   }
   
   populateStockMap(stocks: Stock[], stockItems: StockItems[]): void {
-    // Clear any previous data in stockMap
     this.stockMap.clear();
   
     // Populate the stock map with valid stocks
     stocks.forEach((stock: Stock) => {
-      // Ensure stockitemId is a valid number
       const stockId: number = Number(stock.stockId);
-  
-      if (!isNaN(stockId) && stockId !== undefined && stockId !== null) {
+      if (!isNaN(stockId) && stockId > 0) {
         this.stockMap.set(stockId, stock.stockName.trim());
       } else {
-        console.error(`Invalid stockitemId detected:`, stock.stockId, `for stock:`, stock);
+        console.error(`Invalid stockId detected: ${stock.stockId} for stock:`, stock);
       }
     });
   
     console.log('Populated Stock Map:', this.stockMap);
   
-    // Process stock items and validate their IDs
+    // Validate stock items against the map
     stockItems.forEach((item: StockItems) => {
       const stockId: number = Number(item.StockId);
-  
-      if (!isNaN(stockId) && stockId !== undefined && stockId !== null) {
-        if (this.stockMap.has(stockId)) {
-          console.log(`Valid Stock Item:`, item);
-          // Further processing or usage here
-        } else {
-          console.error(`StockId ${stockId} not found in stock map.`);
-        }
+      if (!isNaN(stockId) && stockId > 0) {
+        item.stockName = this.stockMap.get(stockId) || 'Unknown';
       } else {
-        console.error(`Invalid StockId detected:`, item.StockId, `for stock item:`, item);
+        console.error(`Invalid StockId detected: ${item.StockId} for stock item:`, item);
+        item.stockName = 'Unknown';
       }
     });
   }
-  
-  
   
 
   filterAndProcessStockData(stockItems: StockItems[]): void {
@@ -154,27 +218,22 @@ export class StockUsageModalComponent implements OnInit {
     this.belowMinStock = this.stocks.filter(stock => stock.quantityAvailable < stock.minimumStockLevel);
     console.log('Stock Items Below Minimum Level:', this.belowMinStock);
   }
+
   processStockItems(stockItems: StockItems[]): void {
     stockItems.forEach((item: StockItems) => {
-      item.StockId = Number(item.StockId); // Convert StockId to number
-  
-      if (isNaN(item.StockId) || item.StockId === 0) {
-        console.error(`Invalid StockId detected: ${item.StockId}`);
-        item.stockName = 'Unknown'; // Default to 'Unknown' for invalid StockId
+      // Directly use the stock name from the nested stock object
+      if (item.stock && item.stock.stockName) {
+        item.stockName = item.stock.stockName.trim(); // Use the stock name from the stock object
       } else {
-        // Fetch the stock name and log if not found
-        const stockName = this.stockMap.get(item.StockId);
-        if (!stockName) {
-          console.warn(`StockId ${item.StockId} has no matching name in stockMap, defaulting to 'Unknown'.`);
-        }
-        item.stockName = stockName || 'Unknown';
+        console.warn(`StockId ${item.StockId} does not have a valid stock name, defaulting to 'Unknown'.`);
+        item.stockName = 'Unknown'; // Default to 'Unknown' if stock or stockName is missing
       }
+  
+      // Convert dateUsed to a Date object
       item.dateUsed = new Date(item.dateUsed);
     });
   
     console.log('Processed Stock Items:', stockItems);
-    console.log('Stock Map:', this.stockMap);
-  
     this.groupStockUsageByWeek(stockItems);
   }
   
@@ -233,124 +292,91 @@ groupStockUsageByWeek(stockItems: StockItems[]): void {
   }
 
   createStockUsageChart(): void {
-  // Check if there is data to display for the selected week
-  if (!this.weeklyStockUsage.length || !this.weeklyStockUsage[0].stockDetails.length) {
-    console.error('No weekly stock usage data available for the selected week.');
-    
-    // Display message to user (optional)
-    alert('No stock usage detected for the selected week.');
-    
-    return;
-  }
-
-  // Create a map from StockitemId to stockName with trimmed names
-  const stockIdToNameMap = new Map<number, string>();
-  this.stocks.forEach(stock => {
-    // Ensure stockitemId is valid before using it
-    if (typeof stock.stockId !== 'undefined' && stock.stockId !== null) {
-      stockIdToNameMap.set(stock.stockId, stock.stockName.trim());
-    } else {
-      console.error(`Stock entry missing stockId:`, stock);
+    // Check if there is data to display for the selected week
+    if (!this.weeklyStockUsage.length || !this.weeklyStockUsage[0].stockDetails.length) {
+      console.error('No weekly stock usage data available for the selected week.');
+      alert('No stock usage detected for the selected week.');
+      return;
     }
-  });
-
-  console.log('Stock ID to Name Map:', stockIdToNameMap); // Debugging log
-
-  // Update stock names in the weekly stock usage data
-  this.weeklyStockUsage.forEach(weekData => {
-    weekData.stockDetails.forEach(detail => {
-      // Ensure StockId is a valid number
-      if (!Number.isNaN(Number(detail.StockId))) {
-        detail.StockId = Number(detail.StockId); // Convert to a number
-        const mappedName = stockIdToNameMap.get(detail.StockId);
-
-        // Log warning if no matching stock name is found
-        if (!mappedName) {
-          console.warn(`StockId ${detail.StockId} not found in stockIdToNameMap. Using 'Unknown'.`);
-        }
-        detail.stockName = mappedName || 'Unknown'; // Assign stockName or 'Unknown'
-      } else {
-        console.error(`Invalid StockId detected: ${detail.StockId}`);
-        detail.stockName = 'Unknown'; // Default to 'Unknown' for invalid StockId
-      }
-    });
-  });
-
-  console.log('Weekly Stock Usage with Names:', this.weeklyStockUsage); // Debugging log
-
-  // Extract stock names and quantities for the chart
-  const labels = this.weeklyStockUsage[0].stockDetails.map(detail => detail.stockName || 'Unknown');
-  const data = this.weeklyStockUsage[0].stockDetails.map(detail => detail.quantity);
-
-  // Destroy the previous chart if it exists
-  if (this.stockUsageChart) {
-    this.stockUsageChart.destroy();
-  }
-
-  // Get the canvas element for the chart
-  const canvas = this.stockUsageChartRef.nativeElement;
-  if (!canvas) {
-    console.error('Cannot find canvas element for stock usage chart');
-    return;
-  }
-
-  // Get the context for the chart
-  const context = canvas.getContext('2d');
-  if (!context) {
-    console.error('Unable to get context for chart creation');
-    return;
-  }
-
-  console.log('Chart data labels:', labels); // Debugging: Log the chart labels
-  console.log('Chart data values:', data); // Debugging: Log the chart data
-
-  // Create a chart configuration object
-  const chartConfig: ChartConfiguration<'doughnut'> = {
-    type: 'doughnut', // Specify chart type
-    data: {
-      labels: labels,
-      datasets: [{
-        label: 'Stock Usage',
-        data: data,
-        backgroundColor: [
-          'rgba(255, 99, 132, 0.2)',
-          'rgba(54, 162, 235, 0.2)',
-          'rgba(255, 206, 86, 0.2)',
-          'rgba(75, 192, 192, 0.2)',
-          'rgba(153, 102, 255, 0.2)',
-          'rgba(255, 159, 64, 0.2)'
-        ],
-        borderColor: [
-          'rgba(255, 99, 132, 1)',
-          'rgba(54, 162, 235, 1)',
-          'rgba(255, 206, 86, 1)',
-          'rgba(75, 192, 192, 1)',
-          'rgba(153, 102, 255, 1)',
-          'rgba(255, 159, 64, 1)'
-        ],
-        borderWidth: 1
-      }]
-    },
-    options: {
-      responsive: true,
-      cutout: '50%', // Creates the empty center for the doughnut chart
-      plugins: {
-        legend: {
-          position: 'top',
-        },
-        title: {
-          display: true,
-          text: 'Stock Usage by Item'
+  
+    // Extract stock names and quantities for the chart
+    const labels = this.weeklyStockUsage.flatMap(weekData => 
+      weekData.stockDetails.map(detail => detail.stockName || 'Unknown')
+    );
+  
+    const data = this.weeklyStockUsage.flatMap(weekData => 
+      weekData.stockDetails.map(detail => detail.quantity)
+    );
+  
+    // Destroy the previous chart if it exists
+    if (this.stockUsageChart) {
+      this.stockUsageChart.destroy();
+    }
+  
+    // Get the canvas element for the chart
+    const canvas = this.stockUsageChartRef.nativeElement;
+    if (!canvas) {
+      console.error('Cannot find canvas element for stock usage chart');
+      return;
+    }
+  
+    // Set the canvas size to 60% of its original size
+    // canvas.style.width = '15%';
+    // canvas.style.height = '15%';
+  
+    // Get the context for the chart
+    const context = canvas.getContext('2d');
+    if (!context) {
+      console.error('Unable to get context for chart creation');
+      return;
+    }
+  
+    // Create a chart configuration object
+    const chartConfig: ChartConfiguration<'doughnut'> = {
+      type: 'doughnut',
+      data: {
+        labels: labels,
+        datasets: [{
+          label: 'Stock Usage',
+          data: data,
+          backgroundColor: [
+            'rgba(255, 99, 132, 0.2)',
+            'rgba(54, 162, 235, 0.2)',
+            'rgba(255, 206, 86, 0.2)',
+            'rgba(75, 192, 192, 0.2)',
+            'rgba(153, 102, 255, 0.2)',
+            'rgba(255, 159, 64, 0.2)'
+          ],
+          borderColor: [
+            'rgba(255, 99, 132, 1)',
+            'rgba(54, 162, 235, 1)',
+            'rgba(255, 206, 86, 1)',
+            'rgba(75, 192, 192, 1)',
+            'rgba(153, 102, 255, 1)',
+            'rgba(255, 159, 64, 1)'
+          ],
+          borderWidth: 1
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: {
+            position: 'top',
+          },
+          title: {
+            display: true,
+            text: 'Stock Usage by Item'
+          }
         }
       }
-    }
-  };
-
-  // Create the chart using the configuration
-  this.stockUsageChart = new Chart(context, chartConfig);
-}
-
-
+    };
+  
+    // Create the chart using the configuration
+    this.stockUsageChart = new Chart<'doughnut'>(context, chartConfig);
+    console.log('Created stock usage chart:', this.stockUsageChart);
+  }
+  
   
   createStockLevelChart(): void {
     const ctx = this.stockLevelChartRef.nativeElement.getContext('2d') as ChartItem;

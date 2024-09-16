@@ -77,11 +77,12 @@ export class AddStockItemViewModel {
 }
 export interface StockItems {
     StockId: number;
-     OrderId: string;
-     quantity:number;
-    dateUsed:Date;
+    OrderId: string;
+    quantity: number;
+    dateUsed: Date;
     stockName?: string;
-    stockitemId: number;
+    stockItemId: number;
+    stock?: Stock; // Add the nested stock object here
     
    
   }
@@ -89,10 +90,17 @@ export interface StockItems {
   export interface Stock {
     
     stockId: number;
+    stockCategoryId: number;
+    supplierId: number;
     stockName: string;
     quantityAvailable: number;
     maximumStockLevel: number;
     minimumStockLevel: number;
+    reorderPoint: number;
+    currentlyInUse: boolean;
+    measurement: string;
+    stockWriteOffs: any[]; // Adjust the type as necessary
+    stockItem?: StockItems[]; 
   }
   
   export interface WeeklyStockUsage {
