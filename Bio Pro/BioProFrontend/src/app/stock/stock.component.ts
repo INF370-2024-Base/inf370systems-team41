@@ -56,7 +56,7 @@ export class StockComponent implements OnInit {
   openModal(): void {
     this.dialog.open(StockUsageModalComponent, {
       width: '1000px',
-      height: '700px'
+      height: '800px'
     });
   }
 

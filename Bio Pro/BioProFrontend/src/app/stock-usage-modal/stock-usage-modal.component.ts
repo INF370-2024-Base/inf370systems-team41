@@ -26,22 +26,24 @@ interface WeeklyStockUsage {
 })
 export class StockUsageModalComponent implements OnInit {
   @ViewChild('stockLevelChart', { static: true }) stockLevelChartRef!: ElementRef<HTMLCanvasElement>;
-  @ViewChild('stockUsageChart', { static: true }) stockUsageChartRef!: ElementRef<HTMLCanvasElement>;
+  @ViewChild('uniqueStockUsageChart', { static: true }) uniqueStockUsageChartRef!: ElementRef<HTMLCanvasElement>;// Use unique ID here
   @ViewChild('quarter1Gauge', { static: true }) quarter1GaugeRef!: ElementRef<HTMLCanvasElement>;
   @ViewChild('quarter2Gauge', { static: true }) quarter2GaugeRef!: ElementRef<HTMLCanvasElement>;
   @ViewChild('quarter3Gauge', { static: true }) quarter3GaugeRef!: ElementRef<HTMLCanvasElement>;
   @ViewChild('quarter4Gauge', { static: true }) quarter4GaugeRef!: ElementRef<HTMLCanvasElement>;
+
   quarterlyUsage: number[] = [0, 0, 0, 0];
   filteredStock: StockItems[] = [];
   belowMinStock: Stock[] = [];
   weeklyStockUsage: WeeklyStockUsage[] = [];
   stockMap: Map<number, string> = new Map();
-  stockLevelChart?: Chart; // Separate chart object for stock level chart
-  stockUsageChart?: Chart; // Separate chart object for stock usage chart
+  stockLevelChart?: Chart;
+ // stockUsageChart?: Chart;
   stocks: Stock[] = [];
-  selectedDate: Date; // Changed to a single date
-  selectedWeek: string = '';
-
+  selectedDate: Date;
+  selectedWeek: string = ''
+  private charts: Map<string, Chart> = new Map();
+  stockUsageChart?: Chart<'doughnut'>;
 
   constructor (private stockServices: StockServices, private cdr: ChangeDetectorRef) {
     const today = new Date();
@@ -52,15 +54,18 @@ export class StockUsageModalComponent implements OnInit {
     this.fetchStockData();
     
   }
+  get totalStockUsed(): number {
+    return this.quarterlyUsage.reduce((a, b) => a + b, 0);
+  }
 
   calculateQuarterlyStockUsage(stockItems: StockItems[]): void {
     const quarterlyUsage = [0, 0, 0, 0];
-  
+
     stockItems.forEach((item) => {
       const dateUsed = new Date(item.dateUsed);
       const month = dateUsed.getMonth();
-  
-      if (item.quantity && !isNaN(Number(item.quantity))) { // Ensure quantity is a valid number
+
+      if (item.quantity && !isNaN(Number(item.quantity))) {
         const quantity = Number(item.quantity);
         if (month >= 0 && month <= 2) {
           quarterlyUsage[0] += quantity; // Q1
@@ -75,13 +80,11 @@ export class StockUsageModalComponent implements OnInit {
         console.warn(`Invalid quantity for stock item:`, item);
       }
     });
-  
+
     this.quarterlyUsage = quarterlyUsage;
-  
     console.log('Quarterly Stock Usage:', this.quarterlyUsage);
   }
-  
-  
+
   createQuarterlyGauges(): void {
     const quarters = [
       { ref: this.quarter1GaugeRef.nativeElement, data: this.quarterlyUsage[0], label: 'Q1' },
@@ -89,11 +92,11 @@ export class StockUsageModalComponent implements OnInit {
       { ref: this.quarter3GaugeRef.nativeElement, data: this.quarterlyUsage[2], label: 'Q3' },
       { ref: this.quarter4GaugeRef.nativeElement, data: this.quarterlyUsage[3], label: 'Q4' }
     ];
-  
+
     quarters.forEach(quarter => {
       const context = quarter.ref.getContext('2d');
       if (!context) return;
-  
+
       new Chart(context, {
         type: 'doughnut',
         data: {
@@ -118,8 +121,6 @@ export class StockUsageModalComponent implements OnInit {
       });
     });
   }
-  
-
 
   fetchStockData(): void {
     forkJoin({
@@ -132,28 +133,21 @@ export class StockUsageModalComponent implements OnInit {
           this.stockMap.set(stock.stockId, stock.stockName);
           console.log('Fetched Stock Items:', stockItems);
           console.log('Fetched Stocks:', stocks);
-
         });
         this.stocks = stocks;
         this.populateStockMap(stocks, stockItems);
-        
-        // Update stock items below minimum level independently
         this.updateBelowMinimumStock();
-
-        // Always create the stock level chart
         this.createStockLevelChart();
-        this.updateStockLevelChart(); // Ensure stock levels are displayed
+        this.updateStockLevelChart();
         this.calculateQuarterlyStockUsage(stockItems);
-      this.createQuarterlyGauges(); // Create the gauges after calculation
+        this.createQuarterlyGauges();
 
-        // Only proceed with weekly usage if a week is selected
         if (this.selectedWeek) {
           const [year, week] = this.selectedWeek.split('-W').map(Number);
           const startOfWeek = this.getStartOfWeekFromWeekNumber(year, week);
           const endOfWeek = this.getEndOfWeekFromWeekNumber(startOfWeek);
 
           this.filterAndProcessStockData(stockItems);
-
           this.filteredStock = this.filterStockItemsByWeek(stockItems, startOfWeek, endOfWeek);
           this.processStockItems(this.filteredStock);
           this.createStockUsageChart();
@@ -292,45 +286,52 @@ groupStockUsageByWeek(stockItems: StockItems[]): void {
   }
 
   createStockUsageChart(): void {
+    console.log('Attempting to create stock usage chart...');
+
     // Check if there is data to display for the selected week
     if (!this.weeklyStockUsage.length || !this.weeklyStockUsage[0].stockDetails.length) {
       console.error('No weekly stock usage data available for the selected week.');
       alert('No stock usage detected for the selected week.');
       return;
     }
-  
+
     // Extract stock names and quantities for the chart
-    const labels = this.weeklyStockUsage.flatMap(weekData => 
+    const labels = this.weeklyStockUsage.flatMap(weekData =>
       weekData.stockDetails.map(detail => detail.stockName || 'Unknown')
     );
-  
-    const data = this.weeklyStockUsage.flatMap(weekData => 
+
+    const data = this.weeklyStockUsage.flatMap(weekData =>
       weekData.stockDetails.map(detail => detail.quantity)
     );
-  
+
     // Destroy the previous chart if it exists
     if (this.stockUsageChart) {
+      console.log('Destroying existing chart...');
       this.stockUsageChart.destroy();
+      this.stockUsageChart = undefined; // Ensure it's reset
     }
-  
+
     // Get the canvas element for the chart
-    const canvas = this.stockUsageChartRef.nativeElement;
+    const canvas = this.uniqueStockUsageChartRef.nativeElement;
     if (!canvas) {
       console.error('Cannot find canvas element for stock usage chart');
       return;
     }
-  
-    // Set the canvas size to 60% of its original size
-    // canvas.style.width = '15%';
-    // canvas.style.height = '15%';
-  
-    // Get the context for the chart
+
+    // Clear the canvas content before creating a new chart
     const context = canvas.getContext('2d');
     if (!context) {
       console.error('Unable to get context for chart creation');
       return;
     }
-  
+
+    // Clear the canvas content
+    context.clearRect(0, 0, canvas.width, canvas.height); // Clear the entire canvas
+
+    // Reset canvas dimensions to ensure no conflicts
+    canvas.width = canvas.width; // Reset the canvas width
+    canvas.height = canvas.height; // Reset the canvas height
+
     // Create a chart configuration object
     const chartConfig: ChartConfiguration<'doughnut'> = {
       type: 'doughnut',
@@ -371,12 +372,11 @@ groupStockUsageByWeek(stockItems: StockItems[]): void {
         }
       }
     };
-  
+
     // Create the chart using the configuration
     this.stockUsageChart = new Chart<'doughnut'>(context, chartConfig);
     console.log('Created stock usage chart:', this.stockUsageChart);
   }
-  
   
   createStockLevelChart(): void {
     const ctx = this.stockLevelChartRef.nativeElement.getContext('2d') as ChartItem;
