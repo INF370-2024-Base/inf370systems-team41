@@ -94,7 +94,7 @@ import { AddStockCategoryComponent } from './add-stock-category/add-stock-catego
 import { UpdatePasswordComponent } from './update-password/update-password.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { ResetUserPasswordComponent } from './reset-user-password/reset-user-password.component';
-
+import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSelectModule } from '@angular/material/select';
 import { ConfirmDeleteEmployeeComponent } from './confirm-delete-employee/confirm-delete-employee.component';
 import { ConfirmDeleteDentistComponent } from './confirm-delete-dentist/confirm-delete-dentist.component';
@@ -156,7 +156,7 @@ import { StockUsageModalComponent } from './stock-usage-modal/stock-usage-modal.
     CommonModule,
     MatDialogModule,
     MatExpansionModule,
-    MatSelectModule
+    MatSelectModule,    MatPaginatorModule
   ],
   providers: [DatePipe,{ provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },LoadingService,
     { provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true },{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }],

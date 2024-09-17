@@ -1,31 +1,30 @@
 <body class="delivery-body">
+  <h1 style="font-size: 48px; color: #333; text-align: center; text-transform: uppercase; letter-spacing: 3px; margin-bottom: 20px; width: 100%;">
+    <i class="fas fa-user-plus" style="vertical-align: middle; margin-right: 8px;"></i> DELIVERIES
+  </h1>
+  
+  <div class="filter-container" style="display: flex; justify-content: center; align-items: center; width: 100%; margin-bottom: 20px; gap: 20px;">
+    <mat-form-field appearance="fill" style="width: 300px;">
+      <mat-label>Filter by Delivery Status</mat-label>
+      <mat-select [(value)]="selectedStatus" (selectionChange)="filterDeliveries()">
+        <mat-option *ngFor="let status of deliveryStatuses" [value]="status.status">
+          {{ status.status }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
 
-    <h1 style="font-size: 48px; color: #333; text-align: center; text-transform: uppercase; letter-spacing: 3px; margin-bottom: 20px;">
-      <i class="fas fa-user-plus" style="vertical-align: middle; margin-right: 8px;"></i> DELIVERIES
-    </h1> 
+    <mat-form-field appearance="fill" class="search-bar" style="width: 300px;">
+      <mat-label>Search by Delivery ID or System Order ID</mat-label>
+      <input matInput [(ngModel)]="searchTerm" (ngModelChange)="filterDeliveries()" placeholder="Enter delivery ID or system order ID">
+    </mat-form-field>
+  </div>
   
-    <div class="filter-container">
-      <mat-form-field appearance="fill">
-        <mat-label>Filter by Delivery Status</mat-label>
-        <mat-select [(value)]="selectedStatus" (selectionChange)="filterDeliveries()">
-          <mat-option *ngFor="let status of deliveryStatuses" [value]="status.status">
-            {{ status.status }}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-    
-      <mat-form-field appearance="fill" class="search-bar">
-        <mat-label>Search by Delivery ID or System Order ID</mat-label>
-        <input matInput [(ngModel)]="searchTerm" (ngModelChange)="filterDeliveries()" placeholder="Enter delivery ID or system order ID">
-      </mat-form-field>
-    </div>
+  <div *ngIf="filteredDeliveries.length === 0" class="no-deliveries alert-message">
+    <span class="icon">&#9888;</span> No deliveries found.
+  </div>
   
-    <div *ngIf="filteredDeliveries.length === 0" class="no-deliveries alert-message">
-      <span class="icon">&#9888;</span> No deliveries found.
-    </div>
- 
-  
-    <div *ngFor="let delivery of filteredDeliveries" class="mb-3 delivery-card">
+  <div class="delivery-card-container" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; width: 100%;">
+    <div *ngFor="let delivery of pagedDeliveries" class="mb-3 delivery-card">
       <mat-card>
         <mat-card-header class="delivery-header"></mat-card-header>
         <mat-card-content>
@@ -67,13 +66,17 @@
         </mat-card-content>
       </mat-card>
     </div>
+  </div>
+  <div class="pagination-controls">
+  <mat-paginator [length]="filteredDeliveries.length" [pageSize]="6" [pageSizeOptions]="[6]" (page)="onPageChange($event)">
+  </mat-paginator>
+  </div>
 
-     <div class="help-button-container">
+  </body>
+  
+  <div class="help-button-container">
     <button mat-button [routerLink]="['/help-deliveries']" fragment="new-deliveries">
       <mat-icon>live_help</mat-icon>
       <span>Help</span>
     </button>
   </div>
-  </body>
-  
-  
