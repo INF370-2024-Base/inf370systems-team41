@@ -67,10 +67,12 @@
       </mat-card>
     </div>
   </div>
-  <div class="pagination-controls">
-  <mat-paginator [length]="filteredDeliveries.length" [pageSize]="6" [pageSizeOptions]="[6]" (page)="onPageChange($event)">
-  </mat-paginator>
+  <div class="pagination-controls" style="display: flex; justify-content: space-between; align-items: center; width: 100%; padding: 10px; margin-top: 25px;">
+    <button mat-button (click)="previousPage()" [disabled]="currentPage === 0" class="pagination-button">Previous</button>
+    <span style="font-size: 12px; font-weight: bold; color: #333;">Page {{ currentPage + 1 }} of {{ totalPages }}</span>
+    <button mat-button (click)="nextPage()" [disabled]="currentPage >= totalPages - 1" class="pagination-button">Next</button>
   </div>
+  
 
   </body>
   

@@ -23,8 +23,6 @@ export class DeliveriesComponent implements OnInit {
   pageSize = 6; // Number of deliveries per page
   currentPage = 0; // Current page number
 
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
-
   constructor(private deliveryService: DeliveryService, private snackBar: MatSnackBar,private loginService:DataService) { }
 
   ngOnInit(): void {
@@ -81,10 +79,24 @@ export class DeliveriesComponent implements OnInit {
     });
   }
 
-  onPageChange(event: PageEvent) {
-    this.currentPage = event.pageIndex;
-    this.pageSize = event.pageSize;
-    this.updatePagedDeliveries();
+
+  previousPage() {
+    if (this.currentPage > 0) {
+      this.currentPage--;
+      this.updatePagedDeliveries();
+    }
+  }
+
+  nextPage() {
+    if (this.currentPage < this.totalPages - 1) {
+      this.currentPage++;
+      this.updatePagedDeliveries();
+    }
+  }
+
+  // Getter method to calculate total pages
+  get totalPages(): number {
+    return Math.ceil(this.filteredDeliveries.length / this.pageSize);
   }
 
   updatePagedDeliveries() {
@@ -92,5 +104,4 @@ export class DeliveriesComponent implements OnInit {
     const endIndex = startIndex + this.pageSize;
     this.pagedDeliveries = this.filteredDeliveries.slice(startIndex, endIndex);
   }
-
 }
