@@ -20,6 +20,8 @@ import {  ChartConfiguration, ChartItem, registerables } from 'chart.js';
 import { StockServices } from '../services/stock.service';
 import { DentistService } from '../shared/dentist.service'; 
 import {StockItems } from '../shared/Stock';
+import { forkJoin } from 'rxjs'; // Import forkJoin
+Chart.register(...registerables);
 
 
 
@@ -58,6 +60,9 @@ export class ReportsComponent implements OnInit {
   totalEmployees: number = 0;
   selectedReport: string = 'all';
   weeklyStockUsage: any[] = [];
+  totalEmployeeHoursLogged: number = 0;
+  gaugeCharts: any[] = []; // Array to store gauge chart instances
+
 
   constructor(private reportsService: ReportsServices, 
     private datePipe: DatePipe, 
@@ -78,7 +83,9 @@ export class ReportsComponent implements OnInit {
       this.getDeliveries();
       this.getAllDentists(); 
       this.getAllEmployees();
-      
+      this.calculateTotalEmployeeHours();
+      this.initializeGauges(); // Initialize gauges
+      this.updateGaugeValues(); 
     
       try {
         await this.fetchLoggedInUserName();
@@ -89,6 +96,7 @@ export class ReportsComponent implements OnInit {
         console.error('Error fetching user name:', error);
       }
     }
+
 
     filterReports(reportId: string) {
       // Get all report sections by their ID
@@ -104,8 +112,82 @@ export class ReportsComponent implements OnInit {
       });
     }
 
+    calculateTotalEmployeeHours() {
+      // Check if employeeHours has been populated and has data
+      if (this.employeeHours && this.employeeHours.length > 0) {
+        // Log the employeeHours data to verify structure
+        console.log('Employee Hours Data:', this.employeeHours);
+    
+        // Calculate total hours and round to the nearest whole number
+        this.totalEmployeeHoursLogged = Math.round(
+          this.employeeHours.reduce((total, employeeHour) => {
+            const hours = employeeHour.totalHours || 0; // Ensure we handle undefined values safely
+            return total + hours;
+          }, 0)
+        );
+    
+        console.log('Total Employee Hours Logged:', this.totalEmployeeHoursLogged); // Log the result for verification
+      } else {
+        // Handle case when no data is available
+        this.totalEmployeeHoursLogged = 0;
+        console.log('No employee hours data available. Total set to 0.');
+      }
+    }
+    
+    
+    initializeGauges() {
+      // Define options for all gauges
+      const gaugeOptions: ChartConfiguration<'doughnut', number[], unknown> = {
+        type: 'doughnut',
+        data: {
+          datasets: [
+            {
+              data: [0, 100], // Initial data: [current value, remaining percentage]
+              backgroundColor: ['rgba(54, 162, 235, 0.5)', 'rgba(200, 200, 200, 0.3)'], // Gauge color and background color
+              borderWidth: 0, // Remove border
+            },
+          ],
+        },
+        options: {
+          responsive: true,
+          rotation: -90, // Start from the top
+          circumference: 180, // Make it a half-circle
+          cutout: '85%', // Make it look like a gauge
+          plugins: {
+            legend: {
+              display: false, // Hide the legend
+            },
+          },
+        },
+      };
+    
+      // Create gauges for each KPI
+      this.gaugeCharts = [
+        new Chart('gauge1', gaugeOptions),
+        new Chart('gauge2', gaugeOptions),
+        new Chart('gauge3', gaugeOptions),
+        new Chart('gauge4', gaugeOptions),
+        new Chart('gauge5', gaugeOptions),
+        new Chart('gauge6', gaugeOptions),
+      ];
+    }
+    
+    updateGaugeValues() {
+      // Fetch data and update gauges
+      this.getAllOrder();
+      this.getAllStockWriteOffs();
+      this.getAllEmployees();
+      this.getAllDentists();
+      this.getDeliveries();
+      this.getEmployeesWithMonthlyHours();
+    }
 
-
+    updateGauge(index: number, currentValue: number, maxValue: number) {
+      const percentage = (currentValue / maxValue) * 100;
+      this.gaugeCharts[index].data.datasets[0].data = [percentage, 100 - percentage];
+      this.gaugeCharts[index].update();
+    }
+    
   fetchLoggedInUserName(): Promise<void> {
     return new Promise((resolve, reject) => {
       const token = sessionStorage.getItem('Token');
@@ -313,6 +395,8 @@ export class ReportsComponent implements OnInit {
         data => {
             this.orders = data;
             this.sortOrders();
+            this.totalOrderCount = data.length;
+      this.updateGauge(0, this.totalOrderCount, 100);
         },
         error => {
             console.error('Error fetching orders:', error);
@@ -325,7 +409,12 @@ getAllDentists(): void {
     this.dentists = data.sort((a, b) => {
       return a.firstName.localeCompare(b.firstName) || a.lastName.localeCompare(b.lastName);
     });
+
+    // Update total number of dentists
     this.totalDentists = this.dentists.length;
+    
+    // Update the gauge for Total Dentists
+    this.updateGauge(3, this.totalDentists, 100);
   });
 }
 
@@ -335,9 +424,15 @@ getAllEmployees(): void {
     this.employee = data.sort((a, b) => {
       return a.firstName.localeCompare(b.firstName) || a.lastName.localeCompare(b.lastName);
     });
+
+    // Set total number of employees
     this.totalEmployees = this.employee.length;
+
+    // Update the gauge for Total Employees
+    this.updateGauge(2, this.totalEmployees, 100); // Adjust the index if needed
   });
 }
+
 
 getOrderTypesWithOrderCount() {
   this.reportsService.getOrderTypesWithOrderCount().subscribe(
@@ -424,6 +519,8 @@ getAllStockWriteOffs() {
       data => {
           this.stockWriteOffs = data;
           this.groupStockWriteOffs();
+          this.totalQuantityWrittenOff = data.reduce((sum, item) => sum + item.quantityWrittenOff, 0);
+      this.updateGauge(1, this.totalQuantityWrittenOff, 100);
       },
       error => {
           console.error('Error fetching stock write-offs:', error);
@@ -461,15 +558,22 @@ calculateTotals() {
   getEmployeesWithMonthlyHours() {
     this.reportsService.getEmployeesWithMonthlyHours().subscribe(data => {
       this.employeeHours = data;
+      this.calculateTotalEmployeeHours();
       const labels = this.employeeHours.map(e => `${e.employee.firstName} ${e.employee.lastName} (${e.employee.employeeId})`);
       const hours = this.employeeHours.map(e => e.totalHours);
       this.createChart(labels, hours, 'Monthly Hours');
+
+      
+        // Update the gauge using the calculated total employee hours
+    const maxValue = Math.max(this.totalEmployeeHoursLogged, 100); // Adjust maxValue dynamically if necessary
+    this.updateGauge(5, this.totalEmployeeHoursLogged, maxValue);
     });
   }
   
   getEmployeesWithWeeklyHours() {
     this.reportsService.getEmployeesWithWeeklyHours().subscribe(data => {
       this.employeeHours = data;
+      this.calculateTotalEmployeeHours();
       const labels = this.employeeHours.map(e => `${e.employee.firstName} ${e.employee.lastName} (${e.employee.employeeId})`);
       const hours = this.employeeHours.map(e => e.totalHours);
       this.createChart(labels, hours, 'Weekly Hours');
@@ -515,7 +619,9 @@ calculateTotals() {
     this.deliveryService.getdeliveries().subscribe(results => {
       this.deliveries = results;
       this.processDeliveries();
-    
+
+      this.totalDeliveries = results.length;
+      this.updateGauge(4, this.totalDeliveries, 100);
     });
   }
 

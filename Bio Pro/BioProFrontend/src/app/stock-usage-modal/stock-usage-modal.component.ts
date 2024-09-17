@@ -31,7 +31,7 @@ export class StockUsageModalComponent implements OnInit {
   @ViewChild('quarter2Gauge', { static: true }) quarter2GaugeRef!: ElementRef<HTMLCanvasElement>;
   @ViewChild('quarter3Gauge', { static: true }) quarter3GaugeRef!: ElementRef<HTMLCanvasElement>;
   @ViewChild('quarter4Gauge', { static: true }) quarter4GaugeRef!: ElementRef<HTMLCanvasElement>;
-
+ 
 
   quarterlyUsage: number[] = [0, 0, 0, 0];
   filteredStock: StockItems[] = [];
@@ -58,6 +58,8 @@ export class StockUsageModalComponent implements OnInit {
   get totalStockUsed(): number {
     return this.quarterlyUsage.reduce((a, b) => a + b, 0);
   }
+
+
 
   createSkeletonChart(): void {
     console.log('Creating skeleton chart...');
