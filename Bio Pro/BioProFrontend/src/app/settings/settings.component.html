@@ -5,7 +5,7 @@
         <div class="settings-container">
           <div *ngIf="roleService.hasRole(['Lab Manager','Owner'])">
             <mat-form-field appearance="outline">
-              <mat-select [(ngModel)]="currentView"> <!-- Two-way binding -->
+              <mat-select [(ngModel)]="currentView"  (selectionChange)="changeSettings($event)"> <!-- Two-way binding -->
                 <mat-option value="User Profile">
                   User Profile
                 </mat-option>
@@ -67,7 +67,7 @@
           </form>
           
         </section>
-  
+  <div  *ngIf="currentView=='Audit'">
         <div class="filter-container">
           <!-- Date Range Filter -->
           <mat-form-field appearance="fill">
@@ -101,48 +101,44 @@
               <mat-option *ngFor="let type of uniqueTransactionTypes" [value]="type">{{type}}</mat-option>
             </mat-select>
           </mat-form-field>
-        
-          <button mat-raised-button color="primary" (click)="applyFilters()">Apply Filters</button>
-          <button mat-raised-button color="warn" (click)="clearFilters()">Clear Filters</button>
+        <div style="display: flex;">
+          <button mat-raised-button color="primary" (click)="applyFilters()" style="float: left;">Apply Filters</button>
+          <button mat-raised-button color="warn" (click)="clearFilters()" style="float: right;">Clear Filters</button>
+        </div>
+       
         </div>
         
         <div class="audit-trail-container">
           <mat-table [dataSource]="filteredAuditTrails" matSort class="mat-elevation-z8 blue-theme-table">
-            
-            <!-- Audit Trail ID Column -->
-            <ng-container matColumnDef="auditTrailId">
-              <mat-header-cell *matHeaderCellDef> Audit Trail ID </mat-header-cell>
-              <mat-cell *matCellDef="let element"> {{element.auditTrailId}} </mat-cell>
-            </ng-container>
-        
             <!-- Date of Transaction Column -->
             <ng-container matColumnDef="dateOfTransaction">
               <mat-header-cell *matHeaderCellDef mat-sort-header> Date of Transaction </mat-header-cell>
-              <mat-cell *matCellDef="let element"> {{element.dateOfTransaction | date: 'short'}} </mat-cell>
+              <mat-cell *matCellDef="let element"> {{ element.dateOfTransaction | date:'short' }} </mat-cell>
             </ng-container>
-        
+          
             <!-- System User Column -->
             <ng-container matColumnDef="systemUser">
               <mat-header-cell *matHeaderCellDef> System User </mat-header-cell>
               <mat-cell *matCellDef="let element"> {{element.systemUser.name}} {{element.systemUser.surname}} </mat-cell>
             </ng-container>
-        
+          
             <!-- Transaction Type Column -->
             <ng-container matColumnDef="transactionType">
               <mat-header-cell *matHeaderCellDef> Transaction Type </mat-header-cell>
               <mat-cell *matCellDef="let element"> {{element.transactionType}} </mat-cell>
             </ng-container>
-        
+          
             <!-- Additional Data Column -->
             <ng-container matColumnDef="additionalData">
               <mat-header-cell *matHeaderCellDef> Additional Data </mat-header-cell>
               <mat-cell *matCellDef="let element"> {{element.additionalData}} </mat-cell>
             </ng-container>
-        
+          
             <!-- Header and Rows -->
             <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
             <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
           </mat-table>
+          
         </div>
         <mat-card class="error-card" *ngIf="filteredAuditTrails.data.length === 0">
           <mat-card-content>
@@ -150,6 +146,7 @@
             <h1>None found</h1>
           </mat-card-content>
         </mat-card>
+      </div>
         <style>
           .error-card {
         max-width: 400px;

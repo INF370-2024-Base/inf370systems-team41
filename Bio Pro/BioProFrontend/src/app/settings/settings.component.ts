@@ -13,6 +13,7 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { RoleGuardService } from '../services/roleCheck';
 
+
 @Component({
   selector: 'app-settings',
   templateUrl: './settings.component.html',
@@ -26,7 +27,7 @@ export class SettingsComponent implements OnInit {
   currentView:string="User Profile"
   @ViewChild(MatSort) sort!: MatSort;
 
-  displayedColumns: string[] = ['auditTrailId', 'dateOfTransaction', 'systemUser', 'transactionType', 'additionalData'];
+  displayedColumns: string[] = [ 'dateOfTransaction', 'systemUser', 'transactionType', 'additionalData'];
 
   startDate: Date | null = null;
   endDate: Date | null = null;
@@ -54,20 +55,7 @@ today:Date=new Date()
   ngOnInit(): void {
     // Load user data if needed
     this.loadUserSettings();
-    if(this.roleService.hasRole(['Lab Manager','Owner']))
-    {
-      this.loginService.GetAllTransaction().subscribe(
-        (result: any[]) => {
-          this.auditTrail = result;
-          this.filteredAuditTrails.data = this.auditTrail;
-          this.filteredAuditTrails.sort = this.sort;
-          this.extractUniqueValues();
-        },
-        (error) => {
-          this.showSnackBar("Failed to load audit trails. Please contact admin. " + error.error);
-        }
-      );
-    }
+    
     
   }
    userDetails = JSON.parse(sessionStorage.getItem('User')!);
@@ -78,7 +66,37 @@ today:Date=new Date()
       UpdatedEmail:this.userDetails.email,
       Phonenumber:this.userDetails.phoneNumber
     }
-
+    changeSettings(event:any)
+    {
+      if(event.value=="Audit"){
+      if(this.roleService.hasRole(['Lab Manager','Owner']))
+        {
+          this.loginService.GetAllTransaction().subscribe(
+            (result: any[]) => {
+              this.auditTrail = result.map(item => {
+                // Convert date string to Date object if not already
+                const date = new Date(item.dateOfTransaction);
+      
+                // Adjust for time zone difference (e.g., GMT+2, which is 120 minutes ahead of GMT)
+                // Replace `120` with the appropriate offset for your needs
+                const offsetMinutes = 120;
+                date.setMinutes(date.getMinutes() + offsetMinutes);
+      
+                item.dateOfTransaction = date; // Update with adjusted date
+                return item;
+              });
+              this.filteredAuditTrails.data = this.auditTrail;
+              this.filteredAuditTrails.sort = this.sort;
+              console.log(this.filteredAuditTrails.data)
+              this.extractUniqueValues();
+            },
+            (error) => {
+              this.showSnackBar("Failed to load audit trails. Please contact admin. " + error.error);
+            }
+          );
+        }
+      }
+    }
   loadUserSettings(){
     
     this.userForm.patchValue({

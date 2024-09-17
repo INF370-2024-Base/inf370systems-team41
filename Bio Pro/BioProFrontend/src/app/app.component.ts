@@ -27,7 +27,7 @@ export class AppComponent implements OnInit {
   title = 'BioProSystem';
   userRoles: string[] = [];
 
-  constructor(public dataService: OrderService, private router: Router, private dialog: MatDialog,private loadingService:LoadingService,public  roleService: RoleGuardService) {
+  constructor(public dataService: OrderService, private router: Router, private dialog: MatDialog,private loadingService:LoadingService,public  roleService: RoleGuardService,private loginService:DataService) {
     // Listen to router events to determine the current route
   }
 
@@ -78,6 +78,7 @@ export class AppComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
+        this.loginService.addTransaction("Put","Logged out.")
         this.router.navigate(['login']);
       }
     });

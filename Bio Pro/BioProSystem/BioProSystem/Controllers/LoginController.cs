@@ -319,7 +319,6 @@ namespace BioProSystem.Controllers
         }
         [HttpPut]
         [Route("EditUser")]
-        [Authorize(Roles = " Lab Manager, Owner")]
         [Authorize(AuthenticationSchemes = "Bearer")]
         public async Task<IActionResult> EditUser(EditUser user)
         {
