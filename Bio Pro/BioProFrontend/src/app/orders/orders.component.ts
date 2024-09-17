@@ -60,17 +60,22 @@ export class OrdersComponent implements OnInit {
     this.dataservices.getAllOrderInfo().subscribe(
       ((allOrders: any[]) => {
         if (Array.isArray(allOrders)) {
-          this.orders = allOrders;
-          this.originalOrders=allOrders
-          this.loading=false
-          this.ordersInfo=allOrders
-          console.log(this.ordersInfo)
-          
-          
+          // Ensure the orders are sorted by the correct date field in descending order
+          this.orders = allOrders.sort((a, b) => {
+            const dateA = new Date(a.orderDate).getTime();
+            const dateB = new Date(b.orderDate).getTime();
+            return dateB - dateA; // Newest orders first
+          });
+  
+          this.originalOrders = [...this.orders]; // Keep a copy of the original sorted orders
+          this.loading = false;
+          this.ordersInfo = [...this.orders]; // Display the sorted orders
+          console.log(this.ordersInfo);
         } else {
           console.error('No orders found.');
         }
-      })
+      }
+    )
     )
   }
 
