@@ -108,6 +108,12 @@
       </mat-expansion-panel>
     </mat-accordion>
 
+    <div class="pagination-controls">
+      <button mat-button (click)="previousPage()" [disabled]="currentPage === 1">Previous</button>
+      <span>Page {{ currentPage }} of {{ totalPages }}</span>
+      <button mat-button (click)="nextPage()" [disabled]="currentPage === totalPages">Next</button>
+    </div>
+
     <div *ngIf="ordersInfo.length === 0 && (orderId.trim() !== '' || selectedFilter !== 0)">
       <div class="alert-message">
         No orders found.

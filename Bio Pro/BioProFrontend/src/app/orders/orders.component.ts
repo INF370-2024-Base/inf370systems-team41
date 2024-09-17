@@ -43,6 +43,10 @@ export class OrdersComponent implements OnInit {
   baseUrl: string ='https://localhost:44315/Api/';
   loading:boolean=true
   constructor(public roleService:RoleGuardService, private dialog: MatDialog,private http: HttpClient,private dataservices:OrderService,private snackBar:MatSnackBar,private loginService:DataService) { }
+  currentPage: number = 1;
+  itemsPerPage: number = 7;
+  totalPages: number = 0;
+
 
   ngAfterViewChecked(): void {
 
@@ -71,12 +75,40 @@ export class OrdersComponent implements OnInit {
           this.loading = false;
           this.ordersInfo = [...this.orders]; // Display the sorted orders
           console.log(this.ordersInfo);
+          this.updatePageData();
         } else {
           console.error('No orders found.');
         }
       }
     )
     )
+  }
+
+  updatePageData() {
+    this.totalPages = Math.ceil(this.originalOrders.length / this.itemsPerPage);
+    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+    const endIndex = startIndex + this.itemsPerPage;
+    this.ordersInfo = this.originalOrders.slice(startIndex, endIndex);
+  }
+
+  goToPage(page: number) {
+    if (page < 1 || page > this.totalPages) return;
+    this.currentPage = page;
+    this.updatePageData();
+  }
+
+  nextPage() {
+    if (this.currentPage < this.totalPages) {
+      this.currentPage++;
+      this.updatePageData();
+    }
+  }
+
+  previousPage() {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+      this.updatePageData();
+    }
   }
 
   getOrderTypes() {
