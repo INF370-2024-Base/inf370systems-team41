@@ -264,3 +264,24 @@ html, body {
   font-size: 16px;
   font-weight: bold;
 }
+
+.back-button-container {
+  display: flex;
+  justify-content: flex-end; /* Aligns the button to the right */
+  width: 100%; /* Ensures the container takes up the full width of the page */
+  position: relative;
+}
+
+.back-button-container button {
+  display: flex;
+  align-items: center;
+}
+
+.back-button-container mat-icon {
+  margin-right: 8px;
+}
+
+.back-button-container span {
+  font-size: 16px;
+  font-weight: bold;
+}
