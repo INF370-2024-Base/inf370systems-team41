@@ -1,4 +1,3 @@
-<p>help-profile works!</p>
 
 
 <!DOCTYPE html>
@@ -300,93 +299,142 @@
 
   
   <div *ngIf="shouldDisplayContainer('delete-dentists')" class="help-container dentist-container search-dentists">
-    <h2><mat-icon>delete</mat-icon> Delete Dentist</h2>
-    <p>This section provides assistance on how to delete an existing dentist from the system.</p>
-    <button mat-raised-button color="primary" [routerLink]="['/Dentist']">Go To Page</button>
+    <h2><mat-icon>history</mat-icon>  Audit Trail</h2>
+    <p>This section provides assistance on how to view, filter, and interpret the audit trail for system transactions.</p>
+   
     
     <div class="help-section">
       <h3 (click)="toggleDropdown('commonQuestionsDeleteDentist')">Common Questions</h3>
       <ul *ngIf="dropdownStates['commonQuestionsDeleteDentist']">
         <li class="searchable">
-          <h4 class="searchable">How do I delete a dentist's record?</h4>
-          <p>Navigate to the 'Dentist Management' section, select the dentist you want to delete, and click 'Delete'. Confirm the action to remove the record.</p>
-        </li>
-        <li class="searchable">
-          <h4 class="searchable">Can I delete multiple dentist records at once?</h4>
-          <p>Currently, records need to be deleted individually. Ensure to confirm the deletion for each record.</p>
-        </li>
-        <li class="searchable">
-          <h4 class="searchable">What if I delete the wrong dentist record?</h4>
-          <p>Unfortunately, deletion is permanent. Double-check the details before confirming. If you need to restore the data, contact technical support to see if a recent backup can be used.</p>
-        </li>
-        <li class="searchable">
-          <h4 class="searchable">Is there a way to recover a deleted dentist record?</h4>
-          <p>Once deleted, records cannot be recovered. Ensure you double-check before confirming the deletion.</p>
-        </li>
-        <li class="searchable">
-          <h4 class="searchable">Why can’t I find the dentist record I want to delete?</h4>
-          <p>Check if you are looking at the correct list or using the search/filter options to locate the specific dentist record.</p>
-        </li>
-      </ul>
-    </div>
+            <h4 class="searchable">What is an audit trail, and why is it important?</h4>
+        <p>An audit trail is a comprehensive log that records all transactions and actions within the system, capturing essential data such as the user who performed the action, the type of transaction (e.g., Create, Update, Delete), and additional data related to the transaction. It is crucial for monitoring system activity, ensuring accountability, and tracking changes for security purposes.</p>
+      </li>
+      <li class="searchable">
+        <h4 class="searchable">How do I view the complete audit trail in the system?</h4>
+        <p>To view the audit trail, navigate to the 'Audit Trail' page from the main navigation menu. Once on the page, you will see a table listing all transactions, with columns such as 'Audit Trail ID', 'Date of Transaction', 'System User', 'Transaction Type', and 'Additional Data'. These columns provide detailed information about each system action.</p>
+      </li>
+      <li class="searchable">
+        <h4 class="searchable">Can I filter the audit trail to see transactions from a specific date range?</h4>
+        <p>Yes, you can filter the audit trail by selecting a 'Start Date' and an 'End Date'. This filter allows you to narrow down the list of transactions to only those that occurred within the specified date range. Use the date pickers to select the desired dates, and the audit trail will update automatically.</p>
+      </li>
+      <li class="searchable">
+        <h4 class="searchable">How can I view audit trail entries for a specific user?</h4>
+        <p>To view the transactions performed by a specific user, use the 'User' dropdown filter on the audit trail page. This will display a list of unique users, identified by their email addresses, and allow you to select a specific user. Once selected, the table will filter to show only the actions performed by that user.</p>
+      </li>
+      <li class="searchable">
+        <h4 class="searchable">What does the 'Transaction Type' refer to, and how can I use it to filter results?</h4>
+        <p>The 'Transaction Type' represents the kind of action taken by the user (e.g., 'Create', 'Update', 'Delete'). You can filter the audit trail by selecting a specific transaction type from the 'Transaction Type' dropdown, enabling you to focus on only certain kinds of system activities, such as updates or deletions.</p>
+      </li>
+      <li class="searchable">
+        <h4 class="searchable">What information is available in the 'Additional Data' column?</h4>
+        <p>The 'Additional Data' column provides further context about the transaction, such as what record was affected, the changes made, or any other details that were part of the action. This data is critical for understanding the full scope of the action performed and can help in auditing the exact nature of the change.</p>
+      </li>
+      <li class="searchable">
+        <h4 class="searchable">How do I reset the filters if I want to see the full audit trail again?</h4>
+        <p>If you want to clear all filters and return to viewing the complete list of audit trail entries, you can click the 'Clear Filters' button. This will reset the 'Start Date', 'End Date', 'User', and 'Transaction Type' filters, allowing you to see all transactions logged in the system without restrictions.</p>
+      </li>
+      <li class="searchable">
+        <h4 class="searchable">How can I sort the audit trail data by date or other columns?</h4>
+        <p>You can sort the audit trail by clicking on the headers of any column. For example, clicking on the 'Date of Transaction' column header will sort the table by date in ascending or descending order, allowing you to quickly find the most recent or oldest transactions. This functionality also applies to the other columns, such as 'System User' and 'Transaction Type'.</p>
+      </li>
+      <li class="searchable">
+        <h4 class="searchable">Can I export the audit trail for external review?</h4>
+        <p>Currently, the system does not provide an export function directly through the UI. If you need to export the audit trail data for external review or backup purposes, contact your system administrator, who may be able to assist with exporting the data directly from the database or back-end system.</p>
+      </li>
+    </ul>
+  </div>
     
     <div class="help-section">
       <h3 (click)="toggleDropdown('technicalIssuesDeleteDentist')">Technical Issues</h3>
       <ul *ngIf="dropdownStates['technicalIssuesDeleteDentist']">
         <li class="searchable">
-          <h4 class="searchable">Why can't I see the 'Delete' button?</h4>
-          <p>Ensure you have the necessary permissions to delete dentist records. Some user roles may not have this authorization.</p>
-        </li>
-        <li class="searchable">
-          <h4 class="searchable">What should I do if the deletion confirmation dialog does not appear?</h4>
-          <p>Ensure pop-ups are enabled for the site. Try refreshing the page or using a different browser.</p>
-        </li>
-        <li class="searchable">
-          <h4 class="searchable">Why am I receiving an error when trying to delete a dentist record?</h4>
-          <p>This could be due to a server or database issue. Contact technical support with the error details.</p>
-        </li>
-        <li class="searchable">
-          <h4 class="searchable">Why is the dentist record still visible after deletion?</h4>
-          <p>There might be a delay in updating the dentist list. Refresh the page to see if the deletion has been processed.</p>
-        </li>
-        <li class="searchable">
-          <h4 class="searchable">What if I accidentally delete the wrong dentist record?</h4>
-          <p>Unfortunately, deletion is permanent. To avoid this, double-check the details before confirming the deletion. If you need to restore the data, contact technical support to see if a recent backup can be used.</p>
-        </li>
-      </ul>
-    </div>
+            <h4 class="searchable">Why is the audit trail not displaying any data?</h4>
+            <p>If no audit trail entries are visible, there could be several reasons. First, ensure that the filters you applied (e.g., date range, user, or transaction type) are not too restrictive. If the filters are clear and no data is still showing, it could indicate a connection issue or a system error. Try refreshing the page or contacting technical support.</p>
+          </li>
+          <li class="searchable">
+            <h4 class="searchable">What should I do if the audit trail page is slow to load?</h4>
+            <p>Loading delays may be caused by a large amount of data being retrieved. Try applying filters to reduce the number of entries displayed at once, or check your network connection. If the issue persists, contact technical support to investigate further.</p>
+          </li>
+          <li class="searchable">
+            <h4 class="searchable">Why am I unable to filter the audit trail by user?</h4>
+            <p>If the 'User' filter is not working, it could be due to missing data for some audit trail entries or a system issue. Ensure that the user you are looking for has performed actions logged in the audit trail, and try clearing other filters to expand the results. If the issue persists, contact support for further assistance.</p>
+          </li>
+          <li class="searchable">
+            <h4 class="searchable">What should I do if the date range filter isn't working correctly?</h4>
+            <p>If you're experiencing issues with filtering by date, double-check that the 'Start Date' is before the 'End Date'. If the filter still doesn't apply, try clearing the date filters and setting them again. Persistent problems may require contacting technical support.</p>
+          </li>
+          <li class="searchable">
+            <h4 class="searchable">Why do some audit trail entries lack details in the 'Additional Data' column?</h4>
+            <p>In some cases, the 'Additional Data' column may not contain detailed information if the transaction didn't involve specific data changes or if the log entry was incomplete. If you frequently see incomplete entries, report the issue to technical support.</p>
+          </li>
+          <li class="searchable">
+            <h4 class="searchable">How do I fix a broken or missing filter on the audit trail page?</h4>
+            <p>If a filter option is not functioning as expected, such as the user or transaction type filter, first try clearing all filters and applying them again. If the issue persists, it could indicate a bug or system error, in which case contacting support is recommended.</p>
+          </li>
+          <li class="searchable">
+            <h4 class="searchable">What can I do if the audit trail fails to refresh with new data?</h4>
+            <p>If new transactions are not appearing in the audit trail, try refreshing the page manually. The audit trail should update in real-time, so if the issue persists, ensure your internet connection is stable or contact support to ensure the system is logging new transactions properly.</p>
+          </li>
+          <li class="searchable">
+            <h4 class="searchable">Why am I getting a server error when trying to view the audit trail?</h4>
+            <p>A server error when viewing the audit trail could be due to a backend issue or connectivity problem. First, try refreshing the page or logging out and back in. If the error continues, report the issue to technical support for further investigation.</p>
+          </li>
+        </ul>
+      </div>
     
     <div class="help-section">
       <h3 (click)="toggleDropdown('stepsElementsDelete')">Step-by-Step Guide</h3>
       <mat-accordion *ngIf="dropdownStates['stepsElementsDelete']">
         <mat-expansion-panel>
-          <mat-expansion-panel-header>
-            <mat-panel-title>Step 1: Access the 'Delete Dentist' Page</mat-panel-title>
-          </mat-expansion-panel-header>
-          <p>Click on the 'Delete Dentist' button in the navigation menu or on the dentist details page.</p>
-        </mat-expansion-panel>
-        <mat-expansion-panel>
-          <mat-expansion-panel-header>
-            <mat-panel-title>Step 2: Confirm Deletion</mat-panel-title>
-          </mat-expansion-panel-header>
-          <p>Review the dentist's details to ensure the correct dentist is selected for deletion.</p>
-        </mat-expansion-panel>
-        <mat-expansion-panel>
-          <mat-expansion-panel-header>
-            <mat-panel-title>Step 3: Click 'Delete'</mat-panel-title>
-          </mat-expansion-panel-header>
-          <p>Click the 'Delete' button in the confirmation dialog to proceed with deletion.</p>
-        </mat-expansion-panel>
-        <mat-expansion-panel>
-          <mat-expansion-panel-header>
-            <mat-panel-title>Step 4: Confirm Deletion</mat-panel-title>
-          </mat-expansion-panel-header>
-          <p>Check for a confirmation message indicating successful deletion of the dentist from the system.</p>
-        </mat-expansion-panel>
-      </mat-accordion>
+            <mat-expansion-panel-header>
+              <mat-panel-title>Step 1: Access the Audit Trail Page</mat-panel-title>
+            </mat-expansion-panel-header>
+            <p>Navigate to the 'Audit Trail' page by clicking on the corresponding option in the main navigation menu. The audit trail will load automatically, showing all system transactions.</p>
+          </mat-expansion-panel>
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>Step 2: View the complete audit trail</mat-panel-title>
+            </mat-expansion-panel-header>
+            <p>The audit trail page will show a table listing all logged transactions. You can sort the data by clicking on the column headers (e.g., Date of Transaction, System User, Transaction Type).</p>
+          </mat-expansion-panel>
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>Step 3: Filter transactions by date</mat-panel-title>
+            </mat-expansion-panel-header>
+            <p>To view transactions within a specific date range, use the 'Start Date' and 'End Date' date pickers. Select the dates, and the table will update to show only transactions within that range.</p>
+          </mat-expansion-panel>
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>Step 4: Filter transactions by user</mat-panel-title>
+            </mat-expansion-panel-header>
+            <p>To view transactions for a specific user, use the 'User' dropdown filter. Select the user from the list, and the table will update to show only the transactions performed by that user.</p>
+          </mat-expansion-panel>
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>Step 5: Filter transactions by transaction type</mat-panel-title>
+            </mat-expansion-panel-header>
+            <p>Use the 'Transaction Type' dropdown filter to view specific types of actions, such as 'Create', 'Update', or 'Delete'. Select the desired type, and the table will update accordingly.</p>
+          </mat-expansion-panel>
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>Step 6: Clear all filters</mat-panel-title>
+            </mat-expansion-panel-header>
+            <p>If you wish to see the entire audit trail again, click the 'Clear Filters' button. This will reset all filters, displaying the full list of logged transactions.</p>
+          </mat-expansion-panel>
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>Step 7: Interpret the 'Additional Data' column</mat-panel-title>
+            </mat-expansion-panel-header>
+            <p>Review the 'Additional Data' column for more details about the transaction. This may include what record was affected, what changes were made, or additional context about the action taken by the user.</p>
+          </mat-expansion-panel>
+        </mat-accordion>
     </div>
+    <button mat-raised-button color="primary" [routerLink]="['/audit-trail']">Go To Page</button>
   </div>
+  
 </div>
+
 <div *ngIf="noResultsFound" class="no-results-message">
     <mat-icon class="no-results-icon">search_off</mat-icon>
     No results found for your search query.
