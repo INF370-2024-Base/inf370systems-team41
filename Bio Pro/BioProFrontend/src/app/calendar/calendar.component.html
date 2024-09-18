@@ -1,4 +1,5 @@
 <body>
+  <h1 style="font-size: 48px; color: #4d4a4a; text-align: center; text-transform: uppercase; letter-spacing: 3px; margin-bottom: 24px; text-shadow: 2px 2px 4px rgba(124, 124, 124, 0.5);">EVENT CALENDAR</h1>
   <mat-form-field appearance="outline" *ngIf="selectedCalendarId === 1" class="search-form-field search-style">
     <mat-label><mat-icon>search</mat-icon>Search</mat-label>
     <input matInput [(ngModel)]="searchTerm" (ngModelChange)="onSearchTermChange($event)" placeholder="Search events">

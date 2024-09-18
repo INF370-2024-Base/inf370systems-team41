@@ -19,7 +19,7 @@ import { RoleGuardService } from '../services/roleCheck';
   templateUrl: './calendar.component.html',
   styleUrls: ['./calendar.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.Emulated
 })
 
 export class CalendarComponent implements OnInit{

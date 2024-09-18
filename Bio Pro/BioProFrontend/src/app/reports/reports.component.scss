@@ -237,12 +237,111 @@ table tr:last-child td {
 
 /* Responsive Design */
 @media only screen and (max-width: 768px) {
-  .report-section {
-    width: 100%;
-    margin-bottom: 20px;
+  body {
+    background-size: 300% 300%;
+    padding: 10px;
+    flex-direction: column;
   }
+
+  .page-container {
+    margin: 10px;
+    padding: 10px;
+    max-width: 100%;
+    box-shadow: none;
+    border-radius: 8px;
+  }
+
+  .reports-title {
+    font-size: 28px;
+    margin: 10px 0;
+  }
+
+  .header-container {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 5px 0;
+  }
+
+  .filter-container mat-form-field {
+    width: 100%;
+  }
+
+  .report-info-container {
+    text-align: left;
+    font-size: 12px;
+  }
+
   .dashboard-grid {
-    grid-template-columns: repeat(1, 1fr);
+    grid-template-columns: repeat(1, 1fr); /* Single column layout for smaller screens */
+    gap: 5px; /* Reduced gap for smaller screens */
+    padding: 5px;
+  }
+
+  /* Make KPI cards responsive */
+  .kpi-card {
+    width: 100%; /* Take up the full width of the grid column */
+    max-width: 100%; /* Ensure it scales properly */
+    padding: 15px; /* Adjust padding for smaller screens */
+    box-shadow: none; /* Remove shadow for a cleaner look on smaller screens */
+  }
+
+  .kpi-card:hover {
+    transform: none; /* Disable hover effects for touch devices */
+    box-shadow: none;
+  }
+
+  .kpi-card h3 {
+    font-size: 16px; /* Adjust font size */
+  }
+
+  .kpi-card p {
+    font-size: 16px; /* Adjust font size */
+  }
+
+  .gauge {
+    width: 50px;  /* Adjust gauge size for smaller screens */
+    height: 40px;
+  }
+  .reports-container {
+    flex-direction: column;
+  }
+
+  .report-section {
+    flex: 1 1 100%;
+    margin-bottom: 15px;
+    box-shadow: none;
+    padding: 15px;
+  }
+
+  table th, table td {
+    padding: 8px;
+  }
+
+  .download-button {
+    width: 100%;
+    font-size: 14px;
+  }
+
+  .pagination-controls {
+    flex-direction: column;
+    align-items: center;
+    padding: 5px;
+  }
+
+  .pagination-controls button {
+    width: 100%;
+    margin-bottom: 5px;
+  }
+
+  .summary-card {
+    min-width: 100%;
+    max-width: 100%;
+  }
+
+  /* Make the canvas responsive */
+  canvas {
+    width: 100% !important;
+    height: auto !important;
   }
 }
 
