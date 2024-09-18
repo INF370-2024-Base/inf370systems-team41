@@ -110,6 +110,7 @@ import { LoadingInterceptor } from './services/loading.interceptor';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
 import { StockUsageModalComponent } from './stock-usage-modal/stock-usage-modal.component';
+import { HelpProfileComponent } from './help-profile/help-profile.component';
 
 @NgModule({
   declarations: [
@@ -133,7 +134,7 @@ import { StockUsageModalComponent } from './stock-usage-modal/stock-usage-modal.
     ReportsComponent,
     StockUsageModalComponent,
     CaptureEmployeeHoursComponent,LoginComponent,EditOrderModalComponent, AddUserComponent, AddProceduralTimeline, DeliveriesComponent, AddDeliveryComponent, HomeComponent, TestingBackendComponent, ConfirmationDialogComponent, OrdersAwaitingDentalDesignComponent, DentalDesignApprovalComponent, HelpComponent, HelpOrdersComponent, HelpTimelineOfOrdersComponent, HelpDeliveriesComponent, StockCategoryComponent, EditStockCategoryComponent, StockTypeComponent, EditStockTypeComponent, AddStockTypeComponent, AddStockCategoryComponent, UpdatePasswordComponent, ResetPasswordComponent, ResetUserPasswordComponent
-    ,CaptureEmployeeHoursComponent,LoginComponent,EditOrderModalComponent, AddUserComponent, AddProceduralTimeline, DeliveriesComponent, AddDeliveryComponent, HomeComponent, TestingBackendComponent, ConfirmationDialogComponent, OrdersAwaitingDentalDesignComponent, DentalDesignApprovalComponent, HelpComponent, HelpOrdersComponent, HelpTimelineOfOrdersComponent, HelpDeliveriesComponent, ConfirmDeleteEmployeeComponent, ConfirmDeleteDentistComponent, HelpUserComponent, ConfirmDeleteUserComponent, ConfirmDeleteDailyHourComponent, SettingsComponent, AuditTrailComponent, UnauthorizedComponent, StockUsageModalComponent
+    ,CaptureEmployeeHoursComponent,LoginComponent,EditOrderModalComponent, AddUserComponent, AddProceduralTimeline, DeliveriesComponent, AddDeliveryComponent, HomeComponent, TestingBackendComponent, ConfirmationDialogComponent, OrdersAwaitingDentalDesignComponent, DentalDesignApprovalComponent, HelpComponent, HelpOrdersComponent, HelpTimelineOfOrdersComponent, HelpDeliveriesComponent, ConfirmDeleteEmployeeComponent, ConfirmDeleteDentistComponent, HelpUserComponent, ConfirmDeleteUserComponent, ConfirmDeleteDailyHourComponent, SettingsComponent, AuditTrailComponent, UnauthorizedComponent, StockUsageModalComponent, HelpProfileComponent
   ],
   imports: [
     BrowserModule,
