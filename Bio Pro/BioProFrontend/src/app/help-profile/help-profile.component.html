@@ -163,109 +163,138 @@
   </div>
 
   <div *ngIf="shouldDisplayContainer('add-dentists')" class="help-container dentist-container add-dentists">
-    <h2><mat-icon>person_add</mat-icon> Add Dentist</h2>
-    <p>This section provides assistance on how to add a new dentist within the system.</p>
-    <button mat-raised-button color="primary" [routerLink]="['/addDentist']">Go To Page</button>
+    <h2><mat-icon>settings</mat-icon> My Profile Settings</h2>
+    <p>This section provides assistance on how to manage your profile settings, such as updating your name, email, and phone number.</p>
+  
     
     <div class="help-section">
       <h3 (click)="toggleDropdown('commonQuestionsAdd')">Common Questions</h3>
       <ul *ngIf="dropdownStates['commonQuestionsAdd']">
         <li class="searchable">
-          <h4 class="searchable">How do I add a new dentist?</h4>
-          <p>To add a new dentist, navigate to the 'Add Dentist' page by clicking the 'Add Dentist' button on the top right corner of the dentist management page. Fill in the required fields and click 'Add Dentist'.</p>
-        </li>
-        <li class="searchable">
-          <h4 class="searchable">What information is required to add a dentist?</h4>
-          <p>The required fields are First Name, Last Name, and Contact Details. The Address is optional but recommended.</p>
-        </li>
-        <li class="searchable">
-          <h4 class="searchable">Can I add a dentist without an email address?</h4>
-          <p>Yes, email is not a required field but it is recommended to have for communication purposes.</p>
-        </li>
-        <li class="searchable">
-          <h4 class="searchable">How can I add a dentist's specialization?</h4>
-          <p>There is a field for specialization in the 'Add Dentist' form. Make sure to fill it with the dentist's area of expertise.</p>
-        </li>
-        <li class="searchable">
-          <h4 class="searchable">Can I edit the dentist details after adding them?</h4>
-          <p>Yes, you can edit the dentist details by navigating to the 'Edit Dentist' section.</p>
-        </li>
-      </ul>
-    </div>
+            <h4 class="searchable">How do I update my personal details?</h4>
+            <p>To update your name, surname, email address, or phone number, navigate to the 'Settings' page. Once on the page, edit the fields you wish to update. Ensure all required fields are filled before saving.</p>
+          </li>
+          <li class="searchable">
+            <h4 class="searchable">Can I change my email address?</h4>
+            <p>Yes, you can change your email address on the 'Settings' page. Enter the new email address in the 'Email Address' field and confirm the change. Remember to save the update by clicking the 'Save' button.</p>
+          </li>
+          <li class="searchable">
+            <h4 class="searchable">What happens if I change my email?</h4>
+            <p>Once you change your email address and save, the system will log you out as a security measure. You will need to log in again using your new email address.</p>
+          </li>
+          <li class="searchable">
+            <h4 class="searchable">How do I update my phone number?</h4>
+            <p>You can update your phone number by entering the new number in the 'Phone Number' field on the 'Settings' page. Ensure the phone number is in the correct format (e.g., for South African numbers, it should start with +27).</p>
+          </li>
+          <li class="searchable">
+            <h4 class="searchable">Will I be logged out if I update my phone number?</h4>
+            <p>No, updating your phone number will not log you out. However, make sure to save the changes after updating.</p>
+          </li>
+          <li class="searchable">
+            <h4 class="searchable">What happens if I don’t save my changes?</h4>
+            <p>If you navigate away from the 'Settings' page without saving, your changes will not be applied. Ensure that you click the 'Save' button to commit the updates.</p>
+          </li>
+          <li class="searchable">
+            <h4 class="searchable">How can I reset my profile details to the original values?</h4>
+            <p>If you make unwanted changes, you can reset the form to its original state by refreshing the page before saving. This will discard all unsaved changes.</p>
+          </li>
+          <li class="searchable">
+            <h4 class="searchable">Can I edit my profile if the form shows errors?</h4>
+            <p>If there are errors in the form, you cannot save the changes. Make sure to correct the highlighted errors (e.g., missing required fields or invalid email format) before attempting to save.</p>
+          </li>
+          <li class="searchable">
+            <h4 class="searchable">Is there a character limit for the Name and Surname fields?</h4>
+            <p>Yes, there might be a character limit for these fields to ensure consistency. If the system doesn't accept longer names, shorten them accordingly or contact support for guidance.</p>
+          </li>
+          <li class="searchable">
+            <h4 class="searchable">Can I change multiple fields at the same time?</h4>
+            <p>Yes, you can update multiple fields, such as your name, email, and phone number, all at once. Ensure that all changes are accurate before saving.</p>
+          </li>
+        </ul>
+      </div>
     
     <div class="help-section">
       <h3 (click)="toggleDropdown('technicalIssuesAdd')">Technical Issues</h3>
       <ul *ngIf="dropdownStates['technicalIssuesAdd']">
         <li class="searchable">
-          <h4 class="searchable">What happens if I don't fill in all required fields?</h4>
-          <p>The form will not be submitted, and an error message will be displayed below each missing field indicating that it is required.</p>
-        </li>
-        <li class="searchable">
-          <h4 class="searchable">What if I encounter an error while adding a dentist?</h4>
-          <p>If you encounter an error, check if all required fields are filled correctly. If the problem persists, contact technical support for further assistance.</p>
-        </li>
-        <li class="searchable">
-          <h4 class="searchable">Why is the 'Add Dentist' button unresponsive?</h4>
-          <p>This could be due to a script error or browser issue. Try refreshing the page or using a different browser. If the issue persists, contact technical support.</p>
-        </li>
-        <li class="searchable">
-          <h4 class="searchable">What should I do if the page does not load?</h4>
-          <p>Check your internet connection and try reloading the page. If the problem continues, contact technical support.</p>
-        </li>
-        <li class="searchable">
-          <h4 class="searchable">Why am I getting a server error when trying to add a dentist?</h4>
-          <p>This could be due to server issues or database connectivity problems. Contact technical support for assistance.</p>
-        </li>
-      </ul>
+            <h4 class="searchable">Why is the 'Save' button unresponsive?</h4>
+            <p>This could be due to a validation error. Check that all required fields are filled correctly, and that there are no formatting errors (e.g., invalid email address). If the issue persists, try refreshing the page or using a different browser.</p>
+          </li>
+          <li class="searchable">
+            <h4 class="searchable">What if I encounter an error when saving my settings?</h4>
+            <p>If you encounter an error while saving, check if all required fields are filled correctly and if there is any error message indicating what needs to be corrected. If the issue persists, contact support for assistance.</p>
+          </li>
+          <li class="searchable">
+            <h4 class="searchable">Why can't I submit the form even though I filled out all fields?</h4>
+            <p>Ensure that all fields meet the validation requirements. For example, the phone number must be in the correct format, and the email must be valid. If you’ve met all conditions and still can’t submit, refresh the page or try again later.</p>
+          </li>
+          <li class="searchable">
+            <h4 class="searchable">Why did the page freeze after I made changes?</h4>
+            <p>This could be caused by a browser issue. Try refreshing the page or clearing your browser cache. If the issue persists, contact technical support for assistance.</p>
+          </li>
+          <li class="searchable">
+            <h4 class="searchable">What should I do if my changes are not being saved?</h4>
+            <p>If your changes are not saving, check your internet connection or try a different browser. Also, ensure that all required fields are filled correctly and any validation errors are addressed.</p>
+          </li>
+          <li class="searchable">
+            <h4 class="searchable">Why am I getting a server error when saving my settings?</h4>
+            <p>This could be due to server issues or connectivity problems. Try saving again later, or contact support if the issue persists.</p>
+          </li>
+          <li class="searchable">
+            <h4 class="searchable">What if the page doesn’t load properly?</h4>
+            <p>If the 'Settings' page does not load properly, try clearing your browser cache or using another browser. If the issue persists, contact support for further assistance.</p>
+          </li>
+        </ul>
     </div>
     
     <div class="help-section">
       <h3 (click)="toggleDropdown('stepsElementsAdd')">Step-by-Step Guide</h3>
       <mat-accordion *ngIf="dropdownStates['stepsElementsAdd']">
         <mat-expansion-panel>
-          <mat-expansion-panel-header>
-            <mat-panel-title>Step 1: Navigate to the 'Dentists' page</mat-panel-title>
-          </mat-expansion-panel-header>
-          <p>Click the 'Dentists' tab in the main navigation menu.</p>
-        </mat-expansion-panel>
-        <mat-expansion-panel>
-          <mat-expansion-panel-header>
-            <mat-panel-title>Step 2: Click the 'Add Dentist' button</mat-panel-title>
-          </mat-expansion-panel-header>
-          <p>Locate the 'Add Dentist' button at the top right corner of the page and click it.</p>
-        </mat-expansion-panel>
-        <mat-expansion-panel>
-          <mat-expansion-panel-header>
-            <mat-panel-title>Step 3: Fill in required fields</mat-panel-title>
-          </mat-expansion-panel-header>
-          <p>Complete the required fields: Surname, First Name, and Contact Details.</p>
-        </mat-expansion-panel>
-        <mat-expansion-panel>
-          <mat-expansion-panel-header>
-            <mat-panel-title>Step 4: Add optional information</mat-panel-title>
-          </mat-expansion-panel-header>
-          <p>Optionally, fill in the Address field for more complete records.</p>
-        </mat-expansion-panel>
-        <mat-expansion-panel>
-          <mat-expansion-panel-header>
-            <mat-panel-title>Step 5: Submit the form</mat-panel-title>
-          </mat-expansion-panel-header>
-          <p>Click the 'Add Dentist' button at the bottom of the form to submit.</p>
-        </mat-expansion-panel>
-        <mat-expansion-panel>
-          <mat-expansion-panel-header>
-            <mat-panel-title>Step 6: Confirm addition</mat-panel-title>
-          </mat-expansion-panel-header>
-          <p>Look for a confirmation message indicating successful addition of the dentist.</p>
-        </mat-expansion-panel>
-        <mat-expansion-panel>
-          <mat-expansion-panel-header>
-            <mat-panel-title>Step 7: Verify the new dentist</mat-panel-title>
-          </mat-expansion-panel-header>
-          <p>Check the dentist management page to see the newly added dentist in the list.</p>
-        </mat-expansion-panel>
-      </mat-accordion>
+            <mat-expansion-panel-header>
+              <mat-panel-title>Step 1: Navigate to 'Settings'</mat-panel-title>
+            </mat-expansion-panel-header>
+            <p>Click on the 'Settings' tab in the main navigation menu to access your profile settings.</p>
+          </mat-expansion-panel>
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>Step 2: Update your personal details</mat-panel-title>
+            </mat-expansion-panel-header>
+            <p>Edit the fields you wish to update, such as your name, email, or phone number. Ensure that you meet the validation criteria for each field.</p>
+          </mat-expansion-panel>
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>Step 3: Confirm your changes</mat-panel-title>
+            </mat-expansion-panel-header>
+            <p>Double-check your updates to ensure accuracy. Verify that all required fields are filled and that the email and phone number are in the correct format.</p>
+          </mat-expansion-panel>
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>Step 4: Save your updates</mat-panel-title>
+            </mat-expansion-panel-header>
+            <p>Click the 'Save' button at the bottom of the form to apply the changes. If successful, you will see a confirmation message indicating that the settings were saved.</p>
+          </mat-expansion-panel>
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>Step 5: Handle potential errors</mat-panel-title>
+            </mat-expansion-panel-header>
+            <p>If you encounter errors, correct the fields as indicated by the error messages and try saving again.</p>
+          </mat-expansion-panel>
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>Step 6: Log out and log back in</mat-panel-title>
+            </mat-expansion-panel-header>
+            <p>If you updated your email address, you will be logged out for security reasons. Log back in using your updated email address and credentials.</p>
+          </mat-expansion-panel>
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>Step 7: Verify that changes were applied</mat-panel-title>
+            </mat-expansion-panel-header>
+            <p>After logging back in, verify that the changes were successfully applied by returning to the 'Settings' page and reviewing your updated details.</p>
+          </mat-expansion-panel>
+        </mat-accordion>
     </div>
+    <button mat-raised-button color="primary" [routerLink]="['/settings']">Go To Page</button>
   </div>
   
 
