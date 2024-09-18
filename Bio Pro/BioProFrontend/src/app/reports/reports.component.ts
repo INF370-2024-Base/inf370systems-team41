@@ -309,13 +309,38 @@ paginatedStockWriteOffsList: any[] = [];
       columns = ['Stock Category', 'Stock Item Count'];
       this.loginService.addTransaction("Generated","Generated stock category report.")
       data = this.stockItems.map(stockItem => [stockItem.description, stockItem.stockItemsCount]);
-    } else if (sectionId === 'stockWriteOffsReport') {
-      this.loginService.addTransaction("Generated","Generated stock write off report.")
-      columns = ['Stock Name', 'Total Quantity Written Off'];
-      data = this.groupedStockWriteOffs.map(group => [group.stockName, group.totalQuantityWrittenOff]);
 
-      // Add total quantity written off at the end of the table
-      data.push(['Total', this.totalQuantityWrittenOff]);
+
+    }else if (sectionId === 'stockWriteOffsReport') {
+      // Log the generation of the report
+      this.loginService.addTransaction("Generated", "Generated stock write-off report.");
+  
+      // Set up the columns for the report
+      columns = ['Stock Name', 'Total Quantity Written Off'];
+  
+      // Ensure you're working with the full dataset (not paginated data)
+      const fullStockWriteOffData = this.groupedStockWriteOffs.map(group => [group.stockName, group.totalQuantityWrittenOff]);
+  
+      // Add the total row
+      fullStockWriteOffData.push(['Total', this.totalQuantityWrittenOff]);
+  
+     
+      autoTable(doc, {
+          head: [columns],
+          body: fullStockWriteOffData,
+          startY: 70, // Adjust starting Y position to ensure it's below the header
+          margin: { top: 70 }, // Adjust top margin to avoid overlap with the logo and title
+          pageBreak: 'auto', // Automatically insert page breaks when content overflows
+          theme: 'grid', // Apply grid styling for better readability
+          didDrawCell: (data) => {
+              // Highlight the total row by using bold font
+              if (data.row.index === data.table.body.length - 1) {
+                  doc.setFont('helvetica', 'bold');
+                  doc.setFontSize(12);
+              }
+          }
+      });
+
     } else if (sectionId === 'deliveryReport') {
       // Add total deliveries
       this.loginService.addTransaction("Generated","Generated delivery report.")
@@ -380,16 +405,25 @@ paginatedStockWriteOffsList: any[] = [];
         },
       });
     }
-     if (sectionId === 'dentistReport') {
-      // Dentist Report
+    if (sectionId === 'DentistReport') {
       columns = ['Dentist Name', 'Contact', 'Address'];
-      data = this.dentists.map(dentist => [dentist.firstName + dentist.lastName, dentist.contactDetail, dentist.address]);
-      data.push(['Total Dentists', this.totalDentists.toString()]);
-    } else if (sectionId === 'employeeReport') {
-      // Employee Report
+      // Ensure correct field names for dentists
+      data = this.dentists.map(dentist => [
+          `${dentist.firstName} ${dentist.lastName}`, // Full name
+          dentist.contactDetail,                      // Contact detail
+          dentist.address                             // Address
+      ]);
+
+      // Add total dentists row
+      data.push(['Total Dentists', '', this.totalDentists.toString()]);
+  } else if (sectionId === 'EmployeeReport') {
       columns = ['Employee Name', 'Contact', 'Address'];
-      data = this.employee.map(employee => [employee.firstName + employee.lastName, employee.cellphoneNumber, employee.address]);
-      data.push(['Total Employees', this.totalEmployees.toString()]);
+      // Ensure correct field names for employees
+      data = this.employee.map(employee => [
+          `${employee.firstName} ${employee.lastName}`, // Full name
+          employee.cellphoneNumber,                     // Phone number
+          employee.address                              // Address
+      ]);
     }
   
     if (sectionId !== 'employeeHoursReport' && sectionId !== 'deliveryReport') {
@@ -609,11 +643,11 @@ getStockItemsCountByCategory() {
   );
 }
 
-updatePaginatedStockWriteOffs() {
-  const startIndex = (this.currentPageStockWriteOffs - 1) * this.itemsPerPageStockWriteOffs;
-  const endIndex = startIndex + this.itemsPerPageStockWriteOffs;
-  this.paginatedStockWriteOffsList = this.stockWriteOffs.slice(startIndex, endIndex);
-}
+// updatePaginatedStockWriteOffs() {
+//   const startIndex = (this.currentPageStockWriteOffs - 1) * this.itemsPerPageStockWriteOffs;
+//   const endIndex = startIndex + this.itemsPerPageStockWriteOffs;
+//   this.paginatedStockWriteOffsList = this.stockWriteOffs.slice(startIndex, endIndex);
+// }
 
 nextPageStockWriteOffs() {
   if (this.currentPageStockWriteOffs < this.totalPagesStockWriteOffs) {
@@ -646,8 +680,8 @@ getAllStockWriteOffs() {
       }
   );
 }
-
 groupStockWriteOffs() {
+  // Group the stock write-offs by stockName and accumulate totalQuantityWrittenOff
   const grouped: { [key: string]: { stockName: string; totalQuantityWrittenOff: number; details: any[] } } = this.stockWriteOffs.reduce((acc, writeOff) => {
     const stockName = writeOff.stockName;
     if (!acc[stockName]) {
@@ -658,13 +692,29 @@ groupStockWriteOffs() {
     return acc;
   }, {} as { [key: string]: { stockName: string; totalQuantityWrittenOff: number; details: any[] } });
 
+  // Convert the grouped object into an array for display and pagination
   this.groupedStockWriteOffs = Object.values(grouped);
+
+  // Calculate the total quantity written off for all items
   this.calculateTotals();
+
+  // Paginate the grouped stock write-offs
+  this.updatePaginatedStockWriteOffs();
 }
 
 calculateTotals() {
   this.totalQuantityWrittenOff = this.groupedStockWriteOffs.reduce((sum, group) => sum + group.totalQuantityWrittenOff, 0);
 }
+
+updatePaginatedStockWriteOffs() {
+  // Handle pagination for the grouped stock write-offs
+  const startIndex = (this.currentPageStockWriteOffs - 1) * this.itemsPerPageStockWriteOffs;
+  const endIndex = startIndex + this.itemsPerPageStockWriteOffs;
+
+  // Populate the paginated list with the correct slice of the grouped data
+  this.paginatedStockWriteOffsList = this.groupedStockWriteOffs.slice(startIndex, endIndex);
+}
+
 
   updateChart() {
     if (this.selectedPeriod === 'monthly') {
