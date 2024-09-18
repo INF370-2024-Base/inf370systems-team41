@@ -62,6 +62,30 @@ export class ReportsComponent implements OnInit {
   weeklyStockUsage: any[] = [];
   totalEmployeeHoursLogged: number = 0;
   gaugeCharts: any[] = []; // Array to store gauge chart instances
+  
+  // Orders Pagination
+currentPageOrders: number = 1;
+itemsPerPageOrders: number = 10;
+totalPagesOrders: number = 1;
+paginatedOrderList: any[] = []; 
+
+// Dentists Pagination
+currentPageDentists: number = 1;
+itemsPerPageDentists: number = 10;
+totalPagesDentists: number = 1;
+paginatedDentistList: any[] = [];
+
+// Employees Pagination
+currentPageEmployees: number = 1;
+itemsPerPageEmployees: number = 10;
+totalPagesEmployees: number = 1;
+paginatedEmployeeList: any[] = [];
+
+// Stock Write-Offs Pagination
+currentPageStockWriteOffs: number = 1;
+itemsPerPageStockWriteOffs: number = 10;
+totalPagesStockWriteOffs: number = 1;
+paginatedStockWriteOffsList: any[] = [];
 
 
   constructor(private reportsService: ReportsServices, 
@@ -396,13 +420,80 @@ export class ReportsComponent implements OnInit {
             this.orders = data;
             this.sortOrders();
             this.totalOrderCount = data.length;
+            this.totalPagesOrders = Math.ceil(this.orders.length / this.itemsPerPageOrders);
+      this.currentPageOrders = 1;
+      this.updatePaginatedOrders();
       this.updateGauge(0, this.totalOrderCount, 100);
+      
         },
         error => {
             console.error('Error fetching orders:', error);
         }
     );
 }
+
+updatePaginatedOrders() {
+  const startIndex = (this.currentPageOrders - 1) * this.itemsPerPageOrders;
+  const endIndex = startIndex + this.itemsPerPageOrders;
+  this.paginatedOrderList = this.orders.slice(startIndex, endIndex);  // Update the paginated data
+}
+
+nextPageOrders() {
+  if (this.currentPageOrders < this.totalPagesOrders) {
+    this.currentPageOrders++;
+    this.updatePaginatedOrders();  // Update the table data for the new page
+  }
+}
+
+prevPageOrders() {
+  if (this.currentPageOrders > 1) {
+    this.currentPageOrders--;
+    this.updatePaginatedOrders();  // Update the table data for the new page
+  }
+}
+
+updatePaginatedDentists() {
+  const startIndex = (this.currentPageDentists - 1) * this.itemsPerPageDentists;
+  const endIndex = startIndex + this.itemsPerPageDentists;
+  this.paginatedDentistList = this.dentists.slice(startIndex, endIndex);
+}
+
+nextPageDentists() {
+  if (this.currentPageDentists < this.totalPagesDentists) {
+    this.currentPageDentists++;
+    this.updatePaginatedDentists();
+  }
+}
+
+prevPageDentists() {
+  if (this.currentPageDentists > 1) {
+    this.currentPageDentists--;
+    this.updatePaginatedDentists();
+  }
+}
+
+
+
+updatePaginatedEmployees() {
+  const startIndex = (this.currentPageEmployees - 1) * this.itemsPerPageEmployees;
+  const endIndex = startIndex + this.itemsPerPageEmployees;
+  this.paginatedEmployeeList = this.employee.slice(startIndex, endIndex);
+}
+
+nextPageEmployees() {
+  if (this.currentPageEmployees < this.totalPagesEmployees) {
+    this.currentPageEmployees++;
+    this.updatePaginatedEmployees();
+  }
+}
+
+prevPageEmployees() {
+  if (this.currentPageEmployees > 1) {
+    this.currentPageEmployees--;
+    this.updatePaginatedEmployees();
+  }
+}
+
 getAllDentists(): void {
   this.dentistService.getAllDentists().subscribe((data: any[]) => {
     // Sort by first name, then last name
@@ -412,7 +503,9 @@ getAllDentists(): void {
 
     // Update total number of dentists
     this.totalDentists = this.dentists.length;
-    
+    this.totalPagesDentists = Math.ceil(this.dentists.length / this.itemsPerPageDentists);
+    this.currentPageDentists = 1;
+    this.updatePaginatedDentists();
     // Update the gauge for Total Dentists
     this.updateGauge(3, this.totalDentists, 100);
   });
@@ -427,7 +520,9 @@ getAllEmployees(): void {
 
     // Set total number of employees
     this.totalEmployees = this.employee.length;
-
+    this.totalPagesEmployees = Math.ceil(this.employee.length / this.itemsPerPageEmployees);
+    this.currentPageEmployees = 1;
+    this.updatePaginatedEmployees();
     // Update the gauge for Total Employees
     this.updateGauge(2, this.totalEmployees, 100); // Adjust the index if needed
   });
@@ -514,12 +609,36 @@ getStockItemsCountByCategory() {
   );
 }
 
+updatePaginatedStockWriteOffs() {
+  const startIndex = (this.currentPageStockWriteOffs - 1) * this.itemsPerPageStockWriteOffs;
+  const endIndex = startIndex + this.itemsPerPageStockWriteOffs;
+  this.paginatedStockWriteOffsList = this.stockWriteOffs.slice(startIndex, endIndex);
+}
+
+nextPageStockWriteOffs() {
+  if (this.currentPageStockWriteOffs < this.totalPagesStockWriteOffs) {
+    this.currentPageStockWriteOffs++;
+    this.updatePaginatedStockWriteOffs();
+  }
+}
+
+prevPageStockWriteOffs() {
+  if (this.currentPageStockWriteOffs > 1) {
+    this.currentPageStockWriteOffs--;
+    this.updatePaginatedStockWriteOffs();
+  }
+}
+
 getAllStockWriteOffs() {
   this.reportsService.getAllStockWriteOffs().subscribe(
       data => {
           this.stockWriteOffs = data;
           this.groupStockWriteOffs();
           this.totalQuantityWrittenOff = data.reduce((sum, item) => sum + item.quantityWrittenOff, 0);
+      this.updateGauge(1, this.totalQuantityWrittenOff, 100);
+      this.totalPagesStockWriteOffs = Math.ceil(this.stockWriteOffs.length / this.itemsPerPageStockWriteOffs);
+      this.currentPageStockWriteOffs = 1;
+      this.updatePaginatedStockWriteOffs();
       this.updateGauge(1, this.totalQuantityWrittenOff, 100);
       },
       error => {
