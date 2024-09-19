@@ -30,9 +30,11 @@
         <mat-card-content>
           <mat-list>
             <mat-list-item>
-              <mat-icon matListIcon>local_shipping</mat-icon>
-              <h4 matLine>Delivery ID</h4>
-              <p matLine>{{ delivery.deliveryId }}</p>
+              <mat-icon matListIcon style="font-size: 24px; margin-right: 8px;">local_shipping</mat-icon>
+              <h4 matLine style="font-size: 18px; font-weight: bold; margin-right: 8px;">Delivery Address</h4>
+              <p matLine style="font-size: 16px; color: #333; white-space: normal; overflow-wrap: break-word;">
+                {{ delivery.systemOrder.dentist.address }}
+              </p>
             </mat-list-item>
             <mat-list-item *ngIf="delivery.deliveryDate != null">
               <mat-icon matListIcon>date_range</mat-icon>

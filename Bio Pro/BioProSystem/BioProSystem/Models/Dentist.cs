@@ -21,4 +21,5 @@ public partial class Dentist
     public virtual ICollection<Patient> Patients { get; set; } = new List<Patient>();
 
     public virtual ICollection<SystemOrder> SystemOrders { get; set; } = new List<SystemOrder>();
+   
 }

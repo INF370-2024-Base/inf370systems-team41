@@ -511,8 +511,10 @@ namespace BioProSystem.Models
         {
 
             return await _appDbContext.Deliveries
-                               .Include(d => d.DeliveryStatus)
-                               .Include(e => e.Employee)
+                                 .Include(d => d.DeliveryStatus)
+                       .Include(e => e.Employee)
+                       .Include(d => d.SystemOrder) 
+                       .ThenInclude(o => o.Dentist) 
                                .OrderByDescending(d => d.DeliveryId)
                                .ToListAsync();
         }

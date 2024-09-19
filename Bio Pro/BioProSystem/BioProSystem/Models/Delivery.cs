@@ -26,4 +26,5 @@ public partial class Delivery
     public virtual Employee Employee { get; set; } = null!;
 
     public virtual SystemOrder SystemOrder { get; set; } = null!;
+    public virtual Dentist Dentist => SystemOrder?.Dentist;
 }
