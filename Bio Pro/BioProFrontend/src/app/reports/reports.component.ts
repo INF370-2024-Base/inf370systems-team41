@@ -22,7 +22,7 @@ import { DentistService } from '../shared/dentist.service';
 import {StockItems } from '../shared/Stock';
 import { forkJoin } from 'rxjs'; // Import forkJoin
 Chart.register(...registerables);
-
+import { Employee } from '../shared/employee';
 
 
 
@@ -62,6 +62,7 @@ export class ReportsComponent implements OnInit {
   weeklyStockUsage: any[] = [];
   totalEmployeeHoursLogged: number = 0;
   gaugeCharts: any[] = []; // Array to store gauge chart instances
+  employeeGroupedByTitle: { titleName: string, employeeCount: number }[] = [];
   
   // Orders Pagination
 currentPageOrders: number = 1;
@@ -417,13 +418,21 @@ paginatedStockWriteOffsList: any[] = [];
       // Add total dentists row
       data.push(['Total Dentists', '', this.totalDentists.toString()]);
   } else if (sectionId === 'EmployeeReport') {
-      columns = ['Employee Name', 'Contact', 'Address'];
+      columns = ['Job Title', 'Total Employees'];
       // Ensure correct field names for employees
-      data = this.employee.map(employee => [
-          `${employee.firstName} ${employee.lastName}`, // Full name
-          employee.cellphoneNumber,                     // Phone number
-          employee.address                              // Address
-      ]);
+       // Ensure correct field names for employees
+    data = this.employeeGroupedByTitle.map(group => [
+      group.titleName,      // Job title
+      group.employeeCount   // Total number of employees with that title
+    ]);
+
+    // Add the total as a final row in the data
+    data.push(['Total', this.totalEmployees]);
+
+    // Add total number of employees after the table, with consistent spacing
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(14);
+    
     }
   
     if (sectionId !== 'employeeHoursReport' && sectionId !== 'deliveryReport') {
@@ -546,21 +555,56 @@ getAllDentists(): void {
 }
 
 getAllEmployees(): void {
-  this.employeeService.getAllEmployees().subscribe((data: any[]) => {
-    // Sort by first name, then last name
-    this.employee = data.sort((a, b) => {
-      return a.firstName.localeCompare(b.firstName) || a.lastName.localeCompare(b.lastName);
-    });
+  this.employeeService.getAllEmployees().subscribe(
+    (data: Employee[]) => {
+      // Log the entire data received from the backend
+      console.log('Received Employee Data:', data);
 
-    // Set total number of employees
-    this.totalEmployees = this.employee.length;
-    this.totalPagesEmployees = Math.ceil(this.employee.length / this.itemsPerPageEmployees);
-    this.currentPageEmployees = 1;
-    this.updatePaginatedEmployees();
-    // Update the gauge for Total Employees
-    this.updateGauge(2, this.totalEmployees, 100); // Adjust the index if needed
+      // Group employees by their job title
+      const groupedByTitle = data.reduce((acc, employee) => {
+        // Log each employee's job title to make sure it's being accessed correctly
+        if (employee.jobTitle && employee.jobTitle.titleName) {
+          console.log('Employee Job Title:', employee.jobTitle.titleName);
+        } else {
+          console.warn('Employee does not have a valid JobTitle:', employee);
+        }
+
+        // Safely access JobTitle and default to 'Unknown' if it's null or undefined
+        const title = employee.jobTitle?.titleName || 'Unknown';
+
+        // Log the actual title being used for grouping
+        console.log('Grouping by title:', title);
+
+        // If the title doesn't exist in the accumulator, initialize it
+        if (!acc[title]) {
+          acc[title] = { titleName: title, employeeCount: 0, employees: [] };
+        }
+
+        // Increment the count for each employee with that title
+        acc[title].employeeCount += 1;
+        acc[title].employees.push(employee); // Optional: if you want to keep the list of employees for each title
+
+        return acc;
+      }, {} as { [key: string]: { titleName: string, employeeCount: number, employees: Employee[] } });
+
+      // Log the grouped data to see the final grouping
+      console.log('Grouped Employee Data:', groupedByTitle);
+
+      // Convert the grouped object into an array for easy display
+      this.employeeGroupedByTitle = Object.values(groupedByTitle);
+
+      // Log the final array to check the format
+      console.log('Grouped Employee Array:', this.employeeGroupedByTitle);
+
+      // Update total employee count
+      this.totalEmployees = data.length;
+      this.totalPagesEmployees = Math.ceil(this.totalEmployees / this.itemsPerPageEmployees);
+      this.currentPageEmployees = 1;
+      this.updatePaginatedEmployees();
+    this.updateGauge(2, this.totalEmployees, 100);
   });
 }
+
 
 
 getOrderTypesWithOrderCount() {

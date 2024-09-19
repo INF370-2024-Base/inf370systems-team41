@@ -160,37 +160,39 @@
       <button class="download-button" (click)="downloadPDF('List of All Dentists Report', 'DentistReport')">Download PDF</button>
     </div>
 
-     <!-- List of All Employees Report -->
-     <div class="report-section" id="EmployeeReport">
-      <h2>List of All Employees Report</h2>
-      <table mat-table [dataSource]="paginatedEmployeeList" class="mat-elevation-z8">
-        <ng-container matColumnDef="name">
-          <th mat-header-cell *matHeaderCellDef> Name </th>
-          <td mat-cell *matCellDef="let employee"> {{employee.firstName}} {{employee.lastName}} </td>
-        </ng-container>
-        <ng-container matColumnDef="contact">
-          <th mat-header-cell *matHeaderCellDef> Phone Number </th>
-          <td mat-cell *matCellDef="let employee"> {{employee.cellphoneNumber}} </td>
-        </ng-container>
-        <ng-container matColumnDef="address">
-          <th mat-header-cell *matHeaderCellDef style="font-size: 12px;"> Address </th>
-          <td mat-cell *matCellDef="let employee" style="font-size: 12px;"> {{employee.address}} </td>
-        </ng-container>
-        
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-      </table>
-      <div class="total-count">
-        <p><strong>Total Number of Employees: {{totalEmployees}}</strong></p>
-      </div>
-      <div class="pagination-controls">
-        <button (click)="prevPageEmployees()" [disabled]="currentPageEmployees === 1">Previous</button>
-        <span>Page {{currentPageEmployees}} of {{totalPagesEmployees}}</span>
-        <button (click)="nextPageEmployees()" [disabled]="currentPageEmployees === totalPagesEmployees">Next</button>
-      </div>
-      
-      <button class="download-button" (click)="downloadPDF('List of All Employees Report', 'EmployeeReport')">Download PDF</button>
-    </div>
+<!-- Employees Grouped by Job Title Report -->
+<div class="report-section" id="EmployeeReport">
+  <h2>Employee Count by Job Title</h2>
+
+  
+  <table mat-table [dataSource]="employeeGroupedByTitle" class="mat-elevation-z8">
+    <ng-container matColumnDef="titleName">
+      <th mat-header-cell *matHeaderCellDef> Job Title </th>
+      <td mat-cell *matCellDef="let group"> {{ group.titleName }} </td>
+    </ng-container>
+    
+    <ng-container matColumnDef="employeeCount">
+      <th mat-header-cell *matHeaderCellDef> Total Employees </th>
+      <td mat-cell *matCellDef="let group"> {{ group.employeeCount }} </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="['titleName', 'employeeCount']"></tr>
+    <tr mat-row *matRowDef="let row; columns: ['titleName', 'employeeCount'];"></tr>
+  </table>
+
+  <div class="total-count">
+    <p><strong>Total Number of Employees: {{ totalEmployees }}</strong></p>
+  </div>
+  
+  <!-- <div class="pagination-controls">
+    <button (click)="prevPageEmployees()" [disabled]="currentPageEmployees === 1">Previous</button>
+    <span>Page {{ currentPageEmployees }} of {{ totalPagesEmployees }}</span>
+    <button (click)="nextPageEmployees()" [disabled]="currentPageEmployees === totalPagesEmployees">Next</button>
+  </div> -->
+
+  <button class="download-button" (click)="downloadPDF('Employees Grouped by Job Title Report', 'EmployeeReport')">Download PDF</button>
+</div>
+
 
   <!-- Overall Stock Write-Offs Report -->
 <div class="report-section" id="stockWriteOffsReport">

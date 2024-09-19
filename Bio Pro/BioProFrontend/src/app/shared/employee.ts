@@ -7,5 +7,8 @@ export interface Employee {
   PhoneNumber: string;
     EmailAddress: string;
     Address: string | null;
+    jobTitle?: {
+      titleName: string;
+    };
   }
   

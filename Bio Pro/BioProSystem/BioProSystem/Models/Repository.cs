@@ -378,7 +378,7 @@ namespace BioProSystem.Models
         //Employee
         public async Task<Employee[]> GetAllEmployeeAsync()
         {
-            IQueryable<Employee> query = _appDbContext.Employees.Where(e => e.isActiveEmployee);
+            IQueryable<Employee> query = _appDbContext.Employees.Where(e => e.isActiveEmployee).Include(j=> j.JobTitle);
             return await query.ToArrayAsync();
         }
         public async Task<SystemOrder[]> GetSystemOrdersForEmployee(string employeeEmail)
