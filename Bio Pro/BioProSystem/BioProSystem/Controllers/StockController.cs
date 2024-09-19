@@ -1,6 +1,7 @@
 ﻿using BioProSystem.EmailService;
 using BioProSystem.Models;
 using BioProSystem.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -252,6 +253,7 @@ namespace BioProSystem.Controllers
             }
 
         }
+        [Authorize(Roles="Admin")]
         [HttpPost]
         [Route("WriteOffStock")]
         public async Task<IActionResult> WriteOffStock(StockWriteOffViewModel viewModel)

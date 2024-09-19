@@ -16,8 +16,7 @@ class AuthService {
         'Password': password,
       }),
     );
-
-    if (response.statusCode == 200) {
+    if (response.statusCode == 201) {
       return jsonDecode(response.body);
     } else if (response.statusCode == 400) {
       throw Exception('Invalid login credentials');

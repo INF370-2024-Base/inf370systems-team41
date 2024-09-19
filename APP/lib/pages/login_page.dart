@@ -15,7 +15,6 @@ class BioProLoginPage extends StatelessWidget {
     try {
       AuthService authService = AuthService();
       final response = await authService.login(data.name, data.password);
-
       await storage.write(key: 'token', value: response['token']);
 
       Navigator.of(context).pushReplacement(

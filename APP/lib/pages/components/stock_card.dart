@@ -1,9 +1,13 @@
+import 'package:biopromobileflutter/pages/components/write_off_component.dart';
 import 'package:flutter/material.dart';
+
+
 
 class StockCard extends StatelessWidget {
   final Map<String, dynamic> stockItem;
+  final Function(Map<String, dynamic>) onWriteOff;
 
-  StockCard({required this.stockItem});
+  StockCard({required this.stockItem, required this.onWriteOff});
 
   @override
   Widget build(BuildContext context) {
@@ -45,9 +49,25 @@ class StockCard extends StatelessWidget {
                 Text('Quantity: ${stockItem['quantityAvailable']}'),
               ],
             ),
+            const SizedBox(height: 10),
+            ElevatedButton(
+              onPressed: () async {
+                final writeOffData = await showDialog(
+                  context: context,
+                  builder: (context) => WriteOffDialog(
+                    stockId: stockItem['stockId'],
+                    stockName: stockItem['stockName'],
+                  ),
+                );
+                if (writeOffData != null) {
+                  onWriteOff(writeOffData);
+                }
+              },
+              child: const Text('Write Off Stock'),
+            ),
           ],
         ),
-      ),
-    );
-  }
+     ),
+);
+}
 }

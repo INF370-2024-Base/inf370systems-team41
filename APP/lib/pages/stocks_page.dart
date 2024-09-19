@@ -17,6 +17,22 @@ class _StocksPageState extends State<StocksPage> {
     futureStocks = stockService.fetchStocks();
   }
 
+  void handleWriteOffStock(Map<String, dynamic> writeOffData) async {
+    try {
+      await stockService.writeOffStock(writeOffData);
+      setState(() {
+        futureStocks = stockService.fetchStocks(); 
+      });
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Stock successfully written off')),
+      );
+    } catch (error) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Failed to write off stock: $error')),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,14 +58,17 @@ class _StocksPageState extends State<StocksPage> {
                   itemCount: stockItems.length,
                   itemBuilder: (context, index) {
                     final stockItem = stockItems[index];
-                    return StockCard(stockItem: stockItem);
+                    return StockCard(
+                      stockItem: stockItem,
+                      onWriteOff: handleWriteOffStock,
+                    );
                   },
                 ),
               );
             }
           },
         ),
-      ),
-    );
-  }
+     ),
+);
+}
 }

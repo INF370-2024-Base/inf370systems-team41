@@ -15,4 +15,16 @@ class StockService {
       throw Exception('Failed to load stocks');
     }
   }
+
+  Future<void> writeOffStock(Map<String, dynamic> writeOffData) async {
+    final response = await http.post(
+      Uri.parse('$baseUrl/WriteOffStock'),
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode(writeOffData),
+    );
+
+    if (response.statusCode != 200) {
+      throw Exception('Failed to write off stock');
+    }
+  }
 }
