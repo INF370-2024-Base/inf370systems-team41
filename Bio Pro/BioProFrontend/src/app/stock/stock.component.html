@@ -18,7 +18,7 @@
             </div>
         </div>
                    
-<div class="feature-cards">
+<div class="feature-cards" *ngIf="roleService.hasRole(['admin', 'owner','lab manager'])">
     <div 
       *ngFor="let page of frequentlyVisitedPages" 
       class="feature-card" 
@@ -67,16 +67,16 @@
                         <th>Quantity Available</th>
                         <th>Category</th>
                         <th>Supplier</th>
-                        <th class="text-center">Actions</th>
+                        <th class="text-center" *ngIf="roleService.hasRole(['admin', 'owner','lab manager'])">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr *ngFor="let stock of filteredStock | paginate: { itemsPerPage: 9, currentPage: page }">
                         <td>{{ stock.stockName }}</td>
-                        <td>{{ stock.quantityAvailable }}</td>
+                        <td>{{ stock.quantityAvailable }} {{stock.measurement}}</td>
                         <td>{{ getCategoryDescription(stock.stockCategoryId) }}</td>
                         <td>{{ stock.supplier.supplierName }}</td>
-                        <td class="text-center">
+                        <td class="text-center" *ngIf="roleService.hasRole(['admin', 'owner','lab manager'])">
                             <button (click)="openWriteOffModal(stock)" class="btn btn-outline-danger rounded-btn mr-2">
                                 <i></i> Write Off
                             </button>

@@ -122,6 +122,9 @@ namespace BioProSystem.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("DecisionLogId"));
 
+                    b.Property<DateTime>("DateOfDecision")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("DecisionLogState")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -795,6 +798,9 @@ namespace BioProSystem.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("StockItemId"));
+
+                    b.Property<DateTime>("DateUsed")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("OrderId")
                         .IsRequired()

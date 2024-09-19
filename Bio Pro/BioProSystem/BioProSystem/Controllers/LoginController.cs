@@ -43,6 +43,8 @@ namespace BioProSystem.Controllers
         }
         [HttpPost]
         [Route("Register")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
+        [Authorize(Roles = " Lab Manager, Owner")]
         public async Task<IActionResult> Register(SystemUserAddViewModel uvm)
         {
             var user = await _userManager.FindByIdAsync(uvm.emailaddress);
@@ -273,8 +275,10 @@ namespace BioProSystem.Controllers
         }
 
 
-            [HttpPost]
+        [HttpPost]
         [Route("CreateRole")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
+        [Authorize(Roles = " Lab Manager, Owner")]
         public async Task<IActionResult> CreateRole(string roleName)
         {
             var role = await _roleManager.FindByNameAsync(roleName);
@@ -300,7 +304,9 @@ namespace BioProSystem.Controllers
 
         [HttpPost]
         [Route("AssignRole")]
-        
+        [Authorize(AuthenticationSchemes = "Bearer")]
+        [Authorize(Roles = " Lab Manager, Owner")]
+
         public async Task<IActionResult> AssignRole(string emailAddress, string roleName)
         {
             var user = await _userManager.FindByEmailAsync(emailAddress);
@@ -313,6 +319,7 @@ namespace BioProSystem.Controllers
         }
         [HttpPut]
         [Route("EditUser")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
         public async Task<IActionResult> EditUser(EditUser user)
         {
             var userToEdit = await _userManager.FindByEmailAsync(user.OldEmail);
@@ -328,6 +335,14 @@ namespace BioProSystem.Controllers
                     if (currentRole != null && !currentRole.Equals(user.Role, StringComparison.OrdinalIgnoreCase))
                     {
                         await _userManager.RemoveFromRoleAsync(userToEdit, currentRole);
+                        var result = await _userManager.AddToRoleAsync(userToEdit, user.Role);
+                        if (!result.Succeeded)
+                        {
+                            return BadRequest(result.Errors);
+                        }
+                    }
+                    else if(currentRole == null)
+                    {
                         var result = await _userManager.AddToRoleAsync(userToEdit, user.Role);
                         if (!result.Succeeded)
                         {
@@ -374,6 +389,8 @@ namespace BioProSystem.Controllers
 
         [HttpPut]
         [Route("RemoveAccess/{userEmail}")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
+        [Authorize(Roles = " Lab Manager, Owner")]
 
         public async Task<IActionResult> RemoveAccess(string userEmail)
         {
@@ -442,9 +459,34 @@ namespace BioProSystem.Controllers
             {
                 var result = await _repository.GetsystemUserAsync(emailAddress);
 
-                if (result == null) return NotFound("user does not exist");
+                if (result == null) return NotFound("User does not exist");
 
-                return Ok(result);
+                var roles = await _userManager.GetRolesAsync(result);
+                var userWithRoles = new UserInfoWithRolesViewModel
+                {
+                    Id = result.Id,
+                    Email = result.Email,
+                    UserName = result.UserName,
+                    EmailConfirmed = result.EmailConfirmed,
+                    PhoneNumber = result.PhoneNumber,
+                    PhoneNumberConfirmed = result.PhoneNumberConfirmed,
+                    TwoFactorEnabled = result.TwoFactorEnabled,
+                    LockoutEnabled = result.LockoutEnabled,
+                    LockoutEnd = result.LockoutEnd,
+                    AccessFailedCount = result.AccessFailedCount,
+                    ConcurrencyStamp = result.ConcurrencyStamp,
+                    SecurityStamp = result.SecurityStamp,
+                    PasswordHash = result.PasswordHash,
+                    NormalizedEmail = result.NormalizedEmail,
+                    NormalizedUserName = result.NormalizedUserName,
+                    Name = result.Name,
+                    Surname = result.Surname,
+                    IsActiveUser = result.isActiveUser,
+                    AuditTrails = result.AuditTrails.ToList(),
+                    Roles = roles.ToList()
+                };
+
+                return Ok(userWithRoles);
             }
             catch (Exception)
             {

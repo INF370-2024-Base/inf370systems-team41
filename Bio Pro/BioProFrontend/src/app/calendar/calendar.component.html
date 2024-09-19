@@ -27,7 +27,7 @@
     </mat-form-field>
 
     <div *ngIf="selectedCalendarId === 1" style="width: 100%;">
-      <button mat-button matSuffix mat-icon-button aria-label="Clear" (click)="addEventClicked($event)">
+      <button mat-button matSuffix mat-icon-button aria-label="Clear" (click)="addEventClicked($event)"  *ngIf="roleService.hasRole(['admin', 'owner','lab manager'])">
         <mat-icon>add</mat-icon>
         Add event
       </button>

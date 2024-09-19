@@ -151,7 +151,8 @@ mediaFileViewModels:MediaFileViewModel[]=[]
         {
           StockId:element.StockId,
           OrderId:this.stockUsed.OrderId,
-          Quantity:element.Quantity
+          Quantity:element.Quantity,
+          DateUsed:new Date()
         }
         this.stockService.addStockItem(stockToSend).subscribe(result=>
           {

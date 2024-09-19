@@ -45,8 +45,8 @@ namespace BioProSystem.Controllers
         
         [HttpPost]
         [Route("CreateScheduledEvent")]
-        //[Authorize(AuthenticationSchemes = "Bearer")]
-        //[Authorize(Roles = "Admin, Manager")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
+        [Authorize(Roles = "Admin, Owner")]
         public async Task<IActionResult> CreateScheduledEvent(EditCalanderEventViewModel viewModel)
         {
             try
@@ -82,6 +82,7 @@ namespace BioProSystem.Controllers
         }
         [HttpGet]
         [Route("GetAllScheduledEvents")]
+        
         public async Task<IActionResult> GetAllScheduledEvents()
         {
             try
@@ -105,6 +106,9 @@ namespace BioProSystem.Controllers
 
         [HttpPut]
         [Route("UpdateScheduledEvent")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
+        [Authorize(Roles = "Admin, Owner")]
+        
         public async Task<IActionResult> UpdateScheduledEvent(EditCalanderEventViewModel viewModel)
         {
             try
@@ -139,6 +143,9 @@ namespace BioProSystem.Controllers
     
         [HttpDelete]
         [Route("DeleteScheduledEvent/{eventID}")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
+        [Authorize(Roles = "Admin, Owner")]
+        
         public async Task<IActionResult> DeleteScheduledEvent(int eventID)
         {
             try

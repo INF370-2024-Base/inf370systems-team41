@@ -11,7 +11,7 @@ import { error } from 'console';
 import { DatePipe } from '@angular/common';
 import { DomSanitizer } from '@angular/platform-browser';
 import { DataService } from '../services/login.service';
-
+import { teethAreas } from '../shared/TeethAreas';
 @Component({
   selector: 'app-add-order',
   templateUrl: './add-order.component.html',
@@ -42,7 +42,7 @@ export class AddOrderComponent implements OnInit {
   twoDaysAhead = this.datePipe.transform(new Date(this.today.setDate(this.today.getDate() + 2)), 'yyyy-MM-dd');
   uploadedFiles:CustomFile[] = [];
   @ViewChild('imageCanvas', { static: true }) canvasRef!: ElementRef<HTMLCanvasElement>; 
-
+  teeth: Tooth[] = teethAreas
   constructor(
     private dataService: OrderService,
     private httpClient: HttpClient,
@@ -77,78 +77,107 @@ export class AddOrderComponent implements OnInit {
     this.loadOrderTypes();
     this.loadOrderStatuses();
     this.loadTeethShades();
-    
-    console.log(this.areas)
   }
   selectedAreas: number[] = [];
    
+  
   loadImageOnCanvas(): void {
     const canvas = this.canvasRef.nativeElement;
     const ctx = canvas.getContext('2d');
-    const scaleFactor = 0.5; // Adjust this scale factor to make the canvas bigger
-  
+    const scaleFactor = 0.5;
+
     if (ctx) {
       const imageUrl = 'assets/images/mouth area.png';
-  
+
       const img = new Image();
       img.onload = () => {
-        // Set desired canvas dimensions
         canvas.width = img.width * scaleFactor;
         canvas.height = img.height * scaleFactor;
-        ctx.drawImage(img, 0, 0, canvas.width, canvas.height); // Draw scaled image
-  
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+
         canvas.addEventListener('click', (event: MouseEvent) => {
-          // Adjust click coordinates for scaling
           const clickX = event.offsetX / scaleFactor;
           const clickY = event.offsetY / scaleFactor;
-  
-          const clickedArea = this.areas.find((area: Area) => {
-            const {x, y, width, height} = area;
-            return (
-              clickX >= x &&
-              clickX <= (x + width) &&
-              clickY >= y &&
-              clickY <= (y + height)
-            );
-          }) as Area;
-  
-          if (clickedArea) {
-            const areaIndex = this.selectedAreas.indexOf(clickedArea.selectedAreaId);
-            if (areaIndex !== -1) {
-              // Area already selected, deselect it
-              this.selectedAreas.splice(areaIndex, 1);
-              this.updateFormValues()
+
+          const clickedTooth = this.teeth.find(tooth => 
+            this.isPointInPolygon(clickX, clickY, tooth.vertices)
+          );
+
+          if (clickedTooth) {
+            const toothIndex = this.selectedAreas.indexOf(clickedTooth.id);
+            if (toothIndex !== -1) {
+              this.selectedAreas.splice(toothIndex, 1);
             } else {
-              // Area not selected, select it
-              this.selectedAreas.push(clickedArea.selectedAreaId);
-              this.updateFormValues()
+              this.selectedAreas.push(clickedTooth.id);
             }
-            this.drawShapes(ctx, img, this.areas, this.selectedAreas, scaleFactor); // Pass selected areas for highlighting
+            this.drawShapes(ctx, img, this.teeth, this.selectedAreas, scaleFactor);
           }
         });
       };
-  
+
       img.src = imageUrl;
     }
   }
-  
-  drawShapes(ctx: CanvasRenderingContext2D, img: HTMLImageElement, areas: any[], selectedAreas: number[], scaleFactor: number) {
-    let canvas = document.getElementById('myCanvas') as HTMLCanvasElement;
-    ctx = canvas.getContext('2d')!;
-    ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear previous drawings
-    ctx.drawImage(img, 0, 0, canvas.width, canvas.height); // Draw scaled image
-  
-    for (const area of areas) {
-      const { x, y, width, height } = area;
-      // Draw scaled rectangles
-      ctx.strokeRect(x * scaleFactor, y * scaleFactor, width * scaleFactor, height * scaleFactor);
-  
-      if (selectedAreas.includes(area.selectedAreaId)) {
-        // Highlight selected areas with a different color or style
-        ctx.fillStyle = 'lightblue'; // Example highlight color
-        ctx.fillRect(x * scaleFactor, y * scaleFactor, width * scaleFactor, height * scaleFactor);
+
+  drawShapes(ctx: CanvasRenderingContext2D, img: HTMLImageElement, teeth: Tooth[], selectedTeeth: number[], scaleFactor: number) {
+    ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+    ctx.drawImage(img, 0, 0, ctx.canvas.width, ctx.canvas.height);
+
+    for (const tooth of teeth) {
+      this.drawPolygon(ctx, tooth.vertices.map(v => ({ x: v.x * scaleFactor, y: v.y * scaleFactor })));
+      
+      if (selectedTeeth.includes(tooth.id)) {
+        ctx.fillStyle = 'lightblue';
+        this.fillPolygon(ctx, tooth.vertices.map(v => ({ x: v.x * scaleFactor, y: v.y * scaleFactor })));
       }
     }
+  }
+
+  drawPolygon(ctx: CanvasRenderingContext2D, vertices: { x: number; y: number }[]) {
+    ctx.beginPath();
+    ctx.moveTo(vertices[0].x, vertices[0].y);
+    for (let i = 1; i < vertices.length; i++) {
+      ctx.lineTo(vertices[i].x, vertices[i].y);
+    }
+    ctx.closePath();
+    ctx.stroke();
+  }
+
+  fillPolygon(ctx: CanvasRenderingContext2D, vertices: { x: number; y: number }[]) {
+    ctx.save(); // Save the current drawing state
+    
+    // Set semi-transparent light blue fill color
+    ctx.fillStyle = 'rgba(173, 216, 230, 0.5)'; // Light sky blue with 50% opacity
+    
+    // Set globalAlpha for overall transparency control
+    ctx.globalAlpha = 1; // Adjust this value between 0 and 1 for desired transparency
+    
+    ctx.beginPath();
+    ctx.moveTo(vertices[0].x, vertices[0].y);
+    for (let i = 1; i < vertices.length; i++) {
+      ctx.lineTo(vertices[i].x, vertices[i].y);
+    }
+    ctx.closePath();
+    ctx.fill();
+    
+    ctx.restore(); // Restore the original drawing state
+  }
+
+  isPointInPolygon(x: number, y: number, vertices: { x: number; y: number }[]): boolean {
+    let inside = false;
+    const len = vertices.length;
+
+    for (let i = 0, j = len - 1; i < len; j = i++) {
+      const xi = vertices[i].x;
+      const yi = vertices[i].y;
+      const xj = vertices[j].x;
+      const yj = vertices[j].y;
+
+      const intersect = ((yi > y) !== (yj > y)) && (x < (xj - xi) * (y - yi) / (yj - yi) + xi);
+      if (intersect) inside = !inside;
+    }
+
+    return inside;
   }
   
   updateFormValues() {
@@ -476,4 +505,8 @@ export interface CustomFile {
   name: string;
   size: number;
   content: Uint8Array;
+}
+interface Tooth {
+  id: number;
+  vertices: { x: number; y: number }[];
 }

@@ -1,9 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { OrderService } from '../services/order.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { error } from 'console';
+import { Console, error } from 'console';
 import { HttpErrorResponse } from '@angular/common/http';
 import { DataService } from '../services/login.service';
+import { DecisionViewModel } from '../shared/ordersViewModel';
+import { MatDialog } from '@angular/material/dialog';
+import { RejectOrderModalComponent } from '../reject-order-modal/reject-order-modal.component';
 
 @Component({
   selector: 'app-approve-order',
@@ -12,7 +15,7 @@ import { DataService } from '../services/login.service';
 })
 export class ApproveOrderComponent implements OnInit {
 
-  constructor( private dataService: OrderService,private snackBar: MatSnackBar,private loginService:DataService) {}
+  constructor( private dataService: OrderService,private snackBar: MatSnackBar,private loginService:DataService,private dialog: MatDialog) {}
 pendingOrders:any[]=[]
 pendingOrdersData:any[]=[]
 
@@ -34,6 +37,20 @@ ngOnInit(): void {
   approveOrder(orderId:number){
   this.dataService.apporvePendingOrder(orderId).subscribe(result=>{
     this.loginService.addTransaction("Put","Approved an order. Order ID:"+orderId)
+    const Decision:DecisionViewModel={
+      Justification:"Order approved",
+      DateOfDecision:new Date(),
+      DecisionLogState:"Accepted",
+      SystemOrderId:orderId
+    }
+    this.dataService.AddDecision(Decision).subscribe(
+      result=>{
+        console.log("Successfully added decision")
+      },
+      error=>{
+        console.log("Error:"+error.error)
+      }
+    )
     console.log(result)
     location.reload()
   },
@@ -44,12 +61,17 @@ ngOnInit(): void {
 )
   }
   rejectOrder(orderId:number){
-    this.dataService.dissaprovePendingOrders(orderId).subscribe(result=>{
-      this.loginService.addTransaction("Put","Rejected an order. Order ID:"+orderId)
-      console.log(result)
-      location.reload()
-    })
    
-    }
-
+     const dialogRef = this.dialog.open(RejectOrderModalComponent, {
+      width: '300px',
+      data: { orderId: orderId }
+    });
+ 
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        location.reload();
+      }
+    });
+  }
 }
+

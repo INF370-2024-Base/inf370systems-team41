@@ -7,7 +7,6 @@ export class AuthInterceptor implements HttpInterceptor {
 
     intercept(req: HttpRequest<any>,
               next: HttpHandler): Observable<HttpEvent<any>> {
-         
         if (sessionStorage.getItem('Token')) {
             const jwt = JSON.parse(sessionStorage.getItem('Token')!)
             const token = jwt.token

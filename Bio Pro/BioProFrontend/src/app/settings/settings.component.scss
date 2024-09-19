@@ -1,5 +1,6 @@
 body {
     background-color: #f5f5f5; /* Light gray background */
+    background: linear-gradient(120deg, #aed9e0, #c2e2f3, #eaf1fa, #c2e2f3, #aed9e0);
     font-family: 'Verdana', sans-serif; /* Playful font */
     color: #333; /* Dark text color */
     margin: 0; /* Reset margin */
@@ -10,24 +11,9 @@ body {
     align-items: center; /* Center content horizontally */
     min-height: 100vh; /* Full viewport height */
     overflow-y: auto; /* Allow the page to scroll */
-  }
-  
-  body {
-    background: linear-gradient(120deg, #aed9e0, #c2e2f3, #eaf1fa, #c2e2f3, #aed9e0);
-    background-size: 400% 400%;
     animation: gradientAnimation 20s ease infinite;
-    font-family: 'Roboto', sans-serif;
-    color: #333;
-    margin: 0;
-    padding: 0;
-    height:max-content;
-    
-    display: flex;
-    flex-direction: column;
-    
   }
   
-
   /* Animated background gradients */
   @keyframes gradientAnimation {
     0% { background-position: 0% 50%; }
@@ -35,19 +21,12 @@ body {
     100% { background-position: 0% 50%; }
   }
   
-  /* Enhanced blue gradient animation */
-  body {
-    background: linear-gradient(120deg, #aed9e0, #c2e2f3, #eaf1fa, #c2e2f3, #aed9e0);
-    background-size: 400% 400%;
-    animation: gradientAnimation 20s ease infinite;
-  }
-  
   .settings-container {
     display: flex;
     flex-direction: column;
     padding: 15px; /* Reduced padding to make more room */
     background-color: #f7f9fc; /* Softer background color for better contrast */
-    max-width: 50vw; /* Ensure it doesn't exceed 50% of the viewport width */
+     /* Ensure it doesn't exceed 50% of the viewport width */
     width: 100%;
     margin-top: 20px; /* Add space between the title and the container */
     border-radius: 15px; /* More rounded corners */
@@ -90,21 +69,6 @@ body {
     color: #3a506b; /* Softer icon color */
   }
   
-  mat-input-element, input[matInput] {
-    font-size: 14px; /* Further reduced font for better readability */
-    color: #2e3c58; /* Text color matching the title */
-    width: 100%; /* Full width input fields */
-    padding: 6px 10px; /* Further reduced padding inside input fields */
-    border-radius: 8px; /* Curved edges for input fields */
-    border: 1px solid #d1d9e6; /* Subtle border color */
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Slight shadow for depth */
-    background-color: #ffffff; /* White background for input fields */
-  }
-  
-  input[matInput]:focus {
-    border-color: #3a506b; /* Change border color on focus */
-    outline: none; /* Remove default outline */
-  }
   
   mat-select {
     width: 100%; /* Full width for select dropdowns */
@@ -116,12 +80,27 @@ body {
     padding-left: 5px;
     color: #2e3c58; /* Matching select text color */
   }
+
   
+  /* Optional: Add padding and margin adjustments if needed */
+  .settings-section .form-group {
+    margin-bottom: 16px; /* Space between fields */
+  }
+  
+  mat-form-field {
+    width: 100%; 
+  }
+
   .save-button-section {
     text-align: center;
+    align-items: center;
     padding: 5px; /* Reduced padding */
     margin-top: auto; /* Push the button to the bottom */
   }
+  .form-group {
+    width: 100%;
+  }
+  
   
   button[mat-raised-button] {
     width: 80%; /* Further reduced width */
@@ -138,3 +117,49 @@ body {
     box-shadow: 0 10px 20px rgba(0, 123, 255, 0.5);
   }
   
+.button-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Audit table container styling */
+.audit-trail-container {
+  margin-top: 20px;
+  overflow-x: auto;
+}
+
+.blue-theme-table {
+  background-color: #f1f5f8;
+  border-radius: 8px;
+  padding: 16px;
+}
+
+/* Table row hover effect */
+.mat-row:hover {
+  background-color: rgba(0, 0, 255, 0.1);
+}
+
+/* Adjust table header styling */
+.mat-header-cell {
+  font-weight: bold;
+  color: #1976d2;
+}
+
+/* Error card styling */
+.error-card {
+  text-align: center;
+  padding: 20px;
+  margin-top: 20px;
+}
+
+.error-card .error-icon {
+  font-size: 48px;
+  color: #ff5252;
+}
+
+.error-card h1 {
+  font-size: 24px;
+  color: #ff5252;
+  margin: 0;
+}

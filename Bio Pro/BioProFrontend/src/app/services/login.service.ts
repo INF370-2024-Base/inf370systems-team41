@@ -6,6 +6,7 @@ import { Employee } from '../shared/employee';
 import { SystemUser } from '../shared/systemuser';
 import { catchError } from 'rxjs/operators';
 import { AddAuditTrailViewModels } from '../shared/addAuditTrailViewModel';
+import { RoleGuardService } from './roleCheck';
 
 @Injectable({
   providedIn: 'root'
@@ -21,7 +22,7 @@ export class DataService {
     })
   }
 
-  constructor(private httpClient: HttpClient) { 
+  constructor(private httpClient: HttpClient,private roleService:RoleGuardService) { 
   }
 
   addDentist(dentist: Dentist): Observable<Dentist> {
@@ -38,9 +39,9 @@ export class DataService {
     if (this.jwt) {
       return this.getSignInUser(this.SignInUserEmail).pipe(
         tap((result: SystemUser) => {
-          
           this.user=result
           sessionStorage.setItem('User',JSON.stringify(this.user));
+          this.roleService.getRoles()
           console.log(this.user)
                 })
       );

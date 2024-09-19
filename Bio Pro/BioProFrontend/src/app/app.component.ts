@@ -6,6 +6,7 @@ import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-
 import { DataService } from './services/login.service';
 import { AddAuditTrailViewModels } from './shared/addAuditTrailViewModel';
 import { LoadingService } from './services/loading.service';
+import { RoleGuardService } from './services/roleCheck';
 
 @Component({
   selector: 'app-root',
@@ -24,8 +25,9 @@ export class AppComponent implements OnInit {
   user: any;
   showNavBar = true;
   title = 'BioProSystem';
+  userRoles: string[] = [];
 
-  constructor(public dataService: OrderService, private router: Router, private dialog: MatDialog,private loadingService:LoadingService) {
+  constructor(public dataService: OrderService, private router: Router, private dialog: MatDialog,private loadingService:LoadingService,public  roleService: RoleGuardService,private loginService:DataService) {
     // Listen to router events to determine the current route
   }
 
@@ -76,11 +78,10 @@ export class AppComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
+        this.loginService.addTransaction("Put","Logged out.")
         this.router.navigate(['login']);
       }
     });
   }
-
-
   
 }

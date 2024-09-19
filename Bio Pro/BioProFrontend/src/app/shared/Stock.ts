@@ -66,11 +66,13 @@ export class AddStockItemViewModel {
     public StockId: number;
     public OrderId: string;
     public Quantity:Number;
+    public DateUsed:Date
 
-    constructor(stockId: number, orderId: string,quantity:number) {
+    constructor(stockId: number, orderId: string,quantity:number,dateUsed:Date) {
         this.StockId = stockId;
         this.OrderId = orderId;
         this.Quantity = quantity;
+        this.DateUsed=dateUsed;
     }
 }
 

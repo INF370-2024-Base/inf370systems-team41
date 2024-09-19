@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.Extensions.Options;
 using System.Net.Mail;
 using static System.Runtime.InteropServices.JavaScript.JSType;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BioProSystem.Controllers
 {
@@ -28,6 +29,8 @@ namespace BioProSystem.Controllers
 
         [HttpGet]
         [Route("GetAllEmployee")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
+        [Authorize(Roles = "Admin, Lab Manager, Owner")]
         public async Task<IActionResult> GetAllEmployee()
         {
             try
@@ -43,6 +46,8 @@ namespace BioProSystem.Controllers
 
         // POST api/Employee/AddEmployee
         [HttpPost("AddEmployee")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
+        [Authorize(Roles = " Lab Manager, Owner")]
         public async Task<IActionResult> AddEmployee(SystemEmployeeAddViewModel model)
         {
             try
@@ -89,6 +94,8 @@ namespace BioProSystem.Controllers
 
         // PUT api/Employee/EditEmployee
         [HttpPut("EditEmployee")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
+        [Authorize(Roles = " Lab Manager, Owner")]
         public async Task<IActionResult> EditEmployee(EditEmployee employeeToEdit)
         {
             try
@@ -118,6 +125,8 @@ namespace BioProSystem.Controllers
 
         // DELETE api/Employee/DeleteEmployee/{id}
         [HttpDelete("DeleteEmployee/{id}")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
+        [Authorize(Roles = " Lab Manager, Owner")]
         public async Task<IActionResult> DeleteEmployee(int id)
         {
             try
@@ -150,6 +159,8 @@ namespace BioProSystem.Controllers
 
         // GET api/Employee/SearchEmployees
         [HttpGet("SearchEmployees")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
+        [Authorize(Roles = "Admin, Lab Manager, Owner")]
         public async Task<IActionResult> SearchEmployees([FromQuery] string searchString)
         {
             try
@@ -169,6 +180,8 @@ namespace BioProSystem.Controllers
 
         [HttpPost]
         [Route("capture-daily-hours/{employeeId}")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> CaptureEmployeeDailyHours(int employeeId, EmployeeDailyHoursViewModel newDailyHours)
         {
             try
@@ -185,6 +198,8 @@ namespace BioProSystem.Controllers
         }
         [HttpDelete]
         [Route("DeleteEmployeeDailyHours/{employeedDailyHoursId}")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
+        [Authorize(Roles = "Owner")]
         public async Task<IActionResult> DeleteEmployeeDailyHours(int employeedDailyHoursId)
         {
             try
@@ -210,6 +225,8 @@ namespace BioProSystem.Controllers
         }
         [HttpGet]
         [Route("GetEmployeeInfoByEmail/{employeeEmail}")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
+        [Authorize(Roles = "Admin, Lab Manager, Owner")]
         public async Task<ActionResult<Employee>> GetEmployeeInfoByEmail(string employeeEmail)
         {
             var result = await _repository.GetEmployeeByEmailAsync(employeeEmail);
@@ -222,6 +239,8 @@ namespace BioProSystem.Controllers
         }
         [HttpGet]
         [Route("GetEmployeeDailyHours")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
+        [Authorize(Roles = "Admin, Lab Manager, Owner")]
         public async Task<ActionResult<List<EmployeeDailyHours>>> GetEmployeeDailyHours()
         {
             var result = await _repository.GetEmployeeDailyHours();
@@ -234,6 +253,8 @@ namespace BioProSystem.Controllers
         }
         [HttpGet]
         [Route("GetEmployeeDailyHoursByDate")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
+        [Authorize(Roles = "Admin, Lab Manager, Owner")]
         public async Task<ActionResult<List<EmployeeDailyHours>>> GetEmployeeDailyHoursByDate(DateTime date)
         {
             var result = await _repository.GetEmployeeDailyHoursByDay(date);

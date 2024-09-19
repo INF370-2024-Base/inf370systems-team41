@@ -6,6 +6,7 @@ import { StockServices } from '../services/stock.service';
 import { WriteOffModalComponent } from '../write-off-modal/write-off-modal.component';
 import { CaptureNewStockModalComponent } from '../capture-new-stock-modal/capture-new-stock-modal.component';
 import { DataService } from '../services/login.service';
+import { RoleGuardService } from '../services/roleCheck';
 
 @Component({
   selector: 'app-stock',
@@ -36,7 +37,7 @@ export class StockComponent implements OnInit {
   ];
 
 
-  constructor(private stockService: StockServices, public dialog: MatDialog, private snackBar: MatSnackBar,private dataService:DataService) { }
+  constructor(public roleService:RoleGuardService, private stockService: StockServices, public dialog: MatDialog, private snackBar: MatSnackBar,private dataService:DataService) { }
 
   ngOnInit(): void {
     this.fetchData();

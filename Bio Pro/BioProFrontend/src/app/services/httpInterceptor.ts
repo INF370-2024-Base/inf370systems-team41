@@ -2,11 +2,12 @@ import { Injectable } from '@angular/core';
 import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpErrorResponse } from '@angular/common/http';
 import { Observable, catchError } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
 
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {
 
-  constructor(private snackBar: MatSnackBar) { }
+  constructor(private snackBar: MatSnackBar,private route:Router) { }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     return next.handle(req).pipe(
@@ -18,11 +19,13 @@ export class ErrorInterceptor implements HttpInterceptor {
             duration: 5000,
           });
         }
-        // } else if (error.status >= 400 && error.status < 500) {
-        //   // Client-side error
-        //   this.snackBar.open('Client error occurred. Please try again.', 'Dismiss', {
-        //     duration: 5000,
-        //   });
+         else if (error.status == 403) {
+          // Client-side error
+          this.snackBar.open('Not authorized to access this action.', 'Dismiss', {
+            duration: 5000,
+          });
+          this.route.navigate(["unauthorized"])
+        }
         else if (error.status >= 500) {
           // Server-side error
           this.snackBar.open('Server error occurred. Please contact admin.', 'Dismiss', {

@@ -93,10 +93,11 @@ body, html {
 
 .feature-cards {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-gap: 20px;
-  padding: 30px 40px;
-  background: linear-gradient(to right, #94b8df, #abdcec, #d2ecf5, #cdf3ff);
+  grid-template-columns: repeat(3, 1fr); /* Creates 3 equal-width columns */
+  grid-auto-rows: auto; /* Automatically determines row height based on content */
+  grid-gap: 20px; /* Space between grid items */
+  padding: 30px 40px; /* Padding around the grid */
+  background: linear-gradient(to right, #94b8df, #abdcec, #d2ecf5, #cdf3ff); /* Background gradient */
 }
 
 .feature-card {

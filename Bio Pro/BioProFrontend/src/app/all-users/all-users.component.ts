@@ -43,6 +43,7 @@ export class AllUsersComponent implements OnInit {
   get paginatedUsers(): any[] {
     const startIndex = (this.currentPage - 1) * this.itemsPerPage;
     const endIndex = startIndex + this.itemsPerPage;
+    
     return this.filteredUsers.slice(startIndex, endIndex);
   }
 
@@ -60,12 +61,14 @@ export class AllUsersComponent implements OnInit {
     if (this.currentPage < this.totalPages) {
       this.currentPage++;
     }
+    
   }
 
   previousPage(): void {
     if (this.currentPage > 1) {
       this.currentPage--;
     }
+    console.log(this.paginatedUsers)
   }
 
   fetchAllUsers() {
@@ -75,6 +78,7 @@ export class AllUsersComponent implements OnInit {
         this.users = data;
         this.filteredUsers = data; // Initially show all users
         this.loading = false;
+        console.log(this.filteredUsers)
       },
       error => {
         this.loading = false; // Handle error and stop loading

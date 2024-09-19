@@ -15,6 +15,8 @@ public partial class DecisionLog
     [Required]
     public string Justification { get; set; } = null!;
 
+    public DateTime DateOfDecision { get; set; }
+
     public string SystemOrderId { get; set; }
 
     public virtual SystemOrder SystemOrder { get; set; } = null!;

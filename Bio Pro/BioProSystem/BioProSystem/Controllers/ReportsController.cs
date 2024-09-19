@@ -4,12 +4,15 @@ using BioProSystem.Models;
 using BioProSystem.ViewModels;
 using System.Text.RegularExpressions;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 
 
 namespace BioProSystem.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(AuthenticationSchemes = "Bearer")]
+    [Authorize(Roles = "  Owner, Lab Manager")]
     public class ReportsController : Controller
     {
         private readonly IRepository _repository;
@@ -20,6 +23,8 @@ namespace BioProSystem.Controllers
         }
 
         [HttpGet("GetAllOrders")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
+        [Authorize(Roles = "  Owner, Lab Manager")]
         public async Task<IActionResult> GetAllOrdersAsync()
         {
             try
@@ -38,6 +43,8 @@ namespace BioProSystem.Controllers
         }
 
         [HttpGet("StockTypesCountByCategory")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
+        [Authorize(Roles = "  Owner, Lab Manager")]
         public async Task<IActionResult> StockTypesCountByCategory()
         {
             try
@@ -60,6 +67,8 @@ namespace BioProSystem.Controllers
 
         // Endpoint to get total amount of stock items within a stock category
         [HttpGet("StockItemsCountByCategory")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
+        [Authorize(Roles = "  Owner, Lab Manager")]
         public async Task<IActionResult> StockItemsCountByCategory()
         {
             try
@@ -85,6 +94,8 @@ namespace BioProSystem.Controllers
 
         [HttpGet]
         [Route("GetEmployeesWithMonthlyHours")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
+        [Authorize(Roles = "  Owner, Lab Manager")]
         public async Task<IActionResult> GetEmployeesWithMonthlyHours()
         {
             var result = await _repository.GetEmployeesWithMonthlyHours();
@@ -101,6 +112,8 @@ namespace BioProSystem.Controllers
 
         [HttpGet]
         [Route("GetEmployeesWithWeeklyHours")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
+        [Authorize(Roles = "  Owner, Lab Manager")]
         public async Task<IActionResult> GetEmployeesWithWeeklyHours()
         {
             var result = await _repository.GetEmployeesWithWeeklyHours();
@@ -117,6 +130,8 @@ namespace BioProSystem.Controllers
 
 
         [HttpGet("ordertypes/with-order-count")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
+        [Authorize(Roles = "  Owner, Lab Manager")]
         public async Task<IActionResult> GetOrderTypesWithOrderCount()
         {
             try
@@ -132,6 +147,8 @@ namespace BioProSystem.Controllers
 
         [HttpGet]
         [Route("GetAllStockWriteOffs")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
+        [Authorize(Roles = "  Owner, Lab Manager")]
         public async Task<IActionResult> GetAllStockWriteOffs()
         {
             try

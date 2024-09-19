@@ -1,39 +1,177 @@
 <body>
+ 
     <h1 style="font-size: 48px; color: #4d4a4a; text-align: center; text-transform: uppercase; letter-spacing: 3px; margin-bottom: 24px; text-shadow: 2px 2px 4px rgba(124, 124, 124, 0.5);">
         SETTINGS
     </h1> 
+    <button mat-raised-button color="primary" type="submit" routerLink="/UpdatePassword" style="justify-content: center;">
+      <mat-icon>update</mat-icon> Update Password
+    </button>
         <div class="settings-container">
-        <!-- Profile Section -->
-        <section class="settings-section">
+          <div *ngIf="roleService.hasRole(['Lab Manager','Owner'])">
+            <mat-form-field appearance="outline">
+              <mat-select [(ngModel)]="currentView"  (selectionChange)="changeSettings($event)"> <!-- Two-way binding -->
+                <mat-option value="User Profile">
+                  User Profile
+                </mat-option>
+                <mat-option value="Audit">
+                  Audit
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          
+        <section class="settings-section" *ngIf="currentView=='User Profile'">
+          
           <h3 mat-subheader>Profile Settings</h3>
-          <mat-list>
-            <mat-list-item>
-              <mat-icon matListIcon>person</mat-icon>
-              <div matLine>Name</div>
-              <div matLine><input matInput [(ngModel)]="user.Name" placeholder="Enter your first name"></div>
-            </mat-list-item>
-            <mat-list-item>
-              <mat-icon matListIcon>person_outline</mat-icon>
-              <div matLine>Surname</div>
-              <div matLine><input matInput [(ngModel)]="user.Surname" placeholder="Enter your surname"></div>
-            </mat-list-item>
-            <mat-list-item>
-              <mat-icon matListIcon>email</mat-icon>
-              <div matLine>Email</div>
-              <div matLine><input matInput [(ngModel)]="user.EmailAddress" type="email" placeholder="Enter your email"></div>
-            </mat-list-item>
-            <mat-list-item>
-              <mat-icon matListIcon>lock</mat-icon>
-              <div matLine>Password</div>
-              <div matLine><input matInput [(ngModel)]="user.Password" type="password" placeholder="Enter your password"></div>
-            </mat-list-item>
-          </mat-list>
+          <form [formGroup]="userForm" (ngSubmit)="saveSettings()">
+            <div class="form-group">
+              <mat-form-field appearance="outline">
+                <mat-label>Name</mat-label>
+                <input matInput formControlName="Name" placeholder="Enter your first name">
+                <mat-error *ngIf="userForm.get('Name')?.hasError('required') && userForm.get('Name')?.touched">
+                  Name is required
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="form-group">
+              <mat-form-field appearance="outline">
+                <mat-label>Surname</mat-label>
+                <input matInput formControlName="Surname" placeholder="Enter your surname">
+                <mat-error *ngIf="userForm.get('Surname')?.hasError('required') && userForm.get('Surname')?.touched">
+                  Surname is required
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="form-group">
+              <mat-form-field appearance="outline">
+                <mat-label>Email</mat-label>
+                <input matInput formControlName="EmailAddress" type="email" placeholder="Enter your email">
+                <mat-error *ngIf="userForm.get('EmailAddress')?.hasError('required') && userForm.get('EmailAddress')?.touched">
+                  Email is required
+                </mat-error>
+                <mat-error *ngIf="userForm.get('EmailAddress')?.hasError('email') && userForm.get('EmailAddress')?.touched">
+                  Enter a valid email
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="form-group">
+              <mat-form-field appearance="outline">
+                <mat-label>Phonenumber</mat-label>
+                <input matInput formControlName="Phonenumber" type="text" placeholder="Enter your phonenumber">
+                <mat-error *ngIf="userForm.get('Phonenumber')?.invalid">
+                  Phonenumber is required and must be a valid number
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <mat-error style="text-align: center;">Warning: This will sign you out</mat-error>
+            <div class="save-button-section">
+              
+              <button mat-raised-button color="primary" type="submit">
+                <mat-icon>save</mat-icon> SAVE
+              </button>
+            </div>
+          </form>
+          
         </section>
-      
+  <div  *ngIf="currentView=='Audit'">
+        <div class="filter-container">
+          <!-- Date Range Filter -->
+          <mat-form-field appearance="fill">
+            <mat-label>Start Date</mat-label>
+            <input matInput [matDatepicker]="startPicker" [(ngModel)]="startDate" 
+                   [max]="endDate ? addDays(endDate, -1) : today">
+            <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
+            <mat-datepicker #startPicker></mat-datepicker>
+          </mat-form-field>
+        
+          <mat-form-field appearance="fill">
+            <mat-label>End Date</mat-label>
+            <input matInput [matDatepicker]="endPicker" [(ngModel)]="endDate" 
+                   [min]="startDate ? addDays(startDate, 1) : null" [max]="today">
+            <mat-datepicker-toggle matSuffix [for]="endPicker"></mat-datepicker-toggle>
+            <mat-datepicker #endPicker></mat-datepicker>
+          </mat-form-field>
+        
+          <!-- User Dropdown Filter -->
+          <mat-form-field appearance="fill">
+            <mat-label>User</mat-label>
+            <mat-select [(ngModel)]="selectedUserEmail">
+              <mat-option *ngFor="let user of uniqueUsers" [value]="user.email">{{user.name}} {{user.surname}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        
+          <!-- Transaction Type Dropdown Filter -->
+          <mat-form-field appearance="fill">
+            <mat-label>Transaction Type</mat-label>
+            <mat-select [(ngModel)]="selectedTransactionType">
+              <mat-option *ngFor="let type of uniqueTransactionTypes" [value]="type">{{type}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        <div style="display: flex;">
+          <button mat-raised-button color="primary" (click)="applyFilters()" style="float: left;">Apply Filters</button>
+          <button mat-raised-button color="warn" (click)="clearFilters()" style="float: right;">Clear Filters</button>
+        </div>
+       
+        </div>
+        
+        <div class="audit-trail-container">
+          <mat-table [dataSource]="filteredAuditTrails" matSort class="mat-elevation-z8 blue-theme-table">
+            <!-- Date of Transaction Column -->
+            <ng-container matColumnDef="dateOfTransaction">
+              <mat-header-cell *matHeaderCellDef mat-sort-header> Date of Transaction </mat-header-cell>
+              <mat-cell *matCellDef="let element"> {{ element.dateOfTransaction | date:'short' }} </mat-cell>
+            </ng-container>
+          
+            <!-- System User Column -->
+            <ng-container matColumnDef="systemUser">
+              <mat-header-cell *matHeaderCellDef> System User </mat-header-cell>
+              <mat-cell *matCellDef="let element"> {{element.systemUser.name}} {{element.systemUser.surname}} </mat-cell>
+            </ng-container>
+          
+            <!-- Transaction Type Column -->
+            <ng-container matColumnDef="transactionType">
+              <mat-header-cell *matHeaderCellDef> Transaction Type </mat-header-cell>
+              <mat-cell *matCellDef="let element"> {{element.transactionType}} </mat-cell>
+            </ng-container>
+          
+            <!-- Additional Data Column -->
+            <ng-container matColumnDef="additionalData">
+              <mat-header-cell *matHeaderCellDef> Additional Data </mat-header-cell>
+              <mat-cell *matCellDef="let element"> {{element.additionalData}} </mat-cell>
+            </ng-container>
+          
+            <!-- Header and Rows -->
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+          </mat-table>
+          
+        </div>
+        <mat-card class="error-card" *ngIf="filteredAuditTrails.data.length === 0">
+          <mat-card-content>
+            <mat-icon class="error-icon">error_outline</mat-icon>
+            <h1>None found</h1>
+          </mat-card-content>
+        </mat-card>
+      </div>
+        <style>
+          .error-card {
+        max-width: 400px;
+        margin: auto;
+        padding: 20px;
+        color: red;
+        text-align: center;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+      }
+      .error-icon {
+        font-size: 48px;
+        color: red;
+        margin-bottom: 20px;
+      }
+        </style>
   <!-- Application Settings Section -->
 <div class="application-settings-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
     <!-- Language Setting -->
-    <div class="settings-item" style="padding: 15px; background-color: #ffffff; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); cursor: pointer;" (click)="languageSelect.open()">
+    <!-- <div class="settings-item" style="padding: 15px; background-color: #ffffff; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); cursor: pointer;" (click)="languageSelect.open()">
       <mat-form-field appearance="fill" style="width: 100%;">
         <mat-label>
           <mat-icon matListIcon style="margin-right: 10px; color: #3a506b;">language</mat-icon>
@@ -50,10 +188,10 @@
           </mat-option>
         </mat-select>
       </mat-form-field>
-    </div>
+    </div> -->
   
     <!-- Theme Setting -->
-    <div class="settings-item" style="padding: 15px; background-color: #ffffff; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); cursor: pointer;" (click)="themeSelect.open()">
+    <!-- <div class="settings-item" style="padding: 15px; background-color: #ffffff; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); cursor: pointer;" (click)="themeSelect.open()">
       <mat-form-field appearance="fill" style="width: 100%;">
         <mat-label>
           <mat-icon matListIcon style="margin-right: 10px; color: #3a506b;">brightness_6</mat-icon>
@@ -67,38 +205,35 @@
           </mat-option>
         </mat-select>
       </mat-form-field>
-    </div>
+    </div> -->
   
     <!-- Time Zone Setting -->
-    <div class="settings-item" style="padding: 15px; background-color: #ffffff; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); cursor: pointer;" (click)="timezoneSelect.open()">
+    <!-- <div class="settings-item" style="padding: 15px; background-color: #ffffff; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); cursor: pointer;" (click)="timezoneSelect.open()">
       <mat-form-field appearance="fill" style="width: 100%;">
         <mat-label>
           <mat-icon matListIcon style="margin-right: 10px; color: #3a506b;">schedule</mat-icon>
           Time Zone
         </mat-label>
         <mat-select #timezoneSelect [(value)]="user.timezone">
-          <mat-option *ngFor="let timezone of timezones" [value]="timezone">
+          <mat-option *ngFor="let timezone of timezones" [value]="timezone"> -->
             <!-- Including common states or regions for each timezone -->
-            <ng-container *ngIf="timezone === 'UTC'">UTC (Universal Time Coordinated)</ng-container>
+            <!-- <ng-container *ngIf="timezone === 'UTC'">UTC (Universal Time Coordinated)</ng-container>
+
             <ng-container *ngIf="timezone === 'GMT'">GMT - London, Dublin</ng-container>
             <ng-container *ngIf="timezone === 'PST'">PST - Los Angeles, Seattle</ng-container>
             <ng-container *ngIf="timezone === 'EST'">EST - New York, Miami</ng-container>
             <ng-container *ngIf="timezone === 'CST'">CST - Chicago, Dallas</ng-container>
             <ng-container *ngIf="timezone === 'MST'">MST - Denver, Phoenix</ng-container>
-            <ng-container *ngIf="timezone === 'IST'">IST - New Delhi, Mumbai</ng-container>
+            <ng-container *ngIf="timezone === 'IST'">IST - New Delhi, Mumbai</ng-container> -->
             <!-- Add more as needed -->
-          </mat-option>
+          <!-- </mat-option>
         </mat-select>
       </mat-form-field>
-    </div>
+    </div> -->
   </div>
 
         <!-- Save Button Section -->
-        <section class="save-button-section">
-          <button mat-raised-button color="primary">
-            <mat-icon>save</mat-icon> SAVE
-          </button>
-        </section>
+        
       </div>
       
 </body>

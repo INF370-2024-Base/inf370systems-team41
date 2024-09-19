@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { trigger, style, animate, transition } from '@angular/animations';
 import { HttpClient } from '@angular/common/http';
+import { RoleGuardService } from '../services/roleCheck';
 
 @Component({
   selector: 'app-home',
@@ -23,19 +24,20 @@ import { HttpClient } from '@angular/common/http';
 })
 export class HomeComponent implements OnInit {
   weather: any;
-  frequentlyVisitedPages: { name: string; route: string; icon: string }[] = [
-    { name: 'NEW ORDER', route: '/addOrder', icon: 'assignment' },
-    { name: 'ALL ORDERS', route: '/orders', icon: 'folder_open' },
-    { name: 'VIEW CALENDAR', route: '/calendar', icon: 'calendar_today' },
-    { name: 'DELIVERIES MANAGEMENT', route: '/deliveries', icon: 'delivery_dining' },
-    { name: 'STOCK MANAGEMENT', route: '/pageStock', icon: 'stock' },
-    { name: 'REPORTS', route: '/reports', icon: 'analytics' },
+  frequentlyVisitedPages: { name: string; route: string; icon: string,roles:string[]}[] = [
+    { name: 'NEW ORDER', route: '/addOrder', icon: 'assignment',roles:['Lab Manager','Owner','Admin'] },
+    { name: 'ALL ORDERS', route: '/orders', icon: 'folder_open',roles:['Lab Manager','Owner','Admin','Employee','Design Technician'] },
+    { name: 'VIEW CALENDAR', route: '/calendar', icon: 'calendar_today',roles:['Lab Manager','Owner','Admin','Employee','Design Technician'] },
+    { name: 'DELIVERIES MANAGEMENT', route: '/deliveries', icon: 'delivery_dining',roles:['Lab Manager','Owner','Admin'] },
+    { name: 'STOCK MANAGEMENT', route: '/pageStock', icon: 'stock',roles:['Lab Manager','Owner','Admin','Employee','Design Technician'] },
+    { name: 'REPORTS', route: '/reports', icon: 'analytics',roles:['Lab Manager','Owner','Admin'] },
   ];
   
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient,public roleService: RoleGuardService) {}
 
   ngOnInit(): void {
     this.getWeather();
+    this.frequentlyVisitedPages=this.getFilteredPages()
   }
 
   getWeather(): void {
@@ -52,6 +54,9 @@ export class HomeComponent implements OnInit {
     if (modal) {
       modal.style.display = "block";
     }
+  }
+  getFilteredPages() {
+    return this.frequentlyVisitedPages.filter(page => this.roleService.hasRole(page.roles));
   }
 
   closeModal(): void {
