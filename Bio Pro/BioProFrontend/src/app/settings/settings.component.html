@@ -1,7 +1,11 @@
 <body>
+ 
     <h1 style="font-size: 48px; color: #4d4a4a; text-align: center; text-transform: uppercase; letter-spacing: 3px; margin-bottom: 24px; text-shadow: 2px 2px 4px rgba(124, 124, 124, 0.5);">
         SETTINGS
     </h1> 
+    <button mat-raised-button color="primary" type="submit" routerLink="/UpdatePassword" style="justify-content: center;">
+      <mat-icon>update</mat-icon> Update Password
+    </button>
         <div class="settings-container">
           <div *ngIf="roleService.hasRole(['Lab Manager','Owner'])">
             <mat-form-field appearance="outline">
@@ -15,6 +19,7 @@
               </mat-select>
             </mat-form-field>
           </div>
+          
         <section class="settings-section" *ngIf="currentView=='User Profile'">
           
           <h3 mat-subheader>Profile Settings</h3>
@@ -60,6 +65,7 @@
             </div>
             <mat-error style="text-align: center;">Warning: This will sign you out</mat-error>
             <div class="save-button-section">
+              
               <button mat-raised-button color="primary" type="submit">
                 <mat-icon>save</mat-icon> SAVE
               </button>
