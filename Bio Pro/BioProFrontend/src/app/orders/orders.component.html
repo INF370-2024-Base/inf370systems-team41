@@ -76,6 +76,9 @@
                         <button mat-icon-button (click)="deleteMediaFile(media.mediaFileId)">
                           <mat-icon>delete</mat-icon>
                         </button>
+<button (click)="onFileSelected(media)" *ngIf="media.fileName.includes('gltf')">
+                          View in 3D
+                        </button>
                        </div>
                     </div>
                  
@@ -83,14 +86,15 @@
                 </div>
                 <div *ngIf="!isImage(media.fileSelf)" style="position: relative;">
                   <button *ngIf="roleService.hasRole(['lab manager','owner','admin'])" mat-icon-button (click)="deleteMediaFile(media.mediaFileId)"><mat-icon>delete</mat-icon></button>
-                  <div class="file-item" (click)="downloadFile(media.fileSelf, media.fileName)" style="width: 100px;height: 100px;">
+                  <button class="file-item" (click)="downloadFile(media.fileSelf, media.fileName)" style="width: 100px;height: 100px;">
                     
                     <mat-icon class="fileIcon">insert_drive_file</mat-icon>
                     <p class="file-name">{{ media.fileName }}</p>
-                  </div>
+                  </button>
                   <div style="padding-top: 10px;">
-                  
+                    
                 </div>
+                
               </div>
               </div>
             </div>

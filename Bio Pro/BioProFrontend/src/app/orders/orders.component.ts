@@ -10,6 +10,10 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
 import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
 import { DataService } from '../services/login.service';
 import { RoleGuardService } from '../services/roleCheck';
+import { ModellingComponent } from '../modelling/modelling.component';
+import { MediaFileViewModel } from '../shared/SystemOrderViewModel ';
+import { eventNames } from 'process';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-orders',
@@ -42,7 +46,7 @@ export class OrdersComponent implements OnInit {
   originalOrders:any[]=[]
   baseUrl: string ='https://localhost:44315/Api/';
   loading:boolean=true
-  constructor(public roleService:RoleGuardService, private dialog: MatDialog,private http: HttpClient,private dataservices:OrderService,private snackBar:MatSnackBar,private loginService:DataService) { }
+  constructor(private router:Router,public roleService:RoleGuardService, private dialog: MatDialog,private http: HttpClient,private dataservices:OrderService,private snackBar:MatSnackBar,private loginService:DataService) { }
 
   ngAfterViewChecked(): void {
 
@@ -55,7 +59,47 @@ export class OrdersComponent implements OnInit {
   toggleHover(state: string) {
     this.hoverState = state;
   }
-
+  selectedGltfFile!: File;
+  openModelViewer(file: File): void {
+    const fileUrl = URL.createObjectURL(file);
+    this.router.navigate(['/model'], { queryParams: { fileUrl } });
+  }
+    onFileSelected(event: any): void {
+      console.log(event)
+      const file:MediaFileViewModel= 
+      {
+        FileName:event.fileName,
+        FileSelf:event.fileSelf,
+        FileSizeKb:event.fileSizeKb,
+        SystemOrderId:event.systemOrderId
+      }
+      if (file && file.FileName.endsWith('.gltf')) {
+        this.selectedGltfFile = this.convertBase64ToFile(file.FileSelf,file.FileName);
+        this.openModelViewer(this.selectedGltfFile)
+      } else {
+        console.error('Invalid file type. Please upload a .gltf file.');
+      }
+    }
+    private convertBase64ToFile(base64String: string, fileName: string): File {
+      // Decode the Base64 string to binary data
+      const byteString = atob(base64String);
+    
+      // Convert the binary string to an array of 8-bit unsigned integers
+      const byteArray = new Uint8Array(byteString.length);
+      for (let i = 0; i < byteString.length; i++) {
+        byteArray[i] = byteString.charCodeAt(i);
+      }
+    
+      // Check if the file is binary (.glb) or text (.gltf) based on the extension
+      const isBinary = fileName.endsWith('.glb');
+      const mimeType = isBinary ? 'model/gltf-binary' : 'application/json';
+    
+      // Create a Blob from the byte array
+      const blob = new Blob([byteArray], { type: mimeType });
+    
+      // Create and return a File from the Blob
+      return new File([blob], fileName, { type: mimeType });
+    }
   getOrdersAndInfo() {
     this.dataservices.getAllOrderInfo().subscribe(
       ((allOrders: any[]) => {

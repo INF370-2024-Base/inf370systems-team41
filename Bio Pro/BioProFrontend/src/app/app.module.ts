@@ -106,7 +106,6 @@ import { AuditTrailComponent } from './audit-trail/audit-trail.component';
 import { ErrorInterceptor } from './services/httpInterceptor';
 import { LoadingService } from './services/loading.service';
 import { LoadingInterceptor } from './services/loading.interceptor';
-
 import { NgxPaginationModule } from 'ngx-pagination';
 import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
 import { RejectOrderModalComponent } from './reject-order-modal/reject-order-modal.component';

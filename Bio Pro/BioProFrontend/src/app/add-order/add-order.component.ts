@@ -12,6 +12,9 @@ import { DatePipe } from '@angular/common';
 import { DomSanitizer } from '@angular/platform-browser';
 import { DataService } from '../services/login.service';
 import { teethAreas } from '../shared/TeethAreas';
+import { modifyAndExportGltf } from '../shared/createTeethModel';
+import { MatDialog } from '@angular/material/dialog';
+import { ModellingComponent } from '../modelling/modelling.component';
 @Component({
   selector: 'app-add-order',
   templateUrl: './add-order.component.html',
@@ -47,7 +50,7 @@ export class AddOrderComponent implements OnInit {
     private dataService: OrderService,
     private httpClient: HttpClient,
     private router: Router,
-    private formBuilder: FormBuilder,private snackBar:MatSnackBar,private datePipe: DatePipe,private sanitizer:DomSanitizer,private loginService:DataService
+    private formBuilder: FormBuilder,private snackBar:MatSnackBar,private datePipe: DatePipe,private sanitizer:DomSanitizer,private loginService:DataService,public dialog: MatDialog
   ) {
     this.addForm = this.formBuilder.group({
       OrderId: ['', [Validators.required,Validators.maxLength(7),Validators.minLength(7)]],
@@ -107,8 +110,10 @@ export class AddOrderComponent implements OnInit {
             const toothIndex = this.selectedAreas.indexOf(clickedTooth.id);
             if (toothIndex !== -1) {
               this.selectedAreas.splice(toothIndex, 1);
+              console.log( this.selectedAreas)
             } else {
               this.selectedAreas.push(clickedTooth.id);
+              console.log( this.selectedAreas)
             }
             this.drawShapes(ctx, img, this.teeth, this.selectedAreas, scaleFactor);
           }
@@ -391,8 +396,7 @@ addDays(date: Date, days: number): Date {
     return btoa(binary);
     
     }
-  
-  
+    
   
   
     async onSubmit(): Promise<void> {
@@ -401,6 +405,7 @@ addDays(date: Date, days: number): Date {
       } else {
         if (this.selectedAreas.length < 1) {
           this.showSnackBar('SelectedAreas are required');
+          console.log()
         } else {
           if (this.addForm.valid) {
             try {
@@ -445,6 +450,13 @@ addDays(date: Date, days: number): Date {
                       mediaFileViewModel.SystemOrderId = viewModel.OrderId;
                       return mediaFileViewModel;
                   });
+                  const toothModelContent= await modifyAndExportGltf("assets/models/teeth.glb",this.selectedAreas)
+                  const toothModelFile = new MediaFileViewModel();
+                  toothModelFile.FileName = 'ToothModel.gltf'; // You can dynamically change this if needed
+                  toothModelFile.FileSelf = await this.encodeFileContentFromBlob(toothModelContent); // Assuming `toothModelContent` contains the GLTF file content
+                  toothModelFile.FileSizeKb = this.getFileSizeKb(toothModelContent); // Implement a function to get the size in KB
+                  toothModelFile.SystemOrderId = viewModel.OrderId;
+                  viewModel.mediaFileViewModels.push(toothModelFile);
               } catch (error) {
                 console.error('Error while mapping mediaFileViewModels:', error);
                 throw error;
@@ -484,7 +496,28 @@ addDays(date: Date, days: number): Date {
         }
       }
     }
-  
+    getFileSizeKb(blob: Blob): number {
+      return Math.ceil(blob.size / 1024); // Convert bytes to KB
+    }
+    async encodeFileContentFromBlob(blob: Blob): Promise<string> {
+      // Convert Blob to ArrayBuffer
+      const arrayBuffer = await blob.arrayBuffer();
+      
+      // Convert ArrayBuffer to Uint8Array
+      const uint8Array = new Uint8Array(arrayBuffer);
+      
+      // Convert Uint8Array to binary string
+      let binary = '';
+      const len = uint8Array.byteLength;
+      
+      for (let i = 0; i < len; i++) {
+        binary += String.fromCharCode(uint8Array[i]);
+      }
+      
+      // Convert binary string to Base64
+      return btoa(binary);
+    }
+    
   cancel(): void {
     this.addForm.get('SpecialRequirements')?.reset('');
     this.router.navigate(['/orders']);
