@@ -13,62 +13,76 @@
 
 <div class="container">
   <h1 style="font-size: 48px; color: #4d4a4a; text-align: center; text-transform: uppercase; letter-spacing: 3px; margin-bottom: 24px; text-shadow: 2px 2px 4px rgba(124, 124, 124, 0.5);">EMPLOYEE HOURS</h1>
-    <form [formGroup]="captureHoursForm" (ngSubmit)="submitForm()">
-      <div class="form-group">
-        <mat-form-field appearance="outline">
-          <mat-label><i class="material-icons">person</i> Employee</mat-label>
-          <mat-select id="employee" formControlName="employee" required>
-            <mat-option *ngFor="let employee of employees" [value]="employee.employeeId">{{ employee.firstName }}</mat-option>
-          </mat-select>
-          <mat-error *ngIf="captureHoursForm.get('employee')!.invalid && captureHoursForm.get('employee')!.touched">
-            Employee is required.
-          </mat-error>
-        </mat-form-field>
-      </div>
-      <div class="form-group">
-        <mat-form-field appearance="outline">
-          <mat-label><i class="material-icons">date_range</i> Work Date</mat-label>
-          <input matInput id="workDate" formControlName="workDate" type="date" required>
-          <mat-error *ngIf="captureHoursForm.get('workDate')!.invalid && captureHoursForm.get('workDate')!.touched">
-            Work date is required.
-          </mat-error>
-        </mat-form-field>
-      </div>
-      <div class="form-group">
-        <mat-form-field appearance="outline">
-          <mat-label><i class="material-icons">access_time</i> Clock In Time</mat-label>
-          <input matInput id="clockInTime" formControlName="clockInTime" type="time" required>
-          <mat-error *ngIf="captureHoursForm.get('clockInTime')!.invalid && captureHoursForm.get('clockInTime')!.touched">
-            Clock in time is required.
-          </mat-error>
-        </mat-form-field>
-      </div>
-      <div class="form-group">
-        <mat-form-field appearance="outline">
-          <mat-label><i class="material-icons">access_time</i> Clock Out Time</mat-label>
-          <input matInput id="clockOutTime" formControlName="clockOutTime" type="time" required [min]="minClockOutTime">
-          <mat-error *ngIf="captureHoursForm.get('clockOutTime')!.invalid && captureHoursForm.get('clockOutTime')!.touched">
-            Clock out time is required and should be after clock in time.
-          </mat-error>
-        </mat-form-field>
-        <div *ngIf="captureHoursForm.errors?.['clockOutTimeInvalid']" style="color: red;">
-          Clock out time cannot be earlier than clock in time.
-        </div>
-      </div>
-      <button mat-raised-button color="primary" type="submit" [disabled]="captureHoursForm.invalid">Submit</button>
-    </form>
-  </div>
+  
+  <form [formGroup]="captureHoursForm" (ngSubmit)="submitForm()">
+    <!-- Employee Selection -->
+    <div class="form-group">
+      <mat-form-field appearance="outline">
+        <mat-label><i class="material-icons">person</i> Employee</mat-label>
+        <mat-select id="employee" formControlName="employee" required>
+          <mat-option *ngFor="let employee of employees" [value]="employee.employeeId">{{ employee.firstName }}</mat-option>
+        </mat-select>
+        <mat-error *ngIf="captureHoursForm.get('employee')!.invalid && captureHoursForm.get('employee')!.touched">
+          Employee is required.
+        </mat-error>
+      </mat-form-field>
+    </div>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.2/angular.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.1.12/angular-material.min.js"></script>
-</body>
+    <!-- Work Date Picker -->
+    <div class="form-group">
+      <mat-form-field appearance="outline">
+        <mat-label><i class="material-icons">date_range</i> Work Date</mat-label>
+        <!-- Add (focus) or (click) event to trigger the calendar -->
+        <input matInput [matDatepicker]="picker" id="workDate" formControlName="workDate" required (focus)="picker.open()" (click)="picker.open()">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+        <mat-error *ngIf="captureHoursForm.get('workDate')!.invalid && captureHoursForm.get('workDate')!.touched">
+          Work date is required.
+        </mat-error>
+      </mat-form-field>
+    </div>
 
-<div class="help-button-container">
-  <button mat-button [routerLink]="['/help-employee']" >
-    <mat-icon>live_help</mat-icon>
-    <span>Help</span>
-  </button>
+    <!-- Clock In Time Picker (Using Native Time Input) -->
+    <div class="form-group">
+      <mat-form-field appearance="outline">
+        <mat-label><i class="material-icons">access_time</i> Clock In Time</mat-label>
+        <input matInput type="time" id="clockInTime" formControlName="clockInTime" required>
+        <mat-error *ngIf="captureHoursForm.get('clockInTime')!.invalid && captureHoursForm.get('clockInTime')!.touched">
+          Clock in time is required.
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <!-- Clock Out Time Picker (Using Native Time Input) -->
+    <div class="form-group">
+      <mat-form-field appearance="outline">
+        <mat-label><i class="material-icons">access_time</i> Clock Out Time</mat-label>
+        <input matInput type="time" id="clockOutTime" formControlName="clockOutTime" required>
+        <mat-error *ngIf="captureHoursForm.get('clockOutTime')!.invalid && captureHoursForm.get('clockOutTime')!.touched">
+          Clock out time is required and should be after clock in time.
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <!-- Submit Button -->
+    <button mat-raised-button color="primary" type="submit" [disabled]="captureHoursForm.invalid">Submit</button>
+  </form>
 </div>
 
+  <!-- Help Button -->
+  <div class="help-button-container">
+    <button mat-button [routerLink]="['/help-employee']">
+      <mat-icon>live_help</mat-icon>
+      <span>Help</span>
+    </button>
+  </div>
+  
+  
+  
 
+<!-- Angular Material and Angular Script imports -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.2/angular.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.1.12/angular-material.min.js"></script>
+
+</body>
 </html>

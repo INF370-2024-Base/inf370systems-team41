@@ -67,6 +67,7 @@ import { StockUsageModalComponent } from './stock-usage-modal/stock-usage-modal.
 import { HelpProfileComponent } from './help-profile/help-profile.component';
 import { HelpCalendarComponent } from './help-calendar/help-calendar.component';
 
+
 const routes: Routes = [
   { path: 'settings', component: SettingsComponent },
   { path: 'help-user', component: HelpUserComponent, canActivate: [RoleGuardService], data: { expectedRoles: ['Admin', 'Lab Manager',"Owner"] } },

@@ -4,18 +4,19 @@
     <mat-form-field appearance="fill">
       <mat-label>Start Date</mat-label>
       <input matInput [matDatepicker]="startPicker" [(ngModel)]="startDate" 
-             [max]="endDate ? addDays(endDate, -1) : null">
-      <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
+             [max]="endDate ? addDays(endDate, -1) : null"
+             (focus)="startPicker.open()" (click)="startPicker.open()" />
       <mat-datepicker #startPicker></mat-datepicker>
     </mat-form-field>
-  
+    
     <mat-form-field appearance="fill">
       <mat-label>End Date</mat-label>
       <input matInput [matDatepicker]="endPicker" [(ngModel)]="endDate" 
-             [min]="startDate ? addDays(startDate, 1) : null">
-      <mat-datepicker-toggle matSuffix [for]="endPicker"></mat-datepicker-toggle>
+             [min]="startDate ? addDays(startDate, 1) : null"
+             (focus)="endPicker.open()" (click)="endPicker.open()" />
       <mat-datepicker #endPicker></mat-datepicker>
     </mat-form-field>
+    
   
     <!-- User Dropdown Filter -->
     <mat-form-field appearance="fill">
