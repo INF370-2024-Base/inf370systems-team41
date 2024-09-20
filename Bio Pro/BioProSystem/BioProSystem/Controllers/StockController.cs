@@ -81,7 +81,7 @@ namespace BioProSystem.Controllers
         [HttpPost]
         [Route("AddStockItem")]
         [Authorize(AuthenticationSchemes = "Bearer")]
-        [Authorize(Roles = " Design Techician, Employee, Lab Manager")]
+        [Authorize(Roles = "Design Technician,Employee,Lab Manager")]
         public async Task<IActionResult> AddStockItem(AddStockItemViewModel viewModel)
         {
             if (viewModel == null)

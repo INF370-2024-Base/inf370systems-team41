@@ -76,9 +76,7 @@
                         <button mat-icon-button (click)="deleteMediaFile(media.mediaFileId)">
                           <mat-icon>delete</mat-icon>
                         </button>
-<button (click)="onFileSelected(media)" *ngIf="media.fileName.includes('gltf')">
-                          View in 3D
-                        </button>
+                          
                        </div>
                     </div>
                  
@@ -92,7 +90,9 @@
                     <p class="file-name">{{ media.fileName }}</p>
                   </button>
                   <div style="padding-top: 10px;">
-                    
+                    <button (click)="onFileSelected(media)" *ngIf="media.fileName.includes('gltf')">
+                      View in 3D
+                    </button>
                 </div>
                 
               </div>

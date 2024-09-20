@@ -13,6 +13,7 @@ import { AddStockItemViewModel } from '../shared/Stock';
 import { StockServices } from '../services/stock.service';
 import { DataService } from '../services/login.service';
 import { map, switchMap } from 'rxjs';
+import { editTeethToNewColour } from '../shared/editTeethModel';
 
 @Component({
   selector: 'app-employee-orders-and-steps',
@@ -114,7 +115,7 @@ onFileSelected(event: any): void {
 }
 errorsFound:boolean=false
 mediaFileViewModels:MediaFileViewModel[]=[]
- CompleteStepOrOrder(stepId:number,orderId:string)
+ CompleteStepOrOrder(stepId:number,orderId:string,step:any,order:any)
  {
   console.log(stepId)
   
@@ -165,6 +166,7 @@ mediaFileViewModels:MediaFileViewModel[]=[]
       });
       if(!this.errorsFound)
         {
+          editTeethToNewColour(this.orderService,order,step.isFinalStep)
           this.employeeService.CompleteStepAndJob(stepId).pipe(
             switchMap(result => {
               return this.employeeService.GetSystemOrderStepById(stepId).pipe(

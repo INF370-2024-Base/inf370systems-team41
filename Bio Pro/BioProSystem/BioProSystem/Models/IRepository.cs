@@ -38,7 +38,6 @@ namespace BioProSystem.Models
         Task<OrderWorkflowTimeline> GetOrderTimelineByIdAsync(int orderTimelinId);
         Task<OrderStatus> GetOrderStatusByIdAsync(int orderStatusId);
         Task<OrderType> GetOrderTypeByIdAsync(int ordertypeId);
-
         Task<MedicalAid> GetMedicalAidByIdAsync(int medicalAidId);
 
         Task<Dentist> GetDentistdByIdAsync(int dentistId);
@@ -85,6 +84,8 @@ namespace BioProSystem.Models
         Task<EmployeeDailyHours> GetEmployeeDailyHoursById(int employeedDailyHoursId);
         Task<List<EmployeeDailyHours>> GetEmployeeDailyHours();
         Task<MediaFile> GetMediaFileById(int mediaFileId);
+
+        Task<MediaFile> Get3DMediaFileById(string systemOrderID);
         //stock
         Task<List<Stock>> GetAllStocks();
         Task<List<StockType>> GetAllStockTypes();

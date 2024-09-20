@@ -70,7 +70,7 @@ const routes: Routes = [
   { path: 'help-user', component: HelpUserComponent, canActivate: [RoleGuardService], data: { expectedRoles: ['Admin', 'Lab Manager',"Owner"] } },
   { path: 'addOrder', component: AddOrderComponent, canActivate: [RoleGuardService], data: { expectedRoles: ['Admin', 'Lab Manager',"Owner"] } },
   { path: 'orders', component: OrdersComponent},
-  { path: 'orderAwaitingDentalDesign', component: OrdersAwaitingDentalDesignComponent, canActivate: [RoleGuardService], data: { expectedRoles: ['Design Technician',"Owner"] } },
+  { path: 'orderAwaitingDentalDesign', component: OrdersAwaitingDentalDesignComponent, canActivate: [RoleGuardService], data: { expectedRoles: ['Design Technician',"Lab Manager"] } },
   { path: 'dentalDesignApproval', component: DentalDesignApprovalComponent, canActivate: [RoleGuardService], data: { expectedRoles: ['Lab Manager',"Owner"] } },
   { path: 'approval', component: ApproveOrderComponent, canActivate: [RoleGuardService], data: { expectedRoles: ['Lab Manager',"Owner"] } },
   { path: 'addEmployee', component: AddEmployeeComponent, canActivate: [RoleGuardService], data: { expectedRoles: ['Lab Manager',"Owner"] } },

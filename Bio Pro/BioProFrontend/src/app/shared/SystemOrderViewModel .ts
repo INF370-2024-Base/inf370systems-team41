@@ -51,4 +51,11 @@ export class SystemOrderViewModel {
     SystemOrderId:string=""
   }
 
+  export class EditMediaFileViewModel{
+    FileName:string='example.txt';
+    FileSelf:string = "new Uint8Array";
+    FileSizeKb:number=1024;
+    MediaFileID:number=0
+  }
+
   

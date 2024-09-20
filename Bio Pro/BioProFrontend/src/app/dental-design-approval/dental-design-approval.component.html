@@ -21,7 +21,7 @@
             </mat-panel-title>
             <mat-panel-description>
               <div class="button-container">
-                <button mat-raised-button color="primary" class="approve-button" (click)="approveOrder(pendingOrder.orderId)">
+                <button mat-raised-button color="primary" class="approve-button" (click)="approveOrder(pendingOrder)">
                   <mat-icon>check</mat-icon> Approve
                 </button>
                 <button mat-raised-button color="warn" class="reject-button" (click)="rejectOrder(pendingOrder.orderId)">

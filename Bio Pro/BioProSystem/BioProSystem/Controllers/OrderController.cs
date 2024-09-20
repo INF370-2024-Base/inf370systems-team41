@@ -623,6 +623,27 @@ namespace BioProSystem.Controllers
                 return StatusCode(500, $"Internal Server Error: {ex.InnerException.Message}");
             }
         }
+        [HttpGet]
+        [Route("Get3DMediaFile/{orderID}")]
+        public async Task<ActionResult<IEnumerable<SystemOrder>>> Get3DMediaFile(string orderID)
+        {
+            try
+            {
+                var mediaFile = await _repository.Get3DMediaFileById(orderID);
+                if (mediaFile == null)
+                {
+                    return NotFound("No pending orders found");
+                }
+                else
+                {
+                    return Ok(mediaFile);
+                }
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal Server Error: {ex.InnerException.Message}");
+            }
+        }
         [HttpPut]
         [Route("DissaprovePendingOrder/{orderId}")]
         [Authorize(AuthenticationSchemes = "Bearer")]
@@ -725,7 +746,7 @@ namespace BioProSystem.Controllers
         [HttpGet]
         [Route("GetOrdersAwaitingDentalDesign")]
         [Authorize(AuthenticationSchemes = "Bearer")]
-        [Authorize(Roles = "Owner, Design Technician")]
+        [Authorize(Roles = "Owner, Design Technician,Lab Manager")]
         public async Task<IActionResult> GetOrdersAwaitingDentalDesign()
         {
             try
@@ -748,7 +769,7 @@ namespace BioProSystem.Controllers
         [HttpPost]
         [Route("SendDentalDesign")]
         [Authorize(AuthenticationSchemes = "Bearer")]
-        [Authorize(Roles = "Design Technician")]
+        [Authorize(Roles = "Design Technician,Lab Manager")]
         public async Task<IActionResult> SendDentalDesign(AddDentalDesignViewModel dentalDesign)
         {
             try
@@ -823,6 +844,41 @@ namespace BioProSystem.Controllers
                 }
               
 
+                if (await _repository.SaveChangesAsync())
+                {
+                    return Ok(mediaFileViewModels);
+                }
+                else
+                {
+                    return BadRequest("Could not save changes to database");
+                }
+
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "An error occurred while deleting daily hours." + ex.InnerException.Message);
+            }
+        }
+        [HttpPut]
+        [Route("EditMediaFile")]
+
+        public async Task<IActionResult> EditMediaFile(EditMediaFileViewModel mediaFileViewModels)
+        {
+            try
+            {
+                
+                    MediaFile mediaFile =await  _repository.GetMediaFileById(mediaFileViewModels.MediaFileID);
+                    if(mediaFile!=null)
+                    {
+                    mediaFile.FileName = mediaFileViewModels.FileName;
+                    mediaFile.FileSelf = Convert.FromBase64String(mediaFileViewModels.FileSelf);
+                    mediaFile.FileSizeKb = mediaFileViewModels.FileSizeKb;
+                    }
+                    else
+                    {
+                    return NotFound("Could not find mediafile. It might have been deleted");
+                    }
+                    
                 if (await _repository.SaveChangesAsync())
                 {
                     return Ok(mediaFileViewModels);
@@ -999,7 +1055,7 @@ namespace BioProSystem.Controllers
         [HttpGet]
         [Route("GetOrdersAwaitingDentalDesignApproval")]
         [Authorize(AuthenticationSchemes = "Bearer")]
-        [Authorize(Roles = " Admin, Owner, Lab Manager")]
+        [Authorize(Roles = "Admin,Owner,Lab Manager")]
         public async Task<IActionResult> GetOrdersAwaitingDentalDesignApproval()
         {
             try

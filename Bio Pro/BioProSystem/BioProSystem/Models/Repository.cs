@@ -179,7 +179,7 @@ namespace BioProSystem.Models
         }
         public async Task<List<SystemOrder>> GetSystemOrdersWithOrderStatusID(int orderStatusId)
         {
-            IQueryable<SystemOrder> pendingOrders = _appDbContext.SystemOrders.Where(o => o.OrderStatusId == orderStatusId).Include(s=>s.OrderStatus).Include(s=>s.OrderWorkflowTimeline).ThenInclude(o=>o.orderDirection).Include(s=>s.Dentist).Include(s=>s.OrderType).Include(o=>o.MediaFiles);
+            IQueryable<SystemOrder> pendingOrders = _appDbContext.SystemOrders.Where(o => o.OrderStatusId == orderStatusId).Include(s => s.SelectedAreas).Include(s=>s.OrderStatus).Include(s=>s.OrderWorkflowTimeline).ThenInclude(o=>o.orderDirection).Include(s=>s.Dentist).Include(s=>s.OrderType).Include(o=>o.MediaFiles);
             return await pendingOrders.ToListAsync();
         }
 
@@ -360,6 +360,14 @@ namespace BioProSystem.Models
         public async Task<OrderType> GetOrderTypeByIdAsync(int ordertypeId)
         {
             return await _appDbContext.OrderTypes.Where(o => o.OrderTypeId == ordertypeId).FirstOrDefaultAsync();
+        }
+        public async Task<MediaFile> GetMediaFileById(int mediaFileId)
+        {
+            return await _appDbContext.MediaFiles.Where(o => o.MediaFileId == mediaFileId).FirstOrDefaultAsync();
+        }
+        public async Task<MediaFile> Get3DMediaFileById(string systemOrderID)
+        {
+            return await _appDbContext.MediaFiles.Where(o => o.SystemOrderId == systemOrderID && o.FileName== "ToothModel.gltf").FirstOrDefaultAsync();
         }
         public async Task<List<OrderStatus>> GetOrderStatusesAsync()
         {
@@ -550,10 +558,6 @@ namespace BioProSystem.Models
         {
 
             return await _appDbContext.EmployeeDailyHours.Include(emp => emp.Employees).ToListAsync();
-        }
-        public async Task<MediaFile> GetMediaFileById(int mediaFileId)
-        {
-            return await _appDbContext.MediaFiles.Where(m => m.MediaFileId == mediaFileId).FirstOrDefaultAsync();
         }
         //stock
         public async Task<List<Stock>> GetAllStocks()

@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map, Observable, Subject } from 'rxjs';
 import { DecisionViewModel, OpenOrder } from '../shared/ordersViewModel';
-import { SystemOrderViewModel } from '../shared/SystemOrderViewModel ';
+import { EditMediaFileViewModel, SystemOrderViewModel } from '../shared/SystemOrderViewModel ';
 import { AddDentalDesignViewModel } from '../orders-awaiting-dental-design/orders-awaiting-dental-design.component';
 import { AddMediaFileViewModel } from '../employee-orders-and-steps/employee-orders-and-steps.component';
 import { AddStockItemViewModel } from '../shared/Stock';
@@ -42,13 +42,14 @@ export class OrderService {
   addMediaFile(mediaFile: AddMediaFileViewModel): Observable<AddMediaFileViewModel> {
     return this.httpClient.post<AddMediaFileViewModel>(`${this.apiUrl}Api/AddMediaFile`, mediaFile, this.httpOptions);
   }
+  editMediaFile(mediaFile: EditMediaFileViewModel): Observable<EditMediaFileViewModel> {
+    return this.httpClient.put<EditMediaFileViewModel>(`${this.apiUrl}Api/EditMediaFile`, mediaFile, this.httpOptions);
+  }
   
 
   getOpenOrderId(openOrderID: string): Observable<OpenOrder>{
     return this.httpClient.get<OpenOrder>(`${this.apiUrl}GetOpenOrder/` + openOrderID)
   }
-
-
 
   getAllOrders(): Observable<any[]> {
     return this.httpClient.get<any[]>(`${this.apiUrl}Api/GetAllOrders`);
@@ -132,6 +133,9 @@ export class OrderService {
 getOrderStatus(orderId: string): Observable<any> {
   return this.httpClient.get<any>(`${this.apiUrl}/orders/${orderId}/status`);
 }
+get3DMediaFile(orderId: string): Observable<any> {
+  return this.httpClient.get<any>(`${this.apiUrl}Api/Get3DMediaFile/${orderId}`);
+}
 
 getPendingSystemOrders(): Observable<any[]> {
   return this.httpClient.get<any[]>(`${this.apiUrl}/Timeline/GetOrdersWithoutPendingStatus`);
@@ -156,9 +160,9 @@ sendDentalDesign(dentalDesign:AddDentalDesignViewModel):Observable<any[]>
 {
   return this.httpClient.post<any[]>(`${this.apiUrl}Api/SendDentalDesign`,dentalDesign);
 }
-apporveDentalDesign(orderId:number):Observable<number> {
+apporveDentalDesign(orderId:string):Observable<string> {
   const endpoint = `Api/ApproveDentalDesign/${orderId}`; 
-  return this.httpClient.put<number>(`${this.apiUrl}${endpoint}`,orderId);
+  return this.httpClient.put<string>(`${this.apiUrl}${endpoint}`,orderId);
 }
 rejectDentalDesign(orderId:number):Observable<number> {
   const endpoint = `Api/DisapproveDentalDesign/${orderId}`;
