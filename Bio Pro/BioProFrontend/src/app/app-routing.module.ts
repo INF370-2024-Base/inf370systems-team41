@@ -63,7 +63,7 @@ import { SettingsComponent } from './settings/settings.component';
 import { AuditTrailComponent } from './audit-trail/audit-trail.component';
 import { RoleGuardService } from './services/roleCheck';
 import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
-
+import { ModellingComponent } from './modelling/modelling.component';
 
 const routes: Routes = [
   { path: 'settings', component: SettingsComponent },
@@ -123,6 +123,7 @@ const routes: Routes = [
   { path: 'rp/:email', component: ResetUserPasswordComponent},
   { path: 'audit-trail', component: AuditTrailComponent, canActivate: [RoleGuardService], data: { expectedRoles: ['Admin', 'Lab Manager','Owner'] } },
   { path: 'unauthorized', component: UnauthorizedComponent },
+  { path: 'model', component: ModellingComponent }
 ];
 
 @NgModule({

@@ -110,6 +110,7 @@ import { LoadingInterceptor } from './services/loading.interceptor';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
 import { RejectOrderModalComponent } from './reject-order-modal/reject-order-modal.component';
+import { ModellingComponent } from './modelling/modelling.component';
 
 @NgModule({
   declarations: [
@@ -132,7 +133,7 @@ import { RejectOrderModalComponent } from './reject-order-modal/reject-order-mod
     , OrdersAwaitingDentalDesignComponent, DentalDesignApprovalComponent, EmployeeOrdersAndStepsComponent,CalendarComponent, SearchBarComponent, EventModalComponent, ProcededuralTimelineViewComponent, AddEventModalComponent, StockUsedComponent, HelpComponent,HelpStockComponent, HelpEmployeesComponent, HelpDentistComponent, DentistEditDialogComponent, HelpDentistSearchComponent, HelpDentistAddComponent, HelpDentistEditComponent, HelpDentistDeleteComponent, HelpEmployeeAddComponent, HelpEmployeeEditComponent, HelpEmployeeDeleteComponent, HelpEmployeeSearchComponent, HelpEmployeeHourComponent, HelpEmploueeHourDeleteComponent, HelpStockAddComponent, HelpStockCaptureComponent, HelpStockWriteoffComponent, HelpStockSearchComponent,
     ReportsComponent,
     CaptureEmployeeHoursComponent,LoginComponent,EditOrderModalComponent, AddUserComponent, AddProceduralTimeline, DeliveriesComponent, AddDeliveryComponent, HomeComponent, TestingBackendComponent, ConfirmationDialogComponent, OrdersAwaitingDentalDesignComponent, DentalDesignApprovalComponent, HelpComponent, HelpOrdersComponent, HelpTimelineOfOrdersComponent, HelpDeliveriesComponent, StockCategoryComponent, EditStockCategoryComponent, StockTypeComponent, EditStockTypeComponent, AddStockTypeComponent, AddStockCategoryComponent, UpdatePasswordComponent, ResetPasswordComponent, ResetUserPasswordComponent
-    ,CaptureEmployeeHoursComponent,LoginComponent,EditOrderModalComponent, AddUserComponent, AddProceduralTimeline, DeliveriesComponent, AddDeliveryComponent, HomeComponent, TestingBackendComponent, ConfirmationDialogComponent, OrdersAwaitingDentalDesignComponent, DentalDesignApprovalComponent, HelpComponent, HelpOrdersComponent, HelpTimelineOfOrdersComponent, HelpDeliveriesComponent, ConfirmDeleteEmployeeComponent, ConfirmDeleteDentistComponent, HelpUserComponent, ConfirmDeleteUserComponent, ConfirmDeleteDailyHourComponent, SettingsComponent, AuditTrailComponent, UnauthorizedComponent, RejectOrderModalComponent
+    ,CaptureEmployeeHoursComponent,LoginComponent,EditOrderModalComponent, AddUserComponent, AddProceduralTimeline, DeliveriesComponent, AddDeliveryComponent, HomeComponent, TestingBackendComponent, ConfirmationDialogComponent, OrdersAwaitingDentalDesignComponent, DentalDesignApprovalComponent, HelpComponent, HelpOrdersComponent, HelpTimelineOfOrdersComponent, HelpDeliveriesComponent, ConfirmDeleteEmployeeComponent, ConfirmDeleteDentistComponent, HelpUserComponent, ConfirmDeleteUserComponent, ConfirmDeleteDailyHourComponent, SettingsComponent, AuditTrailComponent, UnauthorizedComponent, RejectOrderModalComponent, ModellingComponent
   ],
   imports: [
     BrowserModule,
