@@ -341,6 +341,7 @@ namespace BioProSystem.Controllers
                 else
                 {
                     completedStep.DateCompleted = DateTime.Now;
+                    completedStep.Completed = true;
                     order.OrderStatusId = 5;
                     List<Employee> drivers=await _repository.GetEmployeesWithJobTitleId(0, "Driver");
                     foreach (Employee driver in drivers)

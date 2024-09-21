@@ -3,6 +3,8 @@ import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import { ActivatedRoute } from '@angular/router';
+import { AnyARecord } from 'dns';
+import { el } from 'date-fns/locale';
 
 @Component({
   selector: 'app-modelling',
@@ -20,11 +22,25 @@ export class ModellingComponent implements OnInit {
   private gltfFile?: File;
 
   constructor(private route: ActivatedRoute) { }
-
+  stepsWithColors:any
+  completedStepColor = '#FFB6C1';
+  completed=false
   ngOnInit() {
     this.initScene();
     this.route.queryParams.subscribe(params => {
       const fileUrl = params['fileUrl'];
+      const steps=JSON.parse(params['steps']);
+      if(steps)
+      {
+        steps.forEach((element:any) => {
+          console.log(element)
+          if(element.isFinalStep&&element.completed)
+          {
+            this.completed=true
+          }
+        });
+        this.stepsWithColors = assignColorsToSteps(steps);
+      }
       if (fileUrl) {
         fetch(fileUrl)
           .then(response => response.blob())
@@ -112,4 +128,26 @@ export class ModellingComponent implements OnInit {
 
     this.renderer.render(this.scene, this.camera);
   }
+}
+const colorSequence = ['#ADD8E6', '#90EE90', '#FFA07A', '#FFFFE0']; // Light Blue, Green, Orange, Yellow
+const completedStepColor = '#FFB6C1'; // Light Red for completed steps
+
+// Function to get the appropriate color for each step
+function getStepColor(stepIndex: number, steps: any[]): string {
+  // Step is completed, return the completed step color
+  
+  return colorSequence[stepIndex];
+}
+
+// Assign colors to steps based on their completion status and index
+function assignColorsToSteps(steps: any[]): any[] {
+  return steps.map((step, index) => {
+    const stepColor = getStepColor(index, steps);
+
+    // Assign the color to each step
+    return {
+      ...step,
+      color: stepColor // Add a color property to each step
+    };
+  });
 }

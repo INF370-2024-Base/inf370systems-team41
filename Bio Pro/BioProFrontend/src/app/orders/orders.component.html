@@ -90,7 +90,7 @@
                     <p class="file-name">{{ media.fileName }}</p>
                   </button>
                   <div style="padding-top: 10px;">
-                    <button (click)="onFileSelected(media)" *ngIf="media.fileName.includes('gltf')">
+                    <button (click)="onFileSelected(media,order.systemOrderSteps)" *ngIf="media.fileName.includes('gltf')">
                       View in 3D
                     </button>
                 </div>

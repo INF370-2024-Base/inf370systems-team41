@@ -60,11 +60,11 @@ export class OrdersComponent implements OnInit {
     this.hoverState = state;
   }
   selectedGltfFile!: File;
-  openModelViewer(file: File): void {
+  openModelViewer(file: File, steps?:any): void {
     const fileUrl = URL.createObjectURL(file);
-    this.router.navigate(['/model'], { queryParams: { fileUrl } });
+    this.router.navigate(['/model'], { queryParams: { fileUrl,steps: JSON.stringify(steps) } });
   }
-    onFileSelected(event: any): void {
+    onFileSelected(event: any,steps?:any): void {
       console.log(event)
       const file:MediaFileViewModel= 
       {
@@ -75,7 +75,7 @@ export class OrdersComponent implements OnInit {
       }
       if (file && file.FileName.endsWith('.gltf')) {
         this.selectedGltfFile = this.convertBase64ToFile(file.FileSelf,file.FileName);
-        this.openModelViewer(this.selectedGltfFile)
+        this.openModelViewer(this.selectedGltfFile,steps)
       } else {
         console.error('Invalid file type. Please upload a .gltf file.');
       }

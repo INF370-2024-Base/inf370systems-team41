@@ -1,4 +1,20 @@
 <h1 mat-dialog-title>3D Model Viewer</h1>
+<div *ngIf="stepsWithColors">
+  <div *ngFor="let step of stepsWithColors">
+    <p *ngIf="!step.isCurrentStep" [ngStyle]="{'background-color': step.color, 'padding': '5px', 'border-radius': '5px', 'color': '#000'}">
+      Step: {{ step.description }} 
+    </p>
+    <p *ngIf="step.isCurrentStep && !completed" [ngStyle]="{'background-color': step.color, 'padding': '5px', 'border-radius': '5px', 'color': '#000'}">
+      Current Step: {{ step.description }} -{{ step.employee.firstName }} {{ step.employee.lastName }} 
+    </p>
+  </div>
+  <p *ngIf="!completed" [ngStyle]="{'background-color': completedStepColor, 'padding': '5px', 'border-radius': '5px', 'color': '#000'}">
+    Completed 
+  </p>
+  <p *ngIf="completed" [ngStyle]="{'background-color': completedStepColor, 'padding': '5px', 'border-radius': '5px', 'color': '#000'}">
+    Order has been completed 
+  </p>
+</div>
 <div mat-dialog-actions>
   <button mat-button [routerLink]="['/orders']">Back to Orders</button>
 </div>
