@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:biopromobileflutter/services/delivery_service.dart';
+import 'package:biopromobileflutter/services/auth_service.dart'; // Import AuthService
 import 'components/delivery_card.dart';
+import 'package:http/http.dart' as http;
 
 class DeliveriesPage extends StatefulWidget {
   const DeliveriesPage({super.key});
@@ -10,14 +12,22 @@ class DeliveriesPage extends StatefulWidget {
 }
 
 class _DeliveriesPageState extends State<DeliveriesPage> {
-  late Future<List<dynamic>> futureDeliveries;
-  final DeliveryService deliveryService = DeliveryService(baseUrl: 'https://localhost:44315/delivery');
+  late Future<List<Map<String, dynamic>>> futureDeliveries;
+  late DeliveryService deliveryService;
+  final AuthService authService = AuthService(); // Initialize AuthService
 
   @override
   void initState() {
     super.initState();
+
+    // Create the DeliveryService with AuthService
+    deliveryService = DeliveryService(
+      baseUrl: 'https://localhost:44315/delivery',
+      authService: authService,
+      context: context,
+    );
+
     futureDeliveries = deliveryService.fetchDeliveries();
-    print('Future Deliveries Assigned: $futureDeliveries');
   }
 
   @override
@@ -28,7 +38,7 @@ class _DeliveriesPageState extends State<DeliveriesPage> {
       ),
       body: Container(
         color: const Color(0xFF8B9AAD),
-        child: FutureBuilder<List<dynamic>>(
+        child: FutureBuilder<List<Map<String, dynamic>>>(
           future: futureDeliveries,
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
@@ -39,7 +49,6 @@ class _DeliveriesPageState extends State<DeliveriesPage> {
               return const Center(child: Text('No deliveries found'));
             } else {
               final deliveries = snapshot.data!;
-              print('Deliveries Data: $deliveries'); // Log the fetched deliveries data
               return Scrollbar(
                 child: ListView.builder(
                   padding: const EdgeInsets.all(10.0),

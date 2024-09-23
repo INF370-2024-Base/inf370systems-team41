@@ -800,7 +800,7 @@ namespace BioProSystem.Controllers
         [HttpPost]
         [Route("AddMediaFile")]
         [Authorize(AuthenticationSchemes = "Bearer")]
-        [Authorize(Roles = "Owner, Design Technician, Employee")]
+        [Authorize(Roles = "Owner, Design Technician, Employee,Lab Manager")]
         public async Task<IActionResult> SendDentalDesign(AddMediaFileViewModel mediaFileViewModels)
         {
             try

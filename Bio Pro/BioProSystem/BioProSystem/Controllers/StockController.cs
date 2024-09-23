@@ -259,7 +259,6 @@ namespace BioProSystem.Controllers
             }
 
         }
-        [Authorize(Roles="Admin")]
         [HttpPost]
         [Route("WriteOffStock")]
         [Authorize(AuthenticationSchemes = "Bearer")]

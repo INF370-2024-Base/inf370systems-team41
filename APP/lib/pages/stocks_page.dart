@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import '../services/stock_service.dart';
+import 'package:biopromobileflutter/services/auth_service.dart'; // Adjust import path
+import 'package:biopromobileflutter/services/stock_service.dart'; // Adjust import path
+ // Adjust import path
 import 'components/stock_card.dart';
 
 class StocksPage extends StatefulWidget {
@@ -9,11 +11,28 @@ class StocksPage extends StatefulWidget {
 
 class _StocksPageState extends State<StocksPage> {
   late Future<List<dynamic>> futureStocks;
-  final StockService stockService = StockService(baseUrl: 'https://localhost:44315/stock');
+  late StockService stockService;
+  late AuthService authService;
 
   @override
   void initState() {
     super.initState();
+
+    // Initialize AuthService
+    authService = AuthService(); // Ensure AuthService is correctly instantiated
+
+    // Initialize AuthenticatedHttpClient
+    final authenticatedClient = AuthenticatedHttpClient(
+      baseUrl: 'https://localhost:44315/stock',
+      authService: authService,
+    );
+
+    // Initialize StockService with AuthenticatedHttpClient
+    stockService = StockService(
+      baseUrl: 'stock',
+      client: authenticatedClient,
+    );
+
     futureStocks = stockService.fetchStocks();
   }
 
@@ -21,14 +40,42 @@ class _StocksPageState extends State<StocksPage> {
     try {
       await stockService.writeOffStock(writeOffData);
       setState(() {
-        futureStocks = stockService.fetchStocks(); 
+        futureStocks = stockService.fetchStocks(); // Refresh stock list
       });
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Stock successfully written off')),
       );
     } catch (error) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Failed to write off stock: $error')),
+      if (error is UnauthorizedException) {
+        _showUnauthorizedError();
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Failed to write off stock: $error')),
+        );
+      }
+    }
+  }
+
+  void _showUnauthorizedError() {
+    if (Navigator.of(context).canPop()) {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Unauthorized'),
+            content: Text('Your session has expired or you are not authorized. Please log in again.'),
+            actions: <Widget>[
+              TextButton(
+                child: Text('OK'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  // Optionally navigate to login screen
+                  // Navigator.pushReplacementNamed(context, '/login');
+                },
+              ),
+            ],
+          );
+        },
       );
     }
   }
@@ -68,7 +115,7 @@ class _StocksPageState extends State<StocksPage> {
             }
           },
         ),
-     ),
-);
-}
+      ),
+    );
+  }
 }

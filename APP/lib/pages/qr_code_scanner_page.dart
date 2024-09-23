@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'package:biopromobileflutter/services/auth_service.dart';
 import 'package:http/http.dart' as http;
 import 'package:biopromobileflutter/services/employee_hours_capture_service.dart';
 import 'package:flutter/material.dart';
@@ -8,7 +9,8 @@ import 'timer_component.dart';
 
 class QRCodeScannerPage extends StatefulWidget {
   final ValueNotifier<Duration> workedHoursNotifier;
-
+  late final AuthService _authService;
+  late final AuthenticatedHttpClient _authenticatedHttpClient;
   QRCodeScannerPage({required this.workedHoursNotifier});
 
   @override
@@ -20,17 +22,27 @@ class _QRCodeScannerPageState extends State<QRCodeScannerPage> {
   Timer? _timer;
   bool isScanning = true;
   bool isTimeCaptured = false;
-  String? employeeId; 
+  String? employeeId;
   Duration workedHours = Duration.zero;
   MobileScannerController scannerController = MobileScannerController();
   bool isCooldown = false;
 
   late final EmployeeHoursCaptureService _captureService;
+  late final AuthService _authService;
+  late final AuthenticatedHttpClient _authenticatedHttpClient;
 
   @override
   void initState() {
     super.initState();
-    _captureService = EmployeeHoursCaptureService(baseUrl: 'https://localhost:44315');
+    
+    _authService = AuthService();
+    _authenticatedHttpClient = AuthenticatedHttpClient(
+      baseUrl: 'https://example.com', // Replace with your actual base URL
+      authService: _authService,
+    );
+    _captureService = EmployeeHoursCaptureService(
+      httpClient: _authenticatedHttpClient,
+    );
 
     if (widget.workedHoursNotifier.value > Duration.zero) {
       startTime = DateTime.now().subtract(widget.workedHoursNotifier.value);

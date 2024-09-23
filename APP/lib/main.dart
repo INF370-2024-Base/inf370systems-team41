@@ -8,6 +8,8 @@ import 'package:biopromobileflutter/pages/qr_code_scanner_page.dart';
 import 'package:biopromobileflutter/pages/stocks_page.dart';
 import 'package:flutter/material.dart';
 
+final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+
 void main() {
   runApp(MyApp());
 }
@@ -16,11 +18,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      navigatorKey: navigatorKey, // Set the navigator key here
       title: 'BioPro Mobile Flutter',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: BioProLoginPage(), 
+      home: BioProLoginPage(),
     );
   }
 }

@@ -30,7 +30,6 @@ namespace BioProSystem.Controllers
         [HttpGet]
         [Route("GetAllEmployee")]
         [Authorize(AuthenticationSchemes = "Bearer")]
-        [Authorize(Roles = "Admin, Lab Manager, Owner")]
         public async Task<IActionResult> GetAllEmployee()
         {
             try

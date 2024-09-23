@@ -1,9 +1,11 @@
+import 'package:biopromobileflutter/services/error_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'dart:io';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter/foundation.dart' show Uint8List, kIsWeb;
+import 'package:biopromobileflutter/services/auth_service.dart';
 
 class EditOrderModal extends StatefulWidget {
   final Map<String, dynamic> order;
@@ -17,6 +19,8 @@ class EditOrderModal extends StatefulWidget {
 class _EditOrderModalState extends State<EditOrderModal> {
   final _formKey = GlobalKey<FormState>();
   final ImagePicker _picker = ImagePicker();
+  late AuthService authService = AuthService();
+  late AuthenticatedHttpClient httpClient;
   XFile? _selectedImage;
 
   late TextEditingController _priorityLevelController;
@@ -32,6 +36,7 @@ class _EditOrderModalState extends State<EditOrderModal> {
   @override
   void initState() {
     super.initState();
+    authService = AuthService();
     _priorityLevelController =
         TextEditingController(text: widget.order['priorityLevel'] ?? '');
     _specialRequirementsController =
@@ -46,7 +51,10 @@ class _EditOrderModalState extends State<EditOrderModal> {
     _medicalAidNumberController =
         TextEditingController(text: widget.order['patientMedicalAidNumber'] ?? '');
     selectedAreasIds = widget.order['selectedAreasIds']?.cast<int>() ?? [];
-
+    httpClient = AuthenticatedHttpClient(
+      baseUrl: 'https://localhost:44315',
+      authService: authService,
+    );
     _fetchMediaFiles();
   }
 
@@ -128,19 +136,13 @@ class _EditOrderModalState extends State<EditOrderModal> {
             "orderId": widget.order['orderId'],
           };
 
-          print('Submitting media file with request body: $requestBody');
-
-          final response = await http.post(
-            Uri.parse('https://localhost:44315/Api/AddMediaFile'),
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: jsonEncode(requestBody),
+          final response = await httpClient.sendRequest(
+            'POST',
+            'Api/AddMediaFile',
+            body: requestBody,
           );
 
-          print('Response status code: ${response.statusCode}');
           if (response.statusCode == 200) {
-            print('Media file attached successfully.');
             showDialog(
               context: context,
               builder: (BuildContext context) {
@@ -152,8 +154,7 @@ class _EditOrderModalState extends State<EditOrderModal> {
                       child: Text('OK'),
                       onPressed: () {
                         Navigator.of(context).pop();
-                        Navigator.of(context)
-                            .pop('Media file added successfully');
+                        Navigator.of(context).pop('Media file added successfully');
                       },
                     ),
                   ],
@@ -161,22 +162,24 @@ class _EditOrderModalState extends State<EditOrderModal> {
               },
             );
           } else {
-            print('Failed to add media file: ${response.body}');
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
-                  content: Text('Failed to add media file: ${response.body}')),
+                content: Text('Failed to add media file: ${response.body}'),
+              ),
             );
           }
         } catch (e) {
-          print('Exception occurred while saving media file: $e');
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('An error occurred: $e')),
+            SnackBar(
+              content: Text('An error occurred: $e'),
+            ),
           );
         }
       } else {
-        print('No image selected for upload.');
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Please select an image to attach.')),
+          SnackBar(
+            content: Text('Please select an image to attach.'),
+          ),
         );
       }
     }

@@ -1,16 +1,19 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'auth_service.dart'; // Import the file containing AuthService
 
 class EmployeeHoursCaptureService {
-  final String baseUrl;
+  final AuthenticatedHttpClient httpClient;
 
-  EmployeeHoursCaptureService({required this.baseUrl});
+  EmployeeHoursCaptureService({
+    required this.httpClient,
+  });
 
   Future<void> captureDailyHours({
     required String employeeId,
     required double totalHours,
   }) async {
-    final String apiUrl = '$baseUrl/api/Employee/capture-daily-hours/$employeeId';
+    final String endpoint = 'api/Employee/capture-daily-hours/$employeeId';
 
     final Map<String, dynamic> data = {
       "employeeDailyHoursId": 0,
@@ -19,16 +22,14 @@ class EmployeeHoursCaptureService {
       "hours": totalHours,
     };
 
-    print('Sending the following data to $apiUrl:');
+    print('Sending the following data to $endpoint:');
     print(jsonEncode(data));
 
     try {
-      final response = await http.post(
-        Uri.parse(apiUrl),
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: jsonEncode(data),
+      final response = await httpClient.sendRequest(
+        'POST',
+        endpoint,
+        body: data,
       );
 
       if (response.statusCode == 200) {
