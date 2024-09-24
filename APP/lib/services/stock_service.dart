@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:biopromobileflutter/services/auth_service.dart';
 import 'package:http/http.dart' as http;
-
+import 'package:shared_preferences/shared_preferences.dart';
 
 class UnauthorizedException implements Exception {}
 
@@ -13,7 +13,10 @@ class StockService {
     required this.baseUrl,
     required this.client,
   });
-
+Future<List<String>?> getRoles() async {
+  final prefs = await SharedPreferences.getInstance();
+  return prefs.getStringList('userRoles');
+}
   Future<List<dynamic>> fetchStocks() async {
     final response = await client.sendRequest('GET', 'GetAllStock');
 

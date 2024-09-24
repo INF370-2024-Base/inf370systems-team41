@@ -1,3 +1,4 @@
+import 'package:biopromobileflutter/pages/stocks_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_login/flutter_login.dart';
 import 'package:biopromobileflutter/main.dart';
@@ -7,24 +8,35 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 class BioProLoginPage extends StatelessWidget {
   final storage = FlutterSecureStorage();
 
-  BioProLoginPage({Key? key}) : super(key: key);
+  BioProLoginPage({Key? key, required AuthService authService}) : super(key: key);
 
   Duration get loginTime => Duration(milliseconds: 2250);
 
   Future<String?> _authUser(LoginData data, BuildContext context) async {
-    try {
-      AuthService authService = AuthService();
-      final response = await authService.login(data.name, data.password);
-      await storage.write(key: 'token', value: response['token']);
+  try {
+    // Create instances of AuthService and AuthenticatedHttpClient
+    AuthService authService = AuthService();
+    AuthenticatedHttpClient httpClient = AuthenticatedHttpClient(
+      baseUrl: 'https://localhost:44315', // Your API base URL
+      authService: authService, // Pass the authService here
+    );
 
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (context) => MyHomePage()),
-      );
-      return null;
-    } catch (e) {
-      return e.toString();
-    }
+    // Call login with the required 3 arguments
+    final response = await authService.login(data.name, data.password, httpClient);
+
+    // Save the token in secure storage
+    await storage.write(key: 'token', value: response['token']);
+    final theRoles= await getRoles();
+    // Navigate to the home page
+    Navigator.of(context).pushReplacement(
+      MaterialPageRoute(builder: (context) => MyHomePage(authService: authService,roles: theRoles,)),
+    );
+
+    return null;
+  } catch (e) {
+    return e.toString(); // Return the error message to display in the login UI
   }
+}
 
   Future<String?> _authSignup(SignupData data, BuildContext context) async {
     return await _authUser(LoginData(name: data.name!, password: data.password!), context);
@@ -35,6 +47,7 @@ class BioProLoginPage extends StatelessWidget {
       return 'Password recovery not implemented';
     });
   }
+  
 
   @override
   Widget build(BuildContext context) {

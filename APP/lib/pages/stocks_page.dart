@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:biopromobileflutter/services/auth_service.dart'; // Adjust import path
-import 'package:biopromobileflutter/services/stock_service.dart'; // Adjust import path
- // Adjust import path
+import 'package:biopromobileflutter/services/auth_service.dart';
+import 'package:biopromobileflutter/services/stock_service.dart';
 import 'components/stock_card.dart';
-
+import 'package:shared_preferences/shared_preferences.dart';
 class StocksPage extends StatefulWidget {
   @override
   _StocksPageState createState() => _StocksPageState();
@@ -13,27 +12,31 @@ class _StocksPageState extends State<StocksPage> {
   late Future<List<dynamic>> futureStocks;
   late StockService stockService;
   late AuthService authService;
+  List<String> roles = [];
 
   @override
   void initState() {
     super.initState();
+    _initializeServices();
+  }
 
-    // Initialize AuthService
-    authService = AuthService(); // Ensure AuthService is correctly instantiated
+  Future<void> _initializeServices() async {
+    authService = AuthService();
+    roles = await authService.getRoles() ?? []; // Retrieve and store roles
+    print(roles); // Debug print to check roles
 
-    // Initialize AuthenticatedHttpClient
     final authenticatedClient = AuthenticatedHttpClient(
       baseUrl: 'https://localhost:44315/stock',
       authService: authService,
     );
 
-    // Initialize StockService with AuthenticatedHttpClient
     stockService = StockService(
       baseUrl: 'stock',
       client: authenticatedClient,
     );
 
     futureStocks = stockService.fetchStocks();
+    setState(() {});
   }
 
   void handleWriteOffStock(Map<String, dynamic> writeOffData) async {
@@ -69,8 +72,6 @@ class _StocksPageState extends State<StocksPage> {
                 child: Text('OK'),
                 onPressed: () {
                   Navigator.of(context).pop();
-                  // Optionally navigate to login screen
-                  // Navigator.pushReplacementNamed(context, '/login');
                 },
               ),
             ],
@@ -107,6 +108,7 @@ class _StocksPageState extends State<StocksPage> {
                     final stockItem = stockItems[index];
                     return StockCard(
                       stockItem: stockItem,
+                      roles: roles, // Pass the roles list
                       onWriteOff: handleWriteOffStock,
                     );
                   },
@@ -118,4 +120,9 @@ class _StocksPageState extends State<StocksPage> {
       ),
     );
   }
+}
+
+Future<List<String>?> getRoles() async {
+  final prefs = await SharedPreferences.getInstance();
+  return prefs.getStringList('userRoles');
 }

@@ -29,7 +29,6 @@ namespace BioProSystem.Controllers
 
         [HttpGet]
         [Route("GetAllEmployee")]
-        [Authorize(AuthenticationSchemes = "Bearer")]
         public async Task<IActionResult> GetAllEmployee()
         {
             try
@@ -179,8 +178,6 @@ namespace BioProSystem.Controllers
 
         [HttpPost]
         [Route("capture-daily-hours/{employeeId}")]
-        [Authorize(AuthenticationSchemes = "Bearer")]
-        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> CaptureEmployeeDailyHours(int employeeId, EmployeeDailyHoursViewModel newDailyHours)
         {
             try

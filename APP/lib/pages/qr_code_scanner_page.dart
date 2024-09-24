@@ -37,7 +37,7 @@ class _QRCodeScannerPageState extends State<QRCodeScannerPage> {
     
     _authService = AuthService();
     _authenticatedHttpClient = AuthenticatedHttpClient(
-      baseUrl: 'https://example.com', // Replace with your actual base URL
+      baseUrl: 'https://localhost:44315', // Replace with your actual base URL
       authService: _authService,
     );
     _captureService = EmployeeHoursCaptureService(
@@ -173,7 +173,7 @@ Future<bool> _validateEmployeeId(String scannedEmployeeId) async {
 
     if (response.statusCode == 200) {
       final List<dynamic> employees = jsonDecode(response.body);
-
+      print(employees);
       return employees.any((employee) => employee['employeeId'].toString() == scannedEmployeeId);
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -221,7 +221,7 @@ Future<bool> _validateEmployeeId(String scannedEmployeeId) async {
     if (totalHours < 1) {
       totalHours = 1.0;
     }
-
+    _resetScanner();
     print('Total worked hours (rounded up): $totalHours');
 
     try {
@@ -229,6 +229,7 @@ Future<bool> _validateEmployeeId(String scannedEmployeeId) async {
         employeeId: employeeId,
         totalHours: totalHours,
       );
+      
     } catch (e) {
       print('Error: $e');
       ScaffoldMessenger.of(context).showSnackBar(

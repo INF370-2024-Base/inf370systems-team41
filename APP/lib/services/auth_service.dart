@@ -5,9 +5,13 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart'; // Import shared_preferences
 
 class AuthService {
-  final String apiUrl = 'https://localhost:44315'; 
+  final String apiUrl = 'https://localhost:44315'; // Your API base URL
+  String? token;
+  List<String> roles = [];
+  // Remove the client initialization from here to avoid circular reference
+  // AuthenticatedHttpClient httpClient; 
 
-  Future<Map<String, dynamic>> login(String email, String password) async {
+  Future<Map<String, dynamic>> login(String email, String password, AuthenticatedHttpClient httpClient) async {
     final url = Uri.parse('$apiUrl/Login');
     final response = await http.post(
       url,
@@ -19,11 +23,23 @@ class AuthService {
         'Password': password,
       }),
     );
+
     if (response.statusCode == 201) {
       final responseBody = jsonDecode(response.body);
-      final token = responseBody['token']; // Assuming the token is under 'token'
-      print(token);
+      final token = responseBody['token'];
       await _saveToken(token);
+
+      // Fetch the roles using sendRequest
+      final rolesResponse = await httpClient.sendRequest('GET', 'GetSignInProfile/$email');
+      if (rolesResponse.statusCode == 200) {
+        final responseBody = jsonDecode(rolesResponse.body);
+        roles = List<String>.from(responseBody['roles']);
+        await _saveRoles(roles); // Save roles to SharedPreferences
+       responseBody['roles'] = roles;
+      } else {
+        throw Exception('Failed to fetch roles');
+      }
+
       return responseBody;
     } else if (response.statusCode == 400) {
       throw Exception('Invalid login credentials');
@@ -31,6 +47,16 @@ class AuthService {
       throw Exception('Failed to log in');
     }
   }
+  Future<void> _saveRoles(List<String> roles) async {
+  final prefs = await SharedPreferences.getInstance();
+  await prefs.setStringList('userRoles', roles);
+}
+
+Future<List<String>?> getRoles() async {
+  final prefs = await SharedPreferences.getInstance();
+  return prefs.getStringList('userRoles');
+}
+
 
   Future<void> _saveToken(String token) async {
     final prefs = await SharedPreferences.getInstance();
@@ -42,6 +68,7 @@ class AuthService {
     return prefs.getString('authToken');
   }
 }
+
 
 class AuthenticatedHttpClient {
   final String baseUrl;
