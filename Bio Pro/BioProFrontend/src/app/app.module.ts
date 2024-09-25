@@ -100,6 +100,10 @@ import { ModellingComponent } from './modelling/modelling.component';
 import { StockUsageModalComponent } from './stock-usage-modal/stock-usage-modal.component';
 import { HelpProfileComponent } from './help-profile/help-profile.component';
 import { HelpCalendarComponent } from './help-calendar/help-calendar.component';
+import { MatInputModule } from '@angular/material/input';
+import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
+import { MatMenuModule } from '@angular/material/menu';
+
 
 @NgModule({
   declarations: [
@@ -147,7 +151,12 @@ import { HelpCalendarComponent } from './help-calendar/help-calendar.component';
     CommonModule,
     MatDialogModule,
     MatExpansionModule,
-    MatSelectModule,    MatPaginatorModule
+    MatSelectModule,    MatPaginatorModule,
+    MatDatepickerModule,
+    MatInputModule,
+    MatNativeDateModule,
+    NgxMaterialTimepickerModule,
+    MatMenuModule
   ],
   providers: [DatePipe,{ provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },LoadingService,
     { provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true },{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }],

@@ -104,6 +104,7 @@ a.btn.btn-primary.rounded-btn {
   padding: 12px 30px;
   text-decoration: none;
   margin-right: auto;
+  justify-content: space-between;
 }
 
 a.btn.btn-primary.rounded-btn:hover {
@@ -171,14 +172,14 @@ a.btn.btn-primary.rounded-btn:hover {
 /* Flexbox for spacing between filters and buttons */
 .d-flex {
   display: flex;
-  justify-content: flex-start;
+  justify-content: space-between;
   align-items: center;
   margin-bottom: 20px;
 }
 
 .filter-container {
   display: flex;
-  justify-content: flex-start;
+  justify-content:  space-between;
   align-items: center;
   margin-bottom: 20px; /* Space below filters */
 }
@@ -190,7 +191,7 @@ a.btn.btn-primary.rounded-btn:hover {
 .button-container {
   display: flex;
   align-items: center;
-  justify-content: flex-start; /* Align buttons to the start */
+  justify-content:  space-between; /* Align buttons to the start */
   margin-top: 20px; /* Space above buttons */
 }
 
@@ -210,7 +211,7 @@ a.btn.btn-primary.rounded-btn:hover {
   padding: 10px 20px; /* Increase padding for bigger buttons */
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   text-decoration: none;
   margin-left: 20px; /* Add spacing between buttons */
 }

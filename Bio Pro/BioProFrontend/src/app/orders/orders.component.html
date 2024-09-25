@@ -18,13 +18,15 @@
           <mat-option *ngFor="let ordertype of orderTypes" [value]="ordertype.orderTypeId">{{ ordertype.description }}</mat-option>
         </mat-select>
       </mat-form-field>
+   
+ 
       <button class="btn btn-outline-primary rounded-btn" >
         <mat-icon>search</mat-icon>Search
       </button>
       <button class="btn btn-outline-danger rounded-btn" (click)="clearSeacrhOrders()">
         <mat-icon>clear</mat-icon>Clear
       </button>
-      
+    
     </div>
     
     <mat-accordion>

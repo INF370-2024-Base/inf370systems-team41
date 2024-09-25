@@ -39,17 +39,20 @@
                 </mat-form-field>
             </div>
 
-            <!-- Order Date Input -->
-            <div class="form-group">
-                <mat-form-field appearance="outline">
-                    <mat-label><i class="material-icons">event</i> Order Date</mat-label>
-                    <input matInput id="OrderDate" formControlName="OrderDate" type="date" placeholder="Select Order Date" [max]="todayDate">
-                    <mat-error *ngIf="addForm.get('OrderDate')?.invalid && addForm.get('OrderDate')?.touched">
-                        Order Date is required.
-                    </mat-error>
-                </mat-form-field>
-            </div>
-
+<!-- Order Date Input -->
+<div class="form-group">
+    <mat-form-field appearance="outline">
+      <mat-label><i class="material-icons">event</i> Order Date</mat-label>
+      <!-- Add a date picker reference and open it on focus or click -->
+      <input matInput [matDatepicker]="picker" id="OrderDate" formControlName="OrderDate" placeholder="Select Order Date" [max]="todayDate" (focus)="picker.open()" (click)="picker.open()">
+      <mat-datepicker #picker></mat-datepicker>
+      <mat-error *ngIf="addForm.get('OrderDate')?.invalid && addForm.get('OrderDate')?.touched">
+        Order Date is required.
+      </mat-error>
+    </mat-form-field>
+  </div>
+  
+  
             <!-- Medical Aid Selection Dropdown -->
             <div class="form-group">
                 <mat-form-field appearance="outline">
