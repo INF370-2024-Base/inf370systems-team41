@@ -74,7 +74,6 @@ namespace BioProSystem.Controllers
 
                 var newRole = await _userManager.AddToRoleAsync(user, uvm.rolename);
                 if (result.Succeeded) return Ok();
-
                 return BadRequest(result.Errors);
                 if (result.Errors.Count() > 0) return StatusCode(StatusCodes.Status500InternalServerError, "Internal Server Error. Please contact support.");
             }

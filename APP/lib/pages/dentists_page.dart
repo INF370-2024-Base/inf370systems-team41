@@ -1,6 +1,7 @@
-import 'package:biopromobileflutter/pages/components/dentist_card.dart';
+import 'package:biopromobileflutter/services/auth_service.dart';
 import 'package:biopromobileflutter/services/dentist_service.dart';
 import 'package:flutter/material.dart';
+import 'components/dentist_card.dart';
 
 class DentistsPage extends StatefulWidget {
   @override
@@ -9,12 +10,21 @@ class DentistsPage extends StatefulWidget {
 
 class _DentistsPageState extends State<DentistsPage> {
   late Future<List<dynamic>> futureDentists;
-  final DentistService dentistService = DentistService(baseUrl: 'https://localhost:44315/api/Dentist');
+  late DentistService dentistService;
 
   @override
   void initState() {
     super.initState();
-    futureDentists = dentistService.fetchDentists();
+    
+    // Initialize AuthService and DentistService
+    final authService = AuthService(); // Initialize your AuthService here
+    dentistService = DentistService(
+      baseUrl: 'https://localhost:44315/api/Dentist',
+      authService: authService,
+    );
+    
+    // Fetch dentists
+    futureDentists = dentistService.fetchDentists(context);
   }
 
   @override

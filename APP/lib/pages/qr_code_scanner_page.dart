@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'package:biopromobileflutter/services/auth_service.dart';
 import 'package:http/http.dart' as http;
 import 'package:biopromobileflutter/services/employee_hours_capture_service.dart';
 import 'package:flutter/material.dart';
@@ -8,7 +9,8 @@ import 'timer_component.dart';
 
 class QRCodeScannerPage extends StatefulWidget {
   final ValueNotifier<Duration> workedHoursNotifier;
-
+  late final AuthService _authService;
+  late final AuthenticatedHttpClient _authenticatedHttpClient;
   QRCodeScannerPage({required this.workedHoursNotifier});
 
   @override
@@ -20,17 +22,27 @@ class _QRCodeScannerPageState extends State<QRCodeScannerPage> {
   Timer? _timer;
   bool isScanning = true;
   bool isTimeCaptured = false;
-  String? employeeId; 
+  String? employeeId;
   Duration workedHours = Duration.zero;
   MobileScannerController scannerController = MobileScannerController();
   bool isCooldown = false;
 
   late final EmployeeHoursCaptureService _captureService;
+  late final AuthService _authService;
+  late final AuthenticatedHttpClient _authenticatedHttpClient;
 
   @override
   void initState() {
     super.initState();
-    _captureService = EmployeeHoursCaptureService(baseUrl: 'https://localhost:44315');
+    
+    _authService = AuthService();
+    _authenticatedHttpClient = AuthenticatedHttpClient(
+      baseUrl: 'https://localhost:44315', // Replace with your actual base URL
+      authService: _authService,
+    );
+    _captureService = EmployeeHoursCaptureService(
+      httpClient: _authenticatedHttpClient,
+    );
 
     if (widget.workedHoursNotifier.value > Duration.zero) {
       startTime = DateTime.now().subtract(widget.workedHoursNotifier.value);
@@ -161,7 +173,7 @@ Future<bool> _validateEmployeeId(String scannedEmployeeId) async {
 
     if (response.statusCode == 200) {
       final List<dynamic> employees = jsonDecode(response.body);
-
+      print(employees);
       return employees.any((employee) => employee['employeeId'].toString() == scannedEmployeeId);
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -209,7 +221,7 @@ Future<bool> _validateEmployeeId(String scannedEmployeeId) async {
     if (totalHours < 1) {
       totalHours = 1.0;
     }
-
+    _resetScanner();
     print('Total worked hours (rounded up): $totalHours');
 
     try {
@@ -217,6 +229,7 @@ Future<bool> _validateEmployeeId(String scannedEmployeeId) async {
         employeeId: employeeId,
         totalHours: totalHours,
       );
+      
     } catch (e) {
       print('Error: $e');
       ScaffoldMessenger.of(context).showSnackBar(
