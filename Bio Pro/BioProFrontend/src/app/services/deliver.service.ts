@@ -32,5 +32,8 @@ export class DeliveryService {
       UpdateDeliveryCollected(id: number): Observable<any> {
         return this.httpClient.put(`${this.apiUrl}delivery/UpdateDeliveryCollected/${id}`,id);
       }
+      UpdateDeliveryDelivered(id: number): Observable<any> {
+        return this.httpClient.put(`${this.apiUrl}delivery/UpdateDeliveryDelivered/${id}`,id);
+      }
 
 }

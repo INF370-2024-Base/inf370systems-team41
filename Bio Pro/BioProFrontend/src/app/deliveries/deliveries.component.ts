@@ -63,6 +63,18 @@ export class DeliveriesComponent implements OnInit {
       console.log(error);
     });
   }
+  updateDeliveryDelivered(id: number) {
+    this.deliveryService.UpdateDeliveryDelivered(id).subscribe(results => {
+      this.loginService.addTransaction("Put","Captured delivery delivered. Delivery Id:"+id)
+      console.log(this.deliveries);
+      this.showSnackbar("Delivery with id:" + id + ", has been updated");
+      this.getDeliveries();
+    },
+    (error: HttpErrorResponse) => {
+      this.showSnackbar("Error updating delivery." + error.error);
+      console.log(error);
+    });
+  }
 
   filterDeliveries() {
     this.filteredDeliveries = this.deliveries.filter(delivery => {

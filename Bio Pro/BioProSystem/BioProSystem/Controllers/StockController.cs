@@ -326,12 +326,17 @@ namespace BioProSystem.Controllers
                         {
                             if (labManager != null)
                             {
+
                                 string phoneNumber = labManager.PhoneNumber.Replace("-", "");
                                 if (phoneNumber.StartsWith("0"))
                                 {
                                     phoneNumber = "+27" + phoneNumber.Substring(1);
                                 }
-                                SendSms(phoneNumber, "Stock is low: " + stockToEdit.StockName);
+                                if(phoneNumber=="+27813884531")
+                                {
+                                    SendSms(phoneNumber, "Stock is low: " + stockToEdit.StockName);
+                                }
+                                
                             }
                         }
                     }

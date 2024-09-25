@@ -33,9 +33,16 @@ $BioProSystem-theme: mat.define-light-theme((
 // that you are using.
 @include mat.all-component-themes($BioProSystem-theme);
 
+
+// Custom Theming for Angular Material
+// For more information: https://material.angular.io/guide/theming
+
 /* You can add global styles to this file, and also import other style files */
 
 body { color: black !important; background-color: white !important; }
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

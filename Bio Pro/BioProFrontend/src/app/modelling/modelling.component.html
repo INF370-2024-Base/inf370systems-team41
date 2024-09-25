@@ -1,24 +1,48 @@
 <h1 mat-dialog-title>3D Model Viewer</h1>
-<div *ngIf="stepsWithColors.length>0">
+<div *ngIf="stepsWithColors.length > 0">
   <div *ngFor="let step of stepsWithColors">
-    <p *ngIf="!step.isCurrentStep" [ngStyle]="{'background-color': step.color, 'padding': '5px', 'border-radius': '5px', 'color': '#000'}">
+    <!-- Style for non-current steps -->
+    <p *ngIf="!step.isCurrentStep" 
+       [ngStyle]="{'background-color': step.color, 'padding': '5px', 'border-radius': '5px', 'color': '#000', 'box-shadow': '0 2px 4px rgba(0, 0, 0, 0.1)'}">
       Step: {{ step.description }} 
     </p>
-    <p *ngIf="step.isCurrentStep && !completed" [ngStyle]="{'background-color': step.color, 'padding': '5px', 'border-radius': '5px', 'color': '#000'}">
-      Current Step: {{ step.description }} -{{ step.employee.firstName }} {{ step.employee.lastName }} 
+    
+    <!-- Style for the current step -->
+    <p *ngIf="step.isCurrentStep && !completed" 
+       [ngStyle]="{
+         'background-color': step.color, 
+         'padding': '10px', 
+         'border-radius': '8px', 
+         'color': '#fff', 
+         'font-weight': 'bold', 
+         'border': '2px solid #2196F3',
+         'box-shadow': '0 4px 8px rgba(0, 0, 0, 0.2)', 
+         'font-size': '1.2em', 
+         'transition': 'all 0.3s ease'
+       }">
+      Current Step: {{ step.description }} - {{ step.employee.firstName }} {{ step.employee.lastName }} 
     </p>
   </div>
-  <p *ngIf="!completed" [ngStyle]="{'background-color': completedStepColor, 'padding': '5px', 'border-radius': '5px', 'color': '#000'}">
-    Completed 
+  
+  <!-- Completed steps -->
+  <p *ngIf="!completed" 
+     [ngStyle]="{'background-color': completedStepColor, 'padding': '5px', 'border-radius': '5px', 'color': '#000', 'font-weight': 'bold'}">
+    Completed
   </p>
-  <p *ngIf="completed" [ngStyle]="{'background-color': completedStepColor, 'padding': '5px', 'border-radius': '5px', 'color': '#000'}">
+  
+  <p *ngIf="completed" 
+     [ngStyle]="{'background-color': completedStepColor, 'padding': '5px', 'border-radius': '5px', 'color': '#000', 'font-weight': 'bold'}">
     Order has been completed 
   </p>
 </div>
+
 <div mat-dialog-actions>
   <button mat-button [routerLink]="['/orders']">Back to Orders</button>
 </div>
+
 <br>
+
 <div mat-dialog-content>
   <canvas #canvasing></canvas>
 </div>
+
