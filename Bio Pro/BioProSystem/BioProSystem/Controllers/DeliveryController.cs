@@ -170,5 +170,43 @@ namespace BioProSystem.Controllers
                 return StatusCode(500, $"Internal Server Error: {ex.Message}");
             }
         }
+        [HttpPut]
+        [Route("UpdateDeliveryDelivered/{deliveryId}")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
+        [Authorize(Roles = "Admin, Lab Manager, Owner")]
+
+        public async Task<IActionResult> UpdateDeliveryDelivered(int deliveryId)
+        {
+            try
+            {
+                Delivery delivery = await _repository.GetDeliveryById(deliveryId);
+                if (delivery == null)
+                {
+                    return BadRequest("Delivery not found found");
+                }
+                else
+                {
+                    if (delivery.DeliveryStatusId == 3)
+                    {
+                        return BadRequest("Delivery already delivered");
+                    }
+                    delivery.DeliveryStatusId = 3;
+                    if (await _repository.SaveChangesAsync())
+                    {
+                        return Ok(delivery);
+                    }
+                    else
+                    {
+                        return BadRequest("Failed to update delivery.Please contact admin.");
+                    }
+
+                }
+
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal Server Error: {ex.Message}");
+            }
+        }
     }
 }
