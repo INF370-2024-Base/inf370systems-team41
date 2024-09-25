@@ -50,7 +50,7 @@ export class StockComponent implements OnInit {
     setTimeout(() => {
       this.createStockLevelChart();
     }, 0);
-   
+    this.updateChart();
   }
 
   openModal(): void {
@@ -80,7 +80,7 @@ export class StockComponent implements OnInit {
         console.log('Fetched stock data:', this.stockList);
 
         // Ensure the chart is created after the data is fetched
-        this.updateChart();
+         
 
         // Fetch all stock categories
         this.stockService.getAllStockCategories().subscribe(

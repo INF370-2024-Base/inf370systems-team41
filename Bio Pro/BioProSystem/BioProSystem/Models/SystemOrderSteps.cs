@@ -7,14 +7,10 @@ namespace BioProSystem.Models
     {
         [Key]
         public int SysteorderStepId { get; set; }
-
         public DateTime? DueDateForStep { get; set; }
-
         public DateTime? StartDateForStep { get; set; }
         public DateTime? DateCompleted { get; set; }
-
         public string Description { get; set; }
-
         public int EmployeeId { get; set; }
         public string  SystemOrderId { get; set; }
         public bool Completed { get; set; }=false;
@@ -22,8 +18,5 @@ namespace BioProSystem.Models
         public bool IsFinalStep { get; set; } = false;
         public virtual SystemOrder SystemOrders { get; set; } = null;
         public virtual Employee Employee { get; set; } = null;
-        public virtual Dentist Dentist { get; set; } = null!;
-
-
     }
 }

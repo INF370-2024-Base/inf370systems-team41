@@ -36,7 +36,7 @@ namespace BioProSystem.Migrations
 
                     b.HasKey("ActionTypeId");
 
-                    b.ToTable("ActionTypes");
+                    b.ToTable("ActionTypes", (string)null);
                 });
 
             modelBuilder.Entity("BioProSystem.Models.AuditTrail", b =>
@@ -66,7 +66,7 @@ namespace BioProSystem.Migrations
 
                     b.HasIndex("SystemUserId");
 
-                    b.ToTable("AuditTrails");
+                    b.ToTable("AuditTrails", (string)null);
                 });
 
             modelBuilder.Entity("BioProSystem.Models.Calander", b =>
@@ -83,7 +83,7 @@ namespace BioProSystem.Migrations
 
                     b.HasKey("CalanderId");
 
-                    b.ToTable("Calanders");
+                    b.ToTable("Calanders", (string)null);
                 });
 
             modelBuilder.Entity("BioProSystem.Models.CalanderScheduleEvent", b =>
@@ -111,7 +111,7 @@ namespace BioProSystem.Migrations
 
                     b.HasIndex("CalanderId");
 
-                    b.ToTable("CalanderScheduleEvents");
+                    b.ToTable("CalanderScheduleEvents", (string)null);
                 });
 
             modelBuilder.Entity("BioProSystem.Models.DecisionLog", b =>
@@ -141,7 +141,7 @@ namespace BioProSystem.Migrations
 
                     b.HasIndex("SystemOrderId");
 
-                    b.ToTable("DecisionLogs");
+                    b.ToTable("DecisionLogs", (string)null);
                 });
 
             modelBuilder.Entity("BioProSystem.Models.Delivery", b =>
@@ -173,7 +173,7 @@ namespace BioProSystem.Migrations
 
                     b.HasIndex("SystemOrderId");
 
-                    b.ToTable("Deliveries");
+                    b.ToTable("Deliveries", (string)null);
                 });
 
             modelBuilder.Entity("BioProSystem.Models.DeliveryStatus", b =>
@@ -190,7 +190,7 @@ namespace BioProSystem.Migrations
 
                     b.HasKey("DeliveryStatusId");
 
-                    b.ToTable("DeliveryStatuses");
+                    b.ToTable("DeliveryStatuses", (string)null);
                 });
 
             modelBuilder.Entity("BioProSystem.Models.Dentist", b =>
@@ -217,7 +217,7 @@ namespace BioProSystem.Migrations
 
                     b.HasKey("DentistId");
 
-                    b.ToTable("Dentists");
+                    b.ToTable("Dentists", (string)null);
                 });
 
             modelBuilder.Entity("BioProSystem.Models.Discount", b =>
@@ -246,7 +246,7 @@ namespace BioProSystem.Migrations
 
                     b.HasIndex("SystemOrderId");
 
-                    b.ToTable("Discounts");
+                    b.ToTable("Discounts", (string)null);
                 });
 
             modelBuilder.Entity("BioProSystem.Models.Employee", b =>
@@ -292,7 +292,7 @@ namespace BioProSystem.Migrations
 
                     b.HasIndex("SystemUserId");
 
-                    b.ToTable("Employees");
+                    b.ToTable("Employees", (string)null);
                 });
 
             modelBuilder.Entity("BioProSystem.Models.EmployeeDailyHours", b =>
@@ -311,7 +311,7 @@ namespace BioProSystem.Migrations
 
                     b.HasKey("EmployeeDailyHoursId");
 
-                    b.ToTable("EmployeeDailyHours");
+                    b.ToTable("EmployeeDailyHours", (string)null);
                 });
 
             modelBuilder.Entity("BioProSystem.Models.JobTitle", b =>
@@ -328,7 +328,7 @@ namespace BioProSystem.Migrations
 
                     b.HasKey("JobTitleId");
 
-                    b.ToTable("JobTitles");
+                    b.ToTable("JobTitles", (string)null);
                 });
 
             modelBuilder.Entity("BioProSystem.Models.MediaFile", b =>
@@ -364,7 +364,7 @@ namespace BioProSystem.Migrations
 
                     b.HasIndex("SystemOrderId");
 
-                    b.ToTable("MediaFiles");
+                    b.ToTable("MediaFiles", (string)null);
                 });
 
             modelBuilder.Entity("BioProSystem.Models.MedicalAid", b =>
@@ -381,7 +381,7 @@ namespace BioProSystem.Migrations
 
                     b.HasKey("MedicalAidId");
 
-                    b.ToTable("MedicalAids");
+                    b.ToTable("MedicalAids", (string)null);
                 });
 
             modelBuilder.Entity("BioProSystem.Models.OpenOrder", b =>
@@ -398,7 +398,7 @@ namespace BioProSystem.Migrations
 
                     b.HasKey("OpenOrderId");
 
-                    b.ToTable("OpenOrders");
+                    b.ToTable("OpenOrders", (string)null);
                 });
 
             modelBuilder.Entity("BioProSystem.Models.OrderDirection", b =>
@@ -422,7 +422,7 @@ namespace BioProSystem.Migrations
 
                     b.HasKey("OrderDirectionId");
 
-                    b.ToTable("OrderDirections");
+                    b.ToTable("OrderDirections", (string)null);
                 });
 
             modelBuilder.Entity("BioProSystem.Models.OrderDirectionState", b =>
@@ -452,7 +452,7 @@ namespace BioProSystem.Migrations
 
                     b.HasIndex("OrderDirectionsId");
 
-                    b.ToTable("OrderDirectionStates");
+                    b.ToTable("OrderDirectionStates", (string)null);
                 });
 
             modelBuilder.Entity("BioProSystem.Models.OrderPayment", b =>
@@ -477,7 +477,7 @@ namespace BioProSystem.Migrations
 
                     b.HasIndex("PaymentId");
 
-                    b.ToTable("OrderPayments");
+                    b.ToTable("OrderPayments", (string)null);
                 });
 
             modelBuilder.Entity("BioProSystem.Models.OrderStatus", b =>
@@ -494,7 +494,7 @@ namespace BioProSystem.Migrations
 
                     b.HasKey("OrderStatusId");
 
-                    b.ToTable("OrderStatuses");
+                    b.ToTable("OrderStatuses", (string)null);
                 });
 
             modelBuilder.Entity("BioProSystem.Models.OrderType", b =>
@@ -511,7 +511,7 @@ namespace BioProSystem.Migrations
 
                     b.HasKey("OrderTypeId");
 
-                    b.ToTable("OrderTypes");
+                    b.ToTable("OrderTypes", (string)null);
                 });
 
             modelBuilder.Entity("BioProSystem.Models.OrderWorkflowTimeline", b =>
@@ -545,7 +545,7 @@ namespace BioProSystem.Migrations
 
                     b.HasIndex("TimelineId");
 
-                    b.ToTable("OrderWorkflowTimelines");
+                    b.ToTable("OrderWorkflowTimelines", (string)null);
                 });
 
             modelBuilder.Entity("BioProSystem.Models.PasswordManagement", b =>
@@ -566,7 +566,7 @@ namespace BioProSystem.Migrations
 
                     b.HasIndex("ActionTypeId");
 
-                    b.ToTable("PasswordManagements");
+                    b.ToTable("PasswordManagements", (string)null);
                 });
 
             modelBuilder.Entity("BioProSystem.Models.Patient", b =>
@@ -601,7 +601,7 @@ namespace BioProSystem.Migrations
 
                     b.HasIndex("MedicalAidId");
 
-                    b.ToTable("Patients");
+                    b.ToTable("Patients", (string)null);
                 });
 
             modelBuilder.Entity("BioProSystem.Models.Payment", b =>
@@ -631,7 +631,7 @@ namespace BioProSystem.Migrations
 
                     b.HasKey("PaymentId");
 
-                    b.ToTable("Payments");
+                    b.ToTable("Payments", (string)null);
                 });
 
             modelBuilder.Entity("BioProSystem.Models.ProceduralTimeline", b =>
@@ -662,7 +662,7 @@ namespace BioProSystem.Migrations
 
                     b.HasIndex("CalanderId");
 
-                    b.ToTable("ProceduralTimelines");
+                    b.ToTable("ProceduralTimelines", (string)null);
                 });
 
             modelBuilder.Entity("BioProSystem.Models.RefundPayment", b =>
@@ -695,7 +695,7 @@ namespace BioProSystem.Migrations
                     b.HasIndex("PaymentId")
                         .IsUnique();
 
-                    b.ToTable("RefundPayments");
+                    b.ToTable("RefundPayments", (string)null);
                 });
 
             modelBuilder.Entity("BioProSystem.Models.SelectedArea", b =>
@@ -720,7 +720,7 @@ namespace BioProSystem.Migrations
 
                     b.HasKey("SelectedAreaId");
 
-                    b.ToTable("SelectedAreas");
+                    b.ToTable("SelectedAreas", (string)null);
                 });
 
             modelBuilder.Entity("BioProSystem.Models.Stock", b =>
@@ -766,7 +766,7 @@ namespace BioProSystem.Migrations
 
                     b.HasIndex("SupplierId");
 
-                    b.ToTable("Stocks");
+                    b.ToTable("Stocks", (string)null);
                 });
 
             modelBuilder.Entity("BioProSystem.Models.StockCategory", b =>
@@ -788,7 +788,7 @@ namespace BioProSystem.Migrations
 
                     b.HasIndex("StockTypeId");
 
-                    b.ToTable("StockCategories");
+                    b.ToTable("StockCategories", (string)null);
                 });
 
             modelBuilder.Entity("BioProSystem.Models.StockItem", b =>
@@ -818,7 +818,7 @@ namespace BioProSystem.Migrations
 
                     b.HasIndex("StockId");
 
-                    b.ToTable("StockItems");
+                    b.ToTable("StockItems", (string)null);
                 });
 
             modelBuilder.Entity("BioProSystem.Models.StockType", b =>
@@ -835,7 +835,7 @@ namespace BioProSystem.Migrations
 
                     b.HasKey("StockTypeId");
 
-                    b.ToTable("StockType");
+                    b.ToTable("StockType", (string)null);
                 });
 
             modelBuilder.Entity("BioProSystem.Models.StockWriteOff", b =>
@@ -863,7 +863,7 @@ namespace BioProSystem.Migrations
 
                     b.HasIndex("StockId");
 
-                    b.ToTable("StockWriteOffs");
+                    b.ToTable("StockWriteOffs", (string)null);
                 });
 
             modelBuilder.Entity("BioProSystem.Models.Supplier", b =>
@@ -888,7 +888,7 @@ namespace BioProSystem.Migrations
 
                     b.HasKey("SupplierId");
 
-                    b.ToTable("Suppliers");
+                    b.ToTable("Suppliers", (string)null);
                 });
 
             modelBuilder.Entity("BioProSystem.Models.SystemOrder", b =>
@@ -954,7 +954,7 @@ namespace BioProSystem.Migrations
                     b.HasIndex("OrderWorkflowTimelineId")
                         .IsUnique();
 
-                    b.ToTable("SystemOrders");
+                    b.ToTable("SystemOrders", (string)null);
                 });
 
             modelBuilder.Entity("BioProSystem.Models.SystemOrderSteps", b =>
@@ -1000,7 +1000,7 @@ namespace BioProSystem.Migrations
 
                     b.HasIndex("SystemOrderId");
 
-                    b.ToTable("SystemOrderSteps");
+                    b.ToTable("SystemOrderSteps", (string)null);
                 });
 
             modelBuilder.Entity("BioProSystem.Models.SystemUser", b =>
@@ -1101,7 +1101,7 @@ namespace BioProSystem.Migrations
 
                     b.HasKey("TeethShadeId");
 
-                    b.ToTable("TeethShades");
+                    b.ToTable("TeethShades", (string)null);
                 });
 
             modelBuilder.Entity("BioProSystem.Models.UserAction", b =>
@@ -1124,7 +1124,7 @@ namespace BioProSystem.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("UserActions");
+                    b.ToTable("UserActions", (string)null);
                 });
 
             modelBuilder.Entity("EmployeeEmployeeDailyHours", b =>
@@ -1139,7 +1139,7 @@ namespace BioProSystem.Migrations
 
                     b.HasIndex("EmployeesEmployeeId");
 
-                    b.ToTable("EmployeeEmployeeDailyHours");
+                    b.ToTable("EmployeeEmployeeDailyHours", (string)null);
                 });
 
             modelBuilder.Entity("EmployeeSystemOrder", b =>
@@ -1154,7 +1154,7 @@ namespace BioProSystem.Migrations
 
                     b.HasIndex("SystemOrdersOrderId");
 
-                    b.ToTable("EmployeeSystemOrder");
+                    b.ToTable("EmployeeSystemOrder", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -1302,7 +1302,7 @@ namespace BioProSystem.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("PasswordManagementSystemUser");
+                    b.ToTable("PasswordManagementSystemUser", (string)null);
                 });
 
             modelBuilder.Entity("SelectedAreaSystemOrder", b =>
@@ -1317,7 +1317,7 @@ namespace BioProSystem.Migrations
 
                     b.HasIndex("SystemOrdersOrderId");
 
-                    b.ToTable("SelectedAreaSystemOrder");
+                    b.ToTable("SelectedAreaSystemOrder", (string)null);
                 });
 
             modelBuilder.Entity("SystemOrderTeethShade", b =>
@@ -1332,7 +1332,7 @@ namespace BioProSystem.Migrations
 
                     b.HasIndex("TeethShadesTeethShadeId");
 
-                    b.ToTable("SystemOrderTeethShade");
+                    b.ToTable("SystemOrderTeethShade", (string)null);
                 });
 
             modelBuilder.Entity("BioProSystem.Models.AuditTrail", b =>
