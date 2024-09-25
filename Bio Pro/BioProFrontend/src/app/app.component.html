@@ -74,22 +74,28 @@
 
 
     <!-- Employee Section For admin,lab manager,owner-->
-<div *ngIf="roleService.hasRole(['lab manager','owner'])">
-    <mat-expansion-panel class="nav-expansion-panel" (opened)="toggleEmployeeMenu()" (closed)="toggleEmployeeMenu()">
-    <mat-expansion-panel>
-      <a [routerLink]="['/employeeProfile']" class="nav-link" (click)="$event.stopPropagation()">
+
+    <mat-expansion-panel class="nav-expansion-panel" (opened)="toggleEmployeeMenu()" (closed)="toggleEmployeeMenu()" *ngIf="roleService.hasRole(['admin'])">
+      <mat-expansion-panel-header><a [routerLink]="['/employeeProfile']" class="nav-link" (click)="$event.stopPropagation()">
+        <mat-icon>perm_contact_calendar</mat-icon>
+        <span>All Employees</span>
+      </a></mat-expansion-panel-header>
+        <a mat-list-item [routerLink]="['/dailyHoursProfile']" class="nav-link" (click)="isSidenavOpen = !isSidenavOpen" *ngIf="roleService.hasRole(['admin'])">
+          <mat-icon>schedule</mat-icon>
+          <span>Employee Daily Hours</span>
+        </a>
+
+    </mat-expansion-panel>
+
+      <a  mat-list-item *ngIf="roleService.hasRole(['lab manager','owner'])" [routerLink]="['/employeeProfile']">
         <mat-icon>perm_contact_calendar</mat-icon>
         <span>All Employees</span>
       </a>
-    </mat-expansion-panel>
-    </mat-expansion-panel>
-</div>
-<div *ngIf="roleService.hasRole(['admin'])">
-    <a mat-list-item [routerLink]="['/dailyHoursProfile']" class="nav-link" (click)="isSidenavOpen = !isSidenavOpen">
-      <mat-icon>schedule</mat-icon>
-      <span>Employee Daily Hours</span>
-    </a>
-</div>
+
+
+
+
+
       <!-- Dentist Profile For admin,lab manager,owner -->
       <a mat-list-item routerLink="/dentistProfile" (click)="isSidenavOpen = !isSidenavOpen" *ngIf="roleService.hasRole(['admin','lab manager','owner'])">
         <mat-icon>medical_services</mat-icon>
