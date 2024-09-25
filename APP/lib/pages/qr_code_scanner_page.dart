@@ -217,9 +217,12 @@ Future<bool> _validateEmployeeId(String scannedEmployeeId) async {
     double totalHours = workedHours.inHours +
         (workedHours.inMinutes % 60) / 60 +
         (workedHours.inSeconds % 60) / 3600;
-
+    print('Total worked hours: $totalHours');
     if (totalHours < 1) {
       totalHours = 1.0;
+    }
+    if (totalHours ==0) {
+      totalHours = 0;
     }
     _resetScanner();
     print('Total worked hours (rounded up): $totalHours');

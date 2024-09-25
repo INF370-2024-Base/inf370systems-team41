@@ -7,11 +7,11 @@ import 'package:biopromobileflutter/pages/orders_page.dart';
 import 'package:biopromobileflutter/pages/qr_code_scanner_page.dart';
 import 'package:biopromobileflutter/pages/stocks_page.dart';
 import 'package:biopromobileflutter/services/auth_service.dart';
+import 'package:biopromobileflutter/services/timer_service.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 void main() {
@@ -19,7 +19,7 @@ void main() {
     MultiProvider(
       providers: [
         Provider<AuthService>(create: (_) => AuthService()),
-        // other providers...
+        ChangeNotifierProvider<TimerService>(create: (_) => TimerService()),
       ],
       child: MyApp(),
     ),

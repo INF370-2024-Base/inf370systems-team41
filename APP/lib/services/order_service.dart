@@ -17,7 +17,7 @@ class OrderService {
 
       if (response.statusCode == 200) {
         return json.decode(response.body);
-      } else if (response.statusCode == 401) {
+      } else if (response.statusCode == 403) {
         // Handle unauthorized error
         throw UnauthorizedException();
       } else {
