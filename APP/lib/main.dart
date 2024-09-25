@@ -1,3 +1,4 @@
+import 'package:biopromobileflutter/pages/about_page.dart';
 import 'package:biopromobileflutter/pages/timer_component.dart';
 import 'package:biopromobileflutter/pages/deliveries_page.dart';
 import 'package:biopromobileflutter/pages/dentists_page.dart';
@@ -84,7 +85,7 @@ class MyHomePage extends StatelessWidget {
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              Image.asset('assets/logo.jpg', width: 150, height: 150),
+              Image.asset('assets/logo.jpg', width: 100, height: 100),
               const SizedBox(height: 20),
               
               NavigationButton(text: 'Stocks', page: StocksPage()),
@@ -94,9 +95,9 @@ class MyHomePage extends StatelessWidget {
                 NavigationButton(text: 'Dentists', page: DentistsPage()),
               NavigationButton(text: 'Orders', page: OrdersPage()),
               NavigationButton(text: 'Help', page: HelpPage()),
-
+              NavigationButton(text: 'About us', page: AboutPage()),
               NavigationButton(
-                text: 'Login',
+                text: 'Logout',
                 page: BioProLoginPage(authService: authService),
               ),
 

@@ -71,6 +71,7 @@ class BioProLoginPage extends StatelessWidget {
         afterHeroFontSize: 20, 
       ),
       additionalSignupFields: [],
+      hideForgotPasswordButton: true,
     );
   }
 }
