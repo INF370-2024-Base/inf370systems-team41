@@ -31,7 +31,6 @@ export class StockComponent implements OnInit {
 
   frequentlyVisitedPages: { name: string; route: string; icon: string }[] = [
     { name: 'ADD STOCK', route: '/addStock', icon: 'add_box' }, // Represents adding items
-    
     { name: 'STOCK TYPE', route: '/stock-type', icon: 'list_alt' }, // Represents a list or type of items
     { name: 'STOCK CATEGORY', route: '/stock-categories', icon: 'category' }, // Represents categories
   ];

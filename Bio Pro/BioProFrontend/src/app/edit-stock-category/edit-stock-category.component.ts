@@ -31,7 +31,7 @@ export class EditStockCategoryComponent implements OnInit {
 
   ngOnInit(): void {
     this.GetAllStockType();
-    console.log(this.data);
+    console.log(this.data.category.stockType.stockTypeId);
   }
 
   GetAllStockType() {

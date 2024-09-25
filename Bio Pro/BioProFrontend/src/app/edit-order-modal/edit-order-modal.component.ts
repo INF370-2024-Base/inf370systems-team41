@@ -65,8 +65,9 @@ export class EditOrderModalComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log('Incoming order data:', this.order); 
+    
     this.order = this.data.order;
+    console.log('Incoming order data:', this.order); 
     console.log( this.order)
     this.loadDentists();
     this.loadMedicalAids();

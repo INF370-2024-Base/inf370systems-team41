@@ -180,15 +180,14 @@ downloadFile(base64String: string, fileName: string) {
     }
   }
   
-  editOrder(orderId: string): void {
-    const selectedOrder = this.ordersInfo.find(order => order.orderId === orderId);
-  console.log('Selected order for editing:', selectedOrder); // Debug log for selected order
-
+  editOrder(orderdata:any): void {
   const dialogRef = this.dialog.open(EditOrderModalComponent, {
-    data: { order: selectedOrder }
+    data: { order: orderdata }
   });
 
   dialogRef.afterClosed().subscribe(result => {
+    if(result)
+    {
     if(result!="Order update canceled")
     {console.log(`Dialog result: ${result}`);
     this.closeModal();
@@ -200,9 +199,7 @@ downloadFile(base64String: string, fileName: string) {
     else{
       this.showSnackBar(result);
     }
-    
-  
-     
+  }     
   });
 }
   openStatusModal(order: any): void {

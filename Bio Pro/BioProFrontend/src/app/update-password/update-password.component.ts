@@ -165,6 +165,6 @@ export class UpdatePasswordComponent implements OnInit {
   }
 
   onCancel() {
-    this.router.navigate(['login']);
+    this.router.navigate(['settings']);
   }
 }

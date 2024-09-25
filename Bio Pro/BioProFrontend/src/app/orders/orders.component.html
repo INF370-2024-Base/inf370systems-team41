@@ -89,12 +89,15 @@
                     <mat-icon class="fileIcon">insert_drive_file</mat-icon>
                     <p class="file-name">{{ media.fileName }}</p>
                   </button>
-                  <div style="padding-top: 10px;">
-                    <button (click)="onFileSelected(media,order.systemOrderSteps)" *ngIf="media.fileName.includes('gltf')">
-                      View in 3D
-                    </button>
-                </div>
                 
+              </div>
+              <div style="display: flex; justify-content: center; align-items: center;">
+                <button class="btn btn-primary clear-filter-btn" 
+                        style="background-color: rgb(35, 86, 131); margin-top: 10px; width: 70%;" 
+                        (click)="onFileSelected(media, order.systemOrderSteps)" 
+                        *ngIf="media.fileName.includes('gltf')">
+                  View in 3D
+                </button>
               </div>
               </div>
             </div>
@@ -103,7 +106,7 @@
         </div>
         
         <div class="action-icons"  *ngIf="roleService.hasRole(['Admin','lab manager','owner'])">
-          <button class="btn btn-secondary rounded-btn mr-2" (click)="editOrder(order.orderId)">
+          <button class="btn btn-secondary rounded-btn mr-2" (click)="editOrder(order)">
             <mat-icon>edit</mat-icon>Edit
           </button>
           <button *ngIf="order.orderStatus.orderStatusId!=9"  class="btn btn-outline-danger rounded-btn" (click)="cancelOrder(order.orderId)">

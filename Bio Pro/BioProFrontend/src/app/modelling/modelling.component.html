@@ -1,5 +1,5 @@
 <h1 mat-dialog-title>3D Model Viewer</h1>
-<div *ngIf="stepsWithColors">
+<div *ngIf="stepsWithColors.length>0">
   <div *ngFor="let step of stepsWithColors">
     <p *ngIf="!step.isCurrentStep" [ngStyle]="{'background-color': step.color, 'padding': '5px', 'border-radius': '5px', 'color': '#000'}">
       Step: {{ step.description }} 
