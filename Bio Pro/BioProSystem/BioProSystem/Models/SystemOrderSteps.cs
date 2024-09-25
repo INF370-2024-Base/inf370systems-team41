@@ -22,6 +22,7 @@ namespace BioProSystem.Models
         public bool IsFinalStep { get; set; } = false;
         public virtual SystemOrder SystemOrders { get; set; } = null;
         public virtual Employee Employee { get; set; } = null;
+        public virtual Dentist Dentist { get; set; } = null!;
 
 
     }

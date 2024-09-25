@@ -16,8 +16,15 @@ import { EmployeeService } from '../services/employee.service';
 import { DeliveryService } from '../services/deliver.service';
 import autoTable from 'jspdf-autotable';
 import { DataService } from '../services/login.service';
-
+import {  ChartConfiguration, ChartItem, registerables } from 'chart.js';
+import { StockServices } from '../services/stock.service';
 import { DentistService } from '../shared/dentist.service'; 
+import {StockItems } from '../shared/Stock';
+import { forkJoin } from 'rxjs'; // Import forkJoin
+Chart.register(...registerables);
+import { Employee } from '../shared/employee';
+
+
 
 @Component({
   selector: 'app-reports',
@@ -52,10 +59,40 @@ export class ReportsComponent implements OnInit {
   employee: any[]=[];
   totalEmployees: number = 0;
   selectedReport: string = 'all';
+  weeklyStockUsage: any[] = [];
+  totalEmployeeHoursLogged: number = 0;
+  gaugeCharts: any[] = []; // Array to store gauge chart instances
+  employeeGroupedByTitle: { titleName: string, employeeCount: number }[] = [];
+  
+  // Orders Pagination
+currentPageOrders: number = 1;
+itemsPerPageOrders: number = 10;
+totalPagesOrders: number = 1;
+paginatedOrderList: any[] = []; 
+
+// Dentists Pagination
+currentPageDentists: number = 1;
+itemsPerPageDentists: number = 10;
+totalPagesDentists: number = 1;
+paginatedDentistList: any[] = [];
+
+// Employees Pagination
+currentPageEmployees: number = 1;
+itemsPerPageEmployees: number = 10;
+totalPagesEmployees: number = 1;
+paginatedEmployeeList: any[] = [];
+
+// Stock Write-Offs Pagination
+currentPageStockWriteOffs: number = 1;
+itemsPerPageStockWriteOffs: number = 10;
+totalPagesStockWriteOffs: number = 1;
+paginatedStockWriteOffsList: any[] = [];
+
 
   constructor(private reportsService: ReportsServices, 
     private datePipe: DatePipe, 
     private employeeService:EmployeeService,
+    private stockServices: StockServices,
     private deliveryService: DeliveryService,private loginService:DataService,
     private dentistService: DentistService  ) { }
 
@@ -71,6 +108,9 @@ export class ReportsComponent implements OnInit {
       this.getDeliveries();
       this.getAllDentists(); 
       this.getAllEmployees();
+      this.calculateTotalEmployeeHours();
+      this.initializeGauges(); // Initialize gauges
+      this.updateGaugeValues(); 
     
       try {
         await this.fetchLoggedInUserName();
@@ -81,6 +121,7 @@ export class ReportsComponent implements OnInit {
         console.error('Error fetching user name:', error);
       }
     }
+
 
     filterReports(reportId: string) {
       // Get all report sections by their ID
@@ -96,7 +137,82 @@ export class ReportsComponent implements OnInit {
       });
     }
 
+    calculateTotalEmployeeHours() {
+      // Check if employeeHours has been populated and has data
+      if (this.employeeHours && this.employeeHours.length > 0) {
+        // Log the employeeHours data to verify structure
+        console.log('Employee Hours Data:', this.employeeHours);
+    
+        // Calculate total hours and round to the nearest whole number
+        this.totalEmployeeHoursLogged = Math.round(
+          this.employeeHours.reduce((total, employeeHour) => {
+            const hours = employeeHour.totalHours || 0; // Ensure we handle undefined values safely
+            return total + hours;
+          }, 0)
+        );
+    
+        console.log('Total Employee Hours Logged:', this.totalEmployeeHoursLogged); // Log the result for verification
+      } else {
+        // Handle case when no data is available
+        this.totalEmployeeHoursLogged = 0;
+        console.log('No employee hours data available. Total set to 0.');
+      }
+    }
+    
+    
+    initializeGauges() {
+      // Define options for all gauges
+      const gaugeOptions: ChartConfiguration<'doughnut', number[], unknown> = {
+        type: 'doughnut',
+        data: {
+          datasets: [
+            {
+              data: [0, 100], // Initial data: [current value, remaining percentage]
+              backgroundColor: ['rgba(54, 162, 235, 0.5)', 'rgba(200, 200, 200, 0.3)'], // Gauge color and background color
+              borderWidth: 0, // Remove border
+            },
+          ],
+        },
+        options: {
+          responsive: true,
+          rotation: -90, // Start from the top
+          circumference: 180, // Make it a half-circle
+          cutout: '85%', // Make it look like a gauge
+          plugins: {
+            legend: {
+              display: false, // Hide the legend
+            },
+          },
+        },
+      };
+    
+      // Create gauges for each KPI
+      this.gaugeCharts = [
+        new Chart('gauge1', gaugeOptions),
+        new Chart('gauge2', gaugeOptions),
+        new Chart('gauge3', gaugeOptions),
+        new Chart('gauge4', gaugeOptions),
+        new Chart('gauge5', gaugeOptions),
+        new Chart('gauge6', gaugeOptions),
+      ];
+    }
+    
+    updateGaugeValues() {
+      // Fetch data and update gauges
+      this.getAllOrder();
+      this.getAllStockWriteOffs();
+      this.getAllEmployees();
+      this.getAllDentists();
+      this.getDeliveries();
+      this.getEmployeesWithMonthlyHours();
+    }
 
+    updateGauge(index: number, currentValue: number, maxValue: number) {
+      const percentage = (currentValue / maxValue) * 100;
+      this.gaugeCharts[index].data.datasets[0].data = [percentage, 100 - percentage];
+      this.gaugeCharts[index].update();
+    }
+    
   fetchLoggedInUserName(): Promise<void> {
     return new Promise((resolve, reject) => {
       const token = sessionStorage.getItem('Token');
@@ -194,13 +310,38 @@ export class ReportsComponent implements OnInit {
       columns = ['Stock Category', 'Stock Item Count'];
       this.loginService.addTransaction("Generated","Generated stock category report.")
       data = this.stockItems.map(stockItem => [stockItem.description, stockItem.stockItemsCount]);
-    } else if (sectionId === 'stockWriteOffsReport') {
-      this.loginService.addTransaction("Generated","Generated stock write off report.")
-      columns = ['Stock Name', 'Total Quantity Written Off'];
-      data = this.groupedStockWriteOffs.map(group => [group.stockName, group.totalQuantityWrittenOff]);
 
-      // Add total quantity written off at the end of the table
-      data.push(['Total', this.totalQuantityWrittenOff]);
+
+    }else if (sectionId === 'stockWriteOffsReport') {
+      // Log the generation of the report
+      this.loginService.addTransaction("Generated", "Generated stock write-off report.");
+  
+      // Set up the columns for the report
+      columns = ['Stock Name', 'Total Quantity Written Off'];
+  
+      // Ensure you're working with the full dataset (not paginated data)
+      const fullStockWriteOffData = this.groupedStockWriteOffs.map(group => [group.stockName, group.totalQuantityWrittenOff]);
+  
+      // Add the total row
+      fullStockWriteOffData.push(['Total', this.totalQuantityWrittenOff]);
+  
+     
+      autoTable(doc, {
+          head: [columns],
+          body: fullStockWriteOffData,
+          startY: 70, // Adjust starting Y position to ensure it's below the header
+          margin: { top: 70 }, // Adjust top margin to avoid overlap with the logo and title
+          pageBreak: 'auto', // Automatically insert page breaks when content overflows
+          theme: 'grid', // Apply grid styling for better readability
+          didDrawCell: (data) => {
+              // Highlight the total row by using bold font
+              if (data.row.index === data.table.body.length - 1) {
+                  doc.setFont('helvetica', 'bold');
+                  doc.setFontSize(12);
+              }
+          }
+      });
+
     } else if (sectionId === 'deliveryReport') {
       // Add total deliveries
       this.loginService.addTransaction("Generated","Generated delivery report.")
@@ -265,16 +406,33 @@ export class ReportsComponent implements OnInit {
         },
       });
     }
-     if (sectionId === 'dentistReport') {
-      // Dentist Report
+    if (sectionId === 'DentistReport') {
       columns = ['Dentist Name', 'Contact', 'Address'];
-      data = this.dentists.map(dentist => [dentist.firstName + dentist.lastName, dentist.contactDetail, dentist.address]);
-      data.push(['Total Dentists', this.totalDentists.toString()]);
-    } else if (sectionId === 'employeeReport') {
-      // Employee Report
-      columns = ['Employee Name', 'Contact', 'Address'];
-      data = this.employee.map(employee => [employee.firstName + employee.lastName, employee.cellphoneNumber, employee.address]);
-      data.push(['Total Employees', this.totalEmployees.toString()]);
+      // Ensure correct field names for dentists
+      data = this.dentists.map(dentist => [
+          `${dentist.firstName} ${dentist.lastName}`, // Full name
+          dentist.contactDetail,                      // Contact detail
+          dentist.address                             // Address
+      ]);
+
+      // Add total dentists row
+      data.push(['Total Dentists', '', this.totalDentists.toString()]);
+  } else if (sectionId === 'EmployeeReport') {
+      columns = ['Job Title', 'Total Employees'];
+      // Ensure correct field names for employees
+       // Ensure correct field names for employees
+    data = this.employeeGroupedByTitle.map(group => [
+      group.titleName,      // Job title
+      group.employeeCount   // Total number of employees with that title
+    ]);
+
+    // Add the total as a final row in the data
+    data.push(['Total', this.totalEmployees]);
+
+    // Add total number of employees after the table, with consistent spacing
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(14);
+    
     }
   
     if (sectionId !== 'employeeHoursReport' && sectionId !== 'deliveryReport') {
@@ -304,31 +462,150 @@ export class ReportsComponent implements OnInit {
         data => {
             this.orders = data;
             this.sortOrders();
+            this.totalOrderCount = data.length;
+            this.totalPagesOrders = Math.ceil(this.orders.length / this.itemsPerPageOrders);
+      this.currentPageOrders = 1;
+      this.updatePaginatedOrders();
+      this.updateGauge(0, this.totalOrderCount, 100);
+      
         },
         error => {
             console.error('Error fetching orders:', error);
         }
     );
 }
+
+updatePaginatedOrders() {
+  const startIndex = (this.currentPageOrders - 1) * this.itemsPerPageOrders;
+  const endIndex = startIndex + this.itemsPerPageOrders;
+  this.paginatedOrderList = this.orders.slice(startIndex, endIndex);  // Update the paginated data
+}
+
+nextPageOrders() {
+  if (this.currentPageOrders < this.totalPagesOrders) {
+    this.currentPageOrders++;
+    this.updatePaginatedOrders();  // Update the table data for the new page
+  }
+}
+
+prevPageOrders() {
+  if (this.currentPageOrders > 1) {
+    this.currentPageOrders--;
+    this.updatePaginatedOrders();  // Update the table data for the new page
+  }
+}
+
+updatePaginatedDentists() {
+  const startIndex = (this.currentPageDentists - 1) * this.itemsPerPageDentists;
+  const endIndex = startIndex + this.itemsPerPageDentists;
+  this.paginatedDentistList = this.dentists.slice(startIndex, endIndex);
+}
+
+nextPageDentists() {
+  if (this.currentPageDentists < this.totalPagesDentists) {
+    this.currentPageDentists++;
+    this.updatePaginatedDentists();
+  }
+}
+
+prevPageDentists() {
+  if (this.currentPageDentists > 1) {
+    this.currentPageDentists--;
+    this.updatePaginatedDentists();
+  }
+}
+
+
+
+updatePaginatedEmployees() {
+  const startIndex = (this.currentPageEmployees - 1) * this.itemsPerPageEmployees;
+  const endIndex = startIndex + this.itemsPerPageEmployees;
+  this.paginatedEmployeeList = this.employee.slice(startIndex, endIndex);
+}
+
+nextPageEmployees() {
+  if (this.currentPageEmployees < this.totalPagesEmployees) {
+    this.currentPageEmployees++;
+    this.updatePaginatedEmployees();
+  }
+}
+
+prevPageEmployees() {
+  if (this.currentPageEmployees > 1) {
+    this.currentPageEmployees--;
+    this.updatePaginatedEmployees();
+  }
+}
+
 getAllDentists(): void {
   this.dentistService.getAllDentists().subscribe((data: any[]) => {
     // Sort by first name, then last name
     this.dentists = data.sort((a, b) => {
       return a.firstName.localeCompare(b.firstName) || a.lastName.localeCompare(b.lastName);
     });
+
+    // Update total number of dentists
     this.totalDentists = this.dentists.length;
+    this.totalPagesDentists = Math.ceil(this.dentists.length / this.itemsPerPageDentists);
+    this.currentPageDentists = 1;
+    this.updatePaginatedDentists();
+    // Update the gauge for Total Dentists
+    this.updateGauge(3, this.totalDentists, 100);
   });
 }
 
 getAllEmployees(): void {
-  this.employeeService.getAllEmployees().subscribe((data: any[]) => {
-    // Sort by first name, then last name
-    this.employee = data.sort((a, b) => {
-      return a.firstName.localeCompare(b.firstName) || a.lastName.localeCompare(b.lastName);
-    });
-    this.totalEmployees = this.employee.length;
+  this.employeeService.getAllEmployees().subscribe(
+    (data: Employee[]) => {
+      // Log the entire data received from the backend
+      console.log('Received Employee Data:', data);
+
+      // Group employees by their job title
+      const groupedByTitle = data.reduce((acc, employee) => {
+        // Log each employee's job title to make sure it's being accessed correctly
+        if (employee.jobTitle && employee.jobTitle.titleName) {
+          console.log('Employee Job Title:', employee.jobTitle.titleName);
+        } else {
+          console.warn('Employee does not have a valid JobTitle:', employee);
+        }
+
+        // Safely access JobTitle and default to 'Unknown' if it's null or undefined
+        const title = employee.jobTitle?.titleName || 'Unknown';
+
+        // Log the actual title being used for grouping
+        console.log('Grouping by title:', title);
+
+        // If the title doesn't exist in the accumulator, initialize it
+        if (!acc[title]) {
+          acc[title] = { titleName: title, employeeCount: 0, employees: [] };
+        }
+
+        // Increment the count for each employee with that title
+        acc[title].employeeCount += 1;
+        acc[title].employees.push(employee); // Optional: if you want to keep the list of employees for each title
+
+        return acc;
+      }, {} as { [key: string]: { titleName: string, employeeCount: number, employees: Employee[] } });
+
+      // Log the grouped data to see the final grouping
+      console.log('Grouped Employee Data:', groupedByTitle);
+
+      // Convert the grouped object into an array for easy display
+      this.employeeGroupedByTitle = Object.values(groupedByTitle);
+
+      // Log the final array to check the format
+      console.log('Grouped Employee Array:', this.employeeGroupedByTitle);
+
+      // Update total employee count
+      this.totalEmployees = data.length;
+      this.totalPagesEmployees = Math.ceil(this.totalEmployees / this.itemsPerPageEmployees);
+      this.currentPageEmployees = 1;
+      this.updatePaginatedEmployees();
+    this.updateGauge(2, this.totalEmployees, 100);
   });
 }
+
+
 
 getOrderTypesWithOrderCount() {
   this.reportsService.getOrderTypesWithOrderCount().subscribe(
@@ -410,19 +687,45 @@ getStockItemsCountByCategory() {
   );
 }
 
+// updatePaginatedStockWriteOffs() {
+//   const startIndex = (this.currentPageStockWriteOffs - 1) * this.itemsPerPageStockWriteOffs;
+//   const endIndex = startIndex + this.itemsPerPageStockWriteOffs;
+//   this.paginatedStockWriteOffsList = this.stockWriteOffs.slice(startIndex, endIndex);
+// }
+
+nextPageStockWriteOffs() {
+  if (this.currentPageStockWriteOffs < this.totalPagesStockWriteOffs) {
+    this.currentPageStockWriteOffs++;
+    this.updatePaginatedStockWriteOffs();
+  }
+}
+
+prevPageStockWriteOffs() {
+  if (this.currentPageStockWriteOffs > 1) {
+    this.currentPageStockWriteOffs--;
+    this.updatePaginatedStockWriteOffs();
+  }
+}
+
 getAllStockWriteOffs() {
   this.reportsService.getAllStockWriteOffs().subscribe(
       data => {
           this.stockWriteOffs = data;
           this.groupStockWriteOffs();
+          this.totalQuantityWrittenOff = data.reduce((sum, item) => sum + item.quantityWrittenOff, 0);
+      this.updateGauge(1, this.totalQuantityWrittenOff, 100);
+      this.totalPagesStockWriteOffs = Math.ceil(this.stockWriteOffs.length / this.itemsPerPageStockWriteOffs);
+      this.currentPageStockWriteOffs = 1;
+      this.updatePaginatedStockWriteOffs();
+      this.updateGauge(1, this.totalQuantityWrittenOff, 100);
       },
       error => {
           console.error('Error fetching stock write-offs:', error);
       }
   );
 }
-
 groupStockWriteOffs() {
+  // Group the stock write-offs by stockName and accumulate totalQuantityWrittenOff
   const grouped: { [key: string]: { stockName: string; totalQuantityWrittenOff: number; details: any[] } } = this.stockWriteOffs.reduce((acc, writeOff) => {
     const stockName = writeOff.stockName;
     if (!acc[stockName]) {
@@ -433,13 +736,29 @@ groupStockWriteOffs() {
     return acc;
   }, {} as { [key: string]: { stockName: string; totalQuantityWrittenOff: number; details: any[] } });
 
+  // Convert the grouped object into an array for display and pagination
   this.groupedStockWriteOffs = Object.values(grouped);
+
+  // Calculate the total quantity written off for all items
   this.calculateTotals();
+
+  // Paginate the grouped stock write-offs
+  this.updatePaginatedStockWriteOffs();
 }
 
 calculateTotals() {
   this.totalQuantityWrittenOff = this.groupedStockWriteOffs.reduce((sum, group) => sum + group.totalQuantityWrittenOff, 0);
 }
+
+updatePaginatedStockWriteOffs() {
+  // Handle pagination for the grouped stock write-offs
+  const startIndex = (this.currentPageStockWriteOffs - 1) * this.itemsPerPageStockWriteOffs;
+  const endIndex = startIndex + this.itemsPerPageStockWriteOffs;
+
+  // Populate the paginated list with the correct slice of the grouped data
+  this.paginatedStockWriteOffsList = this.groupedStockWriteOffs.slice(startIndex, endIndex);
+}
+
 
   updateChart() {
     if (this.selectedPeriod === 'monthly') {
@@ -452,15 +771,22 @@ calculateTotals() {
   getEmployeesWithMonthlyHours() {
     this.reportsService.getEmployeesWithMonthlyHours().subscribe(data => {
       this.employeeHours = data;
+      this.calculateTotalEmployeeHours();
       const labels = this.employeeHours.map(e => `${e.employee.firstName} ${e.employee.lastName} (${e.employee.employeeId})`);
       const hours = this.employeeHours.map(e => e.totalHours);
       this.createChart(labels, hours, 'Monthly Hours');
+
+      
+        // Update the gauge using the calculated total employee hours
+    const maxValue = Math.max(this.totalEmployeeHoursLogged, 100); // Adjust maxValue dynamically if necessary
+    this.updateGauge(5, this.totalEmployeeHoursLogged, maxValue);
     });
   }
   
   getEmployeesWithWeeklyHours() {
     this.reportsService.getEmployeesWithWeeklyHours().subscribe(data => {
       this.employeeHours = data;
+      this.calculateTotalEmployeeHours();
       const labels = this.employeeHours.map(e => `${e.employee.firstName} ${e.employee.lastName} (${e.employee.employeeId})`);
       const hours = this.employeeHours.map(e => e.totalHours);
       this.createChart(labels, hours, 'Weekly Hours');
@@ -506,7 +832,9 @@ calculateTotals() {
     this.deliveryService.getdeliveries().subscribe(results => {
       this.deliveries = results;
       this.processDeliveries();
-    
+
+      this.totalDeliveries = results.length;
+      this.updateGauge(4, this.totalDeliveries, 100);
     });
   }
 

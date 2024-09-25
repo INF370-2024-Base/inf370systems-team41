@@ -46,7 +46,12 @@ export class OrdersComponent implements OnInit {
   originalOrders:any[]=[]
   baseUrl: string ='https://localhost:44315/Api/';
   loading:boolean=true
+
   constructor(private router:Router,public roleService:RoleGuardService, private dialog: MatDialog,private http: HttpClient,private dataservices:OrderService,private snackBar:MatSnackBar,private loginService:DataService) { }
+  currentPage: number = 1;
+  itemsPerPage: number = 7;
+  totalPages: number = 0;
+
 
   ngAfterViewChecked(): void {
 
@@ -104,18 +109,51 @@ export class OrdersComponent implements OnInit {
     this.dataservices.getAllOrderInfo().subscribe(
       ((allOrders: any[]) => {
         if (Array.isArray(allOrders)) {
-          this.orders = allOrders;
-          this.originalOrders=allOrders
-          this.loading=false
-          this.ordersInfo=allOrders
-          console.log(this.ordersInfo)
-          
-          
+          // Ensure the orders are sorted by the correct date field in descending order
+          this.orders = allOrders.sort((a, b) => {
+            const dateA = new Date(a.orderDate).getTime();
+            const dateB = new Date(b.orderDate).getTime();
+            return dateB - dateA; // Newest orders first
+          });
+  
+          this.originalOrders = [...this.orders]; // Keep a copy of the original sorted orders
+          this.loading = false;
+          this.ordersInfo = [...this.orders]; // Display the sorted orders
+          console.log(this.ordersInfo);
+          this.updatePageData();
         } else {
           console.error('No orders found.');
         }
-      })
+      }
     )
+    )
+  }
+
+  updatePageData() {
+    this.totalPages = Math.ceil(this.originalOrders.length / this.itemsPerPage);
+    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+    const endIndex = startIndex + this.itemsPerPage;
+    this.ordersInfo = this.originalOrders.slice(startIndex, endIndex);
+  }
+
+  goToPage(page: number) {
+    if (page < 1 || page > this.totalPages) return;
+    this.currentPage = page;
+    this.updatePageData();
+  }
+
+  nextPage() {
+    if (this.currentPage < this.totalPages) {
+      this.currentPage++;
+      this.updatePageData();
+    }
+  }
+
+  previousPage() {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+      this.updatePageData();
+    }
   }
 
   getOrderTypes() {

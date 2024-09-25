@@ -64,6 +64,9 @@ import { AuditTrailComponent } from './audit-trail/audit-trail.component';
 import { RoleGuardService } from './services/roleCheck';
 import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
 import { ModellingComponent } from './modelling/modelling.component';
+import { StockUsageModalComponent } from './stock-usage-modal/stock-usage-modal.component';
+import { HelpProfileComponent } from './help-profile/help-profile.component';
+import { HelpCalendarComponent } from './help-calendar/help-calendar.component';
 
 const routes: Routes = [
   { path: 'settings', component: SettingsComponent },
@@ -123,7 +126,10 @@ const routes: Routes = [
   { path: 'rp/:email', component: ResetUserPasswordComponent},
   { path: 'audit-trail', component: AuditTrailComponent, canActivate: [RoleGuardService], data: { expectedRoles: ['Admin', 'Lab Manager','Owner'] } },
   { path: 'unauthorized', component: UnauthorizedComponent },
-  { path: 'model', component: ModellingComponent }
+  { path: 'model', component: ModellingComponent },
+  {path: 'stock-usage-modal', component:StockUsageModalComponent, canActivate: [RoleGuardService], data: { expectedRoles: ['Admin', 'Lab Manager','Owner'] }},
+  {path: 'help-profile', component:HelpProfileComponent, canActivate: [RoleGuardService], data: { expectedRoles: ['Admin', 'Lab Manager','Owner'] }},
+  {path: 'help-calendar', component:HelpCalendarComponent, canActivate: [RoleGuardService], data: { expectedRoles: ['Admin', 'Lab Manager','Owner'] }},
 ];
 
 @NgModule({

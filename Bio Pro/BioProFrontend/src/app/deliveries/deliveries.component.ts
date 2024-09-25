@@ -1,8 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit , ViewChild} from '@angular/core';
 import { DeliveryService } from '../services/deliver.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { DataService } from '../services/login.service';
+import { MatPaginator, PageEvent } from '@angular/material/paginator'; // Corrected import for MatPaginator
+
+
 
 @Component({
   selector: 'app-deliveries',
@@ -14,8 +17,11 @@ export class DeliveriesComponent implements OnInit {
   deliveries: any[] = [];
   deliveryStatuses: any[] = [];
   filteredDeliveries: any[] = [];
+  pagedDeliveries: any[] = [];
   selectedStatus: string = 'Any';
   searchTerm: string = '';
+  pageSize = 6; // Number of deliveries per page
+  currentPage = 0; // Current page number
 
   constructor(private deliveryService: DeliveryService, private snackBar: MatSnackBar,private loginService:DataService) { }
 
@@ -64,11 +70,38 @@ export class DeliveriesComponent implements OnInit {
       const matchesSearch = !this.searchTerm || delivery.deliveryId.toString().includes(this.searchTerm) || delivery.systemOrderId.toString().includes(this.searchTerm);
       return matchesStatus && matchesSearch;
     });
+    this.updatePagedDeliveries();
   }
 
   showSnackbar(message: string) {
     this.snackBar.open(message, 'Close', {
       duration: 5000 // milliseconds
     });
+  }
+
+
+  previousPage() {
+    if (this.currentPage > 0) {
+      this.currentPage--;
+      this.updatePagedDeliveries();
+    }
+  }
+
+  nextPage() {
+    if (this.currentPage < this.totalPages - 1) {
+      this.currentPage++;
+      this.updatePagedDeliveries();
+    }
+  }
+
+  // Getter method to calculate total pages
+  get totalPages(): number {
+    return Math.ceil(this.filteredDeliveries.length / this.pageSize);
+  }
+
+  updatePagedDeliveries() {
+    const startIndex = this.currentPage * this.pageSize;
+    const endIndex = startIndex + this.pageSize;
+    this.pagedDeliveries = this.filteredDeliveries.slice(startIndex, endIndex);
   }
 }

@@ -75,6 +75,39 @@ export class AddStockItemViewModel {
         this.DateUsed=dateUsed;
     }
 }
+export interface StockItems {
+    StockId: number;
+    OrderId: string;
+    quantity: number;
+    dateUsed: Date;
+    stockName?: string;
+    stockItemId: number;
+    stock?: Stock; // Add the nested stock object here
+    
+   
+  }
+
+  export interface Stock {
+    
+    stockId: number;
+    stockCategoryId: number;
+    supplierId: number;
+    stockName: string;
+    quantityAvailable: number;
+    maximumStockLevel: number;
+    minimumStockLevel: number;
+    reorderPoint: number;
+    currentlyInUse: boolean;
+    measurement: string;
+    stockWriteOffs: any[]; // Adjust the type as necessary
+    stockItem?: StockItems[]; 
+  }
+  
+  export interface WeeklyStockUsage {
+    week: number;
+    totalUsage: number;
+    stockDetails: StockItems[];
+  }
 
 export class StockCategoryViewModel {
     public StockTypeId: number;

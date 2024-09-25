@@ -6,43 +6,126 @@ body {
   color: #333;
   margin: 0;
   padding: 0;
-  height:max-content;
-  
   display: flex;
-  flex-direction: column;
-  
+  justify-content: center;
 }
 
-/* Animated background gradients */
+.page-container {
+  width: 100%;
+  max-width: 1800px;
+  margin: 20px;
+  padding: 20px;
+  background: #ffffffcc;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
 @keyframes gradientAnimation {
   0% { background-position: 0% 50%; }
   50% { background-position: 100% 50%; }
   100% { background-position: 0% 50%; }
 }
 
-/* Enhanced blue gradient animation */
-body {
-  background: linear-gradient(120deg, #aed9e0, #c2e2f3, #eaf1fa, #c2e2f3, #aed9e0);
-  background-size: 400% 400%;
-  animation: gradientAnimation 20s ease infinite;
+.reports-title {
+  font-size: 36px;
+  color: #333;
+  text-align: center;
+  margin: 20px 0;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  background-color: #fff;
+  margin-bottom: 20px;
+}
+
+.filter-container mat-form-field {
+  width: 200px;
+  font-size: 14px;
+  color: #6c757d;
+}
+
+.report-info-container {
+  text-align: right;
+  font-size: 14px;
+  color: #555;
+}
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 10px;
+  padding: 5px;
+  margin-bottom: 10px;
+}
+
+.kpi-card {
+  background-color: #fff;
+  border-radius: 5px;
+  padding: 10px;
+  text-align: center;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s, box-shadow 0.2s;
+  width: 120%;
+  max-width: 270px; /* Sets a maximum width to keep cards small */
+}
+
+.kpi-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.kpi-card h3 {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.kpi-card p {
+  font-size: 18px;
+  color: #333;
+  margin: 5px 0;
+  font-weight: bold;
+}
+
+.gauge {
+  width: 70px;  /* Further adjust gauge size */
+  height: 50px; /* Further adjust gauge size */
+}
+
+.chart-card {
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  position: relative;
 }
 
 .reports-container {
   display: flex;
   flex-wrap: wrap;
   gap: 20px;
-  padding: 20px;
 }
 
 .report-section {
-  flex: 1 1 calc(50% - 20px); /* Adjust width to fit two in a row with a gap */
-  border: 1px solid #ccc;
+  flex: 1 1 calc(25% - 10px);
+  border: 1px solid #ddd;
   padding: 20px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   background-color: #fff;
+  border-radius: 8px;
   margin-bottom: 20px;
-  border-radius: 5px;
-  overflow: auto; /* Enable scrolling for sections */
+  transition: box-shadow 0.3s, transform 0.3s;
+}
+
+.report-section:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
 }
 
 table {
@@ -52,7 +135,7 @@ table {
 }
 
 th, td {
-  border: 1px solid #ccc;
+  border: 1px solid #ddd;
   padding: 12px;
   text-align: left;
 }
@@ -60,6 +143,7 @@ th, td {
 th {
   background-color: #529cdd;
   color: #ffffff;
+  text-transform: uppercase;
 }
 
 td {
@@ -77,64 +161,6 @@ table th:last-child, table td:last-child {
 table tr:last-child td {
   border-bottom: none;
 }
-mat-form-field {
-  font-size: 14px;
-  color: #6c757d; /* Grey color for text */
-}
-
-mat-label {
-  font-size: 12px;
-  color: grey; /* Matches the "Filter By" text color */
-}
-
-.mat-select-placeholder, .mat-select-value {
-  font-size: 14px;
-  color: #000; /* Adjust to match the 'No Filter' text color */
-}
-
-.mat-form-field-appearance-outline .mat-form-field-outline-thick {
-  border-color: rgba(0, 0, 0, 0.12); /* Adjusts the border color of the dropdown */
-}
-
-
-mat-form-field {
-  font-size: 14px;
-  color: #6c757d;
-}
-
-
-select {
-  padding: 10px;
-  margin-top: 20px;
-  width: 100%;
-  font-size: 1em;
-  background-color: #fff;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-}
-
-canvas {
-  margin-top: 20px;
-  background-color: #f9f9f9;
-  border: 1px solid #ccc;
-}
-
-strong {
-  font-weight: bold;
-  display: block;
-  margin-top: 20px;
-  font-size: 1.2em;
-}
-
-@media only screen and (max-width: 768px) {
-  .report-section {
-    width: 100%;
-    margin-bottom: 20px;
-  }
-}
-.hidden {
-  display: none !important;
-}
 
 .download-button {
   background-color: #007bff;
@@ -146,6 +172,7 @@ strong {
   text-align: center;
   font-size: 16px;
   margin-top: 20px;
+  transition: background-color 0.3s;
 }
 
 .download-button:hover {
@@ -169,6 +196,10 @@ strong {
   flex: 1 1 30%;
   min-width: 300px;
   max-width: 45%;
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .summary-card mat-card {
@@ -202,4 +233,150 @@ strong {
 .summary-card mat-list-item p {
   margin: 0;
   font-size: 16px;
+}
+
+/* Responsive Design */
+@media only screen and (max-width: 768px) {
+  body {
+    background-size: 300% 300%;
+    padding: 10px;
+    flex-direction: column;
+  }
+
+  .page-container {
+    margin: 10px;
+    padding: 10px;
+    max-width: 100%;
+    box-shadow: none;
+    border-radius: 8px;
+  }
+
+  .reports-title {
+    font-size: 28px;
+    margin: 10px 0;
+  }
+
+  .header-container {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 5px 0;
+  }
+
+  .filter-container mat-form-field {
+    width: 100%;
+  }
+
+  .report-info-container {
+    text-align: left;
+    font-size: 12px;
+  }
+
+  .dashboard-grid {
+    grid-template-columns: repeat(1, 1fr); /* Single column layout for smaller screens */
+    gap: 5px; /* Reduced gap for smaller screens */
+    padding: 5px;
+  }
+
+  /* Make KPI cards responsive */
+  .kpi-card {
+    width: 100%; /* Take up the full width of the grid column */
+    max-width: 100%; /* Ensure it scales properly */
+    padding: 15px; /* Adjust padding for smaller screens */
+    box-shadow: none; /* Remove shadow for a cleaner look on smaller screens */
+  }
+
+  .kpi-card:hover {
+    transform: none; /* Disable hover effects for touch devices */
+    box-shadow: none;
+  }
+
+  .kpi-card h3 {
+    font-size: 16px; /* Adjust font size */
+  }
+
+  .kpi-card p {
+    font-size: 16px; /* Adjust font size */
+  }
+
+  .gauge {
+    width: 50px;  /* Adjust gauge size for smaller screens */
+    height: 40px;
+  }
+  .reports-container {
+    flex-direction: column;
+  }
+
+  .report-section {
+    flex: 1 1 100%;
+    margin-bottom: 15px;
+    box-shadow: none;
+    padding: 15px;
+  }
+
+  table th, table td {
+    padding: 8px;
+  }
+
+  .download-button {
+    width: 100%;
+    font-size: 14px;
+  }
+
+  .pagination-controls {
+    flex-direction: column;
+    align-items: center;
+    padding: 5px;
+  }
+
+  .pagination-controls button {
+    width: 100%;
+    margin-bottom: 5px;
+  }
+
+  .summary-card {
+    min-width: 100%;
+    max-width: 100%;
+  }
+
+  /* Make the canvas responsive */
+  canvas {
+    width: 100% !important;
+    height: auto !important;
+  }
+}
+
+
+
+.pagination-controls {
+  display: flex;
+  justify-content: space-between; /* Align buttons to the left and right edges */
+  align-items: center;
+  width: 100%; /* Ensures the pagination controls take the full width */
+  padding: 10px;
+ // background-color: #e9f2f9; /* Light blue background similar to screenshot */
+  border-radius: 10px; /* Rounded corners */
+  box-sizing: border-box; /* Ensure padding doesn't add extra width */
+  position: relative; /* Positioning context for absolute elements */
+  margin-top: 25 px;
+}
+
+.pagination-controls button {
+  margin: 0; /* Remove margin to align correctly to the edges */
+  border: 1px solid #a0a0a0; /* Grey border */
+  background-color: transparent;
+  color: #333; /* Darker text color */
+  border-radius: 5px; /* Rounded button corners */
+  padding: 5px 10px; /* Adds padding for better button appearance */
+}
+
+.pagination-controls span {
+  font-size: 12px;
+  font-weight: bold;
+  color: #333; /* Dark text */
+  margin: 0 auto; /* Center the page number text */
+}
+.pagination-controls button:hover {
+  background-color: #7d7d7d; /* Light blue background on hover */
+  color: #fff; /* White text on hover */
+  border-color: #575656; /* Blue border on hover */
 }

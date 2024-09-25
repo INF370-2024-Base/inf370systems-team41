@@ -1,0 +1,442 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dentist Management Help</title>
+    <!-- Include favicon -->
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <!-- Include Angular Material CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.1.12/angular-material.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
+
+</head>
+<body>
+
+ 
+<div *ngIf="isAnySectionOpen()" class="search-filter-container">
+    <input type="text" placeholder="Search..." (input)="onSearch($event)" />
+    
+  </div>
+  <div #searchContent>
+    <div *ngIf="shouldDisplayContainer('search-dentists')" class="help-container dentist-container search-dentists">
+    <h2><mat-icon>lock</mat-icon> Update Password</h2>
+    <p>This section provides guidance on how to update your account password securely.</p>
+
+
+    <div class="help-section">
+        <h3 (click)="toggleDropdown('commonQuestionsSearch')">Common Questions</h3>
+        <ul *ngIf="dropdownStates['commonQuestionsSearch']">
+            <li class="searchable">
+                <h4 class="searchable">What is required to update my password?</h4>
+                <p>To update your password, you need to enter your current password, choose a new password, and confirm the new password. Ensure the new password meets the system's security requirements, which include a minimum length of 6 characters, an uppercase letter, and a special character.</p>
+              </li>
+              <li class="searchable">
+                <h4 class="searchable">Why is the password update form locked?</h4>
+                <p>The form locks after 1.5 minutes of inactivity to ensure security. If locked, you need to wait for 5 minutes before you can attempt to update your password again.</p>
+              </li>
+              <li class="searchable">
+                <h4 class="searchable">What happens if I enter the wrong current password?</h4>
+                <p>If the current password you entered does not match your account password, the update will fail, and you will receive an error message. Double-check the password and try again.</p>
+              </li>
+              <li class="searchable">
+                <h4 class="searchable">How do I ensure my new password is strong?</h4>
+                <p>Make sure your new password contains at least 6 characters, including an uppercase letter and a special character (e.g., *, !, #). This helps protect your account from unauthorized access.</p>
+              </li>
+              <li class="searchable">
+                <h4 class="searchable">What if the passwords I enter do not match?</h4>
+                <p>If your new password and confirm password fields do not match, the system will display an error. You need to ensure both passwords are the same before submitting.</p>
+              </li>
+              <li class="searchable">
+                <h4 class="searchable">Can I update my password if I forget my current password?</h4>
+                <p>No, you need your current password to update it. If you forget your current password, use the 'Forgot Password' feature to reset it.</p>
+              </li>
+              <li class="searchable">
+                <h4 class="searchable">What happens after I successfully update my password?</h4>
+                <p>After successfully updating your password, you will be logged out for security reasons. You will need to log in again with your new password.</p>
+              </li>
+              <li class="searchable">
+                <h4 class="searchable">Why does the password update form lock after some time?</h4>
+                <p>The form locks after 1.5 minutes of inactivity to enhance security. Once locked, the form will be inaccessible for 5 minutes. After the lock duration, you can attempt to update your password again.</p>
+              </li>
+              <li class="searchable">
+                <h4 class="searchable">What should I do if my current password is not recognized?</h4>
+                <p>If the system does not recognize your current password, double-check the password entered. If you still encounter issues, consider using the 'Forgot Password' feature to reset your password.</p>
+              </li>
+              <li class="searchable">
+                <h4 class="searchable">What happens if the 'Confirm Password' field does not match the new password?</h4>
+                <p>If the new password and confirm password fields do not match, the system will show an error. You must re-enter the correct password in both fields to proceed with the update.</p>
+              </li>
+              <li class="searchable">
+                <h4 class="searchable">Can I update my password if I forget my current one?</h4>
+                <p>No, the current password is required to update it. If you forget your current password, use the 'Forgot Password' feature to reset it instead of updating.</p>
+              </li>
+              <li class="searchable">
+                <h4 class="searchable">Will I be logged out after successfully updating my password?</h4>
+                <p>Yes, once the password is updated successfully, the system will log you out for security reasons. You will need to log back in using your new password to continue accessing the system.</p>
+              </li>
+            </ul>
+          </div>
+    
+    <div class="help-section">
+        <h3 (click)="toggleDropdown('technicalIssuesSearch')">Technical Issues</h3>
+        <ul *ngIf="dropdownStates['technicalIssuesSearch']">
+            <li>
+                <h4 class="searchable">Why is the form not responding after I enter my details?</h4>
+        <p>If the form becomes unresponsive, this could be due to network connectivity issues. Try refreshing the page or clearing your browser cache. If the problem persists, contact technical support for further assistance.</p>
+      </li>
+      <li class="searchable">
+        <h4 class="searchable">What should I do if I encounter an error while updating my password?</h4>
+        <p>If an error occurs while updating your password, check if the current password is correct and that the new password meets the system's criteria. If the issue persists, try again or contact technical support.</p>
+      </li>
+      <li class="searchable">
+        <h4 class="searchable">Why can’t I submit the form even though I’ve filled in all the fields?</h4>
+        <p>Ensure that your new password meets the validation rules: it must contain at least 6 characters, one uppercase letter, and a special character. The confirm password field must also match the new password.</p>
+      </li>
+      <li class="searchable">
+        <h4 class="searchable">What happens if the timer runs out before I submit the form?</h4>
+        <p>If the timer expires while you're updating your password, the form will lock for 5 minutes. You’ll have to wait for the lock period to end before attempting to update your password again.</p>
+      </li>
+      <li class="searchable">
+        <h4 class="searchable">Why do I keep receiving an error that my new password is invalid?</h4>
+        <p>If you're receiving an invalid password error, ensure that your new password contains an uppercase letter, a special character, and is at least 6 characters long. Re-enter the password correctly and try again.</p>
+      </li>
+      <li class="searchable">
+        <h4 class="searchable">What should I do if I forget my password and the form is locked?</h4>
+        <p>If you forget your password and the form is locked, you will need to wait for the lock to expire. If you're still unable to update your password, use the 'Forgot Password' feature to reset your password.</p>
+      </li>
+      <li class="searchable">
+        <h4 class="searchable">What if I experience a system error while updating my password?</h4>
+        <p>If you encounter a system error, such as a server error, while updating your password, contact support with the error message. They can assist you in resolving the issue and ensuring your password is updated.</p>
+      </li>
+    </ul>
+  </div>
+
+    
+    <div class="help-section">
+        <h3 (click)="toggleDropdown('stepsElementsSearch')">Step-by-Step Guide</h3>
+        <mat-accordion *ngIf="dropdownStates['stepsElementsSearch']">
+            <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                  <mat-panel-title>Step 1: Enter your current password</mat-panel-title>
+                </mat-expansion-panel-header>
+                <p>In the 'Old Password' field, enter your current password. This is the password you currently use to log into your account.</p>
+              </mat-expansion-panel>
+              <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                  <mat-panel-title>Step 2: Enter a new password</mat-panel-title>
+                </mat-expansion-panel-header>
+                <p>In the 'New Password' field, type a new password that meets the system’s security requirements. The password must contain at least 6 characters, including an uppercase letter and a special character.</p>
+              </mat-expansion-panel>
+              <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                  <mat-panel-title>Step 3: Confirm the new password</mat-panel-title>
+                </mat-expansion-panel-header>
+                <p>In the 'Confirm New Password' field, re-enter the new password exactly as you entered it in the previous step. This ensures that both entries match.</p>
+              </mat-expansion-panel>
+              <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                  <mat-panel-title>Step 4: Submit the form</mat-panel-title>
+                </mat-expansion-panel-header>
+                <p>Click the 'Update Password' button to submit your new password. The system will check that your current password is correct and that the new password matches the confirmation field.</p>
+              </mat-expansion-panel>
+              <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                  <mat-panel-title>Step 5: Wait for confirmation</mat-panel-title>
+                </mat-expansion-panel-header>
+                <p>After submitting, you will receive a confirmation message if your password is updated successfully. If the update fails, review any error messages and retry the process.</p>
+              </mat-expansion-panel>
+              <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                  <mat-panel-title>Step 6: Log in with your new password</mat-panel-title>
+                </mat-expansion-panel-header>
+                <p>Once your password is updated, you will be logged out. Log back into the system using your new password to continue accessing your account.</p>
+              </mat-expansion-panel>
+            
+            </mat-accordion>
+            <button mat-raised-button color="primary" [routerLink]="['/UpdatePassword']">Go To Page</button>
+          </div>
+  </div>
+
+  <div *ngIf="shouldDisplayContainer('add-dentists')" class="help-container dentist-container add-dentists">
+    <h2><mat-icon>settings</mat-icon> My Profile Settings</h2>
+    <p>This section provides assistance on how to manage your profile settings, such as updating your name, email, and phone number.</p>
+  
+    
+    <div class="help-section">
+      <h3 (click)="toggleDropdown('commonQuestionsAdd')">Common Questions</h3>
+      <ul *ngIf="dropdownStates['commonQuestionsAdd']">
+        <li class="searchable">
+            <h4 class="searchable">How do I update my personal details?</h4>
+            <p>To update your name, surname, email address, or phone number, navigate to the 'Settings' page. Once on the page, edit the fields you wish to update. Ensure all required fields are filled before saving.</p>
+          </li>
+          <li class="searchable">
+            <h4 class="searchable">Can I change my email address?</h4>
+            <p>Yes, you can change your email address on the 'Settings' page. Enter the new email address in the 'Email Address' field and confirm the change. Remember to save the update by clicking the 'Save' button.</p>
+          </li>
+          <li class="searchable">
+            <h4 class="searchable">What happens if I change my email?</h4>
+            <p>Once you change your email address and save, the system will log you out as a security measure. You will need to log in again using your new email address.</p>
+          </li>
+          <li class="searchable">
+            <h4 class="searchable">How do I update my phone number?</h4>
+            <p>You can update your phone number by entering the new number in the 'Phone Number' field on the 'Settings' page. Ensure the phone number is in the correct format (e.g., for South African numbers, it should start with +27).</p>
+          </li>
+          <li class="searchable">
+            <h4 class="searchable">Will I be logged out if I update my phone number?</h4>
+            <p>No, updating your phone number will not log you out. However, make sure to save the changes after updating.</p>
+          </li>
+          <li class="searchable">
+            <h4 class="searchable">What happens if I don’t save my changes?</h4>
+            <p>If you navigate away from the 'Settings' page without saving, your changes will not be applied. Ensure that you click the 'Save' button to commit the updates.</p>
+          </li>
+          <li class="searchable">
+            <h4 class="searchable">How can I reset my profile details to the original values?</h4>
+            <p>If you make unwanted changes, you can reset the form to its original state by refreshing the page before saving. This will discard all unsaved changes.</p>
+          </li>
+          <li class="searchable">
+            <h4 class="searchable">Can I edit my profile if the form shows errors?</h4>
+            <p>If there are errors in the form, you cannot save the changes. Make sure to correct the highlighted errors (e.g., missing required fields or invalid email format) before attempting to save.</p>
+          </li>
+          <li class="searchable">
+            <h4 class="searchable">Is there a character limit for the Name and Surname fields?</h4>
+            <p>Yes, there might be a character limit for these fields to ensure consistency. If the system doesn't accept longer names, shorten them accordingly or contact support for guidance.</p>
+          </li>
+          <li class="searchable">
+            <h4 class="searchable">Can I change multiple fields at the same time?</h4>
+            <p>Yes, you can update multiple fields, such as your name, email, and phone number, all at once. Ensure that all changes are accurate before saving.</p>
+          </li>
+        </ul>
+      </div>
+    
+    <div class="help-section">
+      <h3 (click)="toggleDropdown('technicalIssuesAdd')">Technical Issues</h3>
+      <ul *ngIf="dropdownStates['technicalIssuesAdd']">
+        <li class="searchable">
+            <h4 class="searchable">Why is the 'Save' button unresponsive?</h4>
+            <p>This could be due to a validation error. Check that all required fields are filled correctly, and that there are no formatting errors (e.g., invalid email address). If the issue persists, try refreshing the page or using a different browser.</p>
+          </li>
+          <li class="searchable">
+            <h4 class="searchable">What if I encounter an error when saving my settings?</h4>
+            <p>If you encounter an error while saving, check if all required fields are filled correctly and if there is any error message indicating what needs to be corrected. If the issue persists, contact support for assistance.</p>
+          </li>
+          <li class="searchable">
+            <h4 class="searchable">Why can't I submit the form even though I filled out all fields?</h4>
+            <p>Ensure that all fields meet the validation requirements. For example, the phone number must be in the correct format, and the email must be valid. If you’ve met all conditions and still can’t submit, refresh the page or try again later.</p>
+          </li>
+          <li class="searchable">
+            <h4 class="searchable">Why did the page freeze after I made changes?</h4>
+            <p>This could be caused by a browser issue. Try refreshing the page or clearing your browser cache. If the issue persists, contact technical support for assistance.</p>
+          </li>
+          <li class="searchable">
+            <h4 class="searchable">What should I do if my changes are not being saved?</h4>
+            <p>If your changes are not saving, check your internet connection or try a different browser. Also, ensure that all required fields are filled correctly and any validation errors are addressed.</p>
+          </li>
+          <li class="searchable">
+            <h4 class="searchable">Why am I getting a server error when saving my settings?</h4>
+            <p>This could be due to server issues or connectivity problems. Try saving again later, or contact support if the issue persists.</p>
+          </li>
+          <li class="searchable">
+            <h4 class="searchable">What if the page doesn’t load properly?</h4>
+            <p>If the 'Settings' page does not load properly, try clearing your browser cache or using another browser. If the issue persists, contact support for further assistance.</p>
+          </li>
+        </ul>
+    </div>
+    
+    <div class="help-section">
+      <h3 (click)="toggleDropdown('stepsElementsAdd')">Step-by-Step Guide</h3>
+      <mat-accordion *ngIf="dropdownStates['stepsElementsAdd']">
+        <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>Step 1: Navigate to 'Settings'</mat-panel-title>
+            </mat-expansion-panel-header>
+            <p>Click on the 'Settings' tab in the main navigation menu to access your profile settings.</p>
+          </mat-expansion-panel>
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>Step 2: Update your personal details</mat-panel-title>
+            </mat-expansion-panel-header>
+            <p>Edit the fields you wish to update, such as your name, email, or phone number. Ensure that you meet the validation criteria for each field.</p>
+          </mat-expansion-panel>
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>Step 3: Confirm your changes</mat-panel-title>
+            </mat-expansion-panel-header>
+            <p>Double-check your updates to ensure accuracy. Verify that all required fields are filled and that the email and phone number are in the correct format.</p>
+          </mat-expansion-panel>
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>Step 4: Save your updates</mat-panel-title>
+            </mat-expansion-panel-header>
+            <p>Click the 'Save' button at the bottom of the form to apply the changes. If successful, you will see a confirmation message indicating that the settings were saved.</p>
+          </mat-expansion-panel>
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>Step 5: Handle potential errors</mat-panel-title>
+            </mat-expansion-panel-header>
+            <p>If you encounter errors, correct the fields as indicated by the error messages and try saving again.</p>
+          </mat-expansion-panel>
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>Step 6: Log out and log back in</mat-panel-title>
+            </mat-expansion-panel-header>
+            <p>If you updated your email address, you will be logged out for security reasons. Log back in using your updated email address and credentials.</p>
+          </mat-expansion-panel>
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>Step 7: Verify that changes were applied</mat-panel-title>
+            </mat-expansion-panel-header>
+            <p>After logging back in, verify that the changes were successfully applied by returning to the 'Settings' page and reviewing your updated details.</p>
+          </mat-expansion-panel>
+        </mat-accordion>
+    </div>
+    <button mat-raised-button color="primary" [routerLink]="['/settings']">Go To Page</button>
+  </div>
+  
+
+  
+  <div *ngIf="shouldDisplayContainer('delete-dentists')" class="help-container dentist-container search-dentists">
+    <h2><mat-icon>history</mat-icon>  Audit Trail</h2>
+    <p>This section provides assistance on how to view, filter, and interpret the audit trail for system transactions.</p>
+   
+    
+    <div class="help-section">
+      <h3 (click)="toggleDropdown('commonQuestionsDeleteDentist')">Common Questions</h3>
+      <ul *ngIf="dropdownStates['commonQuestionsDeleteDentist']">
+        <li class="searchable">
+            <h4 class="searchable">What is an audit trail, and why is it important?</h4>
+        <p>An audit trail is a comprehensive log that records all transactions and actions within the system, capturing essential data such as the user who performed the action, the type of transaction (e.g., Create, Update, Delete), and additional data related to the transaction. It is crucial for monitoring system activity, ensuring accountability, and tracking changes for security purposes.</p>
+      </li>
+      <li class="searchable">
+        <h4 class="searchable">How do I view the complete audit trail in the system?</h4>
+        <p>To view the audit trail, navigate to the 'Audit Trail' page from the main navigation menu. Once on the page, you will see a table listing all transactions, with columns such as 'Audit Trail ID', 'Date of Transaction', 'System User', 'Transaction Type', and 'Additional Data'. These columns provide detailed information about each system action.</p>
+      </li>
+      <li class="searchable">
+        <h4 class="searchable">Can I filter the audit trail to see transactions from a specific date range?</h4>
+        <p>Yes, you can filter the audit trail by selecting a 'Start Date' and an 'End Date'. This filter allows you to narrow down the list of transactions to only those that occurred within the specified date range. Use the date pickers to select the desired dates, and the audit trail will update automatically.</p>
+      </li>
+      <li class="searchable">
+        <h4 class="searchable">How can I view audit trail entries for a specific user?</h4>
+        <p>To view the transactions performed by a specific user, use the 'User' dropdown filter on the audit trail page. This will display a list of unique users, identified by their email addresses, and allow you to select a specific user. Once selected, the table will filter to show only the actions performed by that user.</p>
+      </li>
+      <li class="searchable">
+        <h4 class="searchable">What does the 'Transaction Type' refer to, and how can I use it to filter results?</h4>
+        <p>The 'Transaction Type' represents the kind of action taken by the user (e.g., 'Create', 'Update', 'Delete'). You can filter the audit trail by selecting a specific transaction type from the 'Transaction Type' dropdown, enabling you to focus on only certain kinds of system activities, such as updates or deletions.</p>
+      </li>
+      <li class="searchable">
+        <h4 class="searchable">What information is available in the 'Additional Data' column?</h4>
+        <p>The 'Additional Data' column provides further context about the transaction, such as what record was affected, the changes made, or any other details that were part of the action. This data is critical for understanding the full scope of the action performed and can help in auditing the exact nature of the change.</p>
+      </li>
+      <li class="searchable">
+        <h4 class="searchable">How do I reset the filters if I want to see the full audit trail again?</h4>
+        <p>If you want to clear all filters and return to viewing the complete list of audit trail entries, you can click the 'Clear Filters' button. This will reset the 'Start Date', 'End Date', 'User', and 'Transaction Type' filters, allowing you to see all transactions logged in the system without restrictions.</p>
+      </li>
+      <li class="searchable">
+        <h4 class="searchable">How can I sort the audit trail data by date or other columns?</h4>
+        <p>You can sort the audit trail by clicking on the headers of any column. For example, clicking on the 'Date of Transaction' column header will sort the table by date in ascending or descending order, allowing you to quickly find the most recent or oldest transactions. This functionality also applies to the other columns, such as 'System User' and 'Transaction Type'.</p>
+      </li>
+      <li class="searchable">
+        <h4 class="searchable">Can I export the audit trail for external review?</h4>
+        <p>Currently, the system does not provide an export function directly through the UI. If you need to export the audit trail data for external review or backup purposes, contact your system administrator, who may be able to assist with exporting the data directly from the database or back-end system.</p>
+      </li>
+    </ul>
+  </div>
+    
+    <div class="help-section">
+      <h3 (click)="toggleDropdown('technicalIssuesDeleteDentist')">Technical Issues</h3>
+      <ul *ngIf="dropdownStates['technicalIssuesDeleteDentist']">
+        <li class="searchable">
+            <h4 class="searchable">Why is the audit trail not displaying any data?</h4>
+            <p>If no audit trail entries are visible, there could be several reasons. First, ensure that the filters you applied (e.g., date range, user, or transaction type) are not too restrictive. If the filters are clear and no data is still showing, it could indicate a connection issue or a system error. Try refreshing the page or contacting technical support.</p>
+          </li>
+          <li class="searchable">
+            <h4 class="searchable">What should I do if the audit trail page is slow to load?</h4>
+            <p>Loading delays may be caused by a large amount of data being retrieved. Try applying filters to reduce the number of entries displayed at once, or check your network connection. If the issue persists, contact technical support to investigate further.</p>
+          </li>
+          <li class="searchable">
+            <h4 class="searchable">Why am I unable to filter the audit trail by user?</h4>
+            <p>If the 'User' filter is not working, it could be due to missing data for some audit trail entries or a system issue. Ensure that the user you are looking for has performed actions logged in the audit trail, and try clearing other filters to expand the results. If the issue persists, contact support for further assistance.</p>
+          </li>
+          <li class="searchable">
+            <h4 class="searchable">What should I do if the date range filter isn't working correctly?</h4>
+            <p>If you're experiencing issues with filtering by date, double-check that the 'Start Date' is before the 'End Date'. If the filter still doesn't apply, try clearing the date filters and setting them again. Persistent problems may require contacting technical support.</p>
+          </li>
+          <li class="searchable">
+            <h4 class="searchable">Why do some audit trail entries lack details in the 'Additional Data' column?</h4>
+            <p>In some cases, the 'Additional Data' column may not contain detailed information if the transaction didn't involve specific data changes or if the log entry was incomplete. If you frequently see incomplete entries, report the issue to technical support.</p>
+          </li>
+          <li class="searchable">
+            <h4 class="searchable">How do I fix a broken or missing filter on the audit trail page?</h4>
+            <p>If a filter option is not functioning as expected, such as the user or transaction type filter, first try clearing all filters and applying them again. If the issue persists, it could indicate a bug or system error, in which case contacting support is recommended.</p>
+          </li>
+          <li class="searchable">
+            <h4 class="searchable">What can I do if the audit trail fails to refresh with new data?</h4>
+            <p>If new transactions are not appearing in the audit trail, try refreshing the page manually. The audit trail should update in real-time, so if the issue persists, ensure your internet connection is stable or contact support to ensure the system is logging new transactions properly.</p>
+          </li>
+          <li class="searchable">
+            <h4 class="searchable">Why am I getting a server error when trying to view the audit trail?</h4>
+            <p>A server error when viewing the audit trail could be due to a backend issue or connectivity problem. First, try refreshing the page or logging out and back in. If the error continues, report the issue to technical support for further investigation.</p>
+          </li>
+        </ul>
+      </div>
+    
+    <div class="help-section">
+      <h3 (click)="toggleDropdown('stepsElementsDelete')">Step-by-Step Guide</h3>
+      <mat-accordion *ngIf="dropdownStates['stepsElementsDelete']">
+        <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>Step 1: Access the Audit Trail Page</mat-panel-title>
+            </mat-expansion-panel-header>
+            <p>Navigate to the 'Audit Trail' page by clicking on the corresponding option in the main navigation menu. The audit trail will load automatically, showing all system transactions.</p>
+          </mat-expansion-panel>
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>Step 2: View the complete audit trail</mat-panel-title>
+            </mat-expansion-panel-header>
+            <p>The audit trail page will show a table listing all logged transactions. You can sort the data by clicking on the column headers (e.g., Date of Transaction, System User, Transaction Type).</p>
+          </mat-expansion-panel>
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>Step 3: Filter transactions by date</mat-panel-title>
+            </mat-expansion-panel-header>
+            <p>To view transactions within a specific date range, use the 'Start Date' and 'End Date' date pickers. Select the dates, and the table will update to show only transactions within that range.</p>
+          </mat-expansion-panel>
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>Step 4: Filter transactions by user</mat-panel-title>
+            </mat-expansion-panel-header>
+            <p>To view transactions for a specific user, use the 'User' dropdown filter. Select the user from the list, and the table will update to show only the transactions performed by that user.</p>
+          </mat-expansion-panel>
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>Step 5: Filter transactions by transaction type</mat-panel-title>
+            </mat-expansion-panel-header>
+            <p>Use the 'Transaction Type' dropdown filter to view specific types of actions, such as 'Create', 'Update', or 'Delete'. Select the desired type, and the table will update accordingly.</p>
+          </mat-expansion-panel>
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>Step 6: Clear all filters</mat-panel-title>
+            </mat-expansion-panel-header>
+            <p>If you wish to see the entire audit trail again, click the 'Clear Filters' button. This will reset all filters, displaying the full list of logged transactions.</p>
+          </mat-expansion-panel>
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>Step 7: Interpret the 'Additional Data' column</mat-panel-title>
+            </mat-expansion-panel-header>
+            <p>Review the 'Additional Data' column for more details about the transaction. This may include what record was affected, what changes were made, or additional context about the action taken by the user.</p>
+          </mat-expansion-panel>
+        </mat-accordion>
+    </div>
+    <button mat-raised-button color="primary" [routerLink]="['/audit-trail']">Go To Page</button>
+  </div>
+  
+</div>
+
+<div *ngIf="noResultsFound" class="no-results-message">
+    <mat-icon class="no-results-icon">search_off</mat-icon>
+    No results found for your search query.
+  </div>
+</body>

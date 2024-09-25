@@ -162,6 +162,33 @@ namespace BioProSystem.Controllers
             }
 
         }
+
+        [HttpGet]
+        [Route("GetAllStockItems")]
+        public async Task<IActionResult> GetAllStockItems()
+        {
+            try
+            {
+                List<StockItem> allstockitem = new List<StockItem>();
+                allstockitem = await _repository.GetAllStockItems();
+                if (allstockitem.Count > 0)
+                {
+                    return Ok(allstockitem);
+                }
+                else
+                {
+                    return NotFound("No stock items found");
+                }
+            }
+            catch (Exception ex)
+            {
+
+                return StatusCode(500, "Internal Server Error. Please contact support." + ex.Message);
+            }
+
+        }
+
+
         [HttpGet]
         [Route("GetAllStockCategories")]
         public async Task<IActionResult> GetAllStockCategories()

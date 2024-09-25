@@ -1,0 +1,254 @@
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deliveries Help</title>
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.1.12/angular-material.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
+</head>
+<body>
+    <!-- <div class="filter-container">
+        <div class="filter-field">
+            <mat-form-field appearance="fill">
+                <mat-label>FILTER BY:</mat-label>
+                <mat-select (selectionChange)="onFilter($event)">
+                    <mat-option value="all">All</mat-option>
+                    <mat-option value="delivery-container">Deliveries</mat-option>
+                    <mat-option value="new-delivery-container">New Deliveries</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+    </div> -->
+
+    <div *ngIf="isAnySectionOpen()" class="search-filter-container">
+        <input type="text" placeholder="Search..." (input)="onSearch($event)" (click)="$event.stopPropagation()" />
+    </div>
+
+    <div #searchContent>
+        <div class="help-container delivery-container" *ngIf="shouldDisplayContainer('delivery-container')" id="deliveries">
+            <h2><mat-icon>event</mat-icon>Event Calendar</h2>
+
+            <section>
+                <h3>Overview</h3>
+                <p>The Calendar section allows users to view and manage events related to both patients and procedural timelines. You can see all scheduled events for specific dates, including patient-related activities and dental procedures, and filter by event type.</p>
+            </section>
+
+            <div class="help-section">
+                <section class="dropdown" (click)="toggleDropdown('commonQuestions')">
+                    <h3>Common Questions</h3>
+                    <ul *ngIf="dropdownStates['commonQuestions']">
+                        <!-- Patient Events Questions -->
+                        <li class="searchable">
+                            <h4>How do I view Patient events on the calendar?</h4>
+                            <p>Patient events, such as scheduled appointments or follow-ups, are displayed in the calendar. You can view them in the weekly or monthly view. Simply click on the event for detailed information.</p>
+                        </li>
+                        <li class="searchable">
+                            <h4>How can I add a new Patient event?</h4>
+                            <p>If you have the necessary permissions, click the "Add Event" button. Fill in the patient details, select the date and time, and save the event to schedule a new patient appointment.</p>
+                        </li>
+                        <li class="searchable">
+                            <h4>Can I edit or delete a Patient event?</h4>
+                            <p>Yes, if you have the appropriate permissions, you can edit or delete a Patient event by clicking on the event and selecting the desired action from the options provided.</p>
+                        </li>
+
+                        <!-- Procedural Timelines Questions -->
+                        <li class="searchable">
+                            <h4>How do I view Procedural events?</h4>
+                            <p>Procedural events, including dental procedures, are listed under the "Procedural Timeline" section of the calendar. You can filter events by specific timelines or view all scheduled procedures for a given time frame.</p>
+                        </li>
+                        <li class="searchable">
+                            <h4>How can I add a new Procedural event?</h4>
+                            <p>To add a new Procedural event, click the "Add Event" button, select "Procedure" from the event type dropdown, fill in the necessary details, and save the event to schedule the procedure.</p>
+                        </li>
+                        <li class="searchable">
+                            <h4>Can I associate a Procedural event with a specific Patient?</h4>
+                            <p>Yes, when creating or editing a Procedural event, you can associate it with a specific Patient by selecting the patient from the dropdown menu in the event details form.</p>
+                        </li>
+
+                        <!-- General Calendar Questions -->
+                        <li class="searchable">
+                            <h4>How can I search for specific events?</h4>
+                            <p>Use the search bar at the top of the calendar page to filter events by name, patient, or description. You can also use the dropdown to filter procedural events by type or timeline.</p>
+                        </li>
+                        <li class="searchable">
+                            <h4>Can I customize the calendar view?</h4>
+                            <p>Yes, you can switch between "Week View" and "Month View" using the view selector. Additionally, you can filter events by type or timeline to focus on specific information.</p>
+                        </li>
+                        <li class="searchable">
+                            <h4>What do the different event colors represent?</h4>
+                            <p>Each event is color-coded based on its type. Patient events and procedural events are visually distinguished by different colors to help you quickly identify them on the calendar.</p>
+                        </li>
+                        <li class="searchable">
+                            <h4>How do I navigate between different dates?</h4>
+                            <p>Use the "Previous" and "Next" buttons to move between weeks or months. The "Today" button will quickly return you to the current date.</p>
+                        </li>
+                        <li class="searchable">
+                            <h4>Is there a way to filter events by specific criteria?</h4>
+                            <p>Yes, you can use the dropdown menus to filter events by procedural timelines or event types, allowing you to focus on relevant events.</p>
+                        </li>
+                        <li class="searchable">
+                            <h4>How do I view detailed information about an event?</h4>
+                            <p>Click on the event in the calendar to open a detailed view. This will provide more information about the event, including associated patient details and procedural information.</p>
+                        </li>
+                        <li class="searchable">
+                            <h4>Can I export calendar events?</h4>
+                            <p>Currently, exporting calendar events is not supported directly from the calendar. If you need to export data, please contact the support team for assistance.</p>
+                        </li>
+                        <li class="searchable">
+                            <h4>How often is the calendar data updated?</h4>
+                            <p>The calendar data refreshes automatically when you navigate between views or perform actions like adding or editing events. For the latest updates, you can also manually refresh the page.</p>
+                        </li>
+                        <li class="searchable">
+                            <h4>Are there any permissions required to access certain calendar features?</h4>
+                            <p>Yes, certain features like adding, editing, or deleting events may require specific user roles or permissions. Ensure you have the necessary access rights to perform these actions.</p>
+                        </li>
+                    </ul>
+                </section>
+            </div>
+            
+            
+            <div class="help-section">
+                <section class="dropdown" (click)="toggleDropdown('technicalIssues')">
+                    <h3>Technical Issues</h3>
+                    <ul *ngIf="dropdownStates['technicalIssues']">
+                        <!-- General Technical Issues -->
+                        <li class="searchable">
+                            <h4>What should I do if the calendar events are not loading?</h4>
+                            <p>If the events are not loading, try refreshing the page. Ensure your internet connection is stable. If the problem persists, it might be a server issue—please contact support.</p>
+                        </li>
+                        <li class="searchable">
+                            <h4>How do I report a problem with the calendar?</h4>
+                            <p>If you encounter any issues with the calendar, please contact the support team with detailed information about the problem, including any error messages you receive.</p>
+                        </li>
+                        <li class="searchable">
+                            <h4>Why am I seeing an error message when accessing the calendar?</h4>
+                            <p>Error messages can occur due to network issues, server problems, or browser incompatibilities. Try refreshing the page or clearing your browser cache. If the issue continues, reach out to support.</p>
+                        </li>
+                        <li class="searchable">
+                            <h4>How do I clear my browser cache to resolve calendar issues?</h4>
+                            <p>Clearing your browser cache can help resolve loading issues. Instructions vary by browser:</p>
+                            <ul>
+                                <li><strong>Chrome:</strong> Go to Settings > Privacy and security > Clear browsing data.</li>
+                                <li><strong>Firefox:</strong> Go to Options > Privacy & Security > Cookies and Site Data > Clear Data.</li>
+                                <li><strong>Edge:</strong> Go to Settings > Privacy, search, and services > Clear browsing data.</li>
+                            </ul>
+                        </li>
+                        
+
+                        <!-- Patient Events Technical Issues -->
+                        <li class="searchable">
+                            <h4>Why can't I see Patient events on the calendar?</h4>
+                            <p>This could be due to filter settings or permissions. Ensure that the filters are set to display Patient events and that your user role has access to view them.</p>
+                        </li>
+                        <li class="searchable">
+                            <h4>I'm unable to add a new Patient event. What should I do?</h4>
+                            <p>Check if you have the necessary permissions to add events. If you do and the issue persists, try refreshing the page or contact support for further assistance.</p>
+                        </li>
+
+                        <!-- Procedural Timelines Technical Issues -->
+                        <li class="searchable">
+                            <h4>Why are Procedural events not displaying correctly?</h4>
+                            <p>Ensure that you have selected the correct procedural timeline filters. If the issue continues, it may be a data synchronization problem—please reach out to support.</p>
+                        </li>
+                        <li class="searchable">
+                            <h4>I'm experiencing issues when trying to associate a Procedural event with a Patient.</h4>
+                            <p>Verify that the Patient information is correctly entered and that the Patient exists in the system. If the problem persists, contact support with details of the error.</p>
+                        </li>
+
+                        <!-- Specific Feature Issues -->
+                        <li class="searchable">
+                            <h4>Why can't I switch between Week View and Month View?</h4>
+                            <p>Ensure that your browser supports the necessary features and that there are no conflicting extensions or scripts. If the issue persists, try accessing the calendar from a different browser or device.</p>
+                        </li>
+                        <li class="searchable">
+                            <h4>Events are overlapping or not displaying correctly in the calendar view. What can I do?</h4>
+                            <p>This might be a display issue related to the calendar's layout settings. Try adjusting the zoom level of your browser or switching between different calendar views to see if it resolves the problem.</p>
+                        </li>
+                        <li class="searchable">
+                            <h4>I'm receiving a "Permission Denied" error when trying to edit an event. Why?</h4>
+                            <p>You might not have the necessary permissions to edit events. Contact your administrator to verify your user role and access rights.</p>
+                        </li>
+                        <li class="searchable">
+                            <h4>How do I resolve synchronization issues between the calendar and other modules?</h4>
+                            <p>Synchronization issues can occur due to server delays or network problems. Try refreshing the page and ensuring your internet connection is stable. If the issue remains, contact support to investigate further.</p>
+                        </li>
+                    </ul>
+                </section>
+            </div>
+            
+            <div class="help-section">
+                <section class="dropdown" (click)="toggleDropdown('steps')">
+                  <h3>Step-by-Step Guide</h3>
+                  <mat-accordion *ngIf="dropdownStates['steps']">
+                    <mat-expansion-panel>
+                      <mat-expansion-panel-header (click)="handleExpansionClick($event)">
+                        <mat-panel-title>
+                            Step 1: Navigate to the Calendar Page
+                        </mat-panel-title>
+                      </mat-expansion-panel-header>
+                      <p>Use the navigation menu to go to the Event Calendar page.</p>
+                    </mat-expansion-panel>
+                    <mat-expansion-panel>
+                      <mat-expansion-panel-header (click)="handleExpansionClick($event)">
+                        <mat-panel-title>
+                            Step 2: View Events
+                        </mat-panel-title>
+                      </mat-expansion-panel-header>
+                      <p>Scroll through the weekly or monthly view to see all scheduled events, including patient appointments and procedural timelines.</p>
+                    </mat-expansion-panel>
+                    <mat-expansion-panel>
+                        <mat-expansion-panel-header (click)="handleExpansionClick($event)">
+                          <mat-panel-title>
+                            Step 3: Search for Events
+                          </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <p>Use the search bar to filter events by title, patient, or procedure.</p>
+                        </mat-expansion-panel>
+                      
+                      <mat-expansion-panel>
+                        <mat-expansion-panel-header (click)="handleExpansionClick($event)">
+                          <mat-panel-title>
+                            Step 4: Add or Edit Events (Admin/Manager Only)
+                          </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <p>If you have permissions, use the "Add Event" button to schedule a new event or click on an existing event to edit it. You can add both patient-related events and procedural timelines.</p>
+                      </mat-expansion-panel>
+                      <mat-expansion-panel>
+                        <mat-expansion-panel-header (click)="handleExpansionClick($event)">
+                          <mat-panel-title>
+                            Step 5: Filter Events
+                          </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <p>Use the dropdown menus to filter events by type or procedural timeline, allowing you to focus on specific events of interest.</p>
+                      </mat-expansion-panel>
+
+                      <mat-expansion-panel>
+                        <mat-expansion-panel-header (click)="handleExpansionClick($event)">
+                          <mat-panel-title>
+                            Step 6: Navigate Between Dates
+                          </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <p>Use the "Previous" and "Next" buttons to move between weeks or months. Click "Today" to quickly return to the current date.</p>
+                      </mat-expansion-panel>
+                  </mat-accordion>
+                </section>
+              </div>
+            <button mat-raised-button color="primary" [routerLink]="['/calendar']">Go To Page</button>
+        </div>
+        
+        
+    </div>
+    <div *ngIf="noResultsFound" class="no-results-message">
+        <mat-icon class="no-results-icon">search_off</mat-icon>
+        No results found for your search query.
+      </div>
+      
+</body>
+</html>

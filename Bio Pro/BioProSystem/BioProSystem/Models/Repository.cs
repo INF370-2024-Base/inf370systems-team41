@@ -386,7 +386,7 @@ namespace BioProSystem.Models
         //Employee
         public async Task<Employee[]> GetAllEmployeeAsync()
         {
-            IQueryable<Employee> query = _appDbContext.Employees.Where(e => e.isActiveEmployee);
+            IQueryable<Employee> query = _appDbContext.Employees.Where(e => e.isActiveEmployee).Include(j=> j.JobTitle);
             return await query.ToArrayAsync();
         }
         public async Task<SystemOrder[]> GetSystemOrdersForEmployee(string employeeEmail)
@@ -480,6 +480,11 @@ namespace BioProSystem.Models
             _appDbContext.StockItems.Add(stockItem);
         }
 
+        public async Task<List<StockItem>> GetAllStockItems()
+        {
+            return await _appDbContext.StockItems.Include(S=>S.Stock).ToListAsync();
+        }
+
         public void UpdateDentist(Dentist dentist)
         {
             _appDbContext.Entry(dentist).State = EntityState.Modified;
@@ -514,8 +519,10 @@ namespace BioProSystem.Models
         {
 
             return await _appDbContext.Deliveries
-                               .Include(d => d.DeliveryStatus)
-                               .Include(e => e.Employee)
+                                 .Include(d => d.DeliveryStatus)
+                       .Include(e => e.Employee)
+                       .Include(d => d.SystemOrder) 
+                       .ThenInclude(o => o.Dentist) 
                                .OrderByDescending(d => d.DeliveryId)
                                .ToListAsync();
         }
