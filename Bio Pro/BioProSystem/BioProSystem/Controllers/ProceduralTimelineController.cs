@@ -33,7 +33,7 @@ namespace BioProSystem.Controllers
 
         [HttpPost("CreateTimeline")]
         [Authorize(AuthenticationSchemes = "Bearer")]
-        [Authorize(Roles = " Admin, Owner, Manager")]
+        [Authorize(Roles = " Admin, Owner, Lab Manager")]
 
         public async Task<IActionResult> CreateTimeline(ProceduralTimelineViewModel viewModel)
         {
