@@ -3,9 +3,7 @@
     <h1 style="font-size: 48px; color: #4d4a4a; text-align: center; text-transform: uppercase; letter-spacing: 3px; margin-bottom: 24px; text-shadow: 2px 2px 4px rgba(124, 124, 124, 0.5);">
         SETTINGS
     </h1> 
-    <button mat-raised-button color="primary" type="submit" routerLink="/UpdatePassword" style="justify-content: center;">
-      <mat-icon>update</mat-icon> Update Password
-    </button>
+   
         <div class="settings-container">
           <div *ngIf="roleService.hasRole(['Lab Manager','Owner'])">
             <mat-form-field appearance="outline">
@@ -235,5 +233,7 @@
         <!-- Save Button Section -->
         
       </div>
-      
+      <button mat-raised-button color="primary" type="submit" routerLink="/UpdatePassword" style="justify-content: center;">
+        <mat-icon>update</mat-icon> Update Password
+      </button>
 </body>
