@@ -6,6 +6,7 @@ import { ConfirmDeleteDailyHourComponent } from '../confirm-delete-daily-hour/co
 import { DataService } from '../services/login.service';
 import { formatDate } from '@angular/common';
 import { CaptureEmployeeHoursComponent } from '../capture-employee-hours/capture-employee-hours.component';
+import { RoleGuardService } from '../services/roleCheck';
 
 @Component({
   selector: 'app-daily-hours-profile',
@@ -35,7 +36,8 @@ export class DailyHoursProfileComponent implements OnInit {
     private employeeService: EmployeeService,
     private dialog: MatDialog,
     private loginService: DataService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private roleGuardService: RoleGuardService,
   ) {}
 
   ngOnInit(): void {
@@ -169,7 +171,10 @@ export class DailyHoursProfileComponent implements OnInit {
       }
     });
   }
-
+  isOwner(): boolean {
+    const expectedRoles = ['Owner'];  // Define the roles to check
+    return this.roleGuardService.hasRole(expectedRoles);
+  } 
   captureEmployeeHours(): void {
     const dialogRef = this.dialog.open(CaptureEmployeeHoursComponent, {
       width: '600px'
