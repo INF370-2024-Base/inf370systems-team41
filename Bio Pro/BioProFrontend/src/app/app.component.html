@@ -75,7 +75,7 @@
 
     <!-- Employee Section For admin,lab manager,owner-->
 
-    <mat-expansion-panel class="nav-expansion-panel" (opened)="toggleEmployeeMenu()" (closed)="toggleEmployeeMenu()" *ngIf="roleService.hasRole(['admin'])">
+    <mat-expansion-panel class="nav-expansion-panel" (opened)="toggleEmployeeMenu()" (closed)="toggleEmployeeMenu()" *ngIf="roleService.hasRole(['admin','lab manager','owner'])">
       <mat-expansion-panel-header><a [routerLink]="['/employeeProfile']" class="nav-link" (click)="$event.stopPropagation()">
         <mat-icon>perm_contact_calendar</mat-icon>
         <span>All Employees</span>

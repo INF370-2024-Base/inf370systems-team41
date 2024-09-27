@@ -67,7 +67,7 @@ const routes: Routes = [
   { path: 'addEmployee', component: AddEmployeeComponent, canActivate: [RoleGuardService], data: { expectedRoles: ['Lab Manager',"Owner"] } },
   { path: 'addDentist', component: AddDentistComponent, canActivate: [RoleGuardService], data: { expectedRoles: ['Admin', 'Lab Manager',"Owner"] } },
   { path: 'dentistProfile', component: DentistProfileComponent, canActivate: [RoleGuardService], data: { expectedRoles: ['Admin', 'Lab Manager',"Owner"] } },
-  { path: 'captureEmployeeDailyHours', component: CaptureEmployeeHoursComponent, canActivate: [RoleGuardService], data: { expectedRoles: ['Admin'] } },
+  { path: 'captureEmployeeDailyHours', component: CaptureEmployeeHoursComponent, canActivate: [RoleGuardService], data: { expectedRoles: ['admin','lab manager','owner'] } },
   { path: 'employeeProfile', component: EmployeeProfileComponent, canActivate: [RoleGuardService], data: { expectedRoles: ['Lab Manager',"Owner","Admin"] } },
   { path: 'Dentist', component: DentistProfileComponent, canActivate: [RoleGuardService], data: { expectedRoles: ['Admin', 'Lab Manager',"Owner"] } },
   { path: 'employee', component: EmployeeProfileComponent, canActivate: [RoleGuardService], data: { expectedRoles: ['Admin', 'Lab Manager',"Owner"] } },
