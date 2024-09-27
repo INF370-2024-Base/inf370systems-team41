@@ -413,7 +413,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 8,
+          "SelectedChildIndex": 6,
           "Children": [
             {
               "$type": "Document",
@@ -495,6 +495,19 @@
             },
             {
               "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "C:\\Users\\leze7\\Desktop\\UNI 2024\\INF 370\\Don\u0027t panic IT 5 code\\inf370systems-team41\\Bio Pro\\BioProSystem\\BioProSystem\\appsettings.json",
+              "RelativeDocumentMoniker": "BioProSystem\\appsettings.json",
+              "ToolTip": "C:\\Users\\leze7\\Desktop\\UNI 2024\\INF 370\\Don\u0027t panic IT 5 code\\inf370systems-team41\\Bio Pro\\BioProSystem\\BioProSystem\\appsettings.json",
+              "RelativeToolTip": "BioProSystem\\appsettings.json",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAoAAAChAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2024-05-13T13:29:18.467Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 2,
               "Title": "DeliveryController.cs",
               "DocumentMoniker": "C:\\Users\\leze7\\Desktop\\UNI 2024\\INF 370\\Don\u0027t panic IT 5 code\\inf370systems-team41\\Bio Pro\\BioProSystem\\BioProSystem\\Controllers\\DeliveryController.cs",
@@ -503,8 +516,7 @@
               "RelativeToolTip": "BioProSystem\\Controllers\\DeliveryController.cs",
               "ViewState": "AQIAAK0AAAAAAAAAAADwv7EAAABAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-24T20:36:48.436Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-05-24T20:36:48.436Z"
             },
             {
               "$type": "Document",
@@ -517,19 +529,6 @@
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAkAAAA1AAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-06-02T11:50:55.378Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "appsettings.json",
-              "DocumentMoniker": "C:\\Users\\leze7\\Desktop\\UNI 2024\\INF 370\\Don\u0027t panic IT 5 code\\inf370systems-team41\\Bio Pro\\BioProSystem\\BioProSystem\\appsettings.json",
-              "RelativeDocumentMoniker": "BioProSystem\\appsettings.json",
-              "ToolTip": "C:\\Users\\leze7\\Desktop\\UNI 2024\\INF 370\\Don\u0027t panic IT 5 code\\inf370systems-team41\\Bio Pro\\BioProSystem\\BioProSystem\\appsettings.json",
-              "RelativeToolTip": "BioProSystem\\appsettings.json",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAoAAAChAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2024-05-13T13:29:18.467Z",
-              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -553,8 +552,7 @@
               "RelativeToolTip": "BioProSystem\\Controllers\\ProceduralTimelineController.cs",
               "ViewState": "AQIAABYAAAAAAAAAAAAgwCMAAAAuAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-30T22:29:28.751Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-06-30T22:29:28.751Z"
             },
             {
               "$type": "Document",
