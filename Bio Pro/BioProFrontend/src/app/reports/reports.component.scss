@@ -58,7 +58,7 @@ body {
 .dashboard-grid {
   display: grid;
   grid-template-columns: repeat(6, 1fr);
-  gap: 10px;
+  gap: 5px;
   padding: 5px;
   margin-bottom: 10px;
 }
@@ -71,7 +71,7 @@ body {
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
   transition: transform 0.2s, box-shadow 0.2s;
   width: 120%;
-  max-width: 270px; /* Sets a maximum width to keep cards small */
+  max-width: 250px; /* Sets a maximum width to keep cards small */
 }
 
 .kpi-card:hover {
@@ -95,8 +95,22 @@ body {
 
 .gauge {
   width: 70px;  /* Further adjust gauge size */
-  height: 50px; /* Further adjust gauge size */
+  height: 50px; /* Further adjust gauge size */
 }
+
+/* Responsive adjustments */
+@media only screen and (max-width: 1200px) {
+  .dashboard-grid {
+    grid-template-columns: repeat(2, 1fr); /* Two cards per row on medium screens */
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .dashboard-grid {
+    grid-template-columns: repeat(1, 1fr); /* One card per row on small screens */
+  }
+}
+
 
 .chart-card {
   background-color: #fff;

@@ -5,6 +5,7 @@ import { DailyHours } from '../shared/dailyhours';
 import { ConfirmDeleteDailyHourComponent } from '../confirm-delete-daily-hour/confirm-delete-daily-hour.component';
 import { DataService } from '../services/login.service';
 import { formatDate } from '@angular/common';
+import { RoleGuardService } from '../services/roleCheck';                             
 import { CaptureEmployeeHoursComponent } from '../capture-employee-hours/capture-employee-hours.component';
 
 @Component({
@@ -35,8 +36,13 @@ export class DailyHoursProfileComponent implements OnInit {
     private employeeService: EmployeeService,
     private dialog: MatDialog,
     private loginService: DataService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private roleGuardService: RoleGuardService,
   ) {}
+  isOwner(): boolean {
+    const expectedRoles = ['Owner'];  // Define the roles to check
+    return this.roleGuardService.hasRole(expectedRoles);
+  }
 
   ngOnInit(): void {
     this.updateWeekDays(this.selectedDate);
