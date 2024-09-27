@@ -142,7 +142,7 @@
             <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
             <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
           </mat-table>
-          
+          <mat-paginator [pageSize]="10"></mat-paginator> 
         </div>
         <mat-card class="error-card" *ngIf="filteredAuditTrails.data.length === 0">
           <mat-card-content>
