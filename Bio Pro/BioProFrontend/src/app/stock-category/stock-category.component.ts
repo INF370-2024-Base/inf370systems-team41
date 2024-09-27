@@ -24,12 +24,15 @@ this.GetAllStockCategories();
   searchTerm: string = '';
   AllStockCategories:any[]=[]
   displayedStockCategories: any[] = [];
+  currentPage: number = 1;
+  itemsPerPage: number = 9;
   GetAllStockCategories()
   {
       this.stockService.getAllStockCategories().subscribe(result => {
         this.AllStockCategories = result;
         this.displayedStockCategories=result
         console.log(this.AllStockCategories);
+        this.filteredStockCategories(); 
       },
       (error: HttpErrorResponse) => {
         console.log(error.error);
@@ -81,6 +84,28 @@ this.GetAllStockCategories();
       }
     });
   }
+  get paginatedStockCategories(): any[] {
+    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+    const endIndex = startIndex + this.itemsPerPage;
+    return this.displayedStockCategories.slice(startIndex, endIndex);
+  }
+
+  get totalPages(): number {
+    return Math.ceil(this.displayedStockCategories.length / this.itemsPerPage);
+  }
+
+  nextPage(): void {
+    if (this.currentPage < this.totalPages) {
+      this.currentPage++;
+    }
+  }
+
+  previousPage(): void {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+    }
+  }
+
   filteredStockCategories() {
     if (this.searchTerm === '') {
       this.displayedStockCategories = this.AllStockCategories;
@@ -89,5 +114,6 @@ this.GetAllStockCategories();
         category.description.toLowerCase().includes(this.searchTerm.toLowerCase())
       );
     }
+    this.currentPage = 1;
   }
 }

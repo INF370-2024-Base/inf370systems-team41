@@ -30,7 +30,7 @@
     <div class="row">
       <div class="col-md-12">
         <div class="card-container">
-          <div class="card mb-3 example-card" *ngFor="let StockCategory of displayedStockCategories">
+          <div class="card mb-3 example-card" *ngFor="let StockCategory of paginatedStockCategories">
             <div class="card-body">
               <div class="card-header">
                 <i class="material-icons example-header-image">category</i>
@@ -43,14 +43,27 @@
                 <button mat-button class="btn btn-secondary rounded-btn mr-2" (click)="eventClicked(StockCategory)">Edit</button>
                 <button mat-button style="border-color: #dc3545; color: #dc3545; border-radius: 20px; padding: 2px 20px; font-size: 14px; transition: color 0.3s;" 
                 onmouseover="this.style.backgroundColor='#dc3545'; this.style.color='white';" 
-                onmouseout="this.style.backgroundColor=''; this.style.color='#dc3545';"  (click)="deleteCategory(StockCategory.stockCategoryId)">Delete</button>
+                onmouseout="this.style.backgroundColor=''; this.style.color='#dc3545';"  
+                (click)="deleteCategory(StockCategory.stockCategoryId)">Delete</button>
               </div>
             </div>
           </div>
-          <div *ngIf="searchTerm != '' && displayedStockCategories.length == 0" class="no-categories-found">
+          <div *ngIf="searchTerm != '' && paginatedStockCategories.length == 0" class="no-categories-found">
             No categories found
           </div>
         </div>
+      </div>
+    </div>
+    <!-- Pagination controls -->
+    <div class="row">
+      <div class="col-md-12 d-flex justify-content-between align-items-center pagination">
+        <button class="btn btn-outline-secondary" (click)="previousPage()" [disabled]="currentPage === 1">
+          Previous
+        </button>
+        <span>Page {{ currentPage }} of {{ totalPages }}</span>
+        <button class="btn btn-outline-secondary" (click)="nextPage()" [disabled]="currentPage === totalPages">
+          Next
+        </button>
       </div>
     </div>
   </div>
