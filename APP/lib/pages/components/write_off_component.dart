@@ -11,7 +11,7 @@ class WriteOffDialog extends StatefulWidget {
 }
 
 class _WriteOffDialogState extends State<WriteOffDialog> {
-   final _formKey = GlobalKey<FormState>();
+  final _formKey = GlobalKey<FormState>();
   final _quantityController = TextEditingController();
   String? _selectedReason;
 
@@ -84,7 +84,7 @@ class _WriteOffDialogState extends State<WriteOffDialog> {
           },
           child: Text('Submit'),
         ),
-      ],
-    );
-  }
+      ]
+     );
+     }
 }

@@ -1,4 +1,5 @@
 import 'dart:convert';
+// import 'dart:ffi';
 import 'package:biopromobileflutter/main.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
@@ -8,6 +9,7 @@ class AuthService {
   final String apiUrl = 'https://localhost:44315'; // Your API base URL
   String? token;
   List<String> roles = [];
+  int? employeeID=0;
   // Remove the client initialization from here to avoid circular reference
   // AuthenticatedHttpClient httpClient; 
 
@@ -34,7 +36,13 @@ class AuthService {
       if (rolesResponse.statusCode == 200) {
         final responseBody = jsonDecode(rolesResponse.body);
         roles = List<String>.from(responseBody['roles']);
-        await _saveRoles(roles); // Save roles to SharedPreferences
+
+        await _saveRoles(roles); 
+        if(responseBody['employees']['employeeId']!=null)
+        {
+          await _saveEmployeeID(responseBody['employees']['employeeId']);
+        }
+        // Save roles to SharedPreferences
        responseBody['roles'] = roles;
       } else {
         throw Exception('Failed to fetch roles');
@@ -51,10 +59,18 @@ class AuthService {
   final prefs = await SharedPreferences.getInstance();
   await prefs.setStringList('userRoles', roles);
 }
+Future<void> _saveEmployeeID(int employeeID) async {
+  final prefs = await SharedPreferences.getInstance();
+  await prefs.setInt('employeeID',employeeID);
+}
 
 Future<List<String>?> getRoles() async {
   final prefs = await SharedPreferences.getInstance();
   return prefs.getStringList('userRoles');
+}
+Future<int?> getEmployeeID() async {
+  final prefs = await SharedPreferences.getInstance();
+  return prefs.getInt('employeeID');
 }
 
 

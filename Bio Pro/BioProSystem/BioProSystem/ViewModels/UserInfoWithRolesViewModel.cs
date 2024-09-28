@@ -1,4 +1,5 @@
 ﻿using BioProSystem.Migrations;
+using BioProSystem.Models;
 
 namespace BioProSystem.ViewModels
 {
@@ -24,7 +25,7 @@ namespace BioProSystem.ViewModels
         public bool IsActiveUser { get; set; }
 
         public List<BioProSystem.Models.AuditTrail> AuditTrails { get; set; }
-        public List<EmployeeViewModel> Employees { get; set; }
+        public Employee Employees { get; set; }
 
         public List<string> Roles { get; set; }
 
