@@ -15,8 +15,8 @@ import { DataService } from '../services/login.service';
 })
 export class OrdersAwaitingDentalDesignComponent implements OnInit {
   addDentalDesign!: FormGroup;
-  uploadedFileUrls!: { url: SafeUrl, name: string }
-  uploadedFiles!: CustomFile 
+  uploadedFileUrls: { [key: string]: { url: SafeUrl, name: string } } = {}; // Map of orderId to uploaded files
+  uploadedFiles: { [key: string]: CustomFile } = {};
   constructor(private router:Router,private orderService:OrderService,private loginService:DataService,private formBuilder: FormBuilder,private snackbar:MatSnackBar, private sanitizer:DomSanitizer) 
   {  this.addDentalDesign = this.formBuilder.group({
     MediaFiles: [null],
@@ -36,75 +36,82 @@ ordersAwaitingDentalDesign:any[]=[]
         }
     )
   }
-  onFileSelected(event: any): void {
+  onFileSelected(event: any, orderId: string): void {
     const files: FileList = event.target.files;
     const maxFileSize = 10 * 1024 * 1024; // 10MB
 
     console.log('Files selected:', files);
 
     for (let i = 0; i < files.length; i++) {
-        const file = files[i];
-        console.log(`File ${file.name} size: ${file.size} bytes`);
+      const file = files[i];
+      console.log(`File ${file.name} size: ${file.size} bytes`);
 
+      if (file.size > maxFileSize) {
+        console.log(`File ${file.name} exceeds the maximum file size.`);
+        alert(`File ${file.name} is too large. Maximum file size is 5MB.`);
+        continue; // Skip the file and move to the next one
+      }
 
-        if (file.size > maxFileSize) {
-          console.log(`File ${file.name} exceeds the maximum file size.`);
-          alert(`File ${file.name} is too large. Maximum file size is 5MB.`);
-          continue; // Skip the file and move to the next one
-        }
+      console.log(`Processing file: ${file.name}`);
 
-        console.log(`Processing file: ${file.name}`);
+      const reader = new FileReader();
 
-        const reader = new FileReader();
+      reader.onload = (e: any) => {
+        const fileContent = e.target.result;
+        const byteArray = new Uint8Array(fileContent);
+        const url = this.sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(file));
 
-        reader.onload = (e: any) => {
-            const fileContent = e.target.result;
-            const byteArray = new Uint8Array(fileContent);
-            const url = this.sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(file));
+        // Save the uploaded file and its details for the specific order
+        this.uploadedFiles[orderId] = ({
+          name: file.name,
+          size: file.size,
+          content: byteArray
+        });
 
-            this.uploadedFiles=({
-                name: "DentalDesign",
-                size: file.size,
-                content: byteArray
-            });
-            console.log(this.uploadedFiles);
-            this.uploadedFileUrls=({ url, name: file.name });
-        };
+        this.uploadedFileUrls[orderId] = { url, name: file.name };
+      };
 
-        reader.readAsArrayBuffer(file);
+      reader.readAsArrayBuffer(file);
     }
-}
-onSubmit(orderId:string): void {
-  console.log(this.uploadedFiles)
-  const viewModel = new AddDentalDesignViewModel();
-  if (this.uploadedFiles!=null)
-    {
-      viewModel.DentalDesign.FileName = this.uploadedFiles.name
-      viewModel.DentalDesign.FileSelf=this.encodeFileContent(this.uploadedFiles.content)
-      viewModel.DentalDesign.FileSizeKb=this.uploadedFiles.size
-      viewModel.DentalDesign.SystemOrderId=orderId
-
-      viewModel.OrderId=orderId
-      
-      this.orderService.sendDentalDesign(viewModel).subscribe(
-        result=>
-          {
-            this.loginService.addTransaction("Put","Sent dental design for approval for order with id:"+ viewModel.DentalDesign.SystemOrderId+".")
-            this.showSnackBar("Successfully added dental design")
-            this.router.navigate(['/orders']);
-          }
-          ,
-          (error:HttpErrorResponse)=>
-          {
-            this.showSnackBar(error.error)
-          }
-      )
-
-    }
-    else {
-            this.showSnackBar(`Please add dental design.`);
   }
-}
+  onSubmit(orderId: string): void {
+    console.log(this.uploadedFiles);
+
+    const viewModel = new AddDentalDesignViewModel();
+    if (this.uploadedFiles[orderId] != null) {
+      viewModel.DentalDesign.FileName = this.uploadedFiles[orderId].name;
+      viewModel.DentalDesign.FileSelf = this.encodeFileContent(this.uploadedFiles[orderId].content);
+      viewModel.DentalDesign.FileSizeKb = this.uploadedFiles[orderId].size;
+      viewModel.DentalDesign.SystemOrderId = orderId;
+
+      viewModel.OrderId = orderId;
+
+      this.orderService.sendDentalDesign(viewModel).subscribe(
+        result => {
+          this.loginService.addTransaction("Put", "Sent dental design for approval for order with id:" + viewModel.DentalDesign.SystemOrderId + ".");
+          this.showSnackBar("Successfully added dental design");
+          this.router.navigate(['/orders']);
+        },
+        (error: HttpErrorResponse) => {
+          this.showSnackBar(error.error);
+        }
+      );
+    } else {
+      this.showSnackBar(`Please add dental design.`);
+    }
+  }
+
+  // encodeFileContent(content: ArrayBuffer): string {
+  //   let binary = '';
+  //   const bytes = new Uint8Array(content);
+  //   const len = bytes.byteLength;
+
+  //   for (let i = 0; i < len; i++) {
+  //     binary += String.fromCharCode(bytes[i]);
+  //   }
+
+  //   return btoa(binary);
+  // }
 encodeFileContent(content: ArrayBuffer): string {
   let binary = '';
   const bytes = new Uint8Array(content);

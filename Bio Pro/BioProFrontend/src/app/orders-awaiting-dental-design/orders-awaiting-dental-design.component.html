@@ -11,22 +11,26 @@
     </div>
    
     <div *ngFor="let order of ordersAwaitingDentalDesign" class="order-details">
-        <h1 class="order-id">{{order.orderId}}</h1>
-        <h2 class="due-date">Due date: {{order.dueDate | date}}</h2>
-        <h3 class="dentist-name">Dentist: {{order.dentist.firstName}} {{order.dentist.lastName}}</h3>
-        <form [formGroup]="addDentalDesign" (ngSubmit)="onSubmit(order.orderId)" class="dental-design-form">
-            <input type="file" id="MediaFiles" (change)="onFileSelected($event)" multiple class="file-input">
-            <div *ngIf="uploadedFileUrls != null" class="uploaded-file-list">
-                <h3>Uploaded Files:</h3>
-                <div class="uploaded-image-container">
-                    <a [href]="uploadedFileUrls.url" [download]="uploadedFileUrls.name">
-                        <img [src]="uploadedFileUrls.url" class="uploaded-image">
-                    </a>
-                </div>
-            </div>
-            <button type="submit" class="submit-button">Save</button>
-        </form>
-    </div>
+      <h1 class="order-id">{{order.orderId}}</h1>
+      <h2 class="due-date">Due date: {{order.dueDate | date}}</h2>
+      <h3 class="dentist-name">Dentist: {{order.dentist.firstName}} {{order.dentist.lastName}}</h3>
+      <form [formGroup]="addDentalDesign" (ngSubmit)="onSubmit(order.orderId)" class="dental-design-form">
+          <input type="file" id="MediaFiles" (change)="onFileSelected($event, order.orderId)" multiple class="file-input">
+          
+          <!-- Display uploaded files for the specific order -->
+          <div *ngIf="uploadedFileUrls[order.orderId] != null" class="uploaded-file-list">
+              <h3>Uploaded Files:</h3>
+              <div class="uploaded-image-container">
+                  <a [href]="uploadedFileUrls[order.orderId].url" [download]="uploadedFileUrls[order.orderId].name">
+                      <img [src]="uploadedFileUrls[order.orderId].url" class="uploaded-image">
+                  </a>
+              </div>
+          </div>
+  
+          <button type="submit" class="submit-button">Save</button>
+      </form>
+  </div>
+  
   </div>
 </body>
 
