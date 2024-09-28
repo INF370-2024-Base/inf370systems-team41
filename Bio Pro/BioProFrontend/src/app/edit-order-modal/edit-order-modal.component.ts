@@ -9,6 +9,8 @@ import { MediaFileViewModel } from '../shared/SystemOrderViewModel ';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatFormFieldControl } from '@angular/material/form-field';
 import { DataService } from '../services/login.service';
+import { ChangeDetectorRef } from '@angular/core';
+
 @Component({
   selector: 'app-edit-order-modal',
   templateUrl: './edit-order-modal.component.html',
@@ -43,7 +45,8 @@ export class EditOrderModalComponent implements OnInit {
     private sanitizer: DomSanitizer,
     private datePipe: DatePipe,
     private snackBar: MatSnackBar,
-    private loginService:DataService
+    private loginService:DataService,
+    private cdr: ChangeDetectorRef
   ) {
     this.editForm = this.formBuilder.group({
       OrderId: [{ value: '', disabled: true }, Validators.required],

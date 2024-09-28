@@ -16,18 +16,17 @@
   
   <form [formGroup]="captureHoursForm" (ngSubmit)="submitForm()">
     <!-- Employee Selection -->
- <!-- Employee Selection -->
- <div class="form-group">
-  <mat-form-field appearance="outline">
-    <mat-label><i class="material-icons">person</i> Employee</mat-label>
-    <mat-select id="employee" formControlName="employee" required>
-      <mat-option *ngFor="let employee of employees" [value]="employee.employeeId">{{ employee.firstName }}.{{ employee.lastName }}</mat-option>
-    </mat-select>
-    <mat-error *ngIf="captureHoursForm.get('employee')!.invalid && captureHoursForm.get('employee')!.touched">
-      Employee is required.
-    </mat-error>
-  </mat-form-field>
-    </div>
+    <div class="form-group">
+      <mat-form-field appearance="outline">
+        <mat-label><i class="material-icons">person</i> Employee</mat-label>
+        <mat-select id="employee" formControlName="employee" required>
+          <mat-option *ngFor="let employee of employees" [value]="employee.employeeId">{{ employee.firstName }}.{{ employee.lastName }}</mat-option>
+        </mat-select>
+        <mat-error *ngIf="captureHoursForm.get('employee')!.invalid && captureHoursForm.get('employee')!.touched">
+          Employee is required.
+        </mat-error>
+      </mat-form-field>
+    </div>
 
     <!-- Work Date Picker -->
     <div class="form-group">

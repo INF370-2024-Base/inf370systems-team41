@@ -13,7 +13,14 @@ class WriteOffDialog extends StatefulWidget {
 class _WriteOffDialogState extends State<WriteOffDialog> {
   final _formKey = GlobalKey<FormState>();
   final _quantityController = TextEditingController();
-  final _reasonController = TextEditingController();
+  String? _selectedReason;
+
+  final List<String> _reasons = [
+    'Damaged',
+    'Expired',
+    'Lost',
+    'Other'
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -35,12 +42,23 @@ class _WriteOffDialogState extends State<WriteOffDialog> {
                 return null;
               },
             ),
-            TextFormField(
-              controller: _reasonController,
+            DropdownButtonFormField<String>(
+              value: _selectedReason,
+              items: _reasons.map((String reason) {
+                return DropdownMenuItem<String>(
+                  value: reason,
+                  child: Text(reason),
+                );
+              }).toList(),
+              onChanged: (newValue) {
+                setState(() {
+                  _selectedReason = newValue;
+                });
+              },
               decoration: InputDecoration(labelText: 'Reason for Write Off'),
               validator: (value) {
                 if (value == null || value.isEmpty) {
-                  return 'Please enter a reason';
+                  return 'Please select a reason';
                 }
                 return null;
               },
@@ -59,14 +77,14 @@ class _WriteOffDialogState extends State<WriteOffDialog> {
               final writeOffData = {
                 'stockId': widget.stockId,
                 'quantityWrittenOff': int.parse(_quantityController.text),
-                'reason': _reasonController.text
+                'reason': _selectedReason
               };
               Navigator.of(context).pop(writeOffData);
             }
           },
           child: Text('Submit'),
         ),
-      ],
-    );
-}
+      ]
+     );
+     }
 }

@@ -124,7 +124,7 @@ namespace BioProSystem.Controllers
         // DELETE api/Employee/DeleteEmployee/{id}
         [HttpDelete("DeleteEmployee/{id}")]
         [Authorize(AuthenticationSchemes = "Bearer")]
-        [Authorize(Roles = " Lab Manager, Owner")]
+        [Authorize(Roles = "Lab Manager, Owner")]
         public async Task<IActionResult> DeleteEmployee(int id)
         {
             try

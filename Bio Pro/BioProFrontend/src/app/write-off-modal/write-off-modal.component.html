@@ -7,11 +7,28 @@
     </mat-form-field>
     <mat-form-field>
       <mat-label>Written Off Date</mat-label>
-      <input matInput formControlName="writtenOffDate" [min]="currentDate" [max]="currentDate" type="date">
+      <input matInput formControlName="writtenOffDate" [max]="currentDate" type="date">
     </mat-form-field>
     <mat-form-field>
       <mat-label>Reason</mat-label>
-      <input matInput formControlName="reason">
+      <mat-select formControlName="reason">
+        <mat-option [value]="'Damage'">
+          Damage
+        </mat-option>
+        <mat-option [value]="'Expired'">
+          Expired
+        </mat-option>
+        <mat-option [value]="'Theft/loss'"> 
+          Theft/loss
+        </mat-option>
+        <mat-option [value]="'Inventory miscount'"> 
+          Inventory miscount
+        </mat-option>
+        <mat-option [value]="'Defective product'">
+          Defective product
+        </mat-option>
+
+      </mat-select>
     </mat-form-field>
   </form>
 </div>

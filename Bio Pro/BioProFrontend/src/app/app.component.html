@@ -75,12 +75,12 @@
 
     <!-- Employee Section For admin,lab manager,owner-->
 
-    <mat-expansion-panel class="nav-expansion-panel" (opened)="toggleEmployeeMenu()" (closed)="toggleEmployeeMenu()" *ngIf="roleService.hasRole(['admin'])">
+    <mat-expansion-panel class="nav-expansion-panel" (opened)="toggleEmployeeMenu()" (closed)="toggleEmployeeMenu()" *ngIf="roleService.hasRole(['admin','lab manager','owner'])">
       <mat-expansion-panel-header><a [routerLink]="['/employeeProfile']" class="nav-link" (click)="$event.stopPropagation()">
         <mat-icon>perm_contact_calendar</mat-icon>
         <span>All Employees</span>
       </a></mat-expansion-panel-header>
-        <a mat-list-item [routerLink]="['/dailyHoursProfile']" class="nav-link" (click)="isSidenavOpen = !isSidenavOpen" *ngIf="roleService.hasRole(['admin'])">
+        <a mat-list-item  [routerLink]="['/dailyHoursProfile']" class="nav-link" (click)="isSidenavOpen = !isSidenavOpen" *ngIf="roleService.hasRole(['lab manager','owner', 'admin'])">
           <mat-icon>schedule</mat-icon>
           <span>Employee Daily Hours</span>
         </a>

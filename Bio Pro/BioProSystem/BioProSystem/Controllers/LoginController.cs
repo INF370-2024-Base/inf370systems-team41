@@ -459,7 +459,7 @@ namespace BioProSystem.Controllers
                 var result = await _repository.GetsystemUserAsync(emailAddress);
 
                 if (result == null) return NotFound("User does not exist");
-
+                Employee employee=result.Employees.FirstOrDefault();
                 var roles = await _userManager.GetRolesAsync(result);
                 var userWithRoles = new UserInfoWithRolesViewModel
                 {
@@ -482,7 +482,8 @@ namespace BioProSystem.Controllers
                     Surname = result.Surname,
                     IsActiveUser = result.isActiveUser,
                     AuditTrails = result.AuditTrails.ToList(),
-                    Roles = roles.ToList()
+                    Roles = roles.ToList(),
+                    Employees = employee
                 };
 
                 return Ok(userWithRoles);

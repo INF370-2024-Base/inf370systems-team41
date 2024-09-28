@@ -12,7 +12,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { RoleGuardService } from '../services/roleCheck';
-
+import { MatPaginator } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-settings',
@@ -26,7 +26,7 @@ export class SettingsComponent implements OnInit {
   filteredAuditTrails = new MatTableDataSource<any>();
   currentView:string="User Profile"
   @ViewChild(MatSort) sort!: MatSort;
-
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
   displayedColumns: string[] = [ 'dateOfTransaction', 'systemUser', 'transactionType', 'additionalData'];
 
   startDate: Date | null = null;
@@ -58,6 +58,13 @@ today:Date=new Date()
     
     
   }
+
+  ngAfterViewInit() {
+    this.filteredAuditTrails.paginator = this.paginator;
+    this.filteredAuditTrails.sort = this.sort;
+  }
+  
+
    userDetails = JSON.parse(sessionStorage.getItem('User')!);
      user:EditUser={
       Name:this.userDetails.name,
@@ -86,6 +93,10 @@ today:Date=new Date()
                 return item;
               });
               this.filteredAuditTrails.data = this.auditTrail;
+              this.filteredAuditTrails.data = this.auditTrail;
+
+              // Assign paginator and sort after data is set
+              this.filteredAuditTrails.paginator = this.paginator;
               this.filteredAuditTrails.sort = this.sort;
               console.log(this.filteredAuditTrails.data)
               this.extractUniqueValues();
@@ -177,6 +188,16 @@ today:Date=new Date()
   
       this.uniqueTransactionTypes = [...new Set(this.auditTrail.map(item => item.transactionType))];
     }
+
+    setFilteredData(data: any[]): void {
+      this.filteredAuditTrails.data = data;
+      if (this.paginator) {
+        this.filteredAuditTrails.paginator = this.paginator; // Ensure paginator is linked
+      }
+      if (this.sort) {
+        this.filteredAuditTrails.sort = this.sort; // Ensure sort is linked
+      }
+    }
   
     applyFilters() {
       console.log(this.startDate)
@@ -188,6 +209,7 @@ today:Date=new Date()
   
         return matchesDateRange && matchesUser && matchesTransactionType;
       });
+      this.setFilteredData(this.filteredAuditTrails.data);
     }
   
     clearFilters() {
@@ -196,6 +218,7 @@ today:Date=new Date()
       this.selectedUserEmail = null;
       this.selectedTransactionType = null;
       this.filteredAuditTrails.data = this.auditTrail;
+      this.setFilteredData(this.auditTrail); 
     }
   
     onStartDateChange(event: any) {

@@ -22,7 +22,7 @@
         <div class="form-group">
           <label for="DentistId"><i class="material-icons">person</i> Dentist:</label>
           <select required formControlName="DentistId" class="form-control" id="DentistId">
-            <option *ngFor="let dentist of dentists" [ngValue]="dentist.dentistId">
+            <option *ngFor="let dentist of dentists" [value]="dentist.dentistId">
               {{ dentist.firstName }} {{ dentist.lastName }}
             </option>
           </select>

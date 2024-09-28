@@ -6,6 +6,7 @@ import 'package:biopromobileflutter/services/employee_hours_capture_service.dart
 import 'package:flutter/material.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 import 'timer_component.dart';
+import 'package:biopromobileflutter/services/auth_service.dart';
 
 class QRCodeScannerPage extends StatefulWidget {
   final ValueNotifier<Duration> workedHoursNotifier;
@@ -24,6 +25,7 @@ class _QRCodeScannerPageState extends State<QRCodeScannerPage> {
   bool isTimeCaptured = false;
   String? employeeId;
   Duration workedHours = Duration.zero;
+  Duration finalWorkDuration=Duration.zero;
   MobileScannerController scannerController = MobileScannerController();
   bool isCooldown = false;
 
@@ -110,7 +112,7 @@ class _QRCodeScannerPageState extends State<QRCodeScannerPage> {
                         ),
                         const SizedBox(height: 10),
                         Text(
-                          'Worked Time: ${_formatDuration(workedHours)}\nEmployee ID: ${employeeId ?? "Unknown"}',
+                          'Worked Time: ${_formatDuration(finalWorkDuration)}\nEmployee ID: ${employeeId ?? "Unknown"}',
                           style: const TextStyle(fontSize: 18, color: Colors.black),
                           textAlign: TextAlign.center,
                         ),
@@ -152,6 +154,7 @@ void _handleQRCodeScanned(String code) async {
         employeeId = code; 
         if (startTime == null) {
           _startTimer();
+          finalWorkDuration=Duration.zero;
         } else {
           _stopTimerAndSendData(code);
         }
@@ -167,17 +170,14 @@ void _handleQRCodeScanned(String code) async {
 
 Future<bool> _validateEmployeeId(String scannedEmployeeId) async {
   try {
-    final response = await http.get(
-      Uri.parse('https://localhost:44315/api/Employee/GetAllEmployee'),
-    );
-
-    if (response.statusCode == 200) {
-      final List<dynamic> employees = jsonDecode(response.body);
-      print(employees);
-      return employees.any((employee) => employee['employeeId'].toString() == scannedEmployeeId);
+      AuthService authService=new AuthService();
+      final employeeId= await authService.getEmployeeID();
+      print('Employee ID scanned:'+scannedEmployeeId+". employee ID"+employeeId.toString());
+    if (employeeId.toString() ==scannedEmployeeId ) {
+      return true;
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Failed to validate Employee ID')),
+        SnackBar(content: Text('QR code scanned does not match signed in employee.')),
       );
       return false;
     }
@@ -224,6 +224,7 @@ Future<bool> _validateEmployeeId(String scannedEmployeeId) async {
     if (totalHours ==0) {
       totalHours = 0;
     }
+    finalWorkDuration=workedHours;
     _resetScanner();
     print('Total worked hours (rounded up): $totalHours');
 
@@ -279,6 +280,7 @@ Future<bool> _validateEmployeeId(String scannedEmployeeId) async {
   }
 
   String _formatDuration(Duration duration) {
+    print('Duration of thngy'+duration.toString());
     String twoDigits(int n) => n.toString().padLeft(2, '0');
     String twoDigitMinutes = twoDigits(duration.inMinutes.remainder(60));
     String twoDigitSeconds = twoDigits(duration.inSeconds.remainder(60));
