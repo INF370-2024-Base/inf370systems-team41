@@ -279,6 +279,7 @@ namespace BioProSystem.Models
                     OrderId = so.OrderId,
                     Dentist = new Dentist
                     {
+                        DentistId=so.DentistId,
                         FirstName = so.Dentist.FirstName,
                         LastName = so.Dentist.LastName,
                         Patients = so.Dentist.Patients
