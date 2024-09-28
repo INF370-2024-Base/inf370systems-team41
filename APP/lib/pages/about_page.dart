@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:video_player/video_player.dart';
 
 class AboutPage extends StatelessWidget {
@@ -9,7 +10,8 @@ class AboutPage extends StatelessWidget {
       appBar: AppBar(
         title: const Text('About us'),
       ),
-      body: Container(
+      body: Container( 
+        
         color: const Color(0xFF8B9AAD),
         padding: const EdgeInsets.all(16.0),
         child: SingleChildScrollView(
@@ -50,6 +52,7 @@ class AboutPage extends StatelessWidget {
                 '- Employee Hours Tracking',
                 '- Advanced Reporting'
               ]),
+               SizedBox(height: 10.0),
             ],
           ),
         ),
