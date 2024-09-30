@@ -15,7 +15,7 @@ import { DataService } from '../services/login.service';
 })
 export class OrdersAwaitingDentalDesignComponent implements OnInit {
   addDentalDesign!: FormGroup;
-  uploadedFileUrls!: { url: SafeUrl, name: string }
+  uploadedFileUrls!: { url: SafeUrl, name: string,orderID:string }
   uploadedFiles!: CustomFile 
   constructor(private router:Router,private orderService:OrderService,private loginService:DataService,private formBuilder: FormBuilder,private snackbar:MatSnackBar, private sanitizer:DomSanitizer) 
   {  this.addDentalDesign = this.formBuilder.group({
@@ -36,7 +36,7 @@ ordersAwaitingDentalDesign:any[]=[]
         }
     )
   }
-  onFileSelected(event: any): void {
+  onFileSelected(event: any,orderId:string): void {
     const files: FileList = event.target.files;
     const maxFileSize = 10 * 1024 * 1024; // 10MB
 
@@ -68,7 +68,7 @@ ordersAwaitingDentalDesign:any[]=[]
                 content: byteArray
             });
             console.log(this.uploadedFiles);
-            this.uploadedFileUrls=({ url, name: file.name });
+            this.uploadedFileUrls=({ url, name: file.name,orderID:orderId });
         };
 
         reader.readAsArrayBuffer(file);

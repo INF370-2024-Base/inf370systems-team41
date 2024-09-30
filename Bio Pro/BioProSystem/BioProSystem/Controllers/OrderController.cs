@@ -180,18 +180,43 @@ namespace BioProSystem.Controllers
                         newOpenOrder.systemOrder = newOrder;
                         _repository.Add(newOpenOrder);
                     }
-                    var newPatient = new Patient();
+                    
                     Console.WriteLine("is true" + await _repository.CheckSystemPatient(viewModel.MedicalAidNumber));
                     if (await _repository.CheckSystemPatient(viewModel.MedicalAidNumber))
-                    {
-                        newPatient.FirstName = _repository.GetPatientByMedicalAidNumber(viewModel.MedicalAidNumber).Result.FirstName;
-                        newPatient.Lastname = _repository.GetPatientByMedicalAidNumber(viewModel.MedicalAidNumber).Result.Lastname;
-                        newPatient.DentistId = _repository.GetPatientByMedicalAidNumber(viewModel.MedicalAidNumber).Result.DentistId;
-                        newPatient.MedicalAidId = _repository.GetPatientByMedicalAidNumber(viewModel.MedicalAidNumber).Result.MedicalAidId;
-                        newPatient.MedicalAidNumber = _repository.GetPatientByMedicalAidNumber(viewModel.MedicalAidNumber).Result.MedicalAidNumber;                      
+                    {   
+                        Patient patient = await _repository.GetPatientByMedicalAidNumber(viewModel.MedicalAidNumber);
+                        patient.FirstName = viewModel.PatientName;
+                        patient.Lastname = viewModel.PatientSurname;
+                        patient.DentistId = viewModel.DentistId;
+                        patient.MedicalAidId = viewModel.MedicalAidId;
+                        patient.MedicalAidNumber = viewModel.MedicalAidNumber;
+                        Dentist dentist = _repository.GetDentistdByIdAsync(viewModel.DentistId).Result;
+                        dentist.SystemOrders.Add(newOrder);
+                        dentist.Patients.Add(patient);
+                        try
+                        {
+
+
+                            if (await _repository.SaveChangesAsync())
+                            {
+
+                            }
+                            else
+                            {
+                                // Failed to save changes
+                                return BadRequest("Failed to save new patient.");
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            // Log the exception
+                            _logger.LogError(ex, "Error adding new patient.");
+                            return StatusCode(500, "Internal server error: " + ex.InnerException.Message);
+                        }
                     }
                     else
                     {
+                        var newPatient = new Patient();
                         newPatient.FirstName = viewModel.PatientName;
                         newPatient.Lastname = viewModel.PatientSurname;
                         newPatient.DentistId = viewModel.DentistId;
@@ -200,6 +225,9 @@ namespace BioProSystem.Controllers
                         newPatient.MedicalAidNumber = viewModel.MedicalAidNumber;
                         newPatient.Dentist=_repository.GetDentistdByIdAsync(viewModel.DentistId).Result;
                         _repository.Add(newPatient);
+                        Dentist dentist = _repository.GetDentistdByIdAsync(viewModel.DentistId).Result;
+                        dentist.SystemOrders.Add(newOrder);
+                        dentist.Patients.Add(newPatient);
                         try
                         {
    
@@ -221,9 +249,7 @@ namespace BioProSystem.Controllers
                             return StatusCode(500, "Internal server error: " + ex.InnerException.Message);
                         }
                     }   
-                    Dentist dentist=_repository.GetDentistdByIdAsync(viewModel.DentistId).Result;
-                    dentist.SystemOrders.Add(newOrder);
-                    dentist.Patients.Add(newPatient);
+                    
                     _repository.Add(newOrder);
                     List<SystemUser> labManagers = _userManager.GetUsersInRoleAsync("Lab Manager").Result.ToList();
 

@@ -77,10 +77,15 @@ export class EditOrderModalComponent implements OnInit {
     this.loadOrderStatuses();
     console.log("OrderId:", this.order.orderId);
     console.log("DentistId:", this.order.dentist.dentistId);
-    console.log("PatientFirstName:", this.order.dentist.patients[0].firstName);
-    console.log("PatientSurname:", this.order.dentist.patients[0].lastname);
-    console.log("MedicalAidId:", this.order.dentist.patients[0].medicalAidId);
-    console.log("MedicalAidNumber:", this.order.dentist.patients[0].medicalAidNumber);
+    if(this.order.dentist.patients.any)
+    {
+      console.log("PatientFirstName:", this.order.dentist.patients[0].firstName);
+      console.log("PatientSurname:", this.order.dentist.patients[0].lastname);
+      console.log("MedicalAidId:", this.order.dentist.patients[0].medicalAidId);
+      console.log("MedicalAidNumber:", this.order.dentist.patients[0].medicalAidNumber);
+    }
+    
+    
     console.log("OrderDirectionId:", this.order.orderWorkflowTimeline.orderDirection.orderDirectionId);
     console.log("PriorityLevel:", this.order.priorityLevel);
     console.log("OrderTypeId:", this.order.orderType.orderTypeId);
@@ -96,29 +101,52 @@ export class EditOrderModalComponent implements OnInit {
     if (this.order) {
       const orderDate = this.datePipe.transform(this.order.orderDate, 'yyyy-MM-dd');
       const dueDate = this.datePipe.transform(this.order.dueDate, 'yyyy-MM-dd');
-      
-      const patchData = {
-        OrderId: this.order.orderId,
-        DentistId: this.order.dentist.dentistId,
-        OrderDate: orderDate,
-        PatientName: this.order.dentist.patients[0].firstName,
-        PatientSurname: this.order.dentist.patients[0].lastname,
-        MedicalAidId: this.order.dentist.patients[0].medicalAidId,
-        MedicalAidNumber: this.order.dentist.patients[0].medicalAidNumber,
-        OrderDirectionId: this.order.orderWorkflowTimeline.orderDirection.orderDirectionId,
-        PriorityLevel: this.order.priorityLevel,
-        OrderTypeId: this.order.orderType.orderTypeId,
-        OrderStatusId: this.order.orderStatus.orderStatusId,
-        EmergencyNumber: this.order.emergencyNumber,
-        SpecialRequirements: this.order.specialRequirements,
-        DueDate: dueDate,
-        SelectedTeethShadeIds: this.order.teethShades.map((ts: TeethShade) => ts.teethShadeId),
-        SelectedAreas: this.order.selectedAreas
-        
-      };
-
-      console.log('Data to be patched into the form:', patchData); 
+      if(this.order.dentist.patients.length>0)
+        {
+          const patchData = {
+            OrderId: this.order.orderId,
+            DentistId: this.order.dentist.dentistId,
+            OrderDate: orderDate,
+            PatientName: this.order.dentist.patients[0].firstName,
+            PatientSurname: this.order.dentist.patients[0].lastname,
+            MedicalAidId: this.order.dentist.patients[0].medicalAidId,
+            MedicalAidNumber: this.order.dentist.patients[0].medicalAidNumber,
+            OrderDirectionId: this.order.orderWorkflowTimeline.orderDirection.orderDirectionId,
+            PriorityLevel: this.order.priorityLevel,
+            OrderTypeId: this.order.orderType.orderTypeId,
+            OrderStatusId: this.order.orderStatus.orderStatusId,
+            EmergencyNumber: this.order.emergencyNumber,
+            SpecialRequirements: this.order.specialRequirements,
+            DueDate: dueDate,
+            SelectedTeethShadeIds: this.order.teethShades.map((ts: TeethShade) => ts.teethShadeId),
+            SelectedAreas: this.order.selectedAreas
+            
+          };
+          console.log('Data to be patched into the form:', patchData); 
       this.editForm.patchValue(patchData);
+        }
+        else{
+          const patchData = {
+            OrderId: this.order.orderId,
+            DentistId: this.order.dentist.dentistId,
+            OrderDate: orderDate,
+            OrderDirectionId: this.order.orderWorkflowTimeline.orderDirection.orderDirectionId,
+            PriorityLevel: this.order.priorityLevel,
+            OrderTypeId: this.order.orderType.orderTypeId,
+            OrderStatusId: this.order.orderStatus.orderStatusId,
+            EmergencyNumber: this.order.emergencyNumber,
+            SpecialRequirements: this.order.specialRequirements,
+            DueDate: dueDate,
+            SelectedTeethShadeIds: this.order.teethShades.map((ts: TeethShade) => ts.teethShadeId),
+            SelectedAreas: this.order.selectedAreas
+            
+          };
+          console.log('Data to be patched into the form:', patchData); 
+      this.editForm.patchValue(patchData);
+        }
+      
+
+      
 
       this.selectedTeethShadeIds =this.order.teethShades.map((ts: TeethShade) => ts.teethShadeId)
       this.selectedAreas = this.order.selectedAreas || [];
