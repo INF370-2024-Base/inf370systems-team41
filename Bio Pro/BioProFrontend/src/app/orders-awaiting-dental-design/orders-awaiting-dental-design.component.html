@@ -15,7 +15,8 @@
         <h2 class="due-date">Due date: {{order.dueDate | date}}</h2>
         <h3 class="dentist-name">Dentist: {{order.dentist.firstName}} {{order.dentist.lastName}}</h3>
         <form [formGroup]="addDentalDesign" (ngSubmit)="onSubmit(order.orderId)" class="dental-design-form">
-            <input type="file" id="MediaFiles" (change)="onFileSelected($event,order.orderId)" multiple class="file-input">
+          <strong>Can only select one file:</strong>
+            <input type="file" id="MediaFiles" (change)="onFileSelected($event,order.orderId)" class="file-input">
             <div *ngIf="uploadedFileUrls != null && uploadedFileUrls.orderID==order.orderId" class="uploaded-file-list">
                 <h3>Uploaded Files:</h3>
                 <div class="uploaded-image-container">

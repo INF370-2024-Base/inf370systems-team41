@@ -73,13 +73,17 @@ this.GetAllStockCategories();
       if (result) {
         this.stockService.DeleteStockCategory(id).subscribe(() => {
           this.GetAllStockCategories();
-          this.loginService.addTransaction("Deleted","Deleted stock category with id: "+id)
+          this.loginService.addTransaction("Delete","Deleted stock category with id: "+id)
           console.log('Deleted category');
           this.snackBar.open('Deleted category successfully', 'Dismiss', {
             duration: 3000,
           });
         }, error => {
+          this.snackBar.open('Cannot delete stock category that is connected to a stock.', 'Dismiss', {
+            duration: 3000,
+          });
           console.error('Error deleting category', error);
+          
         });
       }
     });

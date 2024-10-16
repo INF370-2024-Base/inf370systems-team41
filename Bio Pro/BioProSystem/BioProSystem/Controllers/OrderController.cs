@@ -228,6 +228,7 @@ namespace BioProSystem.Controllers
                         Dentist dentist = _repository.GetDentistdByIdAsync(viewModel.DentistId).Result;
                         dentist.SystemOrders.Add(newOrder);
                         dentist.Patients.Add(newPatient);
+                        newOrder.DateCreated = DateTime.Now;
                         try
                         {
    

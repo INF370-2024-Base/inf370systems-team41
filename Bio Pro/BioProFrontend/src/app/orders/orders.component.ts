@@ -105,29 +105,31 @@ export class OrdersComponent implements OnInit {
       // Create and return a File from the Blob
       return new File([blob], fileName, { type: mimeType });
     }
-  getOrdersAndInfo() {
-    this.dataservices.getAllOrderInfo().subscribe(
-      ((allOrders: any[]) => {
-        if (Array.isArray(allOrders)) {
-          // Ensure the orders are sorted by the correct date field in descending order
-          this.orders = allOrders.sort((a, b) => {
-            const dateA = new Date(a.orderDate).getTime();
-            const dateB = new Date(b.orderDate).getTime();
-            return dateB - dateA; // Newest orders first
-          });
-  
-          this.originalOrders = [...this.orders]; // Keep a copy of the original sorted orders
-          this.loading = false;
-          this.ordersInfo = [...this.orders]; // Display the sorted orders
-          console.log(this.ordersInfo);
-          this.updatePageData();
-        } else {
-          console.error('No orders found.');
+    getOrdersAndInfo() { 
+      this.dataservices.getAllOrderInfo().subscribe(
+        (allOrders: any[]) => {
+          if (Array.isArray(allOrders)) {
+            // Sort orders by dateCreated
+            this.orders = allOrders.sort((a, b) => {
+              const dateA = new Date(a.dateCreated);
+              const dateB = new Date(b.dateCreated);
+              return dateB.getDate() - dateA.getDate(); // Ascending order
+            });
+            
+            this.originalOrders = this.orders; 
+            this.loading = false;
+            this.ordersInfo = this.orders; 
+            console.log(this.ordersInfo);
+            this.updatePageData();
+          } else {
+            console.error('No orders found.');
+          }
         }
-      }
-    )
-    )
-  }
+      );
+    }
+    
+    
+    
 
   updatePageData() {
     this.totalPages = Math.ceil(this.originalOrders.length / this.itemsPerPage);

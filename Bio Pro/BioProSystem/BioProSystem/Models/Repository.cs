@@ -274,6 +274,8 @@ namespace BioProSystem.Models
                 .Include(so => so.SelectedAreas)
                 .Include(so => so.OrderType)
                 .Include(so => so.MediaFiles)
+                .Include(so=>so.StockItems)
+                .ThenInclude(st=>st.Stock)
                 .Select(so => new SystemOrder
                 {
                     OrderId = so.OrderId,
@@ -286,6 +288,7 @@ namespace BioProSystem.Models
                             .Where(p => p.MedicalAidNumber == so.PatientMedicalAidNumber)
                             .ToList()
                     },
+                    StockItems=so.StockItems,
                     OrderStatus = so.OrderStatus,
                     TeethShades = so.TeethShades,
                     SelectedAreas = so.SelectedAreas,
@@ -302,6 +305,7 @@ namespace BioProSystem.Models
                     SpecialRequirements = so.SpecialRequirements,
                     DueDate = so.DueDate,
                     OrderDate = so.DueDate,
+                    DateCreated=so.DateCreated,
                 })
                 .ToListAsync();
 

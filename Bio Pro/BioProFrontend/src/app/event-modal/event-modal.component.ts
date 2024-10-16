@@ -135,7 +135,7 @@ console.log(this.selectedEvent)
       if (result) {
         // If the user confirms, delete the event
         this.calendarService.deleteCalendarEvent(this.data.event.object.calanderScheduleEventId).subscribe(() => {
-          this.loginService.addTransaction("Deleted","Deleted event: "+this.data.event.object.description)
+          this.loginService.addTransaction("Delete","Deleted event: "+this.data.event.object.description)
 
           console.log('Event deleted:', this.selectedEvent);
           this.dialogRef.close(true);

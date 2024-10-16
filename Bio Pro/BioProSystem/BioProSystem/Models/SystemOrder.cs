@@ -26,6 +26,7 @@ public partial class SystemOrder
     public decimal? TotalAmountDue { get; set; } //
     public string EmergencyNumber { get; set; }  //
     public string PatientMedicalAidNumber { get; set; }    
+    public DateTime DateCreated { get; set; } 
     public virtual ICollection<Delivery>? Deliveries { get; set; } = new List<Delivery>(); // 
     public virtual ICollection<SelectedArea> SelectedAreas { get; set; } = new List<SelectedArea>(); //
     public virtual Dentist Dentist { get; set; } = null!; // 

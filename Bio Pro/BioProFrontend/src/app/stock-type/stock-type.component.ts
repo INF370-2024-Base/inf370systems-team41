@@ -68,13 +68,16 @@ export class StockTypeComponent implements OnInit {
       confirmdialog.afterClosed().subscribe(result => {
         if (result) {
           this.stockService.DeleteStockType(id).subscribe(() => {
-            this.loginService.addTransaction("Deleted","Deleted stock type with id: "+id)
+            this.loginService.addTransaction("Delete","Deleted stock type with id: "+id)
             this.GetAllStockTypes();
             console.log('Deleted type');
             this.snackBar.open('Deleted type successfully', 'Dismiss', {
               duration: 3000,
             });
           }, error => {
+            this.snackBar.open('Cannot delete stock type that is connected to a stock through a stock category.', 'Dismiss', {
+              duration: 3000,
+            });
             console.error('Error deleting type', error);
           });
         }

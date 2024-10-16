@@ -53,8 +53,12 @@
           <p><strong>Order Type:</strong> {{ order.orderType.description }}</p>
            <p><strong>Order Direction:</strong> {{ order.orderWorkflowTimeline.orderDirection.description }}</p> 
            <p><strong>Timeline Details:</strong> {{ order.orderWorkflowTimeline.timelineDetails }}</p> 
-          <div *ngFor="let stock of order.stockItems">
-          <p><strong>Stock amount used</strong> {{ stock.stock.stockName}}: {{stock.quantity}} {{stock.stock.measurement}}</p>
+          
+            <div *ngIf="order.stockItems.length>0">
+              <strong>Stock amount used</strong>
+              <div *ngFor="let stock of order.stockItems">
+              <p> {{ stock.stock.stockName}}: {{stock.quantity}} {{stock.stock.measurement}}</p>
+            </div>
         </div>
           <strong>Teethshades:</strong>
           <div class="teethshades">
