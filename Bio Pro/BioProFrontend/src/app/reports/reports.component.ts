@@ -113,7 +113,7 @@ paginatedStockWriteOffsList: any[] = [];
       this.updateGaugeValues(); 
     
       try {
-        await this.fetchLoggedInUserName();
+        this.loggedInUserName =JSON.parse(sessionStorage.getItem('User')!).name+" "+JSON.parse(sessionStorage.getItem('User')!).surname 
         console.log('Logged in user name before download:', this.loggedInUserName); // Log the name for debugging
         // Remove this line
         // this.downloadPDF('ReportName', 'sectionId'); // Replace with actual report name and section ID
