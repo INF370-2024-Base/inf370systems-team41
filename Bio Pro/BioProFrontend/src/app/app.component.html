@@ -153,7 +153,7 @@
 <!-- Approve Orders -->
 <a mat-list-item [routerLink]="['/approval']" 
    (click)="isSidenavOpen = !isSidenavOpen"
-   *ngIf="roleService.hasRole(['owner'])">
+   *ngIf="roleService.hasRole(['lab manager', 'owner'])">
   <mat-icon>check_circle</mat-icon>
   <!-- Wrap the text and badge together in a span -->
   <span class="badge-container">

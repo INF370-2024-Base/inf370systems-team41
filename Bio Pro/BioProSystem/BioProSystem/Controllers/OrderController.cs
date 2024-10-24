@@ -583,10 +583,10 @@ namespace BioProSystem.Controllers
                 return StatusCode(500, $"Internal Server Error: {ex.Message}"); // Handle and log any exceptions
             }
         }
-
-        [HttpGet("GetPendingOrders")]
+        [HttpGet]
+        [Route("GetPendingOrders")] 
         [Authorize(AuthenticationSchemes = "Bearer")]
-        [Authorize(Roles = " Lab Manager, Owner")]
+        [Authorize(Roles = "Lab Manager,Owner")]
         public async Task<ActionResult<IEnumerable<SystemOrder>>> GetPendingOrders()
         {
             try
