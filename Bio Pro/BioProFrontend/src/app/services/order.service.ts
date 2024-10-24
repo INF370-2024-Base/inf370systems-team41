@@ -102,6 +102,10 @@ export class OrderService {
     const endpoint = 'Api/GetPendingOrders'; // Updated endpoint
     return this.httpClient.get<any[]>(`${this.apiUrl}${endpoint}`);
   }
+  getPendingOrdersCount():Observable<any[]> {
+    const endpoint = 'Api/GetPendingOrdersCount'; // Updated endpoint
+    return this.httpClient.get<any[]>(`${this.apiUrl}${endpoint}`);
+  }
   apporvePendingOrder(orderId:number):Observable<number> {
     const endpoint = `Api/ApprovePendingOrder/${orderId}`; // Updated endpoint
     return this.httpClient.put<number>(`${this.apiUrl}${endpoint}`,orderId);
@@ -171,6 +175,10 @@ rejectDentalDesign(orderId:number):Observable<number> {
 GetOrdersAwaitingDentalDesignApproval():Observable<any[]>
 {
   return this.httpClient.get<any[]>(`${this.apiUrl}Api/GetOrdersAwaitingDentalDesignApproval`);
+}
+GetOrdersAwaitingDentalDesignApprovalCount():Observable<any[]>
+{
+  return this.httpClient.get<any[]>(`${this.apiUrl}Api/GetOrdersAwaitingDentalDesignApprovalCount`);
 }
 CancelOrder(orderId:string):Observable<any[]>
 {

@@ -53,8 +53,8 @@ export class AppComponent implements OnInit {
     this.loadOrdersAwaitingDesignApproval();};
   }
   loadPendingOrders(): void {
-    this.dataService.getPendingOrders().subscribe((orders: any[]) => {
-      this.pendingOrdersCount = orders.length;
+    this.dataService.getPendingOrdersCount().subscribe((orders: any) => {
+      this.pendingOrdersCount = orders;
     });
   }
     // Load count of orders awaiting dental design

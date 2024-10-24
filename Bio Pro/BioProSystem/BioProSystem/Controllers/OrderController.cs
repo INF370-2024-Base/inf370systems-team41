@@ -607,6 +607,30 @@ namespace BioProSystem.Controllers
             }
 
         }
+        [HttpGet]
+        [Route("GetPendingOrdersCount")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
+        [Authorize(Roles = "Lab Manager,Owner")]
+        public async Task<ActionResult<IEnumerable<SystemOrder>>> GetPendingOrdersCount()
+        {
+            try
+            {
+                List<SystemOrder> pendingOrders = await _repository.GetSystemOrdersWithOrderStatusID(1);
+                if (pendingOrders == null || !pendingOrders.Any())
+                {
+                    return Ok(0);
+                }
+                else
+                {
+                    return Ok(pendingOrders.Count());
+                }
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal Server Error: {ex.Message}");
+            }
+
+        }
         [HttpPut]
         [Route("ApprovePendingOrder/{orderId}")]
         [Authorize(AuthenticationSchemes = "Bearer")]
@@ -1101,6 +1125,30 @@ namespace BioProSystem.Controllers
                 // Log the exception or return a meaningful error message
                 return StatusCode(500, "An error occurred while deleting daily hours." + ex.InnerException.Message);
             }
+        }
+        [HttpGet]
+        [Route("GetOrdersAwaitingDentalDesignApprovalCount")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
+        [Authorize(Roles = "Lab Manager,Owner")]
+        public async Task<ActionResult<IEnumerable<SystemOrder>>> GetOrdersAwaitingDentalDesignApprovalCount()
+        {
+            try
+            {
+                List<SystemOrder> ordersAwaitingDentalDesign = await _repository.GetSystemOrdersWithOrderStatusID(3);
+                if (ordersAwaitingDentalDesign == null || !ordersAwaitingDentalDesign.Any())
+                {
+                    return Ok(0);
+                }
+                else
+                {
+                    return Ok(ordersAwaitingDentalDesign.Count());
+                }
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal Server Error: {ex.Message}");
+            }
+
         }
     }
 }

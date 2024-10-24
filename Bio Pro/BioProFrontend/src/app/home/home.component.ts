@@ -82,22 +82,22 @@ export class HomeComponent implements OnInit {
   }
   loadOrderCounts(): void {
     // Fetch pending order counts
-    this.dataService.getPendingOrders().subscribe((orders: any[]) => {
-      this.pendingOrdersCount = orders.length;
+    this.dataService.getPendingOrdersCount().subscribe((orders: any) => {
+      this.pendingOrdersCount = orders;
     });
 
     this.dataService.getOrdersAwaitingDentalDesign().subscribe((orders: any[]) => {
       this.ordersAwaitingDentalDesignCount = orders.length;
     });
 
-    this.dataService.GetOrdersAwaitingDentalDesignApproval().subscribe((orders: any[]) => {
-      this.approveDentalDesignCount = orders.length;
+    this.dataService.GetOrdersAwaitingDentalDesignApprovalCount().subscribe((orders: any) => {
+      this.approveDentalDesignCount = orders;
     });
   }
 // Load order counts
 loadPendingOrders(): void {
-  this.dataService.getPendingOrders().subscribe((orders: any[]) => {
-    this.pendingOrdersCount = orders.length;
+  this.dataService.getPendingOrdersCount().subscribe((orders: any) => {
+    this.pendingOrdersCount = orders;
   });
 }
 
@@ -108,8 +108,8 @@ loadOrdersAwaitingDentalDesign(): void {
 }
 
 loadOrdersAwaitingDesignApproval(): void {
-  this.dataService.GetOrdersAwaitingDentalDesignApproval().subscribe((orders: any[]) => {
-    this.approveDentalDesignCount = orders.length;
+  this.dataService.GetOrdersAwaitingDentalDesignApprovalCount().subscribe((orders: any) => {
+    this.approveDentalDesignCount = orders;
   });
 }
  // Add the getBadgeCount method
