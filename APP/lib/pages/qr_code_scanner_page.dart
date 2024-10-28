@@ -6,7 +6,6 @@ import 'package:biopromobileflutter/services/employee_hours_capture_service.dart
 import 'package:flutter/material.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 import 'timer_component.dart';
-import 'package:biopromobileflutter/services/auth_service.dart';
 
 class QRCodeScannerPage extends StatefulWidget {
   final ValueNotifier<Duration> workedHoursNotifier;
@@ -25,7 +24,7 @@ class _QRCodeScannerPageState extends State<QRCodeScannerPage> {
   bool isTimeCaptured = false;
   String? employeeId;
   Duration workedHours = Duration.zero;
-  Duration finalWorkDuration=Duration.zero;
+  Duration finalWorkDuration = Duration.zero;
   MobileScannerController scannerController = MobileScannerController();
   bool isCooldown = false;
 
@@ -36,10 +35,10 @@ class _QRCodeScannerPageState extends State<QRCodeScannerPage> {
   @override
   void initState() {
     super.initState();
-    
+
     _authService = AuthService();
     _authenticatedHttpClient = AuthenticatedHttpClient(
-      baseUrl: 'https://localhost:44315', // Replace with your actual base URL
+      baseUrl: 'https://localhost:44315',
       authService: _authService,
     );
     _captureService = EmployeeHoursCaptureService(
@@ -134,7 +133,7 @@ class _QRCodeScannerPageState extends State<QRCodeScannerPage> {
     );
   }
 
-void _handleQRCodeScanned(String code) async {
+  void _handleQRCodeScanned(String code) async {
     print('QR code scanned: $code');
 
     if (isTimeCaptured) {
@@ -151,10 +150,10 @@ void _handleQRCodeScanned(String code) async {
 
     if (isValidEmployee) {
       setState(() {
-        employeeId = code; 
+        employeeId = code;
         if (startTime == null) {
           _startTimer();
-          finalWorkDuration=Duration.zero;
+          Navigator.of(context).pop(); 
         } else {
           _stopTimerAndSendData(code);
         }
@@ -168,27 +167,17 @@ void _handleQRCodeScanned(String code) async {
     _startCooldown();
   }
 
-Future<bool> _validateEmployeeId(String scannedEmployeeId) async {
-  try {
-      AuthService authService=new AuthService();
-      final employeeId= await authService.getEmployeeID();
-      print('Employee ID scanned:'+scannedEmployeeId+". employee ID"+employeeId.toString());
-    if (employeeId.toString() ==scannedEmployeeId ) {
-      return true;
-    } else {
+  Future<bool> _validateEmployeeId(String scannedEmployeeId) async {
+    try {
+      final signedInEmployeeId = await _authService.getEmployeeID();
+      return signedInEmployeeId.toString() == scannedEmployeeId;
+    } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('QR code scanned does not match signed in employee.')),
+        SnackBar(content: Text('Error validating Employee ID: $e')),
       );
       return false;
     }
-  } catch (e) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('Error validating Employee ID: $e')),
-    );
-    return false;
   }
-}
-
 
   void _startTimer({bool resume = false}) {
     print(resume ? 'Resuming timer...' : 'Starting timer...');
@@ -221,10 +210,10 @@ Future<bool> _validateEmployeeId(String scannedEmployeeId) async {
     if (totalHours < 1) {
       totalHours = 1.0;
     }
-    if (totalHours ==0) {
+    if (totalHours == 0) {
       totalHours = 0;
     }
-    finalWorkDuration=workedHours;
+    finalWorkDuration = workedHours;
     _resetScanner();
     print('Total worked hours (rounded up): $totalHours');
 
@@ -233,7 +222,6 @@ Future<bool> _validateEmployeeId(String scannedEmployeeId) async {
         employeeId: employeeId,
         totalHours: totalHours,
       );
-      
     } catch (e) {
       print('Error: $e');
       ScaffoldMessenger.of(context).showSnackBar(
@@ -280,7 +268,6 @@ Future<bool> _validateEmployeeId(String scannedEmployeeId) async {
   }
 
   String _formatDuration(Duration duration) {
-    print('Duration of thngy'+duration.toString());
     String twoDigits(int n) => n.toString().padLeft(2, '0');
     String twoDigitMinutes = twoDigits(duration.inMinutes.remainder(60));
     String twoDigitSeconds = twoDigits(duration.inSeconds.remainder(60));
