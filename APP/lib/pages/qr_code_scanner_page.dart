@@ -1,29 +1,24 @@
-import 'dart:async';
 import 'dart:convert';
 import 'package:biopromobileflutter/services/auth_service.dart';
+import 'package:biopromobileflutter/services/timer_service.dart';
 import 'package:http/http.dart' as http;
 import 'package:biopromobileflutter/services/employee_hours_capture_service.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 import 'timer_component.dart';
+import 'package:provider/provider.dart';
 
 class QRCodeScannerPage extends StatefulWidget {
-  final ValueNotifier<Duration> workedHoursNotifier;
-  late final AuthService _authService;
-  late final AuthenticatedHttpClient _authenticatedHttpClient;
-  QRCodeScannerPage({required this.workedHoursNotifier});
+  QRCodeScannerPage();
 
   @override
   _QRCodeScannerPageState createState() => _QRCodeScannerPageState();
 }
 
 class _QRCodeScannerPageState extends State<QRCodeScannerPage> {
-  DateTime? startTime;
-  Timer? _timer;
   bool isScanning = true;
   bool isTimeCaptured = false;
   String? employeeId;
-  Duration workedHours = Duration.zero;
   Duration finalWorkDuration = Duration.zero;
   MobileScannerController scannerController = MobileScannerController();
   bool isCooldown = false;
@@ -45,37 +40,39 @@ class _QRCodeScannerPageState extends State<QRCodeScannerPage> {
       httpClient: _authenticatedHttpClient,
     );
 
-    if (widget.workedHoursNotifier.value > Duration.zero) {
-      startTime = DateTime.now().subtract(widget.workedHoursNotifier.value);
-      _startTimer(resume: true);
+    final timerService = Provider.of<TimerService>(context, listen: false);
+
+    // Resume the timer if it was already active
+    if (timerService.workedHoursNotifier.value > Duration.zero) {
+      timerService.startTimer(resume: true);
     }
   }
 
   @override
   void dispose() {
-    _timer?.cancel();
     scannerController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    final timerService = Provider.of<TimerService>(context);
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('QR Code Scanner'),
       ),
       body: Column(
         children: <Widget>[
-          if (startTime != null)
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: ValueListenableBuilder<Duration>(
-                valueListenable: widget.workedHoursNotifier,
-                builder: (context, duration, child) {
-                  return TimerComponent(duration: duration);
-                },
-              ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: ValueListenableBuilder<Duration>(
+              valueListenable: timerService.workedHoursNotifier,
+              builder: (context, duration, child) {
+                return TimerComponent(duration: duration);
+              },
             ),
+          ),
           Expanded(
             flex: 5,
             child: isScanning
@@ -147,14 +144,17 @@ class _QRCodeScannerPageState extends State<QRCodeScannerPage> {
     }
 
     final isValidEmployee = await _validateEmployeeId(code);
+    final timerService = Provider.of<TimerService>(context, listen: false);
 
     if (isValidEmployee) {
       setState(() {
         employeeId = code;
-        if (startTime == null) {
-          _startTimer();
+        if (timerService.workedHoursNotifier.value == Duration.zero) {
+          // Start the timer and close scanner
+          timerService.startTimer();
           Navigator.of(context).pop(); 
         } else {
+          // Capture time on return scan
           _stopTimerAndSendData(code);
         }
       });
@@ -179,43 +179,17 @@ class _QRCodeScannerPageState extends State<QRCodeScannerPage> {
     }
   }
 
-  void _startTimer({bool resume = false}) {
-    print(resume ? 'Resuming timer...' : 'Starting timer...');
-
-    if (!resume) {
-      startTime = DateTime.now();
-      widget.workedHoursNotifier.value = Duration.zero;
-    }
-
-    setState(() {
-      isTimeCaptured = false;
-    });
-
-    _timer = Timer.periodic(const Duration(seconds: 1), (Timer t) {
-      final workedHours = DateTime.now().difference(startTime!);
-      widget.workedHoursNotifier.value = workedHours;
-    });
-  }
-
   void _stopTimerAndSendData(String employeeId) async {
-    print('Stopping timer...');
-    final endTime = DateTime.now();
-    workedHours = endTime.difference(startTime!);
-    widget.workedHoursNotifier.value = workedHours;
+    final timerService = Provider.of<TimerService>(context, listen: false);
+    final workedHours = timerService.workedHoursNotifier.value;
 
     double totalHours = workedHours.inHours +
         (workedHours.inMinutes % 60) / 60 +
         (workedHours.inSeconds % 60) / 3600;
-    print('Total worked hours: $totalHours');
-    if (totalHours < 1) {
-      totalHours = 1.0;
-    }
-    if (totalHours == 0) {
-      totalHours = 0;
-    }
+    if (totalHours < 1) totalHours = 1.0;
     finalWorkDuration = workedHours;
+
     _resetScanner();
-    print('Total worked hours (rounded up): $totalHours');
 
     try {
       await _captureService.captureDailyHours(
@@ -223,34 +197,29 @@ class _QRCodeScannerPageState extends State<QRCodeScannerPage> {
         totalHours: totalHours,
       );
     } catch (e) {
-      print('Error: $e');
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Failed to capture time: $e')),
       );
     }
 
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Timer stopped. Time captured.')),
-      );
-    });
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text('Timer stopped. Time captured.')),
+    );
 
     setState(() {
       isScanning = false;
       isTimeCaptured = true;
-      startTime = null;
       scannerController.stop();
-      _timer?.cancel();
     });
   }
 
   void _resetScanner() {
+    final timerService = Provider.of<TimerService>(context, listen: false);
     setState(() {
       isScanning = true;
       isTimeCaptured = false;
-      workedHours = Duration.zero;
-      widget.workedHoursNotifier.value = Duration.zero;
-      startTime = null;
+      finalWorkDuration = Duration.zero;
+      timerService.reset();
       scannerController.start();
     });
   }

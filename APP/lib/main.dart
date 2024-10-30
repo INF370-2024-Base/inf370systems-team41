@@ -11,8 +11,8 @@ import 'package:biopromobileflutter/services/auth_service.dart';
 import 'package:biopromobileflutter/services/timer_service.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:provider/single_child_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 void main() {
@@ -28,7 +28,7 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  final AuthService authService = AuthService(); // Create AuthService instance
+  final AuthService authService = AuthService(); 
 
   Future<List<String>> _getRoles() async {
     final prefs = await SharedPreferences.getInstance();
@@ -68,15 +68,15 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatelessWidget {
-  final AuthService authService; // Add this line
-  final List<String>? roles; // Add this line
-  final ValueNotifier<Duration> workedHoursNotifier = ValueNotifier(Duration.zero);
+  final AuthService authService;
+  final List<String>? roles;
 
-  // Update the constructor to accept authService and roles
   MyHomePage({required this.authService, required this.roles});
 
   @override
   Widget build(BuildContext context) {
+    final timerService = Provider.of<TimerService>(context);
+
     return Scaffold(
       body: Stack(
         fit: StackFit.expand,
@@ -102,7 +102,7 @@ class MyHomePage extends StatelessWidget {
               ),
 
               ValueListenableBuilder<Duration>(
-                valueListenable: workedHoursNotifier,
+                valueListenable: timerService.workedHoursNotifier,
                 builder: (context, workedHours, child) {
                   return TimerComponent(duration: workedHours);
                 },
@@ -117,9 +117,7 @@ class MyHomePage extends StatelessWidget {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => QRCodeScannerPage(
-                workedHoursNotifier: workedHoursNotifier,
-              ),
+              builder: (context) => QRCodeScannerPage(),
             ),
           );
         },
@@ -128,7 +126,6 @@ class MyHomePage extends StatelessWidget {
     );
   }
 }
-
 
 class NavigationButton extends StatelessWidget {
   final String text;
